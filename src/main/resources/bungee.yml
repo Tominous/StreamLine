@@ -1,6 +1,6 @@
 name: StreamLine
 version: ${project.version}
-main: net.plasmere.streamline.streamline.StreamLine
+main: net.plasmere.streamline.StreamLine
 author: Nitrate
 depends:
   - LuckPerms
