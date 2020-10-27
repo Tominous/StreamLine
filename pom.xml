@@ -85,5 +85,12 @@
             <artifactId>JDA</artifactId>
             <version>4.2.0_211</version>
         </dependency>
+        <dependency>
+            <groupId>net.luckperms</groupId>
+            <artifactId>api</artifactId>
+            <version>5.2.16</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/LuckPerms-Bungee-5.2.16.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>
