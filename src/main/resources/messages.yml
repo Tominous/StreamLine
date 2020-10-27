@@ -1,0 +1,313 @@
+# DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
+version: "3"
+
+# All bungee messages accept all color and formatting codes.
+# For new lines, use %newline%.
+
+# Message prefix.
+message-prefix: "&d&lStreamline &7&l>> &r"
+# Message shown when a player doesn't have permission.
+no-permission: "&cSorry, but you do not have permission to do this..."
+# Message shown when reloading.
+reload-message: "&aConfiguration reloaded!"
+# For things that only players can do.
+only-players: "&cSorry, but this can only be used by a player!"
+# Discord error title.
+discord-err-title: "ERROR"
+# Error with command.
+command-error:
+  discord: "There was an error executing this command..."
+  bungee: "&cThere was an error executing this command..."
+# If a command is disabled.
+command-disabled:
+  # Discord error message when a command is not enabled.
+  discord: "Sorry, but this command is disabled!"
+  # Bungee error message when a command is not enabled.
+  bungee: "&cSorry, but this command is disabled!"
+# If a module is disabled.
+module-disabled:
+  # Discord error message when a module is not enabled.
+  discord: "Sorry, but this module is disabled!"
+  # Bungee error message when a module is not enabled.
+  bungee: "&cSorry, but this module is disabled!"
+# If a command needs more arguments.
+command-needs-args:
+  # Discord error message when a command needs more arguments.
+  discord: "Sorry, but you need to supply more information!"
+  # Bungee error message when a command needs more arguments.
+  bungee: "&cSorry, but you need to supply more information!"
+# If not a command.
+not-a-command:
+  discord: "Not a command!%newline%Do !commands to see the commands!"
+# If command usage not correct.
+improper-usage:
+  bungee: "&cUsage: &b%usage%"
+
+# When reporting...
+# Fillers:
+# "%reporter%" = the one reporting.
+# "%report%" = what is being reported.
+report-message:
+  # Title of the embeded report message (on Discord).
+  embed-title: "Report"
+  # Reports from the Discord server.
+  from-discord:
+    # Message shown to players with the Discord role stated or in the reports channel. "report-bungee" must be set "true".
+    discord: "[DISCORD REPORT] **%reporter%** reported ``%report%``"
+    # Message shown to players with the permission "streamline.staff.reports". "report-bungee" must be set "true".
+    bungee: "&e[&9DISCORD &cREPORT&e] &a%reporter% &dreported &c%report%"
+    # Message shown to a player when they make a report (on Discord).
+    confirmation: "Your report:%newline%%report%%newline%We will look into it!"
+  # Reports from the Bungee server.
+  from-bungee:
+    # Message shown to players with the Discord role stated or in the reports channel. "report-bungee" must be set "true".
+    discord: "[BUNGEE REPORT] **%reporter%** reported ``%report%``"
+    # Message shown to players with the permission "streamline.staff.reports". "report-bungee" must be set "true".
+    bungee: "&e[&6BUNGEE &cREPORT&e] &a%reporter% &dreported &c%report%"
+    # Message shown to a player when they make a report (on Discord).
+    confirmation: "&aYour report:%newline%&c%report%%newline%&dWe will look into it!"
+
+# When using staff chat...
+staffchat:
+  # Message shown when someone chats in staff chat.
+  message:
+    # Title of the embeded staff chat message (on Discord).
+    embed-title: "STAFF"
+    # Fillers:
+    # %user% = who chatted.
+    # %message% = the message said.
+    # %from% = where the message originated. i.e. bungeecord or discord
+    # Message on Discord.
+    discord: "``%user%`` >> %message%"
+    # Message on bungee.
+    bungee: "&2&lSTAFF &7&l>> &a%user% &e(%from%&e) &8: &e%message%"
+    # Text to use when using "%from%" in your messages.
+    from:
+      # If message originated from Discord.
+      discord: "&9discord"
+      # If message originated from Bungee.
+      bungee: "&6bungee"
+  # Message shown when using the wrong staffchat prefix.
+  wrong-prefix: "&cSorry, but that is not the correct staff chat prefix!"
+
+# When using online list...
+online:
+  message:
+    embed-title: "Global List"
+    # Fillers:
+    # %amount% = the amount of people on the server.
+    # %servers% = a compiled list of servers with the amount online.
+    # %online% = a compiled list of all who are online excluding those who have the permission "streamline.staff.vanish".
+    # Message on Discord.
+    discord: "Total Online: %amount%%newlineServers: %newline%%servers%%newline%Online: %newline%%online%"
+    # Message on bungee.
+    bungee:
+      # The main message.
+      # Fillers:
+      # %amount% = the amount of people on the server.
+      # %servers% = a compiled list of servers with the amount online.
+      # %online% = a compiled list of all who are online.
+      main: "&7--< &5Global List &e(&6%amount%&e) &7>--%newline%&2Servers&8: %newline%%servers%%newline%&2Players&8: %newline%%online%"
+      # Server format.
+      # Fillers:
+      # %server% = specific server.
+      # %count% = amount of players on said server.
+      servers: "&9%server%&8: &6%count% &donline&8..."
+      # Player format.
+      players:
+        # Main bulk of player format.
+        # Fillers:
+        # %group% = the luckperms group.
+        # %count% = the amount online in said luckperms group.
+        # %playerbulk% = a compiled list of players in said luckperms group.
+        main: "&d%group% &e(&6%count%&e)&8: %playerbulk%"
+        # Format for compiling players.
+        playerbulk:
+          # Fillers:
+          # %player% = a said player in a luckperm group.
+          # %server% = the server said player is currently on.
+          # If not the last player in group.
+          if-not-last: "&2%player% &0(&e%server%&0)&8, "
+          if-last: "&2%player% &0(&e%server%&0)&8."
+
+# When using staffonline...
+staffonline:
+  message:
+    embed-title: "Staff"
+    # Message on Discord.
+    discord:
+      # Message to be sent to staff chat (on Discord) when a staff comes online on the bungee server.
+      online: "%staff% is now online."
+      # Message to be sent to staff chat (on Discord) when a staff comes online on the bungee server.
+      offline: "%staff% is now offline."
+      # The main message.
+      # Fillers:
+      # %amount% = the amount of staff on the server.
+      # %staffbulk% = a compiled list of all staff who are online.
+      main: "Total Online: %amount%%newline%Online: %staffbulk%"
+      # Format for compiling staff.
+      staffbulk:
+        # Fillers:
+        # %player% = a said player in a luckperm group.
+        # %server% = the server said player is currently on.
+        # If not the last player in group.
+        if-not-last: "%player% (&e%server%&0), "
+        if-last: "%player% (&e%server%&0)."
+    # Message on bungee.
+    bungee:
+      # Message to be sent to staff chat (on bungee) when a staff comes online on the bungee server.
+      online: "&d%staff% &eis now &aonline&8."
+      # Message to be sent to staff chat (on bungee) when a staff comes online on the bungee server.
+      offline: "&d%staff% &eis now &coffline&8."
+      # The main message.
+      main: "&6Staff Online &e(&6%amount%&e)&8: %staffbulk%"
+      # Format for compiling players.
+      staffbulk:
+        # Fillers:
+        # %player% = a said player in a luckperm group.
+        # %server% = the server said player is currently on.
+        # If not the last player in group.
+        if-not-last: "&2%player% &0(&e%server%&0)&8, "
+        if-last: "&2%player% &0(&e%server%&0)&8."
+
+# When using party...
+party:
+  # Fillers:
+  # %leader% = party leader.
+  # %size% = party size.
+  # Text used for when talking about each party level...
+  text:
+    leader: "LEADER"
+    moderator: "MODERATOR"
+    member: "MEMBER"
+  # When it finds no party.
+  no-party: "&cNo party found!"
+  # Not high enough party permissions.
+  no-permission: "&cYou do not have high enough party permissions to do this!"
+  # When creating a party...
+  create: "&aYou have just created a party!"
+  # Not in a party...
+  not-in-a-party: "&cSorry, but you are not in a party..."
+  # Not enough space in party...
+  not-enough-space: "&cSorry, but the party is full!"
+  # Message for when someone joins a party...
+  join:
+    # Fillers:
+    # %user% = the person joining.
+    # %leader% = the party leader.
+    members: "&b%user% &ejust joined the party!"
+    user: "&eYou just joined &b%leader%&e's party!"
+    failure: "&cThere is no party to join."
+  # Message for when someone leaves a party...
+  leave:
+    # Fillers:
+    # %user% = the person joining.
+    # %leader% = the party leader.
+    members: "&b%user% &ejust left the party."
+    user: "&eYou just left &b%leader%&e's party."
+    failure: "&cThere is no party to leave."
+  # Message for when promoting someone...
+  promote:
+    # Fillers:
+    # %user% = the person being promoted.
+    # %leader% = the party leader.
+    # %level% = the permission level the person is going to.
+    members: "&b%leader% &ejust promoted &b%user% &eto &c%level%&e in the party!"
+    user: "&eYou were just promoted to &c%level% &ein the party!"
+    leader: "&eYou just promoted &b%user% to &c%level%&e!"
+    failure: "&cAlready at highest level."
+  # Message for demoting someone...
+  demote:
+    # Fillers:
+    # %user% = the person being demoted.
+    # %leader% = the party leader.
+    # %level% = the permission level the person is going to.
+    members: "&b%leader% &ejust demoted &b%user% &eto &c%level%&e in the party."
+    user: "&eYou were just demoted to &c%level% &ein the party."
+    leader: "&eYou just demoted &b%user% to &c%level%&e."
+    failure: "&cAlready at lowest level."
+    is-leader: "&cCannot demote yourself..."
+  # Message when someone chats...
+  # Fillers:
+  # %user% = Messager.
+  # %message% = Message user said being sent.
+  chat: "&aPARTY &9&l>> &b%user% &8: &f%message%"
+  # Message when some lists the party...
+  list:
+    # Fillers:
+    # %leaderbulk% = leaderbulk section.
+    # %moderatorbulk% = moderatorbulk section.
+    # %memberbulk% = memberbulk section.
+    # %user% = (only in context of "not-last" and "last") the specific member in the list of members
+    # %user% = (in everything else ^) the one running the command.
+    # Main message used to determine the other of things...
+    main: "&7--< &5Party &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
+    leaderbulk: "&eParty Leader: &c%user%"
+    moderatorbulk:
+      main: "&eParty Moderators: %moderators%"
+      moderators:
+        not-last: "&b%user%&e, "
+        last: "&b%user%&e."
+    memberbulk:
+      main: "&eParty Members: %members%"
+      members:
+        not-last: "&7%user%&e, "
+        last: "&7%user%&e."
+  # Message for opening the party...
+  open:
+    # Fillers:
+    # %leader% = the party leader.
+    # %size% = the new size of the party.
+    members: "&b%leader% &ejust opened the party to a size of &e%size%&e."
+    leader: "&eYou just opened the party to a size of &3%size%&e."
+    failure: "&cAlready open."
+  # Message for closing the party...
+  close:
+    # Fillers:
+    # %leader% = the party leader.
+    # %size% = the size of the party.
+    members: "&b%leader% &ejust closed the party."
+    leader: "&eYou just closed the party."
+    failure: "&cAlready closed."
+  # Message for disbanding the party...
+  disband:
+    # Fillers:
+    # %leader% = the party leader.
+    members: "&b%leader% &ejust disbanded the party."
+    leader: "&eYou just disbanded the party."
+  # Message for accepting an invite to a party...
+  accept:
+    # Fillers:
+    # %user% = the accepter.
+    # %leader% = the party leader.
+    user: "Accepted &b%leader%&e's request."
+    leader: "&b%user% &ejust accepted your invite!"
+    failure: "&cNo invites!"
+  # Message for denying an invite to a party...
+  deny:
+    # Fillers:
+    # %user% = the accepter.
+    # %leader% = the party leader.
+    user: "Denied &b%leader%&e's request."
+    leader: "&b%user% &ejust denied your invite!"
+    failure: "&cNo invites!"
+  # Message for sending an invite of a party...
+  invite:
+    # Fillers:
+    # %user% = the accepter.
+    # %leader% = the party leader.
+    # %leaderdefault% = the party leader formatted without their display name.
+    user: "&b%leader% &einvited you to their party!%newline%&eType &a/party join %leaderdefault% &eto join!"
+    leader: "&eJust invited &b%user% &eto your party!"
+    failure: "&cAlready invited this person."
+
+# Messages for the stream command:
+stream:
+  # If they didn't supply a link.
+  need-link: "&cSorry, but you need to specify a link..."
+  # If what they supplied wasn't a link.
+  not-link: "&cSorry, but you need to specify a link beginning with \"https://\"..."
+  # Message:
+  message: "&a%user% &dis streaming at &b&o&n%link%&d... Come and check it out!"
+  # Hover formatted prefix.
+  hover-prefix: "&b&o&n"

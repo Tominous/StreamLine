@@ -1,0 +1,55 @@
+name: StreamLine
+version: ${project.version}
+main: net.plasmere.streamline.streamline.StreamLine
+author: Nitrate
+depends:
+  - LuckPerms
+
+commands:
+  stream:
+    aliases: [ "str" , "link" , "streamline:stream" , "streamline:str" , "streamline:link" ]
+    permission: streamline.stream
+  msg:
+    aliases: [ "w" , "tell" , "streamline:msg" , "streamline:w" , "streamline:tell" ]
+    permission: streamline.msg
+  ping:
+    aliases: [ "p" , "pong" , "streamline:ping" , "streamline:p" , "streamline:pong" ]
+    permission: streamline.ping
+  reply:
+    aliases: [ "r" , "re" , "streamline:reply" , "streamline:r" , "streamline:re" ]
+    permission: streamline.reply
+  plugins:
+    aliases: [ "pl" , "plug" , "streamline:plugins" , "streamline:pl" , "streamline:plug" ]
+    permission: streamline.plugins
+  fabric:
+    aliases: [ "trampoline" , "bungee-trampoline" , "tramp" , "streamline:templex" ]
+    permission: streamline.server.vanilla
+  hub:
+    aliases: [ "server" , "l" , "streamline:hub" , "streamline:l" ]
+    permission: streamline.server.lobby
+  staffonline:
+    aliases: [ "so" , "staff" , "streamline:staffonline" , "streamline:so" , "streamline:staff" ]
+    permission: streamline.staff.staffonline
+  globalonline:
+    aliases: [ "go" , "gl" , "streamline:globalonline" , "streamline:go" , "streamline:gl" ]
+    permission: streamline.staff.globalonline
+
+permissions:
+  streamline.*:
+    default: op
+  streamline.stream:
+    default: op
+  streamline.ping:
+    default: true
+  streamline.plugins:
+    default: op
+  streamline.server.vanilla:
+    default: true
+  streamline.server.lobby:
+    default: true
+  streamline.staff.staffonline:
+    default: op
+  streamline.staff.globalonline:
+    default: op
+  streamline.command.slreload:
+    default: op

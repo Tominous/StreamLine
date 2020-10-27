@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Streaming:jar">
+    <output-path>$PROJECT_DIR$/../Builds/out/artifacts/Builds/Streamline</output-path>
+    <root id="archive" name="Streaming.jar">
+      <element id="module-output" name="Streaming" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../Minecraft Plugins/JDA-4.2.0_200-withDependencies.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

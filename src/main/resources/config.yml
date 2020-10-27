@@ -1,0 +1,337 @@
+# DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
+version: "3"
+
+#### DISCORD BOT ####
+bot:
+  # Prefix the bot uses. Default: "."
+  prefix: '.'
+  # Bot token that the bot uses to connect to your Bot Discord App.
+  token: "put token here"
+  # Status of your bot. (Only uses "Playing...") Example outcome: Playing... myserver.net
+  server-ip: "myserver.net"
+
+### DISCORD SETTINGS ###
+discord:
+  ## Text Channels ##
+  text-channels:
+    # Report channel ID. "report-to-channel" must be set "true".
+    reports: "put id here"
+    # Staff channel ID. "staffchat-to-minecraft" must be set "true".
+    staffchat: "put id here"
+    # Bot offline and online message output channel ID. Either "startup-message" or "shutdown-message" should be "true".
+    offline-online: "put id here"
+
+  ## Roles ##
+  roles:
+    # Role you want to be pinged when someone does a report. "report-channel-pings" must be set "true".
+    reports: "put id here"
+    # Role you want to be designated as the "Staff" role. All staff should have this role.
+    staff: "put id here"
+
+### COMMAND SETTINGS ###
+commands:
+  # Discord commands...
+  discord:
+    # The help command.
+    help:
+      # Enables / disables the use of the "help" bot command.
+      enabled: true
+      # All aliases for the command. Listed in yml list format. Including the main command.
+      aliases:
+        - "?"
+        - "commands"
+        - "help"
+      # Put the ID of the Discord role here:
+      permission: "put id here"
+    # The online command.
+    online:
+      # Enables / disables the use of the "online" bot command.
+      enabled: true
+      # All aliases for the command. Listed in yml list format. Including the main command.
+      aliases:
+        - "o"
+        - "on"
+        - "online"
+      # Put the ID of the Discord role here:
+      permission: "put id here"
+    # The report command.
+    report:
+      # Enables / disables the use of the "report" bot command.
+      enabled: true
+      # All aliases for the command. Listed in yml list format. Including the main command.
+      aliases:
+        - "r"
+        - "rep"
+        - "report"
+      # Put the ID of the Discord role here:
+      permission: "put id here"
+    # The staffchat command.
+    staffchat:
+      # Enables / disables being able to use a command in Discord to talk to staff on the bungee server.
+      enabled: true
+      # All aliases for the command. Listed in yml list format. Including the main command.
+      aliases:
+        - "sc"
+        - "!"
+        - "#"
+        - "staffchat"
+      # Put the ID of the Discord role here:
+      permission: "put id here"
+    # The staffonline command.
+    staffonline:
+      # Enables / disables the use of the "staffonline" bot command.
+      enabled: true
+      # All aliases for the command. Listed in yml list format. Including the main command.
+      aliases:
+        - "so"
+        - "staff"
+        - "staffonline"
+      # Put the ID of the Discord role here:
+      permission: "put id here"
+  # Bungee commands...
+  bungee:
+    # The ping command.
+    ping:
+      # Enables / disables the use of the "ping" bungee command.
+      enabled: true
+      # Custom permission.
+      permission: "streamline.command.ping"
+      # All aliases for the command. Listed in yml list format.
+      aliases:
+        - "p"
+        - "pn"
+    # The plugins command.
+    plugins:
+      # Enables / disables the use of the "plugins" bungee command.
+      enabled: true
+      # Custom permission.
+      permission: "streamline.command.plugins"
+      # All aliases for the command. Listed in yml list format.
+      aliases:
+        - "pl"
+        - "plug"
+    # The stream command.
+    stream:
+      # Enables / disables the use of the "stream" bungee command.
+      enabled: true
+      # Custom permission.
+      permission: "streamline.command.stream"
+      # All aliases for the command. Listed in yml list format.
+      aliases:
+        - "str"
+        - "link"
+    # The report command.
+    report:
+      # Enables / disables the use of the "report" bungee command.
+      enabled: true
+      # Custom permission.
+      permission: "streamline.command.report"
+      # All aliases for the command. Listed in yml list format.
+      aliases:
+        - "rep"
+        - "!!!"
+    # The party command.
+    party:
+      # Enabled / disables the use of the "party" bungee command.
+      enabled: true
+      # Custom permission.
+      permission: "streamline.command.party"
+      # All aliases for the command. Listed in yml list format.
+      aliases:
+        # Main command.
+        main:
+          - "p"
+          - "par"
+        # Join subcommand.
+        join:
+          - "j"
+          - "go"
+        # Leave subcommand.
+        leave:
+          - "l"
+          - "bye"
+        # Create subcommand.
+        create:
+          - "cr"
+          - "new"
+        # Promote subcommand.
+        promote:
+          - "pr"
+          - "++"
+        # Demote subcommand.
+        demote:
+          - "de"
+          - "--"
+        # Chat subcommand.
+        chat:
+          - "c"
+          - "ch"
+        # List subcommand.
+        list:
+          - "l"
+          - "members"
+        # Open subcommand.
+        open:
+          - "op"
+          - "open"
+        # Close subcommand.
+        close:
+          - "cl"
+          - "shut"
+        # Disband subcommand.
+        disband:
+          - "dis"
+          - "end"
+        # Accept subcommand.
+        accept:
+          - "a"
+          - "yes"
+        # Deny subcommand.
+        deny:
+          - "d"
+          - "no"
+        # Invite subcommand.
+        invite:
+          - "inv"
+          - "add"
+    # Server commands...
+    servers:
+      # The lobby command.
+      lobby:
+        # Enables / disables the use of the "lobby" bungee command.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.servers.lobby"
+        # Put the name of your main lobby / hub server. Not an IP.
+        points-to: "lobby"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "l"
+          - "hub"
+      # The trampoline command fix.
+      fabric-fix:
+        # Enables / disables the use of the "trampoline" bungee command fix.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.servers.fabric"
+        # Should be a server name. Not an IP.
+        points-to: "vanilla"
+    # Staff commands...
+    staff:
+      # The globalonline command.
+      globalonline:
+        # Enables / disables the use of the "globalonline" bungee command.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.globalonline"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "gl"
+          - "go"
+          - "online"
+      # The staffchat command.
+      staffchat:
+        # Enables / disables the use of the "staffchat" bungee command.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.staffchat"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "sc"
+          - "mc"
+          - "schat"
+      # The staffonline command.
+      staffonline:
+        # Enables / disables the use of the "staffonline" bungee command.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.staffonline"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "so"
+          - "staff"
+      # The slreload command.
+      slreload:
+        # Custom permission.
+        permission: "streamline.command.reload"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "slr"
+          - "stre"
+          - "slrel"
+
+### MODULE SETTINGS ###
+modules:
+  # Discord modules...
+  discord:
+    # Reports...
+    reports:
+      # Enables / disables sending a confirmation message to the sender of the report.
+      send-confirmation: true
+      # Enables / disables output of reports to "report-channel" below. See "Text Channels" section from discord.
+      report-to-channel: true
+      # Enables / disables messaging players with the permission "streamline.staff.reports" (on bungee) when someone reports from discord.
+      discord-to-minecraft: true
+    # Enables / disables pinging "reporting-role".
+    # Must have "report-to-channel" set as "true". See above.
+    # Must have "reporting-role" set to the ID of the role you want to be pinged (on Discord). See "Roles" section.
+    report-channel-pings-a-role: false
+    # Enables / disables Discord staff chat going to all staff on the bungee server.
+    staffchat-to-minecraft: true
+    # Enables / disables the staff chat going to the bungee server only being from the "staff-role" Discord role.
+    # Must have "staffchat-to-minecraft" set as "true". See above.
+    # Must have "staff-role" set to the ID of the role you want all staff to be (on Discord). See "Roles" section.
+    staffchat-to-minecraft-only-staff-role: false
+    # Enabled / disables startup messages in discord.
+    startup-message: false
+    # Enabled / disables shutdown messages in discord.
+    shutdown-message: false
+    # Enables / disables telling users if a command is not a command.
+    # Can be:
+    # "yes" = it will.
+    # "no" = it will not.
+    # "staff" = it will only tell it to the staff role listed above. (When they run the command.)
+    # "owner" = it will only tell it to the owner of the Discord server. (When they run the command.)
+    say-if-not-a-command: "staff"
+    # Enables / disables telling users if a command is disabled.
+    # Can be:
+    # "yes" = it will.
+    # "no" = it will not.
+    # "staff" = it will only tell it to the staff role listed above. (When they run the command.)
+    # "owner" = it will only tell it to the owner of the Discord server. (When they run the command.)
+    say-if-command-disabled: "staff"
+    # Enables / disables telling the staff chat defined in "reports" (in the discord > text-channels section) (on Discord) when a staff member logs on.
+    send-staff-login: true
+    # Enables / disables telling the staff chat defined in "reports" (in the discord > text-channels section) (on Discord) when a staff member logs off.
+    send-staff-logoff: true
+  # Bungee commands...
+  bungee:
+    # Reports...
+    reports:
+      # Enables / disables sending a confirmation message to the sender of the report.
+      send-confirmation: true
+      # Enables / disables messaging players with the permission "streamline.staff.reports" (on bungee) when someone reports from bungee.
+      send-in-chat: true
+      # Enables / disables messaging the channel defined in "reports" (in the discord > text-channels section) (on discord) when someone reports from bungee.
+      minecraft-to-discord: true
+    # StaffChat...
+    staffchat:
+      # Enables / disables the bungee staff chat for players with the permission "streamline.staff" (on bungee).
+      enabled: true
+      # Enables / disables the bungee staff chat prefix in "prefix" (in the modules > bungee > staffchat section).
+      enable-prefix: true
+      # The prefix to use for quickly using staff chat.
+      prefix: "#"
+      # Enables / disables the staff chat going to the Discord server.
+      minecraft-to-discord: true
+    # Enables / disables telling the staff chat (on bungee) when a staff member logs on.
+    send-staff-login: true
+    # Enables / disables telling the staff chat (on bungee) when a staff member logs off.
+    send-staff-logoff: true
+    # Parties...
+    parties:
+      # Max size by group... Formatted: <group>: <size>
+      max-size:
+        default: 50
+        yt: 100
+        helper: 150

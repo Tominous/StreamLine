@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BungeeCord_Plugin.iml" filepath="$PROJECT_DIR$/BungeeCord_Plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/StreamLine.iml" filepath="$PROJECT_DIR$/StreamLine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Streaming.iml" filepath="$PROJECT_DIR$/Streaming.iml" />
+    </modules>
+  </component>
+</project>
