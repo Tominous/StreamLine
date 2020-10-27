@@ -12,6 +12,8 @@ no-permission: "&cSorry, but you do not have permission to do this..."
 reload-message: "&aConfiguration reloaded!"
 # For things that only players can do.
 only-players: "&cSorry, but this can only be used by a player!"
+# Player not found...
+no-player: "&cSorry, but that player either does not exist or is not online..."
 # Discord error title.
 discord-err-title: "ERROR"
 # Error with command.

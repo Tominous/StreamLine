@@ -146,30 +146,37 @@ commands:
         join:
           - "j"
           - "go"
+          - "join"
         # Leave subcommand.
         leave:
           - "l"
           - "bye"
+          - "leave"
         # Create subcommand.
         create:
           - "cr"
           - "new"
+          - "create"
         # Promote subcommand.
         promote:
           - "pr"
           - "++"
+          - "promote"
         # Demote subcommand.
         demote:
           - "de"
           - "--"
+          - "demote"
         # Chat subcommand.
         chat:
           - "c"
           - "ch"
+          - "chat"
         # List subcommand.
         list:
           - "l"
           - "members"
+          - "list"
         # Open subcommand.
         open:
           - "op"
@@ -178,22 +185,27 @@ commands:
         close:
           - "cl"
           - "shut"
+          - "close"
         # Disband subcommand.
         disband:
           - "dis"
           - "end"
+          - "disband"
         # Accept subcommand.
         accept:
           - "a"
           - "yes"
+          - "accept"
         # Deny subcommand.
         deny:
           - "d"
           - "no"
+          - "deny"
         # Invite subcommand.
         invite:
           - "inv"
           - "add"
+          - "invite"
     # Server commands...
     servers:
       # The lobby command.

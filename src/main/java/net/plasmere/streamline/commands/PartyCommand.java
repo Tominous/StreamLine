@@ -38,7 +38,9 @@ public class PartyCommand extends Command implements TabExecutor {
                     if (args.length <= 1) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                     } else {
-                        PartyUtils.joinParty((ProxiedPlayer) sender, plugin.getProxy().getPlayer(args[1]));
+                        ProxiedPlayer online = tryOnline(sender, args[1]);
+                        if (online == null) return;
+                        PartyUtils.joinParty((ProxiedPlayer) sender, online);
                     }
                 } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParLeaveAliases)) {
                     PartyUtils.leaveParty((ProxiedPlayer) sender);
@@ -48,13 +50,17 @@ public class PartyCommand extends Command implements TabExecutor {
                     if (args.length <= 1) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                     } else {
-                        PartyUtils.promotePlayer(plugin.getProxy().getPlayer(args[1]));
+                        ProxiedPlayer online = tryOnline(sender, args[1]);
+                        if (online == null) return;
+                        PartyUtils.promotePlayer(online);
                     }
                 } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParDemoteAliases)) {
                     if (args.length <= 1) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                     } else {
-                        PartyUtils.demotePlayer(plugin.getProxy().getPlayer(args[1]));
+                        ProxiedPlayer online = tryOnline(sender, args[1]);
+                        if (online == null) return;
+                        PartyUtils.demotePlayer(online);
                     }
                 } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParChatAliases)) {
                     if (args.length <= 1) {
@@ -78,22 +84,30 @@ public class PartyCommand extends Command implements TabExecutor {
                     if (args.length <= 1) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                     } else {
-                        PartyUtils.acceptInvite((ProxiedPlayer) sender, plugin.getProxy().getPlayer(args[1]));
+                        ProxiedPlayer online = tryOnline(sender, args[1]);
+                        if (online == null) return;
+                        PartyUtils.acceptInvite((ProxiedPlayer) sender, online);
                     }
                 } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParDenyAliases)) {
                     if (args.length <= 1) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                     } else {
-                        PartyUtils.denyInvite((ProxiedPlayer) sender, plugin.getProxy().getPlayer(args[1]));
+                        ProxiedPlayer online = tryOnline(sender, args[1]);
+                        if (online == null) return;
+                        PartyUtils.denyInvite((ProxiedPlayer) sender, online);
                     }
                 } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParInvAliases)) {
                     if (args.length <= 1) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                     } else {
-                        PartyUtils.sendInvite((ProxiedPlayer) sender, plugin.getProxy().getPlayer(args[1]));
+                        ProxiedPlayer online = tryOnline(sender, args[1]);
+                        if (online == null) return;
+                        PartyUtils.sendInvite(online, (ProxiedPlayer) sender);
                     }
                 } else {
-                    PartyUtils.sendInvite(plugin.getProxy().getPlayer(args[0]), (ProxiedPlayer) sender);
+                    ProxiedPlayer online = tryOnline(sender, args[0]);
+                    if (online == null) return;
+                    PartyUtils.sendInvite(online, (ProxiedPlayer) sender);
                 }
             } catch (Throwable e) {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
@@ -102,6 +116,15 @@ public class PartyCommand extends Command implements TabExecutor {
         } else {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
         }
+    }
+
+    public ProxiedPlayer tryOnline(CommandSender sender, String player){
+        try {
+            return plugin.getProxy().getPlayer(player);
+        } catch (Exception e){
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+        }
+        return null;
     }
 
     // Usage: /party <join|leave|create|promote|demote|chat|list|open|close|disband|accept|deny|invite>

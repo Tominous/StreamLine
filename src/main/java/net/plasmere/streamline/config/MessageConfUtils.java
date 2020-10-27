@@ -14,6 +14,7 @@ public class MessageConfUtils {
     public static final String noPerm = message.getString("no-permission");
     public static final String reload = message.getString("reload-message");
     public static final String onlyPlayers = message.getString("only-players");
+    public static final String noPlayer = message.getString("no-player");
     public static final String discordErrTitle = message.getString("discord-err-title");
     // Command Error.
     public static final String discordCommandError = message.getString("command-error.discord");
