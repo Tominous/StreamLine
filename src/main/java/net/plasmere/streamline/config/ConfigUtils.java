@@ -1,4 +1,4 @@
-package net.plasmere.streamline.utils;
+package net.plasmere.streamline.config;
 
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;

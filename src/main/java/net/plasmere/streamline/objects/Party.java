@@ -1,7 +1,7 @@
 package net.plasmere.streamline.objects;
 
 import net.plasmere.streamline.StreamLine;
-import net.plasmere.streamline.utils.ConfigUtils;
+import net.plasmere.streamline.config.ConfigUtils;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.group.Group;

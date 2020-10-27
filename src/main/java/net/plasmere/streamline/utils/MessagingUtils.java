@@ -1,6 +1,8 @@
 package net.plasmere.streamline.utils;
 
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Party;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;

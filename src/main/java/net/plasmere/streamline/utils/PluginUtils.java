@@ -8,6 +8,7 @@ import net.plasmere.streamline.commands.staff.GlobalOnlineCommand;
 import net.plasmere.streamline.commands.staff.ReloadCommand;
 import net.plasmere.streamline.commands.staff.StaffChatCommand;
 import net.plasmere.streamline.commands.staff.StaffOnlineCommand;
+import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.listeners.JoinLeaveListener;
 import net.plasmere.streamline.listeners.StaffChatListener;
 import net.md_5.bungee.api.plugin.Command;

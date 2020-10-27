@@ -2,8 +2,8 @@ package net.plasmere.streamline.discordbot.commands;
 
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
-import net.plasmere.streamline.utils.ConfigUtils;
-import net.plasmere.streamline.utils.MessageConfUtils;
+import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.TextUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;

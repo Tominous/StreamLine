@@ -2,8 +2,8 @@ package net.plasmere.streamline.listeners;
 
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
-import net.plasmere.streamline.utils.ConfigUtils;
-import net.plasmere.streamline.utils.MessageConfUtils;
+import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;

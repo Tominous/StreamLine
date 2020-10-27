@@ -1,7 +1,7 @@
 package net.plasmere.streamline.commands.staff;
 
 import net.plasmere.streamline.StreamLine;
-import net.plasmere.streamline.utils.MessageConfUtils;
+import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.TextUtils;
 import net.luckperms.api.LuckPerms;

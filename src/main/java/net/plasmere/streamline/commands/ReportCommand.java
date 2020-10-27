@@ -1,8 +1,8 @@
 package net.plasmere.streamline.commands;
 
 import net.plasmere.streamline.StreamLine;
-import net.plasmere.streamline.utils.ConfigUtils;
-import net.plasmere.streamline.utils.MessageConfUtils;
+import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.TextUtils;
 import net.md_5.bungee.api.CommandSender;
