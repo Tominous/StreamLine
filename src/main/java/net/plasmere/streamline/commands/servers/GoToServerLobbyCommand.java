@@ -20,6 +20,8 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class GoToServerLobbyCommand extends Command implements TabExecutor {
     private final StreamLine plugin;
@@ -76,22 +78,13 @@ public class GoToServerLobbyCommand extends Command implements TabExecutor {
     @Override
     public Iterable<String> onTabComplete(final CommandSender sender, final String[] args)
     {
-        return ( args.length > 1 ) ? Collections.EMPTY_LIST : Iterables.transform( Iterables.filter( ProxyServer.getInstance().getServers().values(), new Predicate<ServerInfo>()
-        {
-            private final String lower = ( args.length == 0 ) ? "" : args[0].toLowerCase( Locale.ROOT );
+        return ( args.length > 1 ) ? Collections.EMPTY_LIST : StreamSupport.stream(Iterables.filter(ProxyServer.getInstance().getServers().values(), new Predicate<ServerInfo>() {
+            private final String lower = (args.length == 0) ? "" : args[0].toLowerCase(Locale.ROOT);
 
             @Override
-            public boolean apply(ServerInfo input)
-            {
-                return input.getName().toLowerCase( Locale.ROOT ).startsWith( lower ) && input.canAccess( sender );
+            public boolean apply(ServerInfo input) {
+                return input.getName().toLowerCase(Locale.ROOT).startsWith(lower) && input.canAccess(sender);
             }
-        } ), new Function<ServerInfo, String>()
-        {
-            @Override
-            public String apply(ServerInfo input)
-            {
-                return input.getName();
-            }
-        } );
+        }).spliterator(), false).map(input -> input.getName()).collect(Collectors.toList());
     }
 }

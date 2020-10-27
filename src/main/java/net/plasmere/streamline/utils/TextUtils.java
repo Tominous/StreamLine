@@ -6,12 +6,34 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.hover.content.Text;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class TextUtils {
-    public static TextComponent codedText(String text){
+    public static TextComponent codedText(String text) {
         text = ChatColor.translateAlternateColorCodes('&', newLined(text));
 
-        if (text.contains("https://")){
-            return makeLinked(text, text.substring(text.indexOf("https://"), text.substring(text.indexOf(text.indexOf("https://"))).indexOf(" ") + text.indexOf("https://")));
+        try {
+            Pattern pattern = Pattern.compile("\\(?\\bhttp://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]");
+            Matcher matcher = pattern.matcher(text);
+            List<String> tokens = new ArrayList<>();
+
+            while (matcher.find()) {
+                String token = matcher.group(1);
+                tokens.add(token);
+            }
+
+            for (String item : tokens) {
+                if (item.contains("https://") || item.contains("http://") || item.contains("ftp://") || item.contains("sftp://")) {
+                    return makeLinked(text, item);
+                }
+            }
+        } catch (Exception e) {
+            return new TextComponent(text);
         }
         return new TextComponent(text);
     }
@@ -19,11 +41,24 @@ public class TextUtils {
     public static TextComponent clhText(String text, String hoverPrefix){
         text = ChatColor.translateAlternateColorCodes('&', newLined(text));
 
-        if (text.contains("https://")){
-            String substring = text.substring(text.indexOf("https://"), text.substring(text.indexOf(text.indexOf("https://"))).indexOf(" ") + text.indexOf("https://"));
-            TextComponent tc = makeLinked(text, substring);
-            tc = makeHoverable(tc, hoverPrefix + substring);
-            return tc;
+        try {
+            Pattern pattern = Pattern.compile("\\(?\\bhttp://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]");
+            Matcher matcher = pattern.matcher(text);
+            List<String> tokens = new ArrayList<>();
+
+            while (matcher.find()) {
+                String token = matcher.group(1);
+                tokens.add(token);
+            }
+
+            for (String item : tokens) {
+                if (item.contains("https://") || item.contains("http://") || item.contains("ftp://") || item.contains("sftp://")) {
+                    TextComponent tc = makeLinked(text, item);
+                    return makeHoverable(tc, hoverPrefix + item);
+                }
+            }
+        } catch (Exception e) {
+            return new TextComponent(text);
         }
         return new TextComponent(text);
     }

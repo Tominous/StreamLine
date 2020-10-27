@@ -30,7 +30,7 @@ public class StreamCommand extends Command {
                             .replace("%usage%", "/stream <link>")
                     );
                 } else {
-                    if (! args[0].startsWith("https://")){
+                    if (! args[0].startsWith("https://") || ! args[0].startsWith("http://") || ! args[0].startsWith("ftp://") || ! args[0].startsWith("sftp://")) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.streamNotLink);
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeImproperUsage
                                 .replace("%usage%", "/stream <link>")
