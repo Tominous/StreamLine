@@ -92,5 +92,11 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/LuckPerms-Bungee-5.2.16.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

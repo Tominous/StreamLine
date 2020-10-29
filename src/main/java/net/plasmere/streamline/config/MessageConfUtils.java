@@ -30,7 +30,7 @@ public class MessageConfUtils {
     public static final String bungeeImproperUsage = message.getString("improper-usage.bungee");
     // Command needs more args.
     public static final String discordNeedsMore = message.getString("command-needs-args.discord");
-    public static final String bungeeNeedsMore = message.getString("command-needs-args.discord");
+    public static final String bungeeNeedsMore = message.getString("command-needs-args.bungee");
     // Reports.
     public static final String reportEmbedTitle = message.getString("report-message.embed-title");
     public static final String dToDReportMessage = message.getString("report-message.from-discord.discord");

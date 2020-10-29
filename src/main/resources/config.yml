@@ -1,6 +1,12 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
 version: "0.1.5.0"
 
+#### BASICS ####
+# For links in chat. This is so the API can know when there is a link and when not.
+link:
+  prefix: "&b&o&n"
+  suffix: "..."
+
 #### DISCORD BOT ####
 bot:
   # Prefix the bot uses. Default: "."
@@ -98,8 +104,8 @@ commands:
       permission: "streamline.command.ping"
       # All aliases for the command. Listed in yml list format.
       aliases:
-        - "p"
         - "pn"
+        - "png"
     # The plugins command.
     plugins:
       # Enables / disables the use of the "plugins" bungee command.
@@ -142,6 +148,7 @@ commands:
         main:
           - "p"
           - "par"
+          - "part"
         # Join subcommand.
         join:
           - "j"
@@ -342,8 +349,11 @@ modules:
     send-staff-logoff: true
     # Parties...
     parties:
-      # Max size by group... Formatted: <group>: <size>
-      max-size:
-        default: 50
-        yt: 100
-        helper: 150
+      # Maximum size of any party.
+      max-size: 100
+      # Give this plus: "<size>"
+      # where "<size>" is equal to
+      # the max you want them to have,
+      # but less than the "max-size" above.
+      # EXAMPLE: give people "streamline.party.max.10"
+      base-permission: "streamline.party.max."

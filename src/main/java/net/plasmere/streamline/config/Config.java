@@ -113,7 +113,7 @@ public class Config {
         return mess;
     }
 
-    private Configuration iterateConfigs(String old) throws IOException {
+    private static Configuration iterateConfigs(String old) throws IOException {
         File oldfile = new File(inst.getDataFolder(), old);
         if (oldfile.exists()) {
             iterateConfigs("new" + old);
@@ -132,7 +132,7 @@ public class Config {
         return conf;
     }
 
-    private Configuration iterateMessagesConf(String old) throws IOException {
+    private static Configuration iterateMessagesConf(String old) throws IOException {
         File oldfile = new File(inst.getDataFolder(), old);
         if (oldfile.exists()) {
             iterateMessagesConf("new" + old);

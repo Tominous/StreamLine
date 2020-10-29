@@ -177,6 +177,7 @@ party:
   # Fillers:
   # %leader% = party leader.
   # %size% = party size.
+  # %max% = party max size.
   # Text used for when talking about each party level...
   text:
     leader: "LEADER"
@@ -184,10 +185,12 @@ party:
     member: "MEMBER"
   # When it finds no party.
   no-party: "&cNo party found!"
+  # When the the size of /par open <size> is to big.
+  too-big: "&cSorry, but you can't create a party that big."
   # Not high enough party permissions.
   no-permission: "&cYou do not have high enough party permissions to do this!"
   # When creating a party...
-  create: "&aYou have just created a party!"
+  create: "&eYou have just created a party with size of &3%max%&e!"
   # Not in a party...
   not-in-a-party: "&cSorry, but you are not in a party..."
   # Not enough space in party...
@@ -243,7 +246,7 @@ party:
     # %user% = (only in context of "not-last" and "last") the specific member in the list of members
     # %user% = (in everything else ^) the one running the command.
     # Main message used to determine the other of things...
-    main: "&7--< &5Party &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
+    main: "&7--< &5Party &6%size%&8/&6%max% &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
     leaderbulk: "&eParty Leader: &c%user%"
     moderatorbulk:
       main: "&eParty Moderators: %moderators%"
@@ -310,6 +313,6 @@ stream:
   # If what they supplied wasn't a link.
   not-link: "&cSorry, but you need to specify a link beginning with \"https://\"..."
   # Message: (Do not put anything directly after the link. You need a space!
-  message: "&a%user% &dis streaming at &b&o&n%link% &dCome and check it out!"
+  message: "&a%user% &dis streaming at %link% &dCome and check it out!"
   # Hover formatted prefix.
   hover-prefix: "&b&o&n"

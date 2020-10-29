@@ -205,10 +205,11 @@ public class MessagingUtils {
         ).queue();
     }
 
-    public static void sendBPUserMessage(Party party, ProxiedPlayer sender, String msg){
+    public static void sendBPUserMessage(Party party, CommandSender sender, String msg){
         sender.sendMessage(TextUtils.codedText(msg
                 .replace("%leader%", party.leader.getDisplayName())
                 .replace("%size%", Integer.toString(party.getSize()))
+                .replace("%max%", Integer.toString(party.getMaxSize()))
                 .replace("%user%", sender.getName())
         ));
     }

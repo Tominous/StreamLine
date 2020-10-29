@@ -1,5 +1,8 @@
 package net.plasmere.streamline.objects;
 
+import me.lucko.luckperms.common.node.types.Permission;
+import net.luckperms.api.node.NodeType;
+import net.luckperms.api.node.types.PermissionNode;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.luckperms.api.LuckPerms;
@@ -8,6 +11,7 @@ import net.luckperms.api.model.group.Group;
 import net.luckperms.api.query.QueryOptions;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
+import net.plasmere.streamline.utils.MessagingUtils;
 
 import java.util.*;
 
@@ -83,6 +87,8 @@ public class Party {
         return totalMembers.size();
     }
 
+    public int getMaxSize() { return maxSize; }
+
     public void replaceLeader(ProxiedPlayer newLeader){
         setModerator(leader);
         this.leader = newLeader;
@@ -119,33 +125,49 @@ public class Party {
     }
 
     public boolean hasModPerms(ProxiedPlayer member){
-        return isModerator(member) && isLeader(member);
+        return isModerator(member) || isLeader(member);
     }
 
     private int getMaxSize(ProxiedPlayer leader){
-        Collection<Group> groups = Objects.requireNonNull(this.api.getUserManager().getUser(leader.getUniqueId())).getInheritedGroups(QueryOptions.defaultContextualOptions());
-        String mainGroup = Objects.requireNonNull(this.api.getUserManager().getUser(leader.getUniqueId())).getPrimaryGroup();
-        groups.add(this.api.getGroupManager().getGroup(mainGroup));
-        Configuration partyMaxSize = ConfigUtils.partyMaxSize;
+        try {
+            Collection<PermissionNode> perms =
+                    Objects.requireNonNull(api.getGroupManager().getGroup(
+                            Objects.requireNonNull(api.getUserManager().getUser(leader.getName())).getPrimaryGroup()
+                    )).getNodes(NodeType.PERMISSION);
 
-        int highestSize = 1;
-        for (Group group : groups){
-            try {
-                int n = partyMaxSize.getInt(group.getName());
-                if (highestSize < n)
-                    highestSize = n;
-            } catch (Exception e){
-                // Do nothing.
+            for (Group group : Objects.requireNonNull(api.getUserManager().getUser(leader.getName())).getInheritedGroups(QueryOptions.defaultContextualOptions())){
+                perms.addAll(group.getNodes(NodeType.PERMISSION));
             }
+
+            boolean isGood = false;
+
+            int highestSize = 1;
+            for (PermissionNode perm : perms) {
+                try {
+                    String p = perm.getPermission();
+                    for (int i = 1; i <= ConfigUtils.partyMax; i++) {
+                        String pTry = ConfigUtils.partyMaxPerm + i;
+                        if (p.equals(pTry)) {
+                            isGood = true;
+
+                            if (highestSize < i)
+                                highestSize = i;
+                        }
+                    }
+                } catch (Exception e) {
+                    // Do nothing.
+                }
+            }
+
+            if (highestSize == 1)
+                return ConfigUtils.partyMax;
+            else if (isGood)
+                return highestSize;
+            else
+                return ConfigUtils.partyMax;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ConfigUtils.partyMax;
         }
-
-        return highestSize;
-
-//        try {
-//            return partyMaxSize.getInt(mainGroup);
-//        } catch (Exception e){
-//            plugin.getLogger().warning("You don't have " + leader.getName() + "'s group (" + mainGroup + ") in your config under the parties > max-size!");
-//            return partyMaxSize.getInt("default");
-//        }
     }
 }

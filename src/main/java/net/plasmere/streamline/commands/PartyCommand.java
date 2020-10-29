@@ -2,12 +2,19 @@ package net.plasmere.streamline.commands;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.group.Group;
+import net.luckperms.api.node.NodeType;
+import net.luckperms.api.node.types.PermissionNode;
+import net.luckperms.api.query.QueryOptions;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.NoPlayerFoundException;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PartyUtils;
 import net.md_5.bungee.api.CommandSender;
@@ -29,101 +36,231 @@ public class PartyCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (sender instanceof ProxiedPlayer){
+        if (sender instanceof ProxiedPlayer) {
             // Usage: /party <join|leave|create|promote|demote|chat|list|open|close|disband|accept|deny|invite>
-            try {
-                if (args.length <= 0 || args[0].length() <= 0) {
+            if (args.length <= 0 || args[0].length() <= 0) {
+                try {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParJoinAliases)) {
-                    if (args.length <= 1) {
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                    e.printStackTrace();
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParJoinAliases)) {
+                if (args.length <= 1) {
+                    try {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } else {
-                        ProxiedPlayer online = tryOnline(sender, args[1]);
-                        if (online == null) return;
-                        PartyUtils.joinParty((ProxiedPlayer) sender, online);
-                    }
-                } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParLeaveAliases)) {
-                    PartyUtils.leaveParty((ProxiedPlayer) sender);
-                } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParCreateAliases)) {
-                    PartyUtils.createParty(plugin, (ProxiedPlayer) sender);
-                } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParPromoteAliases)) {
-                    if (args.length <= 1) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } else {
-                        ProxiedPlayer online = tryOnline(sender, args[1]);
-                        if (online == null) return;
-                        PartyUtils.promotePlayer(online);
-                    }
-                } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParDemoteAliases)) {
-                    if (args.length <= 1) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } else {
-                        ProxiedPlayer online = tryOnline(sender, args[1]);
-                        if (online == null) return;
-                        PartyUtils.demotePlayer(online);
-                    }
-                } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParChatAliases)) {
-                    if (args.length <= 1) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } else {
-                        PartyUtils.sendChat((ProxiedPlayer) sender, args[1]);
-                    }
-                } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParListAliases)) {
-                    PartyUtils.listParty((ProxiedPlayer) sender);
-                } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParOpenAliases)) {
-                    if (args.length <= 1) {
-                        PartyUtils.openParty((ProxiedPlayer) sender);
-                    } else {
-                        PartyUtils.openPartySized((ProxiedPlayer) sender, Integer.parseInt(args[1]));
-                    }
-                } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParCloseAliases)) {
-                    PartyUtils.closeParty((ProxiedPlayer) sender);
-                } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParDisbandAliases)) {
-                    PartyUtils.disband((ProxiedPlayer) sender);
-                } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParAcceptAliases)) {
-                    if (args.length <= 1) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } else {
-                        ProxiedPlayer online = tryOnline(sender, args[1]);
-                        if (online == null) return;
-                        PartyUtils.acceptInvite((ProxiedPlayer) sender, online);
-                    }
-                } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParDenyAliases)) {
-                    if (args.length <= 1) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } else {
-                        ProxiedPlayer online = tryOnline(sender, args[1]);
-                        if (online == null) return;
-                        PartyUtils.denyInvite((ProxiedPlayer) sender, online);
-                    }
-                } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParInvAliases)) {
-                    if (args.length <= 1) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } else {
-                        ProxiedPlayer online = tryOnline(sender, args[1]);
-                        if (online == null) return;
-                        PartyUtils.sendInvite(online, (ProxiedPlayer) sender);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
                     }
                 } else {
-                    ProxiedPlayer online = tryOnline(sender, args[0]);
+                    try {
+                        ProxiedPlayer online = tryOnline(args[1]);
+                        if (online == null) return;
+                        PartyUtils.joinParty((ProxiedPlayer) sender, online);
+                    } catch (NoPlayerFoundException e){
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParLeaveAliases)) {
+                try {
+                    PartyUtils.leaveParty((ProxiedPlayer) sender);
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                    e.printStackTrace();
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParCreateAliases)) {
+                try {
+                    PartyUtils.createParty(plugin, (ProxiedPlayer) sender);
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                    e.printStackTrace();
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParPromoteAliases)) {
+                if (args.length <= 1) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                } else {
+                    try {
+                        ProxiedPlayer online = tryOnline(args[1]);
+                        if (online == null) return;
+                        PartyUtils.promotePlayer(online);
+                    } catch (NoPlayerFoundException e){
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParDemoteAliases)) {
+                if (args.length <= 1) {
+                    try {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        ProxiedPlayer online = tryOnline(args[1]);
+                        if (online == null) return;
+                        PartyUtils.demotePlayer(online);
+                    } catch (NoPlayerFoundException e){
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParChatAliases)) {
+                if (args.length <= 1) {
+                    try {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        PartyUtils.sendChat((ProxiedPlayer) sender, args[1]);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParListAliases)) {
+                try {
+                    PartyUtils.listParty((ProxiedPlayer) sender);
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                    e.printStackTrace();
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParOpenAliases)) {
+                if (args.length <= 1) {
+                    try {
+                        PartyUtils.openParty((ProxiedPlayer) sender);
+                    }  catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        if (PartyUtils.getParty((ProxiedPlayer) sender) != null) {
+                            PartyUtils.openPartySized((ProxiedPlayer) sender, Integer.parseInt(args[1]));
+                        } else {
+                            PartyUtils.createPartySized(plugin, (ProxiedPlayer) sender, Integer.parseInt(args[1]));
+                        }
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParCloseAliases)) {
+                try {
+                    PartyUtils.closeParty((ProxiedPlayer) sender);
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                    e.printStackTrace();
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParDisbandAliases)) {
+                try {
+                    PartyUtils.disband((ProxiedPlayer) sender);
+                } catch (Throwable e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                    e.printStackTrace();
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParAcceptAliases)) {
+                if (args.length <= 1) {
+                    try {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        ProxiedPlayer online = tryOnline(args[1]);
+                        if (online == null) return;
+                        PartyUtils.acceptInvite((ProxiedPlayer) sender, online);
+                    } catch (NoPlayerFoundException e){
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParDenyAliases)) {
+                if (args.length <= 1) {
+                    try {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        ProxiedPlayer online = tryOnline(args[1]);
+                        if (online == null) return;
+                        PartyUtils.denyInvite((ProxiedPlayer) sender, online);
+                    } catch (NoPlayerFoundException e){
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParInvAliases)) {
+                if (args.length <= 1) {
+                    try {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        ProxiedPlayer online = tryOnline(args[1]);
+                        if (online == null) return;
+                        PartyUtils.sendInvite(online, (ProxiedPlayer) sender);
+                    } catch (NoPlayerFoundException e){
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                try {
+                    ProxiedPlayer online = tryOnline(args[0]);
                     if (online == null) return;
                     PartyUtils.sendInvite(online, (ProxiedPlayer) sender);
+                } catch (NoPlayerFoundException e){
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                    e.printStackTrace();
                 }
-            } catch (Throwable e) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
-                e.printStackTrace();
             }
         } else {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
         }
     }
 
-    public ProxiedPlayer tryOnline(CommandSender sender, String player){
+    public ProxiedPlayer tryOnline(String player) throws NoPlayerFoundException {
         try {
-            return plugin.getProxy().getPlayer(player);
+            for (ProxiedPlayer p : plugin.getProxy().getPlayers()){
+                if (p.getName().equals(player))
+                    return p;
+            }
+            throw new NoPlayerFoundException(player);
+        } catch (NoPlayerFoundException e){
+            throw new NoPlayerFoundException(player);
         } catch (Exception e){
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+            e.printStackTrace();
         }
+
         return null;
     }
 

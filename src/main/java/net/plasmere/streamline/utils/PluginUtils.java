@@ -4,10 +4,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.commands.*;
 import net.plasmere.streamline.commands.servers.GoToServerLobbyCommand;
 import net.plasmere.streamline.commands.servers.GoToServerVanillaCommand;
-import net.plasmere.streamline.commands.staff.GlobalOnlineCommand;
-import net.plasmere.streamline.commands.staff.ReloadCommand;
-import net.plasmere.streamline.commands.staff.StaffChatCommand;
-import net.plasmere.streamline.commands.staff.StaffOnlineCommand;
+import net.plasmere.streamline.commands.staff.*;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.listeners.JoinLeaveListener;
 import net.plasmere.streamline.listeners.StaffChatListener;
@@ -56,6 +53,7 @@ public class PluginUtils {
         Command fabric = new GoToServerVanillaCommand(plugin, ConfigUtils.comBFabricPerm);
 
         Command report = new ReportCommand(plugin, ConfigUtils.comBReportPerm, getAliases(ConfigUtils.comBReportAliases));
+        Command parties = new PartiesCommand(plugin, "streamline.commands.staff.parties", new String[]{"pars", "parts"});
 
         commands.add(stream);
         commands.add(staffChat);
@@ -70,6 +68,7 @@ public class PluginUtils {
         commands.add(fabric);
 
         commands.add(report);
+        commands.add(parties);
 
         try {
             for (Command command : commands) {
@@ -87,6 +86,8 @@ public class PluginUtils {
             registerCommand(plugin, staffChat);
         if (ConfigUtils.comBParty)
             registerCommand(plugin, party);
+        if (true)
+            registerCommand(plugin, parties);
 
         // Utils.
         if (ConfigUtils.comBPing)

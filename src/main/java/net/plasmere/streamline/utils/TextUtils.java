@@ -5,6 +5,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.hover.content.Text;
+import net.plasmere.streamline.config.ConfigUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,8 +19,10 @@ public class TextUtils {
         text = ChatColor.translateAlternateColorCodes('&', newLined(text));
 
         try {
+            String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
+
             Pattern pattern = Pattern.compile("\\(?\\bhttp://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]");
-            Matcher matcher = pattern.matcher(text);
+            Matcher matcher = pattern.matcher(ntext);
             List<String> tokens = new ArrayList<>();
 
             while (matcher.find()) {
@@ -42,8 +45,10 @@ public class TextUtils {
         text = ChatColor.translateAlternateColorCodes('&', newLined(text));
 
         try {
+            String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
+
             Pattern pattern = Pattern.compile("\\(?\\bhttp://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]");
-            Matcher matcher = pattern.matcher(text);
+            Matcher matcher = pattern.matcher(ntext);
             List<String> tokens = new ArrayList<>();
 
             while (matcher.find()) {

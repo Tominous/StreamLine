@@ -4,6 +4,8 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.md_5.bungee.config.Configuration;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ConfigUtils {
@@ -12,6 +14,10 @@ public class ConfigUtils {
 //    public static final String s = config.getString("");
     // Important.
     public static final String version = config.getString("version");
+    // ... Basics.
+    // Links.
+    public static final String linkPre = config.getString("link.prefix");
+    public static final String linkSuff = config.getString("link.suffix");
     // Bot Stuff.
     public static final String botPrefix = config.getString("bot.prefix");
     public static final String botToken = config.getString("bot.token");
@@ -154,5 +160,8 @@ public class ConfigUtils {
     public static final boolean moduleBStaffLogoff = config.getBoolean("modules.bungee.send-staff-logoff");
     // ... Parties.
     // Max size.
-    public static final Configuration partyMaxSize = config.getSection("modules.bungee.parties.max-size");
+    public static final int partyMax = config.getInt("modules.bungee.parties.max-size");
+    public static final String partyMaxPerm = config.getString("modules.bungee.parties.base-permission");
+    //public static final Configuration partyMaxSize = config.getSection("modules.bungee.parties.max-size");
+    //public static final List<Configuration> partyMaxSize = config.get("modules.bungee.parties.max-size", new ArrayList<>());
 }
