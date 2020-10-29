@@ -21,19 +21,14 @@ public class TextUtils {
         try {
             String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
 
-            Pattern pattern = Pattern.compile("\\(?\\bhttp://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]");
+            Pattern pattern = Pattern.compile("(http|ftp|https)://([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(ntext);
-            List<String> tokens = new ArrayList<>();
+            String foundUrl = "";
 
             while (matcher.find()) {
-                String token = matcher.group(1);
-                tokens.add(token);
-            }
+                foundUrl = matcher.group(0);
 
-            for (String item : tokens) {
-                if (item.contains("https://") || item.contains("http://") || item.contains("ftp://") || item.contains("sftp://")) {
-                    return makeLinked(text, item);
-                }
+                return makeLinked(text, foundUrl);
             }
         } catch (Exception e) {
             return new TextComponent(text);
@@ -47,20 +42,15 @@ public class TextUtils {
         try {
             String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
 
-            Pattern pattern = Pattern.compile("\\(?\\bhttp://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]");
+            Pattern pattern = Pattern.compile("(http|ftp|https)://([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(ntext);
-            List<String> tokens = new ArrayList<>();
+            String foundUrl = "";
 
             while (matcher.find()) {
-                String token = matcher.group(1);
-                tokens.add(token);
-            }
+                foundUrl = matcher.group(0);
 
-            for (String item : tokens) {
-                if (item.contains("https://") || item.contains("http://") || item.contains("ftp://") || item.contains("sftp://")) {
-                    TextComponent tc = makeLinked(text, item);
-                    return makeHoverable(tc, hoverPrefix + item);
-                }
+                TextComponent tc = makeLinked(text, foundUrl);
+                return makeHoverable(tc, hoverPrefix + foundUrl);
             }
         } catch (Exception e) {
             return new TextComponent(text);

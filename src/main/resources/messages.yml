@@ -313,6 +313,6 @@ stream:
   # If what they supplied wasn't a link.
   not-link: "&cSorry, but you need to specify a link beginning with \"https://\"..."
   # Message: (Do not put anything directly after the link. You need a space!
-  message: "&a%user% &dis streaming at %link% &dCome and check it out!"
+  message: "&a%user% &dis streaming at &b&o&n%link%... &dCome and check it out!"
   # Hover formatted prefix.
   hover-prefix: "&b&o&n"

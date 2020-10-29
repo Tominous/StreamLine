@@ -320,9 +320,9 @@ modules:
     # "owner" = it will only tell it to the owner of the Discord server. (When they run the command.)
     say-if-command-disabled: "staff"
     # Enables / disables telling the staff chat defined in "reports" (in the discord > text-channels section) (on Discord) when a staff member logs on.
-    send-staff-login: true
+    send-staff-login: false
     # Enables / disables telling the staff chat defined in "reports" (in the discord > text-channels section) (on Discord) when a staff member logs off.
-    send-staff-logoff: true
+    send-staff-logoff: false
   # Bungee commands...
   bungee:
     # Reports...
