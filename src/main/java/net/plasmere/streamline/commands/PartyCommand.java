@@ -125,10 +125,10 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        List<String> nargs = Arrays.asList(args.clone());
+
+                        List<String> nargs = new ArrayList<>(Arrays.asList(args));
 
                         nargs.remove(args[0]);
-                        nargs.remove(args[1]);
 
                         PartyUtils.sendChat((ProxiedPlayer) sender, TextUtils.concat(nargs));
                     } catch (Exception e) {
