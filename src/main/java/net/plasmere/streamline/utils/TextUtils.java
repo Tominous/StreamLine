@@ -104,4 +104,19 @@ public class TextUtils {
 
         return text.toString();
     }
+
+    public static String concat(List<String> splitMsg) {
+        int i = 0;
+        StringBuilder text = new StringBuilder();
+
+        for (String split : splitMsg){
+            i++;
+            if (i < splitMsg.size())
+                text.append(split).append(" ");
+            else
+                text.append(split);
+        }
+
+        return text.toString();
+    }
 }

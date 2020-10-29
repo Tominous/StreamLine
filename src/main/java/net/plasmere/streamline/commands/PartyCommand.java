@@ -20,6 +20,7 @@ import net.plasmere.streamline.utils.PartyUtils;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
+import net.plasmere.streamline.utils.TextUtils;
 import org.apache.commons.collections4.iterators.IteratorChain;
 
 import java.util.*;
@@ -124,7 +125,12 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.sendChat((ProxiedPlayer) sender, args[1]);
+                        List<String> nargs = Arrays.asList(args.clone());
+
+                        nargs.remove(args[0]);
+                        nargs.remove(args[1]);
+
+                        PartyUtils.sendChat((ProxiedPlayer) sender, TextUtils.concat(nargs));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
