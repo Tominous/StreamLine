@@ -132,6 +132,10 @@ public class ConfigUtils {
     // Reload.
     public static final List<String> comBReloadAliases = config.getStringList("commands.bungee.staff.slreload.aliases");
     public static final String comBReloadPerm = config.getString("commands.bungee.staff.slreload.permission");
+    // Parties.
+    public static final boolean comBParties = config.getBoolean("commands.bungee.staff.parties.enabled");
+    public static final List<String> comBPartiesAliases = config.getStringList("commands.bungee.staff.parties.aliases");
+    public static final String comBPartiesPerm = config.getString("commands.bungee.staff.parties.permission");
     // ... ... Modules.
     // ... Discord.
     // Reports.
@@ -168,6 +172,5 @@ public class ConfigUtils {
     // Max size.
     public static final int partyMax = config.getInt("modules.bungee.parties.max-size");
     public static final String partyMaxPerm = config.getString("modules.bungee.parties.base-permission");
-    //public static final Configuration partyMaxSize = config.getSection("modules.bungee.parties.max-size");
-    //public static final List<Configuration> partyMaxSize = config.get("modules.bungee.parties.max-size", new ArrayList<>());
+    public static final boolean partyConsole = config.getBoolean("modules.bungee.parties.chat-to-console");
 }

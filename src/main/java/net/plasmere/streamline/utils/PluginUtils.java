@@ -5,6 +5,7 @@ import net.plasmere.streamline.commands.*;
 import net.plasmere.streamline.commands.servers.GoToServerLobbyCommand;
 import net.plasmere.streamline.commands.servers.GoToServerVanillaCommand;
 import net.plasmere.streamline.commands.staff.*;
+import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.listeners.JoinLeaveListener;
 import net.plasmere.streamline.listeners.StaffChatListener;
@@ -53,7 +54,7 @@ public class PluginUtils {
         Command fabric = new GoToServerVanillaCommand(plugin, ConfigUtils.comBFabricPerm);
 
         Command report = new ReportCommand(plugin, ConfigUtils.comBReportPerm, getAliases(ConfigUtils.comBReportAliases));
-        Command parties = new PartiesCommand(plugin, "streamline.commands.staff.parties", new String[]{"pars", "parts"});
+        Command parties = new PartiesCommand(plugin, ConfigUtils.comBPartiesPerm, getAliases(ConfigUtils.comBPartiesAliases));
 
         commands.add(stream);
         commands.add(staffChat);
@@ -86,7 +87,7 @@ public class PluginUtils {
             registerCommand(plugin, staffChat);
         if (ConfigUtils.comBParty)
             registerCommand(plugin, party);
-        if (true)
+        if (ConfigUtils.comBParties)
             registerCommand(plugin, parties);
 
         // Utils.

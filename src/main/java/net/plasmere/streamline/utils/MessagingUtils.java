@@ -207,10 +207,18 @@ public class MessagingUtils {
 
     public static void sendBPUserMessage(Party party, CommandSender sender, CommandSender to, String msg){
         to.sendMessage(TextUtils.codedText(msg
-                .replace("%leader%", party.leader.getDisplayName())
-                .replace("%size%", Integer.toString(party.getSize()))
-                .replace("%max%", Integer.toString(party.getMaxSize()))
                 .replace("%sender%", ((ProxiedPlayer) sender).getDisplayName())
+                .replace("%leader%", party.leader.getName())
+                .replace("%size%", Integer.toString(party.getSize()))
+                .replace("%max%", Integer.toString(party.maxSize))
+                .replace("%maxmax%", Integer.toString(party.getMaxSize(party.leader)))
+                .replace("%mod_count%", Integer.toString(party.moderators.size()))
+                .replace("%members_count%", Integer.toString(party.members.size()))
+                .replace("%mods%", mods(party))
+                .replace("%members%", members(party))
+                .replace("%invites%", invites(party))
+                .replace("%ispublic%", getIsPublic(party))
+                .replace("%ismuted%", getIsMuted(party))
         ));
     }
 
@@ -254,5 +262,76 @@ public class MessagingUtils {
 
     public static void logSevere(String msg){
         StreamLine.getInstance().getLogger().severe(TextUtils.newLined(msg));
+    }
+
+    public static String mods(Party party){
+        StringBuilder msg = new StringBuilder();
+
+        int i = 1;
+        for (ProxiedPlayer m : party.moderators){
+            if (i < party.moderators.size()){
+                msg.append(MessageConfUtils.partiesModsNLast
+                        .replace("%user%", m.getName())
+                );
+            } else {
+                msg.append(MessageConfUtils.partiesModsLast
+                        .replace("%user%", m.getName())
+                );
+            }
+
+            i++;
+        }
+
+        return msg.toString();
+    }
+
+    public static String members(Party party){
+        StringBuilder msg = new StringBuilder();
+
+        int i = 1;
+        for (ProxiedPlayer m : party.members){
+            if (i < party.members.size()){
+                msg.append(MessageConfUtils.partiesMemsNLast
+                        .replace("%user%", m.getName())
+                );
+            } else {
+                msg.append(MessageConfUtils.partiesMemsLast
+                        .replace("%user%", m.getName())
+                );
+            }
+
+            i++;
+        }
+
+        return msg.toString();
+    }
+
+    public static String invites(Party party){
+        StringBuilder msg = new StringBuilder();
+
+        int i = 1;
+        for (ProxiedPlayer m : party.invites){
+            if (i < party.invites.size()){
+                msg.append(MessageConfUtils.partiesInvsNLast
+                        .replace("%user%", m.getName())
+                );
+            } else {
+                msg.append(MessageConfUtils.partiesInvsLast
+                        .replace("%user%", m.getName())
+                );
+            }
+
+            i++;
+        }
+
+        return msg.toString();
+    }
+
+    public static String getIsPublic(Party party){
+        return party.isPublic ? MessageConfUtils.partiesIsPublicTrue : MessageConfUtils.partiesIsPublicFalse;
+    }
+
+    public static String getIsMuted(Party party){
+        return party.isMuted ? MessageConfUtils.partiesIsMutedTrue : MessageConfUtils.partiesIsMutedFalse;
     }
 }

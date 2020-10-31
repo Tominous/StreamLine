@@ -293,6 +293,17 @@ commands:
           - "slr"
           - "stre"
           - "slrel"
+      # The parties command.
+      parties:
+        # Enables / disables the use of the "parties" bungee command.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.parties"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "parts"
+          - "pars"
+          - "ps"
 
 ### MODULE SETTINGS ###
 modules:
@@ -372,3 +383,5 @@ modules:
       # but less than the "max-size" above.
       # EXAMPLE: give people "streamline.party.max.10"
       base-permission: "streamline.party.max."
+      # Whether or not party chat should be able to be seen on console.
+      chat-to-console: true

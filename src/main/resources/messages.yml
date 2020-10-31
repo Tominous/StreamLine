@@ -239,7 +239,10 @@ party:
   # %message% = Message user said being sent.
   chat:
     message: "&aPARTY &9&l>> &b%sender% &8: &f%message%"
+    # If the party is muted.
     muted: "&cSorry, but the party is muted!"
+    # Message in console when people chat in parties.
+    console: "&b%leader%&d's PARTY &9>> &b%sender% &8: &a%message%"
   # Message when some lists the party...
   list:
     # Fillers:
@@ -345,3 +348,37 @@ stream:
   message: "&a%user% &dis streaming at &b&o&n%link%... &dCome and check it out!"
   # Hover formatted prefix.
   hover-prefix: "&b&o&n"
+
+# Messages for the parties command:
+parties:
+  no-parties: "&cNo parties..."
+  # Fillers:
+  # %sender% = person sending the command.
+  # %leader% = party leader.
+  # %size% = current size of party.
+  # %max% = max party size. --> set by leader.
+  # %maxmax% = absolute max party size. --> set by permissions.
+  # %mods_count% = amount of mods in party.
+  # %members_count% = amount of members in the party.
+  # %invites_count% = amount of invites in the party.
+  # %mods% = a list of mods.
+  # %members% = a list of mods.
+  # %invites% = a list of invited players.
+  # %ispublic% = true if open, false if not.
+  # %ismuted% = true if muted, false if not.
+  parties: "&5PARTY &9>> &eleader&8(&b%leader%&8)&e, size&8(&3%size%&8)&e, partyMax&8(&3%max%&8)&e, permMax&8(&3%maxmax%&8)&e, mods&8(&3%mods_count% &4--> %mods%&8)&e, members&8(&3%members_count% &4--> %members%&8)&e, invites&8(&3%invites_count% &4--> %invites%&8)&e, public&8(%ispublic%&8)&e, muted&8(%ismuted%&8)&e."
+  mods:
+    not-last: "&d%user%&e, "
+    last: "&d%user%"
+  members:
+    not-last: "&d%user%&e, "
+    last: "&d%user%"
+  invites:
+    not-last: "&d%user%&e, "
+    last: "&d%user%"
+  ispublic:
+    true: "&aTRUE"
+    false: "&cFALSE"
+  ismuted:
+    true: "&aTRUE"
+    false: "&cFALSE"

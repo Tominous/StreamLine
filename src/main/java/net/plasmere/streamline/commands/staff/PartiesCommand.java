@@ -4,7 +4,9 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
+import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Party;
 import net.plasmere.streamline.utils.MessagingUtils;
@@ -22,11 +24,11 @@ public class PartiesCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (PartyUtils.getParties().size() <= 0) {
-            sender.sendMessage(new TextComponent("No parties..."));
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.partiesNone);
             return;
         }
         for (Party party : PartyUtils.getParties()){
-            sender.sendMessage(new TextComponent("PARTY: leader(" + party.leader + "), size(" + party.getSize() + ")"));
+            MessagingUtils.sendBPUserMessage(party, sender, sender, MessageConfUtils.partiesMessage);
         }
     }
 }

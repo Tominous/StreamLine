@@ -163,7 +163,7 @@ public class Party {
         return isModerator(member) || isLeader(member);
     }
 
-    private int getMaxSize(ProxiedPlayer leader){
+    public int getMaxSize(ProxiedPlayer leader){
         try {
             Collection<PermissionNode> perms =
                     Objects.requireNonNull(api.getGroupManager().getGroup(

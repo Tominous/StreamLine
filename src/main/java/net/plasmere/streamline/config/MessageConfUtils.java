@@ -73,4 +73,17 @@ public class MessageConfUtils {
     public static final String streamNotLink = message.getString("stream.not-link");
     public static final String streamMessage = message.getString("stream.message");
     public static final String streamHoverPrefix = message.getString("stream.hover-prefix");
+    // Parties.
+    public static final String partiesNone = message.getString("parties.no-parties");
+    public static final String partiesMessage = message.getString("parties.parties");
+    public static final String partiesModsNLast = message.getString("parties.mods.not-last");
+    public static final String partiesModsLast = message.getString("parties.mods.last");
+    public static final String partiesMemsNLast = message.getString("parties.members.not-last");
+    public static final String partiesMemsLast = message.getString("parties.members.last");
+    public static final String partiesInvsNLast = message.getString("parties.invites.not-last");
+    public static final String partiesInvsLast = message.getString("parties.invites.last");
+    public static final String partiesIsPublicTrue = message.getString("parties.ispublic.true");
+    public static final String partiesIsPublicFalse = message.getString("parties.ispublic.false");
+    public static final String partiesIsMutedTrue = message.getString("parties.ismuted.true");
+    public static final String partiesIsMutedFalse = message.getString("parties.ismuted.false");
 }

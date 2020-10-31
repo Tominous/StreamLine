@@ -260,24 +260,23 @@ public class PartyUtils {
         if (party.isMuted) {
             for (ProxiedPlayer m : party.totalMembers) {
                 if (m.equals(sender)){
-                    MessagingUtils.sendBPUserMessage(party, sender, m, muteUser);
-                } else {
-                    MessagingUtils.sendBPUserMessage(party, sender, m, muteMembers);
-                }
-            }
-
-            party.toggleMute();
-        } else {
-            for (ProxiedPlayer m : party.totalMembers) {
-                if (m.equals(sender)){
                     MessagingUtils.sendBPUserMessage(party, sender, m, unmuteUser);
                 } else {
                     MessagingUtils.sendBPUserMessage(party, sender, m, unmuteMembers);
                 }
             }
 
-            party.toggleMute();
+        } else {
+            for (ProxiedPlayer m : party.totalMembers) {
+                if (m.equals(sender)){
+                    MessagingUtils.sendBPUserMessage(party, sender, m, muteUser);
+                } else {
+                    MessagingUtils.sendBPUserMessage(party, sender, m, muteMembers);
+                }
+            }
+
         }
+        party.toggleMute();
 
         reloadParty(party);
     }
@@ -917,6 +916,13 @@ public class PartyUtils {
                 return;
             }
 
+            if (ConfigUtils.partyConsole) {
+                MessagingUtils.sendBPUserMessage(party, sender, StreamLine.getInstance().getProxy().getConsole(), chat
+                        .replace("%sender%", sender.getDisplayName())
+                        .replace("%message%", msg)
+                );
+            }
+
             for (ProxiedPlayer member : party.totalMembers) {
                 MessagingUtils.sendBPUserMessage(party, sender, member, chat
                         .replace("%sender%", sender.getDisplayName())
@@ -948,6 +954,7 @@ public class PartyUtils {
     // Chat.
     public static final String chat = message.getString("party.chat.message");
     public static final String chatMuted = message.getString("party.chat.muted");
+    public static final String chatConsole = message.getString("party.chat.console");
     // Create.
     public static final String create = message.getString("party.create");
     // Join.
