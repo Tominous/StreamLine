@@ -100,6 +100,12 @@ public class ConfigUtils {
     public static final List<String> comBParDenyAliases = config.getStringList("commands.bungee.party.aliases.deny");
     // Invite.
     public static final List<String> comBParInvAliases = config.getStringList("commands.bungee.party.aliases.invite");
+    // Kick.
+    public static final List<String> comBParKickAliases = config.getStringList("commands.bungee.party.aliases.kick");
+    // Mute.
+    public static final List<String> comBParMuteAliases = config.getStringList("commands.bungee.party.aliases.mute");
+    // Warp.
+    public static final List<String> comBParWarpAliases = config.getStringList("commands.bungee.party.aliases.warp");
     // ... Servers.
     // Lobby.
     public static final boolean comBLobby = config.getBoolean("commands.bungee.servers.lobby.enabled");

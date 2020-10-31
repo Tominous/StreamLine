@@ -23,17 +23,6 @@ public class PartiesCommand extends Command {
     public void execute(CommandSender sender, String[] args) {
         if (PartyUtils.getParties().size() <= 0) {
             sender.sendMessage(new TextComponent("No parties..."));
-
-            try {
-                Party party = new Party(plugin, (ProxiedPlayer) sender);
-                PartyUtils.addParty(party);
-
-                sender.sendMessage(new TextComponent(sender.getName() + " just made a party!"));
-                MessagingUtils.sendBPUserMessage(party, (ProxiedPlayer) sender, PartyUtils.create);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
             return;
         }
         for (Party party : PartyUtils.getParties()){

@@ -38,7 +38,7 @@ public class PartyCommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof ProxiedPlayer) {
-            // Usage: /party <join|leave|create|promote|demote|chat|list|open|close|disband|accept|deny|invite>
+            // Usage: /party <join|leave|create|promote|demote|chat|list|open|close|disband|accept|deny|invite|kick|mute|warp>
             if (args.length <= 0 || args[0].length() <= 0) {
                 try {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
@@ -87,7 +87,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     try {
                         ProxiedPlayer online = tryOnline(args[1]);
                         if (online == null) return;
-                        PartyUtils.promotePlayer(online);
+                        PartyUtils.promotePlayer((ProxiedPlayer) sender, online);
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -107,7 +107,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     try {
                         ProxiedPlayer online = tryOnline(args[1]);
                         if (online == null) return;
-                        PartyUtils.demotePlayer(online);
+                        PartyUtils.demotePlayer((ProxiedPlayer) sender, online);
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -237,6 +237,40 @@ public class PartyCommand extends Command implements TabExecutor {
                         e.printStackTrace();
                     }
                 }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParKickAliases)) {
+                if (args.length <= 1) {
+                    try {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        ProxiedPlayer online = tryOnline(args[1]);
+                        if (online == null) return;
+                        PartyUtils.kickMember((ProxiedPlayer) sender, online);
+                    } catch (NoPlayerFoundException e){
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParMuteAliases)) {
+                try {
+                    PartyUtils.muteParty((ProxiedPlayer) sender);
+                } catch (Throwable e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                    e.printStackTrace();
+                }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParWarpAliases)) {
+                try {
+                    PartyUtils.warpParty((ProxiedPlayer) sender);
+                } catch (Throwable e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                    e.printStackTrace();
+                }
             } else {
                 try {
                     ProxiedPlayer online = tryOnline(args[0]);
@@ -270,7 +304,7 @@ public class PartyCommand extends Command implements TabExecutor {
         return null;
     }
 
-    // Usage: /party <join|leave|create|promote|demote|chat|list|open|close|disband|accept|deny|invite>
+    // Usage: /party <join|leave|create|promote|demote|chat|list|open|close|disband|accept|deny|invite|kick|mute|warp>
     @Override
     public Iterable<String> onTabComplete(final CommandSender sender, final String[] args)
     {
@@ -329,6 +363,12 @@ public class PartyCommand extends Command implements TabExecutor {
                 return strPlayers;
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParInvAliases)) {
                 return strPlayers;
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParKickAliases)) {
+                return strPlayers;
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParMuteAliases)) {
+                return new ArrayList<>();
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParWarpAliases)) {
+                return new ArrayList<>();
             } else {
                 return strPlayers;
             }

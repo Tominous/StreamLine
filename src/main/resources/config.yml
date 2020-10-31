@@ -213,6 +213,21 @@ commands:
           - "inv"
           - "add"
           - "invite"
+        # Kick subcommand.
+        kick:
+          - "k"
+          - "-"
+          - "kick"
+        # Mute subcommand.
+        mute:
+          - "mu"
+          - "mut"
+          - "mute"
+        # Warp subcommand.
+        warp:
+          - "wa"
+          - "summon"
+          - "warp"
     # Server commands...
     servers:
       # The lobby command.

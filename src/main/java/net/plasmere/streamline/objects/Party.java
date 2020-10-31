@@ -23,6 +23,7 @@ public class Party {
     public List<ProxiedPlayer> moderators = new ArrayList<>();
     public String name;
     public boolean isPublic = false;
+    public boolean isMuted = false;
     // to , from
     public List<ProxiedPlayer> invites = new ArrayList<>();
 
@@ -48,6 +49,10 @@ public class Party {
         this.totalMembers.add(leader);
         this.maxSize = Math.min(size, getMaxSize(leader));
         this.isPublic = true;
+    }
+
+    public void toggleMute() {
+        isMuted = ! isMuted;
     }
 
     public void dispose() throws Throwable {
@@ -91,25 +96,55 @@ public class Party {
 
     public void replaceLeader(ProxiedPlayer newLeader){
         setModerator(leader);
+
+        removeMember(newLeader);
+        removeMod(newLeader);
+
         this.leader = newLeader;
     }
 
+    public void removeMod(ProxiedPlayer mod){
+        forModeratorRemove(mod);
+    }
+
+    public void removeMember(ProxiedPlayer member){
+        forMemberRemove(member);
+    }
+
     public void setModerator(ProxiedPlayer mod){
+        forModeratorRemove(mod);
         this.moderators.add(mod);
         this.members.remove(mod);
     }
 
     public void setMember(ProxiedPlayer member){
+        forMemberRemove(member);
         this.members.add(member);
         this.moderators.remove(member);
     }
 
     public void addMember(ProxiedPlayer member){
+        removeMemberFromParty(member);
+        this.members.add(member);
         this.totalMembers.add(member);
     }
 
-    public void removeMember(ProxiedPlayer member){
-        this.totalMembers.remove(member);
+    public void removeMemberFromParty(ProxiedPlayer member){
+        forMemberRemove(member);
+        forModeratorRemove(member);
+        forTotalMembers(member);
+    }
+
+    public void forMemberRemove(ProxiedPlayer member){
+        this.members.removeIf(m -> m.equals(member));
+    }
+
+    public void forModeratorRemove(ProxiedPlayer mod){
+        this.moderators.removeIf(m -> m.equals(mod));
+    }
+
+    public void forTotalMembers(ProxiedPlayer member){
+        this.totalMembers.removeIf(m -> m.equals(member));
     }
 
     public boolean hasMember(ProxiedPlayer member){

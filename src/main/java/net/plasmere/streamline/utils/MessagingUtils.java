@@ -205,17 +205,19 @@ public class MessagingUtils {
         ).queue();
     }
 
-    public static void sendBPUserMessage(Party party, CommandSender sender, String msg){
-        sender.sendMessage(TextUtils.codedText(msg
+    public static void sendBPUserMessage(Party party, CommandSender sender, CommandSender to, String msg){
+        to.sendMessage(TextUtils.codedText(msg
                 .replace("%leader%", party.leader.getDisplayName())
                 .replace("%size%", Integer.toString(party.getSize()))
                 .replace("%max%", Integer.toString(party.getMaxSize()))
-                .replace("%user%", sender.getName())
+                .replace("%sender%", ((ProxiedPlayer) sender).getDisplayName())
         ));
     }
 
     public static void sendBUserMessage(CommandSender sender, String msg){
-        sender.sendMessage(TextUtils.codedText(msg));
+        sender.sendMessage(TextUtils.codedText(msg
+                .replace("%sender%", ((ProxiedPlayer) sender).getDisplayName())
+        ));
     }
 
     public static void sendBBroadcast(CommandSender sender, String msg){

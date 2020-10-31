@@ -178,6 +178,7 @@ party:
   # %leader% = party leader.
   # %size% = party size.
   # %max% = party max size.
+  # %sender% = command sender.
   # Text used for when talking about each party level...
   text:
     leader: "LEADER"
@@ -234,9 +235,11 @@ party:
     is-leader: "&cCannot demote yourself..."
   # Message when someone chats...
   # Fillers:
-  # %user% = Messager.
+  # %sender% = Messager.
   # %message% = Message user said being sent.
-  chat: "&aPARTY &9&l>> &b%user% &8: &f%message%"
+  chat:
+    message: "&aPARTY &9&l>> &b%sender% &8: &f%message%"
+    muted: "&cSorry, but the party is muted!"
   # Message when some lists the party...
   list:
     # Fillers:
@@ -247,24 +250,26 @@ party:
     # %user% = (in everything else ^) the one running the command.
     # Main message used to determine the other of things...
     main: "&7--< &5Party &6%size%&8/&6%max% &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
-    leaderbulk: "&eParty Leader: &c%user%"
+    leaderbulk: "&eParty Leader: &c%leader%"
     moderatorbulk:
       main: "&eParty Moderators: %moderators%"
       moderators:
         not-last: "&b%user%&e, "
         last: "&b%user%&e."
+        if-none: "&cNONE"
     memberbulk:
       main: "&eParty Members: %members%"
       members:
         not-last: "&7%user%&e, "
         last: "&7%user%&e."
+        if-none: "&cNONE"
   # Message for opening the party...
   open:
     # Fillers:
     # %leader% = the party leader.
     # %size% = the new size of the party.
-    members: "&b%leader% &ejust opened the party to a size of &e%size%&e."
-    leader: "&eYou just opened the party to a size of &3%size%&e."
+    members: "&b%leader% &ejust opened the party to a size of &e%max%&e."
+    leader: "&eYou just opened the party to a size of &3%max%&e."
     failure: "&cAlready open."
   # Message for closing the party...
   close:
@@ -286,7 +291,8 @@ party:
     # %user% = the accepter.
     # %leader% = the party leader.
     user: "Accepted &b%leader%&e's request."
-    leader: "&b%user% &ejust accepted your invite!"
+    leader: "&b%user% &ejust &aaccepted &eyour invite!"
+    members: "&b%user% &ejust &aaccepted &ethe invite!"
     failure: "&cNo invites!"
   # Message for denying an invite to a party...
   deny:
@@ -294,17 +300,40 @@ party:
     # %user% = the accepter.
     # %leader% = the party leader.
     user: "Denied &b%leader%&e's request."
-    leader: "&b%user% &ejust denied your invite!"
+    leader: "&b%user% &ejust &cdenied &eyour invite!"
+    members: "&b%user% &ejust &cdenied &ethe invite!"
     failure: "&cNo invites!"
   # Message for sending an invite of a party...
   invite:
     # Fillers:
+    # %sender% = person sending the request.
     # %user% = the accepter.
     # %leader% = the party leader.
     # %leaderdefault% = the party leader formatted without their display name.
-    user: "&b%leader% &einvited you to their party!%newline%&eType &a/party join %leaderdefault% &eto join!"
+    user: "&b%sender% &einvited you to &b%leader%&e's party!%newline%&eType &a/party accept %leaderdefault% &eto join!"
+    members: "&b%sender% &einvited &b%user% &eto your party!"
     leader: "&eJust invited &b%user% &eto your party!"
     failure: "&cAlready invited this person."
+  kick:
+    # Fillers:
+    # %user% = the person being kicked.
+    user: "&b%leader% &ekicked you from their party."
+    members: "&b%user% &ewas kicked by &b%leader% &e from the party."
+    sender: "&eYou kicked &b%user% &efrom your party."
+    failure: "&cThis player is not in the party."
+    self: "&cCannot kick self."
+  mute:
+    # Fillers:
+    # %sender% = person sending the command.
+    mute:
+      user: "&eYou just &cmuted &ethe party."
+      members: "&b%sender% &ejust &cmuted &ethe party."
+    unmute:
+      user: "&eYou just &aunmuted &ethe party."
+      members: "&b%sender% &ejust &aunmuted &ethe party."
+  warp:
+    leader: "&eYou warped your party of &3%size% &eto your server!"
+    members: "&b%leader% &ewarped you to their server!"
 
 # Messages for the stream command:
 stream:
