@@ -9,6 +9,7 @@ import net.luckperms.api.query.QueryOptions;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Party;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
@@ -93,6 +94,11 @@ public class PartyUtils {
                 return;
             }
 
+            if (! party.hasMember(from)) {
+                MessagingUtils.sendBUserMessage(from, notInParty);
+                return;
+            }
+
             if (! party.hasModPerms(from)) {
                 MessagingUtils.sendBUserMessage(from, noPermission);
                 return;
@@ -147,6 +153,11 @@ public class PartyUtils {
                 return;
             }
 
+            if (! party.hasMember(from)) {
+                MessagingUtils.sendBUserMessage(accepter, otherNotInParty);
+                return;
+            }
+
             if (party.invites.contains(accepter)) {
                 if (party.getSize() >= party.maxSize) {
                     MessagingUtils.sendBPUserMessage(party, accepter, accepter, notEnoughSpace);
@@ -191,6 +202,11 @@ public class PartyUtils {
                 return;
             }
 
+            if (! party.hasMember(from)) {
+                MessagingUtils.sendBUserMessage(denier, otherNotInParty);
+                return;
+            }
+
             party.removeInvite(denier);
 
             MessagingUtils.sendBPUserMessage(party, denier, denier, denyUser
@@ -226,6 +242,11 @@ public class PartyUtils {
             return;
         }
 
+        if (! party.hasMember(sender)) {
+            MessagingUtils.sendBUserMessage(sender, notInParty);
+            return;
+        }
+
         if (! party.leader.equals(sender)) {
             MessagingUtils.sendBPUserMessage(party, sender, sender, noPermission);
             return;
@@ -249,6 +270,11 @@ public class PartyUtils {
 
         if (!isParty(party) || party == null) {
             MessagingUtils.sendBUserMessage(sender, noPartyFound);
+            return;
+        }
+
+        if (! party.hasMember(sender)) {
+            MessagingUtils.sendBUserMessage(sender, notInParty);
             return;
         }
 
@@ -289,10 +315,14 @@ public class PartyUtils {
             return;
         }
 
+        if (! party.hasMember(sender)) {
+            MessagingUtils.sendBUserMessage(sender, notInParty);
+            return;
+        }
+
         if (! party.hasMember(player)) {
-            MessagingUtils.sendBPUserMessage(party, sender, sender, kickFailure
-                    .replace("%user%", player.getDisplayName())
-            );
+            MessagingUtils.sendBUserMessage(sender, otherNotInParty);
+            return;
         }
 
         if (! party.hasModPerms(sender)) {
@@ -335,6 +365,11 @@ public class PartyUtils {
                 return;
             }
 
+            if (! party.hasMember(sender)) {
+                MessagingUtils.sendBUserMessage(sender, notInParty);
+                return;
+            }
+
             if (!party.hasModPerms(sender)) {
                 MessagingUtils.sendBUserMessage(sender, noPermission);
                 return;
@@ -367,6 +402,11 @@ public class PartyUtils {
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(sender, noPartyFound);
+                return;
+            }
+
+            if (! party.hasMember(sender)) {
+                MessagingUtils.sendBUserMessage(sender, notInParty);
                 return;
             }
 
@@ -410,6 +450,11 @@ public class PartyUtils {
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(sender, noPartyFound);
+                return;
+            }
+
+            if (! party.hasMember(sender)) {
+                MessagingUtils.sendBUserMessage(sender, notInParty);
                 return;
             }
 
@@ -457,6 +502,11 @@ public class PartyUtils {
                 return;
             }
 
+            if (! party.hasMember(sender)) {
+                MessagingUtils.sendBUserMessage(sender, notInParty);
+                return;
+            }
+
             if (!party.hasModPerms(sender)) {
                 MessagingUtils.sendBUserMessage(sender, noPermission);
                 return;
@@ -497,6 +547,11 @@ public class PartyUtils {
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(sender, noPartyFound);
+                return;
+            }
+
+            if (! party.hasMember(sender)) {
+                MessagingUtils.sendBUserMessage(sender, notInParty);
                 return;
             }
 
@@ -605,6 +660,16 @@ public class PartyUtils {
                 return;
             }
 
+            if (! party.hasMember(sender)) {
+                MessagingUtils.sendBUserMessage(sender, notInParty);
+                return;
+            }
+
+            if (! party.hasMember(member)) {
+                MessagingUtils.sendBUserMessage(sender, otherNotInParty);
+                return;
+            }
+
             if (!party.hasModPerms(sender)) {
                 MessagingUtils.sendBUserMessage(sender, noPermission);
                 return;
@@ -707,6 +772,16 @@ public class PartyUtils {
                 return;
             }
 
+            if (! party.hasMember(sender)) {
+                MessagingUtils.sendBUserMessage(sender, notInParty);
+                return;
+            }
+
+            if (! party.hasMember(member)) {
+                MessagingUtils.sendBUserMessage(sender, otherNotInParty);
+                return;
+            }
+
             if (!party.hasModPerms(sender)) {
                 MessagingUtils.sendBUserMessage(sender, noPermission);
                 return;
@@ -767,6 +842,11 @@ public class PartyUtils {
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(sender, noPartyFound);
+                return;
+            }
+
+            if (! party.hasMember(from)) {
+                MessagingUtils.sendBUserMessage(sender, otherNotInParty);
                 return;
             }
 
@@ -853,6 +933,11 @@ public class PartyUtils {
                 return;
             }
 
+            if (! party.hasMember(sender)) {
+                MessagingUtils.sendBUserMessage(sender, notInParty);
+                return;
+            }
+
             if (party.leader.equals(sender)) {
                 for (ProxiedPlayer m : party.totalMembers) {
                     MessagingUtils.sendBPUserMessage(party, sender, m, disbandLeader);
@@ -908,7 +993,12 @@ public class PartyUtils {
                 return;
             }
 
-            if (party.isMuted) {
+            if (! party.hasMember(sender)) {
+                MessagingUtils.sendBUserMessage(sender, notInParty);
+                return;
+            }
+
+            if (party.isMuted && ! party.hasModPerms(sender)) {
                 MessagingUtils.sendBPUserMessage(party, sender, sender, chatMuted
                         .replace("%sender%", sender.getDisplayName())
                         .replace("%message%", msg)
@@ -917,7 +1007,7 @@ public class PartyUtils {
             }
 
             if (ConfigUtils.partyConsole) {
-                MessagingUtils.sendBPUserMessage(party, sender, StreamLine.getInstance().getProxy().getConsole(), chat
+                MessagingUtils.sendBPUserMessage(party, sender, StreamLine.getInstance().getProxy().getConsole(), chatConsole
                         .replace("%sender%", sender.getDisplayName())
                         .replace("%message%", msg)
                 );
@@ -949,6 +1039,7 @@ public class PartyUtils {
     public static final String noPermission = message.getString("party.no-permission");
     // Not in a party.
     public static final String notInParty = message.getString("party.not-in-a-party");
+    public static final String otherNotInParty = message.getString("party.other-not-in-party");
     // Not enough space in party.
     public static final String notEnoughSpace = message.getString("party.not-enough-space");
     // Chat.

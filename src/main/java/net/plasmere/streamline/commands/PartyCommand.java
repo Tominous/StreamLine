@@ -125,7 +125,6 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-
                         List<String> nargs = new ArrayList<>(Arrays.asList(args));
 
                         nargs.remove(args[0]);

@@ -212,8 +212,9 @@ public class MessagingUtils {
                 .replace("%size%", Integer.toString(party.getSize()))
                 .replace("%max%", Integer.toString(party.maxSize))
                 .replace("%maxmax%", Integer.toString(party.getMaxSize(party.leader)))
-                .replace("%mod_count%", Integer.toString(party.moderators.size()))
+                .replace("%mods_count%", Integer.toString(party.moderators.size()))
                 .replace("%members_count%", Integer.toString(party.members.size()))
+                .replace("%invites_count%", Integer.toString(party.invites.size()))
                 .replace("%mods%", mods(party))
                 .replace("%members%", members(party))
                 .replace("%invites%", invites(party))
@@ -223,9 +224,15 @@ public class MessagingUtils {
     }
 
     public static void sendBUserMessage(CommandSender sender, String msg){
-        sender.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", ((ProxiedPlayer) sender).getDisplayName())
-        ));
+        if (sender instanceof ProxiedPlayer) {
+            sender.sendMessage(TextUtils.codedText(msg
+                    .replace("%sender%", ((ProxiedPlayer) sender).getDisplayName())
+            ));
+        } else {
+            sender.sendMessage(TextUtils.codedText(msg
+                    .replace("%sender%", sender.getName())
+            ));
+        }
     }
 
     public static void sendBBroadcast(CommandSender sender, String msg){

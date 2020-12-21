@@ -55,6 +55,7 @@ public class PluginUtils {
 
         Command report = new ReportCommand(plugin, ConfigUtils.comBReportPerm, getAliases(ConfigUtils.comBReportAliases));
         Command parties = new PartiesCommand(plugin, ConfigUtils.comBPartiesPerm, getAliases(ConfigUtils.comBPartiesAliases));
+        Command bsudo = new SudoCommand(plugin, ConfigUtils.comBSudoPerm, getAliases(ConfigUtils.comBSudoAliases));
 
         commands.add(stream);
         commands.add(staffChat);
@@ -70,6 +71,7 @@ public class PluginUtils {
 
         commands.add(report);
         commands.add(parties);
+        commands.add(bsudo);
 
         try {
             for (Command command : commands) {
@@ -89,6 +91,8 @@ public class PluginUtils {
             registerCommand(plugin, party);
         if (ConfigUtils.comBParties)
             registerCommand(plugin, parties);
+        if (ConfigUtils.comBSudo)
+            registerCommand(plugin, bsudo);
 
         // Utils.
         if (ConfigUtils.comBPing)

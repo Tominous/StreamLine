@@ -153,8 +153,8 @@ staffonline:
         # %player% = a said player in a luckperm group.
         # %server% = the server said player is currently on.
         # If not the last player in group.
-        if-not-last: "%player% (&e%server%&0), "
-        if-last: "%player% (&e%server%&0)."
+        if-not-last: "%player% (%server%), "
+        if-last: "%player% (%server%)."
     # Message on bungee.
     bungee:
       # Message to be sent to staff chat (on bungee) when a staff comes online on the bungee server.
@@ -194,6 +194,7 @@ party:
   create: "&eYou have just created a party with size of &3%max%&e!"
   # Not in a party...
   not-in-a-party: "&cSorry, but you are not in a party..."
+  other-not-in-party: "&cSorry, but they are not in the party..."
   # Not enough space in party...
   not-enough-space: "&cSorry, but the party is full!"
   # Message for when someone joins a party...
@@ -382,3 +383,11 @@ parties:
   ismuted:
     true: "&aTRUE"
     false: "&cFALSE"
+
+# For command "sudo":
+sudo:
+  # Fillers:
+  # %user% = the user being sudo-ed.
+  worked: "&eJust sudoed &d%user%&e."
+  no-work: "&cFailed to sudo &d%user%&c."
+  no-sudo: "&cSorry, but you cannot sudo &d%user%&c..."

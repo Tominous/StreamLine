@@ -136,6 +136,10 @@ public class ConfigUtils {
     public static final boolean comBParties = config.getBoolean("commands.bungee.staff.parties.enabled");
     public static final List<String> comBPartiesAliases = config.getStringList("commands.bungee.staff.parties.aliases");
     public static final String comBPartiesPerm = config.getString("commands.bungee.staff.parties.permission");
+    // BSudo.
+    public static final boolean comBSudo = config.getBoolean("commands.bungee.staff.bsudo.enabled");
+    public static final List<String> comBSudoAliases = config.getStringList("commands.bungee.staff.bsudo.aliases");
+    public static final String comBSudoPerm = config.getString("commands.bungee.staff.bsudo.permission");
     // ... ... Modules.
     // ... Discord.
     // Reports.
@@ -173,4 +177,6 @@ public class ConfigUtils {
     public static final int partyMax = config.getInt("modules.bungee.parties.max-size");
     public static final String partyMaxPerm = config.getString("modules.bungee.parties.base-permission");
     public static final boolean partyConsole = config.getBoolean("modules.bungee.parties.chat-to-console");
+    // Sudo.
+    public static final String noSudoPerm = config.getString("modules.bungee.sudo.no-sudo-permission");
 }

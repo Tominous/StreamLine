@@ -86,4 +86,8 @@ public class MessageConfUtils {
     public static final String partiesIsPublicFalse = message.getString("parties.ispublic.false");
     public static final String partiesIsMutedTrue = message.getString("parties.ismuted.true");
     public static final String partiesIsMutedFalse = message.getString("parties.ismuted.false");
+    // Sudo.
+    public static final String sudoWorked = message.getString("sudo.worked");
+    public static final String sudoNoWork = message.getString("sudo.no-work");
+    public static final String sudoNoSudo = message.getString("sudo.no-sudo");
 }

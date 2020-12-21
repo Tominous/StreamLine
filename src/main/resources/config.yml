@@ -304,6 +304,16 @@ commands:
           - "parts"
           - "pars"
           - "ps"
+      bsudo:
+        # Enables / disables the use of the "parties" bungee command.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.bsudo"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "bs"
+          - "bsu"
+          - "psuedo"
 
 ### MODULE SETTINGS ###
 modules:
@@ -385,3 +395,6 @@ modules:
       base-permission: "streamline.party.max."
       # Whether or not party chat should be able to be seen on console.
       chat-to-console: true
+    # Sudoing...
+    sudo:
+      no-sudo-permission: "streamline.sudo.nosudo"
