@@ -6,6 +6,8 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.BungeeMassMessage;
 import net.plasmere.streamline.objects.DiscordMessage;
+import net.plasmere.streamline.objects.Guild;
+import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
@@ -24,8 +26,15 @@ public class JoinLeaveListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onJoin(PostLoginEvent e) {
-        ProxiedPlayer player = e.getPlayer();
+    public void onJoin(PostLoginEvent ev) {
+        ProxiedPlayer player = ev.getPlayer();
+
+        try {
+            GuildUtils.addGuild(new Guild(player.getUniqueId()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         switch (ConfigUtils.moduleBPlayerJoins) {
             case "yes":
                 MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),

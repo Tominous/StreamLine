@@ -53,7 +53,7 @@ public class GuildUtils {
 
     public static void createGuild(ProxiedPlayer player, String name) throws Exception {
         try {
-            Guild guild = new Guild((guilds.size() + 1), player.getUniqueId(), name);
+            Guild guild = new Guild(player.getUniqueId(), name);
 
             addGuild(guild);
 
@@ -63,7 +63,24 @@ public class GuildUtils {
         }
     }
 
-    public static void addGuild(Guild guild){ guilds.add(guild); }
+    public static void addGuild(Guild guild){
+        if (hasLeader(guild.leaderUUID)){
+            try {
+                guild.dispose();
+            } catch (Throwable e){
+                e.printStackTrace();
+            }
+            return;
+        }
+        guilds.add(guild);
+    }
+
+    public static boolean hasLeader(UUID leader){
+        for (Guild guild : guilds){
+            if (guild.leaderUUID.equals(leader)) return true;
+        }
+        return false;
+    }
 
     public static void removeGuild(Guild guild){ guilds.remove(guild); }
 

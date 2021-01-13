@@ -15,7 +15,6 @@ public class Guild {
     private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "guilds" + File.separator;
 
     public File file;
-    public long id;
     public String name;
     public UUID leaderUUID;
     public List<ProxiedPlayer> moderators;
@@ -38,19 +37,17 @@ public class Guild {
         LEADER
     }
 
-    public Guild(long id, UUID creatorUUID, String name) {
+    public Guild(UUID creatorUUID, String name) {
         this.leaderUUID = creatorUUID;
-        this.name = name;
-        construct(id);
+        construct(leaderUUID);
     }
 
-    public Guild(long id){
-        construct(id);
+    public Guild(UUID uuid){
+        construct(uuid);
     }
 
-    private void construct(long id){
-        this.id = id;
-        this.file = new File(filePrePath + this.id + ".properties");
+    private void construct(UUID uuid){
+        this.file = new File(filePrePath + this.leaderUUID.toString() + ".properties");
 
         System.out.println("Guild file: " + file.getAbsolutePath());
 
@@ -680,7 +677,14 @@ public class Guild {
     }
 
     public void replaceLeader(ProxiedPlayer player){
-
+        setModerator(UUIDFetcher.getProxiedPlayer(leaderUUID));
+        file.delete();
+        updateKey("leader", player.getUniqueId());
+        try {
+            saveInfo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void dispose() throws Throwable {
