@@ -80,7 +80,7 @@ staffchat:
     # %message% = the message said.
     # %from% = where the message originated. i.e. bungeecord or discord
     # Message on Discord.
-    discord: "``%user%`` >> %message%"
+    discord: "%message%"
     # Message on bungee.
     bungee: "&2&lSTAFF &7&l>> &a%user% &e(%from%&e) &8: &e%message%"
     # Text to use when using "%from%" in your messages.
