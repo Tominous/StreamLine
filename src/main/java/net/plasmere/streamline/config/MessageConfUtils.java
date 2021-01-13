@@ -47,6 +47,8 @@ public class MessageConfUtils {
     public static final String bungeeStaffChatFrom = message.getString("staffchat.message.from.bungee");
     public static final String staffChatWrongPrefix = message.getString("staffchat.wrong-prefix");
     // Online.
+    public static final String onlineMessageNoPlayers = message.getString("online.message.no-players");
+    public static final String onlineMessageNoGroups = message.getString("online.message.no-groups");
     public static final String onlineMessageEmbedTitle = message.getString("online.message.embed-title");
     public static final String onlineMessageDiscord = message.getString("online.message.discord");
     public static final String onlineMessageBMain = message.getString("online.message.bungee.main");

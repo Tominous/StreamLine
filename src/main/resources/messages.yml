@@ -95,6 +95,8 @@ staffchat:
 # When using online list...
 online:
   message:
+    no-players: "&cNo players online!"
+    no-groups: "&cSorry, but groups are not configured!"
     embed-title: "Global List"
     # Fillers:
     # %amount% = the amount of people on the server.

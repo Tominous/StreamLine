@@ -38,26 +38,26 @@ public class GlobalOnlineCommand extends Command {
     // Use in a try statement:
     private void compileList(CommandSender sendTo){
         if (plugin.getProxy().getOnlineCount() <= 0){
-            sendTo.sendMessage(TextUtils.codedText("&cNo players online!"));
+            sendTo.sendMessage(TextUtils.codedText(MessageConfUtils.onlineMessageNoPlayers));
             return;
         }
 
         Set<Group> groups = api.getGroupManager().getLoadedGroups();
 
         if (groups.size() <= 0){
-            sendTo.sendMessage(TextUtils.codedText("&cSorry, but groups are not configured!"));
+            sendTo.sendMessage(TextUtils.codedText(MessageConfUtils.onlineMessageNoGroups));
             return;
         }
 
         MessagingUtils.sendBUserMessage(sendTo,
                 MessageConfUtils.onlineMessageBMain
                         .replace("%amount%", Integer.toString(plugin.getProxy().getOnlineCount()))
-                        .replace("%servers%", compileServers(sendTo))
+                        .replace("%servers%", compileServers())
                         .replace("%online%", Objects.requireNonNull(getOnline(groups)))
         );
     }
 
-    private String compileServers(CommandSender sendTo){
+    private String compileServers(){
         StringBuilder msg = new StringBuilder();
 
         List<ServerInfo> servers = new ArrayList<>(plugin.getProxy().getServers().values());
