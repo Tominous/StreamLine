@@ -10,6 +10,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Party;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
@@ -51,6 +52,11 @@ public class PartyUtils {
     }
 
     public static void createParty(StreamLine streamLine, ProxiedPlayer player) throws Exception {
+        if (getParty(player) != null) {
+            MessagingUtils.sendBUserMessage(player, MessageConfUtils.partiesAlready);
+            return;
+        }
+
         try {
             Party party = new Party(streamLine, player);
 
@@ -63,6 +69,11 @@ public class PartyUtils {
     }
 
     public static void createPartySized(StreamLine streamLine, ProxiedPlayer player, int size) throws Exception {
+        if (getParty(player) != null) {
+            MessagingUtils.sendBUserMessage(player, MessageConfUtils.partiesAlready);
+            return;
+        }
+
         try {
             int maxSize = getMaxSize(player);
 

@@ -49,6 +49,11 @@ public class GuildUtils {
     }
 
     public static void createGuild(ProxiedPlayer player, String name) {
+        if (guilds.contains(new Guild(player.getUniqueId(), false))) {
+            MessagingUtils.sendBUserMessage(player, MessageConfUtils.guildsAlready);
+            return;
+        }
+
         try {
             Guild guild = new Guild(player.getUniqueId(), name);
 

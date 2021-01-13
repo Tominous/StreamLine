@@ -84,6 +84,7 @@ public class MessageConfUtils {
     public static final String streamHoverPrefix = message.getString("stream.hover-prefix");
     // Parties.
     public static final String partiesNone = message.getString("parties.no-parties");
+    public static final String partiesAlready = message.getString("parties.already-made");
     public static final String partiesMessage = message.getString("parties.parties");
     public static final String partiesModsNLast = message.getString("parties.mods.not-last");
     public static final String partiesModsLast = message.getString("parties.mods.last");
@@ -99,6 +100,7 @@ public class MessageConfUtils {
     public static final String partiesIsMutedFalse = message.getString("parties.ismuted.false");
     // Guilds.
     public static final String guildsNone = message.getString("guilds.no-guilds");
+    public static final String guildsAlready = message.getString("guilds.already-made");
     public static final String guildsMessage = message.getString("guilds.guilds");
     public static final String guildsModsNLast = message.getString("guilds.mods.not-last");
     public static final String guildsModsLast = message.getString("guilds.mods.last");

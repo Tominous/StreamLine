@@ -196,6 +196,8 @@ party:
     member: "MEMBER"
   # When it finds no party.
   no-party: "&cNo party found!"
+  # Already made.
+  already-made: "&cThis guild has already been made!"
   # When the the size of /par open <size> is to big.
   too-big: "&cSorry, but you can't create a party that big."
   # Not high enough party permissions.
@@ -433,6 +435,8 @@ guild:
   other-not-in-guild: "&cSorry, but they are not in the guild..."
   # Not enough space in guild...
   not-enough-space: "&cSorry, but the guild is full!"
+  # Already made.
+  already-made: "&cThis guild has already been made!"
   # Message for when someone joins a guild...
   join:
     # Fillers:
@@ -575,7 +579,7 @@ guild:
   warp:
     leader: "&eYou warped your guild of &3%size% &eto your server!"
     members: "&b%leader% &ewarped you to their server!"
-  info: "&7----- &2Guild Info &7-----%newline%&5GEXP&8: &6%xp%%newline%&5Level&8: %level%"
+  info: "&7----- &2Guild Info &7-----%newline%&5GEXP&8: &6%xp%%newline%&5Level&8: &6%level%"
 
 # Messages for the parties command:
 guilds:
@@ -625,4 +629,4 @@ stats:
   no-stats: "&cCouldn't find the stats..."
   no-permission: "&cSorry, but you do not have permission for that."
   create: "&aJust created a stats profile for you! You can view it by doing &b/stats"
-  info: "&7----- &4My Network Info &7-----%newline%&5EXP&8: &6%xp%%newline%&5Level&8: %level%"
+  info: "&7----- &4My Network Info &7-----%newline%&5EXP&8: &6%xp%%newline%&5Level&8: &6%level%"
