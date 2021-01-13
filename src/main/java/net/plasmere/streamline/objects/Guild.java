@@ -39,15 +39,18 @@ public class Guild {
 
     public Guild(UUID creatorUUID, String name) {
         this.leaderUUID = creatorUUID;
-        construct(leaderUUID);
+        this.name = name;
+        construct(leaderUUID, true);
     }
 
-    public Guild(UUID uuid){
-        construct(uuid);
+    public Guild(UUID uuid, boolean create){
+        construct(uuid, create);
     }
 
-    private void construct(UUID uuid){
-        this.file = new File(filePrePath + this.leaderUUID.toString() + ".properties");
+    private void construct(UUID uuid, boolean createNew){
+        this.file = new File(filePrePath + uuid.toString() + ".properties");
+
+        if (! createNew && ! file.exists()) return;
 
         System.out.println("Guild file: " + file.getAbsolutePath());
 

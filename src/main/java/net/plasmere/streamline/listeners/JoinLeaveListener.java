@@ -30,7 +30,7 @@ public class JoinLeaveListener implements Listener {
         ProxiedPlayer player = ev.getPlayer();
 
         try {
-            GuildUtils.addGuild(new Guild(player.getUniqueId()));
+            GuildUtils.addGuild(new Guild(player.getUniqueId(), false));
         } catch (Exception e) {
             e.printStackTrace();
         }
