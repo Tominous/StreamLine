@@ -521,3 +521,9 @@ modules:
       max-size: 120
       # Whether or not party chat should be able to be seen on console.
       chat-to-console: true
+      # GEXP for guilds.
+      xp:
+        # Amount to give each guild per player online every "time-per" seconds.
+        amount-per: 1
+        # Amount of seconds per xp handout.
+        time-per: 300

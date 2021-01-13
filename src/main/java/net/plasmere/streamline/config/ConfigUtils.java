@@ -225,4 +225,6 @@ public class ConfigUtils {
     // ... Guilds.
     public static final int guildMax = config.getInt("modules.bungee.guilds.max-size");
     public static final boolean guildConsole = config.getBoolean("modules.bungee.guilds.chat-to-console");
+    public static final int xpPerGive = config.getInt("module.bungee.guilds.xp.amount-per");
+    public static final int timePerGive = config.getInt("module.bungee.guilds.xp.time-per");
 }
