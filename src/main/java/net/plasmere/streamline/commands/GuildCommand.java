@@ -273,7 +273,8 @@ public class GuildCommand extends Command implements TabExecutor {
         }
 
         try {
-            GuildUtils.getGuild(sender).saveInfo();
+            assert sender instanceof ProxiedPlayer;
+            GuildUtils.getGuild((ProxiedPlayer) sender).saveInfo();
         } catch (Exception e) {
             e.printStackTrace();
         }

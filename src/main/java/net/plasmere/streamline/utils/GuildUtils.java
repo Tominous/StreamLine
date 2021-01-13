@@ -42,19 +42,6 @@ public class GuildUtils {
         }
     }
 
-    public static Guild getGuild(CommandSender player) throws Exception {
-        try {
-            Guild it = null;
-            for (Guild guild : guilds) {
-                if (guild.hasMember((ProxiedPlayer) player))
-                    it = guild;
-            }
-            return it;
-        } catch (Exception e) {
-            throw new Exception(e);
-        }
-    }
-
     public static boolean isGuild(Guild guild){
         return guilds.contains(guild);
     }
