@@ -12,6 +12,7 @@ import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Guild;
 
@@ -30,7 +31,7 @@ public class GuildUtils {
     // Guild , Invites
     public static Map<Guild, List<ProxiedPlayer>> invites = new HashMap<>();
 
-    public static Guild getGuild(ProxiedPlayer player) throws Exception {
+    public static Guild getGuild(ProxiedPlayer player) {
         try {
             Guild it = null;
             for (Guild guild : guilds) {
@@ -41,7 +42,8 @@ public class GuildUtils {
             }
             return it;
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -49,7 +51,7 @@ public class GuildUtils {
         return guilds.contains(guild);
     }
 
-    public static void reloadGuild(Guild guild) throws Exception {
+    public static void reloadGuild(Guild guild) {
         guilds.remove(getGuild(UUIDFetcher.getProxiedPlayer(guild.leaderUUID)));
         guilds.add(guild);
     }
@@ -67,12 +69,17 @@ public class GuildUtils {
     }
 
     public static void addGuild(Guild guild){
-        if (hasLeader(guild.leaderUUID)){
-            try {
-                guild.dispose();
-            } catch (Throwable e){
-                e.printStackTrace();
+        try {
+            if (guilds.contains(getGuild(UUIDFetcher.getProxiedPlayer(guild.leaderUUID)))) {
+                try {
+                    guild.dispose();
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
+                return;
             }
+        } catch (Exception e){
+            guilds.add(guild);
             return;
         }
         guilds.add(guild);
@@ -112,7 +119,7 @@ public class GuildUtils {
         guilds.remove(guild);
     }
 
-    public static void sendInvite(ProxiedPlayer to, ProxiedPlayer from) throws Exception {
+    public static void sendInvite(ProxiedPlayer to, ProxiedPlayer from) {
         try {
             Guild guild = getGuild(from);
 
@@ -167,11 +174,11 @@ public class GuildUtils {
             invites.remove(guild);
             invites.put(guild, guild.invites);
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
         }
     }
 
-    public static void acceptInvite(ProxiedPlayer accepter, ProxiedPlayer from) throws Exception {
+    public static void acceptInvite(ProxiedPlayer accepter, ProxiedPlayer from) {
         try {
             Guild guild = getGuild(from);
 
@@ -216,11 +223,11 @@ public class GuildUtils {
 
             reloadGuild(guild);
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
         }
     }
 
-    public static void denyInvite(ProxiedPlayer denier, ProxiedPlayer from) throws Exception {
+    public static void denyInvite(ProxiedPlayer denier, ProxiedPlayer from) {
         try {
             Guild guild = getGuild(from);
 
@@ -257,11 +264,11 @@ public class GuildUtils {
 
             reloadGuild(guild);
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
         }
     }
 
-    public static void warpGuild(ProxiedPlayer sender) throws Exception{
+    public static void warpGuild(ProxiedPlayer sender){
         Guild guild = getGuild(sender);
 
         if (!isGuild(guild) || guild == null) {
@@ -274,8 +281,14 @@ public class GuildUtils {
             return;
         }
 
-        if (! guild.getMember(guild.leaderUUID).equals(sender)) {
-            MessagingUtils.sendBGUserMessage(guild, sender, sender, noPermission);
+        try {
+            if (! guild.getMember(guild.leaderUUID).equals(sender)) {
+                MessagingUtils.sendBGUserMessage(guild, sender, sender, noPermission);
+                return;
+            }
+        } catch (Exception e) {
+            MessagingUtils.sendBGUserMessage(guild, sender, sender, MessageConfUtils.bungeeCommandError);
+            e.printStackTrace();
             return;
         }
 
@@ -292,7 +305,7 @@ public class GuildUtils {
         reloadGuild(guild);
     }
 
-    public static void muteGuild(ProxiedPlayer sender) throws Exception{
+    public static void muteGuild(ProxiedPlayer sender){
         Guild guild = getGuild(sender);
 
         if (!isGuild(guild) || guild == null) {
@@ -334,7 +347,7 @@ public class GuildUtils {
         reloadGuild(guild);
     }
 
-    public static void kickMember(ProxiedPlayer sender, ProxiedPlayer player) throws Exception{
+    public static void kickMember(ProxiedPlayer sender, ProxiedPlayer player){
         Guild guild = getGuild(sender);
 
         if (!isGuild(guild) || guild == null) {
@@ -355,28 +368,33 @@ public class GuildUtils {
         if (! guild.hasModPerms(sender)) {
             MessagingUtils.sendBGUserMessage(guild, sender, sender, noPermission);
         } else {
-            if (sender.equals(player)) {
-                MessagingUtils.sendBGUserMessage(guild, sender, sender, kickSelf);
-            } else if (player.equals(guild.getMember(guild.leaderUUID))) {
-                MessagingUtils.sendBGUserMessage(guild, sender, sender, noPermission);
-            } else {
-                for (ProxiedPlayer m : guild.totalMembers){
-                    if (m.equals(sender)) {
-                        MessagingUtils.sendBGUserMessage(guild, sender, m, kickSender
-                                .replace("%user%", player.getDisplayName())
-                        );
-                    } else if (m.equals(player)) {
-                        MessagingUtils.sendBGUserMessage(guild, sender, m, kickUser
-                                .replace("%user%", player.getDisplayName())
-                        );
-                    } else {
-                        MessagingUtils.sendBGUserMessage(guild, sender, m, kickMembers
-                                .replace("%user%", player.getDisplayName())
-                        );
+            try {
+                if (sender.equals(player)) {
+                    MessagingUtils.sendBGUserMessage(guild, sender, sender, kickSelf);
+                } else if (player.equals(guild.getMember(guild.leaderUUID))) {
+                    MessagingUtils.sendBGUserMessage(guild, sender, sender, noPermission);
+                } else {
+                    for (ProxiedPlayer m : guild.totalMembers) {
+                        if (m.equals(sender)) {
+                            MessagingUtils.sendBGUserMessage(guild, sender, m, kickSender
+                                    .replace("%user%", player.getDisplayName())
+                            );
+                        } else if (m.equals(player)) {
+                            MessagingUtils.sendBGUserMessage(guild, sender, m, kickUser
+                                    .replace("%user%", player.getDisplayName())
+                            );
+                        } else {
+                            MessagingUtils.sendBGUserMessage(guild, sender, m, kickMembers
+                                    .replace("%user%", player.getDisplayName())
+                            );
+                        }
                     }
-                }
 
-                guild.removeMemberFromGuild(player);
+                    guild.removeMemberFromGuild(player);
+                }
+            } catch (Exception e){
+                MessagingUtils.sendBGUserMessage(guild, sender, sender, MessageConfUtils.bungeeCommandError);
+                e.printStackTrace();
             }
         }
 
@@ -419,11 +437,11 @@ public class GuildUtils {
 
             guild.dispose();
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
         }
     }
 
-    public static void openGuild(ProxiedPlayer sender) throws Exception {
+    public static void openGuild(ProxiedPlayer sender) {
         try {
             Guild guild = getGuild(sender);
 
@@ -467,11 +485,11 @@ public class GuildUtils {
 
             reloadGuild(guild);
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
         }
     }
 
-    public static void closeGuild(ProxiedPlayer sender) throws Exception {
+    public static void closeGuild(ProxiedPlayer sender) {
         try {
             Guild guild = getGuild(sender);
 
@@ -515,11 +533,11 @@ public class GuildUtils {
 
             reloadGuild(guild);
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
         }
     }
 
-    public static void listGuild(ProxiedPlayer sender) throws Exception {
+    public static void listGuild(ProxiedPlayer sender) {
         try {
             Guild guild = getGuild(sender);
 
@@ -559,11 +577,11 @@ public class GuildUtils {
 
             reloadGuild(guild);
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
         }
     }
 
-    private static String moderators(Guild guild) throws Exception {
+    private static String moderators(Guild guild) {
         try {
             if (! (guild.moderators.size() > 0)) {
                 return listModBulkNone;
@@ -592,11 +610,12 @@ public class GuildUtils {
 
             return mods.toString();
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
+            return null;
         }
     }
 
-    private static String members(Guild guild) throws Exception {
+    private static String members(Guild guild) {
         try {
             if (! (guild.members.size() > 0)) {
                 return listMemberBulkNone;
@@ -625,11 +644,13 @@ public class GuildUtils {
 
             return mems.toString();
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
+
+            return null;
         }
     }
 
-    public static void promotePlayer(ProxiedPlayer sender, ProxiedPlayer member) throws Exception {
+    public static void promotePlayer(ProxiedPlayer sender, ProxiedPlayer member) {
         try {
             Guild guild = getGuild(sender);
 
@@ -737,11 +758,11 @@ public class GuildUtils {
 
             reloadGuild(guild);
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
         }
     }
 
-    public static void demotePlayer(ProxiedPlayer sender, ProxiedPlayer member) throws Exception {
+    public static void demotePlayer(ProxiedPlayer sender, ProxiedPlayer member) {
         try {
             Guild guild = getGuild(sender);
 
@@ -810,11 +831,11 @@ public class GuildUtils {
 
             reloadGuild(guild);
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
         }
     }
 
-    public static void joinGuild(ProxiedPlayer sender, ProxiedPlayer from) throws Exception {
+    public static void joinGuild(ProxiedPlayer sender, ProxiedPlayer from) {
         try {
             Guild guild = getGuild(from);
 
@@ -855,11 +876,11 @@ public class GuildUtils {
 
             reloadGuild(guild);
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
         }
     }
 
-    public static void leaveGuild(ProxiedPlayer sender) throws Exception {
+    public static void leaveGuild(ProxiedPlayer sender) {
         try {
             Guild guild = getGuild(sender);
 
@@ -915,11 +936,10 @@ public class GuildUtils {
             reloadGuild(guild);
         } catch (Throwable e) {
             e.printStackTrace();
-            throw new Exception(e.getMessage());
         }
     }
 
-    public static void sendChat(ProxiedPlayer sender, String msg) throws Exception {
+    public static void sendChat(ProxiedPlayer sender, String msg) {
         try {
             Guild guild = getGuild(sender);
 
@@ -957,7 +977,7 @@ public class GuildUtils {
 
             reloadGuild(guild);
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
         }
     }
 

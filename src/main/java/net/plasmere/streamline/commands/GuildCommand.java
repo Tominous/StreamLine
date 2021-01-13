@@ -7,6 +7,7 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.NoPlayerFoundException;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
@@ -271,7 +272,9 @@ public class GuildCommand extends Command implements TabExecutor {
 
         try {
             assert sender instanceof ProxiedPlayer;
-            GuildUtils.getGuild((ProxiedPlayer) sender).saveInfo();
+            Guild guild = GuildUtils.getGuild((ProxiedPlayer) sender);
+            if (guild == null) return;
+            guild.saveInfo();
         } catch (Exception e) {
             e.printStackTrace();
         }

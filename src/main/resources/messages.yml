@@ -380,24 +380,24 @@ parties:
   # %ispublic% = true if open, false if not.
   # %ismuted% = true if muted, false if not.
   parties: "&5PARTY &9>> &eleader&8(&b%leader%&8)&e, size&8(&3%size%&8)&e, partyMax&8(&3%max%&8)&e, permMax&8(&3%maxmax%&8)&e, mods&8(&3%mods_count% &4--> %mods%&8)&e, members&8(&3%members_count% &4--> %members%&8)&e, all&8(&3%total_count% &4--> %totalmembers%&8)&e, invites&8(&3%invites_count% &4--> %invites%&8)&e, public&8(%ispublic%&8)&e, muted&8(%ismuted%&8)&e."
-    mods:
-      not-last: "&d%user%&e, "
-      last: "&d%user%"
-    members:
-      not-last: "&d%user%&e, "
-      last: "&d%user%"
-    invites:
-      not-last: "&d%user%&e, "
-      last: "&d%user%"
-    totalmembers:
-      not-last: "&d%user%&e, "
-      last: "&d%user%"
-    ispublic:
-      true: "&aTRUE"
-      false: "&cFALSE"
-    ismuted:
-      true: "&aTRUE"
-      false: "&cFALSE"
+  mods:
+   not-last: "&d%user%&e, "
+   last: "&d%user%"
+  members:
+    not-last: "&d%user%&e, "
+    last: "&d%user%"
+  invites:
+    not-last: "&d%user%&e, "
+    last: "&d%user%"
+  totalmembers:
+    not-last: "&d%user%&e, "
+    last: "&d%user%"
+  ispublic:
+    true: "&aTRUE"
+    false: "&cFALSE"
+  ismuted:
+    true: "&aTRUE"
+    false: "&cFALSE"
 
 # For command "sudo":
 sudo:
