@@ -249,6 +249,17 @@ public class MessagingUtils {
                 .replace("%invites%", invitesGuild(guild))
                 .replace("%ispublic%", getIsPublicGuild(guild))
                 .replace("%ismuted%", getIsMutedGuild(guild))
+                .replace("%xp%", Integer.toString(guild.xp))
+                .replace("%level%", Integer.toString(guild.lvl))
+        ));
+    }
+
+    public static void sendStatUserMessage(Player player, CommandSender sender, CommandSender to, String msg){
+        to.sendMessage(TextUtils.codedText(msg
+                .replace("%sender%", ((ProxiedPlayer) sender).getDisplayName())
+                .replace("%player%", player.player.getName())
+                .replace("%xp%", Integer.toString(player.xp))
+                .replace("%level%", Integer.toString(player.lvl))
         ));
     }
 

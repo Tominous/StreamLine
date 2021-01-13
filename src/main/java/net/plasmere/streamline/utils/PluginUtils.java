@@ -69,6 +69,8 @@ public class PluginUtils {
         Command pc = new PCQuickCommand(plugin, ConfigUtils.comBParPerm, getAliases(pca));
         Command gc = new GCQuickCommand(plugin, ConfigUtils.comBParPerm, getAliases(gca));
 
+        Command stats = new StatsCommand(plugin, ConfigUtils.comBStatsPerm, getAliases(ConfigUtils.comBStatsAliases));
+
         commands.add(stream);
         commands.add(staffChat);
         commands.add(ping);
@@ -89,6 +91,8 @@ public class PluginUtils {
         commands.add(guild);
         commands.add(pc);
         commands.add(gc);
+
+        commands.add(stats);
 
         try {
             for (Command command : commands) {
@@ -144,6 +148,9 @@ public class PluginUtils {
             registerCommand(plugin, pc);
         if (ConfigUtils.comBGuildQuick)
             registerCommand(plugin, gc);
+
+        if (ConfigUtils.comBStats)
+            registerCommand(plugin, stats);
 
         plugin.getLogger().info("Loaded " + commands.size() + " commands into memory...!");
     }

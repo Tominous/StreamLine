@@ -71,6 +71,10 @@ public class ConfigUtils {
     public static final boolean comBReport = config.getBoolean("commands.bungee.report.enabled");
     public static final List<String> comBReportAliases = config.getStringList("commands.bungee.report.aliases");
     public static final String comBReportPerm = config.getString("commands.bungee.report.permission");
+    // StatsCommand
+    public static final boolean comBStats = config.getBoolean("commands.bungee.stats.enabled");
+    public static final List<String> comBStatsAliases = config.getStringList("commands.bungee.stats.aliases");
+    public static final String comBStatsPerm = config.getString("commands.bungee.stats.permission");
     // ... Party.
     //
     public static final boolean comBParty = config.getBoolean("commands.bungee.party.enabled");
@@ -231,4 +235,6 @@ public class ConfigUtils {
     public static final boolean guildConsole = config.getBoolean("modules.bungee.guilds.chat-to-console");
     public static final int xpPerGive = config.getInt("modules.bungee.guilds.xp.amount-per");
     public static final int timePerGive = config.getInt("modules.bungee.guilds.xp.time-per");
+    // ... StatsCommand.
+    public static final boolean statsTell = config.getBoolean("modules.bungee.stats.tell-when-create");
 }

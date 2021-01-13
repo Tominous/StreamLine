@@ -2,18 +2,12 @@ package net.plasmere.streamline.utils;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.group.Group;
-import net.luckperms.api.node.NodeType;
-import net.luckperms.api.node.types.PermissionNode;
-import net.luckperms.api.query.QueryOptions;
-import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Guild;
 
 import java.io.IOException;
@@ -127,7 +121,7 @@ public class GuildUtils {
                 return;
             }
 
-            if (guild.invites.contains(to.getUniqueId())){
+            if (guild.invites.contains(to)){
                 MessagingUtils.sendBUserMessage(from, inviteFailure);
                 return;
             }
@@ -151,8 +145,8 @@ public class GuildUtils {
                     MessagingUtils.sendBGUserMessage(guild, from, guild.getMember(member), inviteMembers
                             .replace("%sender%", from.getDisplayName())
                             .replace("%user%", to.getDisplayName())
-                            .replace("%leader%", guild.getMember(getGuild(from).leaderUUID).getDisplayName())
-                            .replace("%leaderdefault%", guild.getMember(getGuild(from).leaderUUID).getName())
+                            .replace("%leader%", guild.getMember(Objects.requireNonNull(getGuild(from)).leaderUUID).getDisplayName())
+                            .replace("%leaderdefault%", guild.getMember(Objects.requireNonNull(getGuild(from)).leaderUUID).getName())
                     );
                 }
             }
@@ -390,6 +384,22 @@ public class GuildUtils {
         reloadGuild(guild);
     }
 
+    public static void info(ProxiedPlayer sender){
+        Guild guild = getGuild(sender);
+
+        if (!isGuild(guild) || guild == null) {
+            MessagingUtils.sendBUserMessage(sender, noGuildFound);
+            return;
+        }
+
+        if (! guild.hasMember(sender)) {
+            MessagingUtils.sendBUserMessage(sender, notInGuild);
+            return;
+        }
+
+        MessagingUtils.sendBGUserMessage(guild, sender, sender, info);
+    }
+
     public static void disband(ProxiedPlayer sender) throws Throwable {
         try {
             Guild guild = getGuild(sender);
@@ -545,12 +555,12 @@ public class GuildUtils {
                     .replace("%user%", sender.getDisplayName())
                     .replace("%size%", Integer.toString(guild.getSize()));
             String moderatorBulk = listModBulkMain
-                    .replace("%moderators%", moderators(guild))
+                    .replace("%moderators%", Objects.requireNonNull(moderators(guild)))
                     .replace("%user%", sender.getDisplayName())
                     .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                     .replace("%size%", Integer.toString(guild.getSize()));
             String memberBulk = listMemberBulkMain
-                    .replace("%members%", members(guild))
+                    .replace("%members%", Objects.requireNonNull(members(guild)))
                     .replace("%user%", sender.getDisplayName())
                     .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                     .replace("%size%", Integer.toString(guild.getSize()));
@@ -1065,4 +1075,6 @@ public class GuildUtils {
     // Warp.
     public static final String warpLeader = message.getString("guild.warp.leader");
     public static final String warpMembers = message.getString("guild.warp.members");
+    // Info.
+    public static final String info = message.getString("guild.info");
 }

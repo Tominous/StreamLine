@@ -415,6 +415,8 @@ guild:
   # %size% = guild size.
   # %max% = guild max size.
   # %sender% = command sender.
+  # %xp% = guild xp.
+  # %level% = guild level.
   # Text used for when talking about each guild level...
   text:
     leader: "LEADER"
@@ -573,6 +575,7 @@ guild:
   warp:
     leader: "&eYou warped your guild of &3%size% &eto your server!"
     members: "&b%leader% &ewarped you to their server!"
+  info: "&7----- &2Guild Info &7-----%newline%&5GEXP&8: &6%xp%%newline%&5Level&8: %level%"
 
 # Messages for the parties command:
 guilds:
@@ -612,3 +615,14 @@ guilds:
   ismuted:
     true: "&aTRUE"
     false: "&cFALSE"
+
+# Info for stats.
+# Fillers:
+# %xp% = network exp.
+# %level% = network level.
+# %player% = the-player-you-are-looking-at-stats-of's name.
+stats:
+  no-stats: "&cCouldn't find the stats..."
+  no-permission: "&cSorry, but you do not have permission for that."
+  create: "&aJust created a stats profile for you! You can view it by doing &b/stats"
+  info: "&7----- &4My Network Info &7-----%newline%&5EXP&8: &6%xp%%newline%&5Level&8: %level%"

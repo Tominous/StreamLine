@@ -328,6 +328,13 @@ commands:
           - "wa"
           - "summon"
           - "warp"
+    stats:
+      enabled: true
+      permission: "streamline.command.stats"
+      aliases:
+        - "st"
+        - "myinfo"
+        - "mi"
     # Server commands...
     servers:
       # The lobby command.
@@ -527,6 +534,7 @@ modules:
     # Sudoing...
     sudo:
       no-sudo-permission: "streamline.sudo.nosudo"
+    # Guilds...
     guilds:
       # Maximum size of any guild.
       max-size: 120
@@ -538,3 +546,7 @@ modules:
         amount-per: 1
         # Amount of seconds per xp handout.
         time-per: 300
+    # StatsCommand...
+    stats:
+      # Enables / disables telling the player when their stats have been created.
+      tell-when-create: true
