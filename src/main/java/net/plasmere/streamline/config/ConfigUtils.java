@@ -177,6 +177,10 @@ public class ConfigUtils {
     public static final boolean comBParties = config.getBoolean("commands.bungee.staff.parties.enabled");
     public static final List<String> comBPartiesAliases = config.getStringList("commands.bungee.staff.parties.aliases");
     public static final String comBPartiesPerm = config.getString("commands.bungee.staff.parties.permission");
+    // Guilds.
+    public static final boolean comBGuilds = config.getBoolean("commands.bungee.staff.guilds.enabled");
+    public static final List<String> comBGuildsAliases = config.getStringList("commands.bungee.staff.guilds.aliases");
+    public static final String comBGuildsPerm = config.getString("commands.bungee.staff.guilds.permission");
     // BSudo.
     public static final boolean comBSudo = config.getBoolean("commands.bungee.staff.bsudo.enabled");
     public static final List<String> comBSudoAliases = config.getStringList("commands.bungee.staff.bsudo.aliases");

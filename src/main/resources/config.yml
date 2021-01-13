@@ -404,6 +404,17 @@ commands:
           - "parts"
           - "pars"
           - "ps"
+      # The guilds command.
+      guilds:
+        # Enables / disables the use of the "parties" bungee command.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.guilds"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "gilds"
+          - "gds"
+          - "gs"
       bsudo:
         # Enables / disables the use of the "parties" bungee command.
         enabled: true

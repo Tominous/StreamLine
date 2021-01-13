@@ -84,4 +84,12 @@ public class UUIDFetcher {
             return null;
         }
     }
+
+    public static String swapUUID(String uuid){
+        if (uuid.contains("-")){
+            return uuid.replace("-", "");
+        } else {
+            return formatToUUID(uuid);
+        }
+    }
 }

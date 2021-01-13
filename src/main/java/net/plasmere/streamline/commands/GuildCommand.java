@@ -64,11 +64,20 @@ public class GuildCommand extends Command implements TabExecutor {
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildCreateAliases)) {
-                try {
-                    GuildUtils.createGuild((ProxiedPlayer) sender, args[1]);
-                } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
-                    e.printStackTrace();
+                if (args.length <= 1) {
+                    try {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        GuildUtils.createGuild((ProxiedPlayer) sender, args[1]);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildPromoteAliases)) {
                 if (args.length <= 1) {

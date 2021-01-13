@@ -234,38 +234,62 @@ public class Guild {
     private List<UUID> loadMods(){
         List<UUID> uuids = new ArrayList<>();
 
-        for (String uuid : getFromKey("mods").split("\\.")){
-            uuids.add(UUID.fromString(uuid));
+        try {
+            for (String uuid : getFromKey("mods").split("\\.")) {
+                uuids.add(UUID.fromString(UUIDFetcher.swapUUID(uuid)));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+
+            return new ArrayList<>();
         }
 
         return uuids;
     }
 
-    private List<UUID> loadMembers(){
+    private List<UUID> loadMembers() {
         List<UUID> uuids = new ArrayList<>();
 
-        for (String uuid : getFromKey("members").split("\\.")){
-            uuids.add(UUID.fromString(uuid));
+        try {
+            for (String uuid : getFromKey("members").split("\\.")) {
+                uuids.add(UUID.fromString(UUIDFetcher.swapUUID(uuid)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ArrayList<>();
         }
 
         return uuids;
     }
 
-    private List<UUID> loadTotalMembers(){
+    private List<UUID> loadTotalMembers() {
         List<UUID> uuids = new ArrayList<>();
 
-        for (String uuid : getFromKey("totalmembers").split("\\.")){
-            uuids.add(UUID.fromString(uuid));
+        try {
+            for (String uuid : getFromKey("totalmembers").split("\\.")) {
+                uuids.add(UUID.fromString(UUIDFetcher.swapUUID(uuid)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ArrayList<>();
         }
 
         return uuids;
     }
 
-    private List<UUID> loadInvites(){
+    private List<UUID> loadInvites() {
         List<UUID> uuids = new ArrayList<>();
 
-        for (String uuid : getFromKey("invites").split("\\.")){
-            uuids.add(UUID.fromString(uuid));
+        try {
+            for (String uuid : getFromKey("invites").split("\\.")) {
+                uuids.add(UUID.fromString(UUIDFetcher.swapUUID(uuid)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ArrayList<>();
         }
 
         return uuids;
@@ -412,15 +436,27 @@ public class Guild {
     }
 
     public boolean hasMember(ProxiedPlayer player){
-        return members.contains(player);
+        try {
+            return members.contains(player);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public boolean hasModPerms(UUID uuid){
-        return modsByUUID.contains(uuid) || leaderUUID.equals(uuid);
+    public boolean hasModPerms(UUID uuid) {
+        try {
+            return modsByUUID.contains(uuid) || leaderUUID.equals(uuid);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public boolean hasModPerms(ProxiedPlayer player){
-        return moderators.contains(player) || leaderUUID.equals(player.getUniqueId());
+    public boolean hasModPerms(ProxiedPlayer player) {
+        try {
+            return moderators.contains(player) || leaderUUID.equals(player.getUniqueId());
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public int getSize(){

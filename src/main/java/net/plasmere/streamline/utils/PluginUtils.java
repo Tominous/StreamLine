@@ -53,10 +53,11 @@ public class PluginUtils {
         Command fabric = new GoToServerVanillaCommand(plugin, ConfigUtils.comBFabricPerm);
 
         Command report = new ReportCommand(plugin, ConfigUtils.comBReportPerm, getAliases(ConfigUtils.comBReportAliases));
-        Command parties = new PartiesCommand(plugin, ConfigUtils.comBPartiesPerm, getAliases(ConfigUtils.comBPartiesAliases));
         Command bsudo = new SudoCommand(plugin, ConfigUtils.comBSudoPerm, getAliases(ConfigUtils.comBSudoAliases));
 
 
+        Command parties = new PartiesCommand(plugin, ConfigUtils.comBPartiesPerm, getAliases(ConfigUtils.comBPartiesAliases));
+        Command guilds = new GuildsCommand(plugin, ConfigUtils.comBGuildsPerm, getAliases(ConfigUtils.comBGuildsAliases));
         Command party = new PartyCommand(plugin, ConfigUtils.comBParPerm, getAliases(ConfigUtils.comBParMainAliases));
         Command guild = new GuildCommand(plugin, ConfigUtils.comBGuildPerm, getAliases(ConfigUtils.comBGuildMainAliases));
         List<String> pca = new ArrayList<>();
@@ -80,9 +81,10 @@ public class PluginUtils {
         commands.add(fabric);
 
         commands.add(report);
-        commands.add(parties);
         commands.add(bsudo);
 
+        commands.add(parties);
+        commands.add(guilds);
         commands.add(party);
         commands.add(guild);
         commands.add(pc);
@@ -102,8 +104,6 @@ public class PluginUtils {
             registerCommand(plugin, stream);
         if (ConfigUtils.comBStaffChat)
             registerCommand(plugin, staffChat);
-        if (ConfigUtils.comBParties)
-            registerCommand(plugin, parties);
         if (ConfigUtils.comBSudo)
             registerCommand(plugin, bsudo);
 
@@ -132,6 +132,10 @@ public class PluginUtils {
             registerCommand(plugin, fabric);
 
 
+        if (ConfigUtils.comBParties)
+            registerCommand(plugin, parties);
+        if (ConfigUtils.comBGuilds)
+            registerCommand(plugin, guilds);
         if (ConfigUtils.comBParty)
             registerCommand(plugin, party);
         if (ConfigUtils.comBGuild)
