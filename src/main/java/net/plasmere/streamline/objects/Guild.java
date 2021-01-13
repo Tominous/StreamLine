@@ -1,14 +1,14 @@
 package net.plasmere.streamline.objects;
 
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Guild {
     private HashMap<String, String> info = new HashMap<>();
@@ -16,16 +16,43 @@ public class Guild {
 
     public File file;
     public long id;
-    public long bound_to;
-    public String prefix;
+    public String name;
+    public UUID leaderUUID;
+    public List<ProxiedPlayer> moderators;
+    public List<UUID> modsByUUID;
+    public List<ProxiedPlayer> members;
+    public List<UUID> membersByUUID;
+    public List<ProxiedPlayer> totalMembers;
+    public List<UUID> totalMembersByUUID;
+    public List<ProxiedPlayer> invites;
+    public List<UUID> invitesByUUID;
+    public boolean isMuted;
+    public boolean isPublic;
     public int xp;
     public int lvl;
+    public int maxSize = ConfigUtils.guildMax;
+
+    public enum Level {
+        MEMBER,
+        MODERATOR,
+        LEADER
+    }
+
+    public Guild(long id, UUID creatorUUID, String name) {
+        this.leaderUUID = creatorUUID;
+        this.name = name;
+        construct(id);
+    }
 
     public Guild(long id){
+        construct(id);
+    }
+
+    private void construct(long id){
         this.id = id;
         this.file = new File(filePrePath + this.id + ".properties");
 
-        System.out.println("Player file: " + file.getAbsolutePath());
+        System.out.println("Guild file: " + file.getAbsolutePath());
 
         try {
             getFromConfigFile();
@@ -80,6 +107,15 @@ public class Guild {
 
     public void addKeyValuePair(String key, String value){
         info.put(key, value);
+    }
+
+    public ProxiedPlayer getMember(UUID uuid) throws Exception {
+        for (UUID u : totalMembersByUUID){
+            if (uuid.equals(u)) {
+                return Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(u));
+            }
+        }
+        throw new Exception("Player not found!");
     }
 
     public void getFromConfigFile() throws IOException {
@@ -159,16 +195,92 @@ public class Guild {
     }
 
     public void loadVars(){
-        this.bound_to = Long.parseLong(getFromKey("bound_to"));
-        this.prefix = getFromKey("prefix");
+        this.name = getFromKey("name");
+        this.leaderUUID = UUID.fromString(getFromKey("leader"));
+        this.modsByUUID = loadMods();
+        this.membersByUUID = loadMembers();
+        this.totalMembersByUUID = loadTotalMembers();
+        this.invitesByUUID = loadInvites();
+        this.isMuted = Boolean.parseBoolean(getFromKey("muted"));
+        this.isPublic = Boolean.parseBoolean(getFromKey("public"));
         this.xp = Integer.parseInt(getFromKey("xp"));
         this.lvl = Integer.parseInt(getFromKey("lvl"));
+
+        try {
+            moderators.clear();
+            for (UUID uuid : modsByUUID) {
+                moderators.add(getMember(uuid));
+            }
+
+            members.clear();
+            for (UUID uuid : membersByUUID) {
+                members.add(getMember(uuid));
+            }
+
+            totalMembers.clear();
+            for (UUID uuid : totalMembersByUUID) {
+                totalMembers.add(getMember(uuid));
+            }
+
+            invites.clear();
+            for (UUID uuid : invitesByUUID) {
+                invites.add(getMember(uuid));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<UUID> loadMods(){
+        List<UUID> uuids = new ArrayList<>();
+
+        for (String uuid : getFromKey("mods").split("\\.")){
+            uuids.add(UUID.fromString(uuid));
+        }
+
+        return uuids;
+    }
+
+    private List<UUID> loadMembers(){
+        List<UUID> uuids = new ArrayList<>();
+
+        for (String uuid : getFromKey("members").split("\\.")){
+            uuids.add(UUID.fromString(uuid));
+        }
+
+        return uuids;
+    }
+
+    private List<UUID> loadTotalMembers(){
+        List<UUID> uuids = new ArrayList<>();
+
+        for (String uuid : getFromKey("totalmembers").split("\\.")){
+            uuids.add(UUID.fromString(uuid));
+        }
+
+        return uuids;
+    }
+
+    private List<UUID> loadInvites(){
+        List<UUID> uuids = new ArrayList<>();
+
+        for (String uuid : getFromKey("invites").split("\\.")){
+            uuids.add(UUID.fromString(uuid));
+        }
+
+        return uuids;
     }
 
     public List<String> propertiesDefaults() {
         List<String> defaults = new ArrayList<>();
-        defaults.add("bound_to=" + 0L);
-        defaults.add("prefix=>");
+        defaults.add("name=" + name);
+        defaults.add("leader=" + leaderUUID);
+        defaults.add("mods=" + "");
+        defaults.add("members=" + "");
+        defaults.add("totalmembers=" + leaderUUID);
+        defaults.add("invites=" + "");
+        defaults.add("muted=false");
+        defaults.add("public=false");
         defaults.add("xp=0");
         defaults.add("lvl=1");
         //defaults.add("");
@@ -208,11 +320,10 @@ public class Guild {
     }
 
     public void addXp(int amount){
-        int needed = getNeededXp();
         int setAmount = this.xp + amount;
 
-        if (setAmount >= needed) {
-            setAmount -= needed;
+        while (setAmount >= getNeededXp()) {
+            setAmount -= getNeededXp();
             int setLevel = this.lvl + 1;
             updateKey("lvl", setLevel);
         }
@@ -221,15 +332,301 @@ public class Guild {
     }
 
     public void setXp(int amount){
-        int needed = getNeededXp();
         int setAmount = amount;
 
-        if (setAmount >= needed) {
-            setAmount -= needed;
+        while (setAmount >= getNeededXp()) {
+            setAmount -= getNeededXp();
             int setLevel = this.lvl + 1;
             updateKey("lvl", setLevel);
         }
 
         updateKey("xp", setAmount);
+    }
+
+    private String getInvitesAsStringed(){
+        StringBuilder builder = new StringBuilder();
+
+        int i = 1;
+        for (UUID uuid : invitesByUUID){
+            if (i != invitesByUUID.size()){
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+            i++;
+        }
+
+        return builder.toString();
+    }
+
+    private String getTotalMembersAsStringed(){
+        StringBuilder builder = new StringBuilder();
+
+        int i = 1;
+        for (UUID uuid : totalMembersByUUID){
+            if (i != totalMembersByUUID.size()){
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+            i++;
+        }
+
+        return builder.toString();
+    }
+
+    private String getMembersAsStringed(){
+        StringBuilder builder = new StringBuilder();
+
+        int i = 1;
+        for (UUID uuid : membersByUUID){
+            if (i != membersByUUID.size()){
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+            i++;
+        }
+
+        return builder.toString();
+    }
+
+    private String getModeratorsAsStringed(){
+        StringBuilder builder = new StringBuilder();
+
+        int i = 1;
+        for (UUID uuid : modsByUUID){
+            if (i != modsByUUID.size()){
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+            i++;
+        }
+
+        return builder.toString();
+    }
+
+    public boolean hasMember(UUID uuid){
+        return totalMembersByUUID.contains(uuid);
+    }
+
+    public boolean hasMember(ProxiedPlayer player){
+        return members.contains(player);
+    }
+
+    public boolean hasModPerms(UUID uuid){
+        return modsByUUID.contains(uuid) || leaderUUID.equals(uuid);
+    }
+
+    public boolean hasModPerms(ProxiedPlayer player){
+        return moderators.contains(player) || leaderUUID.equals(player.getUniqueId());
+    }
+
+    public int getSize(){
+        return totalMembersByUUID.size();
+    }
+
+    public void removeInvite(UUID uuid){
+        invitesByUUID.remove(uuid);
+        updateKey("invites", getInvitesAsStringed());
+    }
+
+    public void removeInvite(ProxiedPlayer player){
+        invitesByUUID.remove(player.getUniqueId());
+        updateKey("invites", getInvitesAsStringed());
+    }
+
+    public void addMember(ProxiedPlayer player){
+        totalMembersByUUID.add(player.getUniqueId());
+        membersByUUID.add(player.getUniqueId());
+        updateKey("totalmembers", getTotalMembersAsStringed());
+        updateKey("members", getMembersAsStringed());
+    }
+
+    public void removeMemberFromGuild(ProxiedPlayer player){
+        Random RNG = new Random();
+
+        if (leaderUUID.equals(player.getUniqueId())){
+            if (totalMembers.size() <= 1) {
+                try {
+                    totalMembersByUUID.remove(leaderUUID);
+                    membersByUUID.remove(player.getUniqueId());
+                    modsByUUID.remove(player.getUniqueId());
+                    updateKey("totalmembers", getTotalMembersAsStringed());
+                    updateKey("members", getMembersAsStringed());
+                    updateKey("mods", getModeratorsAsStringed());
+                    dispose();
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
+            } else {
+                if (moderators.size() > 0) {
+                    int r = RNG.nextInt(moderators.size());
+                    ProxiedPlayer newLeader = moderators.get(r);
+
+                    totalMembersByUUID.remove(leaderUUID);
+                    leaderUUID = newLeader.getUniqueId();
+                    modsByUUID.remove(newLeader.getUniqueId());
+                }
+                if (members.size() > 0) {
+                    int r = RNG.nextInt(members.size());
+                    ProxiedPlayer newLeader = members.get(r);
+
+                    totalMembersByUUID.remove(leaderUUID);
+                    leaderUUID = newLeader.getUniqueId();
+                    membersByUUID.remove(newLeader.getUniqueId());
+                }
+            }
+        }
+
+        totalMembersByUUID.remove(player.getUniqueId());
+        membersByUUID.remove(player.getUniqueId());
+        modsByUUID.remove(player.getUniqueId());
+        updateKey("totalmembers", getTotalMembersAsStringed());
+        updateKey("leader", leaderUUID);
+        updateKey("members", getMembersAsStringed());
+        updateKey("mods", getModeratorsAsStringed());
+    }
+
+    public void addInvite(ProxiedPlayer to) {
+        invitesByUUID.add(to.getUniqueId());
+        updateKey("invites", getInvitesAsStringed());
+        loadVars();
+    }
+
+    public void toggleMute(){
+        updateKey("muted", ! isMuted);
+    }
+
+    public void setPublic(boolean bool){
+        updateKey("public", bool);
+    }
+
+    public Level getLevel(ProxiedPlayer member){
+        if (this.members.contains(member))
+            return Level.MEMBER;
+        else if (this.moderators.contains(member))
+            return Level.MODERATOR;
+        else if (this.leaderUUID.equals(member.getUniqueId()))
+            return Level.LEADER;
+        else
+            return Level.MEMBER;
+    }
+
+    public void setModerator(ProxiedPlayer player){
+        Random RNG = new Random();
+
+        forModeratorRemove(player);
+
+        this.modsByUUID.add(player.getUniqueId());
+        this.membersByUUID.remove(player.getUniqueId());
+
+        if (leaderUUID.equals(player.getUniqueId())){
+            if (totalMembers.size() <= 1) {
+                try {
+                    totalMembersByUUID.remove(leaderUUID);
+                    membersByUUID.remove(player.getUniqueId());
+                    modsByUUID.remove(player.getUniqueId());
+                    updateKey("totalmembers", getTotalMembersAsStringed());
+                    updateKey("members", getMembersAsStringed());
+                    updateKey("mods", getModeratorsAsStringed());
+                    dispose();
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
+            } else {
+                if (moderators.size() > 0) {
+                    int r = RNG.nextInt(moderators.size());
+                    ProxiedPlayer newLeader = moderators.get(r);
+
+                    totalMembersByUUID.remove(leaderUUID);
+                    leaderUUID = newLeader.getUniqueId();
+                    modsByUUID.remove(newLeader.getUniqueId());
+                }
+                if (members.size() > 0) {
+                    int r = RNG.nextInt(members.size());
+                    ProxiedPlayer newLeader = members.get(r);
+
+                    totalMembersByUUID.remove(leaderUUID);
+                    leaderUUID = newLeader.getUniqueId();
+                    membersByUUID.remove(newLeader.getUniqueId());
+                }
+            }
+        }
+
+        updateKey("leader", leaderUUID);
+        updateKey("members", getMembersAsStringed());
+        updateKey("mods", getModeratorsAsStringed());
+    }
+
+    public void setMember(ProxiedPlayer player){
+        Random RNG = new Random();
+
+        forMemberRemove(player);
+
+        this.modsByUUID.remove(player.getUniqueId());
+        this.membersByUUID.add(player.getUniqueId());
+
+        if (leaderUUID.equals(player.getUniqueId())){
+            if (totalMembers.size() <= 1) {
+                try {
+                    totalMembersByUUID.remove(leaderUUID);
+                    membersByUUID.remove(player.getUniqueId());
+                    modsByUUID.remove(player.getUniqueId());
+                    updateKey("totalmembers", getTotalMembersAsStringed());
+                    updateKey("members", getMembersAsStringed());
+                    updateKey("mods", getModeratorsAsStringed());
+                    dispose();
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
+            } else {
+                if (moderators.size() > 0) {
+                    int r = RNG.nextInt(moderators.size());
+                    ProxiedPlayer newLeader = moderators.get(r);
+
+                    totalMembersByUUID.remove(leaderUUID);
+                    leaderUUID = newLeader.getUniqueId();
+                    modsByUUID.remove(newLeader.getUniqueId());
+                }
+                if (members.size() > 0) {
+                    int r = RNG.nextInt(members.size());
+                    ProxiedPlayer newLeader = members.get(r);
+
+                    totalMembersByUUID.remove(leaderUUID);
+                    leaderUUID = newLeader.getUniqueId();
+                    membersByUUID.remove(newLeader.getUniqueId());
+                }
+            }
+        }
+
+        updateKey("leader", leaderUUID);
+        updateKey("members", getMembersAsStringed());
+        updateKey("mods", getModeratorsAsStringed());
+    }
+
+    public void forModeratorRemove(ProxiedPlayer player){
+        this.modsByUUID.removeIf(m -> m.equals(player.getUniqueId()));
+        updateKey("mods", getModeratorsAsStringed());
+    }
+
+    public void forMemberRemove(ProxiedPlayer player){
+        this.membersByUUID.removeIf(m -> m.equals(player.getUniqueId()));
+        updateKey("members", getMembersAsStringed());
+    }
+
+    public void forTotalMembersRemove(ProxiedPlayer player){
+        this.totalMembersByUUID.removeIf(m -> m.equals(player.getUniqueId()));
+        updateKey("totalmembers", getTotalMembersAsStringed());
+    }
+
+    public void replaceLeader(ProxiedPlayer player){
+
+    }
+
+    public void dispose() throws Throwable {
+        this.leaderUUID = null;
+        this.finalize();
     }
 }

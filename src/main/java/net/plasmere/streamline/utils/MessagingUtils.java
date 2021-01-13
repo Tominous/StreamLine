@@ -3,10 +3,7 @@ package net.plasmere.streamline.utils;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.BungeeMassMessage;
-import net.plasmere.streamline.objects.BungeeMessage;
-import net.plasmere.streamline.objects.DiscordMessage;
-import net.plasmere.streamline.objects.Party;
+import net.plasmere.streamline.objects.*;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.md_5.bungee.api.CommandSender;
@@ -234,6 +231,23 @@ public class MessagingUtils {
         ));
     }
 
+    public static void sendBGUserMessage(Guild guild, CommandSender sender, CommandSender to, String msg){
+        to.sendMessage(TextUtils.codedText(msg
+                .replace("%sender%", ((ProxiedPlayer) sender).getDisplayName())
+                .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(guild.leaderUUID)).getName())
+                .replace("%size%", Integer.toString(guild.getSize()))
+                .replace("%max%", Integer.toString(guild.maxSize))
+                .replace("%mods_count%", Integer.toString(guild.modsByUUID.size()))
+                .replace("%members_count%", Integer.toString(guild.membersByUUID.size()))
+                .replace("%invites_count%", Integer.toString(guild.invites.size()))
+                .replace("%mods%", modsGuild(guild))
+                .replace("%members%", membersGuild(guild))
+                .replace("%invites%", invitesGuild(guild))
+                .replace("%ispublic%", getIsPublicGuild(guild))
+                .replace("%ismuted%", getIsMutedGuild(guild))
+        ));
+    }
+
     public static void sendBUserMessage(CommandSender sender, String msg){
         if (sender instanceof ProxiedPlayer) {
             sender.sendMessage(TextUtils.codedText(msg
@@ -351,5 +365,76 @@ public class MessagingUtils {
 
     public static String getIsMuted(Party party){
         return party.isMuted ? MessageConfUtils.partiesIsMutedTrue : MessageConfUtils.partiesIsMutedFalse;
+    }
+
+    public static String modsGuild(Guild guild){
+        StringBuilder msg = new StringBuilder();
+
+        int i = 1;
+        for (UUID m : guild.modsByUUID){
+            if (i != guild.modsByUUID.size()){
+                msg.append(MessageConfUtils.partiesModsNLast
+                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                );
+            } else {
+                msg.append(MessageConfUtils.partiesModsLast
+                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                );
+            }
+
+            i++;
+        }
+
+        return msg.toString();
+    }
+
+    public static String membersGuild(Guild guild){
+        StringBuilder msg = new StringBuilder();
+
+        int i = 1;
+        for (UUID m : guild.membersByUUID){
+            if (i != guild.membersByUUID.size()){
+                msg.append(MessageConfUtils.partiesMemsNLast
+                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                );
+            } else {
+                msg.append(MessageConfUtils.partiesMemsLast
+                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                );
+            }
+
+            i++;
+        }
+
+        return msg.toString();
+    }
+
+    public static String invitesGuild(Guild guild){
+        StringBuilder msg = new StringBuilder();
+
+        int i = 1;
+        for (UUID m : guild.invites){
+            if (i != guild.invites.size()){
+                msg.append(MessageConfUtils.guildsInvsNLast
+                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                );
+            } else {
+                msg.append(MessageConfUtils.guildsInvsLast
+                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                );
+            }
+
+            i++;
+        }
+
+        return msg.toString();
+    }
+
+    public static String getIsPublicGuild(Guild guild){
+        return guild.isPublic ? MessageConfUtils.guildsIsPublicTrue : MessageConfUtils.guildsIsPublicFalse;
+    }
+
+    public static String getIsMutedGuild(Guild guild){
+        return guild.isMuted ? MessageConfUtils.guildsIsMutedTrue : MessageConfUtils.guildsIsMutedFalse;
     }
 }

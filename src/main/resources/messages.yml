@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "0.1.6.0"
+version: "0.1.7.0"
 
 # All bungee messages accept all color and formatting codes.
 # For new lines, use %newline%.
@@ -401,3 +401,202 @@ sudo:
   worked: "&eJust sudoed &d%user%&e."
   no-work: "&cFailed to sudo &d%user%&c."
   no-sudo: "&cSorry, but you cannot sudo &d%user%&c..."
+
+# When using guild...
+guild:
+  # Fillers:
+  # %leader% = guild leader.
+  # %size% = guild size.
+  # %max% = guild max size.
+  # %sender% = command sender.
+  # Text used for when talking about each guild level...
+  text:
+    leader: "LEADER"
+    moderator: "MODERATOR"
+    member: "MEMBER"
+  # When it finds no guild.
+  no-guild: "&cNo guild found!"
+  # Not high enough guild permissions.
+  no-permission: "&cYou do not have high enough guild permissions to do this!"
+  # When creating a guild...
+  create: "&eYou have just created a guild with size of &3%max%&e!"
+  # Not in a guild...
+  not-in-a-guild: "&cSorry, but you are not in a guild..."
+  other-not-in-guild: "&cSorry, but they are not in the guild..."
+  # Not enough space in guild...
+  not-enough-space: "&cSorry, but the guild is full!"
+  # Message for when someone joins a guild...
+  join:
+    # Fillers:
+    # %user% = the person joining.
+    # %leader% = the guild leader.
+    members: "&b%user% &ejust joined the guild!"
+    user: "&eYou just joined &b%leader%&e's guild!"
+    failure: "&cThere is no guild to join."
+  # Message for when someone leaves a guild...
+  leave:
+    # Fillers:
+    # %user% = the person joining.
+    # %leader% = the guild leader.
+    members: "&b%user% &ejust left the guild."
+    user: "&eYou just left &b%leader%&e's guild."
+    failure: "&cThere is no guild to leave."
+  # Message for when promoting someone...
+  promote:
+    # Fillers:
+    # %user% = the person being promoted.
+    # %leader% = the guild leader.
+    # %level% = the permission level the person is going to.
+    members: "&b%leader% &ejust promoted &b%user% &eto &c%level%&e in the guild!"
+    user: "&eYou were just promoted to &c%level% &ein the guild!"
+    leader: "&eYou just promoted &b%user% to &c%level%&e!"
+    failure: "&cAlready at highest level."
+  # Message for demoting someone...
+  demote:
+    # Fillers:
+    # %user% = the person being demoted.
+    # %leader% = the guild leader.
+    # %level% = the permission level the person is going to.
+    members: "&b%leader% &ejust demoted &b%user% &eto &c%level%&e in the guild."
+    user: "&eYou were just demoted to &c%level% &ein the guild."
+    leader: "&eYou just demoted &b%user% to &c%level%&e."
+    failure: "&cAlready at lowest level."
+    is-leader: "&cCannot demote yourself..."
+  # Message when someone chats...
+  # Fillers:
+  # %sender% = Messager.
+  # %message% = Message user said being sent.
+  chat:
+    message: "&aGUILD &9&l>> &b%sender% &8: &f%message%"
+    # If the guild is muted.
+    muted: "&cSorry, but the guild is muted!"
+    # Message in console when people chat in parties.
+    console: "&b%leader%&d's GUILD &9>> &b%sender% &8: &a%message%"
+  # Message when some lists the guild...
+  list:
+    # Fillers:
+    # %leaderbulk% = leaderbulk section.
+    # %moderatorbulk% = moderatorbulk section.
+    # %memberbulk% = memberbulk section.
+    # %user% = (only in context of "not-last" and "last") the specific member in the list of members
+    # %user% = (in everything else ^) the one running the command.
+    # Main message used to determine the other of things...
+    main: "&7--< &5Guild &6%size%&8/&6%max% &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
+    leaderbulk: "&eGuild Leader: &c%leader%"
+    moderatorbulk:
+      main: "&eGuild Moderators: %moderators%"
+      moderators:
+        not-last: "&b%user%&e, "
+        last: "&b%user%&e."
+        if-none: "&cNONE"
+    memberbulk:
+      main: "&eGuild Members: %members%"
+      members:
+        not-last: "&7%user%&e, "
+        last: "&7%user%&e."
+        if-none: "&cNONE"
+  # Message for opening the guild...
+  open:
+    # Fillers:
+    # %leader% = the guild leader.
+    # %size% = the new size of the guild.
+    members: "&b%leader% &ejust opened the guild to a size of &e%max%&e."
+    leader: "&eYou just opened the guild to a size of &3%max%&e."
+    failure: "&cAlready open."
+  # Message for closing the guild...
+  close:
+    # Fillers:
+    # %leader% = the guild leader.
+    # %size% = the size of the guild.
+    members: "&b%leader% &ejust closed the guild."
+    leader: "&eYou just closed the guild."
+    failure: "&cAlready closed."
+  # Message for disbanding the guild...
+  disband:
+    # Fillers:
+    # %leader% = the guild leader.
+    members: "&b%leader% &ejust disbanded the guild."
+    leader: "&eYou just disbanded the guild."
+  # Message for accepting an invite to a guild...
+  accept:
+    # Fillers:
+    # %user% = the accepter.
+    # %leader% = the guild leader.
+    user: "Accepted &b%leader%&e's request."
+    leader: "&b%user% &ejust &aaccepted &eyour invite!"
+    members: "&b%user% &ejust &aaccepted &ethe invite!"
+    failure: "&cNo invites!"
+  # Message for denying an invite to a guild...
+  deny:
+    # Fillers:
+    # %user% = the accepter.
+    # %leader% = the guild leader.
+    user: "Denied &b%leader%&e's request."
+    leader: "&b%user% &ejust &cdenied &eyour invite!"
+    members: "&b%user% &ejust &cdenied &ethe invite!"
+    failure: "&cNo invites!"
+  # Message for sending an invite of a guild...
+  invite:
+    # Fillers:
+    # %sender% = person sending the request.
+    # %user% = the accepter.
+    # %leader% = the guild leader.
+    # %leaderdefault% = the guild leader formatted without their display name.
+    user: "&b%sender% &einvited you to &b%leader%&e's guild!%newline%&eType &a/guild accept %leaderdefault% &eto join!"
+    members: "&b%sender% &einvited &b%user% &eto your guild!"
+    leader: "&eJust invited &b%user% &eto your guild!"
+    failure: "&cAlready invited this person."
+  kick:
+    # Fillers:
+    # %user% = the person being kicked.
+    user: "&b%leader% &ekicked you from their guild."
+    members: "&b%user% &ewas kicked by &b%leader% &e from the guild."
+    sender: "&eYou kicked &b%user% &efrom your guild."
+    failure: "&cThis player is not in the guild."
+    self: "&cCannot kick self."
+  mute:
+    # Fillers:
+    # %sender% = person sending the command.
+    mute:
+      user: "&eYou just &cmuted &ethe guild."
+      members: "&b%sender% &ejust &cmuted &ethe guild."
+    unmute:
+      user: "&eYou just &aunmuted &ethe guild."
+      members: "&b%sender% &ejust &aunmuted &ethe guild."
+  warp:
+    leader: "&eYou warped your guild of &3%size% &eto your server!"
+    members: "&b%leader% &ewarped you to their server!"
+
+# Messages for the parties command:
+guilds:
+  no-guilds: "&cNo guilds..."
+  # Fillers:
+  # %sender% = person sending the command.
+  # %leader% = party leader.
+  # %size% = current size of party.
+  # %max% = max party size. --> set by leader.
+  # %maxmax% = absolute max party size. --> set by permissions.
+  # %mods_count% = amount of mods in party.
+  # %members_count% = amount of members in the party.
+  # %invites_count% = amount of invites in the party.
+  # %mods% = a list of mods.
+  # %members% = a list of mods.
+  # %invites% = a list of invited players.
+  # %ispublic% = true if open, false if not.
+  # %ismuted% = true if muted, false if not.
+  guilds: "&5PARTY &9>> &eleader&8(&b%leader%&8)&e, size&8(&3%size%&8)&e, partyMax&8(&3%max%&8)&e, permMax&8(&3%maxmax%&8)&e, mods&8(&3%mods_count% &4--> %mods%&8)&e, members&8(&3%members_count% &4--> %members%&8)&e, invites&8(&3%invites_count% &4--> %invites%&8)&e, public&8(%ispublic%&8)&e, muted&8(%ismuted%&8)&e."
+  mods:
+    not-last: "&d%user%&e, "
+    last: "&d%user%"
+  members:
+    not-last: "&d%user%&e, "
+    last: "&d%user%"
+  invites:
+    not-last: "&d%user%&e, "
+    last: "&d%user%"
+  ispublic:
+    true: "&aTRUE"
+    false: "&cFALSE"
+  ismuted:
+    true: "&aTRUE"
+    false: "&cFALSE"

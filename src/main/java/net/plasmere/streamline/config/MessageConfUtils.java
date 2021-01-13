@@ -95,6 +95,19 @@ public class MessageConfUtils {
     public static final String partiesIsPublicFalse = message.getString("parties.ispublic.false");
     public static final String partiesIsMutedTrue = message.getString("parties.ismuted.true");
     public static final String partiesIsMutedFalse = message.getString("parties.ismuted.false");
+    // Guilds.
+    public static final String guildsNone = message.getString("guilds.no-guilds");
+    public static final String guildsMessage = message.getString("guilds.guilds");
+    public static final String guildsModsNLast = message.getString("guilds.mods.not-last");
+    public static final String guildsModsLast = message.getString("guilds.mods.last");
+    public static final String guildsMemsNLast = message.getString("guilds.members.not-last");
+    public static final String guildsMemsLast = message.getString("guilds.members.last");
+    public static final String guildsInvsNLast = message.getString("guilds.invites.not-last");
+    public static final String guildsInvsLast = message.getString("guilds.invites.last");
+    public static final String guildsIsPublicTrue = message.getString("guilds.ispublic.true");
+    public static final String guildsIsPublicFalse = message.getString("guilds.ispublic.false");
+    public static final String guildsIsMutedTrue = message.getString("guilds.ismuted.true");
+    public static final String guildsIsMutedFalse = message.getString("guilds.ismuted.false");
     // Sudo.
     public static final String sudoWorked = message.getString("sudo.worked");
     public static final String sudoNoWork = message.getString("sudo.no-work");

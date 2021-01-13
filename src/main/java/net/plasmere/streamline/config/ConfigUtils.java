@@ -74,8 +74,9 @@ public class ConfigUtils {
     // ... Party.
     //
     public static final boolean comBParty = config.getBoolean("commands.bungee.party.enabled");
-    public static final String comBParPerm = config.getString("commands.bungee.party.permission");
+    public static final boolean comBParQuick = config.getBoolean("commands.bungee.party.quick-chat");
     public static final List<String> comBParMainAliases = config.getStringList("commands.bungee.party.aliases.main");
+    public static final String comBParPerm = config.getString("commands.bungee.party.permission");
     // Join.
     public static final List<String> comBParJoinAliases = config.getStringList("commands.bungee.party.aliases.join");
     // Leave.
@@ -108,6 +109,44 @@ public class ConfigUtils {
     public static final List<String> comBParMuteAliases = config.getStringList("commands.bungee.party.aliases.mute");
     // Warp.
     public static final List<String> comBParWarpAliases = config.getStringList("commands.bungee.party.aliases.warp");
+    // ... Guild.
+    //
+    public static final boolean comBGuild = config.getBoolean("commands.bungee.guild.enabled");
+    public static final boolean comBGuildQuick = config.getBoolean("commands.bungee.guild.quick-chat");
+    public static final String comBGuildPerm = config.getString("commands.bungee.guild.permission");
+    public static final List<String> comBGuildMainAliases = config.getStringList("commands.bungee.guild.aliases.main");
+    // Join.
+    public static final List<String> comBGuildJoinAliases = config.getStringList("commands.bungee.guild.aliases.join");
+    // Leave.
+    public static final List<String> comBGuildLeaveAliases = config.getStringList("commands.bungee.guild.aliases.leave");
+    // Create.
+    public static final List<String> comBGuildCreateAliases = config.getStringList("commands.bungee.guild.aliases.create");
+    // Promote.
+    public static final List<String> comBGuildPromoteAliases = config.getStringList("commands.bungee.guild.aliases.promote");
+    // Demote.
+    public static final List<String> comBGuildDemoteAliases = config.getStringList("commands.bungee.guild.aliases.demote");
+    // Chat.
+    public static final List<String> comBGuildChatAliases = config.getStringList("commands.bungee.guild.aliases.chat");
+    // List.
+    public static final List<String> comBGuildListAliases = config.getStringList("commands.bungee.guild.aliases.list");
+    // Open.
+    public static final List<String> comBGuildOpenAliases = config.getStringList("commands.bungee.guild.aliases.open");
+    // Close.
+    public static final List<String> comBGuildCloseAliases = config.getStringList("commands.bungee.guild.aliases.close");
+    // Disband.
+    public static final List<String> comBGuildDisbandAliases = config.getStringList("commands.bungee.guild.aliases.disband");
+    // Accept.
+    public static final List<String> comBGuildAcceptAliases = config.getStringList("commands.bungee.guild.aliases.accept");
+    // Deny.
+    public static final List<String> comBGuildDenyAliases = config.getStringList("commands.bungee.guild.aliases.deny");
+    // Invite.
+    public static final List<String> comBGuildInvAliases = config.getStringList("commands.bungee.guild.aliases.invite");
+    // Kick.
+    public static final List<String> comBGuildKickAliases = config.getStringList("commands.bungee.guild.aliases.kick");
+    // Mute.
+    public static final List<String> comBGuildMuteAliases = config.getStringList("commands.bungee.guild.aliases.mute");
+    // Warp.
+    public static final List<String> comBGuildWarpAliases = config.getStringList("commands.bungee.guild.aliases.warp");
     // ... Servers.
     // Lobby.
     public static final boolean comBLobby = config.getBoolean("commands.bungee.servers.lobby.enabled");
@@ -181,6 +220,9 @@ public class ConfigUtils {
     public static final int partyMax = config.getInt("modules.bungee.parties.max-size");
     public static final String partyMaxPerm = config.getString("modules.bungee.parties.base-permission");
     public static final boolean partyConsole = config.getBoolean("modules.bungee.parties.chat-to-console");
-    // Sudo.
+    // ... Sudo.
     public static final String noSudoPerm = config.getString("modules.bungee.sudo.no-sudo-permission");
+    // ... Guilds.
+    public static final int guildMax = config.getInt("modules.bungee.guilds.max-size");
+    public static final boolean guildConsole = config.getBoolean("modules.bungee.guilds.chat-to-console");
 }

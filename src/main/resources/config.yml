@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "0.1.6.0"
+version: "0.1.7.0"
 
 #### BASICS ####
 # For links in chat. This is so the API can know when there is a link and when not.
@@ -142,8 +142,10 @@ commands:
         - "!!!"
     # The party command.
     party:
-      # Enabled / disables the use of the "party" bungee command.
+      # Enables / disables the use of the "party" bungee command.
       enabled: true
+      # Enables / disables the use of "/pc <msg>" for quick messaging.
+      quick-chat: true
       # Custom permission.
       permission: "streamline.command.party"
       # All aliases for the command. Listed in yml list format.
@@ -153,6 +155,100 @@ commands:
           - "p"
           - "par"
           - "part"
+        # Join subcommand.
+        join:
+          - "j"
+          - "go"
+          - "join"
+        # Leave subcommand.
+        leave:
+          - "l"
+          - "bye"
+          - "leave"
+        # Create subcommand.
+        create:
+          - "cr"
+          - "new"
+          - "create"
+        # Promote subcommand.
+        promote:
+          - "pr"
+          - "++"
+          - "promote"
+        # Demote subcommand.
+        demote:
+          - "de"
+          - "--"
+          - "demote"
+        # Chat subcommand.
+        chat:
+          - "c"
+          - "ch"
+          - "chat"
+        # List subcommand.
+        list:
+          - "l"
+          - "members"
+          - "list"
+        # Open subcommand.
+        open:
+          - "op"
+          - "open"
+        # Close subcommand.
+        close:
+          - "cl"
+          - "shut"
+          - "close"
+        # Disband subcommand.
+        disband:
+          - "dis"
+          - "end"
+          - "disband"
+        # Accept subcommand.
+        accept:
+          - "a"
+          - "yes"
+          - "accept"
+        # Deny subcommand.
+        deny:
+          - "d"
+          - "no"
+          - "deny"
+        # Invite subcommand.
+        invite:
+          - "inv"
+          - "add"
+          - "invite"
+        # Kick subcommand.
+        kick:
+          - "k"
+          - "-"
+          - "kick"
+        # Mute subcommand.
+        mute:
+          - "mu"
+          - "mut"
+          - "mute"
+        # Warp subcommand.
+        warp:
+          - "wa"
+          - "summon"
+          - "warp"
+    # The party command.
+    guild:
+      # Enables / disables the use of the "party" bungee command.
+      enabled: true
+      # Enables / disables the use of "/gc <msg>" for quick messaging.
+      quick-chat: true
+      # Custom permission.
+      permission: "streamline.command.guild"
+      # All aliases for the command. Listed in yml list format.
+      aliases:
+        # Main command.
+        main:
+          - "g"
+          - "gu"
+          - "gul"
         # Join subcommand.
         join:
           - "j"
@@ -420,3 +516,8 @@ modules:
     # Sudoing...
     sudo:
       no-sudo-permission: "streamline.sudo.nosudo"
+    guilds:
+      # Maximum size of any guild.
+      max-size: 120
+      # Whether or not party chat should be able to be seen on console.
+      chat-to-console: true

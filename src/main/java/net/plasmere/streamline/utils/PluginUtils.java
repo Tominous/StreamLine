@@ -48,7 +48,6 @@ public class PluginUtils {
         Command staffOnline = new StaffOnlineCommand(plugin, ConfigUtils.comBStaffOnlinePerm, getAliases(ConfigUtils.comBStaffOnlineAliases));
         Command globalOnline = new GlobalOnlineCommand(plugin, ConfigUtils.comBGlobalOnlinePerm, getAliases(ConfigUtils.comBGlobalOnlineAliases));
         Command reload = new ReloadCommand(plugin, ConfigUtils.comBReloadPerm, getAliases(ConfigUtils.comBReloadAliases));
-        Command party = new PartyCommand(plugin, ConfigUtils.comBParPerm, getAliases(ConfigUtils.comBParMainAliases));
 
         Command lobby = new GoToServerLobbyCommand(plugin, ConfigUtils.comBLobbyPerm, getAliases(ConfigUtils.comBLobbyAliases));
         Command fabric = new GoToServerVanillaCommand(plugin, ConfigUtils.comBFabricPerm);
@@ -57,6 +56,18 @@ public class PluginUtils {
         Command parties = new PartiesCommand(plugin, ConfigUtils.comBPartiesPerm, getAliases(ConfigUtils.comBPartiesAliases));
         Command bsudo = new SudoCommand(plugin, ConfigUtils.comBSudoPerm, getAliases(ConfigUtils.comBSudoAliases));
 
+
+        Command party = new PartyCommand(plugin, ConfigUtils.comBParPerm, getAliases(ConfigUtils.comBParMainAliases));
+        Command guild = new GuildCommand(plugin, ConfigUtils.comBGuildPerm, getAliases(ConfigUtils.comBGuildMainAliases));
+        List<String> pca = new ArrayList<>();
+        pca.add("pch");
+        pca.add("pchat");
+        List<String> gca = new ArrayList<>();
+        gca.add("gch");
+        gca.add("gchat");
+        Command pc = new PCQuickCommand(plugin, ConfigUtils.comBParPerm, getAliases(pca));
+        Command gc = new PCQuickCommand(plugin, ConfigUtils.comBParPerm, getAliases(gca));
+
         commands.add(stream);
         commands.add(staffChat);
         commands.add(ping);
@@ -64,7 +75,6 @@ public class PluginUtils {
         commands.add(staffOnline);
         commands.add(globalOnline);
         commands.add(reload);
-        commands.add(party);
 
         commands.add(lobby);
         commands.add(fabric);
@@ -72,6 +82,11 @@ public class PluginUtils {
         commands.add(report);
         commands.add(parties);
         commands.add(bsudo);
+
+        commands.add(party);
+        commands.add(guild);
+        commands.add(pc);
+        commands.add(gc);
 
         try {
             for (Command command : commands) {
@@ -87,8 +102,6 @@ public class PluginUtils {
             registerCommand(plugin, stream);
         if (ConfigUtils.comBStaffChat)
             registerCommand(plugin, staffChat);
-        if (ConfigUtils.comBParty)
-            registerCommand(plugin, party);
         if (ConfigUtils.comBParties)
             registerCommand(plugin, parties);
         if (ConfigUtils.comBSudo)
@@ -117,6 +130,16 @@ public class PluginUtils {
             registerCommand(plugin, lobby);
         if (ConfigUtils.comBFabric)
             registerCommand(plugin, fabric);
+
+
+        if (ConfigUtils.comBParty)
+            registerCommand(plugin, party);
+        if (ConfigUtils.comBGuild)
+            registerCommand(plugin, guild);
+        if (ConfigUtils.comBParQuick)
+            registerCommand(plugin, pc);
+        if (ConfigUtils.comBGuildQuick)
+            registerCommand(plugin, gc);
 
         plugin.getLogger().info("Loaded " + commands.size() + " commands into memory...!");
     }
