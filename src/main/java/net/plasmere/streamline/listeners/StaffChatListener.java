@@ -49,7 +49,12 @@ public class StaffChatListener implements Listener {
 
                     e.setCancelled(true);
                     MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg.substring(prefix.length()), plugin);
-                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender, MessageConfUtils.staffChatEmbedTitle, msg.substring(prefix.length()), ConfigUtils.textChannelStaffChat));
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
+                            MessageConfUtils.staffChatEmbedTitle,
+                            MessageConfUtils.discordStaffChatMessage
+                                    .replace("%user%", sender.getName())
+                                    .replace("%message%", msg.substring(prefix.length())),
+                            ConfigUtils.textChannelStaffChat));
                 }
             }
         }
