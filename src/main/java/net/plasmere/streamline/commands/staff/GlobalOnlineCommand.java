@@ -60,7 +60,7 @@ public class GlobalOnlineCommand extends Command {
     private String compileServers(){
         StringBuilder msg = new StringBuilder();
 
-        List<ServerInfo> servers = new ArrayList<>(plugin.getProxy().getServers().values());
+        List<ServerInfo> servers = new ArrayList<>();
 
         for (ServerInfo server : plugin.getProxy().getServers().values()){
             if (server.getPlayers().size() > 0) {
