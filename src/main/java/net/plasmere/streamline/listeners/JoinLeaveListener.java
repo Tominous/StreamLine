@@ -69,13 +69,13 @@ public class JoinLeaveListener implements Listener {
         ProxiedPlayer player = e.getPlayer();
         switch (ConfigUtils.moduleBPlayerLeaves) {
             case "yes":
-                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(player,
+                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
                         MessageConfUtils.bungeeOffline.replace("%player%", player.getName()),
                         "streamline.staff"));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
-                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(player,
+                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
                             MessageConfUtils.bungeeOffline.replace("%player%", player.getName()),
                             "streamline.staff"));
                 }
@@ -86,14 +86,14 @@ public class JoinLeaveListener implements Listener {
         }
         switch (ConfigUtils.moduleDPlayerLeaves) {
             case "yes":
-                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player,
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                         MessageConfUtils.discordOfflineEmbed,
                         MessageConfUtils.discordOffline.replace("%player%", player.getName()),
                         ConfigUtils.textChannelBLeaves));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
-                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player,
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                             MessageConfUtils.discordOfflineEmbed,
                             MessageConfUtils.discordOffline.replace("%player%", player.getName()),
                             ConfigUtils.textChannelBLeaves));
