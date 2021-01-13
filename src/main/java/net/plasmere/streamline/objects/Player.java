@@ -28,11 +28,13 @@ public class Player {
 
     public Player(ProxiedPlayer player) {
         this.player = player;
+        this.uuid = player.getUniqueId();
         construct(player.getUniqueId(), true);
     }
 
     public Player(ProxiedPlayer player, boolean create){
         this.player = player;
+        this.uuid = player.getUniqueId();
         construct(player.getUniqueId(), create);
     }
 
@@ -176,6 +178,7 @@ public class Player {
     }
 
     public void loadVars(){
+        this.uuid = UUID.fromString(getFromKey("uuid"));
         this.player = UUIDFetcher.getProxiedPlayer(this.uuid);
         this.xp = Integer.parseInt(getFromKey("xp"));
         this.lvl = Integer.parseInt(getFromKey("lvl"));
@@ -183,7 +186,7 @@ public class Player {
 
     public List<String> propertiesDefaults() {
         List<String> defaults = new ArrayList<>();
-        defaults.add("uuid=" + uuid);
+        defaults.add("uuid=" + this.uuid);
         defaults.add("xp=0");
         defaults.add("lvl=1");
         //defaults.add("");

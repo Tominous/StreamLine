@@ -4,13 +4,15 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.Guild;
+import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.GuildUtils;
+import net.plasmere.streamline.utils.PlayerUtils;
 
-public class GuildXPTimer implements Runnable {
+public class PlayerXPTimer implements Runnable {
     public int countdown;
     public int reset;
 
-    public GuildXPTimer(int seconds) {
+    public PlayerXPTimer(int seconds) {
         this.countdown = seconds;
         this.reset = seconds;
     }
@@ -28,13 +30,13 @@ public class GuildXPTimer implements Runnable {
         countdown = reset;
         try {
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                if (GuildUtils.getGuild(player) == null) continue;
+                if (PlayerUtils.getStat(player) == null) continue;
 
-                Guild guild = GuildUtils.getGuild(player);
-                assert guild != null;
-                guild.addXp(ConfigUtils.xpPerGive);
+                Player p = PlayerUtils.getStat(player);
+                assert p != null;
+                p.addXp(ConfigUtils.xpPerGive);
 
-                guild.saveInfo();
+                p.saveInfo();
             }
         } catch (Exception e){
             e.printStackTrace();
