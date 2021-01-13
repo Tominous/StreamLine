@@ -38,5 +38,7 @@ public class GuildXPTimer implements Runnable {
         } catch (Exception e){
             e.printStackTrace();
         }
+
+        StreamLine.getInstance().getLogger().info("Just gave " + ConfigUtils.xpPerGive + " GEXP to " + GuildUtils.getGuilds().size() + " guilds!");
     }
 }

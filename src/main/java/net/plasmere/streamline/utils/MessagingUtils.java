@@ -222,9 +222,11 @@ public class MessagingUtils {
                 .replace("%maxmax%", Integer.toString(party.getMaxSize(party.leader)))
                 .replace("%mods_count%", Integer.toString(party.moderators.size()))
                 .replace("%members_count%", Integer.toString(party.members.size()))
+                .replace("%total_count%", Integer.toString(party.totalMembers.size()))
                 .replace("%invites_count%", Integer.toString(party.invites.size()))
                 .replace("%mods%", mods(party))
                 .replace("%members%", members(party))
+                .replace("%totalmembers%", membersT(party))
                 .replace("%invites%", invites(party))
                 .replace("%ispublic%", getIsPublic(party))
                 .replace("%ismuted%", getIsMuted(party))
@@ -239,9 +241,11 @@ public class MessagingUtils {
                 .replace("%max%", Integer.toString(guild.maxSize))
                 .replace("%mods_count%", Integer.toString(guild.modsByUUID.size()))
                 .replace("%members_count%", Integer.toString(guild.membersByUUID.size()))
+                .replace("%total_count%", Integer.toString(guild.totalMembersByUUID.size()))
                 .replace("%invites_count%", Integer.toString(guild.invites.size()))
                 .replace("%mods%", modsGuild(guild))
                 .replace("%members%", membersGuild(guild))
+                .replace("%totalmembers%", membersTGuild(guild))
                 .replace("%invites%", invitesGuild(guild))
                 .replace("%ispublic%", getIsPublicGuild(guild))
                 .replace("%ismuted%", getIsMutedGuild(guild))
@@ -338,6 +342,27 @@ public class MessagingUtils {
         return msg.toString();
     }
 
+    public static String membersT(Party party){
+        StringBuilder msg = new StringBuilder();
+
+        int i = 1;
+        for (ProxiedPlayer m : party.totalMembers){
+            if (i != party.totalMembers.size()){
+                msg.append(MessageConfUtils.partiesTMemsNLast
+                        .replace("%user%", m.getName())
+                );
+            } else {
+                msg.append(MessageConfUtils.partiesTMemsLast
+                        .replace("%user%", m.getName())
+                );
+            }
+
+            i++;
+        }
+
+        return msg.toString();
+    }
+
     public static String invites(Party party){
         StringBuilder msg = new StringBuilder();
 
@@ -373,11 +398,11 @@ public class MessagingUtils {
         int i = 1;
         for (UUID m : guild.modsByUUID){
             if (i != guild.modsByUUID.size()){
-                msg.append(MessageConfUtils.partiesModsNLast
+                msg.append(MessageConfUtils.guildsModsNLast
                         .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
                 );
             } else {
-                msg.append(MessageConfUtils.partiesModsLast
+                msg.append(MessageConfUtils.guildsModsLast
                         .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
                 );
             }
@@ -394,11 +419,32 @@ public class MessagingUtils {
         int i = 1;
         for (UUID m : guild.membersByUUID){
             if (i != guild.membersByUUID.size()){
-                msg.append(MessageConfUtils.partiesMemsNLast
+                msg.append(MessageConfUtils.guildsMemsNLast
                         .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
                 );
             } else {
-                msg.append(MessageConfUtils.partiesMemsLast
+                msg.append(MessageConfUtils.guildsMemsLast
+                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                );
+            }
+
+            i++;
+        }
+
+        return msg.toString();
+    }
+
+    public static String membersTGuild(Guild guild){
+        StringBuilder msg = new StringBuilder();
+
+        int i = 1;
+        for (UUID m : guild.totalMembersByUUID){
+            if (i != guild.totalMembersByUUID.size()){
+                msg.append(MessageConfUtils.guildsTMemsNLast
+                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                );
+            } else {
+                msg.append(MessageConfUtils.guildsTMemsLast
                         .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
                 );
             }

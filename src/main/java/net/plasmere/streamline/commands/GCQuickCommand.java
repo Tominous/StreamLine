@@ -15,6 +15,6 @@ public class GCQuickCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        plugin.getProxy().getPluginManager().dispatchCommand(sender, "guild chat " + TextUtils.concat(args));
+        plugin.getProxy().getPluginManager().dispatchCommand(sender, "guild chat " + TextUtils.normalize(args));
     }
 }

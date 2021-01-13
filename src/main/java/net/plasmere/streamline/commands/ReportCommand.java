@@ -18,7 +18,7 @@ public class ReportCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        String msg = TextUtils.concat(args);
+        String msg = TextUtils.normalize(args);
 
         if (msg.length() <= 0){
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.discordNeedsMore);
@@ -32,7 +32,7 @@ public class ReportCommand extends Command {
         if (ConfigUtils.moduleReportsBConfirmation)
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bConfirmReportMessage
                     .replace("%reporter%", sender.getName())
-                    .replace("%report%", TextUtils.concat(args))
+                    .replace("%report%", TextUtils.normalize(args))
             );
     }
 }

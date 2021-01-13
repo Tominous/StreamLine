@@ -90,12 +90,14 @@ public class TextUtils {
         return msg.startsWith("/");
     }
 
-    public static String concat(String[] splitMsg){
+    public static String normalize(String[] splitMsg){
         int i = 0;
         StringBuilder text = new StringBuilder();
 
         for (String split : splitMsg){
             i++;
+            if (split.equals("")) continue;
+
             if (i < splitMsg.length)
                 text.append(split).append(" ");
             else
@@ -105,12 +107,14 @@ public class TextUtils {
         return text.toString();
     }
 
-    public static String concat(List<String> splitMsg) {
+    public static String normalize(List<String> splitMsg) {
         int i = 0;
         StringBuilder text = new StringBuilder();
 
         for (String split : splitMsg){
             i++;
+            if (split.equals("")) continue;
+
             if (i < splitMsg.size())
                 text.append(split).append(" ");
             else

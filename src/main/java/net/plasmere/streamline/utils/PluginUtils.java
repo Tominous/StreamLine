@@ -67,7 +67,7 @@ public class PluginUtils {
         gca.add("gch");
         gca.add("gchat");
         Command pc = new PCQuickCommand(plugin, ConfigUtils.comBParPerm, getAliases(pca));
-        Command gc = new PCQuickCommand(plugin, ConfigUtils.comBParPerm, getAliases(gca));
+        Command gc = new GCQuickCommand(plugin, ConfigUtils.comBParPerm, getAliases(gca));
 
         commands.add(stream);
         commands.add(staffChat);

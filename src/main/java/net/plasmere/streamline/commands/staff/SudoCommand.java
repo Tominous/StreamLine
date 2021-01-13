@@ -39,7 +39,7 @@ public class SudoCommand extends Command implements TabExecutor {
                 return;
             }
 
-            if (plugin.getProxy().getPluginManager().dispatchCommand(sudoOn, TextUtils.concat(nargs))){
+            if (plugin.getProxy().getPluginManager().dispatchCommand(sudoOn, TextUtils.normalize(nargs))){
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoWorked
                         .replace("%user%", sudoOn.getDisplayName())
                 );

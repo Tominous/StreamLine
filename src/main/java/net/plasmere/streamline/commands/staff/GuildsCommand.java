@@ -20,7 +20,7 @@ public class GuildsCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (GuildUtils.getGuilds().size() <= 0) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.partiesNone);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.guildsNone);
             return;
         }
         for (Guild guild : GuildUtils.getGuilds()){

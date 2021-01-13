@@ -89,6 +89,8 @@ public class MessageConfUtils {
     public static final String partiesModsLast = message.getString("parties.mods.last");
     public static final String partiesMemsNLast = message.getString("parties.members.not-last");
     public static final String partiesMemsLast = message.getString("parties.members.last");
+    public static final String partiesTMemsNLast = message.getString("parties.totalmembers.not-last");
+    public static final String partiesTMemsLast = message.getString("parties.totalmembers.last");
     public static final String partiesInvsNLast = message.getString("parties.invites.not-last");
     public static final String partiesInvsLast = message.getString("parties.invites.last");
     public static final String partiesIsPublicTrue = message.getString("parties.ispublic.true");
@@ -102,6 +104,8 @@ public class MessageConfUtils {
     public static final String guildsModsLast = message.getString("guilds.mods.last");
     public static final String guildsMemsNLast = message.getString("guilds.members.not-last");
     public static final String guildsMemsLast = message.getString("guilds.members.last");
+    public static final String guildsTMemsNLast = message.getString("guilds.totalmembers.not-last");
+    public static final String guildsTMemsLast = message.getString("guilds.totalmembers.last");
     public static final String guildsInvsNLast = message.getString("guilds.invites.not-last");
     public static final String guildsInvsLast = message.getString("guilds.invites.last");
     public static final String guildsIsPublicTrue = message.getString("guilds.ispublic.true");

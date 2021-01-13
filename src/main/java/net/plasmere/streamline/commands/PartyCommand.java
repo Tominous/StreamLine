@@ -1,31 +1,19 @@
 package net.plasmere.streamline.commands;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import net.luckperms.api.LuckPerms;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.group.Group;
-import net.luckperms.api.node.NodeType;
-import net.luckperms.api.node.types.PermissionNode;
-import net.luckperms.api.query.QueryOptions;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.NoPlayerFoundException;
+import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PartyUtils;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.plasmere.streamline.utils.TextUtils;
-import org.apache.commons.collections4.iterators.IteratorChain;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class PartyCommand extends Command implements TabExecutor {
     private final StreamLine plugin;
@@ -125,11 +113,9 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        List<String> nargs = new ArrayList<>(Arrays.asList(args));
+                        args[0] = "";
 
-                        nargs.remove(args[0]);
-
-                        PartyUtils.sendChat((ProxiedPlayer) sender, TextUtils.concat(nargs));
+                        PartyUtils.sendChat((ProxiedPlayer) sender, TextUtils.normalize(args));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();

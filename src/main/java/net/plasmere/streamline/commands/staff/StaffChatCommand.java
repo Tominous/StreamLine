@@ -24,12 +24,12 @@ public class StaffChatCommand extends Command {
     public void execute(CommandSender sender, String[] args) {
         if (ConfigUtils.moduleStaffChat)
             if (sender.hasPermission("streamline.staff.staffchat")) {
-                MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, TextUtils.concat(args), plugin);
+                MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, TextUtils.normalize(args), plugin);
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                         MessageConfUtils.staffChatEmbedTitle,
                         MessageConfUtils.discordStaffChatMessage
                                 .replace("%user%", sender.getName())
-                                .replace("%message%", TextUtils.concat(args)),
+                                .replace("%message%", TextUtils.normalize(args)),
                         ConfigUtils.textChannelStaffChat));
             } else
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix + MessageConfUtils.noPerm);

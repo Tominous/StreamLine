@@ -252,6 +252,12 @@ public class Guild {
         List<UUID> uuids = new ArrayList<>();
 
         try {
+            if (getFromKey("mods").equals("") || getFromKey("mods") == null) return uuids;
+            if (! getFromKey("mods").contains(".")) {
+                uuids.add(UUID.fromString(getFromKey("mods")));
+                return uuids;
+            }
+
             for (String uuid : getFromKey("mods").split("\\.")) {
                 try {
                     uuids.add(UUID.fromString(uuid));
@@ -270,6 +276,12 @@ public class Guild {
         List<UUID> uuids = new ArrayList<>();
 
         try {
+            if (getFromKey("members").equals("") || getFromKey("members") == null) return uuids;
+            if (! getFromKey("members").contains(".")) {
+                uuids.add(UUID.fromString(getFromKey("members")));
+                return uuids;
+            }
+
             for (String uuid : getFromKey("members").split("\\.")) {
                 try {
                     uuids.add(UUID.fromString(uuid));
@@ -288,12 +300,19 @@ public class Guild {
         List<UUID> uuids = new ArrayList<>();
 
         try {
+            if (getFromKey("totalmembers").equals("") || getFromKey("totalmembers") == null) return uuids;
+            if (! getFromKey("totalmembers").contains(".")) {
+                uuids.add(UUID.fromString(getFromKey("totalmembers")));
+                return uuids;
+            }
+
             for (String uuid : getFromKey("totalmembers").split("\\.")) {
                 try {
                     uuids.add(UUID.fromString(uuid));
                 } catch (Exception e) {
                     //continue;
-                }            }
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -305,12 +324,19 @@ public class Guild {
         List<UUID> uuids = new ArrayList<>();
 
         try {
+            if (getFromKey("invites").equals("") || getFromKey("invites") == null) return uuids;
+            if (! getFromKey("invites").contains(".")) {
+                uuids.add(UUID.fromString(getFromKey("invites")));
+                return uuids;
+            }
+
             for (String uuid : getFromKey("invites").split("\\.")) {
                 try {
                     uuids.add(UUID.fromString(uuid));
                 } catch (Exception e) {
                     //continue;
-                }            }
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -498,7 +524,9 @@ public class Guild {
 
     public void addMember(ProxiedPlayer player){
         totalMembersByUUID.add(player.getUniqueId());
+        totalMembers.add(player);
         membersByUUID.add(player.getUniqueId());
+        members.add(player);
         updateKey("totalmembers", getTotalMembersAsStringed());
         updateKey("members", getMembersAsStringed());
     }

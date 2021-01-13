@@ -74,8 +74,21 @@ public class JoinLeaveListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onLeave(PlayerDisconnectEvent e) {
-        ProxiedPlayer player = e.getPlayer();
+    public void onLeave(PlayerDisconnectEvent ev) {
+        ProxiedPlayer player = ev.getPlayer();
+
+        try {
+            for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()){
+                if (p.equals(player)) continue;
+                if (GuildUtils.getGuild(player).hasMember(p)) break;
+
+
+                GuildUtils.removeGuild(GuildUtils.getGuild(player));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         switch (ConfigUtils.moduleBPlayerLeaves) {
             case "yes":
                 MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),

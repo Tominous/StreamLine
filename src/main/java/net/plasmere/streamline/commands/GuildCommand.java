@@ -13,7 +13,6 @@ import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.TextUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -124,11 +123,9 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        List<String> nargs = new ArrayList<>(Arrays.asList(args));
+                        args[0] = "";
 
-                        nargs.remove(args[0]);
-
-                        GuildUtils.sendChat((ProxiedPlayer) sender, TextUtils.concat(nargs));
+                        GuildUtils.sendChat((ProxiedPlayer) sender, TextUtils.normalize(args));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();

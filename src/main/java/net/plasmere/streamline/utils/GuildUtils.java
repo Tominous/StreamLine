@@ -15,6 +15,7 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Guild;
 
+import java.io.IOException;
 import java.util.*;
 
 public class GuildUtils {
@@ -33,8 +34,10 @@ public class GuildUtils {
         try {
             Guild it = null;
             for (Guild guild : guilds) {
-                if (guild.hasMember(player.getUniqueId()))
+                if (guild.hasMember(player)) {
                     it = guild;
+                    break;
+                }
             }
             return it;
         } catch (Exception e) {
@@ -100,7 +103,14 @@ public class GuildUtils {
         return hasLeader;
     }
 
-    public static void removeGuild(Guild guild){ guilds.remove(guild); }
+    public static void removeGuild(Guild guild){
+        try {
+            guild.saveInfo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        guilds.remove(guild);
+    }
 
     public static void sendInvite(ProxiedPlayer to, ProxiedPlayer from) throws Exception {
         try {

@@ -15,6 +15,6 @@ public class PCQuickCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        plugin.getProxy().getPluginManager().dispatchCommand(sender, "party chat " + TextUtils.concat(args));
+        plugin.getProxy().getPluginManager().dispatchCommand(sender, "party chat " + TextUtils.normalize(args));
     }
 }
