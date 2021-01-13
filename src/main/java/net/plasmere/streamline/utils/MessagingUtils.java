@@ -413,7 +413,7 @@ public class MessagingUtils {
         StringBuilder msg = new StringBuilder();
 
         int i = 1;
-        for (UUID m : guild.invites){
+        for (UUID m : guild.invitesByUUID){
             if (i != guild.invites.size()){
                 msg.append(MessageConfUtils.guildsInvsNLast
                         .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
