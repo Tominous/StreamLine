@@ -144,6 +144,8 @@ public class ConfigUtils {
     public static final String comBSudoPerm = config.getString("commands.bungee.staff.bsudo.permission");
     // ... ... Modules.
     // ... Discord.
+    // Basics.
+    public static final boolean moduleUseMCAvatar = config.getBoolean("modules.discord.use-mc-avatar");
     // Reports.
     public static final boolean moduleReportsDConfirmation = config.getBoolean("modules.discord.reports.send-confirmation");
     public static final boolean moduleReportToChannel = config.getBoolean("modules.discord.reports.report-to-channel");

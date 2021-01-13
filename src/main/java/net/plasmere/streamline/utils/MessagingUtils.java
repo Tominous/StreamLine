@@ -127,12 +127,32 @@ public class MessagingUtils {
 
     public static void sendDiscordEBMessage(DiscordMessage message){
         try {
-            Objects.requireNonNull(jda.getTextChannelById(message.channel))
-                    .sendMessage(
-                            eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
-                                    .setDescription(message.message.replace("%sender%", message.sender.getName()))
-                                    .build()
-                    ).queue();
+            if (ConfigUtils.moduleUseMCAvatar) {
+                if (message.sender instanceof ProxiedPlayer) {
+                    Objects.requireNonNull(jda.getTextChannelById(message.channel))
+                            .sendMessage(
+                                    eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
+                                            .setDescription(message.message.replace("%sender%", message.sender.getName()))
+                                            .setAuthor(FaceFetcher.getFaceAvatarURL((ProxiedPlayer) message.sender))
+                                            .build()
+                            ).queue();
+                } else {
+                    Objects.requireNonNull(jda.getTextChannelById(message.channel))
+                            .sendMessage(
+                                    eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
+                                            .setDescription(message.message.replace("%sender%", message.sender.getName()))
+                                            .setAuthor(jda.getSelfUser().getAvatarId())
+                                            .build()
+                            ).queue();
+                }
+            } else {
+                Objects.requireNonNull(jda.getTextChannelById(message.channel))
+                        .sendMessage(
+                                eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
+                                        .setDescription(message.message.replace("%sender%", message.sender.getName()))
+                                        .build()
+                        ).queue();
+            }
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -140,26 +160,49 @@ public class MessagingUtils {
 
     public static void sendDiscordReportMessage(String sender, boolean fromBungee, String report){
         try {
-            if (fromBungee)
-                Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessage(
-                        eb.setTitle(MessageConfUtils.reportEmbedTitle)
-                        .setDescription(TextUtils.newLined(
-                                MessageConfUtils.bToDReportMessage
-                                        .replace("%reporter%", sender)
-                                        .replace("%report%", report)
-                                )
-                        ).build()
-                ).queue();
-            else
-                Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessage(
-                        eb.setTitle(MessageConfUtils.reportEmbedTitle)
-                        .setDescription(TextUtils.newLined(
-                                MessageConfUtils.dToDReportMessage
-                                    .replace("%reporter%", sender)
-                                    .replace("%report%", report)
-                                )
-                        ).build()
-                ).queue();
+            String replace = MessageConfUtils.dToDReportMessage
+                    .replace("%reporter%", sender)
+                    .replace("%report%", report);
+
+            String replace1 = MessageConfUtils.bToDReportMessage
+                    .replace("%reporter%", sender)
+                    .replace("%report%", report);
+
+            if (ConfigUtils.moduleUseMCAvatar) {
+                if (fromBungee)
+                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessage(
+                            eb.setTitle(MessageConfUtils.reportEmbedTitle)
+                                    .setDescription(TextUtils.newLined(
+                                            replace1
+                                            )
+                                    ).setAuthor(FaceFetcher.getFaceAvatarURL(sender)).build()
+                    ).queue();
+                else
+                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessage(
+                            eb.setTitle(MessageConfUtils.reportEmbedTitle)
+                                    .setDescription(TextUtils.newLined(
+                                            replace
+                                            )
+                                    ).setAuthor(FaceFetcher.getFaceAvatarURL(sender)).build()
+                    ).queue();
+            } else {
+                if (fromBungee)
+                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessage(
+                            eb.setTitle(MessageConfUtils.reportEmbedTitle)
+                                    .setDescription(TextUtils.newLined(
+                                            replace1
+                                            )
+                                    ).build()
+                    ).queue();
+                else
+                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessage(
+                            eb.setTitle(MessageConfUtils.reportEmbedTitle)
+                                    .setDescription(TextUtils.newLined(
+                                            replace
+                                            )
+                                    ).build()
+                    ).queue();
+            }
         } catch (Exception e){
             e.printStackTrace();
         }

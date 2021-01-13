@@ -323,6 +323,8 @@ commands:
 modules:
   # Discord modules...
   discord:
+    # Enables / disables if the bot should use the sender's Minecraft "face" avatar when sending messages.
+    use-mc-avatar: true
     # Reports...
     reports:
       # Enables / disables sending a confirmation message to the sender of the report.
