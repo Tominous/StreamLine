@@ -28,13 +28,13 @@ public class JoinLeaveListener implements Listener {
         ProxiedPlayer player = e.getPlayer();
         switch (ConfigUtils.moduleBPlayerJoins) {
             case "yes":
-                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(player,
+                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
                         MessageConfUtils.bungeeOnline.replace("%player%", player.getName()),
                         "streamline.staff"));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
-                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(player,
+                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
                             MessageConfUtils.bungeeOnline.replace("%player%", player.getName()),
                             "streamline.staff"));
                 }
@@ -45,14 +45,14 @@ public class JoinLeaveListener implements Listener {
         }
         switch (ConfigUtils.moduleDPlayerJoins) {
             case "yes":
-                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player,
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                         MessageConfUtils.discordOnlineEmbed,
                         MessageConfUtils.discordOnline.replace("%player%", player.getName()),
                         ConfigUtils.textChannelBJoins));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
-                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player,
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                             MessageConfUtils.discordOnlineEmbed,
                             MessageConfUtils.discordOnline.replace("%player%", player.getName()),
                             ConfigUtils.textChannelBJoins));

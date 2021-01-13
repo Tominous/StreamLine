@@ -4,6 +4,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.DiscordMessage;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.TextUtils;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -48,7 +49,7 @@ public class StaffChatListener implements Listener {
 
                     e.setCancelled(true);
                     MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg.substring(prefix.length()), plugin);
-                    MessagingUtils.sendDiscordStaffMessageSC(sender, msg.substring(prefix.length()));
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender, MessageConfUtils.staffChatEmbedTitle, msg.substring(prefix.length()), ConfigUtils.textChannelStaffChat));
                 }
             }
         }

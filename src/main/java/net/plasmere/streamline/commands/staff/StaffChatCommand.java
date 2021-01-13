@@ -4,6 +4,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.DiscordMessage;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.TextUtils;
 import net.md_5.bungee.api.CommandSender;
@@ -24,7 +25,7 @@ public class StaffChatCommand extends Command {
         if (ConfigUtils.moduleStaffChat)
             if (sender.hasPermission("streamline.staff.staffchat")) {
                 MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, TextUtils.concat(args), plugin);
-                MessagingUtils.sendDiscordStaffMessageSC(sender, TextUtils.concat(args));
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender, MessageConfUtils.staffChatEmbedTitle, TextUtils.concat(args), ConfigUtils.textChannelStaffChat));
             } else
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix + MessageConfUtils.noPerm);
     }

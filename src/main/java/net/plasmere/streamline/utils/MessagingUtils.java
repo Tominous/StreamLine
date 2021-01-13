@@ -60,10 +60,7 @@ public class MessagingUtils {
         }
 
         for (ProxiedPlayer player : people) {
-            player.sendMessage(TextUtils.codedText((message.title + message.transition + message.message)
-                            .replace("%sender%", message.sender.getName())
-                    )
-            );
+            sendBungeeMessage(new BungeeMessage(message.sender, player, message.title, message.transition, message.message));
         }
     }
 
@@ -128,20 +125,6 @@ public class MessagingUtils {
         }
     }
 
-    public static void sendDiscordEBStaffMessage(String title, String msg){
-        try {
-            Objects.requireNonNull(
-                    jda.getTextChannelById(ConfigUtils.textChannelStaffChat))
-                    .sendMessage(
-                            eb.setTitle(title)
-                                    .setDescription(msg)
-                                    .build()
-                    ).queue();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     public static void sendDiscordEBMessage(DiscordMessage message){
         try {
             Objects.requireNonNull(jda.getTextChannelById(message.channel))
@@ -150,23 +133,6 @@ public class MessagingUtils {
                                     .setDescription(message.message.replace("%sender%", message.sender.getName()))
                                     .build()
                     ).queue();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public static void sendDiscordStaffMessageSC(CommandSender sender, String msg){
-        try {
-            Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelStaffChat)).sendMessage(
-                    eb.setTitle(MessageConfUtils.staffChatEmbedTitle)
-                    .setDescription(TextUtils.newLined(
-                            MessageConfUtils.discordStaffChatMessage
-                                .replace("%user%", sender.getName())
-                                .replace("%message%", msg)
-                                .replace("%newline%", "\n")
-                            )
-                    ).build()
-            ).queue();
         } catch (Exception e){
             e.printStackTrace();
         }

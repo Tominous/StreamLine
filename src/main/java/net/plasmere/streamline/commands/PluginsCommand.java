@@ -4,7 +4,6 @@ import net.plasmere.streamline.StreamLine;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -20,32 +19,30 @@ public class PluginsCommand extends Command {
     }
 
     public void execute(CommandSender sender, String[] args) {
-        ProxiedPlayer player = (ProxiedPlayer) sender;
-
         if (args.length > 0) {
-            player.sendMessage(new TextComponent(ChatColor.RED + "Sorry, but you entered too many arguments..."));
-            player.sendMessage(new TextComponent(ChatColor.RED + "Usage: /plugins"));
+            sender.sendMessage(new TextComponent(ChatColor.RED + "Sorry, but you entered too many arguments..."));
+            sender.sendMessage(new TextComponent(ChatColor.RED + "Usage: /plugins"));
         } else {
             TextComponent msg = new TextComponent(ChatColor.GOLD + "Plugins" + ChatColor.DARK_GRAY + ": " + getPluginList());
 
-            player.sendMessage(msg);
+            sender.sendMessage(msg);
         }
     }
 
     private String getPluginList(){
         Collection<Plugin> plugins = plugin.getProxy().getPluginManager().getPlugins();
 
-        String pl = "";
+        StringBuilder pl = new StringBuilder();
         int i = 0;
 
         for (Plugin plugin : plugins){
             if (!(i == plugins.size() - 1))
-                pl += ChatColor.GREEN + plugin.getDescription().getName() + ChatColor.DARK_GRAY + ", ";
+                pl.append(ChatColor.GREEN).append(plugin.getDescription().getName()).append(ChatColor.DARK_GRAY).append(", ");
             else
-                pl += ChatColor.GREEN + plugin.getDescription().getName() + ChatColor.DARK_GRAY + ".";
+                pl.append(ChatColor.GREEN).append(plugin.getDescription().getName()).append(ChatColor.DARK_GRAY).append(".");
             i++;
         }
 
-        return pl;
+        return pl.toString();
     }
 }
