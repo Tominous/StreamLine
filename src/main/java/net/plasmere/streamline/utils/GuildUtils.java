@@ -33,14 +33,12 @@ public class GuildUtils {
 
     public static Guild getGuild(ProxiedPlayer player) {
         try {
-            Guild it = null;
             for (Guild guild : guilds) {
                 if (guild.hasMember(player)) {
-                    it = guild;
-                    break;
+                    return guild;
                 }
             }
-            return it;
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -69,19 +67,6 @@ public class GuildUtils {
     }
 
     public static void addGuild(Guild guild){
-        try {
-            if (guilds.contains(getGuild(UUIDFetcher.getProxiedPlayer(guild.leaderUUID)))) {
-                try {
-                    guild.dispose();
-                } catch (Throwable e) {
-                    e.printStackTrace();
-                }
-                return;
-            }
-        } catch (Exception e){
-            guilds.add(guild);
-            return;
-        }
         guilds.add(guild);
     }
 
@@ -131,6 +116,10 @@ public class GuildUtils {
             if (! guild.hasMember(from.getUniqueId())) {
                 MessagingUtils.sendBUserMessage(from, notInGuild);
                 return;
+            }
+
+            if (to.equals(from)) {
+                MessagingUtils.sendBUserMessage(from, inviteNonSelf);
             }
 
             if (! guild.hasModPerms(from.getUniqueId())) {
@@ -351,7 +340,7 @@ public class GuildUtils {
         Guild guild = getGuild(sender);
 
         if (!isGuild(guild) || guild == null) {
-            MessagingUtils.sendBUserMessage(sender, noGuildFound);
+            MessagingUtils.sendBUserMessage(sender, kickFailure);
             return;
         }
 
@@ -943,8 +932,12 @@ public class GuildUtils {
         try {
             Guild guild = getGuild(sender);
 
-            if (!isGuild(guild) || guild == null) {
+            if (! isGuild(guild) || guild == null) {
                 MessagingUtils.sendBUserMessage(sender, noGuildFound);
+
+                StreamLine.getInstance().getLogger().info("isGuild --> " + (isGuild(guild) ? "yes" : "no"));
+                StreamLine.getInstance().getLogger().info("isNull --> " + ((guild == null) ? "yes" : "no"));
+
                 return;
             }
 
@@ -1057,6 +1050,7 @@ public class GuildUtils {
     public static final String inviteLeader = message.getString("guild.invite.leader");
     public static final String inviteMembers = message.getString("guild.invite.members");
     public static final String inviteFailure = message.getString("guild.invite.failure");
+    public static final String inviteNonSelf = message.getString("guild.invite.non-self");
     // Kick.
     public static final String kickUser = message.getString("guild.kick.user");
     public static final String kickSender = message.getString("guild.kick.sender");

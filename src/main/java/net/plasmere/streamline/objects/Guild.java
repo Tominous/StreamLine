@@ -487,7 +487,7 @@ public class Guild {
 
     public boolean hasMember(ProxiedPlayer player){
         try {
-            return members.contains(player);
+            return totalMembers.contains(player);
         } catch (Exception e) {
             return false;
         }

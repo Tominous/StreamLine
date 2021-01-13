@@ -99,6 +99,10 @@ public class PartyUtils {
                 return;
             }
 
+            if (to.equals(from)) {
+                MessagingUtils.sendBUserMessage(from, inviteNonSelf);
+            }
+
             if (! party.hasModPerms(from)) {
                 MessagingUtils.sendBUserMessage(from, noPermission);
                 return;
@@ -311,7 +315,7 @@ public class PartyUtils {
         Party party = getParty(sender);
 
         if (!isParty(party) || party == null) {
-            MessagingUtils.sendBUserMessage(sender, noPartyFound);
+            MessagingUtils.sendBUserMessage(sender, kickFailure);
             return;
         }
 
@@ -1104,6 +1108,7 @@ public class PartyUtils {
     public static final String inviteLeader = message.getString("party.invite.leader");
     public static final String inviteMembers = message.getString("party.invite.members");
     public static final String inviteFailure = message.getString("party.invite.failure");
+    public static final String inviteNonSelf = message.getString("party.invite.non-self");
     // Kick.
     public static final String kickUser = message.getString("party.kick.user");
     public static final String kickSender = message.getString("party.kick.sender");

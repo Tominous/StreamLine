@@ -328,6 +328,7 @@ party:
     members: "&b%sender% &einvited &b%user% &eto your party!"
     leader: "&eJust invited &b%user% &eto your party!"
     failure: "&cAlready invited this person."
+    non-self: "&cCannot invite yourself!"
   kick:
     # Fillers:
     # %user% = the person being kicked.
@@ -551,6 +552,7 @@ guild:
     members: "&b%sender% &einvited &b%user% &eto your guild!"
     leader: "&eJust invited &b%user% &eto your guild!"
     failure: "&cAlready invited this person."
+    non-self: "&cCannot invite yourself!"
   kick:
     # Fillers:
     # %user% = the person being kicked.

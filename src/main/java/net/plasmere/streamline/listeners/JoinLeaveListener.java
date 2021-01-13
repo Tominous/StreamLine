@@ -17,6 +17,8 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
+import java.util.Objects;
+
 public class JoinLeaveListener implements Listener {
     private final Configuration config = Config.getConf();
     private final StreamLine plugin;
@@ -30,7 +32,15 @@ public class JoinLeaveListener implements Listener {
         ProxiedPlayer player = ev.getPlayer();
 
         try {
-            GuildUtils.addGuild(new Guild(player.getUniqueId(), false));
+            for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()){
+                if (GuildUtils.getGuild(p) == null && ! p.equals(player)) continue;
+                if (GuildUtils.getGuild(p) != null) {
+                    if (Objects.requireNonNull(GuildUtils.getGuild(p)).hasMember(player))break;
+                }
+
+                GuildUtils.addGuild(new Guild(player.getUniqueId(), false));
+                break;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,7 +93,7 @@ public class JoinLeaveListener implements Listener {
                 if (GuildUtils.getGuild(player).hasMember(p)) break;
 
 
-                GuildUtils.removeGuild(GuildUtils.getGuild(player));
+                GuildUtils.removeGuild(Objects.requireNonNull(GuildUtils.getGuild(player)));
             }
         } catch (Exception e) {
             e.printStackTrace();
