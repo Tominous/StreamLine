@@ -132,16 +132,28 @@ online:
           if-not-last: "&2%player% &0(&e%server%&0)&8, "
           if-last: "&2%player% &0(&e%server%&0)&8."
 
+join-leave:
+  discord:
+    # Message to be sent to a chat (on Discord) when a player comes online on the bungee server.
+    online:
+      embed: "Join"
+      text: "%player% is now online."
+    # Message to be sent to a chat (on Discord) when a player goes offline on the bungee server.
+    offline:
+      embed: "Leave"
+      text: "%player% is now offline."
+  bungee:
+    # Message to be sent to chat (on bungee) when a player comes online on the bungee server.
+    online: "&d%player% &eis now &aonline&8."
+    # Message to be sent to chat (on bungee) when a player goes offline on the bungee server.
+    offline: "&d%player% &eis now &coffline&8."
+
 # When using staffonline...
 staffonline:
   message:
     embed-title: "Staff"
     # Message on Discord.
     discord:
-      # Message to be sent to staff chat (on Discord) when a staff comes online on the bungee server.
-      online: "%staff% is now online."
-      # Message to be sent to staff chat (on Discord) when a staff comes online on the bungee server.
-      offline: "%staff% is now offline."
       # The main message.
       # Fillers:
       # %amount% = the amount of staff on the server.
@@ -157,10 +169,6 @@ staffonline:
         if-last: "%player% (%server%)."
     # Message on bungee.
     bungee:
-      # Message to be sent to staff chat (on bungee) when a staff comes online on the bungee server.
-      online: "&d%staff% &eis now &aonline&8."
-      # Message to be sent to staff chat (on bungee) when a staff comes online on the bungee server.
-      offline: "&d%staff% &eis now &coffline&8."
       # The main message.
       main: "&6Staff Online &e(&6%amount%&e)&8: %staffbulk%"
       # Format for compiling players.

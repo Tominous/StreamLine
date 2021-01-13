@@ -54,6 +54,15 @@ public class MessageConfUtils {
     public static final String onlineMessageBPlayersMain = message.getString("online.message.bungee.players.main");
     public static final String onlineMessageBPlayersBulkNotLast = message.getString("online.message.bungee.players.playerbulk.if-not-last");
     public static final String onlineMessageBPlayersBulkLast = message.getString("online.message.bungee.players.playerbulk.if-last");
+    // ... Join Leaves.
+    // Discord.
+    public static final String discordOnline = message.getString("join-leave.discord.online.text");
+    public static final String discordOnlineEmbed = message.getString("join-leave.discord.online.embed");
+    public static final String discordOffline = message.getString("join-leave.discord.offline.text");
+    public static final String discordOfflineEmbed = message.getString("join-leave.discord.offline.embed");
+    // Bungee.
+    public static final String bungeeOnline = message.getString("join-leave.bungee.online");
+    public static final String bungeeOffline = message.getString("join-leave.bungee.offline");
     // ... StaffOnline.
     // Discord.
     public static final String sOnlineMessageEmbedTitle = message.getString("staffonline.message.embed-title");
@@ -63,8 +72,6 @@ public class MessageConfUtils {
     public static final String sOnlineDiscordBulkNotLast = message.getString("staffonline.message.discord.staffbulk.if-not-last");
     public static final String sOnlineDiscordBulkLast = message.getString("staffonline.message.discord.staffbulk.if-last");
     // Bungee.
-    public static final String sOnlineBungeeOnline = message.getString("staffonline.message.bungee.online");
-    public static final String sOnlineBungeeOffline = message.getString("staffonline.message.bungee.offline");
     public static final String sOnlineBungeeMain = message.getString("staffonline.message.bungee.main");
     public static final String sOnlineBungeeBulkNotLast = message.getString("staffonline.message.bungee.staffbulk.if-not-last");
     public static final String sOnlineBungeeBulkLast = message.getString("staffonline.message.bungee.staffbulk.if-last");

@@ -4,6 +4,8 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.BungeeMassMessage;
+import net.plasmere.streamline.objects.DiscordMessage;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
@@ -22,30 +24,84 @@ public class JoinLeaveListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onJoin(PostLoginEvent e){
+    public void onJoin(PostLoginEvent e) {
         ProxiedPlayer player = e.getPlayer();
-        if (player.hasPermission("streamline.staff")) {
-            if (ConfigUtils.moduleBStaffLogin)
-                MessagingUtils.sendStaffMessageLogin(player, plugin);
-            if (ConfigUtils.moduleDStaffLogin)
-                MessagingUtils.sendDiscordEBStaffMessage(MessageConfUtils.sOnlineMessageEmbedTitle,
-                        MessageConfUtils.sOnlineDiscordOnline
-                            .replace("%staff%", player.getName())
-                );
+        switch (ConfigUtils.moduleBPlayerJoins) {
+            case "yes":
+                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(player,
+                        MessageConfUtils.bungeeOnline.replace("%player%", player.getName()),
+                        "streamline.staff"));
+                break;
+            case "staff":
+                if (player.hasPermission("streamline.staff")) {
+                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(player,
+                            MessageConfUtils.bungeeOnline.replace("%player%", player.getName()),
+                            "streamline.staff"));
+                }
+                break;
+            case "no":
+            default:
+                break;
+        }
+        switch (ConfigUtils.moduleDPlayerJoins) {
+            case "yes":
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player,
+                        MessageConfUtils.discordOnlineEmbed,
+                        MessageConfUtils.discordOnline.replace("%player%", player.getName()),
+                        ConfigUtils.textChannelBJoins));
+                break;
+            case "staff":
+                if (player.hasPermission("streamline.staff")) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player,
+                            MessageConfUtils.discordOnlineEmbed,
+                            MessageConfUtils.discordOnline.replace("%player%", player.getName()),
+                            ConfigUtils.textChannelBJoins));
+                }
+                break;
+            case "no":
+            default:
+                break;
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onLeave(PlayerDisconnectEvent e){
+    public void onLeave(PlayerDisconnectEvent e) {
         ProxiedPlayer player = e.getPlayer();
-        if (player.hasPermission("streamline.staff")) {
-            if (ConfigUtils.moduleBStaffLogoff)
-                MessagingUtils.sendStaffMessageLogoff(player, plugin);
-            if (ConfigUtils.moduleDStaffLogoff)
-                MessagingUtils.sendDiscordEBStaffMessage(MessageConfUtils.sOnlineMessageEmbedTitle,
-                        MessageConfUtils.sOnlineDiscordOffline
-                            .replace("%staff%", player.getName())
-                );
+        switch (ConfigUtils.moduleBPlayerLeaves) {
+            case "yes":
+                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(player,
+                        MessageConfUtils.bungeeOffline.replace("%player%", player.getName()),
+                        "streamline.staff"));
+                break;
+            case "staff":
+                if (player.hasPermission("streamline.staff")) {
+                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(player,
+                            MessageConfUtils.bungeeOffline.replace("%player%", player.getName()),
+                            "streamline.staff"));
+                }
+                break;
+            case "no":
+            default:
+                break;
+        }
+        switch (ConfigUtils.moduleDPlayerLeaves) {
+            case "yes":
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player,
+                        MessageConfUtils.discordOfflineEmbed,
+                        MessageConfUtils.discordOffline.replace("%player%", player.getName()),
+                        ConfigUtils.textChannelBLeaves));
+                break;
+            case "staff":
+                if (player.hasPermission("streamline.staff")) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player,
+                            MessageConfUtils.discordOfflineEmbed,
+                            MessageConfUtils.discordOffline.replace("%player%", player.getName()),
+                            ConfigUtils.textChannelBLeaves));
+                }
+                break;
+            case "no":
+            default:
+                break;
         }
     }
 }

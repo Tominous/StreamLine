@@ -159,6 +159,4 @@ public class MessageListener extends ListenerAdapter {
             }
         }
     }
-
-
 }

@@ -26,6 +26,10 @@ discord:
     staffchat: "put id here"
     # Bot offline and online message output channel ID. Either "startup-message" or "shutdown-message" should be "true".
     offline-online: "put id here"
+    # Bungee player joins channel ID. "player-joins" must be set to "yes" or "staff".
+    bungee-joins: "put id here"
+    # Bungee player leaves channel ID. "player-leaves" must be set to "yes" or "staff".
+    bungee-leaves: "put id here"
 
   ## Roles ##
   roles:
@@ -337,9 +341,9 @@ modules:
     # Must have "staffchat-to-minecraft" set as "true". See above.
     # Must have "staff-role" set to the ID of the role you want all staff to be (on Discord). See "Roles" section.
     staffchat-to-minecraft-only-staff-role: false
-    # Enabled / disables startup messages in discord.
+    # Enables / disables startup messages in discord.
     startup-message: false
-    # Enabled / disables shutdown messages in discord.
+    # Enables / disables shutdown messages in discord.
     shutdown-message: false
     # Enables / disables telling users if a command is not a command.
     # Can be:
@@ -355,10 +359,18 @@ modules:
     # "staff" = it will only tell it to the staff role listed above. (When they run the command.)
     # "owner" = it will only tell it to the owner of the Discord server. (When they run the command.)
     say-if-command-disabled: "staff"
-    # Enables / disables telling the staff chat defined in "reports" (in the discord > text-channels section) (on Discord) when a staff member logs on.
-    send-staff-login: false
-    # Enables / disables telling the staff chat defined in "reports" (in the discord > text-channels section) (on Discord) when a staff member logs off.
-    send-staff-logoff: false
+    # Enables / disables telling the text channel defined in "joins" (in the discord > text-channels section) (on Discord) when all players joins.
+    # Can be:
+    # "yes" = all players.
+    # "no" = none.
+    # "staff" = only players with the "streamline.staff" permission.
+    player-joins: "yes"
+    # Enables / disables telling the text channel defined in "leaves" (in the discord > text-channels section) (on Discord) when all players leaves.
+    # Can be:
+    # "yes" = all players.
+    # "no" = none.
+    # "staff" = only players with the "streamline.staff" permission.
+    player-leaves: "yes"
   # Bungee commands...
   bungee:
     # Reports...
@@ -379,10 +391,18 @@ modules:
       prefix: "#"
       # Enables / disables the staff chat going to the Discord server.
       minecraft-to-discord: true
-    # Enables / disables telling the staff chat (on bungee) when a staff member logs on.
-    send-staff-login: true
-    # Enables / disables telling the staff chat (on bungee) when a staff member logs off.
-    send-staff-logoff: true
+      # Enables / disables telling people with the "streamline.staff" permission (on Discord) when all players joins.
+      # Can be:
+      # "yes" = all players.
+      # "no" = none.
+      # "staff" = only players with the "streamline.staff" permission.
+      player-joins: "yes"
+      # Enables / disables telling people with the "streamline.staff" permission (on Discord) when all players leave.
+      # Can be:
+      # "yes" = all players.
+      # "no" = none.
+      # "staff" = only players with the "streamline.staff" permission.
+      player-leaves: "yes"
     # Parties...
     parties:
       # Maximum size of any party.

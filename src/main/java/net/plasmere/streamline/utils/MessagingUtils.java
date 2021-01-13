@@ -3,6 +3,9 @@ package net.plasmere.streamline.utils;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.BungeeMassMessage;
+import net.plasmere.streamline.objects.BungeeMessage;
+import net.plasmere.streamline.objects.DiscordMessage;
 import net.plasmere.streamline.objects.Party;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -16,6 +19,7 @@ import java.util.*;
 public class MessagingUtils {
     private static final JDA jda = StreamLine.getJda();
     private static final EmbedBuilder eb = new EmbedBuilder();
+    private static final StreamLine plugin = StreamLine.getInstance();
 
     public static void sendStaffMessage(CommandSender sender, String from, String msg, StreamLine plugin){
         Collection<ProxiedPlayer> staff = plugin.getProxy().getPlayers();
@@ -41,48 +45,33 @@ public class MessagingUtils {
         }
     }
 
-    public static void sendStaffMessageLogin(ProxiedPlayer person, StreamLine plugin){
+    public static void sendBungeeMessage(BungeeMassMessage message){
         Collection<ProxiedPlayer> staff = plugin.getProxy().getPlayers();
-        Set<ProxiedPlayer> staffs = new HashSet<>(staff);
+        Set<ProxiedPlayer> people = new HashSet<>(staff);
 
-        for (ProxiedPlayer player : staff){
+        for (ProxiedPlayer player : people){
             try {
-                if (! player.hasPermission("streamline.staff")) {
-                    staffs.remove(player);
+                if (! player.hasPermission(message.permission)) {
+                    people.remove(player);
                 }
             } catch (Exception e){
                 e.printStackTrace();
             }
         }
 
-        for (ProxiedPlayer player : staffs) {
-            player.sendMessage(TextUtils.codedText(MessageConfUtils.sOnlineBungeeOnline
-                            .replace("%staff%", person.getName())
+        for (ProxiedPlayer player : people) {
+            player.sendMessage(TextUtils.codedText((message.title + message.transition + message.message)
+                            .replace("%sender%", message.sender.getName())
                     )
             );
         }
     }
 
-    public static void sendStaffMessageLogoff(ProxiedPlayer person, StreamLine plugin){
-        Collection<ProxiedPlayer> staff = plugin.getProxy().getPlayers();
-        Set<ProxiedPlayer> staffs = new HashSet<>(staff);
-
-        for (ProxiedPlayer player : staff){
-            try {
-                if (! player.hasPermission("streamline.staff")) {
-                    staffs.remove(player);
-                }
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-
-        for (ProxiedPlayer player : staffs) {
-            player.sendMessage(TextUtils.codedText(MessageConfUtils.sOnlineBungeeOffline
-                            .replace("%staff%", person.getName())
-                    )
-            );
-        }
+    public static void sendBungeeMessage(BungeeMessage message){
+        message.to.sendMessage(TextUtils.codedText((message.title + message.transition + message.message)
+                        .replace("%sender%", message.sender.getName())
+                )
+        );
     }
 
     public static void sendStaffMessageSC(String sender, String from, String msg, StreamLine plugin){
@@ -146,6 +135,19 @@ public class MessagingUtils {
                     .sendMessage(
                             eb.setTitle(title)
                                     .setDescription(msg)
+                                    .build()
+                    ).queue();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendDiscordEBMessage(DiscordMessage message){
+        try {
+            Objects.requireNonNull(jda.getTextChannelById(message.channel))
+                    .sendMessage(
+                            eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
+                                    .setDescription(message.message.replace("%sender%", message.sender.getName()))
                                     .build()
                     ).queue();
         } catch (Exception e){

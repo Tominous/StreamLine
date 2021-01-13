@@ -27,6 +27,8 @@ public class ConfigUtils {
     public static final String textChannelReports = config.getString("discord.text-channels.reports");
     public static final String textChannelStaffChat = config.getString("discord.text-channels.staffchat");
     public static final String textChannelOfflineOnline = config.getString("discord.text-channels.offline-online");
+    public static final String textChannelBJoins = config.getString("discord.text-channels.bungee-joins");
+    public static final String textChannelBLeaves = config.getString("discord.text-channels.bungee-leaves");
     // Roles.
     public static final String roleReports = config.getString("discord.roles.reports");
     public static final String roleStaff = config.getString("discord.roles.staff");
@@ -156,9 +158,9 @@ public class ConfigUtils {
     // Say if...
     public static final String moduleSayNotACommand = config.getString("modules.discord.say-if-not-a-command");
     public static final String moduleSayCommandDisabled = config.getString("modules.discord.say-if-command-disabled");
-    // Staff logins / logouts.
-    public static final boolean moduleDStaffLogin = config.getBoolean("modules.discord.send-staff-login");
-    public static final boolean moduleDStaffLogoff = config.getBoolean("modules.discord.send-staff-logoff");
+    // Player logins / logouts.
+    public static final String moduleDPlayerJoins = config.getString("modules.discord.player-joins");
+    public static final String moduleDPlayerLeaves = config.getString("modules.discord.player-leaves");
     // ... Bungee.
     // Reports.
     public static final boolean moduleReportsBConfirmation = config.getBoolean("modules.bungee.reports.send-confirmation");
@@ -169,9 +171,9 @@ public class ConfigUtils {
     public static final boolean moduleStaffChatDoPrefix = config.getBoolean("modules.bungee.staffchat.enable-prefix");
     public static final String moduleStaffChatPrefix = config.getString("modules.bungee.staffchat.prefix");
     public static final boolean moduleStaffChatMToDiscord = config.getBoolean("modules.bungee.staffchat.minecraft-to-staffchat");
-    // Staff logins / logouts.
-    public static final boolean moduleBStaffLogin = config.getBoolean("modules.bungee.send-staff-login");
-    public static final boolean moduleBStaffLogoff = config.getBoolean("modules.bungee.send-staff-logoff");
+    // Player logins / logouts.
+    public static final String moduleBPlayerJoins = config.getString("modules.bungee.player-joins");
+    public static final String moduleBPlayerLeaves = config.getString("modules.bungee.player-leaves");
     // ... Parties.
     // Max size.
     public static final int partyMax = config.getInt("modules.bungee.parties.max-size");
