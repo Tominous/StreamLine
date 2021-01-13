@@ -133,7 +133,7 @@ public class MessagingUtils {
                             .sendMessage(
                                     eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
                                             .setDescription(message.message.replace("%sender%", message.sender.getName()))
-                                            .setAuthor(FaceFetcher.getFaceAvatarURL((ProxiedPlayer) message.sender))
+                                            .setAuthor(message.sender.getName(), FaceFetcher.getFaceAvatarURL((ProxiedPlayer) message.sender), FaceFetcher.getFaceAvatarURL((ProxiedPlayer) message.sender))
                                             .build()
                             ).queue();
                 } else {
@@ -141,7 +141,7 @@ public class MessagingUtils {
                             .sendMessage(
                                     eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
                                             .setDescription(message.message.replace("%sender%", message.sender.getName()))
-                                            .setAuthor(jda.getSelfUser().getAvatarId())
+                                            .setAuthor("CONSOLE", jda.getSelfUser().getAvatarUrl() , jda.getSelfUser().getAvatarUrl())
                                             .build()
                             ).queue();
                 }
@@ -175,7 +175,7 @@ public class MessagingUtils {
                                     .setDescription(TextUtils.newLined(
                                             replace1
                                             )
-                                    ).setAuthor(FaceFetcher.getFaceAvatarURL(sender)).build()
+                                    ).setAuthor(sender, FaceFetcher.getFaceAvatarURL(sender), FaceFetcher.getFaceAvatarURL(sender)).build()
                     ).queue();
                 else
                     Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessage(
@@ -183,7 +183,7 @@ public class MessagingUtils {
                                     .setDescription(TextUtils.newLined(
                                             replace
                                             )
-                                    ).setAuthor(FaceFetcher.getFaceAvatarURL(sender)).build()
+                                    ).setAuthor(sender, FaceFetcher.getFaceAvatarURL(sender), FaceFetcher.getFaceAvatarURL(sender)).build()
                     ).queue();
             } else {
                 if (fromBungee)
