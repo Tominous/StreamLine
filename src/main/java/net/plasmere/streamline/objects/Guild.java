@@ -50,14 +50,15 @@ public class Guild {
     private void construct(UUID uuid, boolean createNew){
         this.file = new File(filePrePath + uuid.toString() + ".properties");
 
-        if (! createNew && ! file.exists()) return;
+        if (createNew || file.exists()) {
 
-        System.out.println("Guild file: " + file.getAbsolutePath());
+            System.out.println("Guild file: " + file.getAbsolutePath());
 
-        try {
-            getFromConfigFile();
-        } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                getFromConfigFile();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

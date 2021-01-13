@@ -51,7 +51,7 @@ public class GuildUtils {
         guilds.add(guild);
     }
 
-    public static void createGuild(ProxiedPlayer player, String name) throws Exception {
+    public static void createGuild(ProxiedPlayer player, String name) {
         try {
             Guild guild = new Guild(player.getUniqueId(), name);
 
@@ -59,7 +59,7 @@ public class GuildUtils {
 
             MessagingUtils.sendBGUserMessage(guild, player, player, create);
         } catch (Exception e) {
-            throw new Exception(e);
+            e.printStackTrace();
         }
     }
 
@@ -76,10 +76,28 @@ public class GuildUtils {
     }
 
     public static boolean hasLeader(UUID leader){
+        List<Guild> toRem = new ArrayList<>();
+
+        boolean hasLeader = false;
+
         for (Guild guild : guilds){
-            if (guild.leaderUUID.equals(leader)) return true;
+            if (guild.leaderUUID == null) {
+                toRem.add(guild);
+                continue;
+            }
+            if (guild.leaderUUID.equals(leader)) hasLeader = true;
         }
-        return false;
+
+        for (Guild guild : toRem) {
+            try {
+                guild.dispose();
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+            removeGuild(guild);
+        }
+
+        return hasLeader;
     }
 
     public static void removeGuild(Guild guild){ guilds.remove(guild); }
