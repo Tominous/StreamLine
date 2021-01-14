@@ -550,3 +550,8 @@ modules:
     stats:
       # Enables / disables telling the player when their stats have been created.
       tell-when-create: true
+      xp:
+        # Amount to give each guild per player online every "time-per" seconds.
+        amount-per: 1
+        # Amount of seconds per xp handout.
+        time-per: 300

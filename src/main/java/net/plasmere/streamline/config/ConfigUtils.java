@@ -233,8 +233,10 @@ public class ConfigUtils {
     // ... Guilds.
     public static final int guildMax = config.getInt("modules.bungee.guilds.max-size");
     public static final boolean guildConsole = config.getBoolean("modules.bungee.guilds.chat-to-console");
-    public static final int xpPerGive = config.getInt("modules.bungee.guilds.xp.amount-per");
-    public static final int timePerGive = config.getInt("modules.bungee.guilds.xp.time-per");
+    public static final int xpPerGiveG = config.getInt("modules.bungee.guilds.xp.amount-per");
+    public static final int timePerGiveG = config.getInt("modules.bungee.guilds.xp.time-per");
     // ... StatsCommand.
     public static final boolean statsTell = config.getBoolean("modules.bungee.stats.tell-when-create");
+    public static final int xpPerGiveP = config.getInt("modules.bungee.stats.xp.amount-per");
+    public static final int timePerGiveP = config.getInt("modules.bungee.stats.xp.time-per");
 }

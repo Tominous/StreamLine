@@ -3,7 +3,6 @@ package net.plasmere.streamline.objects.timers;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
-import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
@@ -34,7 +33,7 @@ public class PlayerXPTimer implements Runnable {
 
                 Player p = PlayerUtils.getStat(player);
                 assert p != null;
-                p.addXp(ConfigUtils.xpPerGive);
+                p.addXp(ConfigUtils.xpPerGiveP);
 
                 p.saveInfo();
             }
@@ -42,6 +41,6 @@ public class PlayerXPTimer implements Runnable {
             e.printStackTrace();
         }
 
-        StreamLine.getInstance().getLogger().info("Just gave " + ConfigUtils.xpPerGive + " GEXP to " + GuildUtils.getGuilds().size() + " guilds!");
+        StreamLine.getInstance().getLogger().info("Just gave " + ConfigUtils.xpPerGiveP + " EXP to " + PlayerUtils.getStats().size() + " players!");
     }
 }

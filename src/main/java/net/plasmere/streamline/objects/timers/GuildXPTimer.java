@@ -32,7 +32,7 @@ public class GuildXPTimer implements Runnable {
 
                 Guild guild = GuildUtils.getGuild(player);
                 assert guild != null;
-                guild.addXp(ConfigUtils.xpPerGive);
+                guild.addXp(ConfigUtils.xpPerGiveG);
 
                 guild.saveInfo();
             }
@@ -40,6 +40,6 @@ public class GuildXPTimer implements Runnable {
             e.printStackTrace();
         }
 
-        StreamLine.getInstance().getLogger().info("Just gave " + ConfigUtils.xpPerGive + " GEXP to " + GuildUtils.getGuilds().size() + " guilds!");
+        StreamLine.getInstance().getLogger().info("Just gave " + ConfigUtils.xpPerGiveG + " GEXP to " + GuildUtils.getGuilds().size() + " guilds!");
     }
 }
