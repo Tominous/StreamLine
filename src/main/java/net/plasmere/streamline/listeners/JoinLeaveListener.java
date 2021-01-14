@@ -106,8 +106,7 @@ public class JoinLeaveListener implements Listener {
 
         try {
             for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()){
-                if (p.equals(player)) continue;
-                if (GuildUtils.getGuild(player).hasMember(p)) break;
+                if (Objects.requireNonNull(GuildUtils.getGuild(player)).hasMember(p) && ! p.equals(player)) break;
 
 
                 GuildUtils.removeGuild(Objects.requireNonNull(GuildUtils.getGuild(player)));
