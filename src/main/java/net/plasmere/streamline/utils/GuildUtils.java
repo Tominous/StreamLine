@@ -9,6 +9,7 @@ import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Guild;
+import net.plasmere.streamline.objects.Party;
 
 import java.io.IOException;
 import java.util.*;
@@ -39,8 +40,34 @@ public class GuildUtils {
         }
     }
 
+    public static boolean hasGuild(ProxiedPlayer player) {
+        for (Guild guild : guilds) {
+            if (guild.hasMember(player)) return true;
+        }
+        return false;
+    }
+
     public static boolean isGuild(Guild guild){
         return guilds.contains(guild);
+    }
+
+    public static boolean checkPlayer(Guild guild, ProxiedPlayer player, ProxiedPlayer sender){
+        if (! isGuild(guild) || guild == null) {
+            MessagingUtils.sendBUserMessage(sender, noGuildFound);
+            return false;
+        }
+
+        if (! guild.hasMember(sender)) {
+            MessagingUtils.sendBUserMessage(sender, notInGuild);
+            return false;
+        }
+
+        if (hasGuild(player)) {
+            MessagingUtils.sendBUserMessage(sender, alreadyHasOne);
+            return false;
+        }
+
+        return true;
     }
 
     public static void reloadGuild(Guild guild) {
@@ -49,7 +76,9 @@ public class GuildUtils {
     }
 
     public static void createGuild(ProxiedPlayer player, String name) {
-        if (guilds.contains(new Guild(player.getUniqueId(), false))) {
+        Guild g = getGuild(player);
+
+        if (g != null) {
             MessagingUtils.sendBUserMessage(player, MessageConfUtils.guildsAlready);
             return;
         }
@@ -107,15 +136,7 @@ public class GuildUtils {
         try {
             Guild guild = getGuild(from);
 
-            if (! isGuild(guild) || guild == null) {
-                MessagingUtils.sendBUserMessage(to, noGuildFound);
-                return;
-            }
-
-            if (! guild.hasMember(from.getUniqueId())) {
-                MessagingUtils.sendBUserMessage(from, notInGuild);
-                return;
-            }
+            if (! checkPlayer(guild, to, from)) return;
 
             if (to.equals(from)) {
                 MessagingUtils.sendBUserMessage(from, inviteNonSelf);
@@ -996,6 +1017,8 @@ public class GuildUtils {
     public static final String textMember = message.getString("guild.text.member");
     // No guild.
     public static final String noGuildFound = message.getString("guild.no-guild");
+    // Already in one.
+    public static final String alreadyHasOne = message.getString("guild.already-has");
     // Not high enough permissions.
     public static final String noPermission = message.getString("guild.no-permission");
     // Not in a guild.

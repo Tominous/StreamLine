@@ -111,13 +111,10 @@ public class Guild {
         info.put(key, value);
     }
 
-    public ProxiedPlayer getMember(UUID uuid) throws Exception {
-        for (UUID u : totalMembersByUUID){
-            if (uuid.equals(u)) {
-                return Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(u));
-            }
-        }
-        throw new Exception("Player not found!");
+    public ProxiedPlayer getMember(UUID uuid) /*throws Exception*/ {
+        return Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(uuid));
+
+        //throw new Exception("Player not found!");
     }
 
     public void getFromConfigFile() throws IOException {

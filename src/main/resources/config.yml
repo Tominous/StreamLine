@@ -328,6 +328,11 @@ commands:
           - "wa"
           - "summon"
           - "warp"
+        info:
+          - "in"
+          - "inf"
+          - "stats"
+          - "info"
     stats:
       enabled: true
       permission: "streamline.command.stats"

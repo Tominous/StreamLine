@@ -254,6 +254,13 @@ public class GuildCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
                 }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildInfoAliases)) {
+                try {
+                    GuildUtils.info((ProxiedPlayer) sender);
+                } catch (Throwable e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                    e.printStackTrace();
+                }
             } else {
                 try {
                     ProxiedPlayer online = tryOnline(args[0]);

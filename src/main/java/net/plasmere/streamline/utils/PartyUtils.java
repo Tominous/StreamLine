@@ -10,7 +10,6 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Party;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
@@ -42,8 +41,34 @@ public class PartyUtils {
         }
     }
 
+    public static boolean hasParty(ProxiedPlayer player) {
+        for (Party party : parties) {
+            if (party.hasMember(player)) return true;
+        }
+        return false;
+    }
+
     public static boolean isParty(Party party){
         return parties.contains(party);
+    }
+
+    public static boolean checkPlayer(Party party, ProxiedPlayer player, ProxiedPlayer sender){
+        if (! isParty(party) || party == null) {
+            MessagingUtils.sendBUserMessage(sender, noPartyFound);
+            return false;
+        }
+
+        if (! party.hasMember(sender)) {
+            MessagingUtils.sendBUserMessage(sender, notInParty);
+            return false;
+        }
+
+        if (hasParty(player)) {
+            MessagingUtils.sendBUserMessage(sender, alreadyHasOne);
+            return false;
+        }
+
+        return true;
     }
 
     public static void reloadParty(Party party) throws Exception {
@@ -100,15 +125,7 @@ public class PartyUtils {
         try {
             Party party = getParty(from);
 
-            if (! isParty(party) || party == null) {
-                MessagingUtils.sendBUserMessage(to, noPartyFound);
-                return;
-            }
-
-            if (! party.hasMember(from)) {
-                MessagingUtils.sendBUserMessage(from, notInParty);
-                return;
-            }
+            if (! checkPlayer(party, to, from)) return;
 
             if (to.equals(from)) {
                 MessagingUtils.sendBUserMessage(from, inviteNonSelf);
@@ -1048,6 +1065,8 @@ public class PartyUtils {
     public static final String textMember = message.getString("party.text.member");
     // No party.
     public static final String noPartyFound = message.getString("party.no-party");
+    // Already in one.
+    public static final String alreadyHasOne = message.getString("party.already-has");
     // Too big.
     public static final String tooBig = message.getString("party.too-big");
     // Not high enough permissions.

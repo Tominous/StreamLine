@@ -151,6 +151,8 @@ public class ConfigUtils {
     public static final List<String> comBGuildMuteAliases = config.getStringList("commands.bungee.guild.aliases.mute");
     // Warp.
     public static final List<String> comBGuildWarpAliases = config.getStringList("commands.bungee.guild.aliases.warp");
+    // Info.
+    public static final List<String> comBGuildInfoAliases = config.getStringList("commands.bungee.guild.aliases.info");
     // ... Servers.
     // Lobby.
     public static final boolean comBLobby = config.getBoolean("commands.bungee.servers.lobby.enabled");

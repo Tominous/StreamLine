@@ -198,6 +198,10 @@ party:
   no-party: "&cNo party found!"
   # Already made.
   already-made: "&cThis guild has already been made!"
+  # In different one.
+  # Fillers:
+  # %player% = player who the sender is trying to invite.
+  already-has: "&cSorry, but &d%player% &cis already in a party..."
   # When the the size of /par open <size> is to big.
   too-big: "&cSorry, but you can't create a party that big."
   # Not high enough party permissions.
@@ -426,6 +430,12 @@ guild:
     member: "MEMBER"
   # When it finds no guild.
   no-guild: "&cNo guild found!"
+  # Already made.
+  already-made: "&cThis guild has already been made!"
+  # In different one.
+  # Fillers:
+  # %player% = player who the sender is trying to invite.
+  already-has: "&cSorry, but &d%player% &cis already in a guild..."
   # Not high enough guild permissions.
   no-permission: "&cYou do not have high enough guild permissions to do this!"
   # When creating a guild...
@@ -435,8 +445,6 @@ guild:
   other-not-in-guild: "&cSorry, but they are not in the guild..."
   # Not enough space in guild...
   not-enough-space: "&cSorry, but the guild is full!"
-  # Already made.
-  already-made: "&cThis guild has already been made!"
   # Message for when someone joins a guild...
   join:
     # Fillers:
