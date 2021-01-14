@@ -5,10 +5,9 @@ import net.plasmere.streamline.commands.*;
 import net.plasmere.streamline.commands.servers.GoToServerLobbyCommand;
 import net.plasmere.streamline.commands.servers.GoToServerVanillaCommand;
 import net.plasmere.streamline.commands.staff.*;
-import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.listeners.JoinLeaveListener;
-import net.plasmere.streamline.listeners.StaffChatListener;
+import net.plasmere.streamline.listeners.ChatListener;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Listener;
 
@@ -169,7 +168,7 @@ public class PluginUtils {
 
     public static void loadListeners(StreamLine plugin){
         List<Listener> listeners = new ArrayList<>();
-        Listener staffchat = new StaffChatListener(plugin);
+        Listener staffchat = new ChatListener(plugin);
         Listener joinleave = new JoinLeaveListener(plugin);
 
         listeners.add(staffchat);

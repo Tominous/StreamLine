@@ -95,6 +95,12 @@ public class GuildUtils {
     }
 
     public static void addGuild(Guild guild){
+        try {
+            StreamLine.getInstance().getLogger().info("Adding guild for " + UUIDFetcher.getProxiedPlayer(guild.leaderUUID));
+        } catch (Exception e){
+            StreamLine.getInstance().getLogger().info("Error adding guild...");
+            e.printStackTrace();
+        }
         guilds.add(guild);
     }
 

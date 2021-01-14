@@ -96,8 +96,8 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 
 	public void loadTimers(){
 		try {
-			guilds = getProxy().getScheduler().schedule(this, new GuildXPTimer(ConfigUtils.timePerGiveG), 1, 1, TimeUnit.SECONDS);
-			players = getProxy().getScheduler().schedule(this, new PlayerXPTimer(ConfigUtils.timePerGiveP), 1, 1, TimeUnit.SECONDS);
+			guilds = getProxy().getScheduler().schedule(this, new GuildXPTimer(ConfigUtils.timePerGiveG), 1, TimeUnit.SECONDS);
+			players = getProxy().getScheduler().schedule(this, new PlayerXPTimer(ConfigUtils.timePerGiveP), 1, TimeUnit.SECONDS);
 			getLogger().info("Loaded 2 timer (Runnable) into memory...!");
 		} catch (Exception e) {
 			e.printStackTrace();

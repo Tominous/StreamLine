@@ -550,7 +550,7 @@ modules:
         # Amount to give each guild per player online every "time-per" seconds.
         amount-per: 1
         # Amount of seconds per xp handout.
-        time-per: 300
+        time-per: 20
     # StatsCommand...
     stats:
       # Enables / disables telling the player when their stats have been created.
@@ -559,4 +559,4 @@ modules:
         # Amount to give each guild per player online every "time-per" seconds.
         amount-per: 1
         # Amount of seconds per xp handout.
-        time-per: 300
+        time-per: 20
