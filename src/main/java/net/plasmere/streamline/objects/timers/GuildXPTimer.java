@@ -6,6 +6,8 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.utils.GuildUtils;
 
+import java.util.concurrent.TimeUnit;
+
 public class GuildXPTimer implements Runnable {
     public int countdown;
     public int reset;
@@ -41,5 +43,7 @@ public class GuildXPTimer implements Runnable {
         }
 
         StreamLine.getInstance().getLogger().info("Just gave " + ConfigUtils.xpPerGiveG + " GEXP to " + GuildUtils.getGuilds().size() + " guilds!");
+
+        StreamLine.getInstance().getProxy().getScheduler().schedule(StreamLine.getInstance(), new GuildXPTimer(ConfigUtils.timePerGiveG), 1, 1, TimeUnit.SECONDS);
     }
 }

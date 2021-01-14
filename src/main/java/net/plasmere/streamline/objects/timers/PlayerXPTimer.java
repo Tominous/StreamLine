@@ -7,6 +7,8 @@ import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 
+import java.util.concurrent.TimeUnit;
+
 public class PlayerXPTimer implements Runnable {
     public int countdown;
     public int reset;
@@ -41,6 +43,8 @@ public class PlayerXPTimer implements Runnable {
             e.printStackTrace();
         }
 
-        StreamLine.getInstance().getLogger().info("Just gave " + ConfigUtils.xpPerGiveP + " EXP to " + PlayerUtils.getStats().size() + " players!");
+        StreamLine.getInstance().getLogger().info("Just gave " + ConfigUtils.xpPerGiveP + " Network EXP to " + PlayerUtils.getStats().size() + " players!");
+
+        StreamLine.getInstance().getProxy().getScheduler().schedule(StreamLine.getInstance(), new PlayerXPTimer(ConfigUtils.timePerGiveP), 1, 1, TimeUnit.SECONDS);
     }
 }
