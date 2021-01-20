@@ -9,7 +9,6 @@ import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Guild;
-import net.plasmere.streamline.objects.Party;
 
 import java.io.IOException;
 import java.util.*;
@@ -51,6 +50,16 @@ public class GuildUtils {
         return guilds.contains(guild);
     }
 
+    public static boolean pHasGuild(ProxiedPlayer player){
+        Guild guild = new Guild(player.getUniqueId(), false);
+
+        if (guild.leaderUUID == null) {
+            return false;
+        }
+
+        return true;
+    }
+
     public static boolean checkPlayer(Guild guild, ProxiedPlayer player, ProxiedPlayer sender){
         if (! isGuild(guild) || guild == null) {
             MessagingUtils.sendBUserMessage(sender, noGuildFound);
@@ -79,7 +88,7 @@ public class GuildUtils {
         Guild g = getGuild(player);
 
         if (g != null) {
-            MessagingUtils.sendBUserMessage(player, MessageConfUtils.guildsAlready);
+            MessagingUtils.sendBUserMessage(player, already);
             return;
         }
 
@@ -233,7 +242,7 @@ public class GuildUtils {
                 }
 
                 guild.addMember(accepter);
-                guild.removeInvite(accepter);
+                guild.remFromInvites(accepter);
             }
 
             reloadGuild(guild);
@@ -256,7 +265,7 @@ public class GuildUtils {
                 return;
             }
 
-            guild.removeInvite(denier);
+            guild.remFromInvites(denier);
 
             MessagingUtils.sendBGUserMessage(guild, denier, denier, denyUser
                     .replace("%user%", denier.getDisplayName())
@@ -466,7 +475,7 @@ public class GuildUtils {
 
             removeGuild(guild);
 
-            guild.dispose();
+            guild.disband();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1021,8 +1030,13 @@ public class GuildUtils {
     public static final String textLeader = message.getString("guild.text.leader");
     public static final String textModerator = message.getString("guild.text.moderator");
     public static final String textMember = message.getString("guild.text.member");
+    // Players.
+    public static final String offline = message.getString("guild.players.offline");
+    public static final String online = message.getString("guild.players.online");
     // No guild.
     public static final String noGuildFound = message.getString("guild.no-guild");
+    // Already made.
+    public static final String already = message.getString("guild.already-made");
     // Already in one.
     public static final String alreadyHasOne = message.getString("guild.already-has");
     // Not high enough permissions.

@@ -78,7 +78,7 @@ public class PartyUtils {
 
     public static void createParty(StreamLine streamLine, ProxiedPlayer player) throws Exception {
         if (getParty(player) != null) {
-            MessagingUtils.sendBUserMessage(player, MessageConfUtils.partiesAlready);
+            MessagingUtils.sendBUserMessage(player, already);
             return;
         }
 
@@ -95,7 +95,7 @@ public class PartyUtils {
 
     public static void createPartySized(StreamLine streamLine, ProxiedPlayer player, int size) throws Exception {
         if (getParty(player) != null) {
-            MessagingUtils.sendBUserMessage(player, MessageConfUtils.partiesAlready);
+            MessagingUtils.sendBUserMessage(player, already);
             return;
         }
 
@@ -141,12 +141,21 @@ public class PartyUtils {
                 return;
             }
 
-            MessagingUtils.sendBPUserMessage(party, from, to, inviteUser
-                    .replace("%sender%", from.getDisplayName())
-                    .replace("%user%", to.getDisplayName())
-                    .replace("%leader%", getParty(from).leader.getDisplayName())
-                    .replace("%leaderdefault%", getParty(from).leader.getName())
-            );
+            if (StreamLine.getInstance().getProxy().getPlayer(party.leader.getName()) != null) {
+                MessagingUtils.sendBPUserMessage(party, from, to, inviteUser
+                        .replace("%sender%", from.getDisplayName())
+                        .replace("%user%", to.getDisplayName())
+                        .replace("%leader%", online.replace("%player%", getParty(from).leader.getDisplayName()))
+                        .replace("%leaderdefault%", online.replace("%player%", getParty(from).leader.getName()))
+                );
+            } else {
+                MessagingUtils.sendBPUserMessage(party, from, to, inviteUser
+                        .replace("%sender%", from.getDisplayName())
+                        .replace("%user%", to.getDisplayName())
+                        .replace("%leader%", offline.replace("%player%", getParty(from).leader.getDisplayName()))
+                        .replace("%leaderdefault%", offline.replace("%player%", getParty(from).leader.getName()))
+                );
+            }
 
             for (ProxiedPlayer member : party.totalMembers) {
                 if (member.equals(from)) {
@@ -1063,8 +1072,13 @@ public class PartyUtils {
     public static final String textLeader = message.getString("party.text.leader");
     public static final String textModerator = message.getString("party.text.moderator");
     public static final String textMember = message.getString("party.text.member");
+    // Players.
+    public static final String offline = message.getString("party.players.offline");
+    public static final String online = message.getString("party.players.online");
     // No party.
     public static final String noPartyFound = message.getString("party.no-party");
+    // Already made.
+    public static final String already = message.getString("party.already-made");
     // Already in one.
     public static final String alreadyHasOne = message.getString("party.already-has");
     // Too big.

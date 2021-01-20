@@ -408,13 +408,20 @@ public class MessagingUtils {
 
         int i = 1;
         for (UUID m : guild.modsByUUID){
+            ProxiedPlayer player;
+            try {
+                player = Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m));
+            } catch (Exception e) {
+                continue;
+            }
+
             if (i != guild.modsByUUID.size()){
                 msg.append(MessageConfUtils.guildsModsNLast
-                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                        .replace("%user%", player.getName())
                 );
             } else {
                 msg.append(MessageConfUtils.guildsModsLast
-                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                        .replace("%user%", player.getName())
                 );
             }
 
@@ -429,13 +436,20 @@ public class MessagingUtils {
 
         int i = 1;
         for (UUID m : guild.membersByUUID){
+            ProxiedPlayer player;
+            try {
+                player = Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m));
+            } catch (Exception e) {
+                continue;
+            }
+
             if (i != guild.membersByUUID.size()){
                 msg.append(MessageConfUtils.guildsMemsNLast
-                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                        .replace("%user%", player.getName())
                 );
             } else {
                 msg.append(MessageConfUtils.guildsMemsLast
-                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                        .replace("%user%", player.getName())
                 );
             }
 
@@ -450,13 +464,20 @@ public class MessagingUtils {
 
         int i = 1;
         for (UUID m : guild.totalMembersByUUID){
+            ProxiedPlayer player;
+            try {
+                player = Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m));
+            } catch (Exception e) {
+                continue;
+            }
+
             if (i != guild.totalMembersByUUID.size()){
                 msg.append(MessageConfUtils.guildsTMemsNLast
-                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                        .replace("%user%", player.getName())
                 );
             } else {
                 msg.append(MessageConfUtils.guildsTMemsLast
-                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                        .replace("%user%", player.getName())
                 );
             }
 
@@ -471,13 +492,20 @@ public class MessagingUtils {
 
         int i = 1;
         for (UUID m : guild.invitesByUUID){
+            ProxiedPlayer player;
+            try {
+                player = Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m));
+            } catch (Exception e) {
+                continue;
+            }
+
             if (i != guild.invites.size()){
                 msg.append(MessageConfUtils.guildsInvsNLast
-                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                        .replace("%user%", player.getName())
                 );
             } else {
                 msg.append(MessageConfUtils.guildsInvsLast
-                        .replace("%user%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m)).getName())
+                        .replace("%user%", player.getName())
                 );
             }
 

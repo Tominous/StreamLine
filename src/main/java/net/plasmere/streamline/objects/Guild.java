@@ -4,7 +4,6 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -52,8 +51,7 @@ public class Guild {
         this.file = new File(filePrePath + uuid.toString() + ".properties");
 
         if (createNew || file.exists()) {
-
-            System.out.println("Guild file: " + file.getAbsolutePath());
+            StreamLine.getInstance().getLogger().info("Guild file: " + file.getName() + " (In the \"guilds\" folder.)");
 
             try {
                 getFromConfigFile();
@@ -196,7 +194,7 @@ public class Guild {
     public void loadVars(){
         this.name = getFromKey("name");
         this.leaderUUID = UUID.fromString(getFromKey("leader"));
-        this.modsByUUID = loadMods();
+        this.modsByUUID = loadModerators();
         this.membersByUUID = loadMembers();
         this.totalMembersByUUID = loadTotalMembers();
         this.invitesByUUID = loadInvites();
@@ -206,47 +204,79 @@ public class Guild {
         this.lvl = Integer.parseInt(getFromKey("lvl"));
 
         try {
-            if (moderators != null) {
-                moderators.clear();
-                for (UUID uuid : modsByUUID) {
-                    moderators.add(getMember(uuid));
-                }
-            } else {
-                moderators = new ArrayList<>();
-            }
+            loadMods();
 
-            if (members != null) {
-                members.clear();
-                for (UUID uuid : membersByUUID) {
-                    members.add(getMember(uuid));
-                }
-            } else {
-                members = new ArrayList<>();
-            }
+            loadMems();
 
-            if (totalMembers != null) {
-                totalMembers.clear();
-                for (UUID uuid : totalMembersByUUID) {
-                    totalMembers.add(getMember(uuid));
-                }
-            } else {
-                totalMembers = new ArrayList<>();
-            }
+            loadTMems();
 
-            if (invites != null) {
-                invites.clear();
-                for (UUID uuid : invitesByUUID) {
-                    invites.add(getMember(uuid));
-                }
-            } else {
-                invites = new ArrayList<>();
-            }
+            loadInvs();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private List<UUID> loadMods(){
+    public void loadMods(){
+        if (moderators != null) {
+            moderators.clear();
+            for (UUID uuid : modsByUUID) {
+                try {
+                    moderators.add(getMember(uuid));
+                } catch (Exception e) {
+                    // do nothing
+                }
+            }
+        } else {
+            moderators = new ArrayList<>();
+        }
+    }
+
+    public void loadMems(){
+        if (members != null) {
+            members.clear();
+            for (UUID uuid : membersByUUID) {
+                try {
+                    members.add(getMember(uuid));
+                } catch (Exception e) {
+                    // do nothing
+                }
+            }
+        } else {
+            members = new ArrayList<>();
+        }
+    }
+
+    public void loadTMems(){
+        if (totalMembers != null) {
+            totalMembers.clear();
+            for (UUID uuid : totalMembersByUUID) {
+                try {
+                    totalMembers.add(getMember(uuid));
+                } catch (Exception e) {
+                    // do nothing
+                }
+            }
+        } else {
+            totalMembers = new ArrayList<>();
+        }
+    }
+
+    public void loadInvs(){
+        if (invites != null) {
+            invites.clear();
+            for (UUID uuid : invitesByUUID) {
+                try {
+                    invites.add(getMember(uuid));
+                } catch (Exception e) {
+                    // do nothing
+                }
+            }
+        } else {
+            invites = new ArrayList<>();
+        }
+    }
+
+    private List<UUID> loadModerators(){
         List<UUID> uuids = new ArrayList<>();
 
         try {
@@ -367,6 +397,8 @@ public class Guild {
             writer.write(s + "\n");
         }
         writer.close();
+
+        //StreamLine.getInstance().getLogger().info("Just saved Guild info for leader (UUID): " + leaderUUID);
     }
 
     /*
@@ -378,11 +410,11 @@ public class Guild {
     public int getNeededXp(){
         int needed = 0;
         if (this.lvl <= 15){
-            needed = 2 * this.lvl + 7;
+            needed = 10 * this.lvl + 7;
         } else if (this.lvl >= 16 && this.lvl <= 30){
-            needed = 5 * this.lvl - 38;
+            needed = 25 * this.lvl - 38;
         } else if (this.lvl > 30) {
-            needed = 9 * this.lvl - 158;
+            needed = 45 * this.lvl - 158;
         } else {
             needed = 100;
         }
@@ -433,30 +465,32 @@ public class Guild {
     private String getTotalMembersAsStringed(){
         StringBuilder builder = new StringBuilder();
 
-        int i = 1;
+        int i = 0;
         for (UUID uuid : totalMembersByUUID){
+            i++;
             if (i != totalMembersByUUID.size()){
                 builder.append(uuid).append(".");
             } else {
                 builder.append(uuid);
             }
-            i++;
         }
 
         return builder.toString();
     }
 
     private String getMembersAsStringed(){
+        System.out.println("GMAS : " + membersByUUID);
+
         StringBuilder builder = new StringBuilder();
 
-        int i = 1;
+        int i = 0;
         for (UUID uuid : membersByUUID){
+            i++;
             if (i != membersByUUID.size()){
                 builder.append(uuid).append(".");
             } else {
                 builder.append(uuid);
             }
-            i++;
         }
 
         return builder.toString();
@@ -465,14 +499,14 @@ public class Guild {
     private String getModeratorsAsStringed(){
         StringBuilder builder = new StringBuilder();
 
-        int i = 1;
+        int i = 0;
         for (UUID uuid : modsByUUID){
+            i++;
             if (i != modsByUUID.size()){
                 builder.append(uuid).append(".");
             } else {
                 builder.append(uuid);
             }
-            i++;
         }
 
         return builder.toString();
@@ -510,23 +544,181 @@ public class Guild {
         return totalMembersByUUID.size();
     }
 
-    public void removeInvite(UUID uuid){
-        invitesByUUID.remove(uuid);
-        updateKey("invites", getInvitesAsStringed());
+    public String removeFromModerators(ProxiedPlayer player){
+        modsByUUID.remove(player.getUniqueId());
+        moderators.remove(player);
+
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (UUID uuid : modsByUUID) {
+            i++;
+            if (i != modsByUUID.size()) {
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+        }
+
+        return builder.toString();
     }
 
-    public void removeInvite(ProxiedPlayer player){
+    public String remFromMembers(ProxiedPlayer player){
+        membersByUUID.remove(player.getUniqueId());
+        members.remove(player);
+
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (UUID uuid : membersByUUID) {
+            i++;
+            if (i != membersByUUID.size()) {
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+        }
+
+        return builder.toString();
+    }
+
+    public String remFromTMembers(ProxiedPlayer player){
+        totalMembersByUUID.remove(player.getUniqueId());
+        totalMembers.remove(player);
+
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (UUID uuid : totalMembersByUUID) {
+            i++;
+            if (i != totalMembersByUUID.size()) {
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+        }
+
+        return builder.toString();
+    }
+
+    public String remFromInvites(ProxiedPlayer player){
         invitesByUUID.remove(player.getUniqueId());
-        updateKey("invites", getInvitesAsStringed());
+        invites.remove(player);
+
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (UUID uuid : invitesByUUID) {
+            i++;
+            if (i != invitesByUUID.size()) {
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+        }
+
+        return builder.toString();
+    }
+
+    public String addToModerators(ProxiedPlayer player){
+        modsByUUID.add(player.getUniqueId());
+        moderators.add(player);
+
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (UUID uuid : modsByUUID) {
+            i++;
+            if (i != modsByUUID.size()) {
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+        }
+
+        return builder.toString();
+    }
+
+    public String addToMembers(ProxiedPlayer player){
+        membersByUUID.add(player.getUniqueId());
+        members.add(player);
+
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (UUID uuid : membersByUUID) {
+            i++;
+            if (i != membersByUUID.size()) {
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+        }
+
+        return builder.toString();
+    }
+
+    public String addToTMembers(ProxiedPlayer player){
+        totalMembersByUUID.add(player.getUniqueId());
+        totalMembers.add(player);
+
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (UUID uuid : totalMembersByUUID) {
+            i++;
+            if (i != totalMembersByUUID.size()) {
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+        }
+
+        return builder.toString();
+    }
+
+    public String addToInvites(ProxiedPlayer player){
+        invitesByUUID.add(player.getUniqueId());
+        invites.add(player);
+
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (UUID uuid : invitesByUUID) {
+            i++;
+            if (i != invitesByUUID.size()) {
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+        }
+
+        return builder.toString();
     }
 
     public void addMember(ProxiedPlayer player){
-        totalMembersByUUID.add(player.getUniqueId());
-        totalMembers.add(player);
-        membersByUUID.add(player.getUniqueId());
-        members.add(player);
-        updateKey("totalmembers", getTotalMembersAsStringed());
-        updateKey("members", getMembersAsStringed());
+        StreamLine.getInstance().getLogger().info("Members as Stringed: " + getMembersAsStringed());
+        StreamLine.getInstance().getLogger().info("TMembers as Stringed: " + getTotalMembersAsStringed());
+        StreamLine.getInstance().getLogger().info("Members BEFORE: " + getFromKey("members"));
+        StreamLine.getInstance().getLogger().info("Members BEFORE raw: " + membersByUUID.toString());
+        StreamLine.getInstance().getLogger().info("MembersP BEFORE raw: " + members.toString());
+        StreamLine.getInstance().getLogger().info("TMembers BEFORE raw: " + totalMembersByUUID.toString());
+        updateKey("totalmembers", addToTMembers(player));
+        updateKey("members", addToMembers(player));
+        StreamLine.getInstance().getLogger().info("TMembersP BEFORE raw: " + totalMembers.toString());
+        StreamLine.getInstance().getLogger().info("Members AFTER: " + getFromKey("members"));
+        StreamLine.getInstance().getLogger().info("Members AFTER raw: " + membersByUUID.toString());
+        StreamLine.getInstance().getLogger().info("MembersP AFTER raw: " + members.toString());
+        StreamLine.getInstance().getLogger().info("TMembers AFTER raw: " + totalMembersByUUID.toString());
+        StreamLine.getInstance().getLogger().info("TMembersP AFTER raw: " + totalMembers.toString());
+        StreamLine.getInstance().getLogger().info("Members as Stringed: " + getMembersAsStringed());
+        StreamLine.getInstance().getLogger().info("TMembers as Stringed: " + getTotalMembersAsStringed());
+
+        try {
+            saveInfo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void removeMemberFromGuild(ProxiedPlayer player){
@@ -535,13 +727,10 @@ public class Guild {
         if (leaderUUID.equals(player.getUniqueId())){
             if (totalMembers.size() <= 1) {
                 try {
-                    totalMembersByUUID.remove(leaderUUID);
-                    membersByUUID.remove(player.getUniqueId());
-                    modsByUUID.remove(player.getUniqueId());
-                    updateKey("totalmembers", getTotalMembersAsStringed());
-                    updateKey("members", getMembersAsStringed());
-                    updateKey("mods", getModeratorsAsStringed());
-                    dispose();
+                    updateKey("totalmembers", remFromTMembers(player));
+                    updateKey("members", remFromMembers(player));
+                    updateKey("mods", removeFromModerators(player));
+                    disband();
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
@@ -565,18 +754,14 @@ public class Guild {
             }
         }
 
-        totalMembersByUUID.remove(player.getUniqueId());
-        membersByUUID.remove(player.getUniqueId());
-        modsByUUID.remove(player.getUniqueId());
-        updateKey("totalmembers", getTotalMembersAsStringed());
+        updateKey("totalmembers", remFromTMembers(player));
         updateKey("leader", leaderUUID);
-        updateKey("members", getMembersAsStringed());
-        updateKey("mods", getModeratorsAsStringed());
+        updateKey("members", remFromMembers(player));
+        updateKey("mods", removeFromModerators(player));
     }
 
     public void addInvite(ProxiedPlayer to) {
-        invitesByUUID.add(to.getUniqueId());
-        updateKey("invites", getInvitesAsStringed());
+        updateKey("invites", addToInvites(to));
         loadVars();
     }
 
@@ -589,9 +774,9 @@ public class Guild {
     }
 
     public Level getLevel(ProxiedPlayer member){
-        if (this.members.contains(member))
+        if (this.membersByUUID.contains(member.getUniqueId()))
             return Level.MEMBER;
-        else if (this.moderators.contains(member))
+        else if (this.modsByUUID.contains(member.getUniqueId()))
             return Level.MODERATOR;
         else if (this.leaderUUID.equals(member.getUniqueId()))
             return Level.LEADER;
@@ -604,19 +789,13 @@ public class Guild {
 
         forModeratorRemove(player);
 
-        this.modsByUUID.add(player.getUniqueId());
-        this.membersByUUID.remove(player.getUniqueId());
-
         if (leaderUUID.equals(player.getUniqueId())){
             if (totalMembers.size() <= 1) {
                 try {
-                    totalMembersByUUID.remove(leaderUUID);
-                    membersByUUID.remove(player.getUniqueId());
-                    modsByUUID.remove(player.getUniqueId());
-                    updateKey("totalmembers", getTotalMembersAsStringed());
-                    updateKey("members", getMembersAsStringed());
-                    updateKey("mods", getModeratorsAsStringed());
-                    dispose();
+                    updateKey("totalmembers", remFromTMembers(player));
+                    updateKey("members", remFromMembers(player));
+                    updateKey("mods", removeFromModerators(player));
+                    disband();
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
@@ -640,9 +819,18 @@ public class Guild {
             }
         }
 
+        loadMods();
+        loadMems();
+
         updateKey("leader", leaderUUID);
-        updateKey("members", getMembersAsStringed());
-        updateKey("mods", getModeratorsAsStringed());
+        updateKey("members", remFromMembers(player));
+        updateKey("mods", addToModerators(player));
+
+        try {
+            saveInfo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setMember(ProxiedPlayer player){
@@ -650,19 +838,13 @@ public class Guild {
 
         forMemberRemove(player);
 
-        this.modsByUUID.remove(player.getUniqueId());
-        this.membersByUUID.add(player.getUniqueId());
-
         if (leaderUUID.equals(player.getUniqueId())){
             if (totalMembers.size() <= 1) {
                 try {
-                    totalMembersByUUID.remove(leaderUUID);
-                    membersByUUID.remove(player.getUniqueId());
-                    modsByUUID.remove(player.getUniqueId());
-                    updateKey("totalmembers", getTotalMembersAsStringed());
-                    updateKey("members", getMembersAsStringed());
-                    updateKey("mods", getModeratorsAsStringed());
-                    dispose();
+                    updateKey("totalmembers", remFromTMembers(player));
+                    updateKey("members", remFromMembers(player));
+                    updateKey("mods", removeFromModerators(player));
+                    disband();
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
@@ -686,9 +868,18 @@ public class Guild {
             }
         }
 
+        loadMods();
+        loadMems();
+
         updateKey("leader", leaderUUID);
-        updateKey("members", getMembersAsStringed());
-        updateKey("mods", getModeratorsAsStringed());
+        updateKey("members", addToMembers(player));
+        updateKey("mods", removeFromModerators(player));
+
+        try {
+            saveInfo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void forModeratorRemove(ProxiedPlayer player){
@@ -707,9 +898,19 @@ public class Guild {
     }
 
     public void replaceLeader(ProxiedPlayer player){
-        setModerator(UUIDFetcher.getProxiedPlayer(leaderUUID));
-        file.delete();
+        updateKey("mods", getModeratorsAsStringed() + "." + leaderUUID.toString());
+        modsByUUID = loadModerators();
         updateKey("leader", player.getUniqueId());
+        updateKey("mods", getModeratorsAsStringed()
+                .replace("." + leaderUUID.toString(), "")
+                .replace(leaderUUID.toString() + ".", "")
+                .replace(leaderUUID.toString(), "")
+        );
+
+        leaderUUID = UUID.fromString(getFromKey("leader"));
+
+        loadMods();
+
         try {
             saveInfo();
         } catch (IOException e) {
@@ -720,5 +921,15 @@ public class Guild {
     public void dispose() throws Throwable {
         this.leaderUUID = null;
         this.finalize();
+    }
+
+    public void disband(){
+        file.delete();
+
+        try {
+            dispose();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 }

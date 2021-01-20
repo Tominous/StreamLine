@@ -194,6 +194,12 @@ party:
     leader: "LEADER"
     moderator: "MODERATOR"
     member: "MEMBER"
+  # To determine how it shows up if a player is offline or online.
+  # Fillers:
+  # %player% = the player's name.
+  players:
+    offline: "&d%player% &e(&cOFF&e)"
+    online: "&d%player% &e(&aON&e)"
   # When it finds no party.
   no-party: "&cNo party found!"
   # Already made.
@@ -428,6 +434,12 @@ guild:
     leader: "LEADER"
     moderator: "MODERATOR"
     member: "MEMBER"
+  # To determine how it shows up if a player is offline or online.
+  # Fillers:
+  # %player% = the player's name.
+  players:
+    offline: "&d%player% &e(&cOFF&e)"
+    online: "&d%player% &e(&aON&e)"
   # When it finds no guild.
   no-guild: "&cNo guild found!"
   # Already made.

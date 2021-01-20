@@ -237,8 +237,11 @@ public class ConfigUtils {
     public static final boolean guildConsole = config.getBoolean("modules.bungee.guilds.chat-to-console");
     public static final int xpPerGiveG = config.getInt("modules.bungee.guilds.xp.amount-per");
     public static final int timePerGiveG = config.getInt("modules.bungee.guilds.xp.time-per");
-    // ... StatsCommand.
+    // ... Stats.
     public static final boolean statsTell = config.getBoolean("modules.bungee.stats.tell-when-create");
     public static final int xpPerGiveP = config.getInt("modules.bungee.stats.xp.amount-per");
     public static final int timePerGiveP = config.getInt("modules.bungee.stats.xp.time-per");
+    // ... Redirect.
+    public static final String redirectPre = config.getString("modules.bungee.redirect.permission-prefix");
+    public static final String redirectMain = config.getString("modules.bungee.redirect.main");
 }

@@ -42,7 +42,9 @@ public class ChatListener implements Listener {
                     if (Objects.requireNonNull(GuildUtils.getGuild(p)).hasMember(sender)) break;
                 }
 
-                GuildUtils.addGuild(new Guild(sender.getUniqueId(), false));
+                if (GuildUtils.pHasGuild(sender)) {
+                    GuildUtils.addGuild(new Guild(sender.getUniqueId(), false));
+                }
                 break;
             }
         } catch (Exception ex) {

@@ -1,5 +1,8 @@
 package net.plasmere.streamline.listeners;
 
+import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.config.ServerInfo;
+import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
@@ -40,8 +43,9 @@ public class JoinLeaveListener implements Listener {
                 if (GuildUtils.getGuild(p) != null) {
                     if (Objects.requireNonNull(GuildUtils.getGuild(p)).hasMember(player)) break;
                 }
-
-                GuildUtils.addGuild(new Guild(player.getUniqueId(), false));
+                if (GuildUtils.pHasGuild(player)) {
+                    GuildUtils.addGuild(new Guild(player.getUniqueId(), false));
+                }
                 break;
             }
         } catch (Exception e) {
@@ -101,6 +105,31 @@ public class JoinLeaveListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
+    public void onServer(ServerConnectEvent ev){
+        ProxiedPlayer player = ev.getPlayer();
+
+        boolean hasServer = false;
+        ServerInfo server = null;
+
+        for (ServerInfo s : StreamLine.getInstance().getProxy().getServers().values()) {
+            String sv = s.getName();
+            if (player.hasPermission(ConfigUtils.redirectPre + sv)) {
+                hasServer = true;
+                server = s;
+                break;
+            }
+        }
+
+        if (!hasServer) {
+            server = StreamLine.getInstance().getProxy().getServerInfo(ConfigUtils.redirectMain);
+        }
+        if (! ev.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY)){
+            return;
+        }
+        ev.setTarget(server);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onLeave(PlayerDisconnectEvent ev) {
         ProxiedPlayer player = ev.getPlayer();
 
@@ -111,6 +140,12 @@ public class JoinLeaveListener implements Listener {
 
                 GuildUtils.removeGuild(Objects.requireNonNull(GuildUtils.getGuild(player)));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            PlayerUtils.removeStats(Objects.requireNonNull(PlayerUtils.getStat(player)));
         } catch (Exception e) {
             e.printStackTrace();
         }

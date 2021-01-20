@@ -2,7 +2,6 @@ package net.plasmere.streamline.objects;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
-import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.io.File;
@@ -10,7 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-public class Player {
+public class Player  {
     private HashMap<String, String> info = new HashMap<>();
     private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "players" + File.separator;
 
@@ -19,23 +18,36 @@ public class Player {
     public UUID uuid;
     public int xp;
     public int lvl;
-
-    public enum Level {
-        MEMBER,
-        MODERATOR,
-        LEADER
-    }
+    public String ips;
+    public String names;
+    public String latestIP;
+    public String latestName;
+    public List<String> ipList;
+    public List<String> nameList;
 
     public Player(ProxiedPlayer player) {
         this.player = player;
         this.uuid = player.getUniqueId();
+        this.latestIP = player.getSocketAddress().toString();
+        this.latestName = player.getName();
+        this.ips = player.getSocketAddress().toString();
+        this.names = player.getName();
         construct(player.getUniqueId(), true);
     }
 
     public Player(ProxiedPlayer player, boolean create){
         this.player = player;
         this.uuid = player.getUniqueId();
+        this.latestIP = player.getSocketAddress().toString();
+        this.latestName = player.getName();
+        this.ips = player.getSocketAddress().toString();
+        this.names = player.getName();
         construct(player.getUniqueId(), create);
+    }
+
+    public Player(String username){
+        this.player = null;
+        construct(Objects.requireNonNull(UUIDFetcher.fetch(username)), false);
     }
 
     private void construct(UUID uuid, boolean createNew){
@@ -43,7 +55,7 @@ public class Player {
 
         if (createNew || file.exists()) {
 
-            System.out.println("Guild file: " + file.getAbsolutePath());
+            StreamLine.getInstance().getLogger().info("Player file: " + file.getName() + " (In the \"players\" folder.)");
 
             try {
                 getFromConfigFile();
@@ -180,13 +192,75 @@ public class Player {
     public void loadVars(){
         this.uuid = UUID.fromString(getFromKey("uuid"));
         this.player = UUIDFetcher.getProxiedPlayer(this.uuid);
+        this.ips = getFromKey("ips");
+        this.names = getFromKey("names");
+        this.latestIP = getFromKey("latestip");
+        this.latestName = getFromKey("latestname");
+        this.ipList = loadIPs();
+        this.nameList = loadNames();
         this.xp = Integer.parseInt(getFromKey("xp"));
         this.lvl = Integer.parseInt(getFromKey("lvl"));
+    }
+
+    public List<String> loadIPs(){
+        List<String> thing = new ArrayList<>();
+
+        String search = "ips";
+
+        try {
+            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (! getFromKey(search).contains(".")) {
+                thing.add(getFromKey(search));
+                return thing;
+            }
+
+            for (String t : getFromKey(search).split(",")) {
+                try {
+                    thing.add(t);
+                } catch (Exception e) {
+                    //continue;
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return thing;
+    }
+
+    public List<String> loadNames(){
+        List<String> thing = new ArrayList<>();
+
+        String search = "names";
+
+        try {
+            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (! getFromKey(search).contains(".")) {
+                thing.add(getFromKey(search));
+                return thing;
+            }
+
+            for (String t : getFromKey(search).split(",")) {
+                try {
+                    thing.add(t);
+                } catch (Exception e) {
+                    //continue;
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return thing;
     }
 
     public List<String> propertiesDefaults() {
         List<String> defaults = new ArrayList<>();
         defaults.add("uuid=" + this.uuid);
+        defaults.add("ips=" + this.ips);
+        defaults.add("names=" + this.names);
+        defaults.add("latestip=" + this.ips.split(",")[0]);
+        defaults.add("latestname=" + this.names.split(",")[0]);
         defaults.add("xp=0");
         defaults.add("lvl=1");
         //defaults.add("");
@@ -202,6 +276,8 @@ public class Player {
             writer.write(s + "\n");
         }
         writer.close();
+
+        //StreamLine.getInstance().getLogger().info("Just saved Player info for player: " + player.getName());
     }
 
     /*

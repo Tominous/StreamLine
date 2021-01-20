@@ -485,13 +485,13 @@ modules:
     # "yes" = all players.
     # "no" = none.
     # "staff" = only players with the "streamline.staff" permission.
-    player-joins: "yes"
+    player-joins: "staff"
     # Enables / disables telling the text channel defined in "leaves" (in the discord > text-channels section) (on Discord) when all players leaves.
     # Can be:
     # "yes" = all players.
     # "no" = none.
     # "staff" = only players with the "streamline.staff" permission.
-    player-leaves: "yes"
+    player-leaves: "staff"
   # Bungee commands...
   bungee:
     # Reports...
@@ -551,7 +551,7 @@ modules:
         amount-per: 1
         # Amount of seconds per xp handout.
         time-per: 20
-    # StatsCommand...
+    # Stats command...
     stats:
       # Enables / disables telling the player when their stats have been created.
       tell-when-create: true
@@ -560,3 +560,14 @@ modules:
         amount-per: 1
         # Amount of seconds per xp handout.
         time-per: 20
+    # For server redirects...
+    # This redirects players upon joining the server.
+    # Nice if you need to direct certain players to a different server when they join.
+    redirect:
+      # Give this to players per server.
+      # Example permission to give to a player: streamline.send.skyblock
+      # This example will send the player to the skyblock server on your server.
+      # Only works if you have a server specifically called "skyblock" in your bungee config.yml
+      permission-prefix: "streamline.send."
+      # Main lobby server name as defined in your bungee config.yml
+      main: "lobby"

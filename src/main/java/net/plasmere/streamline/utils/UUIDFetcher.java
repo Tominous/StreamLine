@@ -1,5 +1,6 @@
 package net.plasmere.streamline.utils;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.md_5.bungee.api.ProxyServer;
@@ -14,7 +15,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class UUIDFetcher {
-    static public UUID fetch(String username) throws IOException {
+    static public UUID fetch(String username) {
         try {
             String JSONString = "";
 
@@ -39,6 +40,32 @@ public class UUIDFetcher {
 
             return UUID.fromString(uuid);
             //return UUID.fromString(id);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getName(String uuid) {
+        try {
+            String JSONString = "";
+
+            HttpURLConnection connection = (HttpURLConnection) new URL("https://api.mojang.com/user/profiles/" + uuid.replace("-", "") + "/names").openConnection();
+            InputStream is = connection.getInputStream();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                JSONString = line;
+            }
+
+            Object obj = new JsonParser().parse(JSONString);
+            JsonArray jo = (JsonArray) obj;
+            String last = jo.get(jo.size() - 1).toString();
+            Object job = new JsonParser().parse(last);
+            JsonObject njo = (JsonObject) job;
+
+            return njo.get("name").toString();
         } catch (Exception e){
             e.printStackTrace();
         }
