@@ -6,9 +6,11 @@ import net.plasmere.streamline.utils.MessagingUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.plasmere.streamline.utils.PlayerUtils;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class StaffOnlineCommand {

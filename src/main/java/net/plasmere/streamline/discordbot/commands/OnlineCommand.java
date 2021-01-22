@@ -7,6 +7,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.plasmere.streamline.utils.PlayerUtils;
+
+import java.util.Objects;
 
 public class OnlineCommand {
     private static final EmbedBuilder eb = new EmbedBuilder();

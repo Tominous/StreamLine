@@ -295,7 +295,7 @@ public class PartyCommand extends Command implements TabExecutor {
         List<String> strPlayers = new ArrayList<>();
 
         for (ProxiedPlayer player : players){
-            strPlayers.add(PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))));
+            strPlayers.add(Objects.requireNonNull(PlayerUtils.getStat(player)).getName());
         }
 
         if (args.length > 2) return new ArrayList<>();

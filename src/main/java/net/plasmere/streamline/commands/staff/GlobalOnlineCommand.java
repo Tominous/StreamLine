@@ -3,6 +3,7 @@ package net.plasmere.streamline.commands.staff;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
+import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -98,7 +99,7 @@ public class GlobalOnlineCommand extends Command {
 
         for (ProxiedPlayer player : players){
             try {
-                playerGroup.put(player, Objects.requireNonNull(api.getUserManager().getUser(PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))).getPrimaryGroup().toLowerCase());
+                playerGroup.put(player, Objects.requireNonNull(api.getUserManager().getUser(Objects.requireNonNull(PlayerUtils.getStat(player)).getName())).getPrimaryGroup().toLowerCase());
             } catch (Exception e){
                 e.printStackTrace();
                 playerGroup.put(player, "null");

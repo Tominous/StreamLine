@@ -8,6 +8,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
+import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
 
 import java.util.*;
@@ -57,7 +58,7 @@ public class SudoCommand extends Command implements TabExecutor {
         List<String> strPlayers = new ArrayList<>();
 
         for (ProxiedPlayer player : players){
-            strPlayers.add(PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))));
+            strPlayers.add(Objects.requireNonNull(PlayerUtils.getStat(player)).getName());
         }
 
         Collection<Map.Entry<String, Command>> commands = plugin.getProxy().getPluginManager().getCommands();
