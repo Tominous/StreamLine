@@ -98,7 +98,7 @@ public class GlobalOnlineCommand extends Command {
 
         for (ProxiedPlayer player : players){
             try {
-                playerGroup.put(player, Objects.requireNonNull(api.getUserManager().getUser(player.getName())).getPrimaryGroup().toLowerCase());
+                playerGroup.put(player, Objects.requireNonNull(api.getUserManager().getUser(PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))).getPrimaryGroup().toLowerCase());
             } catch (Exception e){
                 e.printStackTrace();
                 playerGroup.put(player, "null");
@@ -143,12 +143,12 @@ public class GlobalOnlineCommand extends Command {
             Server server = playerServers.get(player);
             if (! (i == players.size() - 1))
                 text.append(MessageConfUtils.onlineMessageBPlayersBulkNotLast
-                        .replace("%player%", player.getName())
+                        .replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
                         .replace("%server%", server.getInfo().getName())
                 );
             else
                 text.append(MessageConfUtils.onlineMessageBPlayersBulkLast
-                        .replace("%player%", player.getName())
+                        .replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
                         .replace("%server%", server.getInfo().getName())
                 );
             i++;

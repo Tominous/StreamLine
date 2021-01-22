@@ -340,6 +340,9 @@ commands:
         - "st"
         - "myinfo"
         - "mi"
+      view-others:
+        enabled: true
+        permission: "streamline.command.stats.others"
     # Server commands...
     servers:
       # The lobby command.
@@ -560,6 +563,8 @@ modules:
         amount-per: 1
         # Amount of seconds per xp handout.
         time-per: 20
+      # Time in seconds to wait before trying to clear the cached stats.
+      cache-clear: 300
     # For server redirects...
     # This redirects players upon joining the server.
     # Nice if you need to direct certain players to a different server when they join.

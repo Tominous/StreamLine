@@ -130,7 +130,7 @@ public class MessagingUtils {
                             .sendMessage(
                                     eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
                                             .setDescription(message.message.replace("%sender%", message.sender.getName()))
-                                            .setAuthor(message.sender.getName(), FaceFetcher.getFaceAvatarURL((ProxiedPlayer) message.sender), FaceFetcher.getFaceAvatarURL((ProxiedPlayer) message.sender))
+                                            .setAuthor(message.sender.getName(), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getStat(message.sender)).latestName), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getStat(message.sender)).latestName))
                                             .build()
                             ).queue();
                 } else {
@@ -215,7 +215,7 @@ public class MessagingUtils {
 
     public static void sendBPUserMessage(Party party, CommandSender sender, CommandSender to, String msg){
         to.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", ((ProxiedPlayer) sender).getDisplayName())
+                .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                 .replace("%leader%", party.leader.getName())
                 .replace("%size%", Integer.toString(party.getSize()))
                 .replace("%max%", Integer.toString(party.maxSize))
@@ -235,8 +235,8 @@ public class MessagingUtils {
 
     public static void sendBGUserMessage(Guild guild, CommandSender sender, CommandSender to, String msg){
         to.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", ((ProxiedPlayer) sender).getDisplayName())
-                .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(guild.leaderUUID)).getName())
+                .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getPlayer(guild.leaderUUID)).getName())
                 .replace("%size%", Integer.toString(guild.getSize()))
                 .replace("%max%", Integer.toString(guild.maxSize))
                 .replace("%mods_count%", Integer.toString(guild.modsByUUID.size()))
@@ -256,8 +256,8 @@ public class MessagingUtils {
 
     public static void sendStatUserMessage(Player player, CommandSender sender, CommandSender to, String msg){
         to.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", ((ProxiedPlayer) sender).getDisplayName())
-                .replace("%player%", player.player.getName())
+                .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                .replace("%player%", PlayerUtils.getOffOnReg(player))
                 .replace("%xp%", Integer.toString(player.xp))
                 .replace("%level%", Integer.toString(player.lvl))
         ));
@@ -266,7 +266,7 @@ public class MessagingUtils {
     public static void sendBUserMessage(CommandSender sender, String msg){
         if (sender instanceof ProxiedPlayer) {
             sender.sendMessage(TextUtils.codedText(msg
-                    .replace("%sender%", ((ProxiedPlayer) sender).getDisplayName())
+                    .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
             ));
         } else {
             sender.sendMessage(TextUtils.codedText(msg
@@ -318,11 +318,11 @@ public class MessagingUtils {
         for (ProxiedPlayer m : party.moderators){
             if (i < party.moderators.size()){
                 msg.append(MessageConfUtils.partiesModsNLast
-                        .replace("%user%", m.getName())
+                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             } else {
                 msg.append(MessageConfUtils.partiesModsLast
-                        .replace("%user%", m.getName())
+                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             }
 
@@ -339,11 +339,11 @@ public class MessagingUtils {
         for (ProxiedPlayer m : party.members){
             if (i < party.members.size()){
                 msg.append(MessageConfUtils.partiesMemsNLast
-                        .replace("%user%", m.getName())
+                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             } else {
                 msg.append(MessageConfUtils.partiesMemsLast
-                        .replace("%user%", m.getName())
+                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             }
 
@@ -360,11 +360,11 @@ public class MessagingUtils {
         for (ProxiedPlayer m : party.totalMembers){
             if (i != party.totalMembers.size()){
                 msg.append(MessageConfUtils.partiesTMemsNLast
-                        .replace("%user%", m.getName())
+                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             } else {
                 msg.append(MessageConfUtils.partiesTMemsLast
-                        .replace("%user%", m.getName())
+                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             }
 
@@ -381,11 +381,11 @@ public class MessagingUtils {
         for (ProxiedPlayer m : party.invites){
             if (i < party.invites.size()){
                 msg.append(MessageConfUtils.partiesInvsNLast
-                        .replace("%user%", m.getName())
+                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             } else {
                 msg.append(MessageConfUtils.partiesInvsLast
-                        .replace("%user%", m.getName())
+                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             }
 
@@ -410,18 +410,18 @@ public class MessagingUtils {
         for (UUID m : guild.modsByUUID){
             ProxiedPlayer player;
             try {
-                player = Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m));
+                player = Objects.requireNonNull(UUIDFetcher.getPlayer(m));
             } catch (Exception e) {
                 continue;
             }
 
             if (i != guild.modsByUUID.size()){
                 msg.append(MessageConfUtils.guildsModsNLast
-                        .replace("%user%", player.getName())
+                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             } else {
                 msg.append(MessageConfUtils.guildsModsLast
-                        .replace("%user%", player.getName())
+                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             }
 
@@ -438,18 +438,18 @@ public class MessagingUtils {
         for (UUID m : guild.membersByUUID){
             ProxiedPlayer player;
             try {
-                player = Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m));
+                player = Objects.requireNonNull(UUIDFetcher.getPlayer(m));
             } catch (Exception e) {
                 continue;
             }
 
             if (i != guild.membersByUUID.size()){
                 msg.append(MessageConfUtils.guildsMemsNLast
-                        .replace("%user%", player.getName())
+                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             } else {
                 msg.append(MessageConfUtils.guildsMemsLast
-                        .replace("%user%", player.getName())
+                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             }
 
@@ -466,18 +466,18 @@ public class MessagingUtils {
         for (UUID m : guild.totalMembersByUUID){
             ProxiedPlayer player;
             try {
-                player = Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m));
+                player = Objects.requireNonNull(UUIDFetcher.getPlayer(m));
             } catch (Exception e) {
                 continue;
             }
 
             if (i != guild.totalMembersByUUID.size()){
                 msg.append(MessageConfUtils.guildsTMemsNLast
-                        .replace("%user%", player.getName())
+                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             } else {
                 msg.append(MessageConfUtils.guildsTMemsLast
-                        .replace("%user%", player.getName())
+                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             }
 
@@ -494,18 +494,18 @@ public class MessagingUtils {
         for (UUID m : guild.invitesByUUID){
             ProxiedPlayer player;
             try {
-                player = Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(m));
+                player = Objects.requireNonNull(UUIDFetcher.getPlayer(m));
             } catch (Exception e) {
                 continue;
             }
 
             if (i != guild.invites.size()){
                 msg.append(MessageConfUtils.guildsInvsNLast
-                        .replace("%user%", player.getName())
+                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             } else {
                 msg.append(MessageConfUtils.guildsInvsLast
-                        .replace("%user%", player.getName())
+                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             }
 

@@ -1,6 +1,5 @@
 package net.plasmere.streamline.listeners;
 
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.plasmere.streamline.StreamLine;
@@ -35,10 +34,11 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PostLoginEvent ev) {
-        ProxiedPlayer player = ev.getPlayer();
+        Player player = (Player) ev.getPlayer();
 
         try {
-            for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()){
+            for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
+                Player p = (Player) pl;
                 if (GuildUtils.getGuild(p) == null && ! p.equals(player)) continue;
                 if (GuildUtils.getGuild(p) != null) {
                     if (Objects.requireNonNull(GuildUtils.getGuild(p)).hasMember(player)) break;
@@ -69,13 +69,13 @@ public class JoinLeaveListener implements Listener {
         switch (ConfigUtils.moduleBPlayerJoins) {
             case "yes":
                 MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                        MessageConfUtils.bungeeOnline.replace("%player%", player.getName()),
+                        MessageConfUtils.bungeeOnline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                         "streamline.staff"));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
                     MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                            MessageConfUtils.bungeeOnline.replace("%player%", player.getName()),
+                            MessageConfUtils.bungeeOnline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                             "streamline.staff"));
                 }
                 break;
@@ -87,14 +87,14 @@ public class JoinLeaveListener implements Listener {
             case "yes":
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                         MessageConfUtils.discordOnlineEmbed,
-                        MessageConfUtils.discordOnline.replace("%player%", player.getName()),
+                        MessageConfUtils.discordOnline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                         ConfigUtils.textChannelBJoins));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                             MessageConfUtils.discordOnlineEmbed,
-                            MessageConfUtils.discordOnline.replace("%player%", player.getName()),
+                            MessageConfUtils.discordOnline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                             ConfigUtils.textChannelBJoins));
                 }
                 break;
@@ -106,7 +106,7 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onServer(ServerConnectEvent ev){
-        ProxiedPlayer player = ev.getPlayer();
+        Player player = (Player) ev.getPlayer();
 
         boolean hasServer = false;
         ServerInfo server = null;
@@ -131,10 +131,11 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onLeave(PlayerDisconnectEvent ev) {
-        ProxiedPlayer player = ev.getPlayer();
+        Player player = (Player) ev.getPlayer();
 
         try {
-            for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()){
+            for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
+                Player p = (Player) pl;
                 if (Objects.requireNonNull(GuildUtils.getGuild(player)).hasMember(p) && ! p.equals(player)) break;
 
 
@@ -145,7 +146,7 @@ public class JoinLeaveListener implements Listener {
         }
 
         try {
-            PlayerUtils.removeStats(Objects.requireNonNull(PlayerUtils.getStat(player)));
+            PlayerUtils.removeStat(Objects.requireNonNull(PlayerUtils.getStat(player)));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,13 +154,13 @@ public class JoinLeaveListener implements Listener {
         switch (ConfigUtils.moduleBPlayerLeaves) {
             case "yes":
                 MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                        MessageConfUtils.bungeeOffline.replace("%player%", player.getName()),
+                        MessageConfUtils.bungeeOffline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                         "streamline.staff"));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
                     MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                            MessageConfUtils.bungeeOffline.replace("%player%", player.getName()),
+                            MessageConfUtils.bungeeOffline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                             "streamline.staff"));
                 }
                 break;
@@ -171,14 +172,14 @@ public class JoinLeaveListener implements Listener {
             case "yes":
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                         MessageConfUtils.discordOfflineEmbed,
-                        MessageConfUtils.discordOffline.replace("%player%", player.getName()),
+                        MessageConfUtils.discordOffline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                         ConfigUtils.textChannelBLeaves));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                             MessageConfUtils.discordOfflineEmbed,
-                            MessageConfUtils.discordOffline.replace("%player%", player.getName()),
+                            MessageConfUtils.discordOffline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                             ConfigUtils.textChannelBLeaves));
                 }
                 break;

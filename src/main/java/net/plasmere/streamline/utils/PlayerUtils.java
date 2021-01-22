@@ -2,10 +2,12 @@ package net.plasmere.streamline.utils;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Player;
 
 import java.io.IOException;
@@ -28,10 +30,75 @@ public class PlayerUtils {
                     return stat;
                 }
             }
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+        }
+
+        Player p = new Player(player.getName());
+
+        addStats(p);
+
+        return p;
+    }
+
+    public static Player getStat(CommandSender player) {
+        try {
+            for (Player stat : stats) {
+                if (stat.player.equals(player)) {
+                    return stat;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Player p = new Player(player.getName());
+
+        addStats(p);
+
+        return p;
+    }
+
+    public static Player getStat(String name) {
+        try {
+            for (Player stat : stats) {
+                if (stat.player.getName().equals(name)) {
+                    return stat;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Player player = new Player(name);
+
+        addStats(player);
+
+        return player;
+    }
+
+    public static List<Player> transposeList(List<ProxiedPlayer> players){
+        List<Player> ps = new ArrayList<>();
+        for (ProxiedPlayer player : players){
+            ps.add(PlayerUtils.getStat(player));
+        }
+
+        return ps;
+    }
+
+    public static String getOffOnDisplay(Player player){
+        if (player.online) {
+            return MessageConfUtils.online.replace("%player%", player.displayName);
+        } else {
+            return MessageConfUtils.offline.replace("%player%", player.displayName);
+        }
+    }
+
+    public static String getOffOnReg(Player player){
+        if (player.online) {
+            return MessageConfUtils.online.replace("%player%", player.latestName);
+        } else {
+            return MessageConfUtils.offline.replace("%player%", player.latestName);
         }
     }
 
@@ -44,7 +111,7 @@ public class PlayerUtils {
         stats.add(stat);
     }
 
-    public static void createStat(ProxiedPlayer player) {
+    public static void createStat(Player player) {
         try {
             Player stat = new Player(player);
 
@@ -62,7 +129,7 @@ public class PlayerUtils {
         stats.add(stat);
     }
 
-    public static void removeStats(Player stat){
+    public static void removeStat(Player stat){
         try {
             stat.saveInfo();
         } catch (IOException e) {
@@ -71,8 +138,8 @@ public class PlayerUtils {
         stats.remove(stat);
     }
 
-    public static void info(ProxiedPlayer sender){
-        Player stat = getStat(sender);
+    public static void info(Player sender, Player of){
+        Player stat = getStat(of);
 
         if (! isStats(stat) || stat == null) {
             MessagingUtils.sendBUserMessage(sender, noStatsFound);

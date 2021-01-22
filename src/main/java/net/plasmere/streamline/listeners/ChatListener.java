@@ -6,6 +6,7 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
+import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.TextUtils;
@@ -32,11 +33,12 @@ public class ChatListener implements Listener {
         if (e.isCancelled()) return;
         if (! (e.getSender() instanceof ProxiedPlayer)) return;
 
-        ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
+        Player sender = (Player) e.getSender();
         String msg = e.getMessage();
 
         try {
-            for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()){
+            for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
+                Player p = (Player) pl;
                 if (GuildUtils.getGuild(p) == null && ! p.equals(sender)) continue;
                 if (GuildUtils.getGuild(p) != null) {
                     if (Objects.requireNonNull(GuildUtils.getGuild(p)).hasMember(sender)) break;

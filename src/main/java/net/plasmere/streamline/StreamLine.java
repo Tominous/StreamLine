@@ -9,6 +9,7 @@ import net.plasmere.streamline.discordbot.ReadyListener;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.objects.timers.GuildXPTimer;
+import net.plasmere.streamline.objects.timers.PlayerClearTimer;
 import net.plasmere.streamline.objects.timers.PlayerXPTimer;
 import net.plasmere.streamline.utils.*;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -42,6 +43,7 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 
 	private ScheduledTask guilds;
 	private ScheduledTask players;
+	private ScheduledTask cachedPlayers;
 
 	public StreamLine(){
 		instance = this;
@@ -98,7 +100,8 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 		try {
 			guilds = getProxy().getScheduler().schedule(this, new GuildXPTimer(ConfigUtils.timePerGiveG), 1, 1, TimeUnit.SECONDS);
 			players = getProxy().getScheduler().schedule(this, new PlayerXPTimer(ConfigUtils.timePerGiveP), 1, 1, TimeUnit.SECONDS);
-			getLogger().info("Loaded 2 timer (Runnable) into memory...!");
+			cachedPlayers = getProxy().getScheduler().schedule(this, new PlayerClearTimer(ConfigUtils.cachedPClear), 1, 1, TimeUnit.SECONDS);
+			getLogger().info("Loaded 3 timers (Runnables) into memory...!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

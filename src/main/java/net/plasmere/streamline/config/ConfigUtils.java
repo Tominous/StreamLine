@@ -75,6 +75,8 @@ public class ConfigUtils {
     public static final boolean comBStats = config.getBoolean("commands.bungee.stats.enabled");
     public static final List<String> comBStatsAliases = config.getStringList("commands.bungee.stats.aliases");
     public static final String comBStatsPerm = config.getString("commands.bungee.stats.permission");
+    public static final boolean comBStatsOthers = config.getBoolean("commands.bungee.stats.view-others.enabled");
+    public static final String comBStatsPermOthers = config.getString("commands.bungee.stats.view-others.permission");
     // ... Party.
     //
     public static final boolean comBParty = config.getBoolean("commands.bungee.party.enabled");
@@ -241,6 +243,7 @@ public class ConfigUtils {
     public static final boolean statsTell = config.getBoolean("modules.bungee.stats.tell-when-create");
     public static final int xpPerGiveP = config.getInt("modules.bungee.stats.xp.amount-per");
     public static final int timePerGiveP = config.getInt("modules.bungee.stats.xp.time-per");
+    public static final int cachedPClear = config.getInt("modules.bungee.stats.cache-clear");
     // ... Redirect.
     public static final String redirectPre = config.getString("modules.bungee.redirect.permission-prefix");
     public static final String redirectMain = config.getString("modules.bungee.redirect.main");

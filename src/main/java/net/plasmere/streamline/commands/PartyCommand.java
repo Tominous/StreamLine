@@ -5,13 +5,11 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.NoPlayerFoundException;
-import net.plasmere.streamline.utils.GuildUtils;
-import net.plasmere.streamline.utils.MessagingUtils;
-import net.plasmere.streamline.utils.PartyUtils;
+import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.utils.*;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
-import net.plasmere.streamline.utils.TextUtils;
 
 import java.util.*;
 
@@ -44,9 +42,9 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        ProxiedPlayer online = tryOnline(args[1]);
+                        Player online = tryOnline(args[1]);
                         if (online == null) return;
-                        PartyUtils.joinParty((ProxiedPlayer) sender, online);
+                        PartyUtils.joinParty(PlayerUtils.getStat(sender), online);
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -56,14 +54,14 @@ public class PartyCommand extends Command implements TabExecutor {
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParLeaveAliases)) {
                 try {
-                    PartyUtils.leaveParty((ProxiedPlayer) sender);
+                    PartyUtils.leaveParty(PlayerUtils.getStat(sender));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParCreateAliases)) {
                 try {
-                    PartyUtils.createParty(plugin, (ProxiedPlayer) sender);
+                    PartyUtils.createParty(plugin, PlayerUtils.getStat(sender));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
@@ -73,9 +71,9 @@ public class PartyCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                 } else {
                     try {
-                        ProxiedPlayer online = tryOnline(args[1]);
+                        Player online = tryOnline(args[1]);
                         if (online == null) return;
-                        PartyUtils.promotePlayer((ProxiedPlayer) sender, online);
+                        PartyUtils.promotePlayer(PlayerUtils.getStat(sender), online);
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -93,9 +91,9 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        ProxiedPlayer online = tryOnline(args[1]);
+                        Player online = tryOnline(args[1]);
                         if (online == null) return;
-                        PartyUtils.demotePlayer((ProxiedPlayer) sender, online);
+                        PartyUtils.demotePlayer(PlayerUtils.getStat(sender), online);
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -115,7 +113,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     try {
                         args[0] = "";
 
-                        PartyUtils.sendChat((ProxiedPlayer) sender, TextUtils.normalize(args));
+                        PartyUtils.sendChat(PlayerUtils.getStat(sender), TextUtils.normalize(args));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -123,7 +121,7 @@ public class PartyCommand extends Command implements TabExecutor {
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParListAliases)) {
                 try {
-                    PartyUtils.listParty((ProxiedPlayer) sender);
+                    PartyUtils.listParty(PlayerUtils.getStat(sender));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
@@ -131,17 +129,17 @@ public class PartyCommand extends Command implements TabExecutor {
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParOpenAliases)) {
                 if (args.length <= 1) {
                     try {
-                        PartyUtils.openParty((ProxiedPlayer) sender);
+                        PartyUtils.openParty(PlayerUtils.getStat(sender));
                     }  catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
                     }
                 } else {
                     try {
-                        if (PartyUtils.getParty((ProxiedPlayer) sender) != null) {
-                            PartyUtils.openPartySized((ProxiedPlayer) sender, Integer.parseInt(args[1]));
+                        if (PartyUtils.getParty(PlayerUtils.getStat(sender)) != null) {
+                            PartyUtils.openPartySized(PlayerUtils.getStat(sender), Integer.parseInt(args[1]));
                         } else {
-                            PartyUtils.createPartySized(plugin, (ProxiedPlayer) sender, Integer.parseInt(args[1]));
+                            PartyUtils.createPartySized(plugin, PlayerUtils.getStat(sender), Integer.parseInt(args[1]));
                         }
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
@@ -150,14 +148,14 @@ public class PartyCommand extends Command implements TabExecutor {
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParCloseAliases)) {
                 try {
-                    PartyUtils.closeParty((ProxiedPlayer) sender);
+                    PartyUtils.closeParty(PlayerUtils.getStat(sender));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParDisbandAliases)) {
                 try {
-                    PartyUtils.disband((ProxiedPlayer) sender);
+                    PartyUtils.disband(PlayerUtils.getStat(sender));
                 } catch (Throwable e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
@@ -172,9 +170,9 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        ProxiedPlayer online = tryOnline(args[1]);
+                        Player online = tryOnline(args[1]);
                         if (online == null) return;
-                        PartyUtils.acceptInvite((ProxiedPlayer) sender, online);
+                        PartyUtils.acceptInvite(PlayerUtils.getStat(sender), online);
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -192,9 +190,9 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        ProxiedPlayer online = tryOnline(args[1]);
+                        Player online = tryOnline(args[1]);
                         if (online == null) return;
-                        PartyUtils.denyInvite((ProxiedPlayer) sender, online);
+                        PartyUtils.denyInvite(PlayerUtils.getStat(sender), online);
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -212,9 +210,9 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        ProxiedPlayer online = tryOnline(args[1]);
+                        Player online = tryOnline(args[1]);
                         if (online == null) return;
-                        PartyUtils.sendInvite(online, (ProxiedPlayer) sender);
+                        PartyUtils.sendInvite(online, PlayerUtils.getStat(sender));
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -232,9 +230,9 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        ProxiedPlayer online = tryOnline(args[1]);
+                        Player online = tryOnline(args[1]);
                         if (online == null) return;
-                        PartyUtils.kickMember((ProxiedPlayer) sender, online);
+                        PartyUtils.kickMember(PlayerUtils.getStat(sender), online);
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -244,23 +242,23 @@ public class PartyCommand extends Command implements TabExecutor {
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParMuteAliases)) {
                 try {
-                    PartyUtils.muteParty((ProxiedPlayer) sender);
+                    PartyUtils.muteParty(PlayerUtils.getStat(sender));
                 } catch (Throwable e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParWarpAliases)) {
                 try {
-                    PartyUtils.warpParty((ProxiedPlayer) sender);
+                    PartyUtils.warpParty(PlayerUtils.getStat(sender));
                 } catch (Throwable e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
                 }
             } else {
                 try {
-                    ProxiedPlayer online = tryOnline(args[0]);
+                    Player online = tryOnline(args[0]);
                     if (online == null) return;
-                    PartyUtils.sendInvite(online, (ProxiedPlayer) sender);
+                    PartyUtils.sendInvite(online, PlayerUtils.getStat(sender));
                 } catch (NoPlayerFoundException e){
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                 } catch (Exception e) {
@@ -273,11 +271,11 @@ public class PartyCommand extends Command implements TabExecutor {
         }
     }
 
-    public ProxiedPlayer tryOnline(String player) throws NoPlayerFoundException {
+    public Player tryOnline(String player) throws NoPlayerFoundException {
         try {
             for (ProxiedPlayer p : plugin.getProxy().getPlayers()){
                 if (p.getName().equals(player))
-                    return p;
+                    return PlayerUtils.getStat(p);
             }
             throw new NoPlayerFoundException(player);
         } catch (NoPlayerFoundException e){
@@ -297,7 +295,7 @@ public class PartyCommand extends Command implements TabExecutor {
         List<String> strPlayers = new ArrayList<>();
 
         for (ProxiedPlayer player : players){
-            strPlayers.add(player.getName());
+            strPlayers.add(PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))));
         }
 
         if (args.length > 2) return new ArrayList<>();

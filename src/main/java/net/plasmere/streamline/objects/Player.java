@@ -1,15 +1,24 @@
 package net.plasmere.streamline.objects;
 
+import net.md_5.bungee.api.*;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.config.ServerInfo;
+import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.connection.Server;
+import net.md_5.bungee.api.event.ServerConnectEvent;
+import net.md_5.bungee.api.score.Scoreboard;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.util.*;
 
-public class Player  {
+public class Player implements ProxiedPlayer {
     private HashMap<String, String> info = new HashMap<>();
     private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "players" + File.separator;
 
@@ -24,6 +33,8 @@ public class Player  {
     public String latestName;
     public List<String> ipList;
     public List<String> nameList;
+    public boolean online;
+    public String displayName;
 
     public Player(ProxiedPlayer player) {
         this.player = player;
@@ -32,6 +43,8 @@ public class Player  {
         this.latestName = player.getName();
         this.ips = player.getSocketAddress().toString();
         this.names = player.getName();
+        this.online = true;
+        this.displayName = player.getDisplayName();
         construct(player.getUniqueId(), true);
     }
 
@@ -42,6 +55,8 @@ public class Player  {
         this.latestName = player.getName();
         this.ips = player.getSocketAddress().toString();
         this.names = player.getName();
+        this.online = true;
+        this.displayName = player.getDisplayName();
         construct(player.getUniqueId(), create);
     }
 
@@ -189,9 +204,23 @@ public class Player  {
         loadVars();
     }
 
+    public List<String> propertiesDefaults() {
+        List<String> defaults = new ArrayList<>();
+        defaults.add("uuid=" + this.uuid);
+        defaults.add("ips=" + this.ips);
+        defaults.add("names=" + this.names);
+        defaults.add("latestip=" + this.ips.split(",")[0]);
+        defaults.add("latestname=" + this.names.split(",")[0]);
+        defaults.add("xp=0");
+        defaults.add("lvl=1");
+        defaults.add("displayname=" + this.displayName);
+        //defaults.add("");
+        return defaults;
+    }
+
     public void loadVars(){
         this.uuid = UUID.fromString(getFromKey("uuid"));
-        this.player = UUIDFetcher.getProxiedPlayer(this.uuid);
+        this.player = UUIDFetcher.getPlayer(this.uuid);
         this.ips = getFromKey("ips");
         this.names = getFromKey("names");
         this.latestIP = getFromKey("latestip");
@@ -200,6 +229,16 @@ public class Player  {
         this.nameList = loadNames();
         this.xp = Integer.parseInt(getFromKey("xp"));
         this.lvl = Integer.parseInt(getFromKey("lvl"));
+        this.displayName = getFromKey("displayname");
+        this.online = getIsOnline();
+    }
+
+    public boolean getIsOnline(){
+        try {
+            return StreamLine.getInstance().getProxy().getPlayers().contains(this.player);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public List<String> loadIPs(){
@@ -254,19 +293,6 @@ public class Player  {
         return thing;
     }
 
-    public List<String> propertiesDefaults() {
-        List<String> defaults = new ArrayList<>();
-        defaults.add("uuid=" + this.uuid);
-        defaults.add("ips=" + this.ips);
-        defaults.add("names=" + this.names);
-        defaults.add("latestip=" + this.ips.split(",")[0]);
-        defaults.add("latestname=" + this.names.split(",")[0]);
-        defaults.add("xp=0");
-        defaults.add("lvl=1");
-        //defaults.add("");
-        return defaults;
-    }
-
     public void saveInfo() throws IOException {
         file.delete();
 
@@ -277,7 +303,7 @@ public class Player  {
         }
         writer.close();
 
-        //StreamLine.getInstance().getLogger().info("Just saved Player info for player: " + player.getName());
+        //StreamLine.getInstance().getLogger().info("Just saved Player info for player: " + PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))));
     }
 
     /*
@@ -288,15 +314,8 @@ public class Player  {
     */
     public int getNeededXp(){
         int needed = 0;
-        if (this.lvl <= 15){
-            needed = 2 * this.lvl + 7;
-        } else if (this.lvl >= 16 && this.lvl <= 30){
-            needed = 5 * this.lvl - 38;
-        } else if (this.lvl > 30) {
-            needed = 9 * this.lvl - 158;
-        } else {
-            needed = 100;
-        }
+
+        needed = 50000 + (5000 * lvl);
 
         return needed;
     }
@@ -328,5 +347,373 @@ public class Player  {
     public void dispose() throws Throwable {
         this.uuid = null;
         this.finalize();
+    }
+
+    @Override
+    public String getDisplayName() {
+        return this.displayName;
+    }
+
+    @Override
+    public void setDisplayName(String name) {
+        updateKey("displayname", name);
+    }
+
+    @Override
+    public void sendMessage(ChatMessageType position, BaseComponent... message) {
+        if (online) {
+            player.sendMessage(position, message);
+        }
+    }
+
+    @Override
+    public void sendMessage(ChatMessageType position, BaseComponent message) {
+        if (online) {
+            player.sendMessage(position, message);
+        }
+    }
+
+    @Override
+    public void sendMessage(UUID sender, BaseComponent... message) {
+        if (online) {
+            player.sendMessage(sender, message);
+        }
+    }
+
+    @Override
+    public void sendMessage(UUID sender, BaseComponent message) {
+        if (online) {
+            player.sendMessage(sender, message);
+        }
+    }
+
+    @Override
+    public void connect(ServerInfo target) {
+        if (online) {
+            player.connect(target);
+        }
+    }
+
+    @Override
+    public void connect(ServerInfo target, ServerConnectEvent.Reason reason) {
+        if (online) {
+            player.connect(target, reason);
+        }
+    }
+
+    @Override
+    public void connect(ServerInfo target, Callback<Boolean> callback) {
+        if (online) {
+            player.connect(target, callback);
+        }
+    }
+
+    @Override
+    public void connect(ServerInfo target, Callback<Boolean> callback, ServerConnectEvent.Reason reason) {
+        if (online) {
+            player.connect(target, callback, reason);
+        }
+    }
+
+    @Override
+    public void connect(ServerConnectRequest request) {
+        if (online) {
+            player.connect(request);
+        }
+    }
+
+    @Override
+    public Server getServer() {
+        if (online) {
+            return player.getServer();
+        }
+        return null;
+    }
+
+    @Override
+    public int getPing() {
+        if (online) {
+            return player.getPing();
+        }
+        return -1;
+    }
+
+    @Override
+    public void sendData(String channel, byte[] data) {
+        if (online) {
+            player.sendData(channel, data);
+        }
+    }
+
+    @Override
+    public PendingConnection getPendingConnection() {
+        if (online) {
+            return player.getPendingConnection();
+        }
+        return null;
+    }
+
+    @Override
+    public void chat(String message) {
+        if (online) {
+            player.chat(message);
+        }
+    }
+
+    @Override
+    public ServerInfo getReconnectServer() {
+        if (online) {
+            return player.getReconnectServer();
+        }
+        return null;
+    }
+
+    @Override
+    public void setReconnectServer(ServerInfo server) {
+        if (online) {
+            player.setReconnectServer(server);
+        }
+    }
+
+    @Override
+    public String getUUID() {
+        return uuid.toString();
+    }
+
+    @Override
+    public UUID getUniqueId() {
+        return uuid;
+    }
+
+    @Override
+    public Locale getLocale() {
+        if (online) {
+            return player.getLocale();
+        }
+        return null;
+    }
+
+    @Override
+    public byte getViewDistance() {
+        if (online) {
+            return player.getViewDistance();
+        }
+        return -1;
+    }
+
+    @Override
+    public ChatMode getChatMode() {
+        if (online) {
+            return player.getChatMode();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean hasChatColors() {
+        if (online) {
+            return player.hasChatColors();
+        }
+        return false;
+    }
+
+    @Override
+    public SkinConfiguration getSkinParts() {
+        if (online) {
+            return player.getSkinParts();
+        }
+        return null;
+    }
+
+    @Override
+    public MainHand getMainHand() {
+        if (online) {
+            return player.getMainHand();
+        }
+        return null;
+    }
+
+    @Override
+    public void setTabHeader(BaseComponent header, BaseComponent footer) {
+        if (online) {
+            player.setTabHeader(header, footer);
+        }
+    }
+
+    @Override
+    public void setTabHeader(BaseComponent[] header, BaseComponent[] footer) {
+        if (online) {
+            player.setTabHeader(header, footer);
+        }
+    }
+
+    @Override
+    public void resetTabHeader() {
+        if (online) {
+            player.resetTabHeader();
+        }
+    }
+
+    @Override
+    public void sendTitle(Title title) {
+        if (online) {
+            player.sendTitle(title);
+        }
+    }
+
+    @Override
+    public boolean isForgeUser() {
+        if (online) {
+            return player.isForgeUser();
+        }
+        return false;
+    }
+
+    @Override
+    public Map<String, String> getModList() {
+        if (online) {
+            return player.getModList();
+        }
+        return null;
+    }
+
+    @Override
+    public Scoreboard getScoreboard() {
+        if (online) {
+            return player.getScoreboard();
+        }
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return latestName;
+    }
+
+    @Deprecated
+    @Override
+    public void sendMessage(String message) {
+        if (online) {
+            player.sendMessage(message);
+        }
+    }
+
+    @Deprecated
+    @Override
+    public void sendMessages(String... messages) {
+        if (online) {
+            player.sendMessages(messages);
+        }
+    }
+
+    @Override
+    public void sendMessage(BaseComponent... message) {
+        if (online) {
+            player.sendMessage(message);
+        }
+    }
+
+    @Override
+    public void sendMessage(BaseComponent message) {
+        if (online) {
+            player.sendMessage(message);
+        }
+    }
+
+    @Override
+    public Collection<String> getGroups() {
+        if (online) {
+            return player.getGroups();
+        }
+        return null;
+    }
+
+    @Override
+    public void addGroups(String... groups) {
+        if (online) {
+            player.addGroups(groups);
+        }
+    }
+
+    @Override
+    public void removeGroups(String... groups) {
+        if (online) {
+            player.removeGroups(groups);
+        }
+    }
+
+    @Override
+    public boolean hasPermission(String permission) {
+        if (online) {
+            return player.hasPermission(permission);
+        }
+        return false;
+    }
+
+    @Override
+    public void setPermission(String permission, boolean value) {
+        if (online) {
+            player.setPermission(permission, value);
+        }
+    }
+
+    @Override
+    public Collection<String> getPermissions() {
+        if (online) {
+            return player.getPermissions();
+        }
+        return null;
+    }
+
+    @Deprecated
+    @Override
+    public InetSocketAddress getAddress() {
+        if (online) {
+            return player.getAddress();
+        }
+        return InetSocketAddress.createUnresolved(latestIP, new Random().nextInt(26666));
+    }
+
+    @Override
+    public SocketAddress getSocketAddress() {
+        if (online) {
+            player.getSocketAddress();
+        }
+        return InetSocketAddress.createUnresolved(latestIP, new Random().nextInt(26666));
+    }
+
+    @Deprecated
+    @Override
+    public void disconnect(String reason) {
+        if (online) {
+            player.disconnect(reason);
+        }
+    }
+
+    @Override
+    public void disconnect(BaseComponent... reason) {
+        if (online) {
+            player.disconnect(reason);
+        }
+    }
+
+    @Override
+    public void disconnect(BaseComponent reason) {
+        if (online) {
+            player.disconnect(reason);
+        }
+    }
+
+    @Override
+    public boolean isConnected() {
+        return online;
+    }
+
+    @Override
+    public Unsafe unsafe() {
+        if (online) {
+            return player.unsafe();
+        }
+        return null;
     }
 }

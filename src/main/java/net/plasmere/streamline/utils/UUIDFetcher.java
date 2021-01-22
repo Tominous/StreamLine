@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.objects.Player;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -87,25 +88,19 @@ public class UUIDFetcher {
         return formatted.toString();
     }
 
-    public static ProxiedPlayer getProxiedPlayer(UUID uuid){
+    public static Player getPlayer(UUID uuid){
         try {
-            return StreamLine.getInstance().getProxy().getPlayer(uuid);
+            return new Player(StreamLine.getInstance().getProxy().getPlayer(uuid), false);
         } catch (Exception e){
             e.printStackTrace();
             return null;
         }
     }
 
-    public static ProxiedPlayer getProxiedPlayer(String name){
+    public static Player getPlayer(String name){
         ProxyServer proxy = StreamLine.getInstance().getProxy();
         try {
-            ProxiedPlayer other = Objects.requireNonNull(proxy).getPlayer(UUIDFetcher.fetch(name));
-
-            if (other != null) {
-                return other;
-            }
-
-            throw new Exception("No player found!");
+            return new Player(Objects.requireNonNull(proxy).getPlayer(fetch(name)), false);
         } catch (Exception e){
             e.printStackTrace();
             return null;

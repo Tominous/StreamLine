@@ -9,6 +9,7 @@ import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Guild;
+import net.plasmere.streamline.objects.Player;
 
 import java.io.IOException;
 import java.util.*;
@@ -23,9 +24,9 @@ public class GuildUtils {
         return guilds;
     }
     // Guild , Invites
-    public static Map<Guild, List<ProxiedPlayer>> invites = new HashMap<>();
+    public static Map<Guild, List<Player>> invites = new HashMap<>();
 
-    public static Guild getGuild(ProxiedPlayer player) {
+    public static Guild getGuild(Player player) {
         try {
             for (Guild guild : guilds) {
                 if (guild.hasMember(player)) {
@@ -39,7 +40,7 @@ public class GuildUtils {
         }
     }
 
-    public static boolean hasGuild(ProxiedPlayer player) {
+    public static boolean hasGuild(Player player) {
         for (Guild guild : guilds) {
             if (guild.hasMember(player)) return true;
         }
@@ -50,7 +51,7 @@ public class GuildUtils {
         return guilds.contains(guild);
     }
 
-    public static boolean pHasGuild(ProxiedPlayer player){
+    public static boolean pHasGuild(Player player){
         Guild guild = new Guild(player.getUniqueId(), false);
 
         if (guild.leaderUUID == null) {
@@ -60,7 +61,7 @@ public class GuildUtils {
         return true;
     }
 
-    public static boolean checkPlayer(Guild guild, ProxiedPlayer player, ProxiedPlayer sender){
+    public static boolean checkPlayer(Guild guild, Player player, Player sender){
         if (! isGuild(guild) || guild == null) {
             MessagingUtils.sendBUserMessage(sender, noGuildFound);
             return false;
@@ -80,11 +81,11 @@ public class GuildUtils {
     }
 
     public static void reloadGuild(Guild guild) {
-        guilds.remove(getGuild(UUIDFetcher.getProxiedPlayer(guild.leaderUUID)));
+        guilds.remove(getGuild(UUIDFetcher.getPlayer(guild.leaderUUID)));
         guilds.add(guild);
     }
 
-    public static void createGuild(ProxiedPlayer player, String name) {
+    public static void createGuild(Player player, String name) {
         Guild g = getGuild(player);
 
         if (g != null) {
@@ -105,7 +106,7 @@ public class GuildUtils {
 
     public static void addGuild(Guild guild){
         try {
-            StreamLine.getInstance().getLogger().info("Adding guild for " + UUIDFetcher.getProxiedPlayer(guild.leaderUUID));
+            StreamLine.getInstance().getLogger().info("Adding guild for " + UUIDFetcher.getPlayer(guild.leaderUUID));
         } catch (Exception e){
             StreamLine.getInstance().getLogger().info("Error adding guild...");
             e.printStackTrace();
@@ -147,7 +148,7 @@ public class GuildUtils {
         guilds.remove(guild);
     }
 
-    public static void sendInvite(ProxiedPlayer to, ProxiedPlayer from) {
+    public static void sendInvite(Player to, Player from) {
         try {
             Guild guild = getGuild(from);
 
@@ -170,8 +171,8 @@ public class GuildUtils {
             MessagingUtils.sendBGUserMessage(guild, from, to, inviteUser
                     .replace("%sender%", from.getDisplayName())
                     .replace("%user%", to.getDisplayName())
-                    .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(getGuild(from).leaderUUID)).getDisplayName())
-                    .replace("%leaderdefault%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(getGuild(from).leaderUUID)).getName())
+                    .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getPlayer(getGuild(from).leaderUUID)).getDisplayName())
+                    .replace("%leaderdefault%", Objects.requireNonNull(UUIDFetcher.getPlayer(getGuild(from).leaderUUID)).getName())
             );
 
             for (UUID member : guild.totalMembersByUUID) {
@@ -179,8 +180,8 @@ public class GuildUtils {
                     MessagingUtils.sendBGUserMessage(guild, from, guild.getMember(member), inviteLeader
                             .replace("%sender%", from.getDisplayName())
                             .replace("%user%", to.getDisplayName())
-                            .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(getGuild(from).leaderUUID)).getDisplayName())
-                            .replace("%leaderdefault%", Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(getGuild(from).leaderUUID)).getName())
+                            .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getPlayer(getGuild(from).leaderUUID)).getDisplayName())
+                            .replace("%leaderdefault%", Objects.requireNonNull(UUIDFetcher.getPlayer(getGuild(from).leaderUUID)).getName())
                     );
                 } else {
                     MessagingUtils.sendBGUserMessage(guild, from, guild.getMember(member), inviteMembers
@@ -196,7 +197,7 @@ public class GuildUtils {
 
             guild.addInvite(to);
             invites.remove(guild);
-            invites.put(guild, guild.invites);
+            invites.put(guild, PlayerUtils.transposeList(guild.invites));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -204,7 +205,7 @@ public class GuildUtils {
 
     public static void acceptInvite(ProxiedPlayer accepter, ProxiedPlayer from) {
         try {
-            Guild guild = getGuild(from);
+            Guild guild = getGuild(PlayerUtils.getStat(from));
 
             if (!isGuild(guild) || guild == null) {
                 MessagingUtils.sendBUserMessage(accepter, acceptFailure);
@@ -253,7 +254,7 @@ public class GuildUtils {
 
     public static void denyInvite(ProxiedPlayer denier, ProxiedPlayer from) {
         try {
-            Guild guild = getGuild(from);
+            Guild guild = getGuild(PlayerUtils.getStat(from));
 
             if (!isGuild(guild) || guild == null) {
                 MessagingUtils.sendBUserMessage(denier, denyFailure);
@@ -293,7 +294,7 @@ public class GuildUtils {
     }
 
     public static void warpGuild(ProxiedPlayer sender){
-        Guild guild = getGuild(sender);
+        Guild guild = getGuild(PlayerUtils.getStat(sender));
 
         if (!isGuild(guild) || guild == null) {
             MessagingUtils.sendBUserMessage(sender, noGuildFound);
@@ -330,7 +331,7 @@ public class GuildUtils {
     }
 
     public static void muteGuild(ProxiedPlayer sender){
-        Guild guild = getGuild(sender);
+        Guild guild = getGuild(PlayerUtils.getStat(sender));
 
         if (!isGuild(guild) || guild == null) {
             MessagingUtils.sendBUserMessage(sender, noGuildFound);
@@ -372,7 +373,7 @@ public class GuildUtils {
     }
 
     public static void kickMember(ProxiedPlayer sender, ProxiedPlayer player){
-        Guild guild = getGuild(sender);
+        Guild guild = getGuild(PlayerUtils.getStat(sender));
 
         if (!isGuild(guild) || guild == null) {
             MessagingUtils.sendBUserMessage(sender, kickFailure);
@@ -426,7 +427,7 @@ public class GuildUtils {
     }
 
     public static void info(ProxiedPlayer sender){
-        Guild guild = getGuild(sender);
+        Guild guild = getGuild(PlayerUtils.getStat(sender));
 
         if (!isGuild(guild) || guild == null) {
             MessagingUtils.sendBUserMessage(sender, noGuildFound);
@@ -443,7 +444,7 @@ public class GuildUtils {
 
     public static void disband(ProxiedPlayer sender) throws Throwable {
         try {
-            Guild guild = getGuild(sender);
+            Guild guild = getGuild(PlayerUtils.getStat(sender));
 
             if (!isGuild(guild) || guild == null) {
                 MessagingUtils.sendBUserMessage(sender, noGuildFound);
@@ -483,7 +484,7 @@ public class GuildUtils {
 
     public static void openGuild(ProxiedPlayer sender) {
         try {
-            Guild guild = getGuild(sender);
+            Guild guild = getGuild(PlayerUtils.getStat(sender));
 
             if (!isGuild(guild) || guild == null) {
                 MessagingUtils.sendBUserMessage(sender, noGuildFound);
@@ -531,7 +532,7 @@ public class GuildUtils {
 
     public static void closeGuild(ProxiedPlayer sender) {
         try {
-            Guild guild = getGuild(sender);
+            Guild guild = getGuild(PlayerUtils.getStat(sender));
 
             if (!isGuild(guild) || guild == null) {
                 MessagingUtils.sendBUserMessage(sender, noGuildFound);
@@ -579,7 +580,7 @@ public class GuildUtils {
 
     public static void listGuild(ProxiedPlayer sender) {
         try {
-            Guild guild = getGuild(sender);
+            Guild guild = getGuild(PlayerUtils.getStat(sender));
 
             if (!isGuild(guild) || guild == null) {
                 MessagingUtils.sendBUserMessage(sender, noGuildFound);
@@ -593,16 +594,16 @@ public class GuildUtils {
 
             String leaderBulk = listLeaderBulk
                     .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
-                    .replace("%user%", sender.getDisplayName())
+                    .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                     .replace("%size%", Integer.toString(guild.getSize()));
             String moderatorBulk = listModBulkMain
                     .replace("%moderators%", Objects.requireNonNull(moderators(guild)))
-                    .replace("%user%", sender.getDisplayName())
+                    .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                     .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                     .replace("%size%", Integer.toString(guild.getSize()));
             String memberBulk = listMemberBulkMain
                     .replace("%members%", Objects.requireNonNull(members(guild)))
-                    .replace("%user%", sender.getDisplayName())
+                    .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                     .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                     .replace("%size%", Integer.toString(guild.getSize()));
 
@@ -610,7 +611,7 @@ public class GuildUtils {
                     .replace("%leaderbulk%", leaderBulk)
                     .replace("%moderatorbulk%", moderatorBulk)
                     .replace("%memberbulk%", memberBulk)
-                    .replace("%user%", sender.getDisplayName())
+                    .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                     .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                     .replace("%size%", Integer.toString(guild.getSize()))
             );
@@ -692,7 +693,7 @@ public class GuildUtils {
 
     public static void promotePlayer(ProxiedPlayer sender, ProxiedPlayer member) {
         try {
-            Guild guild = getGuild(sender);
+            Guild guild = getGuild(PlayerUtils.getStat(sender));
 
             if (!isGuild(guild) || guild == null) {
                 MessagingUtils.sendBUserMessage(sender, noGuildFound);
@@ -804,7 +805,7 @@ public class GuildUtils {
 
     public static void demotePlayer(ProxiedPlayer sender, ProxiedPlayer member) {
         try {
-            Guild guild = getGuild(sender);
+            Guild guild = getGuild(PlayerUtils.getStat(sender));
 
             if (!isGuild(guild) || guild == null) {
                 MessagingUtils.sendBUserMessage(sender, noGuildFound);
@@ -877,7 +878,7 @@ public class GuildUtils {
 
     public static void joinGuild(ProxiedPlayer sender, ProxiedPlayer from) {
         try {
-            Guild guild = getGuild(from);
+            Guild guild = getGuild(PlayerUtils.getStat(from));
 
             if (!isGuild(guild) || guild == null) {
                 MessagingUtils.sendBUserMessage(sender, noGuildFound);
@@ -900,12 +901,12 @@ public class GuildUtils {
                 for (ProxiedPlayer m : guild.totalMembers) {
                     if (m.equals(sender)) {
                         MessagingUtils.sendBGUserMessage(guild, sender, m, joinUser
-                                .replace("%user%", sender.getDisplayName())
+                                .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                                 .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                         );
                     } else {
                         MessagingUtils.sendBGUserMessage(guild, sender, m, joinMembers
-                                .replace("%user%", sender.getDisplayName())
+                                .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                                 .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                         );
                     }
@@ -922,7 +923,7 @@ public class GuildUtils {
 
     public static void leaveGuild(ProxiedPlayer sender) {
         try {
-            Guild guild = getGuild(sender);
+            Guild guild = getGuild(PlayerUtils.getStat(sender));
 
             if (!isGuild(guild) || guild == null) {
                 MessagingUtils.sendBUserMessage(sender, noGuildFound);
@@ -957,12 +958,12 @@ public class GuildUtils {
                 for (ProxiedPlayer m : guild.totalMembers) {
                     if (m.equals(sender)) {
                         MessagingUtils.sendBGUserMessage(guild, sender, m, leaveUser
-                                .replace("%user%", sender.getDisplayName())
+                                .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                                 .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                         );
                     } else {
                         MessagingUtils.sendBGUserMessage(guild, sender, m, leaveMembers
-                                .replace("%user%", sender.getDisplayName())
+                                .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                                 .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                         );
                     }
@@ -981,7 +982,7 @@ public class GuildUtils {
 
     public static void sendChat(ProxiedPlayer sender, String msg) {
         try {
-            Guild guild = getGuild(sender);
+            Guild guild = getGuild(PlayerUtils.getStat(sender));
 
             if (! isGuild(guild) || guild == null) {
                 MessagingUtils.sendBUserMessage(sender, noGuildFound);
@@ -999,7 +1000,7 @@ public class GuildUtils {
 
             if (guild.isMuted && ! guild.hasModPerms(sender)) {
                 MessagingUtils.sendBGUserMessage(guild, sender, sender, chatMuted
-                        .replace("%sender%", sender.getDisplayName())
+                        .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                         .replace("%message%", msg)
                 );
                 return;
@@ -1007,14 +1008,14 @@ public class GuildUtils {
 
             if (ConfigUtils.guildConsole) {
                 MessagingUtils.sendBGUserMessage(guild, sender, StreamLine.getInstance().getProxy().getConsole(), chatConsole
-                        .replace("%sender%", sender.getDisplayName())
+                        .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                         .replace("%message%", msg)
                 );
             }
 
             for (ProxiedPlayer member : guild.totalMembers) {
                 MessagingUtils.sendBGUserMessage(guild, sender, member, chat
-                        .replace("%sender%", sender.getDisplayName())
+                        .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                         .replace("%message%", msg)
                 );
             }
@@ -1030,9 +1031,6 @@ public class GuildUtils {
     public static final String textLeader = message.getString("guild.text.leader");
     public static final String textModerator = message.getString("guild.text.moderator");
     public static final String textMember = message.getString("guild.text.member");
-    // Players.
-    public static final String offline = message.getString("guild.players.offline");
-    public static final String online = message.getString("guild.players.online");
     // No guild.
     public static final String noGuildFound = message.getString("guild.no-guild");
     // Already made.

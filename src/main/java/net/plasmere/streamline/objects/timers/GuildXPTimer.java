@@ -4,9 +4,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.Guild;
+import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.GuildUtils;
-
-import java.util.concurrent.TimeUnit;
+import net.plasmere.streamline.utils.PlayerUtils;
 
 public class GuildXPTimer implements Runnable {
     public int countdown;
@@ -29,7 +29,8 @@ public class GuildXPTimer implements Runnable {
     public void done(){
         countdown = reset;
         try {
-            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
+            for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
+                Player player = PlayerUtils.getStat(pl);
                 if (GuildUtils.getGuild(player) == null) continue;
 
                 Guild guild = GuildUtils.getGuild(player);

@@ -44,6 +44,12 @@ not-a-command:
 # If command usage not correct.
 improper-usage:
   bungee: "&cUsage: &b%usage%"
+# To determine how it shows up if a player is offline or online.
+# Fillers:
+# %player% = the player's name.
+players:
+  offline: "&d%player% &e(&cOFF&e)"
+  online: "&d%player% &e(&aON&e)"
 
 # When reporting...
 # Fillers:
@@ -194,12 +200,6 @@ party:
     leader: "LEADER"
     moderator: "MODERATOR"
     member: "MEMBER"
-  # To determine how it shows up if a player is offline or online.
-  # Fillers:
-  # %player% = the player's name.
-  players:
-    offline: "&d%player% &e(&cOFF&e)"
-    online: "&d%player% &e(&aON&e)"
   # When it finds no party.
   no-party: "&cNo party found!"
   # Already made.
@@ -434,12 +434,6 @@ guild:
     leader: "LEADER"
     moderator: "MODERATOR"
     member: "MEMBER"
-  # To determine how it shows up if a player is offline or online.
-  # Fillers:
-  # %player% = the player's name.
-  players:
-    offline: "&d%player% &e(&cOFF&e)"
-    online: "&d%player% &e(&aON&e)"
   # When it finds no guild.
   no-guild: "&cNo guild found!"
   # Already made.
@@ -649,4 +643,4 @@ stats:
   no-stats: "&cCouldn't find the stats..."
   no-permission: "&cSorry, but you do not have permission for that."
   create: "&aJust created a stats profile for you! You can view it by doing &b/stats"
-  info: "&7----- &4My Network Info &7-----%newline%&5EXP&8: &6%xp%%newline%&5Level&8: &6%level%"
+  info: "&7----- &4%player% Network Info &7-----%newline%&5EXP&8: &6%xp%%newline%&5Level&8: &6%level%"

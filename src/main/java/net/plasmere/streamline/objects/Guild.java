@@ -110,7 +110,7 @@ public class Guild {
     }
 
     public ProxiedPlayer getMember(UUID uuid) /*throws Exception*/ {
-        return Objects.requireNonNull(UUIDFetcher.getProxiedPlayer(uuid));
+        return Objects.requireNonNull(UUIDFetcher.getPlayer(uuid));
 
         //throw new Exception("Player not found!");
     }

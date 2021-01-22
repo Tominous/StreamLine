@@ -1,10 +1,12 @@
 package net.plasmere.streamline.utils;
 
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.plasmere.streamline.objects.Player;
+
+import java.util.Objects;
 
 public class FaceFetcher {
-    public static String getFaceAvatarURL(ProxiedPlayer player){
-        return "https://minotar.net/avatar/" + player.getName() + "/1280.png";
+    public static String getFaceAvatarURL(Player player){
+        return "https://minotar.net/avatar/" + PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))) + "/1280.png";
     }
 
     public static String getFaceAvatarURL(String  player){
