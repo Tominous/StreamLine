@@ -4,11 +4,12 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.DiscordMessage;
+import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
+import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
@@ -33,19 +34,44 @@ public class ChatListener implements Listener {
         if (e.isCancelled()) return;
         if (! (e.getSender() instanceof ProxiedPlayer)) return;
 
-        Player sender = (Player) e.getSender();
+        ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
+
+        Player stat = PlayerUtils.getStat(sender);
         String msg = e.getMessage();
+
+        if (stat == null) {
+            PlayerUtils.createStat(sender);
+            stat = PlayerUtils.getStat(sender);
+            if (stat == null) {
+                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
+                return;
+            }
+        }
 
         try {
             for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
-                Player p = (Player) pl;
-                if (GuildUtils.getGuild(p) == null && ! p.equals(sender)) continue;
-                if (GuildUtils.getGuild(p) != null) {
-                    if (Objects.requireNonNull(GuildUtils.getGuild(p)).hasMember(sender)) break;
+                Player p = PlayerUtils.getStat(pl);
+
+                if (p == null) {
+                    if (PlayerUtils.exists(pl.getName())) {
+                        PlayerUtils.addStat(new Player(pl, false));
+                    } else {
+                        PlayerUtils.createStat(pl);
+                    }
+                    p = PlayerUtils.getStat(pl);
+                    if (p == null) {
+                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + pl.getName());
+                        continue;
+                    }
                 }
 
-                if (GuildUtils.pHasGuild(sender)) {
-                    GuildUtils.addGuild(new Guild(sender.getUniqueId(), false));
+                if (GuildUtils.getGuild(p) == null && ! p.equals(stat)) continue;
+                if (GuildUtils.getGuild(p) != null) {
+                    if (Objects.requireNonNull(GuildUtils.getGuild(p)).hasMember(stat)) break;
+                }
+
+                if (GuildUtils.pHasGuild(stat)) {
+                    GuildUtils.addGuild(new Guild(stat.getUniqueId(), false));
                 }
                 break;
             }

@@ -3,6 +3,7 @@ package net.plasmere.streamline.objects;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.io.File;
@@ -17,13 +18,13 @@ public class Guild {
     public File file;
     public String name;
     public UUID leaderUUID;
-    public List<ProxiedPlayer> moderators;
+    public List<Player> moderators;
     public List<UUID> modsByUUID;
-    public List<ProxiedPlayer> members;
+    public List<Player> members;
     public List<UUID> membersByUUID;
-    public List<ProxiedPlayer> totalMembers;
+    public List<Player> totalMembers;
     public List<UUID> totalMembersByUUID;
-    public List<ProxiedPlayer> invites;
+    public List<Player> invites;
     public List<UUID> invitesByUUID;
     public boolean isMuted;
     public boolean isPublic;
@@ -109,10 +110,8 @@ public class Guild {
         info.put(key, value);
     }
 
-    public ProxiedPlayer getMember(UUID uuid) /*throws Exception*/ {
-        return Objects.requireNonNull(UUIDFetcher.getPlayer(uuid));
-
-        //throw new Exception("Player not found!");
+    public Player getMember(UUID uuid) {
+        return UUIDFetcher.getPlayer(uuid);
     }
 
     public void getFromConfigFile() throws IOException {
@@ -622,7 +621,7 @@ public class Guild {
 
     public String addToModerators(ProxiedPlayer player){
         modsByUUID.add(player.getUniqueId());
-        moderators.add(player);
+        moderators.add(PlayerUtils.getOffOnStat(player.getName()));
 
         StringBuilder builder = new StringBuilder();
 
@@ -641,7 +640,7 @@ public class Guild {
 
     public String addToMembers(ProxiedPlayer player){
         membersByUUID.add(player.getUniqueId());
-        members.add(player);
+        members.add(PlayerUtils.getOffOnStat(player.getName()));
 
         StringBuilder builder = new StringBuilder();
 
@@ -660,7 +659,7 @@ public class Guild {
 
     public String addToTMembers(ProxiedPlayer player){
         totalMembersByUUID.add(player.getUniqueId());
-        totalMembers.add(player);
+        totalMembers.add(PlayerUtils.getOffOnStat(player.getName()));
 
         StringBuilder builder = new StringBuilder();
 
@@ -679,7 +678,7 @@ public class Guild {
 
     public String addToInvites(ProxiedPlayer player){
         invitesByUUID.add(player.getUniqueId());
-        invites.add(player);
+        invites.add(PlayerUtils.getOffOnStat(player.getName()));
 
         StringBuilder builder = new StringBuilder();
 
@@ -697,22 +696,8 @@ public class Guild {
     }
 
     public void addMember(ProxiedPlayer player){
-        StreamLine.getInstance().getLogger().info("Members as Stringed: " + getMembersAsStringed());
-        StreamLine.getInstance().getLogger().info("TMembers as Stringed: " + getTotalMembersAsStringed());
-        StreamLine.getInstance().getLogger().info("Members BEFORE: " + getFromKey("members"));
-        StreamLine.getInstance().getLogger().info("Members BEFORE raw: " + membersByUUID.toString());
-        StreamLine.getInstance().getLogger().info("MembersP BEFORE raw: " + members.toString());
-        StreamLine.getInstance().getLogger().info("TMembers BEFORE raw: " + totalMembersByUUID.toString());
         updateKey("totalmembers", addToTMembers(player));
         updateKey("members", addToMembers(player));
-        StreamLine.getInstance().getLogger().info("TMembersP BEFORE raw: " + totalMembers.toString());
-        StreamLine.getInstance().getLogger().info("Members AFTER: " + getFromKey("members"));
-        StreamLine.getInstance().getLogger().info("Members AFTER raw: " + membersByUUID.toString());
-        StreamLine.getInstance().getLogger().info("MembersP AFTER raw: " + members.toString());
-        StreamLine.getInstance().getLogger().info("TMembers AFTER raw: " + totalMembersByUUID.toString());
-        StreamLine.getInstance().getLogger().info("TMembersP AFTER raw: " + totalMembers.toString());
-        StreamLine.getInstance().getLogger().info("Members as Stringed: " + getMembersAsStringed());
-        StreamLine.getInstance().getLogger().info("TMembers as Stringed: " + getTotalMembersAsStringed());
 
         try {
             saveInfo();

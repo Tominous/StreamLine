@@ -10,6 +10,9 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.dv8tion.jda.api.JDA;
+import net.plasmere.streamline.objects.messaging.BungeeMassMessage;
+import net.plasmere.streamline.objects.messaging.BungeeMessage;
+import net.plasmere.streamline.objects.messaging.DiscordMessage;
 
 import java.util.*;
 
@@ -215,7 +218,7 @@ public class MessagingUtils {
 
     public static void sendBPUserMessage(Party party, CommandSender sender, CommandSender to, String msg){
         to.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                 .replace("%leader%", party.leader.getName())
                 .replace("%size%", Integer.toString(party.getSize()))
                 .replace("%max%", Integer.toString(party.maxSize))
@@ -234,8 +237,21 @@ public class MessagingUtils {
     }
 
     public static void sendBGUserMessage(Guild guild, CommandSender sender, CommandSender to, String msg){
+        if (sender instanceof Player) {
+            sender = UUIDFetcher.getPPlayer(((Player) sender).uuid);
+        }
+
+        if (to instanceof Player){
+            to = UUIDFetcher.getPPlayer(((Player) to).uuid);
+        }
+
+        if (sender == null || to == null) {
+            StreamLine.getInstance().getLogger().severe("ERROR CASTING! REPORT \"sendBGUserMessage error\" TO PLUGIN AUTHOR!");
+            return;
+        }
+
         to.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                 .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getPlayer(guild.leaderUUID)).getName())
                 .replace("%size%", Integer.toString(guild.getSize()))
                 .replace("%max%", Integer.toString(guild.maxSize))
@@ -254,10 +270,10 @@ public class MessagingUtils {
         ));
     }
 
-    public static void sendStatUserMessage(Player player, CommandSender sender, CommandSender to, String msg){
-        to.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
-                .replace("%player%", PlayerUtils.getOffOnReg(player))
+    public static void sendStatUserMessage(Player player, CommandSender sender, String msg){
+        sender.sendMessage(TextUtils.codedText(msg
+                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                .replace("%player%", PlayerUtils.getOffOnRegBungee(player))
                 .replace("%xp%", Integer.toString(player.xp))
                 .replace("%level%", Integer.toString(player.lvl))
         ));
@@ -266,7 +282,7 @@ public class MessagingUtils {
     public static void sendBUserMessage(CommandSender sender, String msg){
         if (sender instanceof ProxiedPlayer) {
             sender.sendMessage(TextUtils.codedText(msg
-                    .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                    .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
             ));
         } else {
             sender.sendMessage(TextUtils.codedText(msg
@@ -318,11 +334,11 @@ public class MessagingUtils {
         for (ProxiedPlayer m : party.moderators){
             if (i < party.moderators.size()){
                 msg.append(MessageConfUtils.partiesModsNLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             } else {
                 msg.append(MessageConfUtils.partiesModsLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             }
 
@@ -339,11 +355,11 @@ public class MessagingUtils {
         for (ProxiedPlayer m : party.members){
             if (i < party.members.size()){
                 msg.append(MessageConfUtils.partiesMemsNLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             } else {
                 msg.append(MessageConfUtils.partiesMemsLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             }
 
@@ -360,11 +376,11 @@ public class MessagingUtils {
         for (ProxiedPlayer m : party.totalMembers){
             if (i != party.totalMembers.size()){
                 msg.append(MessageConfUtils.partiesTMemsNLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             } else {
                 msg.append(MessageConfUtils.partiesTMemsLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             }
 
@@ -381,11 +397,11 @@ public class MessagingUtils {
         for (ProxiedPlayer m : party.invites){
             if (i < party.invites.size()){
                 msg.append(MessageConfUtils.partiesInvsNLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             } else {
                 msg.append(MessageConfUtils.partiesInvsLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
                 );
             }
 
@@ -417,11 +433,11 @@ public class MessagingUtils {
 
             if (i != guild.modsByUUID.size()){
                 msg.append(MessageConfUtils.guildsModsNLast
-                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             } else {
                 msg.append(MessageConfUtils.guildsModsLast
-                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             }
 
@@ -445,11 +461,11 @@ public class MessagingUtils {
 
             if (i != guild.membersByUUID.size()){
                 msg.append(MessageConfUtils.guildsMemsNLast
-                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             } else {
                 msg.append(MessageConfUtils.guildsMemsLast
-                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             }
 
@@ -473,11 +489,11 @@ public class MessagingUtils {
 
             if (i != guild.totalMembersByUUID.size()){
                 msg.append(MessageConfUtils.guildsTMemsNLast
-                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             } else {
                 msg.append(MessageConfUtils.guildsTMemsLast
-                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             }
 
@@ -501,11 +517,11 @@ public class MessagingUtils {
 
             if (i != guild.invites.size()){
                 msg.append(MessageConfUtils.guildsInvsNLast
-                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             } else {
                 msg.append(MessageConfUtils.guildsInvsLast
-                        .replace("%user%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
                 );
             }
 

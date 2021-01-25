@@ -1,4 +1,4 @@
-package net.plasmere.streamline.objects;
+package net.plasmere.streamline.objects.messaging;
 
 import net.md_5.bungee.api.CommandSender;
 

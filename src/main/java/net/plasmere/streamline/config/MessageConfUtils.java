@@ -32,8 +32,10 @@ public class MessageConfUtils {
     public static final String discordNeedsMore = message.getString("command-needs-args.discord");
     public static final String bungeeNeedsMore = message.getString("command-needs-args.bungee");
     // Players.
-    public static final String offline = message.getString("players.offline");
-    public static final String online = message.getString("players.online");
+    public static final String offlineB = message.getString("players.bungee.offline");
+    public static final String onlineB = message.getString("players.bungee.online");
+    public static final String offlineD = message.getString("players.discord.offline");
+    public static final String onlineD = message.getString("players.discord.online");
     // Reports.
     public static final String reportEmbedTitle = message.getString("report-message.embed-title");
     public static final String dToDReportMessage = message.getString("report-message.from-discord.discord");

@@ -9,6 +9,7 @@ import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.score.Scoreboard;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.io.File;
@@ -23,7 +24,6 @@ public class Player implements ProxiedPlayer {
     private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "players" + File.separator;
 
     public File file;
-    public ProxiedPlayer player;
     public UUID uuid;
     public int xp;
     public int lvl;
@@ -37,11 +37,15 @@ public class Player implements ProxiedPlayer {
     public String displayName;
 
     public Player(ProxiedPlayer player) {
-        this.player = player;
+        String ipSt = player.getSocketAddress().toString().replace("/", "");
+        String[] ipSplit = ipSt.split(":");
+        ipSt = ipSplit[0];
+
         this.uuid = player.getUniqueId();
-        this.latestIP = player.getSocketAddress().toString();
+        this.latestIP = ipSt;
         this.latestName = player.getName();
-        this.ips = player.getSocketAddress().toString();
+
+        this.ips = ipSt;
         this.names = player.getName();
         this.online = true;
         this.displayName = player.getDisplayName();
@@ -49,11 +53,15 @@ public class Player implements ProxiedPlayer {
     }
 
     public Player(ProxiedPlayer player, boolean create){
-        this.player = player;
+        String ipSt = player.getSocketAddress().toString().replace("/", "");
+        String[] ipSplit = ipSt.split(":");
+        ipSt = ipSplit[0];
+
         this.uuid = player.getUniqueId();
-        this.latestIP = player.getSocketAddress().toString();
+        this.latestIP = ipSt;
         this.latestName = player.getName();
-        this.ips = player.getSocketAddress().toString();
+
+        this.ips = ipSt;
         this.names = player.getName();
         this.online = true;
         this.displayName = player.getDisplayName();
@@ -61,8 +69,16 @@ public class Player implements ProxiedPlayer {
     }
 
     public Player(String username){
-        this.player = null;
-        construct(Objects.requireNonNull(UUIDFetcher.fetch(username)), false);
+        this.online = offlineOnCheck();
+        construct(Objects.requireNonNull(UUIDFetcher.getCachedUUID(username)), false);
+    }
+
+    public boolean offlineOnCheck(){
+        for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()){
+            if (p.getName().equals(this.latestName)) return true;
+        }
+
+        return false;
     }
 
     private void construct(UUID uuid, boolean createNew){
@@ -206,21 +222,20 @@ public class Player implements ProxiedPlayer {
 
     public List<String> propertiesDefaults() {
         List<String> defaults = new ArrayList<>();
-        defaults.add("uuid=" + this.uuid);
-        defaults.add("ips=" + this.ips);
-        defaults.add("names=" + this.names);
-        defaults.add("latestip=" + this.ips.split(",")[0]);
-        defaults.add("latestname=" + this.names.split(",")[0]);
+        defaults.add("uuid=" + uuid);
+        defaults.add("ips=" + ips);
+        defaults.add("names=" + names);
+        defaults.add("latestip=" + latestIP);
+        defaults.add("latestname=" + latestName);
         defaults.add("xp=0");
         defaults.add("lvl=1");
-        defaults.add("displayname=" + this.displayName);
+        defaults.add("displayname=" + displayName);
         //defaults.add("");
         return defaults;
     }
 
     public void loadVars(){
         this.uuid = UUID.fromString(getFromKey("uuid"));
-        this.player = UUIDFetcher.getPlayer(this.uuid);
         this.ips = getFromKey("ips");
         this.names = getFromKey("names");
         this.latestIP = getFromKey("latestip");
@@ -230,15 +245,7 @@ public class Player implements ProxiedPlayer {
         this.xp = Integer.parseInt(getFromKey("xp"));
         this.lvl = Integer.parseInt(getFromKey("lvl"));
         this.displayName = getFromKey("displayname");
-        this.online = getIsOnline();
-    }
-
-    public boolean getIsOnline(){
-        try {
-            return StreamLine.getInstance().getProxy().getPlayers().contains(this.player);
-        } catch (Exception e) {
-            return false;
-        }
+        this.online = offlineOnCheck();
     }
 
     public List<String> loadIPs(){
@@ -362,70 +369,70 @@ public class Player implements ProxiedPlayer {
     @Override
     public void sendMessage(ChatMessageType position, BaseComponent... message) {
         if (online) {
-            player.sendMessage(position, message);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(position, message);
         }
     }
 
     @Override
     public void sendMessage(ChatMessageType position, BaseComponent message) {
         if (online) {
-            player.sendMessage(position, message);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(position, message);
         }
     }
 
     @Override
     public void sendMessage(UUID sender, BaseComponent... message) {
         if (online) {
-            player.sendMessage(sender, message);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(sender, message);
         }
     }
 
     @Override
     public void sendMessage(UUID sender, BaseComponent message) {
         if (online) {
-            player.sendMessage(sender, message);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(sender, message);
         }
     }
 
     @Override
     public void connect(ServerInfo target) {
         if (online) {
-            player.connect(target);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).connect(target);
         }
     }
 
     @Override
     public void connect(ServerInfo target, ServerConnectEvent.Reason reason) {
         if (online) {
-            player.connect(target, reason);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).connect(target, reason);
         }
     }
 
     @Override
     public void connect(ServerInfo target, Callback<Boolean> callback) {
         if (online) {
-            player.connect(target, callback);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).connect(target, callback);
         }
     }
 
     @Override
     public void connect(ServerInfo target, Callback<Boolean> callback, ServerConnectEvent.Reason reason) {
         if (online) {
-            player.connect(target, callback, reason);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).connect(target, callback, reason);
         }
     }
 
     @Override
     public void connect(ServerConnectRequest request) {
         if (online) {
-            player.connect(request);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).connect(request);
         }
     }
 
     @Override
     public Server getServer() {
         if (online) {
-            return player.getServer();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getServer();
         }
         return null;
     }
@@ -433,7 +440,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public int getPing() {
         if (online) {
-            return player.getPing();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getPing();
         }
         return -1;
     }
@@ -441,14 +448,14 @@ public class Player implements ProxiedPlayer {
     @Override
     public void sendData(String channel, byte[] data) {
         if (online) {
-            player.sendData(channel, data);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendData(channel, data);
         }
     }
 
     @Override
     public PendingConnection getPendingConnection() {
         if (online) {
-            return player.getPendingConnection();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getPendingConnection();
         }
         return null;
     }
@@ -456,14 +463,14 @@ public class Player implements ProxiedPlayer {
     @Override
     public void chat(String message) {
         if (online) {
-            player.chat(message);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).chat(message);
         }
     }
 
     @Override
     public ServerInfo getReconnectServer() {
         if (online) {
-            return player.getReconnectServer();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getReconnectServer();
         }
         return null;
     }
@@ -471,7 +478,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public void setReconnectServer(ServerInfo server) {
         if (online) {
-            player.setReconnectServer(server);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).setReconnectServer(server);
         }
     }
 
@@ -488,7 +495,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public Locale getLocale() {
         if (online) {
-            return player.getLocale();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getLocale();
         }
         return null;
     }
@@ -496,7 +503,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public byte getViewDistance() {
         if (online) {
-            return player.getViewDistance();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getViewDistance();
         }
         return -1;
     }
@@ -504,7 +511,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public ChatMode getChatMode() {
         if (online) {
-            return player.getChatMode();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getChatMode();
         }
         return null;
     }
@@ -512,7 +519,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public boolean hasChatColors() {
         if (online) {
-            return player.hasChatColors();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).hasChatColors();
         }
         return false;
     }
@@ -520,7 +527,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public SkinConfiguration getSkinParts() {
         if (online) {
-            return player.getSkinParts();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getSkinParts();
         }
         return null;
     }
@@ -528,7 +535,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public MainHand getMainHand() {
         if (online) {
-            return player.getMainHand();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getMainHand();
         }
         return null;
     }
@@ -536,35 +543,35 @@ public class Player implements ProxiedPlayer {
     @Override
     public void setTabHeader(BaseComponent header, BaseComponent footer) {
         if (online) {
-            player.setTabHeader(header, footer);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).setTabHeader(header, footer);
         }
     }
 
     @Override
     public void setTabHeader(BaseComponent[] header, BaseComponent[] footer) {
         if (online) {
-            player.setTabHeader(header, footer);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).setTabHeader(header, footer);
         }
     }
 
     @Override
     public void resetTabHeader() {
         if (online) {
-            player.resetTabHeader();
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).resetTabHeader();
         }
     }
 
     @Override
     public void sendTitle(Title title) {
         if (online) {
-            player.sendTitle(title);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendTitle(title);
         }
     }
 
     @Override
     public boolean isForgeUser() {
         if (online) {
-            return player.isForgeUser();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).isForgeUser();
         }
         return false;
     }
@@ -572,7 +579,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public Map<String, String> getModList() {
         if (online) {
-            return player.getModList();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getModList();
         }
         return null;
     }
@@ -580,7 +587,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public Scoreboard getScoreboard() {
         if (online) {
-            return player.getScoreboard();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getScoreboard();
         }
         return null;
     }
@@ -594,7 +601,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public void sendMessage(String message) {
         if (online) {
-            player.sendMessage(message);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(message);
         }
     }
 
@@ -602,28 +609,28 @@ public class Player implements ProxiedPlayer {
     @Override
     public void sendMessages(String... messages) {
         if (online) {
-            player.sendMessages(messages);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessages(messages);
         }
     }
 
     @Override
     public void sendMessage(BaseComponent... message) {
         if (online) {
-            player.sendMessage(message);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(message);
         }
     }
 
     @Override
     public void sendMessage(BaseComponent message) {
         if (online) {
-            player.sendMessage(message);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(message);
         }
     }
 
     @Override
     public Collection<String> getGroups() {
         if (online) {
-            return player.getGroups();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getGroups();
         }
         return null;
     }
@@ -631,21 +638,21 @@ public class Player implements ProxiedPlayer {
     @Override
     public void addGroups(String... groups) {
         if (online) {
-            player.addGroups(groups);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).addGroups(groups);
         }
     }
 
     @Override
     public void removeGroups(String... groups) {
         if (online) {
-            player.removeGroups(groups);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).removeGroups(groups);
         }
     }
 
     @Override
     public boolean hasPermission(String permission) {
         if (online) {
-            return player.hasPermission(permission);
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).hasPermission(permission);
         }
         return false;
     }
@@ -653,14 +660,14 @@ public class Player implements ProxiedPlayer {
     @Override
     public void setPermission(String permission, boolean value) {
         if (online) {
-            player.setPermission(permission, value);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).setPermission(permission, value);
         }
     }
 
     @Override
     public Collection<String> getPermissions() {
         if (online) {
-            return player.getPermissions();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getPermissions();
         }
         return null;
     }
@@ -669,7 +676,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public InetSocketAddress getAddress() {
         if (online) {
-            return player.getAddress();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getAddress();
         }
         return InetSocketAddress.createUnresolved(latestIP, new Random().nextInt(26666));
     }
@@ -677,7 +684,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public SocketAddress getSocketAddress() {
         if (online) {
-            player.getSocketAddress();
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getSocketAddress();
         }
         return InetSocketAddress.createUnresolved(latestIP, new Random().nextInt(26666));
     }
@@ -686,21 +693,21 @@ public class Player implements ProxiedPlayer {
     @Override
     public void disconnect(String reason) {
         if (online) {
-            player.disconnect(reason);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).disconnect(reason);
         }
     }
 
     @Override
     public void disconnect(BaseComponent... reason) {
         if (online) {
-            player.disconnect(reason);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).disconnect(reason);
         }
     }
 
     @Override
     public void disconnect(BaseComponent reason) {
         if (online) {
-            player.disconnect(reason);
+            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).disconnect(reason);
         }
     }
 
@@ -712,7 +719,7 @@ public class Player implements ProxiedPlayer {
     @Override
     public Unsafe unsafe() {
         if (online) {
-            return player.unsafe();
+            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).unsafe();
         }
         return null;
     }

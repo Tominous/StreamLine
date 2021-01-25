@@ -48,8 +48,12 @@ improper-usage:
 # Fillers:
 # %player% = the player's name.
 players:
-  offline: "&d%player% &e(&cOFF&e)"
-  online: "&d%player% &e(&aON&e)"
+  bungee:
+    offline: "&d%player% &e(&cOFF&e)"
+    online: "&d%player% &e(&aON&e)"
+  discord:
+    offline: "%player% (OFF)"
+    online: "%player% (ON)"
 
 # When reporting...
 # Fillers:

@@ -41,12 +41,23 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 	private final File cfile = new File(getDataFolder(), "config.yml");
 	private final File mfile = new File(getDataFolder(), "messages.yml");
 
+	private final File plDir = new File(getDataFolder() + File.separator + "players" + File.separator);
+	private final File gDir = new File(getDataFolder() + File.separator + "guilds" + File.separator);
+
 	private ScheduledTask guilds;
 	private ScheduledTask players;
 	private ScheduledTask cachedPlayers;
 
 	public StreamLine(){
 		instance = this;
+	}
+
+	public final File getPlDir() {
+		return plDir;
+	}
+
+	public final File getGDir() {
+		return gDir;
 	}
 
     private void init(){
@@ -73,11 +84,9 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 	}
 
 	public void loadGuilds(){
-		File dir = new File(getDataFolder() + File.separator + "guilds" + File.separator);
-
-		if (! dir.exists()) {
+		if (! gDir.exists()) {
 			try {
-				dir.mkdir();
+				gDir.mkdir();
 			} catch (Exception e){
 				e.printStackTrace();
 			}
@@ -85,11 +94,9 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 	}
 
 	public void loadPlayers(){
-		File dir = new File(getDataFolder() + File.separator + "players" + File.separator);
-
-		if (! dir.exists()) {
+		if (! plDir.exists()) {
 			try {
-				dir.mkdir();
+				plDir.mkdir();
 			} catch (Exception e){
 				e.printStackTrace();
 			}

@@ -1,9 +1,7 @@
 package net.plasmere.streamline.utils;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import net.md_5.bungee.api.ProxyServer;
+import com.google.common.cache.Cache;
+import com.google.gson.*;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.objects.Player;
@@ -11,12 +9,34 @@ import net.plasmere.streamline.objects.Player;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Path;
-import java.util.Objects;
+import java.util.Locale;
 import java.util.UUID;
 
 public class UUIDFetcher {
+    public static Cache<String, UUID> cachedUUIDs;
+    public static Cache<UUID, String> cachedNames;
+
+    public static UUID getCachedUUID(String username) {
+        try {
+            return cachedUUIDs.get(username, () -> fetch(username));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return UUID.randomUUID();
+        }
+    }
+
+    public static String getCachedName(UUID uuid) {
+        try {
+            return cachedNames.get(uuid, () -> getName(uuid.toString()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+
     static public UUID fetch(String username) {
+        username = username.toLowerCase(Locale.ROOT);
+        System.out.println("fetch name --> " + username);
         try {
             String JSONString = "";
 
@@ -24,12 +44,16 @@ public class UUIDFetcher {
             InputStream is = connection.getInputStream();
 
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String line = null;
+            String line;
             while ((line = br.readLine()) != null) {
+                StreamLine.getInstance().getLogger().info("DEBUG:\nline --> " + line);
                 JSONString = line;
             }
 
-            Object obj = new JsonParser().parse(JSONString);
+            StreamLine.getInstance().getLogger().info("DEBUG:\nusername --> " + username + "\nJSONString --> " + JSONString);
+
+            JsonElement obj = new JsonParser().parse(JSONString);
+
             JsonObject jo = (JsonObject) obj;
 
             String id = jo.get("id").getAsString();
@@ -39,12 +63,16 @@ public class UUIDFetcher {
             //        + id.substring(20);
             String uuid = formatToUUID(id);
 
-            return UUID.fromString(uuid);
+            UUID u = UUID.fromString(uuid);
+
+            cachedUUIDs.put(username, u);
+
+            return u;
             //return UUID.fromString(id);
         } catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return UUID.randomUUID();
     }
 
     public static String getName(String uuid) {
@@ -66,11 +94,15 @@ public class UUIDFetcher {
             Object job = new JsonParser().parse(last);
             JsonObject njo = (JsonObject) job;
 
-            return njo.get("name").toString();
+            String name = njo.get("name").toString();
+
+            cachedNames.put(UUID.fromString(uuid), name);
+
+            return name;
         } catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return "error";
     }
 
     public static String formatToUUID(String unformatted){
@@ -88,9 +120,31 @@ public class UUIDFetcher {
         return formatted.toString();
     }
 
+    public static ProxiedPlayer getPPlayer(UUID uuid){
+        try {
+            return StreamLine.getInstance().getProxy().getPlayer(uuid);
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static Player getPlayer(UUID uuid){
         try {
-            return new Player(StreamLine.getInstance().getProxy().getPlayer(uuid), false);
+            String name = getCachedName(uuid);
+
+
+            if (PlayerUtils.hasStat(name)) {
+                return getPlayer(name);
+            } else {
+                Player player = new Player(name);
+
+                if (player.latestName == null) {
+                    return null;
+                } else {
+                    return player;
+                }
+            }
         } catch (Exception e){
             e.printStackTrace();
             return null;
@@ -98,9 +152,16 @@ public class UUIDFetcher {
     }
 
     public static Player getPlayer(String name){
-        ProxyServer proxy = StreamLine.getInstance().getProxy();
         try {
-            return new Player(Objects.requireNonNull(proxy).getPlayer(fetch(name)), false);
+            if (PlayerUtils.exists(name)) {
+                if (PlayerUtils.hasStat(name)) {
+                    return getPlayer(name);
+                } else {
+                    return new Player(name);
+                }
+            }
+
+            return null;
         } catch (Exception e){
             e.printStackTrace();
             return null;

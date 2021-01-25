@@ -6,8 +6,8 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.BungeeMassMessage;
-import net.plasmere.streamline.objects.DiscordMessage;
+import net.plasmere.streamline.objects.messaging.BungeeMassMessage;
+import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.GuildUtils;
@@ -21,7 +21,6 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 import net.plasmere.streamline.utils.PlayerUtils;
 
-import java.io.File;
 import java.util.Objects;
 
 public class JoinLeaveListener implements Listener {
@@ -34,17 +33,46 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PostLoginEvent ev) {
-        Player player = (Player) ev.getPlayer();
+        ProxiedPlayer player = ev.getPlayer();
+
+        Player stat = PlayerUtils.getStat(player);
+
+        if (stat == null) {
+            if (PlayerUtils.exists(player.getName())) {
+                PlayerUtils.addStat(new Player(player, false));
+            } else {
+                PlayerUtils.createStat(player);
+            }
+            stat = PlayerUtils.getStat(player);
+            if (stat == null) {
+                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
+                return;
+            }
+        }
 
         try {
             for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
-                Player p = (Player) pl;
-                if (GuildUtils.getGuild(p) == null && ! p.equals(player)) continue;
-                if (GuildUtils.getGuild(p) != null) {
-                    if (Objects.requireNonNull(GuildUtils.getGuild(p)).hasMember(player)) break;
+                Player p = PlayerUtils.getStat(pl);
+
+                if (p == null) {
+                    if (PlayerUtils.exists(pl.getName())) {
+                        PlayerUtils.addStat(new Player(pl, false));
+                    } else {
+                        PlayerUtils.createStat(pl);
+                    }
+                    p = PlayerUtils.getStat(pl);
+                    if (p == null) {
+                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + pl.getName());
+                        continue;
+                    }
                 }
-                if (GuildUtils.pHasGuild(player)) {
-                    GuildUtils.addGuild(new Guild(player.getUniqueId(), false));
+
+                if (GuildUtils.getGuild(p) == null && ! p.equals(stat)) continue;
+                if (GuildUtils.getGuild(p) != null) {
+                    if (Objects.requireNonNull(GuildUtils.getGuild(p)).hasMember(stat)) break;
+                }
+                if (GuildUtils.pHasGuild(stat)) {
+                    GuildUtils.addGuild(new Guild(stat.uuid, false));
                 }
                 break;
             }
@@ -52,30 +80,16 @@ public class JoinLeaveListener implements Listener {
             e.printStackTrace();
         }
 
-        try {
-            if (PlayerUtils.getStat(player) == null) {
-                File file = new File(StreamLine.getInstance().getDataFolder() + File.separator + "players" + File.separator + player.getUniqueId().toString() + ".properties");
-
-                if (file.exists()) {
-                    PlayerUtils.addStats(new Player(player, false));
-                } else {
-                    PlayerUtils.createStat(player);
-                }
-            }
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
         switch (ConfigUtils.moduleBPlayerJoins) {
             case "yes":
                 MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                        MessageConfUtils.bungeeOnline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                        MessageConfUtils.bungeeOnline.replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                         "streamline.staff"));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
                     MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                            MessageConfUtils.bungeeOnline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                            MessageConfUtils.bungeeOnline.replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                             "streamline.staff"));
                 }
                 break;
@@ -87,14 +101,14 @@ public class JoinLeaveListener implements Listener {
             case "yes":
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                         MessageConfUtils.discordOnlineEmbed,
-                        MessageConfUtils.discordOnline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                        MessageConfUtils.discordOnline.replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                         ConfigUtils.textChannelBJoins));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                             MessageConfUtils.discordOnlineEmbed,
-                            MessageConfUtils.discordOnline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                            MessageConfUtils.discordOnline.replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                             ConfigUtils.textChannelBJoins));
                 }
                 break;
@@ -106,7 +120,7 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onServer(ServerConnectEvent ev){
-        Player player = (Player) ev.getPlayer();
+        ProxiedPlayer player = ev.getPlayer();
 
         boolean hasServer = false;
         ServerInfo server = null;
@@ -131,36 +145,33 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onLeave(PlayerDisconnectEvent ev) {
-        Player player = (Player) ev.getPlayer();
+        ProxiedPlayer player = ev.getPlayer();
 
-        try {
-            for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
-                Player p = (Player) pl;
-                if (Objects.requireNonNull(GuildUtils.getGuild(player)).hasMember(p) && ! p.equals(player)) break;
+        Player stat = PlayerUtils.getStat(player);
 
-
-                GuildUtils.removeGuild(Objects.requireNonNull(GuildUtils.getGuild(player)));
+        if (stat == null) {
+            if (PlayerUtils.exists(player.getName())) {
+                PlayerUtils.addStat(new Player(player, false));
+            } else {
+                PlayerUtils.createStat(player);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            PlayerUtils.removeStat(Objects.requireNonNull(PlayerUtils.getStat(player)));
-        } catch (Exception e) {
-            e.printStackTrace();
+            stat = PlayerUtils.getStat(player);
+            if (stat == null) {
+                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
+                return;
+            }
         }
 
         switch (ConfigUtils.moduleBPlayerLeaves) {
             case "yes":
                 MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                        MessageConfUtils.bungeeOffline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                        MessageConfUtils.bungeeOffline.replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                         "streamline.staff"));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
                     MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                            MessageConfUtils.bungeeOffline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                            MessageConfUtils.bungeeOffline.replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                             "streamline.staff"));
                 }
                 break;
@@ -172,20 +183,56 @@ public class JoinLeaveListener implements Listener {
             case "yes":
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                         MessageConfUtils.discordOfflineEmbed,
-                        MessageConfUtils.discordOffline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                        MessageConfUtils.discordOffline.replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                         ConfigUtils.textChannelBLeaves));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                             MessageConfUtils.discordOfflineEmbed,
-                            MessageConfUtils.discordOffline.replace("%player%", PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                            MessageConfUtils.discordOffline.replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(PlayerUtils.getStat(player)))),
                             ConfigUtils.textChannelBLeaves));
                 }
                 break;
             case "no":
             default:
                 break;
+        }
+
+        try {
+            for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
+                Player p = PlayerUtils.getStat(pl);
+
+                if (p == null) {
+                    if (PlayerUtils.exists(pl.getName())) {
+                        PlayerUtils.addStat(new Player(pl, false));
+                    } else {
+                        PlayerUtils.createStat(pl);
+                    }
+                    p = PlayerUtils.getStat(pl);
+                    if (p == null) {
+                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + pl.getName());
+                        continue;
+                    }
+                }
+
+                Guild guild = GuildUtils.getGuild(stat);
+
+                if (guild == null) continue;
+
+                if (guild.hasMember(p) && ! p.equals(stat)) break;
+
+
+                GuildUtils.removeGuild(Objects.requireNonNull(GuildUtils.getGuild(stat)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            PlayerUtils.removeStat(stat);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

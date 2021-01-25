@@ -52,7 +52,7 @@ public class GuildUtils {
     }
 
     public static boolean pHasGuild(Player player){
-        Guild guild = new Guild(player.getUniqueId(), false);
+        Guild guild = new Guild(player.uuid, false);
 
         if (guild.leaderUUID == null) {
             return false;
@@ -86,19 +86,23 @@ public class GuildUtils {
     }
 
     public static void createGuild(Player player, String name) {
+        ProxiedPlayer p = UUIDFetcher.getPPlayer(player.uuid);
+
+        if (p == null) return;
+
         Guild g = getGuild(player);
 
         if (g != null) {
-            MessagingUtils.sendBUserMessage(player, already);
+            MessagingUtils.sendBUserMessage(p, already);
             return;
         }
 
         try {
-            Guild guild = new Guild(player.getUniqueId(), name);
+            Guild guild = new Guild(player.uuid, name);
 
             addGuild(guild);
 
-            MessagingUtils.sendBGUserMessage(guild, player, player, create);
+            MessagingUtils.sendBGUserMessage(guild, p, p, create);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -106,12 +110,12 @@ public class GuildUtils {
 
     public static void addGuild(Guild guild){
         try {
-            StreamLine.getInstance().getLogger().info("Adding guild for " + UUIDFetcher.getPlayer(guild.leaderUUID));
+            StreamLine.getInstance().getLogger().info("Adding guild for " + guild.leaderUUID);
+            guilds.add(guild);
         } catch (Exception e){
             StreamLine.getInstance().getLogger().info("Error adding guild...");
             e.printStackTrace();
         }
-        guilds.add(guild);
     }
 
     public static boolean hasLeader(UUID leader){
@@ -149,22 +153,26 @@ public class GuildUtils {
     }
 
     public static void sendInvite(Player to, Player from) {
+        ProxiedPlayer player = UUIDFetcher.getPPlayer(from.uuid);
+
+        if (player == null) return;
+
         try {
             Guild guild = getGuild(from);
 
             if (! checkPlayer(guild, to, from)) return;
 
             if (to.equals(from)) {
-                MessagingUtils.sendBUserMessage(from, inviteNonSelf);
+                MessagingUtils.sendBUserMessage(player, inviteNonSelf);
             }
 
             if (! guild.hasModPerms(from.getUniqueId())) {
-                MessagingUtils.sendBUserMessage(from, noPermission);
+                MessagingUtils.sendBUserMessage(player, noPermission);
                 return;
             }
 
             if (guild.invites.contains(to)){
-                MessagingUtils.sendBUserMessage(from, inviteFailure);
+                MessagingUtils.sendBUserMessage(player, inviteFailure);
                 return;
             }
 
@@ -197,7 +205,7 @@ public class GuildUtils {
 
             guild.addInvite(to);
             invites.remove(guild);
-            invites.put(guild, PlayerUtils.transposeList(guild.invites));
+            invites.put(guild, guild.invites);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -594,16 +602,16 @@ public class GuildUtils {
 
             String leaderBulk = listLeaderBulk
                     .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
-                    .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                     .replace("%size%", Integer.toString(guild.getSize()));
             String moderatorBulk = listModBulkMain
                     .replace("%moderators%", Objects.requireNonNull(moderators(guild)))
-                    .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                     .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                     .replace("%size%", Integer.toString(guild.getSize()));
             String memberBulk = listMemberBulkMain
                     .replace("%members%", Objects.requireNonNull(members(guild)))
-                    .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                     .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                     .replace("%size%", Integer.toString(guild.getSize()));
 
@@ -611,7 +619,7 @@ public class GuildUtils {
                     .replace("%leaderbulk%", leaderBulk)
                     .replace("%moderatorbulk%", moderatorBulk)
                     .replace("%memberbulk%", memberBulk)
-                    .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                     .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                     .replace("%size%", Integer.toString(guild.getSize()))
             );
@@ -901,12 +909,12 @@ public class GuildUtils {
                 for (ProxiedPlayer m : guild.totalMembers) {
                     if (m.equals(sender)) {
                         MessagingUtils.sendBGUserMessage(guild, sender, m, joinUser
-                                .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                                 .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                         );
                     } else {
                         MessagingUtils.sendBGUserMessage(guild, sender, m, joinMembers
-                                .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                                 .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                         );
                     }
@@ -958,12 +966,12 @@ public class GuildUtils {
                 for (ProxiedPlayer m : guild.totalMembers) {
                     if (m.equals(sender)) {
                         MessagingUtils.sendBGUserMessage(guild, sender, m, leaveUser
-                                .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                                 .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                         );
                     } else {
                         MessagingUtils.sendBGUserMessage(guild, sender, m, leaveMembers
-                                .replace("%user%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                                 .replace("%leader%", guild.getMember(guild.leaderUUID).getDisplayName())
                         );
                     }
@@ -1000,7 +1008,7 @@ public class GuildUtils {
 
             if (guild.isMuted && ! guild.hasModPerms(sender)) {
                 MessagingUtils.sendBGUserMessage(guild, sender, sender, chatMuted
-                        .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                        .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                         .replace("%message%", msg)
                 );
                 return;
@@ -1008,14 +1016,14 @@ public class GuildUtils {
 
             if (ConfigUtils.guildConsole) {
                 MessagingUtils.sendBGUserMessage(guild, sender, StreamLine.getInstance().getProxy().getConsole(), chatConsole
-                        .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                        .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                         .replace("%message%", msg)
                 );
             }
 
             for (ProxiedPlayer member : guild.totalMembers) {
                 MessagingUtils.sendBGUserMessage(guild, sender, member, chat
-                        .replace("%sender%", PlayerUtils.getOffOnDisplay(Objects.requireNonNull(PlayerUtils.getStat(sender))))
+                        .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                         .replace("%message%", msg)
                 );
             }

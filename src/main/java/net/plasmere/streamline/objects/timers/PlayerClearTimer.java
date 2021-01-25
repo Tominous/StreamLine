@@ -27,19 +27,22 @@ public class PlayerClearTimer implements Runnable {
 
     public void done(){
         countdown = reset;
-        try {
-            for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
-                for (Player player : PlayerUtils.getStats()) {
-                    if (pl.getName().equals(player.getName())) continue;
 
+        int count = 0;
+
+        try {
+            for (Player player : PlayerUtils.getStats()) {
+                if (! player.online) {
                     player.saveInfo();
                     PlayerUtils.removeStat(player);
+
+                    count++;
                 }
             }
         } catch (Exception e){
             e.printStackTrace();
         }
 
-        StreamLine.getInstance().getLogger().info("Just removed some cached players... Now at " + PlayerUtils.getStats().size() + " cached players!");
+        StreamLine.getInstance().getLogger().info("Just removed " + count + " cached players... Now at " + PlayerUtils.getStats().size() + " cached players!");
     }
 }

@@ -31,9 +31,21 @@ public class PlayerXPTimer implements Runnable {
         try {
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
                 Player p = PlayerUtils.getStat(player);
+
                 p.addXp(ConfigUtils.xpPerGiveP);
 
                 p.saveInfo();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try {
+            for (Player player : PlayerUtils.getStats()) {
+                if (! player.online) {
+                    player.saveInfo();
+                    PlayerUtils.removeStat(player);
+                }
             }
         } catch (Exception e){
             e.printStackTrace();

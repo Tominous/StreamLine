@@ -5,11 +5,13 @@ import net.luckperms.api.LuckPermsProvider;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
+import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Player;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -23,10 +25,38 @@ public class PlayerUtils {
         return stats;
     }
 
+    public static ProxiedPlayer getProxiedPlayer(String latestName){
+        for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()){
+            if (p.getName().equals(latestName)) return p;
+        }
+
+        return null;
+    }
+
+    public static boolean hasStat(String latestName){
+        return getStat(latestName) != null;
+    }
+
+    public static Player getOffOnStat(String name){
+        Player p = getStat(name);
+
+        if (p == null) {
+            if (exists(name)) {
+                p = new Player(name);
+                addStat(p);
+                return p;
+            } else {
+                return null;
+            }
+        }
+
+        return p;
+    }
+
     public static Player getStat(ProxiedPlayer player) {
         try {
             for (Player stat : stats) {
-                if (stat.player.equals(player)) {
+                if (stat.latestName.equals(player.getName())) {
                     return stat;
                 }
             }
@@ -34,17 +64,13 @@ public class PlayerUtils {
             e.printStackTrace();
         }
 
-        Player p = new Player(player.getName());
-
-        addStats(p);
-
-        return p;
+        return null;
     }
 
     public static Player getStat(CommandSender player) {
         try {
             for (Player stat : stats) {
-                if (stat.player.equals(player)) {
+                if (stat.latestName.equals(player.getName())) {
                     return stat;
                 }
             }
@@ -52,17 +78,13 @@ public class PlayerUtils {
             e.printStackTrace();
         }
 
-        Player p = new Player(player.getName());
-
-        addStats(p);
-
-        return p;
+        return null;
     }
 
     public static Player getStat(String name) {
         try {
             for (Player stat : stats) {
-                if (stat.player.getName().equals(name)) {
+                if (stat.latestName.equals(name)) {
                     return stat;
                 }
             }
@@ -70,11 +92,7 @@ public class PlayerUtils {
             e.printStackTrace();
         }
 
-        Player player = new Player(name);
-
-        addStats(player);
-
-        return player;
+        return null;
     }
 
     public static List<Player> transposeList(List<ProxiedPlayer> players){
@@ -86,20 +104,42 @@ public class PlayerUtils {
         return ps;
     }
 
-    public static String getOffOnDisplay(Player player){
+    public static String getOffOnDisplayBungee(Player player){
         if (player.online) {
-            return MessageConfUtils.online.replace("%player%", player.displayName);
+            return MessageConfUtils.onlineB.replace("%player%", player.displayName);
         } else {
-            return MessageConfUtils.offline.replace("%player%", player.displayName);
+            return MessageConfUtils.offlineB.replace("%player%", player.displayName);
         }
     }
 
-    public static String getOffOnReg(Player player){
+    public static String getOffOnRegBungee(Player player){
         if (player.online) {
-            return MessageConfUtils.online.replace("%player%", player.latestName);
+            return MessageConfUtils.onlineB.replace("%player%", player.latestName);
         } else {
-            return MessageConfUtils.offline.replace("%player%", player.latestName);
+            return MessageConfUtils.offlineB.replace("%player%", player.latestName);
         }
+    }
+
+    public static String getOffOnDisplayDiscord(Player player){
+        if (player.online) {
+            return MessageConfUtils.onlineD.replace("%player%", player.displayName);
+        } else {
+            return MessageConfUtils.offlineD.replace("%player%", player.displayName);
+        }
+    }
+
+    public static String getOffOnRegDiscord(Player player){
+        if (player.online) {
+            return MessageConfUtils.onlineD.replace("%player%", player.latestName);
+        } else {
+            return MessageConfUtils.offlineD.replace("%player%", player.latestName);
+        }
+    }
+
+    public static boolean exists(String username){
+        File file = new File(StreamLine.getInstance().getPlDir(), UUIDFetcher.getCachedUUID(username) + ".properties");
+
+        return file.exists();
     }
 
     public static boolean isStats(Player stat){
@@ -107,25 +147,25 @@ public class PlayerUtils {
     }
 
     public static void reloadStats(Player stat) {
-        stats.remove(getStat(stat.player));
+        stats.remove(getStat(stat.latestName));
         stats.add(stat);
     }
 
-    public static void createStat(Player player) {
+    public static void createStat(ProxiedPlayer player) {
         try {
             Player stat = new Player(player);
 
-            addStats(stat);
+            addStat(stat);
 
             if (ConfigUtils.statsTell) {
-                MessagingUtils.sendStatUserMessage(stat, player, player, create);
+                MessagingUtils.sendStatUserMessage(stat, player, create);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void addStats(Player stat){
+    public static void addStat(Player stat){
         stats.add(stat);
     }
 
@@ -139,18 +179,20 @@ public class PlayerUtils {
     }
 
     public static void info(Player sender, Player of){
-        Player stat = getStat(of);
+        ProxiedPlayer player = UUIDFetcher.getPPlayer(sender.uuid);
 
-        if (! isStats(stat) || stat == null) {
-            MessagingUtils.sendBUserMessage(sender, noStatsFound);
+        if (player == null) return;
+
+        if (! isStats(of) || of == null) {
+            MessagingUtils.sendBUserMessage(player, noStatsFound);
             return;
         }
 
         if (! sender.hasPermission(ConfigUtils.comBStatsPerm)) {
-            MessagingUtils.sendBUserMessage(sender, noPermission);
+            MessagingUtils.sendBUserMessage(player, noPermission);
         }
 
-        MessagingUtils.sendStatUserMessage(stat, sender, sender, info);
+        MessagingUtils.sendStatUserMessage(of, player, info);
     }
 
     // No stats.
