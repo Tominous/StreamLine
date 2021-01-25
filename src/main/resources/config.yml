@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "0.1.7.0"
+version: "0.1.8.0"
 
 #### BASICS ####
 # For links in chat. This is so the API can know when there is a link and when not.

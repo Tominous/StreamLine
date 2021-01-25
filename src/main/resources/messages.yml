@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "0.1.7.0"
+version: "0.1.8.0"
 
 # All bungee messages accept all color and formatting codes.
 # For new lines, use %newline%.
