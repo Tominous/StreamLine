@@ -71,6 +71,21 @@ public class PlayerUtils {
         return null;
     }
 
+    public static String forStats(List<Player> players){
+        StringBuilder builder = new StringBuilder("[");
+
+        int i = 1;
+        for (Player p : players){
+            if (i != players.size()) {
+                builder.append(p.toString()).append(", ");
+            } else {
+                builder.append(p.toString()).append("]");
+            }
+        }
+
+        return builder.toString();
+    }
+
     public static Player getStat(CommandSender player) {
         if (player instanceof Player) {
             return getStat(player.getName());

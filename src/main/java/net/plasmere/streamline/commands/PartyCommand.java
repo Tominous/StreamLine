@@ -40,7 +40,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.joinParty(Objects.requireNonNull(PlayerUtils.getStat(sender)), PlayerUtils.getStat(args[1]));
+                        PartyUtils.joinParty(Objects.requireNonNull(PlayerUtils.getStat(sender)), UUIDFetcher.getPlayer(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -65,7 +65,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                 } else {
                     try {
-                        PartyUtils.promotePlayer(Objects.requireNonNull(PlayerUtils.getStat(sender)), PlayerUtils.getStat(args[1]));
+                        PartyUtils.promotePlayer(Objects.requireNonNull(PlayerUtils.getStat(sender)), UUIDFetcher.getPlayer(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -81,7 +81,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.demotePlayer(Objects.requireNonNull(PlayerUtils.getStat(sender)), PlayerUtils.getStat(args[1]));
+                        PartyUtils.demotePlayer(Objects.requireNonNull(PlayerUtils.getStat(sender)), UUIDFetcher.getPlayer(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -156,7 +156,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.acceptInvite(Objects.requireNonNull(PlayerUtils.getStat(sender)), PlayerUtils.getStat(args[1]));
+                        PartyUtils.acceptInvite(Objects.requireNonNull(PlayerUtils.getStat(sender)), UUIDFetcher.getPlayer(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -172,7 +172,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.denyInvite(Objects.requireNonNull(PlayerUtils.getStat(sender)), PlayerUtils.getStat(args[1]));
+                        PartyUtils.denyInvite(Objects.requireNonNull(PlayerUtils.getStat(sender)), UUIDFetcher.getPlayer(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -188,7 +188,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.sendInvite(PlayerUtils.getStat(args[1]), Objects.requireNonNull(PlayerUtils.getStat(sender)));
+                        PartyUtils.sendInvite(UUIDFetcher.getPlayer(args[1]), Objects.requireNonNull(PlayerUtils.getStat(sender)));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -204,7 +204,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.kickMember(Objects.requireNonNull(PlayerUtils.getStat(sender)), PlayerUtils.getStat(args[1]));
+                        PartyUtils.kickMember(Objects.requireNonNull(PlayerUtils.getStat(sender)), UUIDFetcher.getPlayer(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -226,7 +226,7 @@ public class PartyCommand extends Command implements TabExecutor {
                 }
             } else {
                 try {
-                    PartyUtils.sendInvite(PlayerUtils.getStat(args[0]), Objects.requireNonNull(PlayerUtils.getStat(sender)));
+                    PartyUtils.sendInvite(UUIDFetcher.getPlayer(args[0]), Objects.requireNonNull(PlayerUtils.getStat(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();

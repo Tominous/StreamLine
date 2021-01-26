@@ -17,7 +17,7 @@ public class TextUtils {
     }
 
     public static String truncate(String text, int digits) {
-        return text.substring(0, text.indexOf(".") + digits);
+        return text.substring(0, text.indexOf(".") + digits + 1);
     }
 
     public static TextComponent codedText(String text) {

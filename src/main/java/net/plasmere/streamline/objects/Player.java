@@ -383,6 +383,10 @@ public class Player implements ProxiedPlayer {
         this.finalize();
     }
 
+    public String toString(){
+        return latestName;
+    }
+
     @Override
     public String getDisplayName() {
         return this.displayName;
