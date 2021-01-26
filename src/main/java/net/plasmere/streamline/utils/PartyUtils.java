@@ -41,6 +41,19 @@ public class PartyUtils {
         }
     }
 
+    public static Party getParty(UUID uuid) {
+        try {
+            for (Party party : parties) {
+                if (party.hasMember(UUIDFetcher.getPlayer(uuid)))
+                    return party;
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static boolean hasParty(Player player) {
         for (Party party : parties) {
             if (party.hasMember(player)) return true;

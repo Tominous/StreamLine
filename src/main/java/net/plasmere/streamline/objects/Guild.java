@@ -617,7 +617,7 @@ public class Guild {
 
     public String addToModerators(Player player){
         modsByUUID.add(player.getUniqueId());
-        moderators.add(PlayerUtils.getOffOnStat(player.getName()));
+        moderators.add(player);
 
         StringBuilder builder = new StringBuilder();
 
@@ -636,7 +636,7 @@ public class Guild {
 
     public String addToMembers(Player player){
         membersByUUID.add(player.getUniqueId());
-        members.add(PlayerUtils.getOffOnStat(player.getName()));
+        members.add(player);
 
         StringBuilder builder = new StringBuilder();
 
@@ -655,7 +655,7 @@ public class Guild {
 
     public String addToTMembers(Player player){
         totalMembersByUUID.add(player.getUniqueId());
-        totalMembers.add(PlayerUtils.getOffOnStat(player.getName()));
+        totalMembers.add(player);
 
         StringBuilder builder = new StringBuilder();
 
@@ -674,7 +674,7 @@ public class Guild {
 
     public String addToInvites(Player player){
         invitesByUUID.add(player.getUniqueId());
-        invites.add(PlayerUtils.getOffOnStat(player.getName()));
+        invites.add(player);
 
         StringBuilder builder = new StringBuilder();
 
@@ -891,6 +891,12 @@ public class Guild {
         leaderUUID = UUID.fromString(getFromKey("leader"));
 
         loadMods();
+
+        File newFile = new File(filePrePath + leaderUUID.toString() + ".properties");
+
+        file.delete();
+
+        file = newFile;
 
         try {
             saveInfo();

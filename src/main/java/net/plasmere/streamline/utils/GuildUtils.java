@@ -40,6 +40,20 @@ public class GuildUtils {
         }
     }
 
+    public static Guild getGuild(UUID uuid) {
+        try {
+            for (Guild guild : guilds) {
+                if (guild.hasMember(UUIDFetcher.getPlayer(uuid))) {
+                    return guild;
+                }
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static boolean hasGuild(Player player) {
         for (Guild guild : guilds) {
             if (guild.hasMember(player)) return true;
@@ -104,7 +118,8 @@ public class GuildUtils {
     }
 
     public static void addGuild(Guild guild){
-        Guild g = getGuild(guild.getMember(guild.leaderUUID));
+
+        Guild g = getGuild(guild.leaderUUID);
 
         if (g != null) return;
 
@@ -179,25 +194,31 @@ public class GuildUtils {
                 MessagingUtils.sendBGUserMessage(guild, player, to, inviteUser
                         .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(from))))
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(to))))
-                        .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getPlayer(getGuild(from).leaderUUID)).getDisplayName())
-                        .replace("%leaderdefault%", Objects.requireNonNull(UUIDFetcher.getPlayer(getGuild(from).leaderUUID)).getName())
+                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
+                        .replace("%leaderdefault%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                 );
             }
 
-            for (UUID member : guild.totalMembersByUUID) {
-                if (member.equals(from.getUniqueId())) {
-                    MessagingUtils.sendBGUserMessage(guild, player, guild.getMember(member), inviteLeader
+            for (Player pl : guild.totalMembers) {
+                if (! pl.online) continue;
+
+                ProxiedPlayer member = UUIDFetcher.getPPlayer(pl.uuid);
+
+                if (member == null) continue;
+
+                if (pl.equals(from)) {
+                    MessagingUtils.sendBGUserMessage(guild, player, member, inviteLeader
                             .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(from))))
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(to))))
-                            .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getPlayer(getGuild(from).leaderUUID)).getDisplayName())
-                            .replace("%leaderdefault%", Objects.requireNonNull(UUIDFetcher.getPlayer(getGuild(from).leaderUUID)).getName())
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
+                            .replace("%leaderdefault%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                     );
                 } else {
-                    MessagingUtils.sendBGUserMessage(guild, player, guild.getMember(member), inviteMembers
+                    MessagingUtils.sendBGUserMessage(guild, player, member, inviteMembers
                             .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(from))))
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(to))))
-                            .replace("%leader%", guild.getMember(Objects.requireNonNull(getGuild(from)).leaderUUID).getDisplayName())
-                            .replace("%leaderdefault%", guild.getMember(Objects.requireNonNull(getGuild(from)).leaderUUID).getName())
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
+                            .replace("%leaderdefault%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                     );
                 }
             }
@@ -246,7 +267,7 @@ public class GuildUtils {
 
                     if (m == null) continue;
 
-                    if (m.equals(guild.getMember(guild.leaderUUID))){
+                    if (pl.equals(PlayerUtils.getStat(guild.leaderUUID))){
                         MessagingUtils.sendBGUserMessage(guild, p, m, acceptLeader
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(accepter))))
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(from))))
@@ -299,7 +320,7 @@ public class GuildUtils {
 
                 if (m == null) continue;
 
-                if (m.equals(guild.getMember(guild.leaderUUID))){
+                if (pl.equals(PlayerUtils.getStat(guild.leaderUUID))){
                     MessagingUtils.sendBGUserMessage(guild, p, m, denyLeader
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(denier))))
                             .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(from))))
@@ -334,7 +355,13 @@ public class GuildUtils {
         }
 
         try {
-            if (! guild.getMember(guild.leaderUUID).equals(sender)) {
+            Player person = PlayerUtils.getStat(guild.leaderUUID);
+            if (person == null) {
+                MessagingUtils.sendBGUserMessage(guild, p, p, MessageConfUtils.bungeeCommandError);
+                return;
+            }
+
+            if (! person.equals(sender)) {
                 MessagingUtils.sendBGUserMessage(guild, p, p, noPermission);
                 return;
             }
@@ -445,7 +472,7 @@ public class GuildUtils {
             try {
                 if (sender.equals(player)) {
                     MessagingUtils.sendBGUserMessage(guild, p, p, kickSelf);
-                } else if (player.equals(guild.getMember(guild.leaderUUID))) {
+                } else if (player.equals(PlayerUtils.getStat(guild.leaderUUID))) {
                     MessagingUtils.sendBGUserMessage(guild, p, p, noPermission);
                 } else {
                     for (Player pl : guild.totalMembers) {
@@ -459,7 +486,7 @@ public class GuildUtils {
                             MessagingUtils.sendBGUserMessage(guild, p, m, kickSender
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
                             );
-                        } else if (m.equals(player)) {
+                        } else if (pl.equals(player)) {
                             MessagingUtils.sendBGUserMessage(guild, p, m, kickUser
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
                             );
@@ -529,7 +556,7 @@ public class GuildUtils {
 
                 if (member == null) continue;
 
-                if (!member.equals(guild.getMember(guild.leaderUUID))) {
+                if (!member.equals(PlayerUtils.getStat(guild.leaderUUID))) {
                     MessagingUtils.sendBGUserMessage(guild, p, member, disbandMembers
                             .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                     );
@@ -585,7 +612,7 @@ public class GuildUtils {
 
                     if (member == null) continue;
 
-                    if (member.equals(guild.getMember(guild.leaderUUID))) {
+                    if (member.equals(PlayerUtils.getStat(guild.leaderUUID))) {
                         MessagingUtils.sendBGUserMessage(guild, p, member, openLeader
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                 .replace("%size%", Integer.toString(guild.getSize()))
@@ -641,7 +668,7 @@ public class GuildUtils {
 
                     if (member == null) continue;
                     
-                    if (member.equals(guild.getMember(guild.leaderUUID))) {
+                    if (member.equals(PlayerUtils.getStat(guild.leaderUUID))) {
                         MessagingUtils.sendBGUserMessage(guild, p, member, closeLeader
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                 .replace("%size%", Integer.toString(guild.getSize()))
@@ -678,18 +705,18 @@ public class GuildUtils {
             }
 
             String leaderBulk = listLeaderBulk
-                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
                     .replace("%size%", Integer.toString(guild.getSize()));
             String moderatorBulk = listModBulkMain
                     .replace("%moderators%", Objects.requireNonNull(moderators(guild)))
                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
-                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                     .replace("%size%", Integer.toString(guild.getSize()));
             String memberBulk = listMemberBulkMain
                     .replace("%members%", Objects.requireNonNull(members(guild)))
                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
-                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                     .replace("%size%", Integer.toString(guild.getSize()));
 
             MessagingUtils.sendBGUserMessage(guild, p, p, listMain
@@ -697,7 +724,7 @@ public class GuildUtils {
                     .replace("%moderatorbulk%", moderatorBulk)
                     .replace("%memberbulk%", memberBulk)
                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
-                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                     .replace("%size%", Integer.toString(guild.getSize()))
             );
         } catch (Exception e) {
@@ -719,13 +746,13 @@ public class GuildUtils {
                 if (i <= guild.moderators.size()) {
                     mods.append(listModBulkNotLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                             .replace("%size%", Integer.toString(guild.getSize()))
                     );
                 } else {
                     mods.append(listModBulkLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                             .replace("%size%", Integer.toString(guild.getSize()))
                     );
                 }
@@ -753,13 +780,13 @@ public class GuildUtils {
                 if (i <= guild.moderators.size()) {
                     mems.append(listMemberBulkNotLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                             .replace("%size%", Integer.toString(guild.getSize()))
                     );
                 } else {
                     mems.append(listMemberBulkLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                             .replace("%size%", Integer.toString(guild.getSize()))
                     );
                 }
@@ -806,9 +833,9 @@ public class GuildUtils {
                 case LEADER:
                     MessagingUtils.sendBGUserMessage(guild, p, p, promoteFailure
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(member))))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                             .replace("%level%", textLeader
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                     .replace("%size%", Integer.toString(guild.getSize()))
                             )
                     );
@@ -823,30 +850,30 @@ public class GuildUtils {
 
                         if (m == null) continue;
 
-                        if (m.equals(guild.getMember(guild.leaderUUID))) {
+                        if (pl.equals(PlayerUtils.getStat(guild.leaderUUID))) {
                             MessagingUtils.sendBGUserMessage(guild, p, m, promoteLeader
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(member))))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                     .replace("%level%", textLeader
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
-                        } else if (m.equals(member)) {
+                        } else if (pl.equals(member)) {
                             MessagingUtils.sendBGUserMessage(guild, p, m, promoteUser
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(member))))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                     .replace("%level%", textLeader
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
                         } else {
                             MessagingUtils.sendBGUserMessage(guild, p, m, promoteMembers
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(member))))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                     .replace("%level%", textLeader
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
@@ -864,30 +891,30 @@ public class GuildUtils {
 
                         if (m == null) continue;
 
-                        if (m.equals(guild.getMember(guild.leaderUUID))) {
+                        if (pl.equals(PlayerUtils.getStat(guild.leaderUUID))) {
                             MessagingUtils.sendBGUserMessage(guild, p, m, promoteLeader
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(member))))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                     .replace("%level%", textModerator
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
-                        } else if (m.equals(member)) {
+                        } else if (pl.equals(member)) {
                             MessagingUtils.sendBGUserMessage(guild, p, m, promoteUser
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(member))))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                     .replace("%level%", textModerator
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
                         } else {
                             MessagingUtils.sendBGUserMessage(guild, p, m, promoteMembers
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(member))))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                     .replace("%level%", textModerator
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
@@ -932,9 +959,9 @@ public class GuildUtils {
                 case LEADER:
                     MessagingUtils.sendBGUserMessage(guild, p, p, demoteIsLeader
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(member))))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                             .replace("%level%", textLeader
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                     .replace("%size%", Integer.toString(guild.getSize()))
                             )
                     );
@@ -949,30 +976,30 @@ public class GuildUtils {
 
                         if (m == null) continue;
 
-                        if (m.equals(guild.getMember(guild.leaderUUID))) {
+                        if (pl.equals(PlayerUtils.getStat(guild.leaderUUID))) {
                             MessagingUtils.sendBGUserMessage(guild, p, m, demoteLeader
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(member))))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                     .replace("%level%", textMember
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
-                        } else if (m.equals(member)) {
+                        } else if (pl.equals(member)) {
                             MessagingUtils.sendBGUserMessage(guild, p, m, demoteUser
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(member))))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                     .replace("%level%", textMember
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
                         } else {
                             MessagingUtils.sendBGUserMessage(guild, p, m, demoteMembers
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(member))))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                     .replace("%level%", textMember
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
@@ -983,9 +1010,9 @@ public class GuildUtils {
                 default:
                     MessagingUtils.sendBGUserMessage(guild, p, p, demoteFailure
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(member))))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                             .replace("%level%", textMember
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                                     .replace("%size%", Integer.toString(guild.getSize()))
                             )
                     );
@@ -1032,12 +1059,12 @@ public class GuildUtils {
                     if (pl.equals(sender)) {
                         MessagingUtils.sendBGUserMessage(guild, p, m, joinUser
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                         );
                     } else {
                         MessagingUtils.sendBGUserMessage(guild, p, m, joinMembers
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                         );
                     }
                 }
@@ -1067,7 +1094,7 @@ public class GuildUtils {
                 return;
             }
 
-            if (guild.getMember(guild.leaderUUID).equals(sender)) {
+            if (PlayerUtils.getStat(guild.leaderUUID).equals(sender)) {
                 for (Player pl : guild.totalMembers) {
                     if (! pl.online) continue;
 
@@ -1100,12 +1127,12 @@ public class GuildUtils {
                     if (pl.equals(sender)) {
                         MessagingUtils.sendBGUserMessage(guild, p, m, leaveUser
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                         );
                     } else {
                         MessagingUtils.sendBGUserMessage(guild, p, m, leaveMembers
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(sender))))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(guild.getMember(guild.leaderUUID))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(guild.leaderUUID))))
                         );
                     }
                 }
