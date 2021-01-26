@@ -488,13 +488,13 @@ modules:
     # "yes" = all players.
     # "no" = none.
     # "staff" = only players with the "streamline.staff" permission.
-    player-joins: "staff"
+    player-joins: "no"
     # Enables / disables telling the text channel defined in "leaves" (in the discord > text-channels section) (on Discord) when all players leaves.
     # Can be:
     # "yes" = all players.
     # "no" = none.
     # "staff" = only players with the "streamline.staff" permission.
-    player-leaves: "staff"
+    player-leaves: "no"
   # Bungee commands...
   bungee:
     # Reports...

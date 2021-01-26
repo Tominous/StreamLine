@@ -512,9 +512,26 @@ public class Guild {
     }
 
     public boolean hasMember(Player player){
+        loadMods();
+        loadMems();
+        loadTMems();
+        loadInvs();
+
+        return hasPMember(player) || hasUUIDMember(player);
+    }
+
+    public boolean hasPMember(Player player){
         try {
             return totalMembers.contains(player);
         } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean hasUUIDMember(Player player){
+        try {
+          return hasMember(player.uuid);
+        } catch (Exception e){
             return false;
         }
     }
