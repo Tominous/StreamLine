@@ -434,7 +434,8 @@ guild:
   # %xp% = guild xp.
   # %level% = guild level.
   # %name% = guild name.
-  # %xpneeded% = guild xp needed for next level.
+  # %xpneeded% = guild xp needed FOR level up.
+  # %xplevel% = guild xp needed UNTIL level up.
   # Text used for when talking about each guild level...
   text:
     leader: "LEADER"
@@ -599,7 +600,7 @@ guild:
   warp:
     leader: "&eYou warped your guild of &3%size% &eto your server!"
     members: "&b%leader% &ewarped you to their server!"
-  info: "&9----- &2Guild Info &9-----%newline%&eGEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eGEXP Needed For Level Up&8: &6%xpneeded%"
+  info: "&9----- &2Guild Info &9-----%newline%&eGEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eGEXP Needed For Level Up&8: &6%xplevel%&9/&6%xpneeded%"
 
 # Messages for the parties command:
 guilds:
@@ -644,9 +645,11 @@ guilds:
 # Fillers:
 # %xp% = network exp.
 # %level% = network level.
-# %player% = the-player-you-are-looking-at-stats-of's name.
+# %player% = the player you are looking at stats of's name.
+# %xpneeded% = the player you are looking at stats of's xp needed FOR level up.
+# %xplevel% = the player you are looking at stats of's xp needed UNTIL level up.
 stats:
   no-stats: "&cCouldn't find the stats..."
   no-permission: "&cSorry, but you do not have permission for that."
   create: "&aJust created a stats profile for you! You can view it by doing &b/stats"
-  info: "&9----- &d%player% &4Network Info &9-----%newline%&eEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xpneeded%"
+  info: "&9----- &d%player% &4Network Info &9-----%newline%&eEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel%&9/&6%xpneeded%"

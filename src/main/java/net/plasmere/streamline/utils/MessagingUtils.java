@@ -269,6 +269,7 @@ public class MessagingUtils {
                 .replace("%level%", Integer.toString(guild.lvl))
                 .replace("%name%", guild.name)
                 .replace("%xpneeded%", Integer.toString(guild.getNeededXp()))
+                .replace("%xplevel%", Integer.toString(guild.xpUntilNextLevel()))
         ));
     }
 
@@ -279,6 +280,7 @@ public class MessagingUtils {
                 .replace("%xp%", Integer.toString(player.xp))
                 .replace("%level%", Integer.toString(player.lvl))
                 .replace("%xpneeded%", Integer.toString(player.getNeededXp()))
+                .replace("%xplevel%", Integer.toString(player.xpUntilNextLevel()))
         ));
     }
 

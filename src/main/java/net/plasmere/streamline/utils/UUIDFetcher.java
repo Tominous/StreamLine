@@ -136,17 +136,14 @@ public class UUIDFetcher {
         try {
             String name = getCachedName(uuid);
 
-
-            if (PlayerUtils.hasStat(name)) {
-                return getPlayer(name);
-            } else {
-                Player player = new Player(name);
-
-                if (player.latestName == null) {
-                    return null;
+            if (PlayerUtils.exists(name)) {
+                if (PlayerUtils.hasStat(name)) {
+                    return getPlayer(name);
                 } else {
-                    return player;
+                    return new Player(name);
                 }
+            } else {
+                return null;
             }
         } catch (Exception e){
             e.printStackTrace();

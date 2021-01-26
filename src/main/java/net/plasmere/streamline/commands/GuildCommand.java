@@ -47,7 +47,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        GuildUtils.joinGuild(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
+                        GuildUtils.joinGuild(Objects.requireNonNull(PlayerUtils.getStat(sender)), PlayerUtils.getStat(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -55,7 +55,7 @@ public class GuildCommand extends Command implements TabExecutor {
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildLeaveAliases)) {
                 try {
-                    GuildUtils.leaveGuild(PlayerUtils.getStat(sender));
+                    GuildUtils.leaveGuild(Objects.requireNonNull(PlayerUtils.getStat(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
@@ -81,7 +81,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                 } else {
                     try {
-                        GuildUtils.promotePlayer(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
+                        GuildUtils.promotePlayer(Objects.requireNonNull(PlayerUtils.getStat(sender)), PlayerUtils.getStat(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -97,7 +97,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        GuildUtils.demotePlayer(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
+                        GuildUtils.demotePlayer(Objects.requireNonNull(PlayerUtils.getStat(sender)), PlayerUtils.getStat(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -115,7 +115,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     try {
                         args[0] = "";
 
-                        GuildUtils.sendChat(PlayerUtils.getStat(sender), TextUtils.normalize(args));
+                        GuildUtils.sendChat(Objects.requireNonNull(PlayerUtils.getStat(sender)), TextUtils.normalize(args));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -123,28 +123,28 @@ public class GuildCommand extends Command implements TabExecutor {
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildListAliases)) {
                 try {
-                    GuildUtils.listGuild(PlayerUtils.getStat(sender));
+                    GuildUtils.listGuild(Objects.requireNonNull(PlayerUtils.getStat(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildOpenAliases)) {
                 try {
-                    GuildUtils.openGuild(PlayerUtils.getStat(sender));
+                    GuildUtils.openGuild(Objects.requireNonNull(PlayerUtils.getStat(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildCloseAliases)) {
                 try {
-                    GuildUtils.closeGuild(PlayerUtils.getStat(sender));
+                    GuildUtils.closeGuild(Objects.requireNonNull(PlayerUtils.getStat(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildDisbandAliases)) {
                 try {
-                    GuildUtils.disband(PlayerUtils.getStat(sender));
+                    GuildUtils.disband(Objects.requireNonNull(PlayerUtils.getStat(sender)));
                 } catch (Throwable e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
@@ -159,7 +159,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        GuildUtils.acceptInvite(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
+                        GuildUtils.acceptInvite(Objects.requireNonNull(PlayerUtils.getStat(sender)), PlayerUtils.getStat(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -175,7 +175,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        GuildUtils.denyInvite(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
+                        GuildUtils.denyInvite(Objects.requireNonNull(PlayerUtils.getStat(sender)), PlayerUtils.getStat(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -207,7 +207,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        GuildUtils.kickMember(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
+                        GuildUtils.kickMember(Objects.requireNonNull(PlayerUtils.getStat(sender)), PlayerUtils.getStat(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -215,21 +215,21 @@ public class GuildCommand extends Command implements TabExecutor {
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildMuteAliases)) {
                 try {
-                    GuildUtils.muteGuild(PlayerUtils.getStat(sender));
+                    GuildUtils.muteGuild(Objects.requireNonNull(PlayerUtils.getStat(sender)));
                 } catch (Throwable e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildWarpAliases)) {
                 try {
-                    GuildUtils.warpGuild(PlayerUtils.getStat(sender));
+                    GuildUtils.warpGuild(Objects.requireNonNull(PlayerUtils.getStat(sender)));
                 } catch (Throwable e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildInfoAliases)) {
                 try {
-                    GuildUtils.info(PlayerUtils.getStat(sender));
+                    GuildUtils.info(Objects.requireNonNull(PlayerUtils.getStat(sender)));
                 } catch (Throwable e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();

@@ -322,9 +322,13 @@ public class Player implements ProxiedPlayer {
     public int getNeededXp(){
         int needed = 0;
 
-        needed = 25000 + (2500 * lvl);
+        needed = 2500 + (2500 * lvl);
 
         return needed;
+    }
+
+    public int xpUntilNextLevel(){
+        return getNeededXp() - this.xp;
     }
 
     public void addXp(int amount){

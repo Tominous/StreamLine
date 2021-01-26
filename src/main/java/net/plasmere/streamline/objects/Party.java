@@ -1,6 +1,5 @@
 package net.plasmere.streamline.objects;
 
-import me.lucko.luckperms.common.node.types.Permission;
 import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.PermissionNode;
 import net.plasmere.streamline.StreamLine;
@@ -9,9 +8,6 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.query.QueryOptions;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.config.Configuration;
-import net.plasmere.streamline.utils.MessagingUtils;
 
 import java.util.*;
 
@@ -64,7 +60,7 @@ public class Party {
         }
     }
 
-    public Level getLevel(ProxiedPlayer member){
+    public Level getLevel(Player member){
         if (this.members.contains(member))
             return Level.MEMBER;
         else if (this.moderators.contains(member))
@@ -167,7 +163,7 @@ public class Party {
         return isModerator(member) || isLeader(member);
     }
 
-    public int getMaxSize(ProxiedPlayer leader){
+    public int getMaxSize(Player leader){
         try {
             Collection<PermissionNode> perms =
                     Objects.requireNonNull(api.getGroupManager().getGroup(

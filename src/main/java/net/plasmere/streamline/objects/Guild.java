@@ -1,6 +1,5 @@
 package net.plasmere.streamline.objects;
 
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
@@ -409,9 +408,13 @@ public class Guild {
     public int getNeededXp(){
         int needed = 0;
 
-        needed = 50000 + (5000 * lvl);
+        needed = 5000 + (5000 * lvl);
 
         return needed;
+    }
+
+    public int xpUntilNextLevel(){
+        return getNeededXp() - this.xp;
     }
 
     public void addXp(int amount){
@@ -508,7 +511,7 @@ public class Guild {
         return totalMembersByUUID.contains(uuid);
     }
 
-    public boolean hasMember(ProxiedPlayer player){
+    public boolean hasMember(Player player){
         try {
             return totalMembers.contains(player);
         } catch (Exception e) {
@@ -524,7 +527,7 @@ public class Guild {
         }
     }
 
-    public boolean hasModPerms(ProxiedPlayer player) {
+    public boolean hasModPerms(Player player) {
         try {
             return moderators.contains(player) || leaderUUID.equals(player.getUniqueId());
         } catch (Exception e) {
@@ -536,7 +539,7 @@ public class Guild {
         return totalMembersByUUID.size();
     }
 
-    public String removeFromModerators(ProxiedPlayer player){
+    public String removeFromModerators(Player player){
         modsByUUID.remove(player.getUniqueId());
         moderators.remove(player);
 
@@ -555,7 +558,7 @@ public class Guild {
         return builder.toString();
     }
 
-    public String remFromMembers(ProxiedPlayer player){
+    public String remFromMembers(Player player){
         membersByUUID.remove(player.getUniqueId());
         members.remove(player);
 
@@ -574,7 +577,7 @@ public class Guild {
         return builder.toString();
     }
 
-    public String remFromTMembers(ProxiedPlayer player){
+    public String remFromTMembers(Player player){
         totalMembersByUUID.remove(player.getUniqueId());
         totalMembers.remove(player);
 
@@ -593,7 +596,7 @@ public class Guild {
         return builder.toString();
     }
 
-    public String remFromInvites(ProxiedPlayer player){
+    public String remFromInvites(Player player){
         invitesByUUID.remove(player.getUniqueId());
         invites.remove(player);
 
@@ -612,7 +615,7 @@ public class Guild {
         return builder.toString();
     }
 
-    public String addToModerators(ProxiedPlayer player){
+    public String addToModerators(Player player){
         modsByUUID.add(player.getUniqueId());
         moderators.add(PlayerUtils.getOffOnStat(player.getName()));
 
@@ -631,7 +634,7 @@ public class Guild {
         return builder.toString();
     }
 
-    public String addToMembers(ProxiedPlayer player){
+    public String addToMembers(Player player){
         membersByUUID.add(player.getUniqueId());
         members.add(PlayerUtils.getOffOnStat(player.getName()));
 
@@ -650,7 +653,7 @@ public class Guild {
         return builder.toString();
     }
 
-    public String addToTMembers(ProxiedPlayer player){
+    public String addToTMembers(Player player){
         totalMembersByUUID.add(player.getUniqueId());
         totalMembers.add(PlayerUtils.getOffOnStat(player.getName()));
 
@@ -669,7 +672,7 @@ public class Guild {
         return builder.toString();
     }
 
-    public String addToInvites(ProxiedPlayer player){
+    public String addToInvites(Player player){
         invitesByUUID.add(player.getUniqueId());
         invites.add(PlayerUtils.getOffOnStat(player.getName()));
 
@@ -688,7 +691,7 @@ public class Guild {
         return builder.toString();
     }
 
-    public void addMember(ProxiedPlayer player){
+    public void addMember(Player player){
         updateKey("totalmembers", addToTMembers(player));
         updateKey("members", addToMembers(player));
 
@@ -699,7 +702,7 @@ public class Guild {
         }
     }
 
-    public void removeMemberFromGuild(ProxiedPlayer player){
+    public void removeMemberFromGuild(Player player){
         Random RNG = new Random();
 
         if (leaderUUID.equals(player.getUniqueId())){
@@ -715,7 +718,7 @@ public class Guild {
             } else {
                 if (moderators.size() > 0) {
                     int r = RNG.nextInt(moderators.size());
-                    ProxiedPlayer newLeader = moderators.get(r);
+                    Player newLeader = moderators.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
                     leaderUUID = newLeader.getUniqueId();
@@ -723,7 +726,7 @@ public class Guild {
                 }
                 if (members.size() > 0) {
                     int r = RNG.nextInt(members.size());
-                    ProxiedPlayer newLeader = members.get(r);
+                    Player newLeader = members.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
                     leaderUUID = newLeader.getUniqueId();
@@ -738,7 +741,7 @@ public class Guild {
         updateKey("mods", removeFromModerators(player));
     }
 
-    public void addInvite(ProxiedPlayer to) {
+    public void addInvite(Player to) {
         updateKey("invites", addToInvites(to));
         loadVars();
     }
@@ -751,7 +754,7 @@ public class Guild {
         updateKey("public", bool);
     }
 
-    public Level getLevel(ProxiedPlayer member){
+    public Level getLevel(Player member){
         if (this.membersByUUID.contains(member.getUniqueId()))
             return Level.MEMBER;
         else if (this.modsByUUID.contains(member.getUniqueId()))
@@ -762,7 +765,7 @@ public class Guild {
             return Level.MEMBER;
     }
 
-    public void setModerator(ProxiedPlayer player){
+    public void setModerator(Player player){
         Random RNG = new Random();
 
         forModeratorRemove(player);
@@ -780,7 +783,7 @@ public class Guild {
             } else {
                 if (moderators.size() > 0) {
                     int r = RNG.nextInt(moderators.size());
-                    ProxiedPlayer newLeader = moderators.get(r);
+                    Player newLeader = moderators.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
                     leaderUUID = newLeader.getUniqueId();
@@ -788,7 +791,7 @@ public class Guild {
                 }
                 if (members.size() > 0) {
                     int r = RNG.nextInt(members.size());
-                    ProxiedPlayer newLeader = members.get(r);
+                    Player newLeader = members.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
                     leaderUUID = newLeader.getUniqueId();
@@ -811,7 +814,7 @@ public class Guild {
         }
     }
 
-    public void setMember(ProxiedPlayer player){
+    public void setMember(Player player){
         Random RNG = new Random();
 
         forMemberRemove(player);
@@ -829,7 +832,7 @@ public class Guild {
             } else {
                 if (moderators.size() > 0) {
                     int r = RNG.nextInt(moderators.size());
-                    ProxiedPlayer newLeader = moderators.get(r);
+                    Player newLeader = moderators.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
                     leaderUUID = newLeader.getUniqueId();
@@ -837,7 +840,7 @@ public class Guild {
                 }
                 if (members.size() > 0) {
                     int r = RNG.nextInt(members.size());
-                    ProxiedPlayer newLeader = members.get(r);
+                    Player newLeader = members.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
                     leaderUUID = newLeader.getUniqueId();
@@ -860,22 +863,22 @@ public class Guild {
         }
     }
 
-    public void forModeratorRemove(ProxiedPlayer player){
+    public void forModeratorRemove(Player player){
         this.modsByUUID.removeIf(m -> m.equals(player.getUniqueId()));
         updateKey("mods", getModeratorsAsStringed());
     }
 
-    public void forMemberRemove(ProxiedPlayer player){
+    public void forMemberRemove(Player player){
         this.membersByUUID.removeIf(m -> m.equals(player.getUniqueId()));
         updateKey("members", getMembersAsStringed());
     }
 
-    public void forTotalMembersRemove(ProxiedPlayer player){
+    public void forTotalMembersRemove(Player player){
         this.totalMembersByUUID.removeIf(m -> m.equals(player.getUniqueId()));
         updateKey("totalmembers", getTotalMembersAsStringed());
     }
 
-    public void replaceLeader(ProxiedPlayer player){
+    public void replaceLeader(Player player){
         updateKey("mods", getModeratorsAsStringed() + "." + leaderUUID.toString());
         modsByUUID = loadModerators();
         updateKey("leader", player.getUniqueId());
