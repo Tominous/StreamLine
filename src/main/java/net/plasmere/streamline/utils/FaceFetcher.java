@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class FaceFetcher {
     public static String getFaceAvatarURL(Player player){
-        return "https://minotar.net/avatar/" + PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))) + "/1280.png";
+        return "https://minotar.net/avatar/" + PlayerUtils.getOffOnRegBungee(player) + "/1280.png";
     }
 
     public static String getFaceAvatarURL(String  player){

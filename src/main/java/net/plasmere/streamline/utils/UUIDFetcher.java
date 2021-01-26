@@ -3,6 +3,7 @@ package net.plasmere.streamline.utils;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.gson.*;
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.objects.Player;
@@ -112,6 +113,44 @@ public class UUIDFetcher {
         try {
             return StreamLine.getInstance().getProxy().getPlayer(uuid);
         } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Player getPlayer(ProxiedPlayer player) {
+        try {
+            String name = getCachedName(player.getUniqueId());
+
+            if (PlayerUtils.exists(name)) {
+                if (PlayerUtils.hasStat(name)) {
+                    return getPlayer(name);
+                } else {
+                    return new Player(name);
+                }
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Player getPlayer(CommandSender player) {
+        try {
+            String name = player.getName();
+
+            if (PlayerUtils.exists(name)) {
+                if (PlayerUtils.hasStat(name)) {
+                    return getPlayer(name);
+                } else {
+                    return new Player(name);
+                }
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

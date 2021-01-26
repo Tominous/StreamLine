@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.utils.PlayerUtils;
+import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.Objects;
 
@@ -43,9 +44,9 @@ public class OnlineCommand {
         for (ProxiedPlayer player : plugin.getProxy().getPlayers()){
             if (!player.hasPermission("streamline.staff.vanish")){
                 if (i < plugin.getProxy().getPlayers().size())
-                    text.append(PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player)))).append(", ");
+                    text.append(PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))).append(", ");
                 else
-                    text.append(PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player)))).append(".");
+                    text.append(PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))).append(".");
             } else {
                 if (i < plugin.getProxy().getPlayers().size())
                     text.append("HIDDEN").append(", ");

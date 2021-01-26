@@ -13,6 +13,7 @@ import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.plugin.Command;
+import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.*;
 
@@ -99,7 +100,7 @@ public class GlobalOnlineCommand extends Command {
 
         for (ProxiedPlayer player : players){
             try {
-                playerGroup.put(player, Objects.requireNonNull(api.getUserManager().getUser(Objects.requireNonNull(PlayerUtils.getStat(player)).getName())).getPrimaryGroup().toLowerCase());
+                playerGroup.put(player, Objects.requireNonNull(api.getUserManager().getUser(player.getName())).getPrimaryGroup().toLowerCase());
             } catch (Exception e){
                 e.printStackTrace();
                 playerGroup.put(player, "null");
@@ -144,12 +145,12 @@ public class GlobalOnlineCommand extends Command {
             Server server = playerServers.get(player);
             if (! (i == players.size() - 1))
                 text.append(MessageConfUtils.onlineMessageBPlayersBulkNotLast
-                        .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player))))
                         .replace("%server%", server.getInfo().getName())
                 );
             else
                 text.append(MessageConfUtils.onlineMessageBPlayersBulkLast
-                        .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player))))
                         .replace("%server%", server.getInfo().getName())
                 );
             i++;

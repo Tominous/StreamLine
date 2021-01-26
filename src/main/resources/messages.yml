@@ -480,7 +480,7 @@ guild:
     # %user% = the person being promoted.
     # %leader% = the guild leader.
     # %level% = the permission level the person is going to.
-    members: "&b%leader% &ejust promoted &b%user% &eto &c%level%&e in the guild!"
+    members: "&b%sender% &ejust promoted &b%user% &eto &c%level%&e in the guild!"
     user: "&eYou were just promoted to &c%level% &ein the guild!"
     leader: "&eYou just promoted &b%user% to &c%level%&e!"
     failure: "&cAlready at highest level."
@@ -490,7 +490,7 @@ guild:
     # %user% = the person being demoted.
     # %leader% = the guild leader.
     # %level% = the permission level the person is going to.
-    members: "&b%leader% &ejust demoted &b%user% &eto &c%level%&e in the guild."
+    members: "&b%sender% &ejust demoted &b%user% &eto &c%level%&e in the guild."
     user: "&eYou were just demoted to &c%level% &ein the guild."
     leader: "&eYou just demoted &b%user% to &c%level%&e."
     failure: "&cAlready at lowest level."

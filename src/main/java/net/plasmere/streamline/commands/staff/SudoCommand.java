@@ -58,7 +58,7 @@ public class SudoCommand extends Command implements TabExecutor {
         List<String> strPlayers = new ArrayList<>();
 
         for (ProxiedPlayer player : players){
-            strPlayers.add(Objects.requireNonNull(PlayerUtils.getStat(player)).getName());
+            strPlayers.add(player.getName());
         }
 
         Collection<Map.Entry<String, Command>> commands = plugin.getProxy().getPluginManager().getCommands();

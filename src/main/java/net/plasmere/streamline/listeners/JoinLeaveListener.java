@@ -20,6 +20,7 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 import net.plasmere.streamline.utils.PlayerUtils;
+import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.Objects;
 
@@ -83,13 +84,13 @@ public class JoinLeaveListener implements Listener {
         switch (ConfigUtils.moduleBPlayerJoins) {
             case "yes":
                 MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                        MessageConfUtils.bungeeOnline.replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                        MessageConfUtils.bungeeOnline.replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
                         "streamline.staff"));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
                     MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                            MessageConfUtils.bungeeOnline.replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                            MessageConfUtils.bungeeOnline.replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
                             "streamline.staff"));
                 }
                 break;
@@ -101,14 +102,14 @@ public class JoinLeaveListener implements Listener {
             case "yes":
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                         MessageConfUtils.discordOnlineEmbed,
-                        MessageConfUtils.discordOnline.replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                        MessageConfUtils.discordOnline.replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
                         ConfigUtils.textChannelBJoins));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                             MessageConfUtils.discordOnlineEmbed,
-                            MessageConfUtils.discordOnline.replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                            MessageConfUtils.discordOnline.replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
                             ConfigUtils.textChannelBJoins));
                 }
                 break;
@@ -165,13 +166,13 @@ public class JoinLeaveListener implements Listener {
         switch (ConfigUtils.moduleBPlayerLeaves) {
             case "yes":
                 MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                        MessageConfUtils.bungeeOffline.replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                        MessageConfUtils.bungeeOffline.replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
                         "streamline.staff"));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
                     MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                            MessageConfUtils.bungeeOffline.replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                            MessageConfUtils.bungeeOffline.replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
                             "streamline.staff"));
                 }
                 break;
@@ -183,14 +184,14 @@ public class JoinLeaveListener implements Listener {
             case "yes":
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                         MessageConfUtils.discordOfflineEmbed,
-                        MessageConfUtils.discordOffline.replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                        MessageConfUtils.discordOffline.replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
                         ConfigUtils.textChannelBLeaves));
                 break;
             case "staff":
                 if (player.hasPermission("streamline.staff")) {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                             MessageConfUtils.discordOfflineEmbed,
-                            MessageConfUtils.discordOffline.replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(PlayerUtils.getStat(player)))),
+                            MessageConfUtils.discordOffline.replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
                             ConfigUtils.textChannelBLeaves));
                 }
                 break;

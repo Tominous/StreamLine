@@ -135,7 +135,7 @@ public class PlayerUtils {
     public static List<Player> transposeList(List<ProxiedPlayer> players){
         List<Player> ps = new ArrayList<>();
         for (ProxiedPlayer player : players){
-            ps.add(PlayerUtils.getStat(player));
+            ps.add(UUIDFetcher.getPlayer(player));
         }
 
         return ps;

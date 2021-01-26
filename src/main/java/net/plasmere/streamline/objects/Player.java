@@ -333,7 +333,7 @@ public class Player implements ProxiedPlayer {
         }
         writer.close();
 
-        //StreamLine.getInstance().getLogger().info("Just saved Player info for player: " + PlayerUtils.getOffOnReg(Objects.requireNonNull(PlayerUtils.getStat(player))));
+        //StreamLine.getInstance().getLogger().info("Just saved Player info for player: " + PlayerUtils.getOffOnReg(player));
     }
 
     /*

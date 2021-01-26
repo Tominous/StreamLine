@@ -76,7 +76,7 @@ public class StatsCommand extends Command implements TabExecutor {
         List<String> strPlayers = new ArrayList<>();
 
         for (ProxiedPlayer player : players){
-            strPlayers.add(Objects.requireNonNull(PlayerUtils.getStat(player)).getName());
+            strPlayers.add(player.getName());
         }
 
         if (sender.hasPermission(ConfigUtils.comBStatsPermOthers)) {

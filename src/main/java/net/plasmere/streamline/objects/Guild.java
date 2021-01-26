@@ -513,10 +513,6 @@ public class Guild {
     }
 
     public boolean hasMember(Player player){
-        System.out.println(totalMembersByUUID);
-        System.out.println(PlayerUtils.forStats(totalMembers));
-        System.out.println(player.toString());
-
         loadMods();
         loadMems();
         loadTMems();
