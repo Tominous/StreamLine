@@ -52,7 +52,7 @@ public class Guild {
         this.file = new File(filePrePath + uuid.toString() + ".properties");
 
         if (createNew || file.exists()) {
-            StreamLine.getInstance().getLogger().info("Guild file: " + file.getName() + " (In the \"guilds\" folder.)");
+            //StreamLine.getInstance().getLogger().info("Guild file: " + file.getName() + " (In the \"guilds\" folder.)");
 
             try {
                 getFromConfigFile();
@@ -408,15 +408,8 @@ public class Guild {
     */
     public int getNeededXp(){
         int needed = 0;
-        if (this.lvl <= 15){
-            needed = 10 * this.lvl + 7;
-        } else if (this.lvl >= 16 && this.lvl <= 30){
-            needed = 25 * this.lvl - 38;
-        } else if (this.lvl > 30) {
-            needed = 45 * this.lvl - 158;
-        } else {
-            needed = 100;
-        }
+
+        needed = 50000 + (5000 * lvl);
 
         return needed;
     }

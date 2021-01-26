@@ -8,8 +8,6 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Guild;
-import net.plasmere.streamline.objects.NoPlayerFoundException;
-import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
@@ -49,11 +47,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        Player online = tryOnline(args[1]);
-                        if (online == null) return;
-                        GuildUtils.joinGuild(PlayerUtils.getStat(sender), online);
-                    } catch (NoPlayerFoundException e){
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        GuildUtils.joinGuild(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -76,7 +70,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        GuildUtils.createGuild(PlayerUtils.getStat(sender), args[1]);
+                        GuildUtils.createGuild(Objects.requireNonNull(PlayerUtils.getStat(sender)), args[1]);
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -87,11 +81,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                 } else {
                     try {
-                        Player online = tryOnline(args[1]);
-                        if (online == null) return;
-                        GuildUtils.promotePlayer(PlayerUtils.getStat(sender), online);
-                    } catch (NoPlayerFoundException e){
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        GuildUtils.promotePlayer(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -107,11 +97,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        Player online = tryOnline(args[1]);
-                        if (online == null) return;
-                        GuildUtils.demotePlayer(PlayerUtils.getStat(sender), online);
-                    } catch (NoPlayerFoundException e){
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        GuildUtils.demotePlayer(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -173,11 +159,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        ProxiedPlayer online = tryOnline(args[1]);
-                        if (online == null) return;
-                        GuildUtils.acceptInvite(PlayerUtils.getStat(sender), online);
-                    } catch (NoPlayerFoundException e){
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        GuildUtils.acceptInvite(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -193,11 +175,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        ProxiedPlayer online = tryOnline(args[1]);
-                        if (online == null) return;
-                        GuildUtils.denyInvite(PlayerUtils.getStat(sender), online);
-                    } catch (NoPlayerFoundException e){
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        GuildUtils.denyInvite(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -213,11 +191,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        Player online = tryOnline(args[1]);
-                        if (online == null) return;
-                        GuildUtils.sendInvite(online, PlayerUtils.getStat(sender));
-                    } catch (NoPlayerFoundException e){
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        GuildUtils.sendInvite(PlayerUtils.getStat(args[1]), Objects.requireNonNull(PlayerUtils.getStat(sender)));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -233,11 +207,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        ProxiedPlayer online = tryOnline(args[1]);
-                        if (online == null) return;
-                        GuildUtils.kickMember(PlayerUtils.getStat(sender), online);
-                    } catch (NoPlayerFoundException e){
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        GuildUtils.kickMember(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -266,11 +236,7 @@ public class GuildCommand extends Command implements TabExecutor {
                 }
             } else {
                 try {
-                    Player online = tryOnline(args[0]);
-                    if (online == null) return;
-                    GuildUtils.sendInvite(online, PlayerUtils.getStat(sender));
-                } catch (NoPlayerFoundException e){
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                    GuildUtils.sendInvite(PlayerUtils.getStat(args[0]), Objects.requireNonNull(PlayerUtils.getStat(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
@@ -288,22 +254,6 @@ public class GuildCommand extends Command implements TabExecutor {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public Player tryOnline(String player) throws NoPlayerFoundException {
-        try {
-            for (ProxiedPlayer p : plugin.getProxy().getPlayers()){
-                if (p.getName().equals(player))
-                    return PlayerUtils.getStat(p);
-            }
-            throw new NoPlayerFoundException(player);
-        } catch (NoPlayerFoundException e){
-            throw new NoPlayerFoundException(player);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return null;
     }
 
     // Usage: /guild <join|leave|create|promote|demote|chat|list|open|close|disband|accept|deny|invite|kick|mute|warp>

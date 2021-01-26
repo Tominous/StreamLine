@@ -38,9 +38,6 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 
 	private static final EmbedBuilder eb = new EmbedBuilder();
 
-	private final File cfile = new File(getDataFolder(), "config.yml");
-	private final File mfile = new File(getDataFolder(), "messages.yml");
-
 	private final File plDir = new File(getDataFolder() + File.separator + "players" + File.separator);
 	private final File gDir = new File(getDataFolder() + File.separator + "guilds" + File.separator);
 

@@ -267,6 +267,8 @@ public class MessagingUtils {
                 .replace("%ismuted%", getIsMutedGuild(guild))
                 .replace("%xp%", Integer.toString(guild.xp))
                 .replace("%level%", Integer.toString(guild.lvl))
+                .replace("%name%", guild.name)
+                .replace("%xpneeded%", Integer.toString(guild.getNeededXp()))
         ));
     }
 
@@ -276,6 +278,7 @@ public class MessagingUtils {
                 .replace("%player%", PlayerUtils.getOffOnRegBungee(player))
                 .replace("%xp%", Integer.toString(player.xp))
                 .replace("%level%", Integer.toString(player.lvl))
+                .replace("%xpneeded%", Integer.toString(player.getNeededXp()))
         ));
     }
 
@@ -424,7 +427,7 @@ public class MessagingUtils {
 
         int i = 1;
         for (UUID m : guild.modsByUUID){
-            ProxiedPlayer player;
+            Player player;
             try {
                 player = Objects.requireNonNull(UUIDFetcher.getPlayer(m));
             } catch (Exception e) {
@@ -433,11 +436,11 @@ public class MessagingUtils {
 
             if (i != guild.modsByUUID.size()){
                 msg.append(MessageConfUtils.guildsModsNLast
-                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                 );
             } else {
                 msg.append(MessageConfUtils.guildsModsLast
-                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                 );
             }
 
@@ -452,7 +455,7 @@ public class MessagingUtils {
 
         int i = 1;
         for (UUID m : guild.membersByUUID){
-            ProxiedPlayer player;
+            Player player;
             try {
                 player = Objects.requireNonNull(UUIDFetcher.getPlayer(m));
             } catch (Exception e) {
@@ -461,11 +464,11 @@ public class MessagingUtils {
 
             if (i != guild.membersByUUID.size()){
                 msg.append(MessageConfUtils.guildsMemsNLast
-                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                 );
             } else {
                 msg.append(MessageConfUtils.guildsMemsLast
-                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                 );
             }
 
@@ -480,7 +483,7 @@ public class MessagingUtils {
 
         int i = 1;
         for (UUID m : guild.totalMembersByUUID){
-            ProxiedPlayer player;
+            Player player;
             try {
                 player = Objects.requireNonNull(UUIDFetcher.getPlayer(m));
             } catch (Exception e) {
@@ -489,11 +492,11 @@ public class MessagingUtils {
 
             if (i != guild.totalMembersByUUID.size()){
                 msg.append(MessageConfUtils.guildsTMemsNLast
-                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                 );
             } else {
                 msg.append(MessageConfUtils.guildsTMemsLast
-                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                 );
             }
 
@@ -508,7 +511,7 @@ public class MessagingUtils {
 
         int i = 1;
         for (UUID m : guild.invitesByUUID){
-            ProxiedPlayer player;
+            Player player;
             try {
                 player = Objects.requireNonNull(UUIDFetcher.getPlayer(m));
             } catch (Exception e) {
@@ -517,11 +520,11 @@ public class MessagingUtils {
 
             if (i != guild.invites.size()){
                 msg.append(MessageConfUtils.guildsInvsNLast
-                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                 );
             } else {
                 msg.append(MessageConfUtils.guildsInvsLast
-                        .replace("%user%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(player))))
+                        .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                 );
             }
 

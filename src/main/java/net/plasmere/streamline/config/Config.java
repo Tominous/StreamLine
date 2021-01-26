@@ -43,15 +43,15 @@ public class Config {
     public static Configuration getoConf() { return oConf; }
     public static Configuration getoMess() { return oMess; }
 
-    public static void reloadConfig(){
+    public void reloadConfig(){
         try {
-            conf = ConfigurationProvider.getProvider(YamlConfiguration.class).load(cfile);
+            conf = loadConf();
         } catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public static void reloadMessages(){
+    public void reloadMessages(){
         try {
             mess = ConfigurationProvider.getProvider(YamlConfiguration.class).load(mfile);
         } catch (Exception e){

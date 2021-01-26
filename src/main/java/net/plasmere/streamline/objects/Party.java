@@ -17,15 +17,15 @@ import java.util.*;
 
 public class Party {
     public int maxSize;
-    public ProxiedPlayer leader;
-    public List<ProxiedPlayer> totalMembers = new ArrayList<>();
-    public List<ProxiedPlayer> members = new ArrayList<>();
-    public List<ProxiedPlayer> moderators = new ArrayList<>();
+    public Player leader;
+    public List<Player> totalMembers = new ArrayList<>();
+    public List<Player> members = new ArrayList<>();
+    public List<Player> moderators = new ArrayList<>();
     public String name;
     public boolean isPublic = false;
     public boolean isMuted = false;
     // to , from
-    public List<ProxiedPlayer> invites = new ArrayList<>();
+    public List<Player> invites = new ArrayList<>();
 
     private final LuckPerms api = LuckPermsProvider.get();
     private final StreamLine plugin;
@@ -35,7 +35,7 @@ public class Party {
         LEADER
     }
 
-    public Party(StreamLine streamLine, ProxiedPlayer leader){
+    public Party(StreamLine streamLine, Player leader){
         this.plugin = streamLine;
         this.leader = leader;
         this.totalMembers.add(leader);
@@ -43,7 +43,7 @@ public class Party {
         this.isPublic = false;
     }
 
-    public Party(StreamLine streamLine, ProxiedPlayer leader, int size){
+    public Party(StreamLine streamLine, Player leader, int size){
         this.plugin = streamLine;
         this.leader = leader;
         this.totalMembers.add(leader);
@@ -55,9 +55,13 @@ public class Party {
         isMuted = ! isMuted;
     }
 
-    public void dispose() throws Throwable {
+    public void dispose() {
         this.leader = null;
-        this.finalize();
+        try {
+            this.finalize();
+        } catch (Throwable e){
+            e.printStackTrace();
+        }
     }
 
     public Level getLevel(ProxiedPlayer member){
@@ -71,11 +75,11 @@ public class Party {
             return Level.MEMBER;
     }
 
-    public void addInvite(ProxiedPlayer invite){
+    public void addInvite(Player invite){
         this.invites.add(invite);
     }
 
-    public void removeInvite(ProxiedPlayer invite){
+    public void removeInvite(Player invite){
         this.invites.remove(invite);
     }
 
@@ -94,7 +98,7 @@ public class Party {
 
     public int getMaxSize() { return maxSize; }
 
-    public void replaceLeader(ProxiedPlayer newLeader){
+    public void replaceLeader(Player newLeader){
         setModerator(leader);
 
         removeMember(newLeader);
@@ -103,63 +107,63 @@ public class Party {
         this.leader = newLeader;
     }
 
-    public void removeMod(ProxiedPlayer mod){
+    public void removeMod(Player mod){
         forModeratorRemove(mod);
     }
 
-    public void removeMember(ProxiedPlayer member){
+    public void removeMember(Player member){
         forMemberRemove(member);
     }
 
-    public void setModerator(ProxiedPlayer mod){
+    public void setModerator(Player mod){
         forModeratorRemove(mod);
         this.moderators.add(mod);
         this.members.remove(mod);
     }
 
-    public void setMember(ProxiedPlayer member){
+    public void setMember(Player member){
         forMemberRemove(member);
         this.members.add(member);
         this.moderators.remove(member);
     }
 
-    public void addMember(ProxiedPlayer member){
+    public void addMember(Player member){
         removeMemberFromParty(member);
         this.members.add(member);
         this.totalMembers.add(member);
     }
 
-    public void removeMemberFromParty(ProxiedPlayer member){
+    public void removeMemberFromParty(Player member){
         forMemberRemove(member);
         forModeratorRemove(member);
         forTotalMembers(member);
     }
 
-    public void forMemberRemove(ProxiedPlayer member){
+    public void forMemberRemove(Player member){
         this.members.removeIf(m -> m.equals(member));
     }
 
-    public void forModeratorRemove(ProxiedPlayer mod){
+    public void forModeratorRemove(Player mod){
         this.moderators.removeIf(m -> m.equals(mod));
     }
 
-    public void forTotalMembers(ProxiedPlayer member){
+    public void forTotalMembers(Player member){
         this.totalMembers.removeIf(m -> m.equals(member));
     }
 
-    public boolean hasMember(ProxiedPlayer member){
+    public boolean hasMember(Player member){
         return this.totalMembers.contains(member);
     }
 
-    public boolean isModerator(ProxiedPlayer member) {
+    public boolean isModerator(Player member) {
         return this.moderators.contains(member);
     }
 
-    public boolean isLeader(ProxiedPlayer member) {
+    public boolean isLeader(Player member) {
         return this.leader.equals(member);
     }
 
-    public boolean hasModPerms(ProxiedPlayer member){
+    public boolean hasModPerms(Player member){
         return isModerator(member) || isLeader(member);
     }
 

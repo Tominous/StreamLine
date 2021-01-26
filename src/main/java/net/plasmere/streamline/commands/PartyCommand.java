@@ -42,9 +42,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        Player online = tryOnline(args[1]);
-                        if (online == null) return;
-                        PartyUtils.joinParty(PlayerUtils.getStat(sender), online);
+                        PartyUtils.joinParty(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -71,9 +69,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                 } else {
                     try {
-                        Player online = tryOnline(args[1]);
-                        if (online == null) return;
-                        PartyUtils.promotePlayer(PlayerUtils.getStat(sender), online);
+                        PartyUtils.promotePlayer(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -91,9 +87,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        Player online = tryOnline(args[1]);
-                        if (online == null) return;
-                        PartyUtils.demotePlayer(PlayerUtils.getStat(sender), online);
+                        PartyUtils.demotePlayer(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -170,9 +164,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        Player online = tryOnline(args[1]);
-                        if (online == null) return;
-                        PartyUtils.acceptInvite(PlayerUtils.getStat(sender), online);
+                        PartyUtils.acceptInvite(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -190,9 +182,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        Player online = tryOnline(args[1]);
-                        if (online == null) return;
-                        PartyUtils.denyInvite(PlayerUtils.getStat(sender), online);
+                        PartyUtils.denyInvite(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -210,9 +200,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        Player online = tryOnline(args[1]);
-                        if (online == null) return;
-                        PartyUtils.sendInvite(online, PlayerUtils.getStat(sender));
+                        PartyUtils.sendInvite(PlayerUtils.getStat(args[1]), PlayerUtils.getStat(sender));
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -230,9 +218,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        Player online = tryOnline(args[1]);
-                        if (online == null) return;
-                        PartyUtils.kickMember(PlayerUtils.getStat(sender), online);
+                        PartyUtils.kickMember(PlayerUtils.getStat(sender), PlayerUtils.getStat(args[1]));
                     } catch (NoPlayerFoundException e){
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     } catch (Exception e) {
@@ -256,9 +242,7 @@ public class PartyCommand extends Command implements TabExecutor {
                 }
             } else {
                 try {
-                    Player online = tryOnline(args[0]);
-                    if (online == null) return;
-                    PartyUtils.sendInvite(online, PlayerUtils.getStat(sender));
+                    PartyUtils.sendInvite(PlayerUtils.getStat(args[0]), PlayerUtils.getStat(sender));
                 } catch (NoPlayerFoundException e){
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                 } catch (Exception e) {
@@ -269,22 +253,6 @@ public class PartyCommand extends Command implements TabExecutor {
         } else {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
         }
-    }
-
-    public Player tryOnline(String player) throws NoPlayerFoundException {
-        try {
-            for (ProxiedPlayer p : plugin.getProxy().getPlayers()){
-                if (p.getName().equals(player))
-                    return PlayerUtils.getStat(p);
-            }
-            throw new NoPlayerFoundException(player);
-        } catch (NoPlayerFoundException e){
-            throw new NoPlayerFoundException(player);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return null;
     }
 
     // Usage: /party <join|leave|create|promote|demote|chat|list|open|close|disband|accept|deny|invite|kick|mute|warp>

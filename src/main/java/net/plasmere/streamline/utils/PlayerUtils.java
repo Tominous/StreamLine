@@ -54,6 +54,10 @@ public class PlayerUtils {
     }
 
     public static Player getStat(ProxiedPlayer player) {
+        if (player instanceof Player) {
+            return getStat(player.getName());
+        }
+
         try {
             for (Player stat : stats) {
                 if (stat.latestName.equals(player.getName())) {
@@ -68,6 +72,10 @@ public class PlayerUtils {
     }
 
     public static Player getStat(CommandSender player) {
+        if (player instanceof Player) {
+            return getStat(player.getName());
+        }
+
         try {
             for (Player stat : stats) {
                 if (stat.latestName.equals(player.getName())) {
@@ -85,6 +93,20 @@ public class PlayerUtils {
         try {
             for (Player stat : stats) {
                 if (stat.latestName.equals(name)) {
+                    return stat;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Player getStat(UUID uuid) {
+        try {
+            for (Player stat : stats) {
+                if (stat.uuid.equals(uuid)) {
                     return stat;
                 }
             }

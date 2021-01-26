@@ -86,7 +86,7 @@ public class Player implements ProxiedPlayer {
 
         if (createNew || file.exists()) {
 
-            StreamLine.getInstance().getLogger().info("Player file: " + file.getName() + " (In the \"players\" folder.)");
+            //StreamLine.getInstance().getLogger().info("Player file: " + file.getName() + " (In the \"players\" folder.)");
 
             try {
                 getFromConfigFile();
@@ -322,7 +322,7 @@ public class Player implements ProxiedPlayer {
     public int getNeededXp(){
         int needed = 0;
 
-        needed = 50000 + (5000 * lvl);
+        needed = 25000 + (2500 * lvl);
 
         return needed;
     }

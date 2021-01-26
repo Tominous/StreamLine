@@ -1,6 +1,7 @@
 package net.plasmere.streamline.utils;
 
-import com.google.common.cache.Cache;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.gson.*;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
@@ -10,15 +11,17 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 public class UUIDFetcher {
-    public static Cache<String, UUID> cachedUUIDs;
-    public static Cache<UUID, String> cachedNames;
+    public static Cache<String, UUID> cachedUUIDs = Caffeine.newBuilder().build();
+    public static Cache<UUID, String> cachedNames = Caffeine.newBuilder().build();
 
     public static UUID getCachedUUID(String username) {
         try {
-            return cachedUUIDs.get(username, () -> fetch(username));
+            String finalUsername = username.replace("\"", "");
+            return cachedUUIDs.get(username, (u) -> fetch(finalUsername));
         } catch (Exception e) {
             e.printStackTrace();
             return UUID.randomUUID();
@@ -27,7 +30,7 @@ public class UUIDFetcher {
 
     public static String getCachedName(UUID uuid) {
         try {
-            return cachedNames.get(uuid, () -> getName(uuid.toString()));
+            return Objects.requireNonNull(cachedNames.get(uuid, (u) -> getName(uuid.toString()))).replace("\"", "");
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
@@ -65,7 +68,7 @@ public class UUIDFetcher {
 
             UUID u = UUID.fromString(uuid);
 
-            cachedUUIDs.put(username, u);
+            //cachedUUIDs.put(username, u);
 
             return u;
             //return UUID.fromString(id);
@@ -96,7 +99,7 @@ public class UUIDFetcher {
 
             String name = njo.get("name").toString();
 
-            cachedNames.put(UUID.fromString(uuid), name);
+            //cachedNames.put(UUID.fromString(uuid), name);
 
             return name;
         } catch (Exception e){
@@ -155,7 +158,7 @@ public class UUIDFetcher {
         try {
             if (PlayerUtils.exists(name)) {
                 if (PlayerUtils.hasStat(name)) {
-                    return getPlayer(name);
+                    return PlayerUtils.getStat(name);
                 } else {
                     return new Player(name);
                 }

@@ -218,9 +218,8 @@ public class JoinLeaveListener implements Listener {
 
                 Guild guild = GuildUtils.getGuild(stat);
 
-                if (guild == null) continue;
-
-                if (guild.hasMember(p) && ! p.equals(stat)) break;
+                if (guild == null || p.equals(stat)) continue;
+                if (guild.hasMember(p)) break;
 
 
                 GuildUtils.removeGuild(Objects.requireNonNull(GuildUtils.getGuild(stat)));

@@ -30,53 +30,14 @@ public class ReloadCommand extends Command {
     public void execute(CommandSender sender, String[] strings) {
         if (sender.hasPermission(perm)) {
             try {
-                Config.reloadConfig();
-                Config.reloadMessages();
+                StreamLine.config.reloadConfig();
+                StreamLine.config.reloadMessages();
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix + MessageConfUtils.reload);
             } catch (Exception e) {
-                plugin.getLogger().warning("Something went wrong with reloading configs... -->\n" + e.getMessage());
+                e.printStackTrace();
             }
-
-            try {
-                Plugin plug = plugin.getProxy().getPluginManager().getPlugin("StreamLine");
-                plugin.getProxy().getPluginManager().unregisterCommands(plug);
-                plugin.getProxy().getPluginManager().unregisterListeners(plug);
-            } catch (Exception e){
-                plugin.getLogger().warning("Something went wrong with unregistering the plugin... -->\n" + e.getMessage());
-            }
-
-            PluginUtils.loadCommands(plugin);
-            PluginUtils.loadListeners(plugin);
-
-//            if (StreamLine.getJda() == null || jda.getStatus() == JDA.Status.DISCONNECTED || jda.getStatus() == JDA.Status.FAILED_TO_LOGIN || jda.getStatus() == JDA.Status.SHUTDOWN){
-//                init();
-//            }
-
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix + MessageConfUtils.reload);
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix + "&cBeware! Your commands may not have reloaded...");
         } else {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix + MessageConfUtils.noPerm);
-        }
-    }
-
-    private void init(){
-        if (jda != null) try { jda.shutdownNow(); jda = null; } catch (Exception e) { e.printStackTrace();}
-
-        try {
-            JDABuilder jdaBuilder = JDABuilder.createDefault(ConfigUtils.botToken)
-                    .setActivity(Activity.listening(ConfigUtils.botStatusMessage));
-            jdaBuilder.addEventListeners(
-                    new MessageListener(plugin),
-                    new ReadyListener(plugin));
-            jda = jdaBuilder.build().awaitReady();
-        } catch (Exception e) {
-            plugin.getLogger().warning("An unknown error occurred building JDA...");
-            return;
-        }
-
-        if (jda.getStatus() == JDA.Status.CONNECTED) {
-            StreamLine.setReady(true);
-
-            plugin.getLogger().info("JDA status is connected...");
         }
     }
 }
