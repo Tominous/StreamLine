@@ -7,14 +7,19 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import net.plasmere.streamline.config.ConfigUtils;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TextUtils {
+    public static String resize(String text, int digits) {
+        return text.substring(0, digits);
+    }
+
+    public static String truncate(String text, int digits) {
+        return text.substring(0, text.indexOf(".") + digits);
+    }
+
     public static TextComponent codedText(String text) {
         text = ChatColor.translateAlternateColorCodes('&', newLined(text));
 

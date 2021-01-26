@@ -39,7 +39,6 @@ public class UUIDFetcher {
 
     static public UUID fetch(String username) {
         username = username.toLowerCase(Locale.ROOT);
-        System.out.println("fetch name --> " + username);
         try {
             String JSONString = "";
 
@@ -49,11 +48,8 @@ public class UUIDFetcher {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String line;
             while ((line = br.readLine()) != null) {
-                StreamLine.getInstance().getLogger().info("DEBUG:\nline --> " + line);
                 JSONString = line;
             }
-
-            StreamLine.getInstance().getLogger().info("DEBUG:\nusername --> " + username + "\nJSONString --> " + JSONString);
 
             JsonElement obj = new JsonParser().parse(JSONString);
 
@@ -61,16 +57,9 @@ public class UUIDFetcher {
 
             String id = jo.get("id").getAsString();
 
-            // String uuid = id.substring(0, 7) + "-" + id.substring(8, 11) + "-"
-            //        + id.substring(12, 15) + "-" + id.substring(16, 19) + "-"
-            //        + id.substring(20);
             String uuid = formatToUUID(id);
 
-            UUID u = UUID.fromString(uuid);
-
-            //cachedUUIDs.put(username, u);
-
-            return u;
+            return UUID.fromString(uuid);
             //return UUID.fromString(id);
         } catch (Exception e){
             e.printStackTrace();
@@ -97,11 +86,7 @@ public class UUIDFetcher {
             Object job = new JsonParser().parse(last);
             JsonObject njo = (JsonObject) job;
 
-            String name = njo.get("name").toString();
-
-            //cachedNames.put(UUID.fromString(uuid), name);
-
-            return name;
+            return njo.get("name").toString();
         } catch (Exception e){
             e.printStackTrace();
         }

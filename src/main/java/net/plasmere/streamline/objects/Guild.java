@@ -215,7 +215,7 @@ public class Guild {
     }
 
     public void loadMods(){
-        if (modsByUUID != null) {
+        if (modsByUUID != null && moderators != null) {
             moderators.clear();
             for (UUID uuid : modsByUUID) {
                 try {
@@ -230,7 +230,7 @@ public class Guild {
     }
 
     public void loadMems(){
-        if (membersByUUID != null) {
+        if (membersByUUID != null && members != null) {
             members.clear();
             for (UUID uuid : membersByUUID) {
                 try {
@@ -245,7 +245,7 @@ public class Guild {
     }
 
     public void loadTMems(){
-        if (totalMembersByUUID != null) {
+        if (totalMembersByUUID != null && totalMembers != null) {
             totalMembers.clear();
             for (UUID uuid : totalMembersByUUID) {
                 try {
@@ -260,7 +260,7 @@ public class Guild {
     }
 
     public void loadInvs(){
-        if (invitesByUUID != null) {
+        if (invitesByUUID != null && invites != null) {
             invites.clear();
             for (UUID uuid : invitesByUUID) {
                 try {

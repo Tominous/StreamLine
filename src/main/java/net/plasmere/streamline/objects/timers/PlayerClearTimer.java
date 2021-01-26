@@ -43,6 +43,6 @@ public class PlayerClearTimer implements Runnable {
             e.printStackTrace();
         }
 
-        StreamLine.getInstance().getLogger().info("Just removed " + count + " cached players... Now at " + PlayerUtils.getStats().size() + " cached players!");
+        //StreamLine.getInstance().getLogger().info("Just removed " + count + " cached players... Now at " + PlayerUtils.getStats().size() + " cached players!");
     }
 }
