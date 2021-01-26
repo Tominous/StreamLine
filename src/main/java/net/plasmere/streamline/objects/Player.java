@@ -27,6 +27,7 @@ public class Player implements ProxiedPlayer {
     public UUID uuid;
     public int xp;
     public int lvl;
+    public int playSeconds;
     public String ips;
     public String names;
     public String latestIP;
@@ -229,6 +230,7 @@ public class Player implements ProxiedPlayer {
         defaults.add("latestname=" + latestName);
         defaults.add("xp=0");
         defaults.add("lvl=1");
+        defaults.add("playtime=0");
         defaults.add("displayname=" + displayName);
         //defaults.add("");
         return defaults;
@@ -244,8 +246,17 @@ public class Player implements ProxiedPlayer {
         this.nameList = loadNames();
         this.xp = Integer.parseInt(getFromKey("xp"));
         this.lvl = Integer.parseInt(getFromKey("lvl"));
+        this.playSeconds = Integer.parseInt(getFromKey("playtime"));
         this.displayName = getFromKey("displayname");
         this.online = offlineOnCheck();
+    }
+
+    public void addPlaySecond(int amount){
+        updateKey("playtime", playSeconds + amount);
+    }
+
+    public void setPlaySeconds(int amount){
+        updateKey("playtime", amount);
     }
 
     public List<String> loadIPs(){

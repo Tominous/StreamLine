@@ -34,7 +34,9 @@ public class GuildXPTimer implements Runnable {
                 if (GuildUtils.getGuild(player) == null) continue;
 
                 Guild guild = GuildUtils.getGuild(player);
-                assert guild != null;
+
+                if (guild == null) continue;
+
                 guild.addXp(ConfigUtils.xpPerGiveG);
 
                 guild.saveInfo();
