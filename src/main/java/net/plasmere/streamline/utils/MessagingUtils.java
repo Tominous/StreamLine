@@ -281,6 +281,7 @@ public class MessagingUtils {
                 .replace("%level%", Integer.toString(player.lvl))
                 .replace("%xpneeded%", Integer.toString(player.getNeededXp()))
                 .replace("%xplevel%", Integer.toString(player.xpUntilNextLevel()))
+                .replace("%playtime%", Double.toString(player.getPlayHours()))
         ));
     }
 

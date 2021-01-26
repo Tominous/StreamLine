@@ -259,6 +259,18 @@ public class Player implements ProxiedPlayer {
         updateKey("playtime", amount);
     }
 
+    public double getPlayDays(){
+        return playSeconds / (60.0d * 60.0d * 24.0d);
+    }
+
+    public double getPlayHours(){
+        return playSeconds / (60.0d * 60.0d);
+    }
+
+    public double getPlayMinutes(){
+        return playSeconds / (60.0d);
+    }
+
     public List<String> loadIPs(){
         List<String> thing = new ArrayList<>();
 

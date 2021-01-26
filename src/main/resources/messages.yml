@@ -648,8 +648,9 @@ guilds:
 # %player% = the player you are looking at stats of's name.
 # %xpneeded% = the player you are looking at stats of's xp needed FOR level up.
 # %xplevel% = the player you are looking at stats of's xp needed UNTIL level up.
+# %playtime% = the player you are looking at stats of's playtime in hours.
 stats:
   no-stats: "&cCouldn't find the stats..."
   no-permission: "&cSorry, but you do not have permission for that."
   create: "&aJust created a stats profile for you! You can view it by doing &b/stats"
-  info: "&9----- &d%player% &4Network Info &9-----%newline%&eEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel%&9/&6%xpneeded%"
+  info: "&9----- &d%player% &4Network Info &9-----%newline%&eEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel%&9/&6%xpneeded%%newline%&ePlaytime&8: &6%playtime%"
