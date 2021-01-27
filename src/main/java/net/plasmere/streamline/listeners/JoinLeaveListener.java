@@ -23,6 +23,7 @@ import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class JoinLeaveListener implements Listener {
     private final Configuration config = Config.getConf();
@@ -68,14 +69,10 @@ public class JoinLeaveListener implements Listener {
                     }
                 }
 
-                if (GuildUtils.getGuild(p) == null && ! p.equals(stat)) continue;
-                if (GuildUtils.getGuild(p) != null) {
-                    if (Objects.requireNonNull(GuildUtils.getGuild(p)).hasMember(stat)) break;
-                }
-                if (GuildUtils.pHasGuild(stat)) {
-                    GuildUtils.addGuild(new Guild(stat.uuid, false));
-                }
-                break;
+                if (stat.guild == null) continue;
+                if (p.guild.equals(stat.guild)) continue;
+
+                GuildUtils.addGuild(new Guild(UUID.fromString(stat.guild), false));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -217,13 +214,15 @@ public class JoinLeaveListener implements Listener {
                     }
                 }
 
-                Guild guild = GuildUtils.getGuild(stat);
+                if (GuildUtils.pHasGuild(stat)) {
+                    Guild guild = GuildUtils.getGuild(stat);
 
-                if (guild == null || p.equals(stat)) continue;
-                if (guild.hasMember(p)) break;
+                    if (guild == null || p.equals(stat)) continue;
+                    if (guild.hasMember(p)) break;
+                    if (stat.guild.equals(p.guild)) break;
 
-
-                GuildUtils.removeGuild(Objects.requireNonNull(GuildUtils.getGuild(stat)));
+                    GuildUtils.removeGuild(guild);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

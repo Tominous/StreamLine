@@ -713,6 +713,8 @@ public class Guild {
         updateKey("totalmembers", addToTMembers(player));
         updateKey("members", addToMembers(player));
 
+        player.updateKey("guild", leaderUUID.toString());
+
         try {
             saveInfo();
         } catch (IOException e) {
@@ -915,6 +917,14 @@ public class Guild {
         file.delete();
 
         file = newFile;
+
+        try {
+            for (Player p : totalMembers) {
+                p.updateKey("guild", leaderUUID.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             saveInfo();

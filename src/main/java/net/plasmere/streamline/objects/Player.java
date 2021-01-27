@@ -36,6 +36,7 @@ public class Player implements ProxiedPlayer {
     public List<String> nameList;
     public boolean online;
     public String displayName;
+    public String guild;
 
     public Player(ProxiedPlayer player) {
         String ipSt = player.getSocketAddress().toString().replace("/", "");
@@ -232,6 +233,7 @@ public class Player implements ProxiedPlayer {
         defaults.add("lvl=1");
         defaults.add("playtime=0");
         defaults.add("displayname=" + displayName);
+        defaults.add("guild=");
         //defaults.add("");
         return defaults;
     }
@@ -248,6 +250,7 @@ public class Player implements ProxiedPlayer {
         this.lvl = Integer.parseInt(getFromKey("lvl"));
         this.playSeconds = Integer.parseInt(getFromKey("playtime"));
         this.displayName = getFromKey("displayname");
+        this.guild = getFromKey("guild");
         this.online = offlineOnCheck();
     }
 
