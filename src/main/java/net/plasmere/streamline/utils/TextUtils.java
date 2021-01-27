@@ -13,11 +13,29 @@ import java.util.regex.Pattern;
 
 public class TextUtils {
     public static String resize(String text, int digits) {
-        return text.substring(0, digits);
+        try {
+            digits = getDigits(digits, text.length());
+            return text.substring(0, digits);
+        } catch (Exception e) {
+            return text;
+        }
     }
 
     public static String truncate(String text, int digits) {
-        return text.substring(0, text.indexOf(".") + digits + 1);
+        try {
+            digits = getDigits(text.indexOf(".") + digits + 1, text.length());
+            return text.substring(0, digits);
+        } catch (Exception e) {
+            return text;
+        }
+    }
+
+    public static int getDigits(int start, int otherSize){
+        if (start <= otherSize) {
+            return start;
+        } else {
+            return otherSize;
+        }
     }
 
     public static TextComponent codedText(String text) {
