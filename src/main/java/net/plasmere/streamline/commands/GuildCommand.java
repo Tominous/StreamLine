@@ -8,6 +8,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Guild;
+import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.*;
 
 import java.util.ArrayList;
@@ -234,7 +235,14 @@ public class GuildCommand extends Command implements TabExecutor {
                 }
             } else {
                 try {
-                    GuildUtils.sendInvite(PlayerUtils.getStat(args[0]), Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                    Player p = UUIDFetcher.getPlayer(args[0]);
+
+                    if (p == null) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        return;
+                    }
+
+                    GuildUtils.sendInvite(p, Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();

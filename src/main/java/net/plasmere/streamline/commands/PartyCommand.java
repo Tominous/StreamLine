@@ -4,6 +4,7 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.*;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -226,7 +227,14 @@ public class PartyCommand extends Command implements TabExecutor {
                 }
             } else {
                 try {
-                    PartyUtils.sendInvite(UUIDFetcher.getPlayer(args[0]), Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                    Player p = UUIDFetcher.getPlayer(args[0]);
+
+                    if (p == null) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        return;
+                    }
+
+                    PartyUtils.sendInvite(p, Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();

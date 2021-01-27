@@ -81,6 +81,8 @@ public class PlayerUtils {
             } else {
                 builder.append(p.toString()).append("]");
             }
+
+            i++;
         }
 
         return builder.toString();

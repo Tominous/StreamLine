@@ -40,6 +40,11 @@ public class Guild {
     public Guild(UUID creatorUUID, String name) {
         this.leaderUUID = creatorUUID;
         this.name = name;
+        try {
+            Objects.requireNonNull(UUIDFetcher.getPlayer(creatorUUID)).updateKey("guild", creatorUUID.toString());
+        } catch (Exception e){
+            // do nothing
+        }
         construct(leaderUUID, true);
     }
 
@@ -626,6 +631,8 @@ public class Guild {
                 builder.append(uuid);
             }
         }
+
+        updateKey("invites", builder.toString());
 
         return builder.toString();
     }

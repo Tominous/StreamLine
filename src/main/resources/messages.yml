@@ -453,7 +453,7 @@ guild:
   # Not high enough guild permissions.
   no-permission: "&cYou do not have high enough guild permissions to do this!"
   # When creating a guild...
-  create: "&eYou have just created &4\"%name%\"&e!"
+  create: "&eYou have just created the guild &4%name%&e!"
   # Not in a guild...
   not-in-a-guild: "&cSorry, but you are not in a guild..."
   other-not-in-guild: "&cSorry, but they are not in the guild..."
@@ -556,7 +556,7 @@ guild:
     # Fillers:
     # %user% = the accepter.
     # %leader% = the guild leader.
-    user: "Accepted the request to &b%leader%&e's guild."
+    user: "&eAccepted the request to &b%leader%&e's guild."
     leader: "&b%user% &ejust &aaccepted &eyour invite!"
     members: "&b%user% &ejust &aaccepted &ethe invite!"
     failure: "&cNo invites!"
@@ -565,7 +565,7 @@ guild:
     # Fillers:
     # %user% = the accepter.
     # %leader% = the guild leader.
-    user: "Denied the request to &b%leader%&e's guild."
+    user: "&eDenied the request to &b%leader%&e's guild."
     leader: "&b%user% &ejust &cdenied &eyour invite!"
     members: "&b%user% &ejust &cdenied &ethe invite!"
     failure: "&cNo invites!"
