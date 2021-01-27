@@ -474,8 +474,6 @@ public class Guild {
     }
 
     private String getMembersAsStringed(){
-        System.out.println("GMAS : " + membersByUUID);
-
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
@@ -508,7 +506,6 @@ public class Guild {
     }
 
     public boolean hasMember(UUID uuid){
-        System.out.println(totalMembersByUUID);
         return totalMembersByUUID.contains(uuid);
     }
 

@@ -245,7 +245,7 @@ party:
     # %user% = the person being promoted.
     # %leader% = the party leader.
     # %level% = the permission level the person is going to.
-    members: "&b%leader% &ejust promoted &b%user% &eto &c%level%&e in the party!"
+    members: "&b%sender% &ejust promoted &b%user% &eto &c%level%&e in the party!"
     user: "&eYou were just promoted to &c%level% &ein the party!"
     leader: "&eYou just promoted &b%user% to &c%level%&e!"
     failure: "&cAlready at highest level."
@@ -255,7 +255,7 @@ party:
     # %user% = the person being demoted.
     # %leader% = the party leader.
     # %level% = the permission level the person is going to.
-    members: "&b%leader% &ejust demoted &b%user% &eto &c%level%&e in the party."
+    members: "&b%sender% &ejust demoted &b%user% &eto &c%level%&e in the party."
     user: "&eYou were just demoted to &c%level% &ein the party."
     leader: "&eYou just demoted &b%user% to &c%level%&e."
     failure: "&cAlready at lowest level."
@@ -298,7 +298,7 @@ party:
     # Fillers:
     # %leader% = the party leader.
     # %size% = the new size of the party.
-    members: "&b%leader% &ejust opened the party to a size of &e%max%&e."
+    members: "&b%sender% &ejust opened the party to a size of &e%max%&e."
     leader: "&eYou just opened the party to a size of &3%max%&e."
     failure: "&cAlready open."
   # Message for closing the party...
@@ -306,21 +306,21 @@ party:
     # Fillers:
     # %leader% = the party leader.
     # %size% = the size of the party.
-    members: "&b%leader% &ejust closed the party."
-    leader: "&eYou just closed the party."
+    members: "&b%sender% &ejust closed the party."
+    sender: "&eYou just closed the party."
     failure: "&cAlready closed."
   # Message for disbanding the party...
   disband:
     # Fillers:
     # %leader% = the party leader.
-    members: "&b%leader% &ejust disbanded the party."
+    members: "&b%sender% &ejust disbanded the party."
     leader: "&eYou just disbanded the party."
   # Message for accepting an invite to a party...
   accept:
     # Fillers:
     # %user% = the accepter.
     # %leader% = the party leader.
-    user: "Accepted &b%leader%&e's request."
+    user: "Accepted the request to &b%leader%&e's party."
     leader: "&b%user% &ejust &aaccepted &eyour invite!"
     members: "&b%user% &ejust &aaccepted &ethe invite!"
     failure: "&cNo invites!"
@@ -329,7 +329,7 @@ party:
     # Fillers:
     # %user% = the accepter.
     # %leader% = the party leader.
-    user: "Denied &b%leader%&e's request."
+    user: "Denied the request to &b%leader%&e's party."
     leader: "&b%user% &ejust &cdenied &eyour invite!"
     members: "&b%user% &ejust &cdenied &ethe invite!"
     failure: "&cNo invites!"
@@ -348,10 +348,11 @@ party:
   kick:
     # Fillers:
     # %user% = the person being kicked.
-    user: "&b%leader% &ekicked you from their party."
+    user: "&b%sender% &ekicked you from their party."
     members: "&b%user% &ewas kicked by &b%leader% &e from the party."
     sender: "&eYou kicked &b%user% &efrom your party."
     failure: "&cThis player is not in the party."
+    mod: "&cCannot kick a party mod."
     self: "&cCannot kick self."
   mute:
     # Fillers:
@@ -363,8 +364,8 @@ party:
       user: "&eYou just &aunmuted &ethe party."
       members: "&b%sender% &ejust &aunmuted &ethe party."
   warp:
-    leader: "&eYou warped your party of &3%size% &eto your server!"
-    members: "&b%leader% &ewarped you to their server!"
+    sender: "&eYou warped your party of &3%size% &eto your server!"
+    members: "&b%sender% &ewarped you to their server!"
 
 # Messages for the stream command:
 stream:
@@ -533,29 +534,29 @@ guild:
     # Fillers:
     # %leader% = the guild leader.
     # %size% = the new size of the guild.
-    members: "&b%leader% &ejust opened the guild to a size of &e%max%&e."
-    leader: "&eYou just opened the guild to a size of &3%max%&e."
+    members: "&b%sender% &ejust opened the guild to a size of &e%max%&e."
+    sender: "&eYou just opened the guild."
     failure: "&cAlready open."
   # Message for closing the guild...
   close:
     # Fillers:
     # %leader% = the guild leader.
     # %size% = the size of the guild.
-    members: "&b%leader% &ejust closed the guild."
-    leader: "&eYou just closed the guild."
+    members: "&b%sender% &ejust closed the guild."
+    sender: "&eYou just closed the guild."
     failure: "&cAlready closed."
   # Message for disbanding the guild...
   disband:
     # Fillers:
     # %leader% = the guild leader.
-    members: "&b%leader% &ejust disbanded the guild."
+    members: "&b%sender% &ejust disbanded the guild."
     leader: "&eYou just disbanded the guild."
   # Message for accepting an invite to a guild...
   accept:
     # Fillers:
     # %user% = the accepter.
     # %leader% = the guild leader.
-    user: "Accepted &b%leader%&e's request."
+    user: "Accepted the request to &b%leader%&e's guild."
     leader: "&b%user% &ejust &aaccepted &eyour invite!"
     members: "&b%user% &ejust &aaccepted &ethe invite!"
     failure: "&cNo invites!"
@@ -564,7 +565,7 @@ guild:
     # Fillers:
     # %user% = the accepter.
     # %leader% = the guild leader.
-    user: "Denied &b%leader%&e's request."
+    user: "Denied the request to &b%leader%&e's guild."
     leader: "&b%user% &ejust &cdenied &eyour invite!"
     members: "&b%user% &ejust &cdenied &ethe invite!"
     failure: "&cNo invites!"
@@ -583,10 +584,11 @@ guild:
   kick:
     # Fillers:
     # %user% = the person being kicked.
-    user: "&b%leader% &ekicked you from their guild."
-    members: "&b%user% &ewas kicked by &b%leader% &e from the guild."
+    user: "&b%sender% &ekicked you from their guild."
+    members: "&b%user% &ewas kicked by &b%sender% &e from the guild."
     sender: "&eYou kicked &b%user% &efrom your guild."
     failure: "&cThis player is not in the guild."
+    mod: "&cCannot kick a guild mod."
     self: "&cCannot kick self."
   mute:
     # Fillers:
@@ -598,8 +600,8 @@ guild:
       user: "&eYou just &aunmuted &ethe guild."
       members: "&b%sender% &ejust &aunmuted &ethe guild."
   warp:
-    leader: "&eYou warped your guild of &3%size% &eto your server!"
-    members: "&b%leader% &ewarped you to their server!"
+    sender: "&eYou warped your guild of &3%size% &eto your server!"
+    members: "&b%sender% &ewarped you to their server!"
   info: "&9----- &2Guild Info For &4%name% &9-----%newline%&eGEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eGEXP Needed For Level Up&8: &6%xplevel%&9/&6%xpneeded%"
 
 # Messages for the parties command:

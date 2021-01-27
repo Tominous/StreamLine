@@ -158,7 +158,7 @@ public class PartyUtils {
                 return;
             }
 
-            if (!party.hasModPerms(from)) {
+            if (! party.hasModPerms(from)) {
                 MessagingUtils.sendBUserMessage(p, noPermission);
                 return;
             }
@@ -332,7 +332,7 @@ public class PartyUtils {
             return;
         }
 
-        if (! party.leader.equals(sender)) {
+        if (! party.hasModPerms(sender)) {
             MessagingUtils.sendBPUserMessage(party, p, p, noPermission);
             return;
         }
@@ -345,7 +345,7 @@ public class PartyUtils {
             if (m == null) continue;
 
             if (player.equals(sender)) {
-                MessagingUtils.sendBPUserMessage(party, p, m, warpLeader);
+                MessagingUtils.sendBPUserMessage(party, p, m, warpSender);
             } else {
                 MessagingUtils.sendBPUserMessage(party, p, m, warpMembers);
             }
@@ -422,48 +422,54 @@ public class PartyUtils {
             return;
         }
 
-        if (! party.hasMember(sender)) {
+        if (!party.hasMember(sender)) {
             MessagingUtils.sendBUserMessage(p, notInParty);
             return;
         }
 
-        if (! party.hasMember(player)) {
+        if (!party.hasMember(player)) {
             MessagingUtils.sendBUserMessage(p, otherNotInParty);
             return;
         }
 
-        if (! party.hasModPerms(sender)) {
+        if (!party.hasModPerms(sender)) {
+            MessagingUtils.sendBPUserMessage(party, p, p, noPermission);
+            return;
+        }
+
+        if (party.hasModPerms(player)) {
+            MessagingUtils.sendBPUserMessage(party, p, p, kickMod);
+            return;
+        }
+
+        if (sender.equals(player)) {
+            MessagingUtils.sendBPUserMessage(party, p, p, kickSelf);
+        } else if (player.equals(party.leader)) {
             MessagingUtils.sendBPUserMessage(party, p, p, noPermission);
         } else {
-            if (sender.equals(player)) {
-                MessagingUtils.sendBPUserMessage(party, p, p, kickSelf);
-            } else if (player.equals(party.leader)) {
-                MessagingUtils.sendBPUserMessage(party, p, p, noPermission);
-            } else {
-                for (Player pl : party.totalMembers){
-                    if (! pl.online) continue;
+            for (Player pl : party.totalMembers) {
+                if (!pl.online) continue;
 
-                    ProxiedPlayer m = UUIDFetcher.getPPlayer(player.uuid);
+                ProxiedPlayer m = UUIDFetcher.getPPlayer(player.uuid);
 
-                    if (m == null) continue;
+                if (m == null) continue;
 
-                    if (pl.equals(sender)) {
-                        MessagingUtils.sendBPUserMessage(party, p, m, kickSender
-                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
-                        );
-                    } else if (pl.equals(player)) {
-                        MessagingUtils.sendBPUserMessage(party, p, m, kickUser
-                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
-                        );
-                    } else {
-                        MessagingUtils.sendBPUserMessage(party, p, m, kickMembers
-                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
-                        );
-                    }
+                if (pl.equals(sender)) {
+                    MessagingUtils.sendBPUserMessage(party, p, m, kickSender
+                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                    );
+                } else if (pl.equals(player)) {
+                    MessagingUtils.sendBPUserMessage(party, p, m, kickUser
+                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                    );
+                } else {
+                    MessagingUtils.sendBPUserMessage(party, p, m, kickMembers
+                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                    );
                 }
-
-                party.removeMemberFromParty(player);
             }
+
+            party.removeMemberFromParty(player);
         }
     }
 
@@ -667,8 +673,8 @@ public class PartyUtils {
 
                     if (member == null) continue;
 
-                    if (member.equals(party.leader)) {
-                        MessagingUtils.sendBPUserMessage(party, p, member, closeLeader
+                    if (member.equals(pl)) {
+                        MessagingUtils.sendBPUserMessage(party, p, member, closeSender
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
                                 .replace("%size%", Integer.toString(party.getSize()))
                         );
@@ -1278,7 +1284,7 @@ public class PartyUtils {
     public static final String openFailure = message.getString("party.open.failure");
     // Close.
     public static final String closeMembers = message.getString("party.close.members");
-    public static final String closeLeader = message.getString("party.close.leader");
+    public static final String closeSender = message.getString("party.close.sender");
     public static final String closeFailure = message.getString("party.close.failure");
     // Disband.
     public static final String disbandMembers = message.getString("party.disband.members");
@@ -1304,6 +1310,7 @@ public class PartyUtils {
     public static final String kickSender = message.getString("party.kick.sender");
     public static final String kickMembers = message.getString("party.kick.members");
     public static final String kickFailure = message.getString("party.kick.failure");
+    public static final String kickMod = message.getString("party.kick.mod");
     public static final String kickSelf = message.getString("party.kick.self");
     // Mute.
     public static final String muteUser = message.getString("party.mute.mute.user");
@@ -1311,6 +1318,6 @@ public class PartyUtils {
     public static final String unmuteUser = message.getString("party.mute.unmute.user");
     public static final String unmuteMembers = message.getString("party.mute.unmute.members");
     // Warp.
-    public static final String warpLeader = message.getString("party.warp.leader");
+    public static final String warpSender = message.getString("party.warp.sender");
     public static final String warpMembers = message.getString("party.warp.members");
 }

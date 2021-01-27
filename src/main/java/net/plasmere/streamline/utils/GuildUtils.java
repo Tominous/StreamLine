@@ -354,20 +354,8 @@ public class GuildUtils {
             return;
         }
 
-        try {
-            Player person = UUIDFetcher.getPlayer(guild.leaderUUID);
-            if (person == null) {
-                MessagingUtils.sendBGUserMessage(guild, p, p, MessageConfUtils.bungeeCommandError);
-                return;
-            }
-
-            if (! person.equals(sender)) {
-                MessagingUtils.sendBGUserMessage(guild, p, p, noPermission);
-                return;
-            }
-        } catch (Exception e) {
-            MessagingUtils.sendBGUserMessage(guild, p, p, MessageConfUtils.bungeeCommandError);
-            e.printStackTrace();
+        if (! guild.hasModPerms(sender)) {
+            MessagingUtils.sendBUserMessage(p, noPermission);
             return;
         }
 
@@ -379,7 +367,7 @@ public class GuildUtils {
             if (m == null) continue;
 
             if (player.equals(sender)) {
-                MessagingUtils.sendBGUserMessage(guild, p, m, warpLeader);
+                MessagingUtils.sendBGUserMessage(guild, p, m, warpSender);
             } else {
                 MessagingUtils.sendBGUserMessage(guild, p, m, warpMembers);
             }
@@ -444,7 +432,7 @@ public class GuildUtils {
         guild.toggleMute();
     }
 
-    public static void kickMember(Player sender, Player player){
+    public static void kickMember(Player sender, Player player) {
         ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
 
         if (p == null) return;
@@ -456,53 +444,59 @@ public class GuildUtils {
             return;
         }
 
-        if (! guild.hasMember(sender)) {
+        if (!guild.hasMember(sender)) {
             MessagingUtils.sendBUserMessage(p, notInGuild);
             return;
         }
 
-        if (! guild.hasMember(player)) {
+        if (!guild.hasMember(player)) {
             MessagingUtils.sendBUserMessage(p, otherNotInGuild);
             return;
         }
 
-        if (! guild.hasModPerms(sender)) {
+        if (!guild.hasModPerms(sender)) {
             MessagingUtils.sendBGUserMessage(guild, p, p, noPermission);
-        } else {
-            try {
-                if (sender.equals(player)) {
-                    MessagingUtils.sendBGUserMessage(guild, p, p, kickSelf);
-                } else if (player.equals(UUIDFetcher.getPlayer(guild.leaderUUID))) {
-                    MessagingUtils.sendBGUserMessage(guild, p, p, noPermission);
-                } else {
-                    for (Player pl : guild.totalMembers) {
-                        if (! pl.online) continue;
+            return;
+        }
 
-                        ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
+        if (guild.hasModPerms(player)) {
+            MessagingUtils.sendBGUserMessage(guild, p, p, kickMod);
+            return;
+        }
 
-                        if (m == null) continue;
+        try {
+            if (sender.equals(player)) {
+                MessagingUtils.sendBGUserMessage(guild, p, p, kickSelf);
+            } else if (player.equals(UUIDFetcher.getPlayer(guild.leaderUUID))) {
+                MessagingUtils.sendBGUserMessage(guild, p, p, noPermission);
+            } else {
+                for (Player pl : guild.totalMembers) {
+                    if (!pl.online) continue;
 
-                        if (pl.equals(sender)) {
-                            MessagingUtils.sendBGUserMessage(guild, p, m, kickSender
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
-                            );
-                        } else if (pl.equals(player)) {
-                            MessagingUtils.sendBGUserMessage(guild, p, m, kickUser
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
-                            );
-                        } else {
-                            MessagingUtils.sendBGUserMessage(guild, p, m, kickMembers
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
-                            );
-                        }
+                    ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
+
+                    if (m == null) continue;
+
+                    if (pl.equals(sender)) {
+                        MessagingUtils.sendBGUserMessage(guild, p, m, kickSender
+                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                        );
+                    } else if (pl.equals(player)) {
+                        MessagingUtils.sendBGUserMessage(guild, p, m, kickUser
+                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                        );
+                    } else {
+                        MessagingUtils.sendBGUserMessage(guild, p, m, kickMembers
+                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                        );
                     }
-
-                    guild.removeMemberFromGuild(player);
                 }
-            } catch (Exception e){
-                MessagingUtils.sendBGUserMessage(guild, sender, sender, MessageConfUtils.bungeeCommandError);
-                e.printStackTrace();
+
+                guild.removeMemberFromGuild(player);
             }
+        } catch (Exception e) {
+            MessagingUtils.sendBGUserMessage(guild, sender, sender, MessageConfUtils.bungeeCommandError);
+            e.printStackTrace();
         }
     }
 
@@ -544,7 +538,7 @@ public class GuildUtils {
                 return;
             }
 
-            if (!guild.hasModPerms(sender)) {
+            if (! guild.leaderUUID.equals(sender.uuid)) {
                 MessagingUtils.sendBUserMessage(p, noPermission);
                 return;
             }
@@ -556,7 +550,7 @@ public class GuildUtils {
 
                 if (member == null) continue;
 
-                if (!member.equals(UUIDFetcher.getPlayer(guild.leaderUUID))) {
+                if (! member.equals(UUIDFetcher.getPlayer(guild.leaderUUID))) {
                     MessagingUtils.sendBGUserMessage(guild, p, member, disbandMembers
                             .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(guild.leaderUUID))))
                     );
@@ -668,8 +662,8 @@ public class GuildUtils {
 
                     if (member == null) continue;
                     
-                    if (member.equals(UUIDFetcher.getPlayer(guild.leaderUUID))) {
-                        MessagingUtils.sendBGUserMessage(guild, p, member, closeLeader
+                    if (member.equals(pl)) {
+                        MessagingUtils.sendBGUserMessage(guild, p, member, closeSender
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(guild.leaderUUID))))
                                 .replace("%size%", Integer.toString(guild.getSize()))
                         );
@@ -1256,7 +1250,7 @@ public class GuildUtils {
     public static final String openFailure = message.getString("guild.open.failure");
     // Close.
     public static final String closeMembers = message.getString("guild.close.members");
-    public static final String closeLeader = message.getString("guild.close.leader");
+    public static final String closeSender = message.getString("guild.close.sender");
     public static final String closeFailure = message.getString("guild.close.failure");
     // Disband.
     public static final String disbandMembers = message.getString("guild.disband.members");
@@ -1282,6 +1276,7 @@ public class GuildUtils {
     public static final String kickSender = message.getString("guild.kick.sender");
     public static final String kickMembers = message.getString("guild.kick.members");
     public static final String kickFailure = message.getString("guild.kick.failure");
+    public static final String kickMod = message.getString("guild.kick.mod");
     public static final String kickSelf = message.getString("guild.kick.self");
     // Mute.
     public static final String muteUser = message.getString("guild.mute.mute.user");
@@ -1289,7 +1284,7 @@ public class GuildUtils {
     public static final String unmuteUser = message.getString("guild.mute.unmute.user");
     public static final String unmuteMembers = message.getString("guild.mute.unmute.members");
     // Warp.
-    public static final String warpLeader = message.getString("guild.warp.leader");
+    public static final String warpSender = message.getString("guild.warp.sender");
     public static final String warpMembers = message.getString("guild.warp.members");
     // Info.
     public static final String info = message.getString("guild.info");
