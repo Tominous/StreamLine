@@ -70,6 +70,7 @@ public class JoinLeaveListener implements Listener {
                 }
 
                 if (stat.guild == null) continue;
+                if (stat.guild.equals("")) continue;
                 if (p.guild.equals(stat.guild) && ! p.equals(stat)) continue;
 
                 GuildUtils.addGuild(new Guild(UUID.fromString(stat.guild), false));
