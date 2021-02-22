@@ -67,13 +67,17 @@ public class GuildUtils {
     }
 
     public static boolean pHasGuild(Player player){
-        Guild guild = new Guild(player.uuid, false);
+        try {
+            Guild guild = new Guild(player.uuid, false);
 
-        if (guild.leaderUUID == null) {
+            if (guild.leaderUUID == null) {
+                return false;
+            }
+
+            return true;
+        } catch (Exception e) {
             return false;
         }
-
-        return true;
     }
 
     public static boolean checkPlayer(Guild guild, Player player, Player sender){
@@ -1188,22 +1192,22 @@ public class GuildUtils {
                         .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(sender))
                         .replace("%message%", msg)
                 );
+            }
 
-                if (ConfigUtils.guildToDiscord) {
-                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, discordTitle, msg, ConfigUtils.textChannelGuilds));
-                }
+            if (ConfigUtils.guildToDiscord) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, discordTitle, msg, ConfigUtils.textChannelGuilds));
+            }
 
-                for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
-                    if (! pp.hasPermission(ConfigUtils.partyView)) continue;
+            for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
+                if (! pp.hasPermission(ConfigUtils.guildView)) continue;
 
-                    Player them = PlayerUtils.getStat(pp);
+                Player them = PlayerUtils.getStat(pp);
 
-                    if (them == null) continue;
+                if (them == null) continue;
 
-                    if (! them.pspy) continue;
+                if (! them.gspy) continue;
 
-                    MessagingUtils.sendBGUserMessage(guild, p, pp, spy.replace("%message%", msg));
-                }
+                MessagingUtils.sendBGUserMessage(guild, p, pp, spy.replace("%message%", msg));
             }
         } catch (Exception e) {
             e.printStackTrace();

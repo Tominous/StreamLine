@@ -6,7 +6,10 @@ public class Event {
     public enum Condition {
         JOIN,
         LEAVE,
-        MESSAGE,
+        MESSAGE_EXACT,
+        MESSAGE_CONTAINS,
+        MESSAGE_STARTS_WITH,
+        MESSAGE_ENDS_WITH,
         COMMAND
     }
 
@@ -25,8 +28,14 @@ public class Event {
                 return "JOIN";
             case LEAVE:
                 return "LEAVE";
-            case MESSAGE:
-                return "MESSAGE";
+            case MESSAGE_EXACT:
+                return "MESSAGE_EXACT";
+            case MESSAGE_CONTAINS:
+                return "MESSAGE_CONTAINS";
+            case MESSAGE_STARTS_WITH:
+                return "MESSAGE_STARTS_WITH";
+            case MESSAGE_ENDS_WITH:
+                return "MESSAGE_ENDS_WITH";
             case COMMAND:
                 return "COMMAND";
             default:
@@ -40,8 +49,14 @@ public class Event {
                 return Condition.JOIN;
             case "LEAVE":
                 return Condition.LEAVE;
-            case "MESSAGE":
-                return Condition.MESSAGE;
+            case "MESSAGE_EXACT":
+                return Condition.MESSAGE_EXACT;
+            case "MESSAGE_CONTAINS":
+                return Condition.MESSAGE_CONTAINS;
+            case "MESSAGE_STARTS_WITH":
+                return Condition.MESSAGE_STARTS_WITH;
+            case "MESSAGE_ENDS_WITH":
+                return Condition.MESSAGE_ENDS_WITH;
             case "COMMAND":
                 return Condition.COMMAND;
             default:

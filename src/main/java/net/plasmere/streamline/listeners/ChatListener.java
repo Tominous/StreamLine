@@ -112,16 +112,44 @@ public class ChatListener implements Listener {
 
         if (! msg.startsWith("/")) {
             for (Event event : EventsHandler.getEvents()) {
-                if (! (event.condition.equals(Event.Condition.MESSAGE) && (event.conVal.equals(msg) || event.conVal.equals("") || event.conVal.toLowerCase(Locale.ROOT).equals("null")))) continue;
+                if (! EventsHandler.checkTags(event, stat)) continue;
 
-                EventsHandler.runEvent(event, stat);
+                if (! (event.condition.equals(Event.Condition.MESSAGE_EXACT) && (event.conVal.equals(msg) || event.conVal.equals("") || event.conVal.toLowerCase(Locale.ROOT).equals("null")))) continue;
+
+                EventsHandler.runEvent(event, stat, msg);
             }
         } else {
             for (Event event : EventsHandler.getEvents()) {
-                if (! (event.condition.equals(Event.Condition.MESSAGE) && (event.conVal.equals(msg.substring(1)) || event.conVal.equals("") || event.conVal.toLowerCase(Locale.ROOT).equals("null")))) continue;
+                if (! EventsHandler.checkTags(event, stat)) continue;
 
-                EventsHandler.runEvent(event, stat);
+                if (! (event.condition.equals(Event.Condition.MESSAGE_EXACT) && (event.conVal.equals(msg.substring(1)) || event.conVal.equals("") || event.conVal.toLowerCase(Locale.ROOT).equals("null")))) continue;
+
+                EventsHandler.runEvent(event, stat, msg);
             }
+        }
+
+        for (Event event : EventsHandler.getEvents()) {
+            if (! EventsHandler.checkTags(event, stat)) continue;
+
+            if (! (event.condition.equals(Event.Condition.MESSAGE_CONTAINS) && (msg.contains(event.conVal)))) continue;
+
+            EventsHandler.runEvent(event, stat, msg);
+        }
+
+        for (Event event : EventsHandler.getEvents()) {
+            if (! EventsHandler.checkTags(event, stat)) continue;
+
+            if (! (event.condition.equals(Event.Condition.MESSAGE_STARTS_WITH) && (msg.startsWith(event.conVal)))) continue;
+
+            EventsHandler.runEvent(event, stat, msg);
+        }
+
+        for (Event event : EventsHandler.getEvents()) {
+            if (! EventsHandler.checkTags(event, stat)) continue;
+
+            if (! (event.condition.equals(Event.Condition.MESSAGE_ENDS_WITH) && (msg.endsWith(event.conVal)))) continue;
+
+            EventsHandler.runEvent(event, stat, msg);
         }
     }
 }

@@ -195,8 +195,15 @@ public class Guild {
     }
 
     public void loadVars(){
+        if (getFromKey("leader") == null) return;
+        if (getFromKey("leader").equals("")) return;
+
         this.name = getFromKey("name");
-        this.leaderUUID = UUID.fromString(getFromKey("leader"));
+        try {
+            this.leaderUUID = UUID.fromString(getFromKey("leader"));
+        } catch (Exception e) {
+            return;
+        }
         this.modsByUUID = loadModerators();
         this.membersByUUID = loadMembers();
         this.totalMembersByUUID = loadTotalMembers();

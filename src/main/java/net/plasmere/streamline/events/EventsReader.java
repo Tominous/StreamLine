@@ -73,7 +73,7 @@ public class EventsReader {
 
             //StreamLine.getInstance().getLogger().info("EVR : action -> " + (action != null ? Event.actionToString(action): "null"));
 
-            return new Event(tagList, condition, lines[3].split(":")[1], action, lines[6].split(":")[1]);
+            return new Event(tagList, condition, lines[3].split(":", 2)[1], action, lines[6].split(":", 2)[1]);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

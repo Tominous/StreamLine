@@ -1,13 +1,10 @@
 package net.plasmere.streamline.listeners;
 
-import me.lucko.luckperms.common.api.LuckPermsApiProvider;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.node.Node;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
-import net.md_5.bungee.api.connection.Connection;
 import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.event.ServerDisconnectEvent;
 import net.plasmere.streamline.StreamLine;
@@ -31,10 +28,8 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
-import org.slf4j.event.LoggingEvent;
 import us.myles.ViaVersion.api.Via;
 import us.myles.ViaVersion.api.ViaAPI;
-import us.myles.ViaVersion.api.protocol.ProtocolVersion;
 
 import java.util.*;
 
@@ -136,6 +131,8 @@ public class JoinLeaveListener implements Listener {
         }
 
         for (Event event : EventsHandler.getEvents()) {
+            if (! EventsHandler.checkTags(event, stat)) continue;
+
             if (! (event.condition.equals(Event.Condition.JOIN) && event.conVal.toLowerCase(Locale.ROOT).equals("network"))) continue;
 
             EventsHandler.runEvent(event, stat);
@@ -225,6 +222,8 @@ public class JoinLeaveListener implements Listener {
         ev.setTarget(server);
 
         for (Event event : EventsHandler.getEvents()) {
+            if (! EventsHandler.checkTags(event, stat)) continue;
+
             if (! (event.condition.equals(Event.Condition.JOIN) && event.conVal.toLowerCase(Locale.ROOT).equals(server.getName()))) continue;
 
             EventsHandler.runEvent(event, stat);
@@ -253,6 +252,8 @@ public class JoinLeaveListener implements Listener {
         }
 
         for (Event event : EventsHandler.getEvents()) {
+            if (! EventsHandler.checkTags(event, stat)) continue;
+
             if (! event.condition.equals(Event.Condition.LEAVE) && ! event.conVal.toLowerCase(Locale.ROOT).equals(server.getName())) continue;
 
             EventsHandler.runEvent(event, stat);
@@ -347,6 +348,8 @@ public class JoinLeaveListener implements Listener {
         }
 
         for (Event event : EventsHandler.getEvents()) {
+            if (! EventsHandler.checkTags(event, stat)) continue;
+
             if (! (event.condition.equals(Event.Condition.LEAVE) && event.conVal.toLowerCase(Locale.ROOT).equals("network"))) continue;
 
             EventsHandler.runEvent(event, stat);

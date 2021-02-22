@@ -279,7 +279,8 @@ public class Player implements ProxiedPlayer {
         StringBuilder stringBuilder = new StringBuilder();
 
         int i = 1;
-        for (String tag : tags) {
+        for (String tag : ConfigUtils.tagsDefaults) {
+            if (tag == null) continue;
             if (tag.equals("")) continue;
             if (i != tag.length()) {
                 stringBuilder.append(tag).append(",");
