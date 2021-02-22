@@ -138,4 +138,6 @@ public class MessageConfUtils {
     public static final String pspyToggle = message.getString("pspy.toggle.message");
     public static final String pspyOn = message.getString("pspy.toggle.on");
     public static final String pspyOff = message.getString("pspy.toggle.off");
+    // EVReload
+    public static final String evReload = message.getString("evreload.message");
 }

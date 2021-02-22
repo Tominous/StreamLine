@@ -6,6 +6,7 @@ import net.plasmere.streamline.commands.servers.GoToServerLobbyCommand;
 import net.plasmere.streamline.commands.servers.GoToServerVanillaCommand;
 import net.plasmere.streamline.commands.staff.*;
 import net.plasmere.streamline.commands.staff.events.BTagCommand;
+import net.plasmere.streamline.commands.staff.events.EventReloadCommand;
 import net.plasmere.streamline.commands.staff.spy.GSPYCommand;
 import net.plasmere.streamline.commands.staff.spy.PSPYCommand;
 import net.plasmere.streamline.commands.staff.spy.SSPYCommand;
@@ -79,6 +80,7 @@ public class PluginUtils {
         Command pspy = new PSPYCommand(ConfigUtils.comBPSPYPerm, getAliases(ConfigUtils.comBPSPYAliases));
 
         Command btag = new BTagCommand(ConfigUtils.comBBTagPerm, getAliases(ConfigUtils.comBBTagAliases));
+        Command reev = new EventReloadCommand(ConfigUtils.comBEReloadPerm, getAliases(ConfigUtils.comBEReloadAliases));
 
         commands.add(stream);
         commands.add(staffChat);
@@ -108,6 +110,7 @@ public class PluginUtils {
         commands.add(pspy);
 
         commands.add(btag);
+        commands.add(reev);
 
         try {
             for (Command command : commands) {
@@ -175,6 +178,8 @@ public class PluginUtils {
             registerCommand(plugin, pspy);
         if (ConfigUtils.comBBTag)
             registerCommand(plugin, btag);
+        if (ConfigUtils.comBEReload)
+            registerCommand(plugin, reev);
 
         plugin.getLogger().info("Loaded " + commands.size() + " commands into memory...!");
     }

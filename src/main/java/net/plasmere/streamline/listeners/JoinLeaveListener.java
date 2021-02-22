@@ -212,7 +212,7 @@ public class JoinLeaveListener implements Listener {
 
                 boolean bool = StreamLine.serverPermissions.isAllowed(version, server.getName());
 
-                StreamLine.getInstance().getLogger().info("Joining " + server.getName() + " tested as: " + bool);
+                //StreamLine.getInstance().getLogger().info("Joining " + server.getName() + " tested as: " + bool);
 
                 if (! StreamLine.serverPermissions.isAllowed(version, server.getName())) {
                     MessagingUtils.sendBUserMessage(ev.getPlayer(), MessageConfUtils.vbBlocked);

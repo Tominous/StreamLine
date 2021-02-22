@@ -5,6 +5,7 @@ import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.discordbot.MessageListener;
 import net.plasmere.streamline.discordbot.ReadyListener;
+import net.plasmere.streamline.events.Event;
 import net.plasmere.streamline.events.EventsHandler;
 import net.plasmere.streamline.events.EventsReader;
 import net.plasmere.streamline.objects.Guild;
@@ -139,8 +140,14 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 			List<Path> files = Files.walk(eventsDir.toPath()).filter(p -> p.toString().endsWith(".event")).collect(Collectors.toList());
 
 			for (Path file : files) {
-				EventsHandler.addEvent(EventsReader.fromFile(file.toFile()));
+				Event event = EventsReader.fromFile(file.toFile());
+
+				if (event == null) continue;
+
+				EventsHandler.addEvent(event);
 			}
+
+			getLogger().info("Loaded " + EventsHandler.getEvents().size() + " events into memory!");
 		} catch (Exception e){
 			e.printStackTrace();
 		}

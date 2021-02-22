@@ -273,12 +273,12 @@ public class ServerPermissions {
         for (String v : servers.get(server)){
             String ver = getVersionString(version);
             if (ver.equals("")) {
-                StreamLine.getInstance().getLogger().severe("A player's version couldn't be determined so we let them join...");
+                //StreamLine.getInstance().getLogger().severe("A player's version couldn't be determined so we let them join...");
                 return true;
             }
 
             if (v.equals(ver)) {
-                StreamLine.getInstance().getLogger().info("Letting a player join " + server + " with version: " + ver);
+                //StreamLine.getInstance().getLogger().info("Letting a player join " + server + " with version: " + ver);
                 return true;
             }
         }

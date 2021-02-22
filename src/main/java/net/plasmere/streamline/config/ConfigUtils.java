@@ -212,6 +212,10 @@ public class ConfigUtils {
     public static final boolean comBBTag = config.getBoolean("commands.bungee.staff.btag.enabled");
     public static final List<String> comBBTagAliases = config.getStringList("commands.bungee.staff.btag.aliases");
     public static final String comBBTagPerm = config.getString("commands.bungee.staff.btag.permission");
+    // Event Reload
+    public static final boolean comBEReload = config.getBoolean("commands.bungee.staff.evreload.enabled");
+    public static final List<String> comBEReloadAliases = config.getStringList("commands.bungee.staff.evreload.aliases");
+    public static final String comBEReloadPerm = config.getString("commands.bungee.staff.evreload.permission");
     // ... ... Modules.
     // ... Discord.
     // Basics.

@@ -478,6 +478,16 @@ commands:
         # All aliases for the command. Listed in yml list format.
         aliases:
           - "bungeetag"
+      evreload:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.ereload"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "reloadevents"
+          - "reloade"
+          - "reev"
 
 ### MODULE SETTINGS ###
 modules:
@@ -634,12 +644,10 @@ modules:
     # Network tags.
     tags:
       defaults:
-        - "tag"
-        - "list"
-        - "here"
+        - newbie
     # Network events.
     events:
       enabled: true
       folder: "events"
       # Puts the default event into the folder above when the folder is empty.
-      add-default-when-empty: true
+      add-default-when-empty: false

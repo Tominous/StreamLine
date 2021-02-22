@@ -409,8 +409,8 @@ parties:
   # %ismuted% = true if muted, false if not.
   parties: "&5PARTY &9>> &eleader&8(&b%leader%&8)&e, size&8(&3%size%&8)&e, partyMax&8(&3%max%&8)&e, permMax&8(&3%maxmax%&8)&e, mods&8(&3%mods_count% &4--> %mods%&8)&e, members&8(&3%members_count% &4--> %members%&8)&e, all&8(&3%total_count% &4--> %totalmembers%&8)&e, invites&8(&3%invites_count% &4--> %invites%&8)&e, public&8(%ispublic%&8)&e, muted&8(%ismuted%&8)&e."
   mods:
-   not-last: "&d%user%&e, "
-   last: "&d%user%"
+    not-last: "&d%user%&e, "
+    last: "&d%user%"
   members:
     not-last: "&d%user%&e, "
     last: "&d%user%"
@@ -668,7 +668,7 @@ stats:
   no-stats: "&cCouldn't find the stats..."
   no-permission: "&cSorry, but you do not have permission for that."
   create: "&aJust created a stats profile for you! You can view it by doing &b/stats"
-  info: "&9----- &d%player% &4Network Info &9-----%newline%&eEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel% &9(&6%xpneeded%&9)%newline%&ePlaytime&8: &6%playtime% &3hours"
+  info: "&9----- &d%player% &4Network Info &9-----%newline%&eEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel% &9(&6%xpneeded%&9)%newline%&ePlaytime&8: &6%playtime% &ehours"
 
 # SSPY command.
 sspy:
@@ -701,4 +701,9 @@ btag:
     main: "&d%player%&e's tags: %tags%"
     tags:
       last: "&6%tag%"
-      not-last: "&6tag&e,"
+      not-last: "&6%tag%&e,"
+
+evreload:
+  # Fillers:
+  # %count% = amount of events that are now loaded.
+  message: "&aReloaded all events (&6%count%&a)!"
