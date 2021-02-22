@@ -1,11 +1,21 @@
 package net.plasmere.streamline.listeners;
 
+import me.lucko.luckperms.common.api.LuckPermsApiProvider;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.group.Group;
+import net.luckperms.api.node.Node;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
+import net.md_5.bungee.api.connection.Connection;
 import net.md_5.bungee.api.event.ServerConnectEvent;
+import net.md_5.bungee.api.event.ServerDisconnectEvent;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.events.Event;
+import net.plasmere.streamline.events.EventsHandler;
 import net.plasmere.streamline.objects.messaging.BungeeMassMessage;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
@@ -21,13 +31,18 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
+import org.slf4j.event.LoggingEvent;
+import us.myles.ViaVersion.api.Via;
+import us.myles.ViaVersion.api.ViaAPI;
+import us.myles.ViaVersion.api.protocol.ProtocolVersion;
 
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class JoinLeaveListener implements Listener {
     private final Configuration config = Config.getConf();
     private final StreamLine plugin;
+    private final LuckPerms api = LuckPermsProvider.get();
+    private final ViaAPI viaAPI = Via.getAPI();
 
     public JoinLeaveListener(StreamLine streamLine){
         this.plugin = streamLine;
@@ -73,7 +88,11 @@ public class JoinLeaveListener implements Listener {
                 if (stat.guild.equals("")) continue;
                 if (p.guild.equals(stat.guild) && ! p.equals(stat)) continue;
 
-                GuildUtils.addGuild(new Guild(UUID.fromString(stat.guild), false));
+                try {
+                    GuildUtils.addGuild(new Guild(UUID.fromString(stat.guild), false));
+                } catch (Exception e) {
+                    // Do nothing.
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -115,6 +134,12 @@ public class JoinLeaveListener implements Listener {
             default:
                 break;
         }
+
+        for (Event event : EventsHandler.getEvents()) {
+            if (! (event.condition.equals(Event.Condition.JOIN) && event.conVal.toLowerCase(Locale.ROOT).equals("network"))) continue;
+
+            EventsHandler.runEvent(event, stat);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -122,24 +147,116 @@ public class JoinLeaveListener implements Listener {
         ProxiedPlayer player = ev.getPlayer();
 
         boolean hasServer = false;
-        ServerInfo server = null;
+        ServerInfo server = ev.getTarget();
 
-        for (ServerInfo s : StreamLine.getInstance().getProxy().getServers().values()) {
-            String sv = s.getName();
-            if (player.hasPermission(ConfigUtils.redirectPre + sv)) {
-                hasServer = true;
-                server = s;
-                break;
+        Player stat = PlayerUtils.getStat(player);
+
+        if (stat == null) {
+            if (PlayerUtils.exists(player.getName())) {
+                PlayerUtils.addStat(new Player(player, false));
+            } else {
+                PlayerUtils.createStat(player);
+            }
+            stat = PlayerUtils.getStat(player);
+            if (stat == null) {
+                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
+                return;
             }
         }
 
-        if (!hasServer) {
-            server = StreamLine.getInstance().getProxy().getServerInfo(ConfigUtils.redirectMain);
+        if (ev.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY)) {
+            for (ServerInfo s : StreamLine.getInstance().getProxy().getServers().values()) {
+                String sv = s.getName();
+                if (player.hasPermission(ConfigUtils.redirectPre + sv)) {
+                    Group group = api.getGroupManager().getGroup(Objects.requireNonNull(api.getUserManager().getUser(player.getName())).getPrimaryGroup());
+
+                    if (group == null) {
+                        hasServer = true;
+                        server = s;
+                        break;
+                    }
+
+                    Collection<Node> nodes = group.getNodes();
+
+                    for (Node node : nodes) {
+                        if (node.getKey().equals(ConfigUtils.redirectPre + sv)) {
+                            hasServer = true;
+                            server = s;
+                            break;
+                        }
+                    }
+
+                    Collection<Node> nods = Objects.requireNonNull(api.getUserManager().getUser(player.getName())).getNodes();
+
+                    for (Node node : nods) {
+                        if (node.getKey().equals(ConfigUtils.redirectPre + sv)) {
+                            hasServer = true;
+                            server = s;
+                            break;
+                        }
+                    }
+
+                    hasServer = false;
+                    break;
+                }
+            }
+
+            if (!hasServer) {
+                server = StreamLine.getInstance().getProxy().getServerInfo(ConfigUtils.redirectMain);
+            }
         }
+
         if (! ev.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY)){
-            return;
+            if (! player.hasPermission(ConfigUtils.vbOverridePerm)) {
+                int version = viaAPI.getPlayerVersion(player.getUniqueId());
+
+                boolean bool = StreamLine.serverPermissions.isAllowed(version, server.getName());
+
+                StreamLine.getInstance().getLogger().info("Joining " + server.getName() + " tested as: " + bool);
+
+                if (! StreamLine.serverPermissions.isAllowed(version, server.getName())) {
+                    MessagingUtils.sendBUserMessage(ev.getPlayer(), MessageConfUtils.vbBlocked);
+                    ev.setCancelled(true);
+                    return;
+                }
+            }
         }
+
         ev.setTarget(server);
+
+        for (Event event : EventsHandler.getEvents()) {
+            if (! (event.condition.equals(Event.Condition.JOIN) && event.conVal.toLowerCase(Locale.ROOT).equals(server.getName()))) continue;
+
+            EventsHandler.runEvent(event, stat);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onServerDiscon(ServerDisconnectEvent ev) {
+        ProxiedPlayer player = ev.getPlayer();
+
+        ServerInfo server = ev.getTarget();
+
+        Player stat = PlayerUtils.getStat(player);
+
+        if (stat == null) {
+            if (PlayerUtils.exists(player.getName())) {
+                PlayerUtils.addStat(new Player(player, false));
+            } else {
+                PlayerUtils.createStat(player);
+            }
+            stat = PlayerUtils.getStat(player);
+            if (stat == null) {
+                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
+                return;
+            }
+        }
+
+        for (Event event : EventsHandler.getEvents()) {
+            if (! event.condition.equals(Event.Condition.LEAVE) && ! event.conVal.toLowerCase(Locale.ROOT).equals(server.getName())) continue;
+
+            EventsHandler.runEvent(event, stat);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -227,6 +344,12 @@ public class JoinLeaveListener implements Listener {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        for (Event event : EventsHandler.getEvents()) {
+            if (! (event.condition.equals(Event.Condition.LEAVE) && event.conVal.toLowerCase(Locale.ROOT).equals("network"))) continue;
+
+            EventsHandler.runEvent(event, stat);
         }
 
         try {

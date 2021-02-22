@@ -1,13 +1,14 @@
 package net.plasmere.streamline;
 
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.scheduler.ScheduledTask;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.discordbot.MessageListener;
 import net.plasmere.streamline.discordbot.ReadyListener;
+import net.plasmere.streamline.events.EventsHandler;
+import net.plasmere.streamline.events.EventsReader;
 import net.plasmere.streamline.objects.Guild;
-import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.objects.configs.ServerPermissions;
 import net.plasmere.streamline.objects.timers.GuildXPTimer;
 import net.plasmere.streamline.objects.timers.PlayerClearTimer;
 import net.plasmere.streamline.objects.timers.PlayerXPTimer;
@@ -25,14 +26,21 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 public class StreamLine extends Plugin /*implements Runnable*/ {
 
 	private static StreamLine instance = null;
 
 	public static Config config;
+	public static ServerPermissions serverPermissions;
 
 	private static JDA jda = null;
 	private static boolean isReady = false;
@@ -41,6 +49,8 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 
 	private final File plDir = new File(getDataFolder() + File.separator + "players" + File.separator);
 	private final File gDir = new File(getDataFolder() + File.separator + "guilds" + File.separator);
+	private final File confDir = new File(getDataFolder() + File.separator + "configs" + File.separator);
+	private File eventsDir;
 
 	private ScheduledTask guilds;
 	private ScheduledTask players;
@@ -54,10 +64,10 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 	public final File getPlDir() {
 		return plDir;
 	}
-
 	public final File getGDir() {
 		return gDir;
 	}
+	public final File getEDir() { return eventsDir; }
 
     private void init(){
 		if (jda != null) try { jda.shutdownNow(); jda = null; } catch (Exception e) { e.printStackTrace();}
@@ -102,6 +112,40 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 		}
 	}
 
+	public void loadEvents(){
+		if (! ConfigUtils.tagsEvents) return;
+
+		eventsDir = new File(getDataFolder() + File.separator + ConfigUtils.tagsEventsFolder + File.separator);
+
+		if (! eventsDir.exists()) {
+			try {
+				eventsDir.mkdir();
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		if (ConfigUtils.tagsEventsWhenEmpty) {
+			try	(InputStream in = getResourceAsStream("default.event")) {
+				Files.copy(in, Path.of(eventsDir.toPath() + File.separator + "default.event"));
+			} catch (FileAlreadyExistsException e){
+				getLogger().info("Default event file already here, skipping...");
+			} catch (IOException e){
+				e.printStackTrace();
+			}
+		}
+
+		try {
+			List<Path> files = Files.walk(eventsDir.toPath()).filter(p -> p.toString().endsWith(".event")).collect(Collectors.toList());
+
+			for (Path file : files) {
+				EventsHandler.addEvent(EventsReader.fromFile(file.toFile()));
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
 	public void loadTimers(){
 		try {
 			guilds = getProxy().getScheduler().schedule(this, new GuildXPTimer(ConfigUtils.timePerGiveG), 1, 1, TimeUnit.SECONDS);
@@ -114,17 +158,30 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 		}
 	}
 
+	public void loadServersAllowedVersions(){
+		if (! confDir.exists()) {
+			try {
+				confDir.mkdir();
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+		serverPermissions = new ServerPermissions(true);
+	}
+
     public void onLoad(){
     	InstanceHolder.setInst(instance);
 	}
 
 	@Override
 	public void onEnable(){
+		instance = this;
+
 		// Teller.
 		getLogger().info("Loading version [v" + getProxy().getPluginManager().getPlugin("StreamLine").getDescription().getVersion() + "]...");
 
 		// Config.
-		config = new Config(this);
+		config = new Config();
 
 		// Commands.
 		PluginUtils.loadCommands(this);
@@ -148,10 +205,21 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 
 		// Timers.
 		loadTimers();
+
+		// Events.
+		loadEvents();
+
+		// Servers Allowed Versions.
+		loadServersAllowedVersions();
 	}
 
 	@Override
 	public void onDisable() {
+		guilds.cancel();
+		players.cancel();
+		playtime.cancel();
+		cachedPlayers.cancel();
+
 		try {
 			if (jda != null) {
 				if (ConfigUtils.moduleShutdowns)
@@ -185,9 +253,6 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 		}
 
 		saveGuilds();
-
-		guilds.cancel();
-		players.cancel();
 	}
 
 	public void saveGuilds(){

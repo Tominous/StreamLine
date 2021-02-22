@@ -15,7 +15,6 @@ public class Config {
     private static Configuration oConf;
     private static Configuration mess;
     private static Configuration oMess;
-    private final StreamLine plugin;
     private String configVer = "";
     private String messagesVer = "";
 
@@ -23,16 +22,15 @@ public class Config {
     private static final File cfile = new File(inst.getDataFolder(), "config.yml");
     private static final File mfile = new File(inst.getDataFolder(), "messages.yml");
 
-    public Config(StreamLine plugin){
-        if (! plugin.getDataFolder().exists()) {
-            if (plugin.getDataFolder().mkdir()) {
-                plugin.getLogger().info("Made folder: " + plugin.getDataFolder().getName());
+    public Config(){
+        if (! inst.getDataFolder().exists()) {
+            if (inst.getDataFolder().mkdir()) {
+                inst.getLogger().info("Made folder: " + inst.getDataFolder().getName());
             }
         }
-        this.plugin = plugin;
 
-        this.configVer = plugin.getDescription().getVersion();
-        this.messagesVer = plugin.getDescription().getVersion();
+        this.configVer = inst.getDescription().getVersion();
+        this.messagesVer = inst.getDescription().getVersion();
 
         conf = loadConf();
         mess = loadMess();

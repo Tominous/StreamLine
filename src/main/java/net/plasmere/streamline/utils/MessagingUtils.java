@@ -1,5 +1,6 @@
 package net.plasmere.streamline.utils;
 
+import net.md_5.bungee.api.config.ServerInfo;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
@@ -40,6 +41,7 @@ public class MessagingUtils {
                             .replace("%user%", sender.getName())
                             .replace("%from%", from)
                             .replace("%message%", msg)
+                            .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
                     )
             );
         }
@@ -67,6 +69,7 @@ public class MessagingUtils {
     public static void sendBungeeMessage(BungeeMessage message){
         message.to.sendMessage(TextUtils.codedText((message.title + message.transition + message.message)
                         .replace("%sender%", message.sender.getName())
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(message.sender.getName())).latestVersion)
                 )
         );
     }
@@ -114,6 +117,7 @@ public class MessagingUtils {
                 player.sendMessage(TextUtils.codedText(MessageConfUtils.bToBReportMessage
                                 .replace("%reporter%", sender)
                                 .replace("%report%", report)
+                                .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
                         )
                 );
             else
@@ -233,6 +237,7 @@ public class MessagingUtils {
                 .replace("%invites%", invites(party))
                 .replace("%ispublic%", getIsPublic(party))
                 .replace("%ismuted%", getIsMuted(party))
+                .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
         ));
     }
 
@@ -270,6 +275,7 @@ public class MessagingUtils {
                 .replace("%name%", guild.name)
                 .replace("%xpneeded%", Integer.toString(guild.getNeededXp()))
                 .replace("%xplevel%", Integer.toString(guild.xpUntilNextLevel()))
+                .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
         ));
     }
 
@@ -282,6 +288,7 @@ public class MessagingUtils {
                 .replace("%xpneeded%", Integer.toString(player.getNeededXp()))
                 .replace("%xplevel%", Integer.toString(player.xpUntilNextLevel()))
                 .replace("%playtime%", TextUtils.truncate(Double.toString(player.getPlayHours()), 3))
+                .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
         ));
     }
 
@@ -289,11 +296,33 @@ public class MessagingUtils {
         if (sender instanceof ProxiedPlayer) {
             sender.sendMessage(TextUtils.codedText(msg
                     .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(sender))))
+                    .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
             ));
         } else {
             sender.sendMessage(TextUtils.codedText(msg
                     .replace("%sender%", sender.getName())
             ));
+        }
+    }
+
+    public static void sendBUserAsMessage(CommandSender as, String msg){
+        ServerInfo serverInfo = StreamLine.getInstance().getProxy().getPlayer(as.getName()).getServer().getInfo();
+
+        Collection<ProxiedPlayer> players = serverInfo.getPlayers();
+
+        if (as instanceof ProxiedPlayer) {
+            for (ProxiedPlayer player : players) {
+            player.sendMessage(TextUtils.codedText(msg
+                        .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(as))))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(as)).latestVersion)
+                ));
+            }
+        } else {
+            for (ProxiedPlayer player : players) {
+                player.sendMessage(TextUtils.codedText(msg
+                        .replace("%sender%", as.getName())
+                ));
+            }
         }
     }
 
@@ -341,10 +370,12 @@ public class MessagingUtils {
             if (i < party.moderators.size()){
                 msg.append(MessageConfUtils.partiesModsNLast
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.partiesModsLast
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
                 );
             }
 
@@ -362,10 +393,12 @@ public class MessagingUtils {
             if (i < party.members.size()){
                 msg.append(MessageConfUtils.partiesMemsNLast
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.partiesMemsLast
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
                 );
             }
 
@@ -383,10 +416,12 @@ public class MessagingUtils {
             if (i != party.totalMembers.size()){
                 msg.append(MessageConfUtils.partiesTMemsNLast
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.partiesTMemsLast
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
                 );
             }
 
@@ -404,10 +439,12 @@ public class MessagingUtils {
             if (i < party.invites.size()){
                 msg.append(MessageConfUtils.partiesInvsNLast
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.partiesInvsLast
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
                 );
             }
 
@@ -440,10 +477,12 @@ public class MessagingUtils {
             if (i != guild.modsByUUID.size()){
                 msg.append(MessageConfUtils.guildsModsNLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.guildsModsLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
                 );
             }
 
@@ -468,10 +507,12 @@ public class MessagingUtils {
             if (i != guild.membersByUUID.size()){
                 msg.append(MessageConfUtils.guildsMemsNLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.guildsMemsLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
                 );
             }
 
@@ -496,10 +537,12 @@ public class MessagingUtils {
             if (i != guild.totalMembersByUUID.size()){
                 msg.append(MessageConfUtils.guildsTMemsNLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.guildsTMemsLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
                 );
             }
 
@@ -524,10 +567,12 @@ public class MessagingUtils {
             if (i != guild.invites.size()){
                 msg.append(MessageConfUtils.guildsInvsNLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.guildsInvsLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
                 );
             }
 

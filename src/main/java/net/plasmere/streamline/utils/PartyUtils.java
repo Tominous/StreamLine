@@ -13,6 +13,7 @@ import net.plasmere.streamline.objects.Party;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.objects.messaging.DiscordMessage;
 
 import java.util.*;
 
@@ -227,6 +228,11 @@ public class PartyUtils {
                 return;
             }
 
+            if (! party.invites.contains(accepter)) {
+                MessagingUtils.sendBUserMessage(p, denyFailure);
+                return;
+            }
+
             if (party.invites.contains(accepter)) {
                 if (party.getSize() >= party.maxSize) {
                     MessagingUtils.sendBPUserMessage(party, p, p, notEnoughSpace);
@@ -281,6 +287,11 @@ public class PartyUtils {
 
             if (! party.hasMember(from)) {
                 MessagingUtils.sendBUserMessage(p, otherNotInParty);
+                return;
+            }
+
+            if (! party.invites.contains(denier)) {
+                MessagingUtils.sendBUserMessage(p, denyFailure);
                 return;
             }
 
@@ -444,8 +455,10 @@ public class PartyUtils {
 
         if (sender.equals(player)) {
             MessagingUtils.sendBPUserMessage(party, p, p, kickSelf);
-        } else if (player.equals(party.leader)) {
+        } else if (! party.hasModPerms(sender)) {
             MessagingUtils.sendBPUserMessage(party, p, p, noPermission);
+        } else if (party.hasModPerms(player)) {
+            MessagingUtils.sendBPUserMessage(party, p, p, kickMod);
         } else {
             for (Player pl : party.totalMembers) {
                 if (!pl.online) continue;
@@ -1217,6 +1230,22 @@ public class PartyUtils {
                         .replace("%message%", msg)
                 );
             }
+
+            if (ConfigUtils.partyToDiscord) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, discordTitle, msg, ConfigUtils.textChannelParties));
+            }
+
+            for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
+                if (! pp.hasPermission(ConfigUtils.partyView)) continue;
+
+                Player them = PlayerUtils.getStat(pp);
+
+                if (them == null) continue;
+
+                if (! them.pspy) continue;
+
+                MessagingUtils.sendBPUserMessage(party, p, pp, spy.replace("%message%", msg));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1227,6 +1256,10 @@ public class PartyUtils {
     public static final String textLeader = message.getString("party.text.leader");
     public static final String textModerator = message.getString("party.text.moderator");
     public static final String textMember = message.getString("party.text.member");
+    // Discord.
+    public static final String discordTitle = message.getString("party.discord.title");
+    // Spy.
+    public static final String spy = message.getString("party.spy");
     // No party.
     public static final String noPartyFound = message.getString("party.no-party");
     // Already made.

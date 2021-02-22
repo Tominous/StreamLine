@@ -66,7 +66,28 @@ public class StatsCommand extends Command implements TabExecutor {
                 }
             }
         } else {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
+            if (args.length <= 0) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
+            } else {
+                if (! PlayerUtils.exists(args[0])) {
+                    MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
+                    return;
+                }
+
+                Player stat = PlayerUtils.getStat(args[0]);
+
+                if (stat == null) {
+                    PlayerUtils.addStat(new Player(args[0]));
+                    stat = PlayerUtils.getStat(args[0]);
+                    if (stat == null) {
+                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        return;
+                    }
+                }
+
+                PlayerUtils.info(sender, stat);
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.hover.content.Text;
+import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 
 import java.util.List;
@@ -106,7 +107,7 @@ public class TextUtils {
     }
 
     public static String newLined(String text){
-        return text.replace("%newline%", "\n");
+        return text.replace("%newline%", "\n").replace("%uniques%", String.valueOf(StreamLine.getInstance().getPlDir().listFiles().length));
     }
 
     public static boolean isCommand(String msg){

@@ -9,8 +9,12 @@ import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.score.Scoreboard;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
+import us.myles.ViaVersion.api.Via;
+import us.myles.ViaVersion.api.ViaAPI;
+import us.myles.ViaVersion.api.protocol.ProtocolVersion;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,6 +24,8 @@ import java.net.SocketAddress;
 import java.util.*;
 
 public class Player implements ProxiedPlayer {
+    private ViaAPI viaAPI = Via.getAPI();
+
     private HashMap<String, String> info = new HashMap<>();
     private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "players" + File.separator;
 
@@ -37,6 +43,12 @@ public class Player implements ProxiedPlayer {
     public boolean online;
     public String displayName;
     public String guild;
+    public boolean sspy;
+    public boolean gspy;
+    public boolean pspy;
+    public boolean sc;
+    public String latestVersion;
+    public List<String> tags;
 
     public Player(ProxiedPlayer player) {
         String ipSt = player.getSocketAddress().toString().replace("/", "");
@@ -51,6 +63,8 @@ public class Player implements ProxiedPlayer {
         this.names = player.getName();
         this.online = true;
         this.displayName = player.getDisplayName();
+
+        this.latestVersion = ProtocolVersion.getProtocol(viaAPI.getPlayerVersion(this.uuid)).getName();
         construct(player.getUniqueId(), true);
     }
 
@@ -67,6 +81,9 @@ public class Player implements ProxiedPlayer {
         this.names = player.getName();
         this.online = true;
         this.displayName = player.getDisplayName();
+        this.tags = ConfigUtils.tagsDefaults;
+
+        this.latestVersion = ProtocolVersion.getProtocol(viaAPI.getPlayerVersion(this.uuid)).getName();
         construct(player.getUniqueId(), create);
     }
 
@@ -144,6 +161,20 @@ public class Player implements ProxiedPlayer {
 
     public void addKeyValuePair(String key, String value){
         info.put(key, value);
+    }
+
+    public String stringifyList(List<String> list, String splitter){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 1; i <= list.size(); i++) {
+            if (i < list.size()) {
+                stringBuilder.append(list.get(i - 1)).append(splitter);
+            } else {
+                stringBuilder.append(list.get(i - 1));
+            }
+        }
+
+        return stringBuilder.toString();
     }
 
     public void getFromConfigFile() throws IOException {
@@ -234,8 +265,30 @@ public class Player implements ProxiedPlayer {
         defaults.add("playtime=0");
         defaults.add("displayname=" + displayName);
         defaults.add("guild=");
+        defaults.add("sspy=true");
+        defaults.add("gspy=true");
+        defaults.add("pspy=true");
+        defaults.add("sc=true");
+        defaults.add("latestversion=" + latestVersion);
+        defaults.add("tags=" + defaultTags());
         //defaults.add("");
         return defaults;
+    }
+
+    public String defaultTags(){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int i = 1;
+        for (String tag : tags) {
+            if (i < tag.length()) {
+                stringBuilder.append(tag).append(",");
+            } else {
+                stringBuilder.append(tag);
+            }
+            i++;
+        }
+
+        return stringBuilder.toString();
     }
 
     public void loadVars(){
@@ -252,6 +305,12 @@ public class Player implements ProxiedPlayer {
         this.displayName = getFromKey("displayname");
         this.guild = getFromKey("guild");
         this.online = offlineOnCheck();
+        this.sspy = Boolean.parseBoolean(getFromKey("sspy"));
+        this.gspy = Boolean.parseBoolean(getFromKey("gspy"));
+        this.pspy = Boolean.parseBoolean(getFromKey("pspy"));
+        this.sc = Boolean.parseBoolean(getFromKey("sc"));
+        this.latestVersion = getFromKey("latestversion");
+        this.tags = loadTags();
     }
 
     public void addPlaySecond(int amount){
@@ -274,6 +333,32 @@ public class Player implements ProxiedPlayer {
         return playSeconds / (60.0d);
     }
 
+    public List<String> loadTags(){
+        List<String> thing = new ArrayList<>();
+
+        String search = "tags";
+
+        try {
+            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (! getFromKey(search).contains(",")) {
+                thing.add(getFromKey(search));
+                return thing;
+            }
+
+            for (String t : getFromKey(search).split(",")) {
+                try {
+                    thing.add(t);
+                } catch (Exception e) {
+                    //continue;
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return thing;
+    }
+
     public List<String> loadIPs(){
         List<String> thing = new ArrayList<>();
 
@@ -281,7 +366,7 @@ public class Player implements ProxiedPlayer {
 
         try {
             if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
-            if (! getFromKey(search).contains(".")) {
+            if (! getFromKey(search).contains(",")) {
                 thing.add(getFromKey(search));
                 return thing;
             }
@@ -307,7 +392,7 @@ public class Player implements ProxiedPlayer {
 
         try {
             if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
-            if (! getFromKey(search).contains(".")) {
+            if (! getFromKey(search).contains(",")) {
                 thing.add(getFromKey(search));
                 return thing;
             }
@@ -345,6 +430,17 @@ public class Player implements ProxiedPlayer {
    5 × current_level – 38 (for levels 16–30)
    9 × current_level – 158 (for levels 31+)
     */
+
+    public void remTag(String tag){
+        tags.remove(tag);
+        updateKey("tags", stringifyList(tags, ","));
+    }
+
+    public void addTag(String tag){
+        tags.add(tag);
+        updateKey("tags", stringifyList(tags, ","));
+    }
+
     public int getNeededXp(){
         int needed = 0;
 
@@ -385,6 +481,22 @@ public class Player implements ProxiedPlayer {
         this.uuid = null;
         this.finalize();
     }
+
+    public void setSSPY(boolean value) { sspy = value; }
+
+    public void toggleSSPY() { setSSPY(! sspy); }
+
+    public void setGSPY(boolean value) { gspy = value; }
+
+    public void toggleGSPY() { setGSPY(! gspy); }
+
+    public void setPSPY(boolean value) { pspy = value; }
+
+    public void togglePSPY() { setPSPY(! pspy); }
+
+    public void setSC(boolean value) { sc = value; }
+
+    public void toggleSC() { setSC(! sc); }
 
     public String toString(){
         return latestName;

@@ -4,6 +4,8 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.events.Event;
+import net.plasmere.streamline.events.EventsHandler;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Player;
@@ -18,6 +20,7 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class ChatListener implements Listener {
@@ -104,6 +107,20 @@ public class ChatListener implements Listener {
                                     .replace("%message%", msg.substring(prefix.length())),
                             ConfigUtils.textChannelStaffChat));
                 }
+            }
+        }
+
+        if (! msg.startsWith("/")) {
+            for (Event event : EventsHandler.getEvents()) {
+                if (! (event.condition.equals(Event.Condition.MESSAGE) && (event.conVal.equals(msg) || event.conVal.equals("") || event.conVal.toLowerCase(Locale.ROOT).equals("null")))) continue;
+
+                EventsHandler.runEvent(event, stat);
+            }
+        } else {
+            for (Event event : EventsHandler.getEvents()) {
+                if (! (event.condition.equals(Event.Condition.MESSAGE) && (event.conVal.equals(msg.substring(1)) || event.conVal.equals("") || event.conVal.toLowerCase(Locale.ROOT).equals("null")))) continue;
+
+                EventsHandler.runEvent(event, stat);
             }
         }
     }

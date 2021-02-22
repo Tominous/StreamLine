@@ -29,6 +29,9 @@ public class ConfigUtils {
     public static final String textChannelOfflineOnline = config.getString("discord.text-channels.offline-online");
     public static final String textChannelBJoins = config.getString("discord.text-channels.bungee-joins");
     public static final String textChannelBLeaves = config.getString("discord.text-channels.bungee-leaves");
+    public static final String textChannelBConsole = config.getString("discord.text-channels.console");
+    public static final String textChannelGuilds = config.getString("discord.text-channels.guilds");
+    public static final String textChannelParties = config.getString("discord.text-channels.parties");
     // Roles.
     public static final String roleReports = config.getString("discord.roles.reports");
     public static final String roleStaff = config.getString("discord.roles.staff");
@@ -193,9 +196,26 @@ public class ConfigUtils {
     public static final boolean comBSudo = config.getBoolean("commands.bungee.staff.bsudo.enabled");
     public static final List<String> comBSudoAliases = config.getStringList("commands.bungee.staff.bsudo.aliases");
     public static final String comBSudoPerm = config.getString("commands.bungee.staff.bsudo.permission");
+    // SSPY.
+    public static final boolean comBSSPY = config.getBoolean("commands.bungee.staff.sspy.enabled");
+    public static final List<String> comBSSPYAliases = config.getStringList("commands.bungee.staff.sspy.aliases");
+    public static final String comBSSPYPerm = config.getString("commands.bungee.staff.sspy.permission");
+    // GSPY.
+    public static final boolean comBGSPY = config.getBoolean("commands.bungee.staff.gspy.enabled");
+    public static final List<String> comBGSPYAliases = config.getStringList("commands.bungee.staff.gspy.aliases");
+    public static final String comBGSPYPerm = config.getString("commands.bungee.staff.gspy.permission");
+    // PSPY.
+    public static final boolean comBPSPY = config.getBoolean("commands.bungee.staff.pspy.enabled");
+    public static final List<String> comBPSPYAliases = config.getStringList("commands.bungee.staff.pspy.aliases");
+    public static final String comBPSPYPerm = config.getString("commands.bungee.staff.pspy.permission");
+    // BTag.
+    public static final boolean comBBTag = config.getBoolean("commands.bungee.staff.btag.enabled");
+    public static final List<String> comBBTagAliases = config.getStringList("commands.bungee.staff.btag.aliases");
+    public static final String comBBTagPerm = config.getString("commands.bungee.staff.btag.permission");
     // ... ... Modules.
     // ... Discord.
     // Basics.
+    public static final boolean moduleDMainConsole = config.getBoolean("modules.discord.main-console");
     public static final boolean moduleUseMCAvatar = config.getBoolean("modules.discord.use-mc-avatar");
     // Reports.
     public static final boolean moduleReportsDConfirmation = config.getBoolean("modules.discord.reports.send-confirmation");
@@ -223,22 +243,25 @@ public class ConfigUtils {
     public static final boolean moduleStaffChat = config.getBoolean("modules.bungee.staffchat.enabled");
     public static final boolean moduleStaffChatDoPrefix = config.getBoolean("modules.bungee.staffchat.enable-prefix");
     public static final String moduleStaffChatPrefix = config.getString("modules.bungee.staffchat.prefix");
-    public static final boolean moduleStaffChatMToDiscord = config.getBoolean("modules.bungee.staffchat.minecraft-to-staffchat");
+    public static final boolean moduleStaffChatMToDiscord = config.getBoolean("modules.bungee.staffchat.minecraft-to-discord");
     // Player logins / logouts.
     public static final String moduleBPlayerJoins = config.getString("modules.bungee.player-joins");
     public static final String moduleBPlayerLeaves = config.getString("modules.bungee.player-leaves");
     // ... Parties.
-    // Max size.
+    public static final boolean partyToDiscord = config.getBoolean("modules.bungee.parties.to-discord");
     public static final int partyMax = config.getInt("modules.bungee.parties.max-size");
     public static final String partyMaxPerm = config.getString("modules.bungee.parties.base-permission");
     public static final boolean partyConsole = config.getBoolean("modules.bungee.parties.chat-to-console");
-    // ... Sudo.
-    public static final String noSudoPerm = config.getString("modules.bungee.sudo.no-sudo-permission");
+    public static final String partyView = config.getString("modules.bungee.parties.view-permission");
     // ... Guilds.
+    public static final boolean guildToDiscord = config.getBoolean("modules.bungee.guilds.to-discord");
     public static final int guildMax = config.getInt("modules.bungee.guilds.max-size");
     public static final boolean guildConsole = config.getBoolean("modules.bungee.guilds.chat-to-console");
     public static final int xpPerGiveG = config.getInt("modules.bungee.guilds.xp.amount-per");
     public static final int timePerGiveG = config.getInt("modules.bungee.guilds.xp.time-per");
+    public static final String guildView = config.getString("modules.bungee.guilds.view-permission");
+    // ... Sudo.
+    public static final String noSudoPerm = config.getString("modules.bungee.sudo.no-sudo-permission");
     // ... Stats.
     public static final boolean statsTell = config.getBoolean("modules.bungee.stats.tell-when-create");
     public static final int xpPerGiveP = config.getInt("modules.bungee.stats.xp.amount-per");
@@ -247,4 +270,15 @@ public class ConfigUtils {
     // ... Redirect.
     public static final String redirectPre = config.getString("modules.bungee.redirect.permission-prefix");
     public static final String redirectMain = config.getString("modules.bungee.redirect.main");
+    // Version Block.
+    public static final String vbOverridePerm = config.getString("modules.bungee.redirect.version-block.override-permission");
+    public static final String vbServerFile = config.getString("modules.bungee.redirect.version-block.server-permission-file");
+    //
+    public static final String pointsName = config.getString("modules.bungee.points.name");
+    public static final String pointsDefault = config.getString("modules.bungee.points.default");
+    //
+    public static final List<String> tagsDefaults = config.getStringList("modules.bungee.tags.defaults");
+    public static final boolean tagsEvents = config.getBoolean("modules.bungee.events.enabled");
+    public static final String tagsEventsFolder = config.getString("modules.bungee.events.folder");
+    public static final boolean tagsEventsWhenEmpty = config.getBoolean("modules.bungee.events.add-default-when-empty");
 }

@@ -6,6 +6,8 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.PlayerUtils;
 
+import java.util.ConcurrentModificationException;
+
 public class PlaytimeTimer implements Runnable {
     public int countdown;
     public int reset;
@@ -43,11 +45,13 @@ public class PlaytimeTimer implements Runnable {
 
         try {
             for (Player player : PlayerUtils.getStats()) {
-                if (! player.online) {
+                if (!player.online) {
                     player.saveInfo();
                     PlayerUtils.removeStat(player);
                 }
             }
+        } catch (ConcurrentModificationException e) {
+            // do nothing
         } catch (Exception e){
             e.printStackTrace();
         }

@@ -36,6 +36,8 @@ public class MessageConfUtils {
     public static final String onlineB = message.getString("players.bungee.online");
     public static final String offlineD = message.getString("players.discord.offline");
     public static final String onlineD = message.getString("players.discord.online");
+    // Redirect.
+    public static final String vbBlocked = message.getString("redirect.by-version.blocked");
     // Reports.
     public static final String reportEmbedTitle = message.getString("report-message.embed-title");
     public static final String dToDReportMessage = message.getString("report-message.from-discord.discord");
@@ -51,6 +53,9 @@ public class MessageConfUtils {
     public static final String discordStaffChatFrom = message.getString("staffchat.message.from.discord");
     public static final String bungeeStaffChatFrom = message.getString("staffchat.message.from.bungee");
     public static final String staffChatWrongPrefix = message.getString("staffchat.wrong-prefix");
+    public static final String staffChatToggle = message.getString("staffchat.toggle.message");
+    public static final String staffChatOn = message.getString("staffchat.toggle.on");
+    public static final String staffChatOff = message.getString("staffchat.toggle.off");
     // Online.
     public static final String onlineMessageNoPlayers = message.getString("online.message.no-players");
     public static final String onlineMessageNoGroups = message.getString("online.message.no-groups");
@@ -121,4 +126,16 @@ public class MessageConfUtils {
     public static final String sudoWorked = message.getString("sudo.worked");
     public static final String sudoNoWork = message.getString("sudo.no-work");
     public static final String sudoNoSudo = message.getString("sudo.no-sudo");
+    // SSPY
+    public static final String sspyToggle = message.getString("sspy.toggle.message");
+    public static final String sspyOn = message.getString("sspy.toggle.on");
+    public static final String sspyOff = message.getString("sspy.toggle.off");
+    // GSPY
+    public static final String gspyToggle = message.getString("gspy.toggle.message");
+    public static final String gspyOn = message.getString("gspy.toggle.on");
+    public static final String gspyOff = message.getString("gspy.toggle.off");
+    // PSPY
+    public static final String pspyToggle = message.getString("pspy.toggle.message");
+    public static final String pspyOn = message.getString("pspy.toggle.on");
+    public static final String pspyOff = message.getString("pspy.toggle.off");
 }

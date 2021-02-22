@@ -217,21 +217,74 @@ public class PlayerUtils {
         stats.remove(stat);
     }
 
-    public static void info(Player sender, Player of){
-        ProxiedPlayer player = UUIDFetcher.getPPlayer(sender.uuid);
+    public static void info(CommandSender sender, Player of){
+        if (! sender.hasPermission(ConfigUtils.comBStatsPerm)) {
+            MessagingUtils.sendBUserMessage(sender, noPermission);
+        }
 
-        if (player == null) return;
+        MessagingUtils.sendStatUserMessage(of, sender, info);
+    }
 
-        if (! isStats(of) || of == null) {
-            MessagingUtils.sendBUserMessage(player, noStatsFound);
+    public static void remTag(CommandSender sender, Player of, String tag){
+        if (! sender.hasPermission(ConfigUtils.comBBTagPerm)) {
+            MessagingUtils.sendBUserMessage(sender, noPermission);
             return;
         }
 
-        if (! sender.hasPermission(ConfigUtils.comBStatsPerm)) {
-            MessagingUtils.sendBUserMessage(player, noPermission);
+        of.remTag(tag);
+
+        MessagingUtils.sendBUserMessage(sender, tagRem
+                .replace("%player%", getOffOnDisplayBungee(of))
+                .replace("%tag%", tag)
+        );
+    }
+
+    public static void addTag(CommandSender sender, Player of, String tag){
+        if (! sender.hasPermission(ConfigUtils.comBBTagPerm)) {
+            MessagingUtils.sendBUserMessage(sender, noPermission);
+            return;
         }
 
-        MessagingUtils.sendStatUserMessage(of, player, info);
+        of.addTag(tag);
+
+        MessagingUtils.sendBUserMessage(sender, tagAdd
+                .replace("%player%", getOffOnDisplayBungee(of))
+                .replace("%tag%", tag)
+        );
+    }
+
+    public static void listTags(CommandSender sender, Player of){
+        if (! sender.hasPermission(ConfigUtils.comBBTagPerm)) {
+            MessagingUtils.sendBUserMessage(sender, noPermission);
+            return;
+        }
+
+        MessagingUtils.sendBUserMessage(sender, tagListMain
+                .replace("%player%", getOffOnDisplayBungee(of))
+                .replace("%tags%", compileTagList(of))
+        );
+    }
+
+    public static String compileTagList(Player of) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int i = 1;
+        for (String tag : of.tags){
+            if (i < of.tags.size()) {
+                stringBuilder.append(tagListNotLast
+                        .replace("%player%", getOffOnDisplayBungee(of))
+                        .replace("%tag%", tag)
+                );
+            } else {
+                stringBuilder.append(tagListLast
+                        .replace("%player%", getOffOnDisplayBungee(of))
+                        .replace("%tag%", tag)
+                );
+            }
+            i++;
+        }
+
+        return stringBuilder.toString();
     }
 
     // No stats.
@@ -242,4 +295,10 @@ public class PlayerUtils {
     public static final String create = message.getString("stats.create");
     // Info.
     public static final String info = message.getString("stats.info");
+    // Tags.
+    public static final String tagRem = message.getString("btag.remove");
+    public static final String tagAdd = message.getString("btag.add");
+    public static final String tagListMain = message.getString("btag.list.main");
+    public static final String tagListLast = message.getString("btag.list.tags.last");
+    public static final String tagListNotLast = message.getString("btag.list.tags.not-last");
 }

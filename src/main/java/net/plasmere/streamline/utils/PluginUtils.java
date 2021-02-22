@@ -5,6 +5,10 @@ import net.plasmere.streamline.commands.*;
 import net.plasmere.streamline.commands.servers.GoToServerLobbyCommand;
 import net.plasmere.streamline.commands.servers.GoToServerVanillaCommand;
 import net.plasmere.streamline.commands.staff.*;
+import net.plasmere.streamline.commands.staff.events.BTagCommand;
+import net.plasmere.streamline.commands.staff.spy.GSPYCommand;
+import net.plasmere.streamline.commands.staff.spy.PSPYCommand;
+import net.plasmere.streamline.commands.staff.spy.SSPYCommand;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.listeners.JoinLeaveListener;
 import net.plasmere.streamline.listeners.ChatListener;
@@ -70,6 +74,12 @@ public class PluginUtils {
 
         Command stats = new StatsCommand(plugin, ConfigUtils.comBStatsPerm, getAliases(ConfigUtils.comBStatsAliases));
 
+        Command sspy = new SSPYCommand(ConfigUtils.comBSSPYPerm, getAliases(ConfigUtils.comBSSPYAliases));
+        Command gspy = new GSPYCommand(ConfigUtils.comBGSPYPerm, getAliases(ConfigUtils.comBGSPYAliases));
+        Command pspy = new PSPYCommand(ConfigUtils.comBPSPYPerm, getAliases(ConfigUtils.comBPSPYAliases));
+
+        Command btag = new BTagCommand(ConfigUtils.comBBTagPerm, getAliases(ConfigUtils.comBBTagAliases));
+
         commands.add(stream);
         commands.add(staffChat);
         commands.add(ping);
@@ -92,6 +102,12 @@ public class PluginUtils {
         commands.add(gc);
 
         commands.add(stats);
+
+        commands.add(sspy);
+        commands.add(gspy);
+        commands.add(pspy);
+
+        commands.add(btag);
 
         try {
             for (Command command : commands) {
@@ -129,7 +145,7 @@ public class PluginUtils {
         //registerCommand(plugin, new JDAPingerCommand(plugin));
 
         // servers
-        if (ConfigUtils.comBStream)
+        if (ConfigUtils.comBLobby)
             registerCommand(plugin, lobby);
         if (ConfigUtils.comBFabric)
             registerCommand(plugin, fabric);
@@ -150,6 +166,15 @@ public class PluginUtils {
 
         if (ConfigUtils.comBStats)
             registerCommand(plugin, stats);
+
+        if (ConfigUtils.comBSSPY)
+            registerCommand(plugin, sspy);
+        if (ConfigUtils.comBGSPY)
+            registerCommand(plugin, gspy);
+        if (ConfigUtils.comBPSPY)
+            registerCommand(plugin, pspy);
+        if (ConfigUtils.comBBTag)
+            registerCommand(plugin, btag);
 
         plugin.getLogger().info("Loaded " + commands.size() + " commands into memory...!");
     }

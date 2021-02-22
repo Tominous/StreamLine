@@ -4,3 +4,4 @@ main: net.plasmere.streamline.StreamLine
 author: Nitrate
 depends:
   - LuckPerms
+  - ViaVersion

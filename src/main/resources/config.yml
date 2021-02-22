@@ -30,6 +30,12 @@ discord:
     bungee-joins: "put id here"
     # Bungee player leaves channel ID. "player-leaves" must be set to "yes" or "staff".
     bungee-leaves: "put id here"
+    # Bungee main console channel ID.
+    console: "put id here"
+    # Bungee guilds console channel ID.
+    guilds: "put id here"
+    # Bungee parties console channel ID.
+    parties: "put id here"
 
   ## Roles ##
   roles:
@@ -410,7 +416,7 @@ commands:
           - "slrel"
       # The parties command.
       parties:
-        # Enables / disables the use of the "parties" bungee command.
+        # Enables / disables the use of the command.
         enabled: true
         # Custom permission.
         permission: "streamline.command.parties"
@@ -421,7 +427,7 @@ commands:
           - "ps"
       # The guilds command.
       guilds:
-        # Enables / disables the use of the "parties" bungee command.
+        # Enables / disables the use of the command.
         enabled: true
         # Custom permission.
         permission: "streamline.command.guilds"
@@ -431,7 +437,7 @@ commands:
           - "gds"
           - "gs"
       bsudo:
-        # Enables / disables the use of the "parties" bungee command.
+        # Enables / disables the use of the command.
         enabled: true
         # Custom permission.
         permission: "streamline.command.bsudo"
@@ -440,11 +446,45 @@ commands:
           - "bs"
           - "bsu"
           - "psuedo"
+      sspy:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.sspy"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "socialspy"
+      gspy:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.gspy"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "guildspy"
+      pspy:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.pspy"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "partyspy"
+      btag:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.btag"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "bungeetag"
 
 ### MODULE SETTINGS ###
 modules:
   # Discord modules...
   discord:
+    # Enables / disables the Discord main console.
+    main-console: true
     # Enables / disables if the bot should use the sender's Minecraft "face" avatar when sending messages.
     use-mc-avatar: true
     # Reports...
@@ -529,6 +569,8 @@ modules:
       player-leaves: "yes"
     # Parties...
     parties:
+      # Go to discord.
+      to-discord: true
       # Maximum size of any party.
       max-size: 100
       # Give this plus: "<size>"
@@ -539,11 +581,15 @@ modules:
       base-permission: "streamline.party.max."
       # Whether or not party chat should be able to be seen on console.
       chat-to-console: true
+      # (Staff) permission to see party messages.
+      view-permission: "streamline.view.party"
     # Sudoing...
     sudo:
       no-sudo-permission: "streamline.sudo.nosudo"
     # Guilds...
     guilds:
+      # Go to discord.
+      to-discord: true
       # Maximum size of any guild.
       max-size: 120
       # Whether or not party chat should be able to be seen on console.
@@ -554,6 +600,8 @@ modules:
         amount-per: 1
         # Amount of seconds per xp handout.
         time-per: 20
+      # (Staff) permission to see guild messages.
+      view-permission: "streamline.view.guild"
     # Stats command...
     stats:
       # Enables / disables telling the player when their stats have been created.
@@ -576,3 +624,22 @@ modules:
       permission-prefix: "streamline.send."
       # Main lobby server name as defined in your bungee config.yml
       main: "lobby"
+      version-block:
+        override-permission: "streamline.block.override"
+        server-permission-file: "servers.properties"
+    # Network points.
+    points:
+      name: "&6Network Gold"
+      default: 0
+    # Network tags.
+    tags:
+      defaults:
+        - "tag"
+        - "list"
+        - "here"
+    # Network events.
+    events:
+      enabled: true
+      folder: "events"
+      # Puts the default event into the folder above when the folder is empty.
+      add-default-when-empty: true

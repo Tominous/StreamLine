@@ -10,6 +10,7 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.objects.messaging.DiscordMessage;
 
 import java.io.IOException;
 import java.util.*;
@@ -118,10 +119,13 @@ public class GuildUtils {
     }
 
     public static void addGuild(Guild guild){
+        try {
+            Guild g = getGuild(guild.leaderUUID);
 
-        Guild g = getGuild(guild.leaderUUID);
-
-        if (g != null) return;
+            if (g != null) return;
+        } catch (Exception e) {
+            // Do nothing.
+        }
 
         try {
             guilds.add(guild);
@@ -1184,6 +1188,22 @@ public class GuildUtils {
                         .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(sender))
                         .replace("%message%", msg)
                 );
+
+                if (ConfigUtils.guildToDiscord) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, discordTitle, msg, ConfigUtils.textChannelGuilds));
+                }
+
+                for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
+                    if (! pp.hasPermission(ConfigUtils.partyView)) continue;
+
+                    Player them = PlayerUtils.getStat(pp);
+
+                    if (them == null) continue;
+
+                    if (! them.pspy) continue;
+
+                    MessagingUtils.sendBGUserMessage(guild, p, pp, spy.replace("%message%", msg));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1192,9 +1212,13 @@ public class GuildUtils {
 
     // MESSAGES...
     // Text.
-    public static final String textLeader = message.getString("guild.text.leader");
-    public static final String textModerator = message.getString("guild.text.moderator");
-    public static final String textMember = message.getString("guild.text.member");
+    public static final String textLeader = message.getString("party.text.leader");
+    public static final String textModerator = message.getString("party.text.moderator");
+    public static final String textMember = message.getString("party.text.member");
+    // Discord.
+    public static final String discordTitle = message.getString("party.discord.title");
+    // Spy.
+    public static final String spy = message.getString("party.spy");
     // No guild.
     public static final String noGuildFound = message.getString("guild.no-guild");
     // Already made.

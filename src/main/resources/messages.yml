@@ -54,6 +54,9 @@ players:
   discord:
     offline: "%player% (OFF)"
     online: "%player% (ON)"
+redirect:
+  by-version:
+    blocked: "&cYou were blocked from joining that server in version &3%version%"
 
 # When reporting...
 # Fillers:
@@ -101,6 +104,10 @@ staffchat:
       bungee: "&6bungee"
   # Message shown when using the wrong staffchat prefix.
   wrong-prefix: "&cSorry, but that is not the correct staff chat prefix!"
+  toggle:
+    message: "&eToggled &bstaffchat %toggle%&e!"
+    on: "&aON"
+    off: "&cOFF"
 
 # When using online list...
 online:
@@ -204,6 +211,9 @@ party:
     leader: "LEADER"
     moderator: "MODERATOR"
     member: "MEMBER"
+  discord:
+    title: "PARTY"
+  spy: "&d%leader%&a's PARTY &9>> &d%sender% &8: &e%message%"
   # When it finds no party.
   no-party: "&cNo party found!"
   # Already made.
@@ -269,7 +279,7 @@ party:
     # If the party is muted.
     muted: "&cSorry, but the party is muted!"
     # Message in console when people chat in parties.
-    console: "&b%leader%&d's PARTY &9>> &b%sender% &8: &a%message%"
+    console: "&d%leader%&a's PARTY &9>> &d%sender% &8: &e%message%"
   # Message when some lists the party...
   list:
     # Fillers:
@@ -320,7 +330,7 @@ party:
     # Fillers:
     # %user% = the accepter.
     # %leader% = the party leader.
-    user: "Accepted the request to &b%leader%&e's party."
+    user: "&eAccepted the request to &b%leader%&e's party."
     leader: "&b%user% &ejust &aaccepted &eyour invite!"
     members: "&b%user% &ejust &aaccepted &ethe invite!"
     failure: "&cNo invites!"
@@ -329,7 +339,7 @@ party:
     # Fillers:
     # %user% = the accepter.
     # %leader% = the party leader.
-    user: "Denied the request to &b%leader%&e's party."
+    user: "&eDenied the request to &b%leader%&e's party."
     leader: "&b%user% &ejust &cdenied &eyour invite!"
     members: "&b%user% &ejust &cdenied &ethe invite!"
     failure: "&cNo invites!"
@@ -442,6 +452,9 @@ guild:
     leader: "LEADER"
     moderator: "MODERATOR"
     member: "MEMBER"
+  discord:
+    title: "GUILD"
+  spy: "&d%leader%&a's GUILD &9>> &d%sender% &8: &e%message%"
   # When it finds no guild.
   no-guild: "&cNo guild found!"
   # Already made.
@@ -505,7 +518,7 @@ guild:
     # If the guild is muted.
     muted: "&cSorry, but the guild is muted!"
     # Message in console when people chat in parties.
-    console: "&b%leader%&d's GUILD &9>> &b%sender% &8: &a%message%"
+    console: "&d%leader%&a's GUILD &9>> &d%sender% &8: &e%message%"
   # Message when some lists the guild...
   list:
     # Fillers:
@@ -655,4 +668,37 @@ stats:
   no-stats: "&cCouldn't find the stats..."
   no-permission: "&cSorry, but you do not have permission for that."
   create: "&aJust created a stats profile for you! You can view it by doing &b/stats"
-  info: "&9----- &d%player% &4Network Info &9-----%newline%&eEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel% &9(&6%xpneeded%&9)%newline%&ePlaytime&8: &6%playtime%"
+  info: "&9----- &d%player% &4Network Info &9-----%newline%&eEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel% &9(&6%xpneeded%&9)%newline%&ePlaytime&8: &6%playtime% &3hours"
+
+# SSPY command.
+sspy:
+  toggle:
+    message: "&eToggled &bSSPY %toggle%&e!"
+    on: "&aON"
+    off: "&cOFF"
+
+# GSPY command.
+gspy:
+  toggle:
+    message: "&eToggled &bGSPY %toggle%&e!"
+    on: "&aON"
+    off: "&cOFF"
+
+# PSPY command.
+pspy:
+  toggle:
+    message: "&eToggled &bPSPY %toggle%&e!"
+    on: "&aON"
+    off: "&cOFF"
+
+btag:
+  # Fillers:
+  # %player% = player whose tags are being changed.
+  # %tag% = tag being changed.
+  remove: "&eRemoved &6%tag% &eoff of &d%player%&e."
+  add: "&eAdded &6%tag% &eto &d%player%&e."
+  list:
+    main: "&d%player%&e's tags: %tags%"
+    tags:
+      last: "&6%tag%"
+      not-last: "&6tag&e,"
