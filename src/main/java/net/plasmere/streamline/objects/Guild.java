@@ -2,6 +2,7 @@ package net.plasmere.streamline.objects;
 
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
@@ -623,7 +624,7 @@ public class Guild {
         return builder.toString();
     }
 
-    public String remFromInvites(Player player){
+    public String remFromInvites(Player from, Player player){
         invitesByUUID.remove(player.getUniqueId());
         invites.remove(player);
 
@@ -638,6 +639,8 @@ public class Guild {
                 builder.append(uuid);
             }
         }
+
+        GuildUtils.removeInvite(GuildUtils.getGuild(from), player);
 
         updateKey("invites", builder.toString());
 
@@ -923,11 +926,16 @@ public class Guild {
 
         loadMods();
 
-        File newFile = new File(filePrePath + leaderUUID.toString() + ".properties");
+        GuildUtils.removeGuild(Objects.requireNonNull(GuildUtils.getGuild(player)));
 
         file.delete();
 
-        file = newFile;
+//        if (! file.renameTo(new File(filePrePath + leaderUUID.toString() + ".properties"))){
+//            StreamLine.getInstance().getLogger().info("Could not rename a guild file for " + leaderUUID + "...");
+//        }
+
+        file = null;
+        file = new File(filePrePath + leaderUUID.toString() + ".properties");
 
         try {
             for (Player p : totalMembers) {
@@ -942,6 +950,8 @@ public class Guild {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        GuildUtils.addGuild(this);
     }
 
     public void dispose() throws Throwable {
@@ -950,6 +960,16 @@ public class Guild {
     }
 
     public void disband(){
+        for (UUID uuid : totalMembersByUUID){
+            Player player = UUIDFetcher.getPlayer(uuid);
+
+            if (player == null) continue;
+
+            player.updateKey("guild", "");
+        }
+
+        GuildUtils.removeGuild(this);
+
         file.delete();
 
         try {

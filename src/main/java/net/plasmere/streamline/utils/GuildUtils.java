@@ -27,6 +27,10 @@ public class GuildUtils {
     // Guild , Invites
     public static Map<Guild, List<Player>> invites = new HashMap<>();
 
+    public static void removeInvite(Guild guild, Player player) {
+        invites.get(guild).remove(player);
+    }
+
     public static Guild getGuild(Player player) {
         try {
             for (Guild guild : guilds) {
@@ -257,6 +261,11 @@ public class GuildUtils {
                 return;
             }
 
+            if (! invites.get(guild).contains(accepter)) {
+                MessagingUtils.sendBUserMessage(p, acceptFailure);
+                return;
+            }
+
             if (guild.invites.contains(accepter)) {
                 if (guild.getSize() >= guild.maxSize) {
                     MessagingUtils.sendBGUserMessage(guild, p, p, notEnoughSpace);
@@ -289,7 +298,9 @@ public class GuildUtils {
                 }
 
                 guild.addMember(accepter);
-                guild.remFromInvites(accepter);
+                guild.remFromInvites(from, accepter);
+            } else {
+                MessagingUtils.sendBUserMessage(p, acceptFailure);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -314,31 +325,40 @@ public class GuildUtils {
                 return;
             }
 
-            guild.remFromInvites(denier);
+            if (! invites.get(guild).contains(denier)) {
+                MessagingUtils.sendBUserMessage(p, denyFailure);
+                return;
+            }
 
-            MessagingUtils.sendBGUserMessage(guild, p, p, denyUser
-                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(denier))
-                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(from))
-            );
+            if (guild.invites.contains(denier)) {
+                MessagingUtils.sendBGUserMessage(guild, p, p, denyUser
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(denier))
+                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(from))
+                );
 
-            for (Player pl : guild.totalMembers){
-                if (! pl.online) continue;
+                for (Player pl : guild.totalMembers) {
+                    if (!pl.online) continue;
 
-                ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
+                    ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
 
-                if (m == null) continue;
+                    if (m == null) continue;
 
-                if (pl.equals(UUIDFetcher.getPlayer(guild.leaderUUID))){
-                    MessagingUtils.sendBGUserMessage(guild, p, m, denyLeader
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(denier))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(from))
-                    );
-                } else {
-                    MessagingUtils.sendBGUserMessage(guild, p, m, denyMembers
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(denier))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(from))
-                    );
+                    if (pl.equals(UUIDFetcher.getPlayer(guild.leaderUUID))) {
+                        MessagingUtils.sendBGUserMessage(guild, p, m, denyLeader
+                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(denier))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(from))
+                        );
+                    } else {
+                        MessagingUtils.sendBGUserMessage(guild, p, m, denyMembers
+                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(denier))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(from))
+                        );
+                    }
                 }
+
+                guild.remFromInvites(from, denier);
+            } else {
+                MessagingUtils.sendBUserMessage(p, denyFailure);
             }
         } catch (Exception e) {
             e.printStackTrace();

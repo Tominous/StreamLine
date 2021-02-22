@@ -461,9 +461,9 @@ public class PartyUtils {
             MessagingUtils.sendBPUserMessage(party, p, p, kickMod);
         } else {
             for (Player pl : party.totalMembers) {
-                if (!pl.online) continue;
+                if (! pl.online) continue;
 
-                ProxiedPlayer m = UUIDFetcher.getPPlayer(player.uuid);
+                ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
 
                 if (m == null) continue;
 
@@ -839,7 +839,7 @@ public class PartyUtils {
                 return;
             }
 
-            if (!party.hasModPerms(sender)) {
+            if (! party.isLeader(sender)) {
                 MessagingUtils.sendBUserMessage(p, noPermission);
                 return;
             }
@@ -964,7 +964,7 @@ public class PartyUtils {
                 return;
             }
 
-            if (!party.hasModPerms(sender)) {
+            if (! party.isLeader(sender)) {
                 MessagingUtils.sendBUserMessage(p, noPermission);
                 return;
             }
