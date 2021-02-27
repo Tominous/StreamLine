@@ -221,6 +221,8 @@ public class ConfigUtils {
     // Basics.
     public static final boolean moduleDMainConsole = config.getBoolean("modules.discord.main-console");
     public static final boolean moduleUseMCAvatar = config.getBoolean("modules.discord.use-mc-avatar");
+    public static final boolean joinsLeavesIcon = config.getBoolean("modules.discord.joins-leaves.use-bot-icon");
+    public static final boolean joinsLeavesAsConsole = config.getBoolean("modules.discord.joins-leaves.send-as-console");
     // Reports.
     public static final boolean moduleReportsDConfirmation = config.getBoolean("modules.discord.reports.send-confirmation");
     public static final boolean moduleReportToChannel = config.getBoolean("modules.discord.reports.report-to-channel");

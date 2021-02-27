@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "1.0.10.2"
+version: "1.0.10.3"
 
 # All bungee messages accept all color and formatting codes.
 # For new lines, use %newline%.
@@ -152,20 +152,21 @@ online:
           if-last: "&2%player% &0(&e%server%&0)&8."
 
 join-leave:
+  # Use "%player_default%" to substitute just the player name without a off / on check.
   discord:
     # Message to be sent to a chat (on Discord) when a player comes online on the bungee server.
     online:
       embed: "Join"
-      text: "%player% is now online."
+      text: "%player_default% is now online."
     # Message to be sent to a chat (on Discord) when a player goes offline on the bungee server.
     offline:
       embed: "Leave"
-      text: "%player% is now offline."
+      text: "%player_default% is now offline."
   bungee:
     # Message to be sent to chat (on bungee) when a player comes online on the bungee server.
-    online: "&d%player% &eis now &aonline&8."
+    online: "&d%player_default% &eis now &aonline&8."
     # Message to be sent to chat (on bungee) when a player goes offline on the bungee server.
-    offline: "&d%player% &eis now &coffline&8."
+    offline: "&d%player_default% &eis now &coffline&8."
 
 # When using staffonline...
 staffonline:

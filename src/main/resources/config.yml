@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "1.0.10.2"
+version: "1.0.10.3"
 
 #### BASICS ####
 # For links in chat. This is so the API can know when there is a link and when not.
@@ -497,6 +497,17 @@ modules:
     main-console: true
     # Enables / disables if the bot should use the sender's Minecraft "face" avatar when sending messages.
     use-mc-avatar: true
+    # Joins and leaves for BungeeCord sent to Discord.
+    joins-leaves:
+      # Enables / disables if when sending the join or leave message to Discord,
+      # whether there should be an icon with the message or not.
+      # If set to true, it will use the bot's icon.
+      use-bot-icon: true
+      # Enables / disables if when sending the join or leave message to Discord,
+      # whether it should be as console or be as defined in
+      # messages.yml > join-leave > discord
+      # use-bot-icon must be true
+      send-as-console: true
     # Reports...
     reports:
       # Enables / disables sending a confirmation message to the sender of the report.

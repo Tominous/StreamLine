@@ -4,6 +4,7 @@ import net.md_5.bungee.api.config.ServerInfo;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.lists.SingleSet;
+import org.apache.commons.collections4.list.TreeList;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -86,7 +87,6 @@ public class Lobbies {
                 throw new Exception("No property saved!");
             }
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -131,7 +131,11 @@ public class Lobbies {
 
             String write = "";
             try {
-                write = getFullProperty(property);
+                if (getFullProperty(property) != null) {
+                    write = getFullProperty(property);
+                } else {
+                    write = p;
+                }
             } catch (Exception e) {
                 write = p;
             }
@@ -194,8 +198,8 @@ public class Lobbies {
                 version.equals("1.17");
     }
 
-    public List<String> getServers(){
-        List<String> defaults = new ArrayList<>();
+    public TreeList<String> getServers(){
+        TreeList<String> defaults = new TreeList<>();
 
         for (ServerInfo si : StreamLine.getInstance().getProxy().getServers().values()){
             defaults.add(si.getName() + "=" + defaultAllow);
@@ -204,9 +208,11 @@ public class Lobbies {
         return defaults;
     }
 
-    public List<String> propertiesDefaults() {
-        List<String> defaults = new ArrayList<>();
+    public TreeList<String> propertiesDefaults() {
+        TreeList<String> defaults = new TreeList<>();
         defaults.add("### Remove the versions you don't want for each lobby.");
+        defaults.add("### These are the list (in order) of which your player will be connected to first (if they can) by version.");
+        defaults.add("### Remove lobbies and change the order of lobbies until you are satisfied.");
         defaults.addAll(getServers());
         //defaults.add("");
         return defaults;
