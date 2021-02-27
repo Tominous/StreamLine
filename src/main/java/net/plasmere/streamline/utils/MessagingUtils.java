@@ -222,7 +222,7 @@ public class MessagingUtils {
 
     public static void sendBPUserMessage(Party party, CommandSender sender, CommandSender to, String msg){
         to.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(sender))))
+                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(UUIDFetcher.getPlayer(sender)))
                 .replace("%leader%", party.leader.getName())
                 .replace("%size%", Integer.toString(party.getSize()))
                 .replace("%max%", Integer.toString(party.maxSize))
@@ -256,7 +256,7 @@ public class MessagingUtils {
         }
 
         to.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(sender))))
+                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(UUIDFetcher.getPlayer(sender)))
                 .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getPlayer(guild.leaderUUID)).getName())
                 .replace("%size%", Integer.toString(guild.getSize()))
                 .replace("%max%", Integer.toString(guild.maxSize))
@@ -281,7 +281,7 @@ public class MessagingUtils {
 
     public static void sendStatUserMessage(Player player, CommandSender sender, String msg){
         sender.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(sender))))
+                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(UUIDFetcher.getPlayer(sender)))
                 .replace("%player%", PlayerUtils.getOffOnRegBungee(player))
                 .replace("%xp%", Integer.toString(player.xp))
                 .replace("%level%", Integer.toString(player.lvl))
@@ -295,7 +295,7 @@ public class MessagingUtils {
     public static void sendBUserMessage(CommandSender sender, String msg){
         if (sender instanceof ProxiedPlayer) {
             sender.sendMessage(TextUtils.codedText(msg
-                    .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(sender))))
+                    .replace("%sender%", PlayerUtils.getOffOnDisplayBungee((UUIDFetcher.getPlayer(sender))))
                     .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
             ));
         } else {
@@ -313,7 +313,7 @@ public class MessagingUtils {
         if (as instanceof ProxiedPlayer) {
             for (ProxiedPlayer player : players) {
             player.sendMessage(TextUtils.codedText(msg
-                        .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(as))))
+                        .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(UUIDFetcher.getPlayer(as)))
                         .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(as)).latestVersion)
                 ));
             }
@@ -477,12 +477,12 @@ public class MessagingUtils {
             if (i != guild.modsByUUID.size()){
                 msg.append(MessageConfUtils.guildsModsNLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
+                        .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.guildsModsLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
+                        .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
             }
 
@@ -507,12 +507,12 @@ public class MessagingUtils {
             if (i != guild.membersByUUID.size()){
                 msg.append(MessageConfUtils.guildsMemsNLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
+                        .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.guildsMemsLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
+                        .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
             }
 
@@ -537,12 +537,12 @@ public class MessagingUtils {
             if (i != guild.totalMembersByUUID.size()){
                 msg.append(MessageConfUtils.guildsTMemsNLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
+                        .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.guildsTMemsLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
+                        .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
             }
 
@@ -567,12 +567,12 @@ public class MessagingUtils {
             if (i != guild.invites.size()){
                 msg.append(MessageConfUtils.guildsInvsNLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
+                        .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.guildsInvsLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(player)).latestVersion)
+                        .replace("%version%", player.latestVersion)
                 );
             }
 

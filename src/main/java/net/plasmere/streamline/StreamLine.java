@@ -9,12 +9,14 @@ import net.plasmere.streamline.events.Event;
 import net.plasmere.streamline.events.EventsHandler;
 import net.plasmere.streamline.events.EventsReader;
 import net.plasmere.streamline.objects.Guild;
+import net.plasmere.streamline.objects.configs.Lobbies;
 import net.plasmere.streamline.objects.configs.ServerPermissions;
 import net.plasmere.streamline.objects.timers.GuildXPTimer;
 import net.plasmere.streamline.objects.timers.PlayerClearTimer;
 import net.plasmere.streamline.objects.timers.PlayerXPTimer;
 import net.plasmere.streamline.objects.timers.PlaytimeTimer;
 import net.plasmere.streamline.utils.*;
+import net.plasmere.streamline.utils.holders.ViaHolder;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.ShutdownEvent;
@@ -42,6 +44,8 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 
 	public static Config config;
 	public static ServerPermissions serverPermissions;
+	public static Lobbies lobbies;
+	public static ViaHolder viaHolder;
 
 	private static JDA jda = null;
 	private static boolean isReady = false;
@@ -165,7 +169,7 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 		}
 	}
 
-	public void loadServersAllowedVersions(){
+	public void loadServers(){
 		if (! confDir.exists()) {
 			try {
 				confDir.mkdir();
@@ -174,6 +178,10 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 			}
 		}
 		serverPermissions = new ServerPermissions(true);
+
+		if (ConfigUtils.lobbies) {
+			lobbies = new Lobbies(true);
+		}
 	}
 
     public void onLoad(){
@@ -186,6 +194,9 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 
 		// Teller.
 		getLogger().info("Loading version [v" + getProxy().getPluginManager().getPlugin("StreamLine").getDescription().getVersion() + "]...");
+
+		// Via Support.
+		viaHolder = new ViaHolder();
 
 		// Config.
 		config = new Config();
@@ -216,8 +227,12 @@ public class StreamLine extends Plugin /*implements Runnable*/ {
 		// Events.
 		loadEvents();
 
-		// Servers Allowed Versions.
-		loadServersAllowedVersions();
+		// Servers by Versions.
+		if (viaHolder.enabled) {
+			loadServers();
+		} else {
+			getLogger().severe("Streamline server custom configs have been disabled due to no ViaVersion being detected.");
+		}
 	}
 
 	@Override

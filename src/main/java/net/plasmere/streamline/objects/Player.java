@@ -12,9 +12,6 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
-import us.myles.ViaVersion.api.Via;
-import us.myles.ViaVersion.api.ViaAPI;
-import us.myles.ViaVersion.api.protocol.ProtocolVersion;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -24,8 +21,6 @@ import java.net.SocketAddress;
 import java.util.*;
 
 public class Player implements ProxiedPlayer {
-    private ViaAPI viaAPI = Via.getAPI();
-
     private HashMap<String, String> info = new HashMap<>();
     private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "players" + File.separator;
 
@@ -64,7 +59,11 @@ public class Player implements ProxiedPlayer {
         this.online = true;
         this.displayName = player.getDisplayName();
 
-        this.latestVersion = ProtocolVersion.getProtocol(viaAPI.getPlayerVersion(this.uuid)).getName();
+        if (StreamLine.viaHolder.enabled) {
+            this.latestVersion = StreamLine.viaHolder.getProtocal(this.uuid).getName();
+        } else {
+            this.latestVersion = "";
+        }
         construct(player.getUniqueId(), true);
     }
 
@@ -83,7 +82,11 @@ public class Player implements ProxiedPlayer {
         this.displayName = player.getDisplayName();
         this.tags = ConfigUtils.tagsDefaults;
 
-        this.latestVersion = ProtocolVersion.getProtocol(viaAPI.getPlayerVersion(this.uuid)).getName();
+        if (StreamLine.viaHolder.enabled) {
+            this.latestVersion = StreamLine.viaHolder.getProtocal(this.uuid).getName();
+        } else {
+            this.latestVersion = "";
+        }
         construct(player.getUniqueId(), create);
     }
 

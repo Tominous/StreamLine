@@ -3,26 +3,27 @@ package net.plasmere.streamline.objects.configs;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.objects.lists.SingleSet;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-public class ServerPermissions {
-    private HashMap<String, String> info = new HashMap<>();
+public class Lobbies {
+    private TreeMap<Integer, SingleSet<String, String>> info = new TreeMap<>();
     private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "configs" + File.separator;
 
     public String defaultAllow = "1.4,1.5,1.6,1.7,1.8,1.9,1.10,1.11,1.12,1.13,1.14,1.15,1.16,1.17";
     public File file;
     public HashMap<String, List<String>> servers = new HashMap<>();
 
-    public ServerPermissions(boolean createNew){
+    public Lobbies(boolean createNew){
         construct(createNew);
     }
 
     private void construct(boolean createNew){
-        this.file = new File(filePrePath + ConfigUtils.vbServerFile);
+        this.file = new File(filePrePath + ConfigUtils.lobbiesFile);
 
         if (createNew || file.exists()) {
             //StreamLine.getInstance().getLogger().info("Guild file: " + file.getName() + " (In the \"guilds\" folder.)");
@@ -35,52 +36,67 @@ public class ServerPermissions {
         }
     }
 
-    public HashMap<String, String> getInfo() {
+    public TreeMap<Integer, SingleSet<String, String>> getInfo() {
         return info;
     }
     public void remKey(String key){
         info.remove(key);
     }
-    public String getFromKey(String key){
-        return info.get(key);
+    public String getValue(int number){
+        return info.get(number).value;
     }
-    public void updateKey(String key, Object value) {
-        info.put(key, String.valueOf(value));
+    public void updateKey(int number, String key, Object value) {
+        info.put(number, new SingleSet<>(key, String.valueOf(value)));
         loadVars();
     }
     public File getFile() { return file; }
 
     public boolean hasProperty(String property) {
-        for (String info : getInfoAsPropertyList()) {
+        for (String info : getInfoAsPropertyList().values()) {
             if (info.startsWith(property)) return true;
         }
 
         return false;
     }
 
-    public List<String> getInfoAsPropertyList() {
-        List<String> infoList = new ArrayList<>();
-        for (String key : info.keySet()){
-            infoList.add(key + "=" + getFromKey(key));
+    public SingleSet<String, String> getSet(String key){
+        for (SingleSet<String, String> set : info.values()){
+            if (set.key.equals(key)) return set;
+        }
+
+        return null;
+    }
+
+    public HashMap<Integer, String> getInfoAsPropertyList() {
+        HashMap<Integer, String> infoList = new HashMap<>();
+        int i = 1;
+        for (SingleSet<String, String> set : info.values()){
+            infoList.put(i, set.key + "=" + set.value);
+            i ++;
         }
 
         return infoList;
     }
 
-    public String getFullProperty(String key) throws Exception {
-        if (hasProperty(key)) {
-            return key + "=" + getFromKey(key);
-        } else {
-            throw new Exception("No property saved!");
+    public String getFullProperty(String key) {
+        try {
+            if (hasProperty(key)) {
+                return key + "=" + getSet(key).value;
+            } else {
+                throw new Exception("No property saved!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
     public void flushInfo(){
-        this.info = new HashMap<>();
+        this.info = new TreeMap<>();
     }
 
     public void addKeyValuePair(String key, String value){
-        info.put(key, value);
+        info.put(info.size() + 1, new SingleSet<>(key, value));
     }
 
     public void getFromConfigFile() throws IOException {
@@ -98,26 +114,10 @@ public class ServerPermissions {
 
             reader.close();
 
-            if (needUpdate()) {
-                updateWithNewDefaults();
-            }
-
             loadVars();
         } else {
             updateWithNewDefaults();
         }
-    }
-
-    public boolean needUpdate() {
-        if (info.size() != propertiesDefaults().size()) return true;
-
-        int i = 0;
-        for (String p : getInfoAsPropertyList()) {
-            if (! p.startsWith(propertiesDefaults().get(i).split("=", 2)[0])) return true;
-            i++;
-        }
-
-        return false;
     }
 
     public void updateWithNewDefaults() throws IOException {
@@ -168,13 +168,13 @@ public class ServerPermissions {
     }
 
     public void loadServers(){
-        for (String s : info.keySet()) {
-            servers.put(s, parseServers(s));
+        for (SingleSet<String, String> s : info.values()) {
+            servers.put(s.key, parseServers(s.key));
         }
     }
 
     public List<String> parseServers(String key){
-        String raw = info.get(key);
+        String raw = getSet(key).value;
         String[] split = raw.split(",");
         List<String> list = new ArrayList<>();
 
@@ -206,7 +206,7 @@ public class ServerPermissions {
 
     public List<String> propertiesDefaults() {
         List<String> defaults = new ArrayList<>();
-        defaults.add("### Remove the versions you don't want for each server.");
+        defaults.add("### Remove the versions you don't want for each lobby.");
         defaults.addAll(getServers());
         //defaults.add("");
         return defaults;
@@ -217,7 +217,7 @@ public class ServerPermissions {
 
         file.createNewFile();
         FileWriter writer = new FileWriter(file);
-        for (String s : getInfoAsPropertyList()){
+        for (String s : getInfoAsPropertyList().values()){
             writer.write(s + "\n");
         }
         writer.close();

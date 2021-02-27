@@ -277,6 +277,9 @@ public class ConfigUtils {
     // Version Block.
     public static final String vbOverridePerm = config.getString("modules.bungee.redirect.version-block.override-permission");
     public static final String vbServerFile = config.getString("modules.bungee.redirect.version-block.server-permission-file");
+    // Lobbies.
+    public static final boolean lobbies = config.getBoolean("modules.bungee.redirect.lobbies.enabled");
+    public static final String lobbiesFile = config.getString("modules.bungee.redirect.lobbies.file");
     //
     public static final String pointsName = config.getString("modules.bungee.points.name");
     public static final String pointsDefault = config.getString("modules.bungee.points.default");

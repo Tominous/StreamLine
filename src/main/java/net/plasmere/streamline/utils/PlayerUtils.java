@@ -144,6 +144,10 @@ public class PlayerUtils {
     }
 
     public static String getOffOnDisplayBungee(Player player){
+        if (player == null) {
+            return "&c&lNULL";
+        }
+
         if (player.online) {
             return MessageConfUtils.onlineB.replace("%player%", player.displayName);
         } else {
@@ -152,6 +156,10 @@ public class PlayerUtils {
     }
 
     public static String getOffOnRegBungee(Player player){
+        if (player == null) {
+            return "&c&lNULL";
+        }
+
         if (player.online) {
             return MessageConfUtils.onlineB.replace("%player%", player.latestName);
         } else {

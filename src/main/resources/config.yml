@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "0.1.8.0"
+version: "1.0.10.2"
 
 #### BASICS ####
 # For links in chat. This is so the API can know when there is a link and when not.
@@ -637,6 +637,9 @@ modules:
       version-block:
         override-permission: "streamline.block.override"
         server-permission-file: "servers.properties"
+      lobbies:
+        enabled: true
+        file: "lobbies.properties"
     # Network points.
     points:
       name: "&6Network Gold"

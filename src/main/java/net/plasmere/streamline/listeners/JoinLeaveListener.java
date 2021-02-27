@@ -13,6 +13,7 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.events.Event;
 import net.plasmere.streamline.events.EventsHandler;
+import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.objects.messaging.BungeeMassMessage;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
@@ -28,8 +29,6 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
-import us.myles.ViaVersion.api.Via;
-import us.myles.ViaVersion.api.ViaAPI;
 
 import java.util.*;
 
@@ -37,7 +36,6 @@ public class JoinLeaveListener implements Listener {
     private final Configuration config = Config.getConf();
     private final StreamLine plugin;
     private final LuckPerms api = LuckPermsProvider.get();
-    private final ViaAPI viaAPI = Via.getAPI();
 
     public JoinLeaveListener(StreamLine streamLine){
         this.plugin = streamLine;
@@ -193,28 +191,37 @@ public class JoinLeaveListener implements Listener {
                         }
                     }
 
-                    hasServer = false;
-                    break;
+                    if (hasServer){
+                        break;
+                    }
                 }
             }
 
-            if (!hasServer) {
+            if (! hasServer) {
                 server = StreamLine.getInstance().getProxy().getServerInfo(ConfigUtils.redirectMain);
             }
         }
 
-        if (! ev.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY)){
-            if (! player.hasPermission(ConfigUtils.vbOverridePerm)) {
-                int version = viaAPI.getPlayerVersion(player.getUniqueId());
+        if (StreamLine.viaHolder.enabled) {
+            if (! hasServer && ConfigUtils.lobbies){
+                for (SingleSet<String, String> set : StreamLine.lobbies.getInfo().values()) {
+                    int version = StreamLine.viaHolder.via.getPlayerVersion(player.getUniqueId());
 
-                boolean bool = StreamLine.serverPermissions.isAllowed(version, server.getName());
+                    if (! StreamLine.lobbies.isAllowed(version, set.key)) continue;
 
-                //StreamLine.getInstance().getLogger().info("Joining " + server.getName() + " tested as: " + bool);
+                    server = StreamLine.getInstance().getProxy().getServerInfo(set.key);
+                }
+            }
 
-                if (! StreamLine.serverPermissions.isAllowed(version, server.getName())) {
-                    MessagingUtils.sendBUserMessage(ev.getPlayer(), MessageConfUtils.vbBlocked);
-                    ev.setCancelled(true);
-                    return;
+            if (! ev.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY)) {
+                if (! player.hasPermission(ConfigUtils.vbOverridePerm)) {
+                    int version = StreamLine.viaHolder.via.getPlayerVersion(player.getUniqueId());
+
+                    if (! StreamLine.serverPermissions.isAllowed(version, server.getName())) {
+                        MessagingUtils.sendBUserMessage(ev.getPlayer(), MessageConfUtils.vbBlocked);
+                        ev.setCancelled(true);
+                        return;
+                    }
                 }
             }
         }
