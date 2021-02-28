@@ -44,6 +44,8 @@ public class Player implements ProxiedPlayer {
     public boolean sc;
     public String latestVersion;
     public List<String> tags;
+    public String connectingStatus;
+    public int tryingLobby = 0;
 
     public Player(ProxiedPlayer player) {
         String ipSt = player.getSocketAddress().toString().replace("/", "");
@@ -274,6 +276,7 @@ public class Player implements ProxiedPlayer {
         defaults.add("sc=true");
         defaults.add("latestversion=" + latestVersion);
         defaults.add("tags=" + defaultTags());
+        defaults.add("connectingStatus=IDLE");
         //defaults.add("");
         return defaults;
     }
@@ -315,6 +318,7 @@ public class Player implements ProxiedPlayer {
         this.pspy = Boolean.parseBoolean(getFromKey("pspy"));
         this.sc = Boolean.parseBoolean(getFromKey("sc"));
         this.latestVersion = getFromKey("latestversion");
+        this.connectingStatus = "";
         this.tags = loadTags();
     }
 

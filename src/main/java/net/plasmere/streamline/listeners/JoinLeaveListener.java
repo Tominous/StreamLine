@@ -4,9 +4,9 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.node.Node;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
-import net.md_5.bungee.api.event.ServerConnectEvent;
-import net.md_5.bungee.api.event.ServerDisconnectEvent;
+import net.md_5.bungee.api.event.*;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
@@ -21,8 +21,6 @@ import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.PlayerDisconnectEvent;
-import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
@@ -218,13 +216,22 @@ public class JoinLeaveListener implements Listener {
         }
 
         if (StreamLine.viaHolder.enabled) {
-            if (! hasServer && ConfigUtils.lobbies){
-                for (SingleSet<String, String> set : StreamLine.lobbies.getInfo().values()) {
+            if (! hasServer && ConfigUtils.lobbies && ev.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY)){
+                for (String sName : StreamLine.lobbies.servers.keySet()) {
                     int version = StreamLine.viaHolder.via.getPlayerVersion(player.getUniqueId());
 
-                    if (! StreamLine.lobbies.isAllowed(version, set.key)) continue;
+                    StreamLine.getInstance().getLogger().info("Version: " + version + " | Server: " + sName);
 
-                    server = StreamLine.getInstance().getProxy().getServerInfo(set.key);
+                    if (! StreamLine.lobbies.isAllowed(version, sName)) continue;
+
+                    server = StreamLine.getInstance().getProxy().getServerInfo(sName);
+
+                    ev.setTarget(server);
+
+                    stat.updateKey("connectingStatus", "CONNECTING");
+
+                    ev.setCancelled(true);
+                    return;
                 }
             }
 
@@ -242,6 +249,7 @@ public class JoinLeaveListener implements Listener {
         }
 
         ev.setTarget(server);
+        stat.updateKey("connectingStatus", "IDLE");
 
         for (Event event : EventsHandler.getEvents()) {
             if (! EventsHandler.checkTags(event, stat)) continue;
@@ -397,6 +405,46 @@ public class JoinLeaveListener implements Listener {
             PlayerUtils.removeStat(stat);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onKick(ServerKickEvent ev){
+        ProxiedPlayer player = ev.getPlayer();
+
+        Player stat = PlayerUtils.getStat(player);
+
+        if (stat == null) {
+            if (PlayerUtils.exists(player.getName())) {
+                PlayerUtils.addStat(new Player(player, false));
+            } else {
+                PlayerUtils.createStat(player);
+            }
+            stat = PlayerUtils.getStat(player);
+            if (stat == null) {
+                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
+                return;
+            }
+        }
+
+        if (StreamLine.viaHolder.enabled) {
+            if (ConfigUtils.lobbies) {
+                if (stat.connectingStatus.equals("CONNECTING")) {
+                    stat.tryingLobby++;
+
+                    TreeMap<String, List<String>> servers = StreamLine.lobbies.servers;
+
+                    String[] lobbies = new String[servers.size()];
+
+                    int i = 0;
+                    for (String s : servers.keySet()) {
+                        lobbies[i] = s;
+                        i++;
+                    }
+
+                    ev.setCancelServer(ProxyServer.getInstance().getServerInfo(lobbies[stat.tryingLobby]));
+                }
+            }
         }
     }
 }
