@@ -173,6 +173,8 @@ public class Lobbies {
 
     public void loadServers(){
         for (SingleSet<String, String> s : info.values()) {
+            //StreamLine.getInstance().getLogger().info("Set: <" + s.key  + " , " + s.value + ">");
+
             servers.put(s.key, parseServers(s.key));
         }
     }

@@ -217,10 +217,12 @@ public class JoinLeaveListener implements Listener {
 
         if (StreamLine.viaHolder.enabled) {
             if (! hasServer && ConfigUtils.lobbies && ev.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY)){
-                for (String sName : StreamLine.lobbies.servers.keySet()) {
+                for (SingleSet<String, String> set : StreamLine.lobbies.getInfo().values()) {
+                    String sName = set.key;
+
                     int version = StreamLine.viaHolder.via.getPlayerVersion(player.getUniqueId());
 
-                    StreamLine.getInstance().getLogger().info("Version: " + version + " | Server: " + sName);
+                    //StreamLine.getInstance().getLogger().info("Version: " + version + " | Server: " + sName);
 
                     if (! StreamLine.lobbies.isAllowed(version, sName)) continue;
 
@@ -230,7 +232,6 @@ public class JoinLeaveListener implements Listener {
 
                     stat.updateKey("connectingStatus", "CONNECTING");
 
-                    ev.setCancelled(true);
                     return;
                 }
             }
@@ -432,17 +433,21 @@ public class JoinLeaveListener implements Listener {
                 if (stat.connectingStatus.equals("CONNECTING")) {
                     stat.tryingLobby++;
 
-                    TreeMap<String, List<String>> servers = StreamLine.lobbies.servers;
+                    TreeMap<Integer, SingleSet<String, String>> servers = StreamLine.lobbies.getInfo();
 
                     String[] lobbies = new String[servers.size()];
 
                     int i = 0;
-                    for (String s : servers.keySet()) {
-                        lobbies[i] = s;
+                    for (SingleSet<String, String> s : servers.values()) {
+                        lobbies[i] = s.key;
                         i++;
                     }
 
+                    StreamLine.getInstance().getLogger().info("Trying to reconnect to " + lobbies[stat.tryingLobby]);
+
                     ev.setCancelServer(ProxyServer.getInstance().getServerInfo(lobbies[stat.tryingLobby]));
+                    //ev.getPlayer().connect(ProxyServer.getInstance().getServerInfo(lobbies[stat.tryingLobby]));
+                    ev.setCancelled(true);
                 }
             }
         }

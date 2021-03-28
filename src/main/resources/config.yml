@@ -556,7 +556,7 @@ modules:
     # "no" = none.
     # "staff" = only players with the "streamline.staff" permission.
     player-leaves: "no"
-  # Bungee commands...
+  # Bungee modules...
   bungee:
     # Reports...
     reports:
@@ -576,18 +576,18 @@ modules:
       prefix: "#"
       # Enables / disables the staff chat going to the Discord server.
       minecraft-to-discord: true
-      # Enables / disables telling people with the "streamline.staff" permission (on Discord) when all players joins.
-      # Can be:
-      # "yes" = all players.
-      # "no" = none.
-      # "staff" = only players with the "streamline.staff" permission.
-      player-joins: "yes"
-      # Enables / disables telling people with the "streamline.staff" permission (on Discord) when all players leave.
-      # Can be:
-      # "yes" = all players.
-      # "no" = none.
-      # "staff" = only players with the "streamline.staff" permission.
-      player-leaves: "yes"
+    # Enables / disables telling people with the "streamline.staff" permission (on Discord) when all players joins.
+    # Can be:
+    # "yes" = all players.
+    # "no" = none.
+    # "staff" = only players with the "streamline.staff" permission.
+    player-joins: "yes"
+    # Enables / disables telling people with the "streamline.staff" permission (on Discord) when all players leave.
+    # Can be:
+    # "yes" = all players.
+    # "no" = none.
+    # "staff" = only players with the "streamline.staff" permission.
+    player-leaves: "yes"
     # Parties...
     parties:
       # Go to discord.

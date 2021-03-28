@@ -38,7 +38,7 @@ import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-public class StreamLine extends Plugin /*implements Runnable*/ {
+public class StreamLine extends Plugin {
 
 	private static StreamLine instance = null;
 

@@ -132,6 +132,11 @@ public class Player implements ProxiedPlayer {
     public void updateKey(String key, Object value) {
         info.put(key, String.valueOf(value));
         loadVars();
+        try {
+            saveInfo();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public File getFile() { return file; }
 
