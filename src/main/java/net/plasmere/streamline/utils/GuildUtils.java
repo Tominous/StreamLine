@@ -136,8 +136,15 @@ public class GuildUtils {
         }
 
         try {
-            for (Guild g : guilds) {
-                if (g.leaderUUID.equals(guild.leaderUUID)) return;
+            Iterator<Guild> gs = guilds.iterator();
+
+            while (gs.hasNext()) {
+                Guild g = gs.next();
+
+                if (g.leaderUUID.equals(guild.leaderUUID)) {
+                    g.disband();
+                    guilds.remove(g);
+                }
             }
 
             guilds.add(guild);
