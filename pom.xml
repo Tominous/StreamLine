@@ -6,7 +6,7 @@
 
     <groupId>net.plasmere</groupId>
     <artifactId>StreamLine</artifactId>
-    <version>1.0.10.3</version>
+    <version>1.0.10.4</version>
     <packaging>jar</packaging>
 
     <name>StreamLine</name>
@@ -63,6 +63,11 @@
             <name>jcenter-bintray</name>
             <url>https://jcenter.bintray.com</url>
         </repository>
+        <repository>
+            <id>dv8tion</id>
+            <name>releases</name>
+            <url>https://m2.dv8tion.net/releases</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -82,7 +87,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>4.2.0_224</version>
+            <version>4.2.1_259</version>
         </dependency>
         <dependency>
             <groupId>net.luckperms</groupId>

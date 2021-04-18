@@ -6,6 +6,7 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.PlayerUtils;
 
+import java.util.ListIterator;
 import java.util.concurrent.TimeUnit;
 
 public class PlayerXPTimer implements Runnable {
@@ -44,9 +45,15 @@ public class PlayerXPTimer implements Runnable {
         }
 
         try {
-            for (Player player : PlayerUtils.getStats()) {
+            ListIterator<Player> players = PlayerUtils.getStats().listIterator();
+
+            while (players.hasNext()) {
+                Player player = players.next();
+
                 if (! player.online) {
                     player.saveInfo();
+                    players.remove();
+
                     PlayerUtils.removeStat(player);
                 }
             }

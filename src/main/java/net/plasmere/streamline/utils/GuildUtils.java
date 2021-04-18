@@ -136,6 +136,10 @@ public class GuildUtils {
         }
 
         try {
+            for (Guild g : guilds) {
+                if (g.leaderUUID.equals(guild.leaderUUID)) return;
+            }
+
             guilds.add(guild);
         } catch (Exception e){
             StreamLine.getInstance().getLogger().info("Error adding guild...");

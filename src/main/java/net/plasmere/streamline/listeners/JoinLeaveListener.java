@@ -4,7 +4,7 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.node.Node;
-import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.event.*;
 import net.plasmere.streamline.StreamLine;
@@ -411,6 +411,12 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onKick(ServerKickEvent ev){
+        try {
+            if (StreamLine.getInstance().getProxy().getPlayer(ev.getPlayer().getUniqueId()) == null) return;
+        } catch (Exception e) {
+            return;
+        }
+
         ProxiedPlayer player = ev.getPlayer();
 
         Player stat = PlayerUtils.getStat(player);
@@ -430,25 +436,55 @@ public class JoinLeaveListener implements Listener {
 
         if (StreamLine.viaHolder.enabled) {
             if (ConfigUtils.lobbies) {
-                if (stat.connectingStatus.equals("CONNECTING")) {
-                    stat.tryingLobby++;
+//                if (stat.connectingStatus.equals("CONNECTING")) {
+//                    stat.tryingLobby++;
+//
+//                    TreeMap<Integer, SingleSet<String, String>> servers = StreamLine.lobbies.getInfo();
+//
+//                    String[] lobbies = new String[servers.size()];
+//
+//                    int i = 0;
+//                    for (SingleSet<String, String> s : servers.values()) {
+//                        lobbies[i] = s.key;
+//                        i++;
+//                    }
+//
+//                    StreamLine.getInstance().getLogger().info("Trying to reconnect to " + lobbies[stat.tryingLobby]);
+//
+//                    ev.setCancelServer(ProxyServer.getInstance().getServerInfo(lobbies[stat.tryingLobby]));
+//                    //ev.getPlayer().connect(ProxyServer.getInstance().getServerInfo(lobbies[stat.tryingLobby]));
+//                    ev.setCancelled(true);
+//                }
 
-                    TreeMap<Integer, SingleSet<String, String>> servers = StreamLine.lobbies.getInfo();
+                TreeMap<Integer, SingleSet<String, String>> servers = StreamLine.lobbies.getInfo();
 
-                    String[] lobbies = new String[servers.size()];
+                String[] lobbies = new String[servers.size()];
 
-                    int i = 0;
-                    for (SingleSet<String, String> s : servers.values()) {
-                        lobbies[i] = s.key;
-                        i++;
-                    }
-
-                    StreamLine.getInstance().getLogger().info("Trying to reconnect to " + lobbies[stat.tryingLobby]);
-
-                    ev.setCancelServer(ProxyServer.getInstance().getServerInfo(lobbies[stat.tryingLobby]));
-                    //ev.getPlayer().connect(ProxyServer.getInstance().getServerInfo(lobbies[stat.tryingLobby]));
-                    ev.setCancelled(true);
+                int i = 0;
+                for (SingleSet<String, String> s : servers.values()) {
+                    lobbies[i] = s.key;
+                    i++;
                 }
+
+                //if (PlayerUtils.getConnection(stat) != null) PlayerUtils.addOneToConn(stat);
+
+                PlayerUtils.addConn(stat);
+                SingleSet<Integer, Integer> conn = PlayerUtils.getConnection(stat);
+
+                if (conn == null) return;
+
+                String kickTo = lobbies[conn.value];
+
+                while (StreamLine.getInstance().getProxy().getPlayer(stat.latestName).getServer().getInfo().getName().equals(lobbies[conn.value])) {
+                    PlayerUtils.addOneToConn(stat);
+                    conn = PlayerUtils.getConnection(stat);
+                    if (conn == null) return;
+                }
+
+                ev.setCancelServer(StreamLine.getInstance().getProxy().getServerInfo(lobbies[conn.value]));
+                ev.setCancelled(true);
+
+                PlayerUtils.addOneToConn(stat);
             }
         }
     }

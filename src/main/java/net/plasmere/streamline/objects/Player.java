@@ -93,8 +93,13 @@ public class Player implements ProxiedPlayer {
     }
 
     public Player(String username){
-        this.online = offlineOnCheck();
         construct(Objects.requireNonNull(UUIDFetcher.getCachedUUID(username)), false);
+        this.online = offlineOnCheck();
+    }
+
+    public Player(UUID uuid) {
+        construct(uuid, false);
+        this.online = offlineOnCheck();
     }
 
     public boolean offlineOnCheck(){
@@ -106,6 +111,8 @@ public class Player implements ProxiedPlayer {
     }
 
     private void construct(UUID uuid, boolean createNew){
+        this.uuid = uuid;
+
         this.file = new File(filePrePath + uuid.toString() + ".properties");
 
         if (createNew || file.exists()) {
@@ -132,11 +139,6 @@ public class Player implements ProxiedPlayer {
     public void updateKey(String key, Object value) {
         info.put(key, String.valueOf(value));
         loadVars();
-        try {
-            saveInfo();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
     public File getFile() { return file; }
 
@@ -281,7 +283,6 @@ public class Player implements ProxiedPlayer {
         defaults.add("sc=true");
         defaults.add("latestversion=" + latestVersion);
         defaults.add("tags=" + defaultTags());
-        defaults.add("connectingStatus=IDLE");
         //defaults.add("");
         return defaults;
     }
@@ -305,6 +306,8 @@ public class Player implements ProxiedPlayer {
     }
 
     public void loadVars(){
+        // StreamLine.getInstance().getLogger().info("UUID : " + getFromKey("uuid"));
+
         this.uuid = UUID.fromString(getFromKey("uuid"));
         this.ips = getFromKey("ips");
         this.names = getFromKey("names");
@@ -323,7 +326,6 @@ public class Player implements ProxiedPlayer {
         this.pspy = Boolean.parseBoolean(getFromKey("pspy"));
         this.sc = Boolean.parseBoolean(getFromKey("sc"));
         this.latestVersion = getFromKey("latestversion");
-        this.connectingStatus = "";
         this.tags = loadTags();
     }
 

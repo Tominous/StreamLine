@@ -4,6 +4,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
+import net.plasmere.streamline.utils.TextUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.io.File;
@@ -116,7 +117,14 @@ public class Guild {
     }
 
     public Player getMember(UUID uuid) {
-        return UUIDFetcher.getPlayer(uuid);
+        Player player = UUIDFetcher.getPlayer(uuid);
+
+        if (player == null) {
+            removeUUID(uuid);
+            return null;
+        }
+
+        return player;
     }
 
     public void getFromConfigFile() throws IOException {
@@ -227,12 +235,23 @@ public class Guild {
         }
     }
 
+    public void removeUUID(UUID uuid) {
+        updateKey("totalmembers", TextUtils.removeExtraDot(getFromKey("totalmembers").replace(uuid.toString(), "")));
+        updateKey("members", TextUtils.removeExtraDot(getFromKey("members").replace(uuid.toString(), "")));
+        updateKey("mods", TextUtils.removeExtraDot(getFromKey("mods").replace(uuid.toString(), "")));
+        updateKey("uuid", TextUtils.removeExtraDot(getFromKey("uuid").replace(uuid.toString(), "")));
+    }
+
     public void loadMods(){
         if (modsByUUID != null && moderators != null) {
             moderators.clear();
             for (UUID uuid : modsByUUID) {
                 try {
-                    moderators.add(getMember(uuid));
+                    Player player = getMember(uuid);
+
+                    if (player == null) continue;
+
+                    moderators.add(player);
                 } catch (Exception e) {
                     // do nothing
                 }
@@ -247,7 +266,11 @@ public class Guild {
             members.clear();
             for (UUID uuid : membersByUUID) {
                 try {
-                    members.add(getMember(uuid));
+                    Player player = getMember(uuid);
+
+                    if (player == null) continue;
+
+                    members.add(player);
                 } catch (Exception e) {
                     // do nothing
                 }
@@ -262,7 +285,12 @@ public class Guild {
             totalMembers.clear();
             for (UUID uuid : totalMembersByUUID) {
                 try {
-                    totalMembers.add(getMember(uuid));
+                    //StreamLine.getInstance().getLogger().info("UUID : " + uuid.toString());
+                    Player player = getMember(uuid);
+
+                    if (player == null) continue;
+
+                    totalMembers.add(player);
                 } catch (Exception e) {
                     // do nothing
                 }
@@ -277,7 +305,11 @@ public class Guild {
             invites.clear();
             for (UUID uuid : invitesByUUID) {
                 try {
-                    invites.add(getMember(uuid));
+                    Player player = getMember(uuid);
+
+                    if (player == null) continue;
+
+                    invites.add(player);
                 } catch (Exception e) {
                     // do nothing
                 }

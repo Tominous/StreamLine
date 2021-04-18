@@ -8,10 +8,18 @@ import java.util.Objects;
 
 public class PermissionHelper {
     public static boolean checkRoleIDPerms(MessageReceivedEvent event, String roleId){
+        long id = 0L;
+        try {
+            id = Long.parseLong(roleId);
+        } catch (Exception e) {
+            return true;
+        }
+
         JDA jda = event.getJDA();
         for (Role role : Objects.requireNonNull(event.getMember()).getRoles()){
-            if (role.equals(jda.getRoleById(roleId)))
+            if (role.equals(jda.getRoleById(id))) {
                 return true;
+            }
         }
         return false;
     }

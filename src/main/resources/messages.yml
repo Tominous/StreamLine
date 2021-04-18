@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "1.0.10.3"
+version: "1.0.10.4"
 
 # All bungee messages accept all color and formatting codes.
 # For new lines, use %newline%.
@@ -120,7 +120,7 @@ online:
     # %servers% = a compiled list of servers with the amount online.
     # %online% = a compiled list of all who are online excluding those who have the permission "streamline.staff.vanish".
     # Message on Discord.
-    discord: "Total Online: %amount%%newlineServers: %newline%%servers%%newline%Online: %newline%%online%"
+    discord: "Total Online: %amount%%newline%Servers: %newline%%servers%%newline%Online: %newline%%online%"
     # Message on bungee.
     bungee:
       # The main message.

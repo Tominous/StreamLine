@@ -164,13 +164,12 @@ public class UUIDFetcher {
                 if (PlayerUtils.hasStat(name)) {
                     return getPlayer(name);
                 } else {
-                    return new Player(name);
+                    return PlayerUtils.getOrCreate(uuid);
                 }
             } else {
                 return null;
             }
         } catch (Exception e){
-            e.printStackTrace();
             return null;
         }
     }

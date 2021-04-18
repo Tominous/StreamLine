@@ -10,6 +10,7 @@ import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.objects.lists.SingleSet;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,9 +18,10 @@ import java.util.*;
 
 public class PlayerUtils {
     private static final List<Player> stats = new ArrayList<>();
+    private static final LuckPerms api = LuckPermsProvider.get();
     private static final Configuration message = Config.getMess();
 
-    private static final LuckPerms api = LuckPermsProvider.get();
+    private static HashMap<Player, SingleSet<Integer, Integer>> connections = new HashMap<>();
 
     public static List<Player> getStats() {
         return stats;
@@ -53,6 +55,67 @@ public class PlayerUtils {
         return p;
     }
 
+    public static HashMap<Player, SingleSet<Integer, Integer>> getConnections(){
+        return connections;
+    }
+
+    public static void addOneToConn(Player player) {
+        SingleSet<Integer, Integer> conn = connections.get(player);
+
+        int timer = conn.key;
+        int num = conn.value;
+
+        num++;
+
+        connections.remove(player);
+        connections.put(player, new SingleSet<>(timer, num));
+    }
+
+    public static void removeSecondFromConn(Player player){
+        SingleSet<Integer, Integer> conn = connections.get(player);
+
+        int timer = conn.key;
+        int num = conn.value;
+
+        timer--;
+
+        connections.remove(player);
+        connections.put(player, new SingleSet<>(timer, num));
+    }
+
+    public static SingleSet<Integer, Integer> getConnection(Player player){
+        try {
+            return connections.get(player);
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    public static void removeConn(Player player){
+        connections.remove(player);
+    }
+
+    public static void addConn(Player player){
+        connections.put(player, new SingleSet<>(ConfigUtils.lobbyTimeOut, 0));
+    }
+
+    public static Player getOrCreate(UUID uuid){
+        Player player = getStat(uuid);
+
+        if (player == null) {
+            player = new Player(uuid);
+            addStat(player);
+        }
+
+        return player;
+    }
+
+    public static boolean isNameEqual(Player player, String name){
+        if (player.latestName == null) return false;
+
+        return player.latestName.equals(name);
+    }
+
     public static Player getStat(ProxiedPlayer player) {
         if (player instanceof Player) {
             return getStat(player.getName());
@@ -60,7 +123,7 @@ public class PlayerUtils {
 
         try {
             for (Player stat : stats) {
-                if (stat.latestName.equals(player.getName())) {
+                if (isNameEqual(stat, player.getName())) {
                     return stat;
                 }
             }
@@ -95,7 +158,7 @@ public class PlayerUtils {
 
         try {
             for (Player stat : stats) {
-                if (stat.latestName.equals(player.getName())) {
+                if (isNameEqual(stat, player.getName())) {
                     return stat;
                 }
             }
@@ -109,7 +172,7 @@ public class PlayerUtils {
     public static Player getStat(String name) {
         try {
             for (Player stat : stats) {
-                if (stat.latestName.equals(name)) {
+                if (isNameEqual(stat, name)) {
                     return stat;
                 }
             }

@@ -11,10 +11,7 @@ import net.plasmere.streamline.events.EventsReader;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.configs.Lobbies;
 import net.plasmere.streamline.objects.configs.ServerPermissions;
-import net.plasmere.streamline.objects.timers.GuildXPTimer;
-import net.plasmere.streamline.objects.timers.PlayerClearTimer;
-import net.plasmere.streamline.objects.timers.PlayerXPTimer;
-import net.plasmere.streamline.objects.timers.PlaytimeTimer;
+import net.plasmere.streamline.objects.timers.*;
 import net.plasmere.streamline.utils.*;
 import net.plasmere.streamline.utils.holders.ViaHolder;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -61,6 +58,7 @@ public class StreamLine extends Plugin {
 	private ScheduledTask players;
 	private ScheduledTask cachedPlayers;
 	private ScheduledTask playtime;
+	private ScheduledTask oneSecTimer;
 
 	public StreamLine(){
 		instance = this;
@@ -163,7 +161,10 @@ public class StreamLine extends Plugin {
 			players = getProxy().getScheduler().schedule(this, new PlayerXPTimer(ConfigUtils.timePerGiveP), 1, 1, TimeUnit.SECONDS);
 			cachedPlayers = getProxy().getScheduler().schedule(this, new PlayerClearTimer(ConfigUtils.cachedPClear), 1, 1, TimeUnit.SECONDS);
 			playtime = getProxy().getScheduler().schedule(this, new PlaytimeTimer(1), 1, 1, TimeUnit.SECONDS);
-			getLogger().info("Loaded 3 timers (Runnables) into memory...!");
+			oneSecTimer = getProxy().getScheduler().schedule(this, new OneSecondTimer(), 1, 1, TimeUnit.SECONDS);
+
+			// DO NOT FORGET TO UPDATE AMOUNT BELOW! :/
+			getLogger().info("Loaded 5 timers (Runnables) into memory...!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -241,6 +242,7 @@ public class StreamLine extends Plugin {
 		players.cancel();
 		playtime.cancel();
 		cachedPlayers.cancel();
+		oneSecTimer.cancel();
 
 		try {
 			if (jda != null) {

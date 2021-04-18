@@ -16,7 +16,6 @@ import java.util.Set;
 
 public class StaffChatCommand {
     private static final EmbedBuilder eb = new EmbedBuilder();
-    private final Configuration config = Config.getConf();
 
     public static void sendMessage(String command, MessageReceivedEvent event, StreamLine plugin){
         String om = event.getMessage().getContentDisplay();

@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "1.0.10.3"
+version: "1.0.10.4"
 
 #### BASICS ####
 # For links in chat. This is so the API can know when there is a link and when not.
@@ -651,6 +651,9 @@ modules:
       lobbies:
         enabled: true
         file: "lobbies.properties"
+        # Time in seconds to wait before removing a player who is connecting to any server from the connection list.
+        # Do not put lower than the time it takes to connect from one server to another.
+        time-out: 5
     # Network points.
     points:
       name: "&6Network Gold"

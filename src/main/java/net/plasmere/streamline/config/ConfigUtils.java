@@ -282,6 +282,7 @@ public class ConfigUtils {
     // Lobbies.
     public static final boolean lobbies = config.getBoolean("modules.bungee.redirect.lobbies.enabled");
     public static final String lobbiesFile = config.getString("modules.bungee.redirect.lobbies.file");
+    public static final int lobbyTimeOut = config.getInt("modules.bungee.redirect.lobbies.time-out");
     //
     public static final String pointsName = config.getString("modules.bungee.points.name");
     public static final String pointsDefault = config.getString("modules.bungee.points.default");

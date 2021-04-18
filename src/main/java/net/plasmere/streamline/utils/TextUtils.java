@@ -13,6 +13,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TextUtils {
+    public static String removeExtraDot(String string){
+        String s = string.replace("..", ".");
+
+        if (s.endsWith(".")) {
+            s = s.substring(0, s.lastIndexOf('.'));
+        }
+
+        return s;
+    }
+
     public static String resize(String text, int digits) {
         try {
             digits = getDigits(digits, text.length());
