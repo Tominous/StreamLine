@@ -1,6 +1,7 @@
 package net.plasmere.streamline.utils.holders;
 
 import net.md_5.bungee.api.ProxyServer;
+import net.plasmere.streamline.StreamLine;
 import us.myles.ViaVersion.api.Via;
 import us.myles.ViaVersion.api.ViaAPI;
 import us.myles.ViaVersion.api.protocol.ProtocolVersion;

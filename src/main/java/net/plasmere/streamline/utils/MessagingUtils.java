@@ -106,9 +106,14 @@ public class MessagingUtils {
     }
 
     public static void sendBungeeMessage(BungeeMessage message){
+        String version = PlayerUtils.notSet;
+
+        Player player = UUIDFetcher.getPlayer(message.sender);
+        if (player != null) version = player.latestVersion;
+
         message.to.sendMessage(TextUtils.codedText((message.title + message.transition + message.message)
                         .replace("%sender%", message.sender.getName())
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(message.sender.getName())).latestVersion)
+                        .replace("%version%", version)
                 )
         );
     }
