@@ -5,8 +5,6 @@ import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
-import net.luckperms.api.LuckPerms;
-import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.group.Group;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.config.ServerInfo;
@@ -19,8 +17,6 @@ import java.util.*;
 
 public class GlobalOnlineCommand extends Command {
     private final StreamLine plugin;
-
-    private final LuckPerms api = LuckPermsProvider.get();
 
     public GlobalOnlineCommand(StreamLine streamLine, String perm, String[] aliases){
         super("globalonline", perm, aliases);
@@ -44,7 +40,7 @@ public class GlobalOnlineCommand extends Command {
             return;
         }
 
-        Set<Group> groups = api.getGroupManager().getLoadedGroups();
+        Set<Group> groups = StreamLine.lpHolder.api.getGroupManager().getLoadedGroups();
 
         if (groups.size() <= 0){
             sendTo.sendMessage(TextUtils.codedText(MessageConfUtils.onlineMessageNoGroups));
@@ -100,7 +96,7 @@ public class GlobalOnlineCommand extends Command {
 
         for (ProxiedPlayer player : players){
             try {
-                playerGroup.put(player, Objects.requireNonNull(api.getUserManager().getUser(player.getName())).getPrimaryGroup().toLowerCase());
+                playerGroup.put(player, Objects.requireNonNull(StreamLine.lpHolder.api.getUserManager().getUser(player.getName())).getPrimaryGroup().toLowerCase());
             } catch (Exception e){
                 e.printStackTrace();
                 playerGroup.put(player, "null");

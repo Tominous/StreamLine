@@ -26,7 +26,7 @@ public class GSPYCommand extends Command {
             StreamLine.getInstance().getLogger().info(String.valueOf(player.gspy));
 
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.gspyToggle
-                    .replace("%toggle%", player.gspy ? MessageConfUtils.gspyOn : MessageConfUtils.gspyOff)
+                    .replace("%toggle%", (player.gspy ? MessageConfUtils.gspyOn : MessageConfUtils.gspyOff))
             );
         } else {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);

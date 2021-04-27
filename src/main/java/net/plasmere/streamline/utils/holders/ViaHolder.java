@@ -24,7 +24,7 @@ public class ViaHolder {
             via = Via.getAPI();
             return true;
         } catch (Exception e) {
-            ProxyServer.getInstance().getLogger().severe("ViaVersion not loaded... Disabling ViaVersion support...");
+            StreamLine.getInstance().getLogger().severe("ViaVersion not loaded... Disabling ViaVersion support...");
         }
         return false;
     }

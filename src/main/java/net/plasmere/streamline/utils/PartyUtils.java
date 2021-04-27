@@ -1,7 +1,5 @@
 package net.plasmere.streamline.utils;
 
-import net.luckperms.api.LuckPerms;
-import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.PermissionNode;
@@ -20,8 +18,6 @@ import java.util.*;
 public class PartyUtils {
     private static final List<Party> parties = new ArrayList<>();
     private static final Configuration message = Config.getMess();
-
-    private static final LuckPerms api = LuckPermsProvider.get();
 
     public static List<Party> getParties() {
         return parties;
@@ -42,10 +38,10 @@ public class PartyUtils {
         }
     }
 
-    public static Party getParty(UUID uuid) {
+    public static Party getParty(String uuid) {
         try {
             for (Party party : parties) {
-                if (party.hasMember(UUIDFetcher.getPlayer(uuid)))
+                if (party.hasMember(UUIDFetcher.getPlayerByUUID(uuid)))
                     return party;
             }
             return null;
@@ -86,7 +82,7 @@ public class PartyUtils {
     }
 
     public static void createParty(StreamLine streamLine, Player player) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(player.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(player.uuid);
 
         if (p == null) return;
 
@@ -107,7 +103,7 @@ public class PartyUtils {
     }
 
     public static void createPartySized(StreamLine streamLine, Player player, int size) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(player.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(player.uuid);
 
         if (p == null) return;
 
@@ -145,7 +141,7 @@ public class PartyUtils {
     public static void removeParty(Party party){ parties.remove(party); }
 
     public static void sendInvite(Player to, Player from) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(from.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(from.uuid);
 
         if (p == null) return;
 
@@ -181,7 +177,7 @@ public class PartyUtils {
             for (Player pl : party.totalMembers) {
                 if (! pl.online) continue;
 
-                ProxiedPlayer member = UUIDFetcher.getPPlayer(pl.uuid);
+                ProxiedPlayer member = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                 if (member == null) continue;
 
@@ -211,7 +207,7 @@ public class PartyUtils {
     }
 
     public static void acceptInvite(Player accepter, Player from) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(accepter.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(accepter.uuid);
 
         if (p == null) return;
 
@@ -247,7 +243,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers){
                     if (! pl.online) continue;
 
-                    ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
+                    ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                     if (m == null) continue;
 
@@ -273,7 +269,7 @@ public class PartyUtils {
     }
 
     public static void denyInvite(Player denier, Player from) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(denier.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(denier.uuid);
 
         if (p == null) return;
 
@@ -305,7 +301,7 @@ public class PartyUtils {
             for (Player pl : party.totalMembers){
                 if (! pl.online) continue;
 
-                ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
+                ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                 if (m == null) continue;
 
@@ -327,7 +323,7 @@ public class PartyUtils {
     }
 
     public static void warpParty(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
 
@@ -351,7 +347,7 @@ public class PartyUtils {
         for (Player player : party.totalMembers){
             if (! player.online) continue;
 
-            ProxiedPlayer m = UUIDFetcher.getPPlayer(player.uuid);
+            ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(player.uuid);
 
             if (m == null) continue;
 
@@ -366,7 +362,7 @@ public class PartyUtils {
     }
 
     public static void muteParty(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
 
@@ -391,7 +387,7 @@ public class PartyUtils {
             for (Player player : party.totalMembers) {
                 if (! player.online) continue;
 
-                ProxiedPlayer m = UUIDFetcher.getPPlayer(player.uuid);
+                ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(player.uuid);
 
                 if (m == null) continue;
 
@@ -406,7 +402,7 @@ public class PartyUtils {
             for (Player player : party.totalMembers) {
                 if (! player.online) continue;
 
-                ProxiedPlayer m = UUIDFetcher.getPPlayer(player.uuid);
+                ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(player.uuid);
 
                 if (m == null) continue;
 
@@ -422,7 +418,7 @@ public class PartyUtils {
     }
 
     public static void kickMember(Player sender, Player player) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
 
@@ -463,7 +459,7 @@ public class PartyUtils {
             for (Player pl : party.totalMembers) {
                 if (! pl.online) continue;
 
-                ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
+                ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                 if (m == null) continue;
 
@@ -487,7 +483,7 @@ public class PartyUtils {
     }
 
     public static void disband(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
 
@@ -512,7 +508,7 @@ public class PartyUtils {
             for (Player pl : party.totalMembers) {
                 if (! pl.online) continue;
 
-                ProxiedPlayer member = UUIDFetcher.getPPlayer(pl.uuid);
+                ProxiedPlayer member = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                 if (member == null) continue;
 
@@ -537,7 +533,7 @@ public class PartyUtils {
     }
 
     public static void openParty(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
 
@@ -570,7 +566,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers) {
                     if (! pl.online) continue;
 
-                    ProxiedPlayer member = UUIDFetcher.getPPlayer(pl.uuid);
+                    ProxiedPlayer member = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                     if (member == null) continue;
 
@@ -593,7 +589,7 @@ public class PartyUtils {
     }
 
     public static void openPartySized(Player sender, int size) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
 
@@ -627,7 +623,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers) {
                     if (! pl.online) continue;
 
-                    ProxiedPlayer member = UUIDFetcher.getPPlayer(pl.uuid);
+                    ProxiedPlayer member = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                     if (member == null) continue;
 
@@ -650,7 +646,7 @@ public class PartyUtils {
     }
 
     public static void closeParty(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -682,7 +678,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers) {
                     if (! pl.online) continue;
 
-                    ProxiedPlayer member = UUIDFetcher.getPPlayer(pl.uuid);
+                    ProxiedPlayer member = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                     if (member == null) continue;
 
@@ -705,7 +701,7 @@ public class PartyUtils {
     }
 
     public static void listParty(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -751,7 +747,7 @@ public class PartyUtils {
 
     private static String moderators(Party party) {
         try {
-            if (! (party.moderators.size() > 0)) {
+            if (party.moderators.size() <= 0) {
                 return listModBulkNone;
             }
 
@@ -760,7 +756,7 @@ public class PartyUtils {
             int i = 1;
 
             for (Player m : party.moderators) {
-                if (i <= party.moderators.size()) {
+                if (i < party.moderators.size()) {
                     mods.append(listModBulkNotLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
                             .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
@@ -785,7 +781,7 @@ public class PartyUtils {
 
     private static String members(Party party) {
         try {
-            if (! (party.members.size() > 0)) {
+            if (party.members.size() <= 0) {
                 return listMemberBulkNone;
             }
 
@@ -794,7 +790,7 @@ public class PartyUtils {
             int i = 1;
 
             for (Player m : party.members) {
-                if (i <= party.moderators.size()) {
+                if (i < party.moderators.size()) {
                     mems.append(listMemberBulkNotLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
                             .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
@@ -818,7 +814,7 @@ public class PartyUtils {
     }
 
     public static void promotePlayer(Player sender, Player member) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -861,7 +857,7 @@ public class PartyUtils {
                     for (Player pl : party.totalMembers) {
                         if (! pl.online) continue;
 
-                        ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
+                        ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                         if (m == null) continue;
 
@@ -902,7 +898,7 @@ public class PartyUtils {
                     for (Player pl : party.totalMembers) {
                         if (! pl.online) continue;
 
-                        ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
+                        ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                         if (m == null) continue;
 
@@ -943,7 +939,7 @@ public class PartyUtils {
     }
 
     public static void demotePlayer(Player sender, Player member) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -983,7 +979,7 @@ public class PartyUtils {
                     for (Player pl : party.totalMembers) {
                         if (! pl.online) continue;
 
-                        ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
+                        ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                         if (m == null) continue;
 
@@ -1023,7 +1019,7 @@ public class PartyUtils {
     }
 
     public static void joinParty(Player sender, Player from) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -1050,7 +1046,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers) {
                     if (! pl.online) continue;
 
-                    ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
+                    ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                     if (m == null) continue;
 
@@ -1075,13 +1071,15 @@ public class PartyUtils {
     }
 
     private static int getMaxSize(Player leader){
+        if (! StreamLine.lpHolder.enabled) return ConfigUtils.partyMax;
+
         try {
             Collection<PermissionNode> perms =
-                    Objects.requireNonNull(api.getGroupManager().getGroup(
-                            Objects.requireNonNull(api.getUserManager().getUser(leader.getName())).getPrimaryGroup()
+                    Objects.requireNonNull(StreamLine.lpHolder.api.getGroupManager().getGroup(
+                            Objects.requireNonNull(StreamLine.lpHolder.api.getUserManager().getUser(leader.getName())).getPrimaryGroup()
                     )).getNodes(NodeType.PERMISSION);
 
-            for (Group group : Objects.requireNonNull(api.getUserManager().getUser(leader.getName())).getInheritedGroups(QueryOptions.defaultContextualOptions())){
+            for (Group group : Objects.requireNonNull(StreamLine.lpHolder.api.getUserManager().getUser(leader.getName())).getInheritedGroups(QueryOptions.defaultContextualOptions())){
                 perms.addAll(group.getNodes(NodeType.PERMISSION));
             }
 
@@ -1118,7 +1116,7 @@ public class PartyUtils {
     }
 
     public static void leaveParty(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -1138,7 +1136,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers) {
                     if (! pl.online) continue;
 
-                    ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
+                    ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                     if (m == null) continue;
 
@@ -1160,7 +1158,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers) {
                     if (! pl.online) continue;
 
-                    ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
+                    ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                     if (m == null) continue;
 
@@ -1187,7 +1185,7 @@ public class PartyUtils {
     }
 
     public static void sendChat(Player sender, String msg) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(sender.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -1221,7 +1219,7 @@ public class PartyUtils {
             for (Player pl : party.totalMembers) {
                 if (! pl.online) continue;
 
-                ProxiedPlayer m = UUIDFetcher.getPPlayer(pl.uuid);
+                ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
                 if (m == null) continue;
 

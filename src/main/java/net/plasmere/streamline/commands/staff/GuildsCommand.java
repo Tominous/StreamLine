@@ -23,6 +23,7 @@ public class GuildsCommand extends Command {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.guildsNone);
             return;
         }
+
         for (Guild guild : GuildUtils.getGuilds()){
             MessagingUtils.sendBGUserMessage(guild, sender, sender, MessageConfUtils.guildsMessage);
         }

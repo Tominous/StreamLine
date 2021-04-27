@@ -26,14 +26,19 @@ public class Lobbies {
     private void construct(boolean createNew){
         this.file = new File(filePrePath + ConfigUtils.lobbiesFile);
 
-        if (createNew || file.exists()) {
-            //StreamLine.getInstance().getLogger().info("Guild file: " + file.getName() + " (In the \"guilds\" folder.)");
-
+        if (createNew || ! file.exists()) {
             try {
-                getFromConfigFile();
+                this.file.delete();
+                this.updateWithNewDefaults();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+        try {
+            getFromConfigFile();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

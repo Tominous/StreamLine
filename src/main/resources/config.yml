@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "1.0.10.4"
+version: "1.0.10.6"
 
 #### BASICS ####
 # For links in chat. This is so the API can know when there is a link and when not.
@@ -240,7 +240,7 @@ commands:
           - "wa"
           - "summon"
           - "warp"
-    # The party command.
+    # The guild command.
     guild:
       # Enables / disables the use of the "party" bungee command.
       enabled: true
@@ -339,6 +339,7 @@ commands:
           - "inf"
           - "stats"
           - "info"
+    # Stats command.
     stats:
       enabled: true
       permission: "streamline.command.stats"
@@ -405,7 +406,7 @@ commands:
         aliases:
           - "so"
           - "staff"
-      # The slreload command.
+      # The streamline reload command.
       slreload:
         # Custom permission.
         permission: "streamline.command.reload"
@@ -436,6 +437,7 @@ commands:
           - "gilds"
           - "gds"
           - "gs"
+      # The bungee sudo command.
       bsudo:
         # Enables / disables the use of the command.
         enabled: true
@@ -446,6 +448,7 @@ commands:
           - "bs"
           - "bsu"
           - "psuedo"
+      # The social spy command.
       sspy:
         # Enables / disables the use of the command.
         enabled: true
@@ -454,6 +457,7 @@ commands:
         # All aliases for the command. Listed in yml list format.
         aliases:
           - "socialspy"
+      # The guild spy command.
       gspy:
         # Enables / disables the use of the command.
         enabled: true
@@ -462,6 +466,7 @@ commands:
         # All aliases for the command. Listed in yml list format.
         aliases:
           - "guildspy"
+      # The party spy command.
       pspy:
         # Enables / disables the use of the command.
         enabled: true
@@ -470,6 +475,7 @@ commands:
         # All aliases for the command. Listed in yml list format.
         aliases:
           - "partyspy"
+      # The bungee tag command.
       btag:
         # Enables / disables the use of the command.
         enabled: true
@@ -478,6 +484,7 @@ commands:
         # All aliases for the command. Listed in yml list format.
         aliases:
           - "bungeetag"
+      # The events reload command.
       evreload:
         # Enables / disables the use of the command.
         enabled: true
@@ -491,6 +498,9 @@ commands:
 
 ### MODULE SETTINGS ###
 modules:
+  # Permission that you will give to all of your staff.
+  # (Used for staff chats and other staff determined staff modules...)
+  staff-permission: "streamline.staff"
   # Discord modules...
   discord:
     # Enables / disables the Discord main console.
@@ -548,13 +558,13 @@ modules:
     # Can be:
     # "yes" = all players.
     # "no" = none.
-    # "staff" = only players with the "streamline.staff" permission.
+    # "staff" = only players with the staff permission.
     player-joins: "no"
     # Enables / disables telling the text channel defined in "leaves" (in the discord > text-channels section) (on Discord) when all players leaves.
     # Can be:
     # "yes" = all players.
     # "no" = none.
-    # "staff" = only players with the "streamline.staff" permission.
+    # "staff" = only players with the staff permission.
     player-leaves: "no"
   # Bungee modules...
   bungee:
@@ -568,7 +578,7 @@ modules:
       minecraft-to-discord: true
     # StaffChat...
     staffchat:
-      # Enables / disables the bungee staff chat for players with the permission "streamline.staff" (on bungee).
+      # Enables / disables the bungee staff chat for players with the permission staff (on bungee).
       enabled: true
       # Enables / disables the bungee staff chat prefix in "prefix" (in the modules > bungee > staffchat section).
       enable-prefix: true
@@ -576,18 +586,23 @@ modules:
       prefix: "#"
       # Enables / disables the staff chat going to the Discord server.
       minecraft-to-discord: true
-    # Enables / disables telling people with the "streamline.staff" permission (on Discord) when all players joins.
+    # Enables / disables telling people with the staff permission (on Discord) when all players joins.
     # Can be:
     # "yes" = all players.
     # "no" = none.
-    # "staff" = only players with the "streamline.staff" permission.
+    # "staff" = only players with the staff permission.
+    # NOTE: per-server connection events can be made with the events module.
     player-joins: "yes"
-    # Enables / disables telling people with the "streamline.staff" permission (on Discord) when all players leave.
+    # Permission for players you want to see the join message.
+    joins-permission: "streamline.joins.view"
+    # Enables / disables telling people with the staff permission (on Discord) when all players leave.
     # Can be:
     # "yes" = all players.
     # "no" = none.
-    # "staff" = only players with the "streamline.staff" permission.
+    # "staff" = only players with the staff permission.
     player-leaves: "yes"
+    # Permission for players you want to see the leaving message.
+    leaves-permission: "streamline.leaves.view"
     # Parties...
     parties:
       # Go to discord.
@@ -606,6 +621,7 @@ modules:
       view-permission: "streamline.view.party"
     # Sudoing...
     sudo:
+      # Permission for players you don't want to be able to be sudoed.
       no-sudo-permission: "streamline.sudo.nosudo"
     # Guilds...
     guilds:
@@ -627,6 +643,7 @@ modules:
     stats:
       # Enables / disables telling the player when their stats have been created.
       tell-when-create: true
+      # Network EXP for players.
       xp:
         # Amount to give each guild per player online every "time-per" seconds.
         amount-per: 1
@@ -638,33 +655,51 @@ modules:
     # This redirects players upon joining the server.
     # Nice if you need to direct certain players to a different server when they join.
     redirect:
+      enabled: true
       # Give this to players per server.
       # Example permission to give to a player: streamline.send.skyblock
-      # This example will send the player to the skyblock server on your server.
+      # This example will send the player to the skyblock server on your server upon joining the network.
       # Only works if you have a server specifically called "skyblock" in your bungee config.yml
       permission-prefix: "streamline.send."
       # Main lobby server name as defined in your bungee config.yml
       main: "lobby"
+      # This will make it so you can block players from joining a specific server without a certain Minecraft version.
       version-block:
-        override-permission: "streamline.block.override"
-        server-permission-file: "servers.properties"
-      lobbies:
+        # Enables this feature.
         enabled: true
+        # Permission to override the version block.
+        override-permission: "streamline.block.override"
+        # File that determines which servers can be accessed on which versions.
+        server-permission-file: "servers.properties"
+      # This does:
+      # 1. Upon joining the network, you will be tried to join specified servers in the order in the file
+      # 2. Upon the server you were on shutting down, you will be tried to join specified servers in the order in the file.
+      # > All configurable by version.
+      lobbies:
+        # Enables this feature.
+        enabled: true
+        # Defines the file. (Will be in the configs folder.)
         file: "lobbies.properties"
         # Time in seconds to wait before removing a player who is connecting to any server from the connection list.
         # Do not put lower than the time it takes to connect from one server to another.
         time-out: 5
     # Network points.
     points:
+      # The name for the points.
       name: "&6Network Gold"
+      # Default amount given to players upon first join to the network.
       default: 0
-    # Network tags.
+    # Network tags. (Used for events.)
     tags:
+      # Default tags given upon first join to the network.
       defaults:
         - newbie
     # Network events.
+    # Check the wiki for how to use: https://github.com/xNitrate/StreamLine/wiki/How-to-do-Events
     events:
+      # Enables feature.
       enabled: true
+      # Folder for events.
       folder: "events"
       # Puts the default event into the folder above when the folder is empty.
       add-default-when-empty: false

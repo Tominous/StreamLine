@@ -18,15 +18,15 @@ public class Guild {
 
     public File file;
     public String name;
-    public UUID leaderUUID;
+    public String leaderUUID;
     public List<Player> moderators;
-    public List<UUID> modsByUUID;
+    public List<String> modsByUUID;
     public List<Player> members;
-    public List<UUID> membersByUUID;
+    public List<String> membersByUUID;
     public List<Player> totalMembers;
-    public List<UUID> totalMembersByUUID;
+    public List<String> totalMembersByUUID;
     public List<Player> invites;
-    public List<UUID> invitesByUUID;
+    public List<String> invitesByUUID;
     public boolean isMuted;
     public boolean isPublic;
     public int xp;
@@ -39,22 +39,22 @@ public class Guild {
         LEADER
     }
 
-    public Guild(UUID creatorUUID, String name) {
+    public Guild(String creatorUUID, String name) {
         this.leaderUUID = creatorUUID;
         this.name = name;
         try {
-            Objects.requireNonNull(UUIDFetcher.getPlayer(creatorUUID)).updateKey("guild", creatorUUID.toString());
+            Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(creatorUUID)).updateKey("guild", creatorUUID.toString());
         } catch (Exception e){
             // do nothing
         }
         construct(leaderUUID, true);
     }
 
-    public Guild(UUID uuid, boolean create){
+    public Guild(String uuid, boolean create){
         construct(uuid, create);
     }
 
-    private void construct(UUID uuid, boolean createNew){
+    private void construct(String uuid, boolean createNew){
         this.file = new File(filePrePath + uuid.toString() + ".properties");
 
         if (createNew || file.exists()) {
@@ -116,8 +116,8 @@ public class Guild {
         info.put(key, value);
     }
 
-    public Player getMember(UUID uuid) {
-        Player player = UUIDFetcher.getPlayer(uuid);
+    public Player getMember(String uuid) {
+        Player player = UUIDFetcher.getPlayerByUUID(uuid);
 
         if (player == null) {
             removeUUID(uuid);
@@ -209,7 +209,7 @@ public class Guild {
 
         this.name = getFromKey("name");
         try {
-            this.leaderUUID = UUID.fromString(getFromKey("leader"));
+            this.leaderUUID = getFromKey("leader");
         } catch (Exception e) {
             return;
         }
@@ -235,17 +235,17 @@ public class Guild {
         }
     }
 
-    public void removeUUID(UUID uuid) {
-        updateKey("totalmembers", TextUtils.removeExtraDot(getFromKey("totalmembers").replace(uuid.toString(), "")));
-        updateKey("members", TextUtils.removeExtraDot(getFromKey("members").replace(uuid.toString(), "")));
-        updateKey("mods", TextUtils.removeExtraDot(getFromKey("mods").replace(uuid.toString(), "")));
-        updateKey("uuid", TextUtils.removeExtraDot(getFromKey("uuid").replace(uuid.toString(), "")));
+    public void removeUUID(String uuid) {
+        updateKey("totalmembers", TextUtils.removeExtraDot(getFromKey("totalmembers").replace(uuid, "")));
+        updateKey("members", TextUtils.removeExtraDot(getFromKey("members").replace(uuid, "")));
+        updateKey("mods", TextUtils.removeExtraDot(getFromKey("mods").replace(uuid, "")));
+        updateKey("uuid", TextUtils.removeExtraDot(getFromKey("uuid").replace(uuid, "")));
     }
 
     public void loadMods(){
         if (modsByUUID != null && moderators != null) {
             moderators.clear();
-            for (UUID uuid : modsByUUID) {
+            for (String uuid : modsByUUID) {
                 try {
                     Player player = getMember(uuid);
 
@@ -264,7 +264,7 @@ public class Guild {
     public void loadMems(){
         if (membersByUUID != null && members != null) {
             members.clear();
-            for (UUID uuid : membersByUUID) {
+            for (String uuid : membersByUUID) {
                 try {
                     Player player = getMember(uuid);
 
@@ -283,7 +283,7 @@ public class Guild {
     public void loadTMems(){
         if (totalMembersByUUID != null && totalMembers != null) {
             totalMembers.clear();
-            for (UUID uuid : totalMembersByUUID) {
+            for (String uuid : totalMembersByUUID) {
                 try {
                     //StreamLine.getInstance().getLogger().info("UUID : " + uuid.toString());
                     Player player = getMember(uuid);
@@ -303,7 +303,7 @@ public class Guild {
     public void loadInvs(){
         if (invitesByUUID != null && invites != null) {
             invites.clear();
-            for (UUID uuid : invitesByUUID) {
+            for (String uuid : invitesByUUID) {
                 try {
                     Player player = getMember(uuid);
 
@@ -319,19 +319,19 @@ public class Guild {
         }
     }
 
-    private List<UUID> loadModerators(){
-        List<UUID> uuids = new ArrayList<>();
+    private List<String> loadModerators(){
+        List<String> uuids = new ArrayList<>();
 
         try {
             if (getFromKey("mods").equals("") || getFromKey("mods") == null) return uuids;
             if (! getFromKey("mods").contains(".")) {
-                uuids.add(UUID.fromString(getFromKey("mods")));
+                uuids.add(getFromKey("mods"));
                 return uuids;
             }
 
             for (String uuid : getFromKey("mods").split("\\.")) {
                 try {
-                    uuids.add(UUID.fromString(uuid));
+                    uuids.add(uuid);
                 } catch (Exception e) {
                     //continue;
                 }
@@ -343,19 +343,19 @@ public class Guild {
         return uuids;
     }
 
-    private List<UUID> loadMembers() {
-        List<UUID> uuids = new ArrayList<>();
+    private List<String> loadMembers() {
+        List<String> uuids = new ArrayList<>();
 
         try {
             if (getFromKey("members").equals("") || getFromKey("members") == null) return uuids;
             if (! getFromKey("members").contains(".")) {
-                uuids.add(UUID.fromString(getFromKey("members")));
+                uuids.add(getFromKey("members"));
                 return uuids;
             }
 
             for (String uuid : getFromKey("members").split("\\.")) {
                 try {
-                    uuids.add(UUID.fromString(uuid));
+                    uuids.add(uuid);
                 } catch (Exception e) {
                     //continue;
                 }
@@ -367,19 +367,19 @@ public class Guild {
         return uuids;
     }
 
-    private List<UUID> loadTotalMembers() {
-        List<UUID> uuids = new ArrayList<>();
+    private List<String> loadTotalMembers() {
+        List<String> uuids = new ArrayList<>();
 
         try {
             if (getFromKey("totalmembers").equals("") || getFromKey("totalmembers") == null) return uuids;
             if (! getFromKey("totalmembers").contains(".")) {
-                uuids.add(UUID.fromString(getFromKey("totalmembers")));
+                uuids.add(getFromKey("totalmembers"));
                 return uuids;
             }
 
             for (String uuid : getFromKey("totalmembers").split("\\.")) {
                 try {
-                    uuids.add(UUID.fromString(uuid));
+                    uuids.add(uuid);
                 } catch (Exception e) {
                     //continue;
                 }
@@ -391,19 +391,19 @@ public class Guild {
         return uuids;
     }
 
-    private List<UUID> loadInvites() {
-        List<UUID> uuids = new ArrayList<>();
+    private List<String> loadInvites() {
+        List<String> uuids = new ArrayList<>();
 
         try {
             if (getFromKey("invites").equals("") || getFromKey("invites") == null) return uuids;
             if (! getFromKey("invites").contains(".")) {
-                uuids.add(UUID.fromString(getFromKey("invites")));
+                uuids.add(getFromKey("invites"));
                 return uuids;
             }
 
             for (String uuid : getFromKey("invites").split("\\.")) {
                 try {
-                    uuids.add(UUID.fromString(uuid));
+                    uuids.add(uuid);
                 } catch (Exception e) {
                     //continue;
                 }
@@ -490,7 +490,7 @@ public class Guild {
         StringBuilder builder = new StringBuilder();
 
         int i = 1;
-        for (UUID uuid : invitesByUUID){
+        for (String uuid : invitesByUUID){
             if (i != invitesByUUID.size()){
                 builder.append(uuid).append(".");
             } else {
@@ -506,7 +506,7 @@ public class Guild {
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
-        for (UUID uuid : totalMembersByUUID){
+        for (String uuid : totalMembersByUUID){
             i++;
             if (i != totalMembersByUUID.size()){
                 builder.append(uuid).append(".");
@@ -522,7 +522,7 @@ public class Guild {
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
-        for (UUID uuid : membersByUUID){
+        for (String uuid : membersByUUID){
             i++;
             if (i != membersByUUID.size()){
                 builder.append(uuid).append(".");
@@ -538,7 +538,7 @@ public class Guild {
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
-        for (UUID uuid : modsByUUID){
+        for (String uuid : modsByUUID){
             i++;
             if (i != modsByUUID.size()){
                 builder.append(uuid).append(".");
@@ -550,7 +550,7 @@ public class Guild {
         return builder.toString();
     }
 
-    public boolean hasMember(UUID uuid){
+    public boolean hasMember(String uuid){
         return totalMembersByUUID.contains(uuid);
     }
 
@@ -579,7 +579,7 @@ public class Guild {
         }
     }
 
-    public boolean hasModPerms(UUID uuid) {
+    public boolean hasModPerms(String uuid) {
         try {
             return modsByUUID.contains(uuid) || leaderUUID.equals(uuid);
         } catch (Exception e) {
@@ -589,7 +589,7 @@ public class Guild {
 
     public boolean hasModPerms(Player player) {
         try {
-            return moderators.contains(player) || leaderUUID.equals(player.getUniqueId());
+            return moderators.contains(player) || leaderUUID.equals(player.uuid);
         } catch (Exception e) {
             return false;
         }
@@ -600,13 +600,13 @@ public class Guild {
     }
 
     public String removeFromModerators(Player player){
-        modsByUUID.remove(player.getUniqueId());
+        modsByUUID.remove(player.uuid);
         moderators.remove(player);
 
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
-        for (UUID uuid : modsByUUID) {
+        for (String uuid : modsByUUID) {
             i++;
             if (i != modsByUUID.size()) {
                 builder.append(uuid).append(".");
@@ -619,13 +619,13 @@ public class Guild {
     }
 
     public String remFromMembers(Player player){
-        membersByUUID.remove(player.getUniqueId());
+        membersByUUID.remove(player.uuid);
         members.remove(player);
 
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
-        for (UUID uuid : membersByUUID) {
+        for (String uuid : membersByUUID) {
             i++;
             if (i != membersByUUID.size()) {
                 builder.append(uuid).append(".");
@@ -638,13 +638,13 @@ public class Guild {
     }
 
     public String remFromTMembers(Player player){
-        totalMembersByUUID.remove(player.getUniqueId());
+        totalMembersByUUID.remove(player.uuid);
         totalMembers.remove(player);
 
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
-        for (UUID uuid : totalMembersByUUID) {
+        for (String uuid : totalMembersByUUID) {
             i++;
             if (i != totalMembersByUUID.size()) {
                 builder.append(uuid).append(".");
@@ -657,13 +657,13 @@ public class Guild {
     }
 
     public String remFromInvites(Player from, Player player){
-        invitesByUUID.remove(player.getUniqueId());
+        invitesByUUID.remove(player.uuid);
         invites.remove(player);
 
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
-        for (UUID uuid : invitesByUUID) {
+        for (String uuid : invitesByUUID) {
             i++;
             if (i != invitesByUUID.size()) {
                 builder.append(uuid).append(".");
@@ -680,13 +680,13 @@ public class Guild {
     }
 
     public String addToModerators(Player player){
-        modsByUUID.add(player.getUniqueId());
+        modsByUUID.add(player.uuid);
         moderators.add(player);
 
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
-        for (UUID uuid : modsByUUID) {
+        for (String uuid : modsByUUID) {
             i++;
             if (i != modsByUUID.size()) {
                 builder.append(uuid).append(".");
@@ -699,13 +699,13 @@ public class Guild {
     }
 
     public String addToMembers(Player player){
-        membersByUUID.add(player.getUniqueId());
+        membersByUUID.add(player.uuid);
         members.add(player);
 
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
-        for (UUID uuid : membersByUUID) {
+        for (String uuid : membersByUUID) {
             i++;
             if (i != membersByUUID.size()) {
                 builder.append(uuid).append(".");
@@ -718,13 +718,13 @@ public class Guild {
     }
 
     public String addToTMembers(Player player){
-        totalMembersByUUID.add(player.getUniqueId());
+        totalMembersByUUID.add(player.uuid);
         totalMembers.add(player);
 
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
-        for (UUID uuid : totalMembersByUUID) {
+        for (String uuid : totalMembersByUUID) {
             i++;
             if (i != totalMembersByUUID.size()) {
                 builder.append(uuid).append(".");
@@ -737,13 +737,13 @@ public class Guild {
     }
 
     public String addToInvites(Player player){
-        invitesByUUID.add(player.getUniqueId());
+        invitesByUUID.add(player.uuid);
         invites.add(player);
 
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
-        for (UUID uuid : invitesByUUID) {
+        for (String uuid : invitesByUUID) {
             i++;
             if (i != invitesByUUID.size()) {
                 builder.append(uuid).append(".");
@@ -771,7 +771,7 @@ public class Guild {
     public void removeMemberFromGuild(Player player){
         Random RNG = new Random();
 
-        if (leaderUUID.equals(player.getUniqueId())){
+        if (leaderUUID.equals(player.uuid)){
             if (totalMembers.size() <= 1) {
                 try {
                     updateKey("totalmembers", remFromTMembers(player));
@@ -787,16 +787,16 @@ public class Guild {
                     Player newLeader = moderators.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
-                    leaderUUID = newLeader.getUniqueId();
-                    modsByUUID.remove(newLeader.getUniqueId());
+                    leaderUUID = newLeader.uuid;
+                    modsByUUID.remove(newLeader.uuid);
                 }
                 if (members.size() > 0) {
                     int r = RNG.nextInt(members.size());
                     Player newLeader = members.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
-                    leaderUUID = newLeader.getUniqueId();
-                    membersByUUID.remove(newLeader.getUniqueId());
+                    leaderUUID = newLeader.uuid;
+                    membersByUUID.remove(newLeader.uuid);
                 }
             }
         }
@@ -821,11 +821,11 @@ public class Guild {
     }
 
     public Level getLevel(Player member){
-        if (this.membersByUUID.contains(member.getUniqueId()))
+        if (this.membersByUUID.contains(member.uuid))
             return Level.MEMBER;
-        else if (this.modsByUUID.contains(member.getUniqueId()))
+        else if (this.modsByUUID.contains(member.uuid))
             return Level.MODERATOR;
-        else if (this.leaderUUID.equals(member.getUniqueId()))
+        else if (this.leaderUUID.equals(member.uuid))
             return Level.LEADER;
         else
             return Level.MEMBER;
@@ -836,7 +836,7 @@ public class Guild {
 
         forModeratorRemove(player);
 
-        if (leaderUUID.equals(player.getUniqueId())){
+        if (leaderUUID.equals(player.uuid)){
             if (totalMembers.size() <= 1) {
                 try {
                     updateKey("totalmembers", remFromTMembers(player));
@@ -852,16 +852,16 @@ public class Guild {
                     Player newLeader = moderators.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
-                    leaderUUID = newLeader.getUniqueId();
-                    modsByUUID.remove(newLeader.getUniqueId());
+                    leaderUUID = newLeader.uuid;
+                    modsByUUID.remove(newLeader.uuid);
                 }
                 if (members.size() > 0) {
                     int r = RNG.nextInt(members.size());
                     Player newLeader = members.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
-                    leaderUUID = newLeader.getUniqueId();
-                    membersByUUID.remove(newLeader.getUniqueId());
+                    leaderUUID = newLeader.uuid;
+                    membersByUUID.remove(newLeader.uuid);
                 }
             }
         }
@@ -885,7 +885,7 @@ public class Guild {
 
         forMemberRemove(player);
 
-        if (leaderUUID.equals(player.getUniqueId())){
+        if (leaderUUID.equals(player.uuid)){
             if (totalMembers.size() <= 1) {
                 try {
                     updateKey("totalmembers", remFromTMembers(player));
@@ -901,16 +901,16 @@ public class Guild {
                     Player newLeader = moderators.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
-                    leaderUUID = newLeader.getUniqueId();
-                    modsByUUID.remove(newLeader.getUniqueId());
+                    leaderUUID = newLeader.uuid;
+                    modsByUUID.remove(newLeader.uuid);
                 }
                 if (members.size() > 0) {
                     int r = RNG.nextInt(members.size());
                     Player newLeader = members.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
-                    leaderUUID = newLeader.getUniqueId();
-                    membersByUUID.remove(newLeader.getUniqueId());
+                    leaderUUID = newLeader.uuid;
+                    membersByUUID.remove(newLeader.uuid);
                 }
             }
         }
@@ -930,31 +930,31 @@ public class Guild {
     }
 
     public void forModeratorRemove(Player player){
-        this.modsByUUID.removeIf(m -> m.equals(player.getUniqueId()));
+        this.modsByUUID.removeIf(m -> m.equals(player.uuid));
         updateKey("mods", getModeratorsAsStringed());
     }
 
     public void forMemberRemove(Player player){
-        this.membersByUUID.removeIf(m -> m.equals(player.getUniqueId()));
+        this.membersByUUID.removeIf(m -> m.equals(player.uuid));
         updateKey("members", getMembersAsStringed());
     }
 
     public void forTotalMembersRemove(Player player){
-        this.totalMembersByUUID.removeIf(m -> m.equals(player.getUniqueId()));
+        this.totalMembersByUUID.removeIf(m -> m.equals(player.uuid));
         updateKey("totalmembers", getTotalMembersAsStringed());
     }
 
     public void replaceLeader(Player player){
         updateKey("mods", getModeratorsAsStringed() + "." + leaderUUID.toString());
         modsByUUID = loadModerators();
-        updateKey("leader", player.getUniqueId());
+        updateKey("leader", player.uuid);
         updateKey("mods", getModeratorsAsStringed()
                 .replace("." + leaderUUID.toString(), "")
                 .replace(leaderUUID.toString() + ".", "")
                 .replace(leaderUUID.toString(), "")
         );
 
-        leaderUUID = UUID.fromString(getFromKey("leader"));
+        leaderUUID = getFromKey("leader");
 
         loadMods();
 
@@ -992,8 +992,8 @@ public class Guild {
     }
 
     public void disband(){
-        for (UUID uuid : totalMembersByUUID){
-            Player player = UUIDFetcher.getPlayer(uuid);
+        for (String uuid : totalMembersByUUID){
+            Player player = UUIDFetcher.getPlayerByUUID(uuid);
 
             if (player == null) continue;
 

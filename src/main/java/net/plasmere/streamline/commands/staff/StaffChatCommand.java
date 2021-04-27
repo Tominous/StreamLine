@@ -27,7 +27,7 @@ public class StaffChatCommand extends Command {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof ProxiedPlayer) {
             if (ConfigUtils.moduleStaffChat) {
-                if (sender.hasPermission("streamline.staff.staffchat")) {
+                if (sender.hasPermission(ConfigUtils.staffPerm)) {
                     Player player = PlayerUtils.getStat(sender);
 
                     if (player == null) return;
@@ -36,7 +36,7 @@ public class StaffChatCommand extends Command {
                         player.toggleSC();
 
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.staffChatToggle
-                                .replace("%toggle%", player.sc ? MessageConfUtils.staffChatOn : MessageConfUtils.staffChatOff)
+                                .replace("%toggle%", (player.sc ? MessageConfUtils.staffChatOn : MessageConfUtils.staffChatOff))
                         );
                         return;
                     }

@@ -28,7 +28,7 @@ public class StaffChatCommand {
 
         for (ProxiedPlayer player : staff){
             try {
-                if (! player.hasPermission("streamline.staff")) {
+                if (! player.hasPermission(ConfigUtils.staffPerm)) {
                     staffs.remove(player);
                 }
             } catch (Exception e){

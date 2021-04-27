@@ -3,6 +3,7 @@ package net.plasmere.streamline.events;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
@@ -10,7 +11,6 @@ import net.plasmere.streamline.utils.TextUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +21,9 @@ public class EventsHandler {
         return events;
     }
     public static void addEvent(Event event){
-        StreamLine.getInstance().getLogger().info("Added Event: " + event.toString());
+        //StreamLine.getInstance().getLogger().info("Added Event: " + event.toString());
+
+        if (! ConfigUtils.tagsEvents) return;
 
         events.add(event);
     }
@@ -34,7 +36,7 @@ public class EventsHandler {
     }
 
     public static void runEvent(Event event, Player player){
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(player.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(player.uuid);
 
         if (p == null) return;
 
@@ -64,7 +66,7 @@ public class EventsHandler {
     }
 
     public static void runEvent(Event event, Player player, String context){
-        ProxiedPlayer p = UUIDFetcher.getPPlayer(player.uuid);
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(player.uuid);
 
         if (p == null) return;
 

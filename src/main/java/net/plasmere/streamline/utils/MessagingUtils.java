@@ -28,8 +28,46 @@ public class MessagingUtils {
 
         for (ProxiedPlayer player : staff){
             try {
-                if (! player.hasPermission("streamline.staff")) {
+                if (! player.hasPermission(ConfigUtils.staffPerm)) {
                     staffs.remove(player);
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        for (ProxiedPlayer player : staffs) {
+            player.sendMessage(TextUtils.codedText(MessageConfUtils.bungeeStaffChatMessage
+                            .replace("%user%", sender.getName())
+                            .replace("%from%", from)
+                            .replace("%message%", msg)
+                            .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
+                    )
+            );
+        }
+    }
+
+    public static void sendStaffChatMessage(CommandSender sender, String from, String msg, StreamLine plugin){
+        Collection<ProxiedPlayer> staff = plugin.getProxy().getPlayers();
+        Set<ProxiedPlayer> staffs = new HashSet<>(staff);
+
+        for (ProxiedPlayer player : staff){
+            try {
+                if (! player.hasPermission(ConfigUtils.staffPerm)) {
+                    staffs.remove(player);
+                    continue;
+                }
+
+                try {
+                    Player p = PlayerUtils.getStat(player);
+
+                    if (p == null) continue;
+
+                    if (! p.sc) {
+                        staffs.remove(player);
+                    }
+                } catch (Exception e) {
+                    // Console, so continue...
                 }
             } catch (Exception e){
                 e.printStackTrace();
@@ -50,18 +88,19 @@ public class MessagingUtils {
     public static void sendBungeeMessage(BungeeMassMessage message){
         Collection<ProxiedPlayer> staff = plugin.getProxy().getPlayers();
         Set<ProxiedPlayer> people = new HashSet<>(staff);
+        List<ProxiedPlayer> ps = new ArrayList<>(people);
 
         for (ProxiedPlayer player : people){
             try {
                 if (! player.hasPermission(message.permission)) {
-                    people.remove(player);
+                    ps.remove(player);
                 }
             } catch (Exception e){
                 e.printStackTrace();
             }
         }
 
-        for (ProxiedPlayer player : people) {
+        for (ProxiedPlayer player : ps) {
             sendBungeeMessage(new BungeeMessage(message.sender, player, message.title, message.transition, message.message));
         }
     }
@@ -80,7 +119,7 @@ public class MessagingUtils {
 
         for (ProxiedPlayer player : staff){
             try {
-                if (! player.hasPermission("streamline.staff")) {
+                if (! player.hasPermission(ConfigUtils.staffPerm)) {
                     staffs.remove(player);
                 }
             } catch (Exception e){
@@ -268,11 +307,11 @@ public class MessagingUtils {
 
     public static void sendBGUserMessage(Guild guild, CommandSender sender, CommandSender to, String msg){
         if (sender instanceof Player) {
-            sender = UUIDFetcher.getPPlayer(((Player) sender).uuid);
+            sender = UUIDFetcher.getPPlayerByUUID(((Player) sender).uuid);
         }
 
         if (to instanceof Player){
-            to = UUIDFetcher.getPPlayer(((Player) to).uuid);
+            to = UUIDFetcher.getPPlayerByUUID(((Player) to).uuid);
         }
 
         if (sender == null || to == null) {
@@ -282,7 +321,7 @@ public class MessagingUtils {
 
         to.sendMessage(TextUtils.codedText(msg
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(UUIDFetcher.getPlayer(sender)))
-                .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getPlayer(guild.leaderUUID)).getName())
+                .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(guild.leaderUUID)).getName())
                 .replace("%size%", Integer.toString(guild.getSize()))
                 .replace("%max%", Integer.toString(guild.maxSize))
                 .replace("%mods_count%", Integer.toString(guild.modsByUUID.size()))
@@ -491,10 +530,10 @@ public class MessagingUtils {
         StringBuilder msg = new StringBuilder();
 
         int i = 1;
-        for (UUID m : guild.modsByUUID){
+        for (String m : guild.modsByUUID){
             Player player;
             try {
-                player = Objects.requireNonNull(UUIDFetcher.getPlayer(m));
+                player = Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(m));
             } catch (Exception e) {
                 continue;
             }
@@ -521,10 +560,10 @@ public class MessagingUtils {
         StringBuilder msg = new StringBuilder();
 
         int i = 1;
-        for (UUID m : guild.membersByUUID){
+        for (String m : guild.membersByUUID){
             Player player;
             try {
-                player = Objects.requireNonNull(UUIDFetcher.getPlayer(m));
+                player = Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(m));
             } catch (Exception e) {
                 continue;
             }
@@ -551,10 +590,10 @@ public class MessagingUtils {
         StringBuilder msg = new StringBuilder();
 
         int i = 1;
-        for (UUID m : guild.totalMembersByUUID){
+        for (String m : guild.totalMembersByUUID){
             Player player;
             try {
-                player = Objects.requireNonNull(UUIDFetcher.getPlayer(m));
+                player = Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(m));
             } catch (Exception e) {
                 continue;
             }
@@ -581,10 +620,10 @@ public class MessagingUtils {
         StringBuilder msg = new StringBuilder();
 
         int i = 1;
-        for (UUID m : guild.invitesByUUID){
+        for (String m : guild.invitesByUUID){
             Player player;
             try {
-                player = Objects.requireNonNull(UUIDFetcher.getPlayer(m));
+                player = Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(m));
             } catch (Exception e) {
                 continue;
             }

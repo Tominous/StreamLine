@@ -1,7 +1,5 @@
 package net.plasmere.streamline.utils;
 
-import net.luckperms.api.LuckPerms;
-import net.luckperms.api.LuckPermsProvider;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
@@ -15,10 +13,10 @@ import net.plasmere.streamline.objects.lists.SingleSet;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class PlayerUtils {
     private static final List<Player> stats = new ArrayList<>();
-    private static final LuckPerms api = LuckPermsProvider.get();
     private static final Configuration message = Config.getMess();
 
     private static HashMap<Player, SingleSet<Integer, Integer>> connections = new HashMap<>();
@@ -55,12 +53,21 @@ public class PlayerUtils {
         return p;
     }
 
+    public static void removePlayerIf(Predicate<Player> predicate){
+        stats.removeIf(predicate);
+    }
+
     public static HashMap<Player, SingleSet<Integer, Integer>> getConnections(){
         return connections;
     }
 
     public static void addOneToConn(Player player) {
         SingleSet<Integer, Integer> conn = connections.get(player);
+
+        if (conn == null) {
+            connections.remove(player);
+            return;
+        }
 
         int timer = conn.key;
         int num = conn.value;
@@ -99,8 +106,8 @@ public class PlayerUtils {
         connections.put(player, new SingleSet<>(ConfigUtils.lobbyTimeOut, 0));
     }
 
-    public static Player getOrCreate(UUID uuid){
-        Player player = getStat(uuid);
+    public static Player getOrCreate(String uuid){
+        Player player = getStatByUUID(uuid);
 
         if (player == null) {
             player = new Player(uuid);
@@ -183,7 +190,7 @@ public class PlayerUtils {
         return null;
     }
 
-    public static Player getStat(UUID uuid) {
+    public static Player getStatByUUID(String uuid) {
         try {
             for (Player stat : stats) {
                 if (stat.uuid.equals(uuid)) {

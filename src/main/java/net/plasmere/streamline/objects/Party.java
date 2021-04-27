@@ -1,13 +1,11 @@
 package net.plasmere.streamline.objects;
 
+import net.luckperms.api.model.group.Group;
 import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.PermissionNode;
+import net.luckperms.api.query.QueryOptions;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
-import net.luckperms.api.LuckPerms;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.group.Group;
-import net.luckperms.api.query.QueryOptions;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.*;
@@ -15,21 +13,20 @@ import java.util.*;
 public class Party {
     public int maxSize;
     public Player leader;
-    public UUID leaderUUID;
+    public String leaderUUID;
     public List<Player> totalMembers = new ArrayList<>();
-    public List<UUID> totalUUIDs = new ArrayList<>();
+    public List<String> totalUUIDs = new ArrayList<>();
     public List<Player> members = new ArrayList<>();
-    public List<UUID> membersUUIDs = new ArrayList<>();
+    public List<String> membersUUIDs = new ArrayList<>();
     public List<Player> moderators = new ArrayList<>();
-    public List<UUID> modUUIDs = new ArrayList<>();
+    public List<String> modUUIDs = new ArrayList<>();
     public String name;
     public boolean isPublic = false;
     public boolean isMuted = false;
     // to , from
     public List<Player> invites = new ArrayList<>();
-    public List<UUID> invitesUUIDs = new ArrayList<>();
+    public List<String> invitesUUIDs = new ArrayList<>();
 
-    private final LuckPerms api = LuckPermsProvider.get();
     private final StreamLine plugin;
     public enum Level {
         MEMBER,
@@ -179,7 +176,7 @@ public class Party {
 
     public void loadLists(){
         totalMembers.clear();
-        for (UUID u : totalUUIDs) {
+        for (String u : totalUUIDs) {
             Player p = UUIDFetcher.getPlayer(u);
             if (p == null) continue;
 
@@ -187,7 +184,7 @@ public class Party {
         }
 
         members.clear();
-        for (UUID u : membersUUIDs) {
+        for (String u : membersUUIDs) {
             Player p = UUIDFetcher.getPlayer(u);
             if (p == null) continue;
 
@@ -195,7 +192,7 @@ public class Party {
         }
 
         moderators.clear();
-        for (UUID u : modUUIDs) {
+        for (String u : modUUIDs) {
             Player p = UUIDFetcher.getPlayer(u);
             if (p == null) continue;
 
@@ -203,8 +200,8 @@ public class Party {
         }
 
         invites.clear();
-        for (UUID u : invitesUUIDs) {
-            Player p = UUIDFetcher.getPlayer(u);
+        for (String u : invitesUUIDs) {
+            Player p = UUIDFetcher.getPlayerByUUID(u);
             if (p == null) continue;
 
             invites.add(p);
@@ -229,13 +226,15 @@ public class Party {
     }
 
     public int getMaxSize(Player leader){
+        if (! StreamLine.lpHolder.enabled) return ConfigUtils.partyMax;
+
         try {
             Collection<PermissionNode> perms =
-                    Objects.requireNonNull(api.getGroupManager().getGroup(
-                            Objects.requireNonNull(api.getUserManager().getUser(leader.getName())).getPrimaryGroup()
+                    Objects.requireNonNull(StreamLine.lpHolder.api.getGroupManager().getGroup(
+                            Objects.requireNonNull(StreamLine.lpHolder.api.getUserManager().getUser(leader.getName())).getPrimaryGroup()
                     )).getNodes(NodeType.PERMISSION);
 
-            for (Group group : Objects.requireNonNull(api.getUserManager().getUser(leader.getName())).getInheritedGroups(QueryOptions.defaultContextualOptions())){
+            for (Group group : Objects.requireNonNull(StreamLine.lpHolder.api.getUserManager().getUser(leader.getName())).getInheritedGroups(QueryOptions.defaultContextualOptions())){
                 perms.addAll(group.getNodes(NodeType.PERMISSION));
             }
 

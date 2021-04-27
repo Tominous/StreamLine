@@ -16,8 +16,8 @@ public class ConfigUtils {
     public static final String version = config.getString("version");
     // ... Basics.
     // Links.
-    public static final String linkPre = config.getString("link.prefix");
-    public static final String linkSuff = config.getString("link.suffix");
+//    public static final String linkPre = config.getString("link.prefix");
+//    public static final String linkSuff = config.getString("link.suffix");
     // Bot Stuff.
     public static final String botPrefix = config.getString("bot.prefix");
     public static final String botToken = config.getString("bot.token");
@@ -217,6 +217,7 @@ public class ConfigUtils {
     public static final List<String> comBEReloadAliases = config.getStringList("commands.bungee.staff.evreload.aliases");
     public static final String comBEReloadPerm = config.getString("commands.bungee.staff.evreload.permission");
     // ... ... Modules.
+    public static final String staffPerm = config.getString("modules.staff-permission");
     // ... Discord.
     // Basics.
     public static final boolean moduleDMainConsole = config.getBoolean("modules.discord.main-console");
@@ -252,7 +253,9 @@ public class ConfigUtils {
     public static final boolean moduleStaffChatMToDiscord = config.getBoolean("modules.bungee.staffchat.minecraft-to-discord");
     // Player logins / logouts.
     public static final String moduleBPlayerJoins = config.getString("modules.bungee.player-joins");
+    public static final String moduleBPlayerJoinsPerm = config.getString("modules.bungee.joins-permission");
     public static final String moduleBPlayerLeaves = config.getString("modules.bungee.player-leaves");
+    public static final String moduleBPlayerLeavesPerm = config.getString("modules.bungee.leaves-permission");
     // ... Parties.
     public static final boolean partyToDiscord = config.getBoolean("modules.bungee.parties.to-discord");
     public static final int partyMax = config.getInt("modules.bungee.parties.max-size");
@@ -274,9 +277,11 @@ public class ConfigUtils {
     public static final int timePerGiveP = config.getInt("modules.bungee.stats.xp.time-per");
     public static final int cachedPClear = config.getInt("modules.bungee.stats.cache-clear");
     // ... Redirect.
+    public static final boolean redirectEnabled = config.getBoolean("modules.bungee.redirect.enabled");
     public static final String redirectPre = config.getString("modules.bungee.redirect.permission-prefix");
     public static final String redirectMain = config.getString("modules.bungee.redirect.main");
     // Version Block.
+    public static final boolean vbEnabled = config.getBoolean("modules.bungee.redirect.version-block.enabled");
     public static final String vbOverridePerm = config.getString("modules.bungee.redirect.version-block.override-permission");
     public static final String vbServerFile = config.getString("modules.bungee.redirect.version-block.server-permission-file");
     // Lobbies.

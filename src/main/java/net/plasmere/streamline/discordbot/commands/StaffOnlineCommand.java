@@ -1,6 +1,7 @@
 package net.plasmere.streamline.discordbot.commands;
 
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -23,7 +24,7 @@ public class StaffOnlineCommand {
 
         for (ProxiedPlayer player : staffs){
             try {
-                if (! player.hasPermission("streamline.staff")) {
+                if (! player.hasPermission(ConfigUtils.staffPerm)) {
                     lstaffs.remove(player);
                 }
             } catch (Exception e){

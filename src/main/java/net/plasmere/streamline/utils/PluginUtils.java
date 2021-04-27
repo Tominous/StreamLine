@@ -136,7 +136,7 @@ public class PluginUtils {
             registerCommand(plugin, plugins);
         if (ConfigUtils.comBStaffOnline)
             registerCommand(plugin, staffOnline);
-        if (ConfigUtils.comBGlobalOnline)
+        if (ConfigUtils.comBGlobalOnline && StreamLine.lpHolder.enabled)
             registerCommand(plugin, globalOnline);
         registerCommand(plugin, reload);
 

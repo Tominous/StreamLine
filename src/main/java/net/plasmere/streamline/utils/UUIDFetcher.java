@@ -7,6 +7,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.utils.holders.GeyserHolder;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -16,20 +17,20 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class UUIDFetcher {
-    public static Cache<String, UUID> cachedUUIDs = Caffeine.newBuilder().build();
-    public static Cache<UUID, String> cachedNames = Caffeine.newBuilder().build();
+    public static Cache<String, String> cachedUUIDs = Caffeine.newBuilder().build();
+    public static Cache<String, String> cachedNames = Caffeine.newBuilder().build();
 
-    public static UUID getCachedUUID(String username) {
+    public static String getCachedUUID(String username) {
         try {
             String finalUsername = username.replace("\"", "");
             return cachedUUIDs.get(username, (u) -> fetch(finalUsername));
         } catch (Exception e) {
             e.printStackTrace();
-            return UUID.randomUUID();
+            return UUID.randomUUID().toString();
         }
     }
 
-    public static String getCachedName(UUID uuid) {
+    public static String getCachedName(String uuid) {
         try {
             return Objects.requireNonNull(cachedNames.get(uuid, (u) -> getName(uuid.toString()))).replace("\"", "");
         } catch (Exception e) {
@@ -38,7 +39,17 @@ public class UUIDFetcher {
         }
     }
 
-    static public UUID fetch(String username) {
+    static public String fetch(String username) {
+        try {
+            if (StreamLine.geyserHolder.enabled) {
+                if (StreamLine.geyserHolder.isGeyserPlayer(username)) {
+                    return StreamLine.geyserHolder.file.getUUID(username);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         username = username.toLowerCase(Locale.ROOT);
         try {
             String JSONString = "";
@@ -60,15 +71,24 @@ public class UUIDFetcher {
 
             String uuid = formatToUUID(id);
 
-            return UUID.fromString(uuid);
+            return uuid;
             //return UUID.fromString(id);
         } catch (Exception e){
             e.printStackTrace();
         }
-        return UUID.randomUUID();
+        return UUID.randomUUID().toString();
     }
 
     public static String getName(String uuid) {
+        try {
+            if (StreamLine.geyserHolder.enabled) {
+                String name = StreamLine.geyserHolder.file.getName(uuid);
+                if (name != null) if (!name.equals("")) return name;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         try {
             String JSONString = "";
 
@@ -109,8 +129,14 @@ public class UUIDFetcher {
         return formatted.toString();
     }
 
-    public static ProxiedPlayer getPPlayer(UUID uuid){
+    public static ProxiedPlayer getPPlayerByUUID(String uuid){
         try {
+            if (StreamLine.geyserHolder.enabled) {
+                if (StreamLine.geyserHolder.file.hasProperty(uuid)) {
+                    return StreamLine.geyserHolder.getPPlayerByUUID(uuid);
+                }
+            }
+
             return StreamLine.getInstance().getProxy().getPlayer(uuid);
         } catch (Exception e){
             e.printStackTrace();
@@ -120,7 +146,7 @@ public class UUIDFetcher {
 
     public static Player getPlayer(ProxiedPlayer player) {
         try {
-            String name = getCachedName(player.getUniqueId());
+            String name = getCachedName(player.getUniqueId().toString());
 
             if (PlayerUtils.exists(name)) {
                 if (PlayerUtils.hasStat(name)) {
@@ -156,7 +182,7 @@ public class UUIDFetcher {
         }
     }
 
-    public static Player getPlayer(UUID uuid){
+    public static Player getPlayerByUUID(String uuid){
         try {
             String name = getCachedName(uuid);
 

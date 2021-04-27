@@ -52,7 +52,7 @@ public class MessageConfUtils {
     public static final String bungeeStaffChatMessage = message.getString("staffchat.message.bungee");
     public static final String discordStaffChatFrom = message.getString("staffchat.message.from.discord");
     public static final String bungeeStaffChatFrom = message.getString("staffchat.message.from.bungee");
-    public static final String staffChatWrongPrefix = message.getString("staffchat.wrong-prefix");
+    public static final String staffChatJustPrefix = message.getString("staffchat.just-prefix");
     public static final String staffChatToggle = message.getString("staffchat.toggle.message");
     public static final String staffChatOn = message.getString("staffchat.toggle.on");
     public static final String staffChatOff = message.getString("staffchat.toggle.off");

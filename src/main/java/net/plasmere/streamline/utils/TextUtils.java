@@ -53,10 +53,10 @@ public class TextUtils {
         text = ChatColor.translateAlternateColorCodes('&', newLined(text));
 
         try {
-            String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
+            //String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
 
             Pattern pattern = Pattern.compile("(http|ftp|https)://([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?", Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(ntext);
+            Matcher matcher = pattern.matcher(text);
             String foundUrl = "";
 
             while (matcher.find()) {
@@ -74,10 +74,10 @@ public class TextUtils {
         text = ChatColor.translateAlternateColorCodes('&', newLined(text));
 
         try {
-            String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
+            //String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
 
             Pattern pattern = Pattern.compile("(http|ftp|https)://([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?", Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(ntext);
+            Matcher matcher = pattern.matcher(text);
             String foundUrl = "";
 
             while (matcher.find()) {

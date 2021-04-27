@@ -74,7 +74,7 @@ public class ChatListener implements Listener {
                 }
 
                 if (GuildUtils.pHasGuild(stat)) {
-                    GuildUtils.addGuild(new Guild(stat.getUniqueId(), false));
+                    GuildUtils.addGuild(new Guild(stat.uuid, false));
                 }
                 break;
             }
@@ -87,19 +87,18 @@ public class ChatListener implements Listener {
         if (ConfigUtils.moduleStaffChat) {
             if (ConfigUtils.moduleStaffChatDoPrefix) {
                 if (msg.startsWith(prefix) && !prefix.equals("/")) {
-                    if (!sender.hasPermission("streamline.staff")) {
-                        e.setCancelled(true);
+                    if (!sender.hasPermission(ConfigUtils.staffPerm)) {
                         return;
                     }
 
                     if (msg.equals(prefix)) {
-                        sender.sendMessage(TextUtils.codedText(MessageConfUtils.staffChatWrongPrefix.replace("%newline%", "\n")));
+                        sender.sendMessage(TextUtils.codedText(MessageConfUtils.staffChatJustPrefix.replace("%newline%", "\n")));
                         e.setCancelled(true);
                         return;
                     }
 
                     e.setCancelled(true);
-                    MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg.substring(prefix.length()), plugin);
+                    MessagingUtils.sendStaffChatMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg.substring(prefix.length()), plugin);
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                             MessageConfUtils.staffChatEmbedTitle,
                             MessageConfUtils.discordStaffChatMessage
@@ -122,7 +121,7 @@ public class ChatListener implements Listener {
             for (Event event : EventsHandler.getEvents()) {
                 if (! EventsHandler.checkTags(event, stat)) continue;
 
-                if (! (event.condition.equals(Event.Condition.MESSAGE_EXACT) && (event.conVal.equals(msg.substring(1)) || event.conVal.equals("") || event.conVal.toLowerCase(Locale.ROOT).equals("null")))) continue;
+                if (! event.condition.equals(Event.Condition.COMMAND) || ! (event.condition.equals(Event.Condition.MESSAGE_EXACT) && (event.conVal.equals(msg.substring(1)) || event.conVal.equals("") || event.conVal.toLowerCase(Locale.ROOT).equals("null")))) continue;
 
                 EventsHandler.runEvent(event, stat, msg);
             }

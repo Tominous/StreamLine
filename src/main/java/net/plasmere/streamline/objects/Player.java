@@ -25,7 +25,7 @@ public class Player implements ProxiedPlayer {
     private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "players" + File.separator;
 
     public File file;
-    public UUID uuid;
+    public String uuid;
     public int xp;
     public int lvl;
     public int playSeconds;
@@ -52,29 +52,7 @@ public class Player implements ProxiedPlayer {
         String[] ipSplit = ipSt.split(":");
         ipSt = ipSplit[0];
 
-        this.uuid = player.getUniqueId();
-        this.latestIP = ipSt;
-        this.latestName = player.getName();
-
-        this.ips = ipSt;
-        this.names = player.getName();
-        this.online = true;
-        this.displayName = player.getDisplayName();
-
-        if (StreamLine.viaHolder.enabled) {
-            this.latestVersion = StreamLine.viaHolder.getProtocal(this.uuid).getName();
-        } else {
-            this.latestVersion = "";
-        }
-        construct(player.getUniqueId(), true);
-    }
-
-    public Player(ProxiedPlayer player, boolean create){
-        String ipSt = player.getSocketAddress().toString().replace("/", "");
-        String[] ipSplit = ipSt.split(":");
-        ipSt = ipSplit[0];
-
-        this.uuid = player.getUniqueId();
+        this.uuid = player.getUniqueId().toString();
         this.latestIP = ipSt;
         this.latestName = player.getName();
 
@@ -85,24 +63,55 @@ public class Player implements ProxiedPlayer {
         this.tags = ConfigUtils.tagsDefaults;
 
         if (StreamLine.viaHolder.enabled) {
-            this.latestVersion = StreamLine.viaHolder.getProtocal(this.uuid).getName();
+            if (StreamLine.geyserHolder.enabled && StreamLine.geyserHolder.file.hasProperty(this.uuid)) {
+                this.latestVersion = "GEYSER";
+            } else {
+                this.latestVersion = StreamLine.viaHolder.getProtocal(UUID.fromString(this.uuid)).getName();
+            }
         } else {
-            this.latestVersion = "";
+            this.latestVersion = "Not Enabled";
         }
-        construct(player.getUniqueId(), create);
+        construct(player.getUniqueId().toString(), true);
+    }
+
+    public Player(ProxiedPlayer player, boolean create){
+        String ipSt = player.getSocketAddress().toString().replace("/", "");
+        String[] ipSplit = ipSt.split(":");
+        ipSt = ipSplit[0];
+
+        this.uuid = player.getUniqueId().toString();
+        this.latestIP = ipSt;
+        this.latestName = player.getName();
+
+        this.ips = ipSt;
+        this.names = player.getName();
+        this.online = true;
+        this.displayName = player.getDisplayName();
+        this.tags = ConfigUtils.tagsDefaults;
+
+        if (StreamLine.viaHolder.enabled) {
+            if (StreamLine.geyserHolder.enabled && StreamLine.geyserHolder.file.hasProperty(this.uuid)) {
+                this.latestVersion = "GEYSER";
+            } else {
+                this.latestVersion = StreamLine.viaHolder.getProtocal(UUID.fromString(this.uuid)).getName();
+            }
+        } else {
+            this.latestVersion = "Not Enabled";
+        }
+        construct(player.getUniqueId().toString(), create);
     }
 
     public Player(String username){
         construct(Objects.requireNonNull(UUIDFetcher.getCachedUUID(username)), false);
-        this.online = offlineOnCheck();
+        this.online = onlineCheck();
     }
 
     public Player(UUID uuid) {
-        construct(uuid, false);
-        this.online = offlineOnCheck();
+        construct(uuid.toString(), false);
+        this.online = onlineCheck();
     }
 
-    public boolean offlineOnCheck(){
+    public boolean onlineCheck(){
         for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()){
             if (p.getName().equals(this.latestName)) return true;
         }
@@ -110,7 +119,9 @@ public class Player implements ProxiedPlayer {
         return false;
     }
 
-    private void construct(UUID uuid, boolean createNew){
+    private void construct(String uuid, boolean createNew){
+        if (uuid == null) return;
+
         this.uuid = uuid;
 
         this.file = new File(filePrePath + uuid.toString() + ".properties");
@@ -308,7 +319,7 @@ public class Player implements ProxiedPlayer {
     public void loadVars(){
         // StreamLine.getInstance().getLogger().info("UUID : " + getFromKey("uuid"));
 
-        this.uuid = UUID.fromString(getFromKey("uuid"));
+        this.uuid = getFromKey("uuid");
         this.ips = getFromKey("ips");
         this.names = getFromKey("names");
         this.latestIP = getFromKey("latestip");
@@ -320,7 +331,7 @@ public class Player implements ProxiedPlayer {
         this.playSeconds = Integer.parseInt(getFromKey("playtime"));
         this.displayName = getFromKey("displayname");
         this.guild = getFromKey("guild");
-        this.online = offlineOnCheck();
+        this.online = onlineCheck();
         this.sspy = Boolean.parseBoolean(getFromKey("sspy"));
         this.gspy = Boolean.parseBoolean(getFromKey("gspy"));
         this.pspy = Boolean.parseBoolean(getFromKey("pspy"));
@@ -498,19 +509,31 @@ public class Player implements ProxiedPlayer {
         this.finalize();
     }
 
-    public void setSSPY(boolean value) { sspy = value; }
+    public void setSSPY(boolean value) {
+        sspy = value;
+        updateKey("sspy", value);
+    }
 
     public void toggleSSPY() { setSSPY(! sspy); }
 
-    public void setGSPY(boolean value) { gspy = value; }
+    public void setGSPY(boolean value) {
+        gspy = value;
+        updateKey("gspy", value);
+    }
 
     public void toggleGSPY() { setGSPY(! gspy); }
 
-    public void setPSPY(boolean value) { pspy = value; }
+    public void setPSPY(boolean value) {
+        pspy = value;
+        updateKey("pspy", value);
+    }
 
     public void togglePSPY() { setPSPY(! pspy); }
 
-    public void setSC(boolean value) { sc = value; }
+    public void setSC(boolean value) {
+        sc = value;
+        updateKey("sc", value);
+    }
 
     public void toggleSC() { setSC(! sc); }
 
@@ -646,12 +669,12 @@ public class Player implements ProxiedPlayer {
 
     @Override
     public String getUUID() {
-        return uuid.toString();
+        return uuid;
     }
 
     @Override
     public UUID getUniqueId() {
-        return uuid;
+        return UUID.fromString(uuid);
     }
 
     @Override

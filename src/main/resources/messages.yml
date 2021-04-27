@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "1.0.10.4"
+version: "1.0.10.6"
 
 # All bungee messages accept all color and formatting codes.
 # For new lines, use %newline%.
@@ -102,8 +102,8 @@ staffchat:
       discord: "&9discord"
       # If message originated from Bungee.
       bungee: "&6bungee"
-  # Message shown when using the wrong staffchat prefix.
-  wrong-prefix: "&cSorry, but that is not the correct staff chat prefix!"
+  # Message shown when using just the prefix without a message.
+  just-prefix: "&cSorry, but you need to supply more than just the prefix!"
   toggle:
     message: "&eToggled &bstaffchat %toggle%&e!"
     on: "&aON"

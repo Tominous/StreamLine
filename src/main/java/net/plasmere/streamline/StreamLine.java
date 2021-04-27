@@ -13,6 +13,8 @@ import net.plasmere.streamline.objects.configs.Lobbies;
 import net.plasmere.streamline.objects.configs.ServerPermissions;
 import net.plasmere.streamline.objects.timers.*;
 import net.plasmere.streamline.utils.*;
+import net.plasmere.streamline.utils.holders.GeyserHolder;
+import net.plasmere.streamline.utils.holders.LPHolder;
 import net.plasmere.streamline.utils.holders.ViaHolder;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -43,6 +45,8 @@ public class StreamLine extends Plugin {
 	public static ServerPermissions serverPermissions;
 	public static Lobbies lobbies;
 	public static ViaHolder viaHolder;
+	public static GeyserHolder geyserHolder;
+	public static LPHolder lpHolder;
 
 	private static JDA jda = null;
 	private static boolean isReady = false;
@@ -196,8 +200,14 @@ public class StreamLine extends Plugin {
 		// Teller.
 		getLogger().info("Loading version [v" + getProxy().getPluginManager().getPlugin("StreamLine").getDescription().getVersion() + "]...");
 
+		// LP Support.
+		lpHolder = new LPHolder();
+
 		// Via Support.
 		viaHolder = new ViaHolder();
+
+		// Geyser Support.
+		geyserHolder = new GeyserHolder();
 
 		// Config.
 		config = new Config();

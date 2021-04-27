@@ -23,7 +23,7 @@ public class SSPYCommand extends Command {
             player.toggleSSPY();
 
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sspyToggle
-                    .replace("%toggle%", player.sspy ? MessageConfUtils.sspyOn : MessageConfUtils.sspyOff)
+                    .replace("%toggle%", (player.sspy ? MessageConfUtils.sspyOn : MessageConfUtils.sspyOff))
             );
         } else {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
