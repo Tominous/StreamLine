@@ -182,10 +182,10 @@ public class StreamLine extends Plugin {
 				e.printStackTrace();
 			}
 		}
-		serverPermissions = new ServerPermissions(true);
+		serverPermissions = new ServerPermissions(false);
 
 		if (ConfigUtils.lobbies) {
-			lobbies = new Lobbies(true);
+			lobbies = new Lobbies(false);
 		}
 	}
 

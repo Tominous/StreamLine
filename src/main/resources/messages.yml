@@ -18,7 +18,9 @@ no-player: "&cSorry, but that player either does not exist or is not online..."
 discord-err-title: "ERROR"
 # Error with command.
 command-error:
+  # For discord.
   discord: "There was an error executing this command..."
+  # For bungee.
   bungee: "&cThere was an error executing this command..."
 # If a command is disabled.
 command-disabled:
@@ -43,19 +45,29 @@ not-a-command:
   discord: "Not a command!%newline%Do !commands to see the commands!"
 # If command usage not correct.
 improper-usage:
+  # For bungee.
   bungee: "&cUsage: &b%usage%"
 # To determine how it shows up if a player is offline or online.
 # Fillers:
 # %player% = the player's name.
 players:
-  bungee:
-    offline: "&d%player% &e(&cOFF&e)"
-    online: "&d%player% &e(&aON&e)"
+  # For discord.
   discord:
+    # If offline on network.
     offline: "%player% (OFF)"
+    # If online.
     online: "%player% (ON)"
+  # For bungee.
+  bungee:
+    # If offline on network.
+    offline: "&d%player% &e(&cOFF&e)"
+    # If online.
+    online: "&d%player% &e(&aON&e)"
+# For the redirect module.
 redirect:
+  # Per version module.
   by-version:
+    # If you are blocked.
     blocked: "&cYou were blocked from joining that server in version &3%version%"
 
 # When reporting...
@@ -104,16 +116,24 @@ staffchat:
       bungee: "&6bungee"
   # Message shown when using just the prefix without a message.
   just-prefix: "&cSorry, but you need to supply more than just the prefix!"
+  # If you toggle staff chat.
   toggle:
+    # Message.
     message: "&eToggled &bstaffchat %toggle%&e!"
+    # If on.
     on: "&aON"
+    # If off.
     off: "&cOFF"
 
 # When using online list...
 online:
+  # Message for it.
   message:
+    # If no players.
     no-players: "&cNo players online!"
+    # If no groups.
     no-groups: "&cSorry, but groups are not configured!"
+    # Embed title for Discord.
     embed-title: "Global List"
     # Fillers:
     # %amount% = the amount of people on the server.
@@ -149,19 +169,27 @@ online:
           # %server% = the server said player is currently on.
           # If not the last player in group.
           if-not-last: "&2%player% &0(&e%server%&0)&8, "
+          # If last.
           if-last: "&2%player% &0(&e%server%&0)&8."
 
+# For player joins and leaves.
 join-leave:
   # Use "%player_default%" to substitute just the player name without a off / on check.
+  # For Discord...
   discord:
     # Message to be sent to a chat (on Discord) when a player comes online on the bungee server.
     online:
+      # Embed title for Discord.
       embed: "Join"
+      # Embed text.
       text: "%player_default% is now online."
     # Message to be sent to a chat (on Discord) when a player goes offline on the bungee server.
     offline:
+      # Embed title for Discord.
       embed: "Leave"
+      # Embed text.
       text: "%player_default% is now offline."
+  # For bungee...
   bungee:
     # Message to be sent to chat (on bungee) when a player comes online on the bungee server.
     online: "&d%player_default% &eis now &aonline&8."
@@ -170,7 +198,9 @@ join-leave:
 
 # When using staffonline...
 staffonline:
+  # Messages for it...
   message:
+    # Embed title for Discord.
     embed-title: "Staff"
     # Message on Discord.
     discord:
@@ -198,6 +228,7 @@ staffonline:
         # %server% = the server said player is currently on.
         # If not the last player in group.
         if-not-last: "&2%player% &0(&e%server%&0)&8, "
+        # If last.
         if-last: "&2%player% &0(&e%server%&0)&8."
 
 # When using party...
@@ -209,11 +240,15 @@ party:
   # %sender% = command sender.
   # Text used for when talking about each party level...
   text:
+    # Defines what each should be when you promote or demote a player.
     leader: "LEADER"
     moderator: "MODERATOR"
     member: "MEMBER"
+  # For Discord...
   discord:
+    # Embed title.
     title: "PARTY"
+  # Guild Spy message.
   spy: "&d%leader%&a's PARTY &9>> &d%sender% &8: &e%message%"
   # When it finds no party.
   no-party: "&cNo party found!"
@@ -239,16 +274,22 @@ party:
     # Fillers:
     # %user% = the person joining.
     # %leader% = the party leader.
+    # Members of the party.
     members: "&b%user% &ejust joined the party!"
+    # Command sender.
     user: "&eYou just joined &b%leader%&e's party!"
+    # If failed.
     failure: "&cThere is no party to join."
   # Message for when someone leaves a party...
   leave:
     # Fillers:
     # %user% = the person joining.
     # %leader% = the party leader.
+    # Members of the party.
     members: "&b%user% &ejust left the party."
+    # Command sender.
     user: "&eYou just left &b%leader%&e's party."
+    # If failed.
     failure: "&cThere is no party to leave."
   # Message for when promoting someone...
   promote:
@@ -256,9 +297,13 @@ party:
     # %user% = the person being promoted.
     # %leader% = the party leader.
     # %level% = the permission level the person is going to.
+    # Members of party.
     members: "&b%sender% &ejust promoted &b%user% &eto &c%level%&e in the party!"
+    # User being promoted.
     user: "&eYou were just promoted to &c%level% &ein the party!"
+    # Party leader.
     leader: "&eYou just promoted &b%user% to &c%level%&e!"
+    # If failed.
     failure: "&cAlready at highest level."
   # Message for demoting someone...
   demote:
@@ -266,16 +311,22 @@ party:
     # %user% = the person being demoted.
     # %leader% = the party leader.
     # %level% = the permission level the person is going to.
+    # Members of party.
     members: "&b%sender% &ejust demoted &b%user% &eto &c%level%&e in the party."
+    # User being demoted.
     user: "&eYou were just demoted to &c%level% &ein the party."
+    # Party leader.
     leader: "&eYou just demoted &b%user% to &c%level%&e."
+    # If failed.
     failure: "&cAlready at lowest level."
+    # If you are the party leader.
     is-leader: "&cCannot demote yourself..."
   # Message when someone chats...
   # Fillers:
   # %sender% = Messager.
   # %message% = Message user said being sent.
   chat:
+    # Message format.
     message: "&aPARTY &9&l>> &b%sender% &8: &f%message%"
     # If the party is muted.
     muted: "&cSorry, but the party is muted!"
@@ -289,60 +340,89 @@ party:
     # %memberbulk% = memberbulk section.
     # %user% = (only in context of "not-last" and "last") the specific member in the list of members
     # %user% = (in everything else ^) the one running the command.
-    # Main message used to determine the other of things...
+    # Main message used to determine the other of parts of the message...
     main: "&7--< &5Party &6%size%&8/&6%max% &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
+    # Bulk leader message.
     leaderbulk: "&eParty Leader: &c%leader%"
+    # Bulk mod message.
     moderatorbulk:
+      # Message.
       main: "&eParty Moderators: %moderators%"
+      # For mods.
       moderators:
+        # If not last mod.
         not-last: "&b%user%&e, "
+        # If last.
         last: "&b%user%&e."
+        # If there are none.
         if-none: "&cNONE"
+    # Bulk member message.
     memberbulk:
+      # Message.
       main: "&eParty Members: %members%"
+      # Members in party.
       members:
+        # If not last in party.
         not-last: "&7%user%&e, "
+        # If last.
         last: "&7%user%&e."
+        # If there are none.
         if-none: "&cNONE"
   # Message for opening the party...
   open:
     # Fillers:
     # %leader% = the party leader.
     # %size% = the new size of the party.
+    # For members of party.
     members: "&b%sender% &ejust opened the party to a size of &e%max%&e."
+    # For leader.
     leader: "&eYou just opened the party to a size of &3%max%&e."
+    # If failure.
     failure: "&cAlready open."
   # Message for closing the party...
   close:
     # Fillers:
     # %leader% = the party leader.
     # %size% = the size of the party.
+    # For members of party.
     members: "&b%sender% &ejust closed the party."
+    # For sender.
     sender: "&eYou just closed the party."
+    # If failure.
     failure: "&cAlready closed."
   # Message for disbanding the party...
   disband:
     # Fillers:
     # %leader% = the party leader.
+    # For members of party.
     members: "&b%sender% &ejust disbanded the party."
+    # For leader.
     leader: "&eYou just disbanded the party."
   # Message for accepting an invite to a party...
   accept:
     # Fillers:
     # %user% = the accepter.
     # %leader% = the party leader.
+    # User who accepts.
     user: "&eAccepted the request to &b%leader%&e's party."
+    # Leader of party.
     leader: "&b%user% &ejust &aaccepted &eyour invite!"
+    # Members of party.
     members: "&b%user% &ejust &aaccepted &ethe invite!"
+    # If failed.
     failure: "&cNo invites!"
   # Message for denying an invite to a party...
   deny:
     # Fillers:
     # %user% = the accepter.
     # %leader% = the party leader.
+    # User who denied.
     user: "&eDenied the request to &b%leader%&e's party."
+    # Leader of party.
     leader: "&b%user% &ejust &cdenied &eyour invite!"
+    # Members of party.
     members: "&b%user% &ejust &cdenied &ethe invite!"
+    # If failed.
     failure: "&cNo invites!"
   # Message for sending an invite of a party...
   invite:
@@ -351,31 +431,53 @@ party:
     # %user% = the accepter.
     # %leader% = the party leader.
     # %leaderdefault% = the party leader formatted without their display name.
+    # User who is being invited.
     user: "&b%sender% &einvited you to &b%leader%&e's party!%newline%&eType &a/party accept %leaderdefault% &eto join!"
+    # Members of party.
     members: "&b%sender% &einvited &b%user% &eto your party!"
+    # Leader of party.
     leader: "&eJust invited &b%user% &eto your party!"
+    # If failed.
     failure: "&cAlready invited this person."
+    # If self.
     non-self: "&cCannot invite yourself!"
+  # Messages for kicking...
   kick:
     # Fillers:
     # %user% = the person being kicked.
+    # User who is kicked.
     user: "&b%sender% &ekicked you from their party."
+    # Members of party.
     members: "&b%user% &ewas kicked by &b%leader% &e from the party."
+    # Sender of command.
     sender: "&eYou kicked &b%user% &efrom your party."
+    # If failed.
     failure: "&cThis player is not in the party."
+    # If it is a mod being kicked.
     mod: "&cCannot kick a party mod."
+    # If self.
     self: "&cCannot kick self."
+  # Messages for muting...
   mute:
     # Fillers:
     # %sender% = person sending the command.
+    # If muted.
     mute:
+      # For sender.
       user: "&eYou just &cmuted &ethe party."
+      # For members.
       members: "&b%sender% &ejust &cmuted &ethe party."
+    # If unmuted.
     unmute:
+      # For sender.
       user: "&eYou just &aunmuted &ethe party."
+      # For members.
       members: "&b%sender% &ejust &aunmuted &ethe party."
+  # Messages for warping...
   warp:
+    # Command sender.
     sender: "&eYou warped your party of &3%size% &eto your server!"
+    # For members.
     members: "&b%sender% &ewarped you to their server!"
 
 # Messages for the stream command:
@@ -391,6 +493,7 @@ stream:
 
 # Messages for the parties command:
 parties:
+  # If there are no parties.
   no-parties: "&cNo parties..."
   # Fillers:
   # %sender% = person sending the command.
@@ -408,32 +511,54 @@ parties:
   # %invites% = a list of invited players.
   # %ispublic% = true if open, false if not.
   # %ismuted% = true if muted, false if not.
+  # Main message.
   parties: "&5PARTY &9>> &eleader&8(&b%leader%&8)&e, size&8(&3%size%&8)&e, partyMax&8(&3%max%&8)&e, permMax&8(&3%maxmax%&8)&e, mods&8(&3%mods_count% &4--> %mods%&8)&e, members&8(&3%members_count% &4--> %members%&8)&e, all&8(&3%total_count% &4--> %totalmembers%&8)&e, invites&8(&3%invites_count% &4--> %invites%&8)&e, public&8(%ispublic%&8)&e, muted&8(%ismuted%&8)&e."
+  # Mods in message.
   mods:
+    # If not last in list.
     not-last: "&d%user%&e, "
+    # If last.
     last: "&d%user%"
+  # Members in message.
   members:
+    # If not last in list.
     not-last: "&d%user%&e, "
+    # If last.
     last: "&d%user%"
+  # Invites in message.
   invites:
+    # If not last in list.
     not-last: "&d%user%&e, "
+    # If last.
     last: "&d%user%"
+  # Total members in message.
   totalmembers:
+    # If not last in list.
     not-last: "&d%user%&e, "
+    # If last.
     last: "&d%user%"
+  # Message for if public.
   ispublic:
+    # If it is.
     true: "&aTRUE"
+    # If not.
     false: "&cFALSE"
+  # Message for if muted.
   ismuted:
+    # If it is.
     true: "&aTRUE"
+    # If not.
     false: "&cFALSE"
 
 # For command "sudo":
 sudo:
   # Fillers:
   # %user% = the user being sudo-ed.
+  # If it worked.
   worked: "&eJust sudoed &d%user%&e."
+  # If it didn't.
   no-work: "&cFailed to sudo &d%user%&c."
+  # If you cannot sudo that player.
   no-sudo: "&cSorry, but you cannot sudo &d%user%&c..."
 
 # When using guild...
@@ -450,11 +575,15 @@ guild:
   # %xplevel% = guild xp needed UNTIL level up.
   # Text used for when talking about each guild level...
   text:
+    # Defines what each should be when you promote or demote a player.
     leader: "LEADER"
     moderator: "MODERATOR"
     member: "MEMBER"
+  # For Discord.
   discord:
+    # Embed title.
     title: "GUILD"
+  # For Guild Spy.
   spy: "&d%leader%&a's GUILD &9>> &d%sender% &8: &e%message%"
   # When it finds no guild.
   no-guild: "&cNo guild found!"
@@ -470,6 +599,7 @@ guild:
   create: "&eYou have just created the guild &4%name%&e!"
   # Not in a guild...
   not-in-a-guild: "&cSorry, but you are not in a guild..."
+  # If that player is not in a guild.
   other-not-in-guild: "&cSorry, but they are not in the guild..."
   # Not enough space in guild...
   not-enough-space: "&cSorry, but the guild is full!"
@@ -478,15 +608,20 @@ guild:
     # Fillers:
     # %user% = the person joining.
     # %leader% = the guild leader.
+    # For members.
     members: "&b%user% &ejust joined the guild!"
+    # For joining player.
     user: "&eYou just joined &b%leader%&e's guild!"
+    # If failed.
     failure: "&cThere is no guild to join."
   # Message for when someone leaves a guild...
   leave:
     # Fillers:
     # %user% = the person joining.
     # %leader% = the guild leader.
+    # For members.
     members: "&b%user% &ejust left the guild."
+    # For user who left.
     user: "&eYou just left &b%leader%&e's guild."
     failure: "&cThere is no guild to leave."
   # Message for when promoting someone...
@@ -495,9 +630,13 @@ guild:
     # %user% = the person being promoted.
     # %leader% = the guild leader.
     # %level% = the permission level the person is going to.
+    # For members.
     members: "&b%sender% &ejust promoted &b%user% &eto &c%level%&e in the guild!"
+    # For user who was promoted.
     user: "&eYou were just promoted to &c%level% &ein the guild!"
+    # For leader.
     leader: "&eYou just promoted &b%user% to &c%level%&e!"
+    # If failed.
     failure: "&cAlready at highest level."
   # Message for demoting someone...
   demote:
@@ -505,16 +644,22 @@ guild:
     # %user% = the person being demoted.
     # %leader% = the guild leader.
     # %level% = the permission level the person is going to.
+    # For members.
     members: "&b%sender% &ejust demoted &b%user% &eto &c%level%&e in the guild."
+    # For user who was demoted.
     user: "&eYou were just demoted to &c%level% &ein the guild."
+    # For leader.
     leader: "&eYou just demoted &b%user% to &c%level%&e."
+    # If failed.
     failure: "&cAlready at lowest level."
+    # If it is leader.
     is-leader: "&cCannot demote yourself..."
   # Message when someone chats...
   # Fillers:
   # %sender% = Messager.
   # %message% = Message user said being sent.
   chat:
+    # Main message.
     message: "&aGUILD &9&l>> &b%sender% &8: &f%message%"
     # If the guild is muted.
     muted: "&cSorry, but the guild is muted!"
@@ -530,58 +675,87 @@ guild:
     # %user% = (in everything else ^) the one running the command.
     # Main message used to determine the other of things...
     main: "&7--< &5Guild &6%size%&8/&6%max% &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
+    # Leader bulk message.
     leaderbulk: "&eGuild Leader: &c%leader%"
+    # Mods bulk message.
     moderatorbulk:
+      # Main message.
       main: "&eGuild Moderators: %moderators%"
+      # Mods.
       moderators:
+        # If not last in list.
         not-last: "&b%user%&e, "
+        # If last.
         last: "&b%user%&e."
+        # If none in list.
         if-none: "&cNONE"
+    # Member bulk message.
     memberbulk:
+      # Main message.
       main: "&eGuild Members: %members%"
+      # Members.
       members:
+        # If not last in list.
         not-last: "&7%user%&e, "
+        # If last.
         last: "&7%user%&e."
+        # If none in list.
         if-none: "&cNONE"
   # Message for opening the guild...
   open:
     # Fillers:
     # %leader% = the guild leader.
     # %size% = the new size of the guild.
+    # For members.
     members: "&b%sender% &ejust opened the guild to a size of &e%max%&e."
+    # For sender.
     sender: "&eYou just opened the guild."
+    # If failed.
     failure: "&cAlready open."
   # Message for closing the guild...
   close:
     # Fillers:
     # %leader% = the guild leader.
     # %size% = the size of the guild.
+    # For members.
     members: "&b%sender% &ejust closed the guild."
+    # For sender.
     sender: "&eYou just closed the guild."
+    # If failed.
     failure: "&cAlready closed."
   # Message for disbanding the guild...
   disband:
     # Fillers:
     # %leader% = the guild leader.
+    # For members.
     members: "&b%sender% &ejust disbanded the guild."
+    # For leader.
     leader: "&eYou just disbanded the guild."
   # Message for accepting an invite to a guild...
   accept:
     # Fillers:
     # %user% = the accepter.
     # %leader% = the guild leader.
+    # For user who accepted.
     user: "&eAccepted the request to &b%leader%&e's guild."
+    # For leader.
     leader: "&b%user% &ejust &aaccepted &eyour invite!"
+    # For members.
     members: "&b%user% &ejust &aaccepted &ethe invite!"
+    # If failed.
     failure: "&cNo invites!"
   # Message for denying an invite to a guild...
   deny:
     # Fillers:
     # %user% = the accepter.
     # %leader% = the guild leader.
+    # For user who denied.
     user: "&eDenied the request to &b%leader%&e's guild."
+    # For leader.
     leader: "&b%user% &ejust &cdenied &eyour invite!"
+    # For members.
     members: "&b%user% &ejust &cdenied &ethe invite!"
+    # If failed.
     failure: "&cNo invites!"
   # Message for sending an invite of a guild...
   invite:
@@ -590,36 +764,60 @@ guild:
     # %user% = the accepter.
     # %leader% = the guild leader.
     # %leaderdefault% = the guild leader formatted without their display name.
+    # For user who was invited.
     user: "&b%sender% &einvited you to &b%leader%&e's guild!%newline%&eType &a/guild accept %leaderdefault% &eto join!"
+    # For members.
     members: "&b%sender% &einvited &b%user% &eto your guild!"
+    # For leader.
     leader: "&eJust invited &b%user% &eto your guild!"
+    # If failed.
     failure: "&cAlready invited this person."
+    # If self.
     non-self: "&cCannot invite yourself!"
+  # Kick messages...
   kick:
     # Fillers:
     # %user% = the person being kicked.
+    # For user who was kicked.
     user: "&b%sender% &ekicked you from their guild."
+    # For members.
     members: "&b%user% &ewas kicked by &b%sender% &e from the guild."
+    # For sender.
     sender: "&eYou kicked &b%user% &efrom your guild."
+    # If failed.
     failure: "&cThis player is not in the guild."
+    # If mod.
     mod: "&cCannot kick a guild mod."
+    # If self.
     self: "&cCannot kick self."
+  # Mute messages.
   mute:
     # Fillers:
     # %sender% = person sending the command.
+    # If muted.
     mute:
+      # For sender.
       user: "&eYou just &cmuted &ethe guild."
+      # For members.
       members: "&b%sender% &ejust &cmuted &ethe guild."
+    # If unmuted.
     unmute:
+      # For sender.
       user: "&eYou just &aunmuted &ethe guild."
+      # For members.
       members: "&b%sender% &ejust &aunmuted &ethe guild."
+  # Warp messages...
   warp:
+    # For sender.
     sender: "&eYou warped your guild of &3%size% &eto your server!"
+    # For members.
     members: "&b%sender% &ewarped you to their server!"
+  # Info message.
   info: "&9----- &2Guild Info For &4%name% &9-----%newline%&eGEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eGEXP Needed For Level Up&8: &6%xplevel% &9(&6%xpneeded%&9)"
 
-# Messages for the parties command:
+# Messages for the guilds command:
 guilds:
+  # If no guilds found.
   no-guilds: "&cNo guilds..."
   # Fillers:
   # %sender% = person sending the command.
@@ -637,24 +835,43 @@ guilds:
   # %invites% = a list of invited players.
   # %ispublic% = true if open, false if not.
   # %ismuted% = true if muted, false if not.
+  # Main message.
   guilds: "&5GUILD &9>> &eleader&8(&b%leader%&8)&e, size&8(&3%size%&8)&e, guildMax&8(&3%max%&8)&e, mods&8(&3%mods_count% &4--> %mods%&8)&e, members&8(&3%members_count% &4--> %members%&8)&e, all&8(&3%total_count% &4--> %totalmembers%&8)&e, invites&8(&3%invites_count% &4--> %invites%&8)&e, public&8(%ispublic%&8)&e, muted&8(%ismuted%&8)&e."
+  # Mods of guild.
   mods:
+    # If not last in list.
     not-last: "&d%user%&e, "
+    # If last.
     last: "&d%user%"
+  # Members of guild.
   members:
+    # If not last in list.
     not-last: "&d%user%&e, "
+    # If last.
     last: "&d%user%"
+  # Invites of guild.
   invites:
+    # If not last in list.
     not-last: "&d%user%&e, "
+    # If last.
     last: "&d%user%"
+  # Total members of guild.
   totalmembers:
+    # If not last in list.
     not-last: "&d%user%&e, "
+    # If last.
     last: "&d%user%"
+  # If is public
   ispublic:
+    # If true.
     true: "&aTRUE"
+    # If false.
     false: "&cFALSE"
+  # If is muted.
   ismuted:
+    # If true.
     true: "&aTRUE"
+    # If false.
     false: "&cFALSE"
 
 # Info for stats.
@@ -665,46 +882,137 @@ guilds:
 # %xpneeded% = the player you are looking at stats of's xp needed FOR level up.
 # %xplevel% = the player you are looking at stats of's xp needed UNTIL level up.
 # %playtime% = the player you are looking at stats of's playtime in hours.
+# %version% = the player you are looking at stats of's version. (Need to have ViaVersion installed.)
+# %points% = the player you are looking at stats of's points.
+# %points_name% = the name of the point system (defined in config.yml).
+# %uuid% = the player you are looking at stats of's Minecraft Java / Bedrock uuid.
+# %tags% = the player you are looking at stats of's tags.
+# %ip% = the player you are looking at stats of's current ip.
+# %ips% = the player you are looking at stats of's ips.
+# %display% = the player you are looking at stats of's display name.
+# %names% = all the names that the player has logged into the network with on that same uuid.
+# %guild% = the player you are looking at stats of's guild name.
+# %guild_members% = the player you are looking at stats of's amount of guild members.
+# %guild_xp% = the player you are looking at stats of's amount of guild experience.
+# %guild_lvl% = the player you are looking at stats of's guild level.
+# %guild_leader% = the player you are looking at stats of's guild leader's name.
+# %sspy% = the toggled value of if the player has sspy enabled.
+# %gspy% = the toggled value of if the player has gspy enabled.
+# %pspy% = the toggled value of if the player has pspy enabled.
+# %sc% = the toggled value of if the player has sc enabled.
+# %online% = the value of if the player is online or not.
 stats:
+  # If no stat.
   no-stats: "&cCouldn't find the stats..."
+  # If no permission.
   no-permission: "&cSorry, but you do not have permission for that."
+  # When being created.
   create: "&aJust created a stats profile for you! You can view it by doing &b/stats"
-  info: "&9----- &d%player% &4Network Info &9-----%newline%&eEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel% &9(&6%xpneeded%&9)%newline%&ePlaytime&8: &6%playtime% &ehours"
+  # Points name.
+  points-name: "&6Network Gold"
+  # Info bulk message.
+  info: "&9----- &d%player% &7Network Info &9-----%newline%&eUUID&8: &b%uuid%%newline%&eMinecraft Version&8: &c%version%%newline%&eEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel% &0(&6%xpneeded% &etotal needed&0)%newline%&ePlaytime&8: &6%playtime% &ehours%newline%&e%points_name%&8: &6%points%%newline%&eTags&8: &c%tags%%newline%&eIP&8: &a%ip%%newline%&eIPs&8: &a%ips%%newline%&eDisplay Name&8: %display%%newline%&eAll names&8: &c%names%%newline%&2Guild&8: &r%guild%%newline%&2Guild Members&8: &6%guild_members%%newline%&2Guild EXP&7/&2LVL&8: &6%guild_xp%&7/&6%guild_lvl%%newline%&2Guild Leader&8: &d%guild_leader%%newline%&eSocial SPY &0(&%sspy%&0) &eGuild SPY &0(%gspy%&0) &eParty SPY &0(%pspy%&0) &eOnline &0(&%online%&0)"
+  # Tags.
+  tags:
+    # If not last in list.
+    last: "&c%value%"
+    # If last.
+    not-last: "&c%value%&8, "
+  # IPs.
+  ips:
+    # If not last in list.
+    last: "&a%value%"
+    # If last.
+    not-last: "&a%value%&8, "
+  # Names.
+  names:
+    # If not last in list.
+    last: "&c%value%"
+    # If last.
+    not-last: "&c%value%&8, "
+  # Social Spy.
+  sspy:
+    # If not last in list.
+    true: "&aTRUE"
+    # If last.
+    false: "&cFALSE"
+  # Guild Spy.
+  gspy:
+    # If not last in list.
+    true: "&aTRUE"
+    # If last.
+    false: "&cFALSE"
+  # Party Spy.
+  pspy:
+    # If not last in list.
+    true: "&aTRUE"
+    # If last.
+    false: "&cFALSE"
+  # Online.
+  online:
+    # If not last in list.
+    true: "&aTRUE"
+    # If last.
+    false: "&cFALSE"
+  # If not set.
+  not-set: "&cNot Set"
 
 # SSPY command.
 sspy:
+  # When toggling.
   toggle:
+    # Message.
     message: "&eToggled &bSSPY %toggle%&e!"
+    # If toggled on.
     on: "&aON"
+    # If toggled off.
     off: "&cOFF"
 
 # GSPY command.
 gspy:
+  # When toggling.
   toggle:
+    # Message.
     message: "&eToggled &bGSPY %toggle%&e!"
+    # If toggled on.
     on: "&aON"
+    # If toggled off.
     off: "&cOFF"
 
 # PSPY command.
 pspy:
+  # When toggling.
   toggle:
+    # Message.
     message: "&eToggled &bPSPY %toggle%&e!"
+    # If toggled on.
     on: "&aON"
+    # If toggled off.
     off: "&cOFF"
 
+# Messages for bungee tag.
 btag:
   # Fillers:
   # %player% = player whose tags are being changed.
   # %tag% = tag being changed.
+  # When removing one.
   remove: "&eRemoved &6%tag% &eoff of &d%player%&e."
+  # When adding one,
   add: "&eAdded &6%tag% &eto &d%player%&e."
+  # Bulk list message...
   list:
+    # Main message.
     main: "&d%player%&e's tags: %tags%"
+    # For tags.
     tags:
+      # If last in list.
       last: "&6%tag%"
+      # If not last in list.
       not-last: "&6%tag%&e,"
 
+# Event reload messages...
 evreload:
   # Fillers:
   # %count% = amount of events that are now loaded.
+  # Message.
   message: "&aReloaded all events (&6%count%&a)!"

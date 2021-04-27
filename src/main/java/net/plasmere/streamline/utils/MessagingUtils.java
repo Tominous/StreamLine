@@ -344,6 +344,8 @@ public class MessagingUtils {
     }
 
     public static void sendStatUserMessage(Player player, CommandSender sender, String msg){
+        Guild guild = GuildUtils.getGuild(player.guild);
+
         sender.sendMessage(TextUtils.codedText(msg
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(UUIDFetcher.getPlayer(sender)))
                 .replace("%player%", PlayerUtils.getOffOnRegBungee(player))
@@ -352,8 +354,70 @@ public class MessagingUtils {
                 .replace("%xpneeded%", Integer.toString(player.getNeededXp()))
                 .replace("%xplevel%", Integer.toString(player.xpUntilNextLevel()))
                 .replace("%playtime%", TextUtils.truncate(Double.toString(player.getPlayHours()), 3))
-                .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
+                .replace("%version%", player.latestVersion)
+                .replace("%points%", Integer.toString(player.points))
+                .replace("%points_name%", PlayerUtils.pointsName)
+                .replace("%uuid%", player.uuid)
+                .replace("%tags%", statTags(player))
+                .replace("%ip%", player.latestIP)
+                .replace("%ips%", statIPs(player))
+                .replace("%display%", player.displayName)
+                .replace("%names%", statNames(player))
+                .replace("%guild%", (guild != null ? guild.name : PlayerUtils.notSet))
+                .replace("%guild_members%", (guild != null ? Integer.toString(guild.totalMembers.size()) : PlayerUtils.notSet))
+                .replace("%guild_xp%", (guild != null ? Integer.toString(guild.xp) : PlayerUtils.notSet))
+                .replace("%guild_lvl%", (guild != null ? Integer.toString(guild.lvl) : PlayerUtils.notSet))
+                .replace("%guild_leader%", (guild != null ? Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(guild.leaderUUID)).displayName : PlayerUtils.notSet))
+                .replace("%sspy%", (player.sspy ? PlayerUtils.sspyT : PlayerUtils.sspyF))
+                .replace("%gspy%", (player.gspy ? PlayerUtils.gspyT : PlayerUtils.gspyF))
+                .replace("%pspy%", (player.pspy ? PlayerUtils.pspyT : PlayerUtils.pspyF))
+                .replace("%online%", (player.online ? PlayerUtils.onlineT : PlayerUtils.onlineF))
         ));
+    }
+
+    public static String statTags(Player player){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int i = 1;
+        for (String tag : player.tags) {
+            if (i != player.tags.size()) {
+                stringBuilder.append(PlayerUtils.tagsNLast.replace("%value%", tag));
+            } else {
+                stringBuilder.append(PlayerUtils.tagsLast.replace("%value%", tag));
+            }
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public static String statIPs(Player player){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int i = 1;
+        for (String ip : player.ipList) {
+            if (i != player.ipList.size()) {
+                stringBuilder.append(PlayerUtils.ipsNLast.replace("%value%", ip));
+            } else {
+                stringBuilder.append(PlayerUtils.ipsLast.replace("%value%", ip));
+            }
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public static String statNames(Player player){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int i = 1;
+        for (String name : player.nameList) {
+            if (i != player.nameList.size()) {
+                stringBuilder.append(PlayerUtils.namesNLast.replace("%value%", name));
+            } else {
+                stringBuilder.append(PlayerUtils.namesLast.replace("%value%", name));
+            }
+        }
+
+        return stringBuilder.toString();
     }
 
     public static void sendBUserMessage(CommandSender sender, String msg){

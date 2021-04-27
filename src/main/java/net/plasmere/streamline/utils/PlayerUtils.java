@@ -373,10 +373,27 @@ public class PlayerUtils {
     public static final String create = message.getString("stats.create");
     // Info.
     public static final String info = message.getString("stats.info");
+    public static final String tagsLast = message.getString("stats.tags.last");
+    public static final String tagsNLast = message.getString("stats.tags.not-last");
+    public static final String ipsLast = message.getString("stats.ips.last");
+    public static final String ipsNLast = message.getString("stats.ips.not-last");
+    public static final String namesLast = message.getString("stats.names.last");
+    public static final String namesNLast = message.getString("stats.names.not-last");
+    public static final String sspyT = message.getString("stats.sspy.true");
+    public static final String sspyF = message.getString("stats.sspy.false");
+    public static final String gspyT = message.getString("stats.gspy.true");
+    public static final String gspyF = message.getString("stats.gspy.false");
+    public static final String pspyT = message.getString("stats.pspy.true");
+    public static final String pspyF = message.getString("stats.pspy.false");
+    public static final String onlineT = message.getString("stats.online.true");
+    public static final String onlineF = message.getString("stats.online.false");
+    public static final String notSet = message.getString("stats.not-set");
     // Tags.
     public static final String tagRem = message.getString("btag.remove");
     public static final String tagAdd = message.getString("btag.add");
     public static final String tagListMain = message.getString("btag.list.main");
     public static final String tagListLast = message.getString("btag.list.tags.last");
     public static final String tagListNotLast = message.getString("btag.list.tags.not-last");
+    // Points.
+    public static final String pointsName = message.getString("stats.points-name");
 }

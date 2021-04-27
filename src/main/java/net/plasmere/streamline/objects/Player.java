@@ -44,8 +44,7 @@ public class Player implements ProxiedPlayer {
     public boolean sc;
     public String latestVersion;
     public List<String> tags;
-    public String connectingStatus;
-    public int tryingLobby = 0;
+    public int points;
 
     public Player(ProxiedPlayer player) {
         String ipSt = player.getSocketAddress().toString().replace("/", "");
@@ -294,6 +293,7 @@ public class Player implements ProxiedPlayer {
         defaults.add("sc=true");
         defaults.add("latestversion=" + latestVersion);
         defaults.add("tags=" + defaultTags());
+        defaults.add("points=" + ConfigUtils.pointsDefault);
         //defaults.add("");
         return defaults;
     }
@@ -536,6 +536,19 @@ public class Player implements ProxiedPlayer {
     }
 
     public void toggleSC() { setSC(! sc); }
+
+    public void setPoints(int amount) {
+        points = amount;
+        updateKey("points", amount);
+    }
+
+    public void addPoints(int amount) {
+        setPoints(points + amount);
+    }
+
+    public void remPoints(int amount) {
+        setPoints(points - amount);
+    }
 
     public String toString(){
         return latestName;

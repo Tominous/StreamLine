@@ -685,8 +685,6 @@ modules:
         time-out: 5
     # Network points.
     points:
-      # The name for the points.
-      name: "&6Network Gold"
       # Default amount given to players upon first join to the network.
       default: 0
     # Network tags. (Used for events.)
