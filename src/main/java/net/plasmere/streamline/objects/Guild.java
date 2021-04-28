@@ -19,14 +19,14 @@ public class Guild {
     public File file;
     public String name;
     public String leaderUUID;
-    public List<Player> moderators;
-    public List<String> modsByUUID;
-    public List<Player> members;
-    public List<String> membersByUUID;
-    public List<Player> totalMembers;
-    public List<String> totalMembersByUUID;
-    public List<Player> invites;
-    public List<String> invitesByUUID;
+    public List<Player> moderators = new ArrayList<>();
+    public List<String> modsByUUID= new ArrayList<>();
+    public List<Player> members = new ArrayList<>();
+    public List<String> membersByUUID = new ArrayList<>();
+    public List<Player> totalMembers = new ArrayList<>();
+    public List<String> totalMembersByUUID = new ArrayList<>();
+    public List<Player> invites = new ArrayList<>();
+    public List<String> invitesByUUID = new ArrayList<>();
     public boolean isMuted;
     public boolean isPublic;
     public int xp;
@@ -42,8 +42,10 @@ public class Guild {
     public Guild(String creatorUUID, String name) {
         this.leaderUUID = creatorUUID;
         this.name = name;
+        this.totalMembersByUUID.add(creatorUUID);
+        this.totalMembers.add(PlayerUtils.getStatByUUID(creatorUUID));
         try {
-            Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(creatorUUID)).updateKey("guild", creatorUUID.toString());
+            Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(creatorUUID, true)).updateKey("guild", creatorUUID.toString());
         } catch (Exception e){
             // do nothing
         }
@@ -54,17 +56,21 @@ public class Guild {
         construct(uuid, create);
     }
 
-    private void construct(String uuid, boolean createNew){
-        this.file = new File(filePrePath + uuid.toString() + ".properties");
+    private void construct(String uuid, boolean createNew) {
+        this.file = new File(filePrePath + uuid + ".properties");
 
-        if (createNew || file.exists()) {
-            //StreamLine.getInstance().getLogger().info("Guild file: " + file.getName() + " (In the \"guilds\" folder.)");
-
+        if (createNew) {
             try {
-                getFromConfigFile();
+                this.updateWithNewDefaults();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+        try {
+            getFromConfigFile();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -117,7 +123,7 @@ public class Guild {
     }
 
     public Player getMember(String uuid) {
-        Player player = UUIDFetcher.getPlayerByUUID(uuid);
+        Player player = UUIDFetcher.getPlayerByUUID(uuid, true);
 
         if (player == null) {
             removeUUID(uuid);
@@ -147,8 +153,6 @@ public class Guild {
             }
 
             loadVars();
-        } else {
-            updateWithNewDefaults();
         }
     }
 
@@ -213,6 +217,24 @@ public class Guild {
         } catch (Exception e) {
             return;
         }
+
+        if (this.leaderUUID == null) {
+            try {
+                throw new Exception("Improper use of the Guild's class! Report this to the owner of the StreamLine plugin...");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+        if (this.leaderUUID.equals("null") || this.leaderUUID.equals("")) {
+            try {
+                throw new Exception("Improper use of the Guild's class! Report this to the owner of the StreamLine plugin...");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+
         this.modsByUUID = loadModerators();
         this.membersByUUID = loadMembers();
         this.totalMembersByUUID = loadTotalMembers();
@@ -993,7 +1015,7 @@ public class Guild {
 
     public void disband(){
         for (String uuid : totalMembersByUUID){
-            Player player = UUIDFetcher.getPlayerByUUID(uuid);
+            Player player = UUIDFetcher.getPlayerByUUID(uuid, true);
 
             if (player == null) continue;
 

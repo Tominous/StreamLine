@@ -41,7 +41,7 @@ public class PartyUtils {
     public static Party getParty(String uuid) {
         try {
             for (Party party : parties) {
-                if (party.hasMember(UUIDFetcher.getPlayerByUUID(uuid)))
+                if (party.hasMember(UUIDFetcher.getPlayerByUUID(uuid, true)))
                     return party;
             }
             return null;
@@ -175,6 +175,8 @@ public class PartyUtils {
             }
 
             for (Player pl : party.totalMembers) {
+                StreamLine.getInstance().getLogger().info("sendInvite > " + pl.displayName);
+
                 if (! pl.online) continue;
 
                 ProxiedPlayer member = UUIDFetcher.getPPlayerByUUID(pl.uuid);
@@ -199,8 +201,6 @@ public class PartyUtils {
             }
 
             party.addInvite(to);
-            invites.remove(party);
-            invites.put(party, party.invites);
         } catch (Exception e) {
             e.printStackTrace();
         }

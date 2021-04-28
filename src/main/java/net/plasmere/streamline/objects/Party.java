@@ -201,7 +201,7 @@ public class Party {
 
         invites.clear();
         for (String u : invitesUUIDs) {
-            Player p = UUIDFetcher.getPlayerByUUID(u);
+            Player p = UUIDFetcher.getPlayerByUUID(u, true);
             if (p == null) continue;
 
             invites.add(p);

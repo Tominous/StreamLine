@@ -100,14 +100,22 @@ public class Player implements ProxiedPlayer {
         construct(player.getUniqueId().toString(), create);
     }
 
-    public Player(String username){
-        construct(Objects.requireNonNull(UUIDFetcher.getCachedUUID(username)), false);
-        this.online = onlineCheck();
+    public Player(String thing){
+        createCheck(thing);
     }
 
     public Player(UUID uuid) {
-        construct(uuid.toString(), false);
-        this.online = onlineCheck();
+        createCheck(uuid.toString());
+    }
+
+    public void createCheck(String thing){
+        if (thing.contains("-")){
+            construct(thing, false);
+            this.online = onlineCheck();
+        } else {
+            construct(Objects.requireNonNull(UUIDFetcher.getCachedUUID(thing)), false);
+            this.online = onlineCheck();
+        }
     }
 
     public boolean onlineCheck(){
@@ -123,17 +131,20 @@ public class Player implements ProxiedPlayer {
 
         this.uuid = uuid;
 
-        this.file = new File(filePrePath + uuid.toString() + ".properties");
+        this.file = new File(filePrePath + uuid + ".properties");
 
-        if (createNew || file.exists()) {
-
-            //StreamLine.getInstance().getLogger().info("Player file: " + file.getName() + " (In the \"players\" folder.)");
-
+        if (createNew) {
             try {
-                getFromConfigFile();
+                this.updateWithNewDefaults();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+        try {
+            getFromConfigFile();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -219,8 +230,6 @@ public class Player implements ProxiedPlayer {
             }
 
             loadVars();
-        } else {
-            updateWithNewDefaults();
         }
     }
 

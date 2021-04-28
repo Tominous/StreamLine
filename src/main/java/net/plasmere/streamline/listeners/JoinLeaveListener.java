@@ -84,7 +84,11 @@ public class JoinLeaveListener implements Listener {
                 if (p.guild.equals(stat.guild) && ! p.equals(stat)) continue;
 
                 try {
-                    GuildUtils.addGuild(new Guild(stat.guild, false));
+                    if (GuildUtils.existsByUUID(stat.guild)) {
+                        GuildUtils.addGuild(new Guild(stat.guild, false));
+                    } else {
+                        stat.updateKey("guild", "");
+                    }
                 } catch (Exception e) {
                     // Do nothing.
                 }

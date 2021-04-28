@@ -326,7 +326,7 @@ public class MessagingUtils {
 
         to.sendMessage(TextUtils.codedText(msg
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(UUIDFetcher.getPlayer(sender)))
-                .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(guild.leaderUUID)).getName())
+                .replace("%leader%", Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(guild.leaderUUID, true)).getName())
                 .replace("%size%", Integer.toString(guild.getSize()))
                 .replace("%max%", Integer.toString(guild.maxSize))
                 .replace("%mods_count%", Integer.toString(guild.modsByUUID.size()))
@@ -345,11 +345,12 @@ public class MessagingUtils {
                 .replace("%xpneeded%", Integer.toString(guild.getNeededXp()))
                 .replace("%xplevel%", Integer.toString(guild.xpUntilNextLevel()))
                 .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
+                .replace("%name%", guild.name)
         ));
     }
 
     public static void sendStatUserMessage(Player player, CommandSender sender, String msg){
-        Guild guild = GuildUtils.getGuild(player.guild);
+        Guild guild = GuildUtils.getGuild(player);
 
         sender.sendMessage(TextUtils.codedText(msg
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(UUIDFetcher.getPlayer(sender)))
@@ -372,7 +373,8 @@ public class MessagingUtils {
                 .replace("%guild_members%", (guild != null ? Integer.toString(guild.totalMembers.size()) : PlayerUtils.notSet))
                 .replace("%guild_xp%", (guild != null ? Integer.toString(guild.xp) : PlayerUtils.notSet))
                 .replace("%guild_lvl%", (guild != null ? Integer.toString(guild.lvl) : PlayerUtils.notSet))
-                .replace("%guild_leader%", (guild != null ? Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(guild.leaderUUID)).displayName : PlayerUtils.notSet))
+                .replace("%guild_leader%", (guild != null ? Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(guild.leaderUUID, true)).displayName : PlayerUtils.notSet))
+                .replace("%guild_uuid%", (guild != null ? player.guild : PlayerUtils.notSet))
                 .replace("%sspy%", (player.sspy ? PlayerUtils.sspyT : PlayerUtils.sspyF))
                 .replace("%gspy%", (player.gspy ? PlayerUtils.gspyT : PlayerUtils.gspyF))
                 .replace("%pspy%", (player.pspy ? PlayerUtils.pspyT : PlayerUtils.pspyF))
@@ -602,7 +604,7 @@ public class MessagingUtils {
         for (String m : guild.modsByUUID){
             Player player;
             try {
-                player = Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(m));
+                player = Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(m, true));
             } catch (Exception e) {
                 continue;
             }
@@ -632,7 +634,7 @@ public class MessagingUtils {
         for (String m : guild.membersByUUID){
             Player player;
             try {
-                player = Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(m));
+                player = Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(m, true));
             } catch (Exception e) {
                 continue;
             }
@@ -662,7 +664,7 @@ public class MessagingUtils {
         for (String m : guild.totalMembersByUUID){
             Player player;
             try {
-                player = Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(m));
+                player = Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(m, true));
             } catch (Exception e) {
                 continue;
             }
@@ -692,7 +694,7 @@ public class MessagingUtils {
         for (String m : guild.invitesByUUID){
             Player player;
             try {
-                player = Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(m));
+                player = Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(m, true));
             } catch (Exception e) {
                 continue;
             }

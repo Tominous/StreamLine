@@ -26,7 +26,7 @@ public class Lobbies {
     private void construct(boolean createNew){
         this.file = new File(filePrePath + ConfigUtils.lobbiesFile);
 
-        if (createNew) {
+        if (createNew || ! file.exists()) {
             try {
                 this.updateWithNewDefaults();
             } catch (Exception e) {

@@ -74,7 +74,7 @@ public class ChatListener implements Listener {
                 }
 
                 if (GuildUtils.pHasGuild(stat)) {
-                    GuildUtils.addGuild(new Guild(stat.uuid, false));
+                    GuildUtils.addGuild(new Guild(stat.guild, false));
                 }
                 break;
             }

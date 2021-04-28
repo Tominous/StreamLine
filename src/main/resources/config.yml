@@ -651,6 +651,8 @@ modules:
         time-per: 20
       # Time in seconds to wait before trying to clear the cached stats.
       cache-clear: 300
+      # Enables updating player's display names. Disable if you have another plugin doing this. MUST HAVE LUCKPERMS.
+      update-display-names: true
     # For server redirects...
     # This redirects players upon joining the server.
     # Nice if you need to direct certain players to a different server when they join.

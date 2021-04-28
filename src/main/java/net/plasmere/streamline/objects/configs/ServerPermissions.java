@@ -26,7 +26,6 @@ public class ServerPermissions {
 
         if (createNew || ! file.exists()) {
             try {
-                this.file.delete();
                 this.updateWithNewDefaults();
             } catch (Exception e) {
                 e.printStackTrace();

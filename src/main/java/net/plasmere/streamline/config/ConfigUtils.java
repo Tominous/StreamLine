@@ -276,6 +276,7 @@ public class ConfigUtils {
     public static final int xpPerGiveP = config.getInt("modules.bungee.stats.xp.amount-per");
     public static final int timePerGiveP = config.getInt("modules.bungee.stats.xp.time-per");
     public static final int cachedPClear = config.getInt("modules.bungee.stats.cache-clear");
+    public static final boolean updateDisplayNames = config.getBoolean("modules.bungee.stats.update-display-names");
     // ... Redirect.
     public static final boolean redirectEnabled = config.getBoolean("modules.bungee.redirect.enabled");
     public static final String redirectPre = config.getString("modules.bungee.redirect.permission-prefix");
@@ -289,7 +290,7 @@ public class ConfigUtils {
     public static final String lobbiesFile = config.getString("modules.bungee.redirect.lobbies.file");
     public static final int lobbyTimeOut = config.getInt("modules.bungee.redirect.lobbies.time-out");
     // Points.
-    public static final String pointsDefault = config.getString("modules.bungee.points.default");
+    public static final int pointsDefault = config.getInt("modules.bungee.points.default");
     //
     public static final List<String> tagsDefaults = config.getStringList("modules.bungee.tags.defaults");
     public static final boolean tagsEvents = config.getBoolean("modules.bungee.events.enabled");

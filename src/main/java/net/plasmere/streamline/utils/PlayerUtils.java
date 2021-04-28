@@ -1,5 +1,10 @@
 package net.plasmere.streamline.utils;
 
+import net.luckperms.api.model.group.Group;
+import net.luckperms.api.model.user.User;
+import net.luckperms.api.node.NodeType;
+import net.luckperms.api.node.types.PrefixNode;
+import net.luckperms.api.node.types.SuffixNode;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
@@ -9,6 +14,7 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.objects.lists.SingleSet;
+import org.apache.commons.collections4.list.TreeList;
 
 import java.io.File;
 import java.io.IOException;
@@ -211,6 +217,55 @@ public class PlayerUtils {
         }
 
         return ps;
+    }
+
+    public static void updateDisplayName(Player player){
+        if (! ConfigUtils.updateDisplayNames) return;
+        if (! StreamLine.lpHolder.enabled) return;
+        if (! player.online) return;
+
+        User user = StreamLine.lpHolder.api.getUserManager().getUser(player.latestName);
+        if (user == null) return;
+
+        Group group = StreamLine.lpHolder.api.getGroupManager().getGroup(user.getPrimaryGroup());
+        if (group == null) return;
+
+        String prefix = "";
+        String suffix = "";
+
+        TreeMap<Integer, String> preWeight = new TreeMap<>();
+        TreeMap<Integer, String> sufWeight = new TreeMap<>();
+
+        for (PrefixNode node : group.getNodes(NodeType.PREFIX)) {
+            preWeight.put(node.getPriority(), node.getMetaValue());
+        }
+
+        for (PrefixNode node : user.getNodes(NodeType.PREFIX)) {
+            preWeight.put(node.getPriority(), node.getMetaValue());
+        }
+
+        for (SuffixNode node : group.getNodes(NodeType.SUFFIX)) {
+            sufWeight.put(node.getPriority(), node.getMetaValue());
+        }
+
+        for (SuffixNode node : user.getNodes(NodeType.SUFFIX)) {
+            sufWeight.put(node.getPriority(), node.getMetaValue());
+        }
+
+        prefix = preWeight.get(getCeilingInt(preWeight.keySet()));
+        suffix = sufWeight.get(getCeilingInt(sufWeight.keySet()));
+
+        player.setDisplayName(TextUtils.codedString(prefix + player.latestName + suffix));
+    }
+
+    public static int getCeilingInt(Set<Integer> ints){
+        int value = 0;
+
+        for (Integer i : ints) {
+            if (i >= value) value = i;
+        }
+
+        return value;
     }
 
     public static String getOffOnDisplayBungee(Player player){

@@ -32,7 +32,7 @@ public class UUIDFetcher {
 
     public static String getCachedName(String uuid) {
         try {
-            return Objects.requireNonNull(cachedNames.get(uuid, (u) -> getName(uuid.toString()))).replace("\"", "");
+            return Objects.requireNonNull(cachedNames.get(uuid, (u) -> getName(uuid))).replace("\"", "");
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
@@ -40,6 +40,8 @@ public class UUIDFetcher {
     }
 
     static public String fetch(String username) {
+        if (username.contains("-")) return getName(username);
+
         try {
             if (StreamLine.geyserHolder.enabled) {
                 if (StreamLine.geyserHolder.isGeyserPlayer(username)) {
@@ -80,6 +82,7 @@ public class UUIDFetcher {
     }
 
     public static String getName(String uuid) {
+        if (! uuid.contains("-")) return fetch(uuid);
         try {
             if (StreamLine.geyserHolder.enabled) {
                 String name = StreamLine.geyserHolder.file.getName(uuid);
@@ -92,7 +95,7 @@ public class UUIDFetcher {
         try {
             String JSONString = "";
 
-            HttpURLConnection connection = (HttpURLConnection) new URL("https://api.mojang.com/user/profiles/" + uuid.replace("-", "") + "/names").openConnection();
+            HttpURLConnection connection = (HttpURLConnection) new URL("https://api.mojang.com/user/profiles/" + uuid + "/names").openConnection();
             InputStream is = connection.getInputStream();
 
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -137,7 +140,7 @@ public class UUIDFetcher {
                 }
             }
 
-            return StreamLine.getInstance().getProxy().getPlayer(uuid);
+            return StreamLine.getInstance().getProxy().getPlayer(UUID.fromString(uuid));
         } catch (Exception e){
             e.printStackTrace();
             return null;
@@ -182,18 +185,27 @@ public class UUIDFetcher {
         }
     }
 
-    public static Player getPlayerByUUID(String uuid){
+    public static Player getPlayerByUUID(String uuid, boolean createIfNull){
         try {
             String name = getCachedName(uuid);
 
-            if (PlayerUtils.exists(name)) {
-                if (PlayerUtils.hasStat(name)) {
-                    return getPlayer(name);
-                } else {
-                    return PlayerUtils.getOrCreate(uuid);
+            try {
+                if (uuid == null || name.equals("error")) {
+                    createIfNull = false;
+                    throw new Exception("UUID is null!");
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (createIfNull /*&& uuid != null*/) {
+                return PlayerUtils.getOrCreate(uuid);
             } else {
-                return null;
+                if (PlayerUtils.exists(name)) {
+                    return PlayerUtils.getOrCreate(uuid);
+                } else {
+                    return null;
+                }
             }
         } catch (Exception e){
             return null;

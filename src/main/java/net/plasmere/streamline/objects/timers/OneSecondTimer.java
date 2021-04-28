@@ -1,5 +1,6 @@
 package net.plasmere.streamline.objects.timers;
 
+import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.utils.PlayerUtils;
@@ -38,6 +39,12 @@ public class OneSecondTimer implements Runnable {
             SingleSet<Integer, Integer> conn = PlayerUtils.getConnection(player);
             if (conn == null) continue;
             if (conn.key <= 0) PlayerUtils.removeConn(player);
+        }
+
+        if (StreamLine.lpHolder.enabled) {
+            for (Player player : PlayerUtils.getStats()) {
+                PlayerUtils.updateDisplayName(player);
+            }
         }
     }
 }
