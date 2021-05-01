@@ -99,12 +99,14 @@ public class ChatListener implements Listener {
 
                     e.setCancelled(true);
                     MessagingUtils.sendStaffChatMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg.substring(prefix.length()), plugin);
-                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
-                            MessageConfUtils.staffChatEmbedTitle,
-                            MessageConfUtils.discordStaffChatMessage
-                                    .replace("%user%", sender.getName())
-                                    .replace("%message%", msg.substring(prefix.length())),
-                            ConfigUtils.textChannelStaffChat));
+                    if (ConfigUtils.moduleStaffChatMToDiscord) {
+                        MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
+                                MessageConfUtils.staffChatEmbedTitle,
+                                MessageConfUtils.discordStaffChatMessage
+                                        .replace("%user%", sender.getName())
+                                        .replace("%message%", msg.substring(prefix.length())),
+                                ConfigUtils.textChannelStaffChat));
+                    }
                 }
             }
         }

@@ -5,11 +5,6 @@ import net.plasmere.streamline.config.Config;
 import net.md_5.bungee.config.Configuration;
 
 public class MessageConfUtils {
-
-    static {
-        System.out.println("MessageConfUtils class init - start");
-    }
-
     private static final Configuration message = Config.getMess();
     // Messages:
 //    public static final String s = message.getString("");
@@ -145,8 +140,4 @@ public class MessageConfUtils {
     public static final String pspyOff = message.getString("pspy.toggle.off");
     // EVReload
     public static final String evReload = message.getString("evreload.message");
-
-    static {
-        System.out.println("MessageConfUtils class init - end");
-    }
 }
