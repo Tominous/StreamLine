@@ -31,6 +31,13 @@ public class MessagingUtils {
                 if (! player.hasPermission(ConfigUtils.staffPerm)) {
                     staffs.remove(player);
                 }
+
+                Player stat = PlayerUtils.getStat(player);
+
+                if (stat == null) continue;
+                if (! stat.sc) {
+                    staffs.remove(player);
+                }
             } catch (Exception e){
                 e.printStackTrace();
             }

@@ -3,13 +3,22 @@ package net.plasmere.streamline.commands.staff.spy;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+
 public class GSPYCommand extends Command {
+
     public GSPYCommand(String perm, String[] aliases){
         super("gspy", perm, aliases);
     }
@@ -23,13 +32,8 @@ public class GSPYCommand extends Command {
 
             player.toggleGSPY();
 
-            StreamLine.getInstance().getLogger().info(String.valueOf(player.gspy));
-            StreamLine.getInstance().getLogger().info(MessageConfUtils.gspyOn);
-            StreamLine.getInstance().getLogger().info(MessageConfUtils.gspyOff);
-            StreamLine.getInstance().getLogger().info((player.gspy ? MessageConfUtils.gspyOn : MessageConfUtils.gspyOff));
-
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.gspyToggle
-                    .replace("%toggle%", (player.gspy ? MessageConfUtils.gspyOn : MessageConfUtils.gspyOff))
+                    .replace("%toggle%", (player.gspy ? "true" : "false"))
             );
         } else {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);

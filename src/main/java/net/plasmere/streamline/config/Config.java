@@ -32,8 +32,12 @@ public class Config {
         this.configVer = inst.getDescription().getVersion();
         this.messagesVer = inst.getDescription().getVersion();
 
+        System.out.println("config load - start");
+
         conf = loadConf();
         mess = loadMess();
+
+        System.out.println("config load - end");
     }
 
     public static Configuration getConf() { return conf; }
