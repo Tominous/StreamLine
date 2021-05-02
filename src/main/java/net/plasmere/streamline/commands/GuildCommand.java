@@ -11,10 +11,7 @@ import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class GuildCommand extends Command implements TabExecutor {
     private final StreamLine plugin;
@@ -68,7 +65,10 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        GuildUtils.createGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), args[1]);
+                        List<String> a = Arrays.asList(args);
+                        a.remove(args[0]);
+
+                        GuildUtils.createGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.normalize(a));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                         e.printStackTrace();
@@ -233,6 +233,25 @@ public class GuildCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
                     e.printStackTrace();
                 }
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildRenameAliases)) {
+                if (args.length <= 1) {
+                    try {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        List<String> a = Arrays.asList(args);
+                        a.remove(args[0]);
+
+                        GuildUtils.rename(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.normalize(a));
+                    } catch (Exception e) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        e.printStackTrace();
+                    }
+                }
             } else {
                 try {
                     Player p = UUIDFetcher.getPlayer(args[0]);
@@ -291,10 +310,11 @@ public class GuildCommand extends Command implements TabExecutor {
             tabArgs1.add("invite");
             tabArgs1.add("mute");
             tabArgs1.add("warp");
+            tabArgs1.add("rename");
 
             return tabArgs1;
         }
-        if (args.length == 2){
+        if (args.length == 2) {
             if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildJoinAliases)) {
                 return strPlayers;
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildLeaveAliases)) {
@@ -326,6 +346,8 @@ public class GuildCommand extends Command implements TabExecutor {
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildMuteAliases)) {
                 return new ArrayList<>();
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildWarpAliases)) {
+                return new ArrayList<>();
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildRenameAliases)) {
                 return new ArrayList<>();
             } else {
                 return strPlayers;

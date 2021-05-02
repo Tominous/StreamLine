@@ -339,6 +339,10 @@ commands:
           - "inf"
           - "stats"
           - "info"
+        rename:
+          - "rename"
+          - "ren"
+          - "rn"
     # Stats command.
     stats:
       enabled: true
@@ -639,6 +643,10 @@ modules:
         time-per: 20
       # (Staff) permission to see guild messages.
       view-permission: "streamline.view.guild"
+      # Name info.
+      name:
+        max-length: 16
+        max-includes-colors: false
     # Stats command...
     stats:
       # Enables / disables telling the player when their stats have been created.

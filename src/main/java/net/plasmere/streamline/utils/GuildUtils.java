@@ -1281,15 +1281,64 @@ public class GuildUtils {
         }
     }
 
+    public static void rename(Player sender, String newName){
+        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+
+        if (p == null) return;
+
+        try {
+            Guild guild = getGuild(sender);
+
+            if (! isGuild(guild) || guild == null) {
+                MessagingUtils.sendBUserMessage(p, noGuildFound);
+                return;
+            }
+
+            if (! guild.hasMember(sender)) {
+                MessagingUtils.sendBUserMessage(p, notInGuild);
+                return;
+            }
+
+            if (! newName.equals("")) {
+                MessagingUtils.sendBUserMessage(p, renameNonEmpty);
+                return;
+            }
+
+            String oldName = guild.name;
+
+            guild.updateKey("name", newName);
+
+            for (Player player : guild.totalMembers) {
+                ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(player.uuid);
+
+                if (m == null) continue;
+
+                if (player.equals(sender)) {
+                    MessagingUtils.sendBGUserMessage(guild, p, m, renameSender
+                            .replace("%old%", oldName)
+                            .replace("%new%", newName)
+                    );
+                } else {
+                    MessagingUtils.sendBGUserMessage(guild, p, m, renameMembers
+                            .replace("%old%", oldName)
+                            .replace("%new%", newName)
+                    );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     // MESSAGES...
     // Text.
-    public static final String textLeader = message.getString("party.text.leader");
-    public static final String textModerator = message.getString("party.text.moderator");
-    public static final String textMember = message.getString("party.text.member");
+    public static final String textLeader = message.getString("guild.text.leader");
+    public static final String textModerator = message.getString("guild.text.moderator");
+    public static final String textMember = message.getString("guild.text.member");
     // Discord.
-    public static final String discordTitle = message.getString("party.discord.title");
+    public static final String discordTitle = message.getString("guild.discord.title");
     // Spy.
-    public static final String spy = message.getString("party.spy");
+    public static final String spy = message.getString("guild.spy");
     // No guild.
     public static final String noGuildFound = message.getString("guild.no-guild");
     // Already made.
@@ -1383,4 +1432,8 @@ public class GuildUtils {
     public static final String warpMembers = message.getString("guild.warp.members");
     // Info.
     public static final String info = message.getString("guild.info");
+    // Rename.
+    public static final String renameSender = message.getString("guilds.rename.sender");
+    public static final String renameMembers = message.getString("guilds.rename.members");
+    public static final String renameNonEmpty = message.getString("guilds.rename.non-empty");
 }

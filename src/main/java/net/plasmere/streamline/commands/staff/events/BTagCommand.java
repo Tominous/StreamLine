@@ -84,14 +84,16 @@ public class BTagCommand extends Command implements TabExecutor {
         secondTab.add("remove");
         secondTab.add("list");
 
-        if (args.length <= 0) {
+        if (args.length == 1) {
             for (ProxiedPlayer player : players) {
                 strPlayers.add(player.getName());
             }
 
             return strPlayers;
-        } else {
+        } else if (args.length == 2) {
             return secondTab;
+        } else {
+            return new ArrayList<>();
         }
     }
 }

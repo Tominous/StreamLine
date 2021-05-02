@@ -158,6 +158,8 @@ public class ConfigUtils {
     public static final List<String> comBGuildWarpAliases = config.getStringList("commands.bungee.guild.aliases.warp");
     // Info.
     public static final List<String> comBGuildInfoAliases = config.getStringList("commands.bungee.guild.aliases.info");
+    // Rename.
+    public static final List<String> comBGuildRenameAliases = config.getStringList("commands.bungee.guild.aliases.rename");
     // ... Servers.
     // Lobby.
     public static final boolean comBLobby = config.getBoolean("commands.bungee.servers.lobby.enabled");
@@ -269,6 +271,8 @@ public class ConfigUtils {
     public static final int xpPerGiveG = config.getInt("modules.bungee.guilds.xp.amount-per");
     public static final int timePerGiveG = config.getInt("modules.bungee.guilds.xp.time-per");
     public static final String guildView = config.getString("modules.bungee.guilds.view-permission");
+    public static final int guildMaxLength = config.getInt("modules.bungee.guilds.name.max-length");
+    public static final boolean guildIncludeColors = config.getBoolean("modules.bungee.guilds.name.max-includes-colors");
     // ... Sudo.
     public static final String noSudoPerm = config.getString("modules.bungee.sudo.no-sudo-permission");
     // ... Stats.
