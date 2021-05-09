@@ -19,7 +19,8 @@ public class Event {
 
     public Configuration configuration;
     public List<String> tags;
-    public TreeMap<Integer, SingleSet<SingleSet<Condition, String>, SingleSet<Action, String>>> compiled = new TreeMap<>();
+    public TreeMap<Integer, SingleSet<Condition, String>> conditions = new TreeMap<>();
+    public TreeMap<Integer, SingleSet<Action, String>> actions = new TreeMap<>();
 
     public Event(File file){
         try {
@@ -27,45 +28,29 @@ public class Event {
 
             tags = configuration.getStringList("tags");
 
-            compiled = compile();
+            this.conditions = compileCond();
+            this.actions = compileAction();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public TreeMap<Integer, SingleSet<SingleSet<Condition, String>, SingleSet<Action, String>>> compile() {
-        TreeMap<Integer, SingleSet<SingleSet<Condition, String>, SingleSet<Action, String>>> c = new TreeMap<>();
+    public TreeMap<Integer, SingleSet<Condition, String>> compileCond() {
+        TreeMap<Integer, SingleSet<Condition, String>> c = new TreeMap<>();
 
-        Configuration conditions = configuration.getSection("conditions");
-        Configuration actions = configuration.getSection("actions");
+        Configuration conditionsConf = configuration.getSection("conditions");
         int i = 1;
 
-//        StreamLine.getInstance().getLogger().info("Configuration : " + configuration.getKeys());
-
-        for (String string : conditions.getKeys()) {
+        for (String string : conditionsConf.getKeys()) {
             try {
-                Configuration cond = conditions.getSection(string);
-                Configuration act = actions.getSection(string);
+                Configuration cond = conditionsConf.getSection(string);
 
                 c.put(i,
                         new SingleSet<>(
-                                new SingleSet<>(
-                                        Condition.fromString(cond.getString("type")),
-                                        cond.getString("value")
-                                ),
-                                new SingleSet<>(
-                                        Action.fromString(act.getString("type")),
-                                        act.getString("value")
-                                )
+                                Condition.fromString(cond.getString("type")),
+                                cond.getString("value")
                         )
                 );
-
-//                StreamLine.getInstance().getLogger().info("Put: " + i + " : ( ( " +
-//                        Condition.fromString(cond.getString("type")) + " , " +
-//                        cond.getString("value") + " ) , ( " +
-//                        Action.fromString(act.getString("type")) + " , " +
-//                        act.getString("value") + " ) )"
-//                );
             } catch (Exception e) {
                 e.printStackTrace();
                 break;
@@ -73,26 +58,43 @@ public class Event {
             i ++;
         }
 
-//        StreamLine.getInstance().getLogger().info("Event#compile():");
-//        for (Integer it : c.keySet()) {
-//            StreamLine.getInstance().getLogger().info("   > " + it + " : ( ( " +
-//                    c.get(it).key.key + " , " +
-//                    c.get(it).key.value + " ) , ( " +
-//                    c.get(it).value.key + " , " +
-//                    c.get(it).value.value + " ) )"
-//            );
-//        }
-
         return c;
+    }
+
+    public TreeMap<Integer, SingleSet<Action, String>> compileAction() {
+        TreeMap<Integer, SingleSet<Action, String>> a = new TreeMap<>();
+
+        Configuration conditionsConf = configuration.getSection("conditions");
+        Configuration actionsConf = configuration.getSection("actions");
+        int i = 1;
+
+        for (String string : conditionsConf.getKeys()) {
+            try {
+                Configuration act = actionsConf.getSection(string);
+
+                a.put(i,
+                        new SingleSet<>(
+                                Action.fromString(act.getString("type")),
+                                act.getString("value")
+                        )
+                );
+            } catch (Exception e) {
+                e.printStackTrace();
+                break;
+            }
+            i ++;
+        }
+
+        return a;
     }
 
     @Override
     public String toString() {
-        return "Event{" +
+        return "Event{ " +
                 "path=" + path +
                 ", configuration=" + configuration +
                 ", tags=" + tags +
-                ", compiled=" + compiled +
-                '}';
+                ", compiled=(" + conditions + " , " + actions +
+                ") }";
     }
 }

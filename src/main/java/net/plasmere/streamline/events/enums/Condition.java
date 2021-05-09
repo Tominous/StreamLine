@@ -9,7 +9,15 @@ public enum Condition {
     MESSAGE_CONTAINS,
     MESSAGE_STARTS_WITH,
     MESSAGE_ENDS_WITH,
-    COMMAND
+    COMMAND,
+
+    // Soft Conditions...
+
+    SERVER,
+    NAME_EXACT,
+    NAME_CONTAINS,
+    NAME_STARTS_WITH,
+    NAME_ENDS_WITH
     ;
 
     public static String toString(Condition condition){
@@ -28,6 +36,19 @@ public enum Condition {
                 return "MESSAGE_ENDS_WITH";
             case COMMAND:
                 return "COMMAND";
+
+                // Soft conditions...
+
+            case SERVER:
+                return "SERVER";
+            case NAME_EXACT:
+                return "NAME_EXACT";
+            case NAME_CONTAINS:
+                return "NAME_CONTAINS";
+            case NAME_STARTS_WITH:
+                return "NAME_STARTS_WITH";
+            case NAME_ENDS_WITH:
+                return "NAME_ENDS_WITH";
             default:
                 return "";
         }
@@ -51,6 +72,19 @@ public enum Condition {
                 return MESSAGE_ENDS_WITH;
             case "COMMAND":
                 return COMMAND;
+
+                // Soft Conditions...
+
+            case "SERVER":
+                return SERVER;
+            case "NAME_EXACT":
+                return NAME_EXACT;
+            case "NAME_CONTAINS":
+                return NAME_CONTAINS;
+            case "NAME_STARTS_WITH":
+                return NAME_STARTS_WITH;
+            case "NAME_ENDS_WITH":
+                return NAME_ENDS_WITH;
             default:
                 return null;
         }

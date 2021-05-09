@@ -117,7 +117,7 @@ public class ChatListener implements Listener {
             for (Event event : EventsHandler.getEvents()) {
                 if (! EventsHandler.checkTags(event, stat)) continue;
 
-                if (! EventsHandler.checkIfHasConditionWithContext(event, Condition.MESSAGE_EXACT, Arrays.asList(msg, "", "null"))) continue;
+                if (! EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_EXACT, Arrays.asList(msg, "", "null"))) continue;
 
                 EventsHandler.runEvent(event, stat, msg);
             }
@@ -125,7 +125,7 @@ public class ChatListener implements Listener {
             for (Event event : EventsHandler.getEvents()) {
                 if (! EventsHandler.checkTags(event, stat)) continue;
 
-                if (! EventsHandler.checkIfHasConditionWithContext(event, Condition.COMMAND, msg) || ! EventsHandler.checkIfHasConditionWithContext(event, Condition.MESSAGE_EXACT, Arrays.asList(msg.substring(1), "", "null"))) continue;
+                if (! EventsHandler.checkEventConditions(event, stat, Condition.COMMAND, msg) || ! EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_EXACT, Arrays.asList(msg.substring(1), "", "null"))) continue;
 
                 EventsHandler.runEvent(event, stat, msg);
             }
@@ -134,7 +134,7 @@ public class ChatListener implements Listener {
         for (Event event : EventsHandler.getEvents()) {
             if (! EventsHandler.checkTags(event, stat)) continue;
 
-            if (! EventsHandler.checkIfHasConditionWithContext(event, Condition.MESSAGE_CONTAINS, msg)) continue;
+            if (! EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_CONTAINS, msg)) continue;
 
             EventsHandler.runEvent(event, stat, msg);
         }
@@ -142,7 +142,7 @@ public class ChatListener implements Listener {
         for (Event event : EventsHandler.getEvents()) {
             if (! EventsHandler.checkTags(event, stat)) continue;
 
-            if (! EventsHandler.checkIfHasConditionWithContext(event, Condition.MESSAGE_STARTS_WITH, msg)) continue;
+            if (! EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_STARTS_WITH, msg)) continue;
 
             EventsHandler.runEvent(event, stat, msg);
         }
@@ -150,7 +150,7 @@ public class ChatListener implements Listener {
         for (Event event : EventsHandler.getEvents()) {
             if (! EventsHandler.checkTags(event, stat)) continue;
 
-            if (! EventsHandler.checkIfHasConditionWithContext(event, Condition.MESSAGE_ENDS_WITH, msg)) continue;
+            if (! EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_ENDS_WITH, msg)) continue;
 
             EventsHandler.runEvent(event, stat, msg);
         }
