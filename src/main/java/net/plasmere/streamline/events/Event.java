@@ -1,129 +1,98 @@
 package net.plasmere.streamline.events;
 
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
+import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.events.enums.Action;
+import net.plasmere.streamline.events.enums.Condition;
+import net.plasmere.streamline.objects.lists.SingleSet;
+
+import java.io.File;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class Event {
-    public enum Condition {
-        JOIN,
-        LEAVE,
-        MESSAGE_EXACT,
-        MESSAGE_CONTAINS,
-        MESSAGE_STARTS_WITH,
-        MESSAGE_ENDS_WITH,
-        COMMAND
-    }
+    public File path = StreamLine.getInstance().getEDir();
 
-    public enum Action {
-        SEND_MESSAGE_TO,
-        SEND_MESSAGE_AS,
-        SEND_SERVER,
-        KICK,
-        RUN_COMMAND_AS_OP,
-        RUN_COMMAND_AS_SELF
-    }
-
-    public static String conditionToString(Condition condition){
-        switch (condition) {
-            case JOIN:
-                return "JOIN";
-            case LEAVE:
-                return "LEAVE";
-            case MESSAGE_EXACT:
-                return "MESSAGE_EXACT";
-            case MESSAGE_CONTAINS:
-                return "MESSAGE_CONTAINS";
-            case MESSAGE_STARTS_WITH:
-                return "MESSAGE_STARTS_WITH";
-            case MESSAGE_ENDS_WITH:
-                return "MESSAGE_ENDS_WITH";
-            case COMMAND:
-                return "COMMAND";
-            default:
-                return "";
-        }
-    }
-
-    public static Condition stringToCondition(String condition){
-        switch (condition) {
-            case "JOIN":
-                return Condition.JOIN;
-            case "LEAVE":
-                return Condition.LEAVE;
-            case "MESSAGE_EXACT":
-                return Condition.MESSAGE_EXACT;
-            case "MESSAGE_CONTAINS":
-                return Condition.MESSAGE_CONTAINS;
-            case "MESSAGE_STARTS_WITH":
-                return Condition.MESSAGE_STARTS_WITH;
-            case "MESSAGE_ENDS_WITH":
-                return Condition.MESSAGE_ENDS_WITH;
-            case "COMMAND":
-                return Condition.COMMAND;
-            default:
-                return null;
-        }
-    }
-
-    public static String actionToString(Action action){
-        switch (action) {
-            case SEND_MESSAGE_TO:
-                return "SEND_MESSAGE_TO";
-            case SEND_MESSAGE_AS:
-                return "SEND_MESSAGE_AS";
-            case SEND_SERVER:
-                return "SEND_SERVER";
-            case KICK:
-                return "KICK";
-            case RUN_COMMAND_AS_OP:
-                return "RUN_COMMAND_AS_OP";
-            case RUN_COMMAND_AS_SELF:
-                return "RUN_COMMAND_AS_SELF";
-            default:
-                return "";
-        }
-    }
-
-    public static Action stringToAction(String action){
-        switch (action) {
-            case "SEND_MESSAGE_TO":
-                return Action.SEND_MESSAGE_TO;
-            case "SEND_MESSAGE_AS":
-                return Action.SEND_MESSAGE_AS;
-            case "SEND_SERVER":
-                return Action.SEND_SERVER;
-            case "KICK":
-                return Action.KICK;
-            case "RUN_COMMAND_AS_OP":
-                return Action.RUN_COMMAND_AS_OP;
-            case "RUN_COMMAND_AS_SELF":
-                return Action.RUN_COMMAND_AS_SELF;
-            default:
-                return null;
-        }
-    }
-
+    public Configuration configuration;
     public List<String> tags;
-    public Condition condition;
-    public String conVal;
-    public Action action;
-    public String actVal;
+    public TreeMap<Integer, SingleSet<SingleSet<Condition, String>, SingleSet<Action, String>>> compiled = new TreeMap<>();
 
-    public Event(List<String> tags, Condition condition, String conditionValue, Action action, String actionValue){
-        this.tags = tags;
-        this.condition = condition;
-        this.conVal = conditionValue;
-        this.action = action;
-        this.actVal = actionValue;
+    public Event(File file){
+        try {
+            configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(path, file.getName()));
+
+            tags = configuration.getStringList("tags");
+
+            compiled = compile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public TreeMap<Integer, SingleSet<SingleSet<Condition, String>, SingleSet<Action, String>>> compile() {
+        TreeMap<Integer, SingleSet<SingleSet<Condition, String>, SingleSet<Action, String>>> c = new TreeMap<>();
+
+        Configuration conditions = configuration.getSection("conditions");
+        Configuration actions = configuration.getSection("actions");
+        int i = 1;
+
+//        StreamLine.getInstance().getLogger().info("Configuration : " + configuration.getKeys());
+
+        for (String string : conditions.getKeys()) {
+            try {
+                Configuration cond = conditions.getSection(string);
+                Configuration act = actions.getSection(string);
+
+                c.put(i,
+                        new SingleSet<>(
+                                new SingleSet<>(
+                                        Condition.fromString(cond.getString("type")),
+                                        cond.getString("value")
+                                ),
+                                new SingleSet<>(
+                                        Action.fromString(act.getString("type")),
+                                        act.getString("value")
+                                )
+                        )
+                );
+
+//                StreamLine.getInstance().getLogger().info("Put: " + i + " : ( ( " +
+//                        Condition.fromString(cond.getString("type")) + " , " +
+//                        cond.getString("value") + " ) , ( " +
+//                        Action.fromString(act.getString("type")) + " , " +
+//                        act.getString("value") + " ) )"
+//                );
+            } catch (Exception e) {
+                e.printStackTrace();
+                break;
+            }
+            i ++;
+        }
+
+//        StreamLine.getInstance().getLogger().info("Event#compile():");
+//        for (Integer it : c.keySet()) {
+//            StreamLine.getInstance().getLogger().info("   > " + it + " : ( ( " +
+//                    c.get(it).key.key + " , " +
+//                    c.get(it).key.value + " ) , ( " +
+//                    c.get(it).value.key + " , " +
+//                    c.get(it).value.value + " ) )"
+//            );
+//        }
+
+        return c;
     }
 
     @Override
     public String toString() {
         return "Event{" +
-                "tags=" + tags +
-                ", condition=" + conditionToString(condition) +
-                ", conVal='" + conVal + '\'' +
-                ", action=" + actionToString(action) +
-                ", actVal='" + actVal + '\'' +
+                "path=" + path +
+                ", configuration=" + configuration +
+                ", tags=" + tags +
+                ", compiled=" + compiled +
                 '}';
     }
 }

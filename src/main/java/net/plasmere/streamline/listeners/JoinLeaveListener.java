@@ -10,6 +10,7 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.events.Event;
 import net.plasmere.streamline.events.EventsHandler;
+import net.plasmere.streamline.events.enums.Condition;
 import net.plasmere.streamline.objects.GeyserFile;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.objects.messaging.BungeeMassMessage;
@@ -152,7 +153,7 @@ public class JoinLeaveListener implements Listener {
         for (Event event : EventsHandler.getEvents()) {
             if (! EventsHandler.checkTags(event, stat)) continue;
 
-            if (! (event.condition.equals(Event.Condition.JOIN) && event.conVal.toLowerCase(Locale.ROOT).equals("network"))) continue;
+            if (! (EventsHandler.checkIfHasConditionWithContext(event, Condition.JOIN, "network"))) continue;
 
             EventsHandler.runEvent(event, stat);
         }
@@ -262,7 +263,7 @@ public class JoinLeaveListener implements Listener {
         for (Event event : EventsHandler.getEvents()) {
             if (! EventsHandler.checkTags(event, stat)) continue;
 
-            if (! (event.condition.equals(Event.Condition.JOIN) && event.conVal.toLowerCase(Locale.ROOT).equals(server.getName()))) continue;
+            if (! (EventsHandler.checkIfHasConditionWithContext(event, Condition.JOIN, server.getName()))) continue;
 
             EventsHandler.runEvent(event, stat);
         }
@@ -293,7 +294,7 @@ public class JoinLeaveListener implements Listener {
             for (Event event : EventsHandler.getEvents()) {
                 if (! EventsHandler.checkTags(event, stat)) continue;
 
-                if (! event.condition.equals(Event.Condition.LEAVE) && ! event.conVal.toLowerCase(Locale.ROOT).equals(server.getName())) continue;
+                if (! (EventsHandler.checkIfHasConditionWithContext(event, Condition.LEAVE, server.getName()))) continue;
 
                 EventsHandler.runEvent(event, stat);
             }
@@ -404,7 +405,7 @@ public class JoinLeaveListener implements Listener {
         for (Event event : EventsHandler.getEvents()) {
             if (! EventsHandler.checkTags(event, stat)) continue;
 
-            if (! (event.condition.equals(Event.Condition.LEAVE) && event.conVal.toLowerCase(Locale.ROOT).equals("network"))) continue;
+            if (! (EventsHandler.checkIfHasConditionWithContext(event, Condition.LEAVE, "network"))) continue;
 
             EventsHandler.runEvent(event, stat);
         }

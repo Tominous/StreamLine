@@ -6,6 +6,7 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.events.Event;
 import net.plasmere.streamline.events.EventsHandler;
+import net.plasmere.streamline.events.enums.Condition;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Player;
@@ -20,6 +21,7 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -115,7 +117,7 @@ public class ChatListener implements Listener {
             for (Event event : EventsHandler.getEvents()) {
                 if (! EventsHandler.checkTags(event, stat)) continue;
 
-                if (! (event.condition.equals(Event.Condition.MESSAGE_EXACT) && (event.conVal.equals(msg) || event.conVal.equals("") || event.conVal.toLowerCase(Locale.ROOT).equals("null")))) continue;
+                if (! EventsHandler.checkIfHasConditionWithContext(event, Condition.MESSAGE_EXACT, Arrays.asList(msg, "", "null"))) continue;
 
                 EventsHandler.runEvent(event, stat, msg);
             }
@@ -123,7 +125,7 @@ public class ChatListener implements Listener {
             for (Event event : EventsHandler.getEvents()) {
                 if (! EventsHandler.checkTags(event, stat)) continue;
 
-                if (! event.condition.equals(Event.Condition.COMMAND) || ! (event.condition.equals(Event.Condition.MESSAGE_EXACT) && (event.conVal.equals(msg.substring(1)) || event.conVal.equals("") || event.conVal.toLowerCase(Locale.ROOT).equals("null")))) continue;
+                if (! EventsHandler.checkIfHasConditionWithContext(event, Condition.COMMAND, msg) || ! EventsHandler.checkIfHasConditionWithContext(event, Condition.MESSAGE_EXACT, Arrays.asList(msg.substring(1), "", "null"))) continue;
 
                 EventsHandler.runEvent(event, stat, msg);
             }
@@ -132,7 +134,7 @@ public class ChatListener implements Listener {
         for (Event event : EventsHandler.getEvents()) {
             if (! EventsHandler.checkTags(event, stat)) continue;
 
-            if (! (event.condition.equals(Event.Condition.MESSAGE_CONTAINS) && (msg.contains(event.conVal)))) continue;
+            if (! EventsHandler.checkIfHasConditionWithContext(event, Condition.MESSAGE_CONTAINS, msg)) continue;
 
             EventsHandler.runEvent(event, stat, msg);
         }
@@ -140,7 +142,7 @@ public class ChatListener implements Listener {
         for (Event event : EventsHandler.getEvents()) {
             if (! EventsHandler.checkTags(event, stat)) continue;
 
-            if (! (event.condition.equals(Event.Condition.MESSAGE_STARTS_WITH) && (msg.startsWith(event.conVal)))) continue;
+            if (! EventsHandler.checkIfHasConditionWithContext(event, Condition.MESSAGE_STARTS_WITH, msg)) continue;
 
             EventsHandler.runEvent(event, stat, msg);
         }
@@ -148,7 +150,7 @@ public class ChatListener implements Listener {
         for (Event event : EventsHandler.getEvents()) {
             if (! EventsHandler.checkTags(event, stat)) continue;
 
-            if (! (event.condition.equals(Event.Condition.MESSAGE_ENDS_WITH) && (msg.endsWith(event.conVal)))) continue;
+            if (! EventsHandler.checkIfHasConditionWithContext(event, Condition.MESSAGE_ENDS_WITH, msg)) continue;
 
             EventsHandler.runEvent(event, stat, msg);
         }

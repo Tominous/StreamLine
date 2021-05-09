@@ -1,0 +1,12 @@
+tags:
+ - "tag"
+ - "list"
+ - "here"
+conditions:
+	1:
+		type: "MESSAGE_CONTAINS"
+		value: "i like streamline"
+actions:
+	1:
+		type: "SEND_MESSAGE_TO"
+		value: "&eI agree!"

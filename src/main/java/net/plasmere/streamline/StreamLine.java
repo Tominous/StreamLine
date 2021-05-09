@@ -133,8 +133,8 @@ public class StreamLine extends Plugin {
 		}
 
 		if (ConfigUtils.tagsEventsWhenEmpty) {
-			try	(InputStream in = getResourceAsStream("default.event")) {
-				Files.copy(in, Path.of(eventsDir.toPath() + File.separator + "default.event"));
+			try	(InputStream in = getResourceAsStream("default.yml")) {
+				Files.copy(in, Path.of(eventsDir.toPath() + File.separator + "default.yml"));
 			} catch (FileAlreadyExistsException e){
 				getLogger().info("Default event file already here, skipping...");
 			} catch (IOException e){
@@ -143,7 +143,7 @@ public class StreamLine extends Plugin {
 		}
 
 		try {
-			List<Path> files = Files.walk(eventsDir.toPath()).filter(p -> p.toString().endsWith(".event")).collect(Collectors.toList());
+			List<Path> files = Files.walk(eventsDir.toPath()).filter(p -> p.toString().endsWith(".yml")).collect(Collectors.toList());
 
 			for (Path file : files) {
 				Event event = EventsReader.fromFile(file.toFile());

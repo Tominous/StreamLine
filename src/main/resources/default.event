@@ -1,7 +1,0 @@
-tags: tag, list, here
-condition:
-    type: JOIN
-    value: network
-action:
-    type: SEND_MESSAGE_TO
-    value: &eWelcome to our Network! We have had &3%uniques% &eunique players join!
