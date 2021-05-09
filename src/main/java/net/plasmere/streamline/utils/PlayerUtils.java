@@ -222,7 +222,6 @@ public class PlayerUtils {
     public static void updateDisplayName(Player player){
         if (! ConfigUtils.updateDisplayNames) return;
         if (! StreamLine.lpHolder.enabled) return;
-        if (! player.online) return;
 
         User user = StreamLine.lpHolder.api.getUserManager().getUser(player.latestName);
         if (user == null) return;
