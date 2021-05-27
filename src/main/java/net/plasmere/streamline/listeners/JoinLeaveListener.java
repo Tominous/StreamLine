@@ -150,12 +150,14 @@ public class JoinLeaveListener implements Listener {
             }
         }
 
-        for (Event event : EventsHandler.getEvents()) {
-            if (! EventsHandler.checkTags(event, stat)) continue;
+        if (ConfigUtils.events) {
+            for (Event event : EventsHandler.getEvents()) {
+                if (!EventsHandler.checkTags(event, stat)) continue;
 
-            if (! (EventsHandler.checkEventConditions(event, stat, Condition.JOIN, "network"))) continue;
+                if (!(EventsHandler.checkEventConditions(event, stat, Condition.JOIN, "network"))) continue;
 
-            EventsHandler.runEvent(event, stat);
+                EventsHandler.runEvent(event, stat);
+            }
         }
     }
 
@@ -260,12 +262,14 @@ public class JoinLeaveListener implements Listener {
 
         ev.setTarget(server);
 
-        for (Event event : EventsHandler.getEvents()) {
-            if (! EventsHandler.checkTags(event, stat)) continue;
+        if (ConfigUtils.events) {
+            for (Event event : EventsHandler.getEvents()) {
+                if (!EventsHandler.checkTags(event, stat)) continue;
 
-            if (! (EventsHandler.checkEventConditions(event, stat, Condition.JOIN, server.getName()))) continue;
+                if (!(EventsHandler.checkEventConditions(event, stat, Condition.JOIN, server.getName()))) continue;
 
-            EventsHandler.runEvent(event, stat);
+                EventsHandler.runEvent(event, stat);
+            }
         }
     }
 
@@ -291,12 +295,14 @@ public class JoinLeaveListener implements Listener {
                 }
             }
 
-            for (Event event : EventsHandler.getEvents()) {
-                if (! EventsHandler.checkTags(event, stat)) continue;
+            if (ConfigUtils.events) {
+                for (Event event : EventsHandler.getEvents()) {
+                    if (!EventsHandler.checkTags(event, stat)) continue;
 
-                if (! (EventsHandler.checkEventConditions(event, stat, Condition.LEAVE, server.getName()))) continue;
+                    if (!(EventsHandler.checkEventConditions(event, stat, Condition.LEAVE, server.getName()))) continue;
 
-                EventsHandler.runEvent(event, stat);
+                    EventsHandler.runEvent(event, stat);
+                }
             }
         } catch (Exception e) {
             // do nothing
@@ -402,12 +408,14 @@ public class JoinLeaveListener implements Listener {
             e.printStackTrace();
         }
 
-        for (Event event : EventsHandler.getEvents()) {
-            if (! EventsHandler.checkTags(event, stat)) continue;
+        if (ConfigUtils.events) {
+            for (Event event : EventsHandler.getEvents()) {
+                if (!EventsHandler.checkTags(event, stat)) continue;
 
-            if (! (EventsHandler.checkEventConditions(event, stat, Condition.LEAVE, "network"))) continue;
+                if (!(EventsHandler.checkEventConditions(event, stat, Condition.LEAVE, "network"))) continue;
 
-            EventsHandler.runEvent(event, stat);
+                EventsHandler.runEvent(event, stat);
+            }
         }
 
         try {

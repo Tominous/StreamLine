@@ -22,7 +22,6 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Objects;
 
 public class ChatListener implements Listener {
@@ -113,46 +112,50 @@ public class ChatListener implements Listener {
             }
         }
 
-        if (! msg.startsWith("/")) {
-            for (Event event : EventsHandler.getEvents()) {
-                if (! EventsHandler.checkTags(event, stat)) continue;
+        if (ConfigUtils.events) {
+            if (!msg.startsWith("/")) {
+                for (Event event : EventsHandler.getEvents()) {
+                    if (!EventsHandler.checkTags(event, stat)) continue;
 
-                if (! EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_EXACT, Arrays.asList(msg, "", "null"))) continue;
+                    if (!EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_EXACT, Arrays.asList(msg, "", "null")))
+                        continue;
+
+                    EventsHandler.runEvent(event, stat, msg);
+                }
+            } else {
+                for (Event event : EventsHandler.getEvents()) {
+                    if (!EventsHandler.checkTags(event, stat)) continue;
+
+                    if (!EventsHandler.checkEventConditions(event, stat, Condition.COMMAND, msg) || !EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_EXACT, Arrays.asList(msg.substring(1), "", "null")))
+                        continue;
+
+                    EventsHandler.runEvent(event, stat, msg);
+                }
+            }
+
+            for (Event event : EventsHandler.getEvents()) {
+                if (!EventsHandler.checkTags(event, stat)) continue;
+
+                if (!EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_CONTAINS, msg)) continue;
 
                 EventsHandler.runEvent(event, stat, msg);
             }
-        } else {
-            for (Event event : EventsHandler.getEvents()) {
-                if (! EventsHandler.checkTags(event, stat)) continue;
 
-                if (! EventsHandler.checkEventConditions(event, stat, Condition.COMMAND, msg) || ! EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_EXACT, Arrays.asList(msg.substring(1), "", "null"))) continue;
+            for (Event event : EventsHandler.getEvents()) {
+                if (!EventsHandler.checkTags(event, stat)) continue;
+
+                if (!EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_STARTS_WITH, msg)) continue;
 
                 EventsHandler.runEvent(event, stat, msg);
             }
-        }
 
-        for (Event event : EventsHandler.getEvents()) {
-            if (! EventsHandler.checkTags(event, stat)) continue;
+            for (Event event : EventsHandler.getEvents()) {
+                if (!EventsHandler.checkTags(event, stat)) continue;
 
-            if (! EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_CONTAINS, msg)) continue;
+                if (!EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_ENDS_WITH, msg)) continue;
 
-            EventsHandler.runEvent(event, stat, msg);
-        }
-
-        for (Event event : EventsHandler.getEvents()) {
-            if (! EventsHandler.checkTags(event, stat)) continue;
-
-            if (! EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_STARTS_WITH, msg)) continue;
-
-            EventsHandler.runEvent(event, stat, msg);
-        }
-
-        for (Event event : EventsHandler.getEvents()) {
-            if (! EventsHandler.checkTags(event, stat)) continue;
-
-            if (! EventsHandler.checkEventConditions(event, stat, Condition.MESSAGE_ENDS_WITH, msg)) continue;
-
-            EventsHandler.runEvent(event, stat, msg);
+                EventsHandler.runEvent(event, stat, msg);
+            }
         }
     }
 }

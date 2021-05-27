@@ -19,9 +19,14 @@ discord-err-title: "ERROR"
 # Error with command.
 command-error:
   # For discord.
-  discord: "There was an error executing this command..."
+  discord:
+    # If the error has not been defined yet.
+    undefined: "There was an error executing this command..."
   # For bungee.
-  bungee: "&cThere was an error executing this command..."
+  bungee:
+    # If the error has not been defined yet.
+    undefined: "&cThere was an error executing this command..."
+    needs-int: "&cYou need to specify an integer..."
 # If a command is disabled.
 command-disabled:
   # Discord error message when a command is not enabled.
@@ -1014,7 +1019,7 @@ btag:
       # If last in list.
       last: "&6%tag%"
       # If not last in list.
-      not-last: "&6%tag%&e,"
+      not-last: "&6%tag%&e, "
 
 # Event reload messages...
 evreload:
@@ -1022,3 +1027,17 @@ evreload:
   # %count% = amount of events that are now loaded.
   # Message.
   message: "&aReloaded all events (&6%count%&a)!"
+
+points:
+  view:
+    self: "&dYou &ehave &6%points% &cNetwork Gold&e!"
+    other: "&d%other% &ehas &6%points% &cNetwork Gold&e!"
+  add:
+    self: "&eJust added &6%points% &cNetwork Gold &eto &dself&e!"
+    other: "&eJust added &6%points% &cNetwork Gold &eto &d%other%&e!"
+  remove:
+    self: "&eJust removed &6%points% &cNetwork Gold &efrom &dself&e!"
+    other: "&eJust removed &6%points% &cNetwork Gold &efrom &d%other%&e!"
+  set:
+    self: "&eJust set &down &cNetwork Gold &eto &6%points%&e!"
+    other: "&eJust set &d%other%&e's &cNetwork Gold &eto &6%points%&e!"

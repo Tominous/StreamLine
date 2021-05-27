@@ -160,6 +160,11 @@ public class Player implements ProxiedPlayer {
     public void updateKey(String key, Object value) {
         info.put(key, String.valueOf(value));
         loadVars();
+        try {
+            saveInfo();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public File getFile() { return file; }
 
@@ -347,6 +352,7 @@ public class Player implements ProxiedPlayer {
         this.sc = Boolean.parseBoolean(getFromKey("sc"));
         this.latestVersion = getFromKey("latestversion");
         this.tags = loadTags();
+        this.points = Integer.parseInt(getFromKey("points"));
     }
 
     public void addPlaySecond(int amount){

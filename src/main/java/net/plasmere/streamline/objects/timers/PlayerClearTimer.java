@@ -7,6 +7,9 @@ import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayerClearTimer implements Runnable {
     public int countdown;
     public int reset;
@@ -31,13 +34,20 @@ public class PlayerClearTimer implements Runnable {
         int count = 0;
 
         try {
-            for (Player player : PlayerUtils.getStats()) {
-                if (! player.online) {
-                    player.saveInfo();
-                    PlayerUtils.removeStat(player);
+            List<Player> players = PlayerUtils.getStats();
+            List<Player> toRemove = new ArrayList<>();
 
-                    count++;
+            for (Player player : players) {
+                if (! player.online) {
+                    toRemove.add(player);
                 }
+            }
+
+            for (Player player : toRemove) {
+                player.saveInfo();
+                PlayerUtils.removeStat(player);
+
+                count++;
             }
         } catch (Exception e){
             e.printStackTrace();

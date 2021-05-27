@@ -14,6 +14,8 @@ public class ConfigUtils {
 //    public static final String s = config.getString("");
     // Important.
     public static final String version = config.getString("version");
+    // Debug.
+    public static final boolean debug = config.getBoolean("debug");
     // ... Basics.
     // Links.
 //    public static final String linkPre = config.getString("link.prefix");
@@ -214,10 +216,18 @@ public class ConfigUtils {
     public static final boolean comBBTag = config.getBoolean("commands.bungee.staff.btag.enabled");
     public static final List<String> comBBTagAliases = config.getStringList("commands.bungee.staff.btag.aliases");
     public static final String comBBTagPerm = config.getString("commands.bungee.staff.btag.permission");
+    public static final String comBBTagOPerm = config.getString("commands.bungee.staff.btag.other-perm");
+    public static final String comBBTagChPerm = config.getString("commands.bungee.staff.btag.change-perm");
     // Event Reload
     public static final boolean comBEReload = config.getBoolean("commands.bungee.staff.evreload.enabled");
     public static final List<String> comBEReloadAliases = config.getStringList("commands.bungee.staff.evreload.aliases");
     public static final String comBEReloadPerm = config.getString("commands.bungee.staff.evreload.permission");
+    // Network Points
+    public static final boolean comBPoints = config.getBoolean("commands.bungee.staff.points.enabled");
+    public static final List<String> comBPointsAliases = config.getStringList("commands.bungee.staff.points.aliases");
+    public static final String comBPointsPerm = config.getString("commands.bungee.staff.points.permission");
+    public static final String comBPointsOPerm = config.getString("commands.bungee.staff.points.other-perm");
+    public static final String comBPointsChPerm = config.getString("commands.bungee.staff.points.change-perm");
     // ... ... Modules.
     public static final String staffPerm = config.getString("modules.staff-permission");
     // ... Discord.
@@ -295,9 +305,12 @@ public class ConfigUtils {
     public static final int lobbyTimeOut = config.getInt("modules.bungee.redirect.lobbies.time-out");
     // Points.
     public static final int pointsDefault = config.getInt("modules.bungee.points.default");
-    //
+    // Tags.
     public static final List<String> tagsDefaults = config.getStringList("modules.bungee.tags.defaults");
-    public static final boolean tagsEvents = config.getBoolean("modules.bungee.events.enabled");
-    public static final String tagsEventsFolder = config.getString("modules.bungee.events.folder");
-    public static final boolean tagsEventsWhenEmpty = config.getBoolean("modules.bungee.events.add-default-when-empty");
+    // Events.
+    public static final boolean events = config.getBoolean("modules.bungee.events.enabled");
+    public static final String eventsFolder = config.getString("modules.bungee.events.folder");
+    public static final boolean eventsWhenEmpty = config.getBoolean("modules.bungee.events.add-default-when-empty");
+    // Errors.
+    public static final boolean errSendToConsole = config.getBoolean("modules.bungee.user-errors.send-to-console");
 }

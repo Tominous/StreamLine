@@ -254,6 +254,9 @@ public class PlayerUtils {
         prefix = preWeight.get(getCeilingInt(preWeight.keySet()));
         suffix = sufWeight.get(getCeilingInt(sufWeight.keySet()));
 
+        if (prefix == null) prefix = "";
+        if (suffix == null) suffix = "";
+
         player.setDisplayName(TextUtils.codedString(prefix + player.latestName + suffix));
     }
 

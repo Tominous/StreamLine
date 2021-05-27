@@ -12,7 +12,6 @@ import net.plasmere.streamline.objects.lists.SingleSet;
 import java.io.File;
 import java.util.List;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 public class Event {
     public File path = StreamLine.getInstance().getEDir();
@@ -41,6 +40,10 @@ public class Event {
         Configuration conditionsConf = configuration.getSection("conditions");
         int i = 1;
 
+        if (ConfigUtils.debug) {
+            StreamLine.getInstance().getLogger().info("Amount of conditions --> " + conditionsConf.getKeys().size());
+        }
+
         for (String string : conditionsConf.getKeys()) {
             try {
                 Configuration cond = conditionsConf.getSection(string);
@@ -58,17 +61,26 @@ public class Event {
             i ++;
         }
 
+        if (ConfigUtils.debug) {
+            StreamLine.getInstance().getLogger().info("Event#compileCond():");
+            for (Integer it : c.keySet()) {
+                StreamLine.getInstance().getLogger().info("   > " + it + " : ( ( " +
+                        c.get(it).key + " , " +
+                        c.get(it).value + " ) )"
+                );
+            }
+        }
+
         return c;
     }
 
     public TreeMap<Integer, SingleSet<Action, String>> compileAction() {
         TreeMap<Integer, SingleSet<Action, String>> a = new TreeMap<>();
 
-        Configuration conditionsConf = configuration.getSection("conditions");
         Configuration actionsConf = configuration.getSection("actions");
         int i = 1;
 
-        for (String string : conditionsConf.getKeys()) {
+        for (String string : actionsConf.getKeys()) {
             try {
                 Configuration act = actionsConf.getSection(string);
 
@@ -82,7 +94,7 @@ public class Event {
                 e.printStackTrace();
                 break;
             }
-            i ++;
+            i++;
         }
 
         return a;

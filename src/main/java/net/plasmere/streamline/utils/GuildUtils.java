@@ -569,7 +569,7 @@ public class GuildUtils {
                 guild.removeMemberFromGuild(player);
             }
         } catch (Exception e) {
-            MessagingUtils.sendBGUserMessage(guild, sender, sender, MessageConfUtils.bungeeCommandError);
+            MessagingUtils.sendBGUserMessage(guild, sender, sender, MessageConfUtils.bungeeCommandErrorUnd);
             e.printStackTrace();
         }
     }

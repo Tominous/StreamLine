@@ -8,7 +8,10 @@ public enum Action {
     SEND_SERVER,
     KICK,
     RUN_COMMAND_AS_OP,
-    RUN_COMMAND_AS_SELF
+    RUN_COMMAND_AS_SELF,
+    GIVE_POINTS,
+    TAKE_POINTS,
+    SET_POINTS,
     ;
 
     public static String toString(Action action){
@@ -25,6 +28,12 @@ public enum Action {
                 return "RUN_COMMAND_AS_OP";
             case RUN_COMMAND_AS_SELF:
                 return "RUN_COMMAND_AS_SELF";
+            case GIVE_POINTS:
+                return "GIVE_POINTS";
+            case TAKE_POINTS:
+                return "TAKE_POINTS";
+            case SET_POINTS:
+                return "SET_POINTS";
             default:
                 return "";
         }
@@ -46,6 +55,12 @@ public enum Action {
                 return RUN_COMMAND_AS_OP;
             case "RUN_COMMAND_AS_SELF":
                 return RUN_COMMAND_AS_SELF;
+            case "GIVE_POINTS":
+                return GIVE_POINTS;
+            case "TAKE_POINTS":
+                return TAKE_POINTS;
+            case "SET_POINTS":
+                return SET_POINTS;
             default:
                 return null;
         }

@@ -1,6 +1,10 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
 version: "1.0.10.7"
 
+#### DEBUG ####
+# Enables debug mode.
+debug: false
+
 #### BASICS ####
 # For links in chat. This is so the API can know when there is a link and when not.
 link:
@@ -485,6 +489,10 @@ commands:
         enabled: true
         # Custom permission.
         permission: "streamline.command.btag"
+        # View others permission.
+        other-perm: "streamline.command.btag.others"
+        # Change values permission.
+        change-perm: "streamline.command.btag.change"
         # All aliases for the command. Listed in yml list format.
         aliases:
           - "bungeetag"
@@ -499,6 +507,22 @@ commands:
           - "reloadevents"
           - "reloade"
           - "reev"
+      # The network points command.
+      points:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.points"
+        # View others permission.
+        other-perm: "streamline.command.points.others"
+        # Change values permission.
+        change-perm: "streamline.command.points.change"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "networkpoints"
+          - "netp"
+          - "np"
+          - "gold"
 
 ### MODULE SETTINGS ###
 modules:
@@ -711,3 +735,8 @@ modules:
       folder: "events"
       # Puts the default event into the folder above when the folder is empty.
       add-default-when-empty: false
+    # For when players are sent an error when running a command...
+    user-errors:
+      # If the stacktrace should be sent to console.
+      # Disable if you do not want random errors when players mistype a command.
+      send-to-console: true

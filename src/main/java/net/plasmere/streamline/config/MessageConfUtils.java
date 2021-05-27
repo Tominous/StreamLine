@@ -16,9 +16,12 @@ public class MessageConfUtils {
     public static final String onlyPlayers = message.getString("only-players");
     public static final String noPlayer = message.getString("no-player");
     public static final String discordErrTitle = message.getString("discord-err-title");
-    // Command Error.
-    public static final String discordCommandError = message.getString("command-error.discord");
-    public static final String bungeeCommandError = message.getString("command-error.bungee");
+    // ... Command Error.
+    // Discord.
+    public static final String discordCommandErrorUnd = message.getString("command-error.discord.undefined");
+    // Bungee.
+    public static final String bungeeCommandErrorUnd = message.getString("command-error.bungee.undefined");
+    public static final String bungeeCommandErrorInt = message.getString("command-error.bungee.needs-int");
     // Command Disabled.
     public static final String discordCommandDisabled = message.getString("command-disabled.discord");
     public static final String bungeeCommandDisabled = message.getString("command-disabled.bungee");
@@ -126,18 +129,27 @@ public class MessageConfUtils {
     public static final String sudoWorked = message.getString("sudo.worked");
     public static final String sudoNoWork = message.getString("sudo.no-work");
     public static final String sudoNoSudo = message.getString("sudo.no-sudo");
-    // SSPY
+    // SSPY.
     public static final String sspyToggle = message.getString("sspy.toggle.message");
     public static final String sspyOn = message.getString("sspy.toggle.on");
     public static final String sspyOff = message.getString("sspy.toggle.off");
-    // GSPY
+    // GSPY.
     public static final String gspyToggle = message.getString("gspy.toggle.message");
     public static final String gspyOn = message.getString("gspy.toggle.on");
     public static final String gspyOff = message.getString("gspy.toggle.off");
-    // PSPY
+    // PSPY.
     public static final String pspyToggle = message.getString("pspy.toggle.message");
     public static final String pspyOn = message.getString("pspy.toggle.on");
     public static final String pspyOff = message.getString("pspy.toggle.off");
-    // EVReload
+    // EVReload.
     public static final String evReload = message.getString("evreload.message");
+    // Points.
+    public static final String pointsViewS = message.getString("points.view.self");
+    public static final String pointsViewO = message.getString("points.view.other");
+    public static final String pointsAddS = message.getString("points.add.self");
+    public static final String pointsAddO = message.getString("points.add.other");
+    public static final String pointsRemoveS = message.getString("points.remove.self");
+    public static final String pointsRemoveO = message.getString("points.remove.other");
+    public static final String pointsSetS = message.getString("points.set.self");
+    public static final String pointsSetO = message.getString("points.set.other");
 }

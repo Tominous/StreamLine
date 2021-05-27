@@ -21,21 +21,25 @@ import java.util.List;
 
 public class PluginUtils {
     public static int commandsAmount = 0;
+    public static int listenerAmount = 0;
 
     public static void unregisterCommand(StreamLine plugin, Command command){
+        commandsAmount --;
         plugin.getProxy().getPluginManager().unregisterCommand(command);
     }
 
     public static void unregisterListener(StreamLine plugin, Listener listener){
+        listenerAmount --;
         plugin.getProxy().getPluginManager().unregisterListener(listener);
     }
 
     public static void registerCommand(StreamLine plugin, Command command){
-        commandsAmount++;
+        commandsAmount ++;
         plugin.getProxy().getPluginManager().registerCommand(plugin, command);
     }
 
     public static void registerListener(StreamLine plugin, Listener listener){
+        listenerAmount ++;
         plugin.getProxy().getPluginManager().registerListener(plugin, listener);
     }
 
@@ -81,6 +85,7 @@ public class PluginUtils {
 
         Command btag = new BTagCommand(ConfigUtils.comBBTagPerm, getAliases(ConfigUtils.comBBTagAliases));
         Command reev = new EventReloadCommand(ConfigUtils.comBEReloadPerm, getAliases(ConfigUtils.comBEReloadAliases));
+        Command points = new NetworkPointsCommand(ConfigUtils.comBPointsPerm, getAliases(ConfigUtils.comBPointsAliases));
 
         commands.add(stream);
         commands.add(staffChat);
@@ -111,6 +116,7 @@ public class PluginUtils {
 
         commands.add(btag);
         commands.add(reev);
+        commands.add(points);
 
         try {
             for (Command command : commands) {
@@ -180,8 +186,10 @@ public class PluginUtils {
             registerCommand(plugin, btag);
         if (ConfigUtils.comBEReload)
             registerCommand(plugin, reev);
+        if (ConfigUtils.comBPoints)
+            registerCommand(plugin, points);
 
-        plugin.getLogger().info("Loaded " + commands.size() + " commands into memory...!");
+        plugin.getLogger().info("Loaded " + commandsAmount + " command(s) into memory...!");
     }
 
     private static String[] getAliases(List<String> aliases){
@@ -197,6 +205,8 @@ public class PluginUtils {
     }
 
     public static void loadListeners(StreamLine plugin){
+        listenerAmount = 0;
+
         List<Listener> listeners = new ArrayList<>();
         Listener staffchat = new ChatListener(plugin);
         Listener joinleave = new JoinLeaveListener(plugin);
@@ -215,6 +225,6 @@ public class PluginUtils {
         registerListener(plugin, staffchat);
         registerListener(plugin, joinleave);
 
-        plugin.getLogger().info("Loaded " + listeners.size() + " listener into memory...!");
+        plugin.getLogger().info("Loaded " + listenerAmount + " listener(s) into memory...!");
     }
 }

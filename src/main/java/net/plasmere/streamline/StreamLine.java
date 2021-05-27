@@ -120,9 +120,9 @@ public class StreamLine extends Plugin {
 	}
 
 	public void loadEvents(){
-		if (! ConfigUtils.tagsEvents) return;
+		if (! ConfigUtils.events) return;
 
-		eventsDir = new File(getDataFolder() + File.separator + ConfigUtils.tagsEventsFolder + File.separator);
+		eventsDir = new File(getDataFolder() + File.separator + ConfigUtils.eventsFolder + File.separator);
 
 		if (! eventsDir.exists()) {
 			try {
@@ -132,7 +132,7 @@ public class StreamLine extends Plugin {
 			}
 		}
 
-		if (ConfigUtils.tagsEventsWhenEmpty) {
+		if (ConfigUtils.eventsWhenEmpty) {
 			try	(InputStream in = getResourceAsStream("default.yml")) {
 				Files.copy(in, Path.of(eventsDir.toPath() + File.separator + "default.yml"));
 			} catch (FileAlreadyExistsException e){

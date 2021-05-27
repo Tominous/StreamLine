@@ -13,11 +13,16 @@ public enum Condition {
 
     // Soft Conditions...
 
-    SERVER,
+    IN_SERVER,
     NAME_EXACT,
     NAME_CONTAINS,
     NAME_STARTS_WITH,
-    NAME_ENDS_WITH
+    NAME_ENDS_WITH,
+    HAS_POINTS_EXACT,
+    HAS_POINTS_LESS_THAN,
+    HAS_POINTS_LESS_THAN_EQUAL,
+    HAS_POINTS_GREATER_THAN,
+    HAS_POINTS_GREATER_THAN_EQUAL,
     ;
 
     public static String toString(Condition condition){
@@ -39,8 +44,8 @@ public enum Condition {
 
                 // Soft conditions...
 
-            case SERVER:
-                return "SERVER";
+            case IN_SERVER:
+                return "IN_SERVER";
             case NAME_EXACT:
                 return "NAME_EXACT";
             case NAME_CONTAINS:
@@ -49,6 +54,16 @@ public enum Condition {
                 return "NAME_STARTS_WITH";
             case NAME_ENDS_WITH:
                 return "NAME_ENDS_WITH";
+            case HAS_POINTS_EXACT:
+                return "HAS_POINTS_EXACT";
+            case HAS_POINTS_LESS_THAN:
+                return "HAS_POINTS_LESS_THAN";
+            case HAS_POINTS_LESS_THAN_EQUAL:
+                return "HAS_POINTS_LESS_THAN_EQUAL";
+            case HAS_POINTS_GREATER_THAN:
+                return "HAS_POINTS_GREATER_THAN";
+            case HAS_POINTS_GREATER_THAN_EQUAL:
+                return "HAS_POINTS_GREATER_THAN_EQUAL";
             default:
                 return "";
         }
@@ -75,8 +90,8 @@ public enum Condition {
 
                 // Soft Conditions...
 
-            case "SERVER":
-                return SERVER;
+            case "IN_SERVER":
+                return IN_SERVER;
             case "NAME_EXACT":
                 return NAME_EXACT;
             case "NAME_CONTAINS":
@@ -85,6 +100,16 @@ public enum Condition {
                 return NAME_STARTS_WITH;
             case "NAME_ENDS_WITH":
                 return NAME_ENDS_WITH;
+            case "HAS_POINTS_EXACT":
+                return HAS_POINTS_EXACT;
+            case "HAS_POINTS_LESS_THAN":
+                return HAS_POINTS_LESS_THAN;
+            case "HAS_POINTS_LESS_THAN_EQUAL":
+                return HAS_POINTS_LESS_THAN_EQUAL;
+            case "HAS_POINTS_GREATER_THAN":
+                return HAS_POINTS_GREATER_THAN;
+            case "HAS_POINTS_GREATER_THAN_EQUAL":
+                return HAS_POINTS_GREATER_THAN_EQUAL;
             default:
                 return null;
         }

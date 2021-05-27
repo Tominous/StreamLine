@@ -14,7 +14,6 @@ import net.plasmere.streamline.utils.PlayerUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 public class StatsCommand extends Command implements TabExecutor {
     private final StreamLine plugin;
@@ -34,7 +33,7 @@ public class StatsCommand extends Command implements TabExecutor {
                 player = PlayerUtils.getStat(sender);
                 if (player == null) {
                     StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     return;
                 }
             }
@@ -55,7 +54,7 @@ public class StatsCommand extends Command implements TabExecutor {
                         stat = PlayerUtils.getStat(args[0]);
                         if (stat == null) {
                             StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                             return;
                         }
                     }
@@ -81,7 +80,7 @@ public class StatsCommand extends Command implements TabExecutor {
                     stat = PlayerUtils.getStat(args[0]);
                     if (stat == null) {
                         StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         return;
                     }
                 }

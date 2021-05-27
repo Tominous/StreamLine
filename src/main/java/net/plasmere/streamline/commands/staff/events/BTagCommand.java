@@ -37,7 +37,14 @@ public class BTagCommand extends Command implements TabExecutor {
                 stat = PlayerUtils.getStat(args[0]);
                 if (stat == null) {
                     StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandError);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    return;
+                }
+            }
+
+            if (! stat.latestName.equals(sender.getName())) {
+                if (! sender.hasPermission(ConfigUtils.comBBTagOPerm)) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
                     return;
                 }
             }
@@ -47,6 +54,11 @@ public class BTagCommand extends Command implements TabExecutor {
                 case "rem":
                 case "r":
                 case "-":
+                    if (! sender.hasPermission(ConfigUtils.comBBTagChPerm)) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
+                        return;
+                    }
+
                     if (args.length <= 2) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                         return;
@@ -56,6 +68,11 @@ public class BTagCommand extends Command implements TabExecutor {
                 case "add":
                 case "a":
                 case "+":
+                    if (! sender.hasPermission(ConfigUtils.comBBTagChPerm)) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
+                        return;
+                    }
+
                     if (args.length <= 2) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                         return;
