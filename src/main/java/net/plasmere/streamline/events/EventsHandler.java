@@ -150,7 +150,11 @@ public class EventsHandler {
     }
 
     public static String getArgFromMsg(String msg, int index){
-        return msg.split(" ")[index];
+        try {
+            return msg.split(" ")[index];
+        } catch (Exception e){
+            return "";
+        }
     }
 
     public static String extractArg(Event event, String msg, int i){
