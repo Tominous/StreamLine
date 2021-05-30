@@ -63,6 +63,9 @@ public class JoinLeaveListener implements Listener {
             }
         }
 
+        stat.tryAddNewName(player.getName());
+        stat.tryAddNewIP(player);
+
         try {
             for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
                 Player p = PlayerUtils.getStat(pl);

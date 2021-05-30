@@ -52,6 +52,8 @@ public class ChatListener implements Listener {
             }
         }
 
+        stat.updateLastMessage(msg);
+
         try {
             for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
                 Player p = PlayerUtils.getStat(pl);

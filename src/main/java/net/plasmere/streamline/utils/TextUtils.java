@@ -9,6 +9,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 
 import java.util.List;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -141,7 +142,7 @@ public class TextUtils {
         return text.toString();
     }
 
-    public static String normalize(List<String> splitMsg) {
+    public static String normalize(TreeSet<String> splitMsg) {
         int i = 0;
         StringBuilder text = new StringBuilder();
 

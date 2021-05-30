@@ -45,6 +45,9 @@ public class Player implements ProxiedPlayer {
     public String latestVersion;
     public List<String> tags;
     public int points;
+    public String lastMessengerUUID;
+    public String lastMessage;
+    public String lastToMessage;
 
     public Player(ProxiedPlayer player) {
         String ipSt = player.getSocketAddress().toString().replace("/", "");
@@ -225,7 +228,7 @@ public class Player implements ProxiedPlayer {
                     data = reader.nextLine();
                 }
                 String[] dataSplit = data.split("=", 2);
-                addKeyValuePair(dataSplit[0], dataSplit[1]);
+                addKeyValuePair(tryUpdateFormat(dataSplit[0]), dataSplit[1]);
             }
 
             reader.close();
@@ -294,20 +297,23 @@ public class Player implements ProxiedPlayer {
         defaults.add("uuid=" + uuid);
         defaults.add("ips=" + ips);
         defaults.add("names=" + names);
-        defaults.add("latestip=" + latestIP);
-        defaults.add("latestname=" + latestName);
+        defaults.add("latest-ip=" + latestIP);
+        defaults.add("latest-name=" + latestName);
         defaults.add("xp=0");
         defaults.add("lvl=1");
         defaults.add("playtime=0");
-        defaults.add("displayname=" + displayName);
+        defaults.add("display-name=" + displayName);
         defaults.add("guild=");
         defaults.add("sspy=true");
         defaults.add("gspy=true");
         defaults.add("pspy=true");
         defaults.add("sc=true");
-        defaults.add("latestversion=" + latestVersion);
+        defaults.add("latest-version=" + latestVersion);
         defaults.add("tags=" + defaultTags());
         defaults.add("points=" + ConfigUtils.pointsDefault);
+        defaults.add("last-messenger=");
+        defaults.add("last-message=");
+        defaults.add("last-to-message=");
         //defaults.add("");
         return defaults;
     }
@@ -336,23 +342,77 @@ public class Player implements ProxiedPlayer {
         this.uuid = getFromKey("uuid");
         this.ips = getFromKey("ips");
         this.names = getFromKey("names");
-        this.latestIP = getFromKey("latestip");
-        this.latestName = getFromKey("latestname");
+        this.latestIP = getFromKey("latest-ip");
+        this.latestName = getFromKey("latest-name");
         this.ipList = loadIPs();
         this.nameList = loadNames();
         this.xp = Integer.parseInt(getFromKey("xp"));
         this.lvl = Integer.parseInt(getFromKey("lvl"));
         this.playSeconds = Integer.parseInt(getFromKey("playtime"));
-        this.displayName = getFromKey("displayname");
+        this.displayName = getFromKey("display-name");
         this.guild = getFromKey("guild");
         this.online = onlineCheck();
         this.sspy = Boolean.parseBoolean(getFromKey("sspy"));
         this.gspy = Boolean.parseBoolean(getFromKey("gspy"));
         this.pspy = Boolean.parseBoolean(getFromKey("pspy"));
         this.sc = Boolean.parseBoolean(getFromKey("sc"));
-        this.latestVersion = getFromKey("latestversion");
+        this.latestVersion = getFromKey("latest-version");
         this.tags = loadTags();
         this.points = Integer.parseInt(getFromKey("points"));
+        this.lastMessengerUUID = getFromKey("last-messenger");
+        this.lastMessage = getFromKey("last-message");
+        this.lastToMessage = getFromKey("last-to-message");
+    }
+
+    public TreeMap<String, String> updatableKeys() {
+        TreeMap<String, String> thing = new TreeMap<>();
+
+        thing.put("latestip", "latest-ip");
+        thing.put("latestname", "latest-name");
+        thing.put("displayname", "display-name");
+        thing.put("latestversion", "latest-version");
+
+        return thing;
+    }
+
+    public String tryUpdateFormat(String from){
+        for (String key : updatableKeys().keySet()) {
+            if (! from.equals(key)) continue;
+
+            return updatableKeys().get(key);
+        }
+
+        return from;
+    }
+
+    public String tryUpdateFormatRaw(String from){
+        String[] fromSplit = from.split("=", 2);
+
+        return tryUpdateFormat(fromSplit[0]) + "=" + fromSplit[1];
+    }
+
+    public void tryAddNewName(String name){
+        if (nameList.contains(name)) return;
+
+        this.nameList.add(name);
+
+        this.names = stringifyList(nameList, ",");
+    }
+
+    public void tryAddNewIP(String ip){
+        if (ipList.contains(ip)) return;
+
+        this.ipList.add(ip);
+
+        this.ips = stringifyList(ipList, ",");
+    }
+
+    public void tryAddNewIP(ProxiedPlayer player){
+        String ipSt = player.getSocketAddress().toString().replace("/", "");
+        String[] ipSplit = ipSt.split(":");
+        ipSt = ipSplit[0];
+
+        tryAddNewIP(ipSt);
     }
 
     public void addPlaySecond(int amount){
@@ -459,7 +519,7 @@ public class Player implements ProxiedPlayer {
         file.createNewFile();
         FileWriter writer = new FileWriter(file);
         for (String s : getInfoAsPropertyList()){
-            writer.write(s + "\n");
+            writer.write(tryUpdateFormatRaw(s) + "\n");
         }
         writer.close();
 
@@ -520,8 +580,11 @@ public class Player implements ProxiedPlayer {
     }
 
     public void dispose() throws Throwable {
-        this.uuid = null;
-        this.finalize();
+        try {
+            this.uuid = null;
+        } finally {
+            super.finalize();
+        }
     }
 
     public void setSSPY(boolean value) {
@@ -567,6 +630,18 @@ public class Player implements ProxiedPlayer {
 
     public String toString(){
         return latestName;
+    }
+
+    public void updateLastMessage(String message){
+        updateKey("last-message", message);
+    }
+
+    public void updateLastToMessage(String message){
+        updateKey("last-to-message", message);
+    }
+
+    public void updateLastMessenger(Player messenger){
+        updateKey("last-messenger", messenger.uuid);
     }
 
     @Override

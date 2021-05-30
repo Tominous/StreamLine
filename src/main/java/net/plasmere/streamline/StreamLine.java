@@ -244,6 +244,8 @@ public class StreamLine extends Plugin {
 		} else {
 			getLogger().severe("Streamline server custom configs have been disabled due to no ViaVersion being detected.");
 		}
+
+		//getLogger().
 	}
 
 	@Override

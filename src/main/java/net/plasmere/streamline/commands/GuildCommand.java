@@ -65,10 +65,13 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        List<String> a = Arrays.asList(args);
-                        a.remove(args[0]);
+                        TreeSet<String> argsSet = new TreeSet<>();
 
-                        GuildUtils.createGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.normalize(a));
+                        for (int i = 1; i < args.length; i++) {
+                            argsSet.add(args[i]);
+                        }
+
+                        GuildUtils.createGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.normalize(argsSet));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();
@@ -243,10 +246,13 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        List<String> a = Arrays.asList(args);
-                        a.remove(args[0]);
+                        TreeSet<String> argsSet = new TreeSet<>();
 
-                        GuildUtils.rename(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.normalize(a));
+                        for (int i = 1; i < args.length; i++) {
+                            argsSet.add(args[i]);
+                        }
+
+                        GuildUtils.rename(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.normalize(argsSet));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();

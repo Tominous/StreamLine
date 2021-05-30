@@ -28,10 +28,11 @@ public class SudoCommand extends Command implements TabExecutor {
         } else {
             ProxiedPlayer sudoOn = plugin.getProxy().getPlayer(args[0]);
 
+            TreeSet<String> argsSet = new TreeSet<>();
 
-            List<String> nargs = new ArrayList<>(Arrays.asList(args));
-
-            nargs.remove(args[0]);
+            for (int i = 1; i < args.length; i++) {
+                argsSet.add(args[i]);
+            };
 
             if (sudoOn.hasPermission(ConfigUtils.noSudoPerm)){
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoNoSudo
@@ -40,7 +41,7 @@ public class SudoCommand extends Command implements TabExecutor {
                 return;
             }
 
-            if (plugin.getProxy().getPluginManager().dispatchCommand(sudoOn, TextUtils.normalize(nargs))){
+            if (plugin.getProxy().getPluginManager().dispatchCommand(sudoOn, TextUtils.normalize(argsSet))){
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoWorked
                         .replace("%user%", sudoOn.getDisplayName())
                 );
