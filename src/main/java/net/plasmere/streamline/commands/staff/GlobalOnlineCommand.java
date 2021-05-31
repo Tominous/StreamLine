@@ -18,7 +18,7 @@ import java.util.*;
 public class GlobalOnlineCommand extends Command {
 
     public GlobalOnlineCommand(String base, String perm, String[] aliases){
-        super("globalonline", perm, aliases);
+        super(base, perm, aliases);
     }
 
     @Override

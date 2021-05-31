@@ -19,7 +19,7 @@ public class ReloadCommand extends Command {
     private JDA jda = StreamLine.getJda();
 
     public ReloadCommand(String base, String perm, String[] aliases){
-        super("slreload", perm, aliases);
+        super(base, perm, aliases);
 
         this.perm = perm;
     }

@@ -11,7 +11,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class ReportCommand extends Command {
 
     public ReportCommand(String base, String perm, String[] aliases){
-        super("report", perm, aliases);
+        super(base, perm, aliases);
     }
 
     @Override
