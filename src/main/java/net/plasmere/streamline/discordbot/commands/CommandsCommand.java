@@ -9,9 +9,9 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class CommandsCommand {
     private static final EmbedBuilder eb = new EmbedBuilder();
 
-    public static void sendMessage(String command, MessageReceivedEvent event, StreamLine plugin){
+    public static void sendMessage(String command, MessageReceivedEvent event){
         event.getChannel().sendMessage(eb.setDescription(compileCommands(event)).build()).queue();
-        plugin.getLogger().info("Sent message for \"" + command + "\"!");
+        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Sent message for \"" + command + "\"!");
     }
 
     private static String compileCommands(MessageReceivedEvent event){

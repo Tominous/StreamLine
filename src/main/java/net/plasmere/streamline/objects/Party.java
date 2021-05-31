@@ -27,15 +27,13 @@ public class Party {
     public List<Player> invites = new ArrayList<>();
     public List<String> invitesUUIDs = new ArrayList<>();
 
-    private final StreamLine plugin;
     public enum Level {
         MEMBER,
         MODERATOR,
         LEADER
     }
 
-    public Party(StreamLine streamLine, Player leader){
-        this.plugin = streamLine;
+    public Party(Player leader){
         this.leader = leader;
         this.leaderUUID = leader.uuid;
         this.totalMembers.add(leader);
@@ -44,8 +42,7 @@ public class Party {
         this.isPublic = false;
     }
 
-    public Party(StreamLine streamLine, Player leader, int size){
-        this.plugin = streamLine;
+    public Party(Player leader, int size){
         this.leader = leader;
         this.leaderUUID = leader.uuid;
         this.totalMembers.add(leader);

@@ -15,12 +15,10 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.config.Configuration;
 
 public class StaffChatCommand extends Command {
-    private final StreamLine plugin;
     private final Configuration config = Config.getConf();
 
-    public StaffChatCommand(StreamLine streamLine, String perm, String[] aliases){
-        super("staffchat", perm, aliases);
-        this.plugin = streamLine;
+    public StaffChatCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override
@@ -41,7 +39,7 @@ public class StaffChatCommand extends Command {
                         return;
                     }
 
-                    MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, TextUtils.normalize(args), plugin);
+                    MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, TextUtils.normalize(args));
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                             MessageConfUtils.staffChatEmbedTitle,
                             MessageConfUtils.discordStaffChatMessage

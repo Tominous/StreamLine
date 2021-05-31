@@ -16,8 +16,8 @@ import java.util.Collection;
 import java.util.List;
 
 public class BTagCommand extends Command implements TabExecutor {
-    public BTagCommand(String perm, String[] aliases){
-        super("btag", perm, aliases);
+    public BTagCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override

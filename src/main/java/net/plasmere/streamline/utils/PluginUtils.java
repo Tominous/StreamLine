@@ -2,6 +2,9 @@ package net.plasmere.streamline.utils;
 
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.commands.*;
+import net.plasmere.streamline.commands.messaging.IgnoreCommand;
+import net.plasmere.streamline.commands.messaging.MessageCommand;
+import net.plasmere.streamline.commands.messaging.ReplyCommand;
 import net.plasmere.streamline.commands.servers.GoToServerLobbyCommand;
 import net.plasmere.streamline.commands.servers.GoToServerVanillaCommand;
 import net.plasmere.streamline.commands.staff.*;
@@ -49,74 +52,82 @@ public class PluginUtils {
         // Setup...
         List<Command> commands = new ArrayList<>();
 
-        Command stream = new StreamCommand(plugin, ConfigUtils.comBStreamPerm, getAliases(ConfigUtils.comBStreamAliases));
-        Command staffChat = new StaffChatCommand(plugin, ConfigUtils.comBStaffChatPerm, getAliases(ConfigUtils.comBStaffChatAliases));
-        Command ping = new PingCommand(plugin, ConfigUtils.comBPingPerm, getAliases(ConfigUtils.comBPingAliases));
-        Command plugins = new PluginsCommand(plugin, ConfigUtils.comBPluginsPerm, getAliases(ConfigUtils.comBPluginsAliases));
-        Command staffOnline = new StaffOnlineCommand(plugin, ConfigUtils.comBStaffOnlinePerm, getAliases(ConfigUtils.comBStaffOnlineAliases));
-        Command globalOnline = new GlobalOnlineCommand(plugin, ConfigUtils.comBGlobalOnlinePerm, getAliases(ConfigUtils.comBGlobalOnlineAliases));
-        Command reload = new ReloadCommand(plugin, ConfigUtils.comBReloadPerm, getAliases(ConfigUtils.comBReloadAliases));
+        // Misc.
+        Command stream = new StreamCommand(ConfigUtils.comBStreamBase, ConfigUtils.comBStreamPerm, getAliases(ConfigUtils.comBStreamAliases));
+        commands.add(stream);
+        Command ping = new PingCommand(ConfigUtils.comBPingBase, ConfigUtils.comBPingPerm, getAliases(ConfigUtils.comBPingAliases));
+        commands.add(ping);
+        Command plugins = new PluginsCommand(ConfigUtils.comBPluginsBase, ConfigUtils.comBPluginsPerm, getAliases(ConfigUtils.comBPluginsAliases));
+        commands.add(plugins);
+        Command report = new ReportCommand(ConfigUtils.comBReportBase, ConfigUtils.comBReportPerm, getAliases(ConfigUtils.comBReportAliases));
+        commands.add(report);
 
-        Command lobby = new GoToServerLobbyCommand(plugin, ConfigUtils.comBLobbyPerm, getAliases(ConfigUtils.comBLobbyAliases));
-        Command fabric = new GoToServerVanillaCommand(plugin, ConfigUtils.comBFabricPerm);
+        // Staff.
+        Command staffChat = new StaffChatCommand(ConfigUtils.comBStaffChatBase, ConfigUtils.comBStaffChatPerm, getAliases(ConfigUtils.comBStaffChatAliases));
+        commands.add(staffChat);
+        Command staffOnline = new StaffOnlineCommand(ConfigUtils.comBStaffOnlineBase, ConfigUtils.comBStaffOnlinePerm, getAliases(ConfigUtils.comBStaffOnlineAliases));
+        commands.add(staffOnline);
+        Command globalOnline = new GlobalOnlineCommand(ConfigUtils.comBGlobalOnlineBase, ConfigUtils.comBGlobalOnlinePerm, getAliases(ConfigUtils.comBGlobalOnlineAliases));
+        commands.add(globalOnline);
+        Command reload = new ReloadCommand(ConfigUtils.comBReloadBase, ConfigUtils.comBReloadPerm, getAliases(ConfigUtils.comBReloadAliases));
+        commands.add(reload);
+        Command bsudo = new SudoCommand(ConfigUtils.comBSudoBase, ConfigUtils.comBSudoPerm, getAliases(ConfigUtils.comBSudoAliases));
+        commands.add(bsudo);
+        Command serverping = new JDAPingerCommand(ConfigUtils.comBSPingBase, ConfigUtils.comBSPingPerm, getAliases(ConfigUtils.comBSPingAliases));
 
-        Command report = new ReportCommand(plugin, ConfigUtils.comBReportPerm, getAliases(ConfigUtils.comBReportAliases));
-        Command bsudo = new SudoCommand(plugin, ConfigUtils.comBSudoPerm, getAliases(ConfigUtils.comBSudoAliases));
+        // Servers.
+        Command lobby = new GoToServerLobbyCommand(ConfigUtils.comBLobbyBase, ConfigUtils.comBLobbyPerm, getAliases(ConfigUtils.comBLobbyAliases));
+        commands.add(lobby);
+        Command fabric = new GoToServerVanillaCommand(ConfigUtils.comBFabricPerm);
+        commands.add(fabric);
 
+        // Parties / Guilds.
+        Command parties = new PartiesCommand(ConfigUtils.comBPartiesBase, ConfigUtils.comBPartiesPerm, getAliases(ConfigUtils.comBPartiesAliases));
+        commands.add(parties);
+        Command guilds = new GuildsCommand(ConfigUtils.comBPartiesBase, ConfigUtils.comBGuildsPerm, getAliases(ConfigUtils.comBGuildsAliases));
+        commands.add(guilds);
+        Command party = new PartyCommand(ConfigUtils.comBPartyBase, ConfigUtils.comBParPerm, getAliases(ConfigUtils.comBParMainAliases));
+        commands.add(party);
+        Command guild = new GuildCommand(ConfigUtils.comBGuildBase, ConfigUtils.comBGuildPerm, getAliases(ConfigUtils.comBGuildMainAliases));
+        commands.add(guild);
 
-        Command parties = new PartiesCommand(plugin, ConfigUtils.comBPartiesPerm, getAliases(ConfigUtils.comBPartiesAliases));
-        Command guilds = new GuildsCommand(plugin, ConfigUtils.comBGuildsPerm, getAliases(ConfigUtils.comBGuildsAliases));
-        Command party = new PartyCommand(plugin, ConfigUtils.comBParPerm, getAliases(ConfigUtils.comBParMainAliases));
-        Command guild = new GuildCommand(plugin, ConfigUtils.comBGuildPerm, getAliases(ConfigUtils.comBGuildMainAliases));
         List<String> pca = new ArrayList<>();
         pca.add("pch");
         pca.add("pchat");
+        Command pc = new PCQuickCommand("pc", ConfigUtils.comBParPerm, getAliases(pca));
+        commands.add(pc);
         List<String> gca = new ArrayList<>();
         gca.add("gch");
         gca.add("gchat");
-        Command pc = new PCQuickCommand(plugin, ConfigUtils.comBParPerm, getAliases(pca));
-        Command gc = new GCQuickCommand(plugin, ConfigUtils.comBGuildPerm, getAliases(gca));
-
-        Command stats = new StatsCommand(plugin, ConfigUtils.comBStatsPerm, getAliases(ConfigUtils.comBStatsAliases));
-
-        Command sspy = new SSPYCommand(ConfigUtils.comBSSPYPerm, getAliases(ConfigUtils.comBSSPYAliases));
-        Command gspy = new GSPYCommand(ConfigUtils.comBGSPYPerm, getAliases(ConfigUtils.comBGSPYAliases));
-        Command pspy = new PSPYCommand(ConfigUtils.comBPSPYPerm, getAliases(ConfigUtils.comBPSPYAliases));
-
-        Command btag = new BTagCommand(ConfigUtils.comBBTagPerm, getAliases(ConfigUtils.comBBTagAliases));
-        Command reev = new EventReloadCommand(ConfigUtils.comBEReloadPerm, getAliases(ConfigUtils.comBEReloadAliases));
-        Command points = new NetworkPointsCommand(ConfigUtils.comBPointsPerm, getAliases(ConfigUtils.comBPointsAliases));
-
-        commands.add(stream);
-        commands.add(staffChat);
-        commands.add(ping);
-        commands.add(plugins);
-        commands.add(staffOnline);
-        commands.add(globalOnline);
-        commands.add(reload);
-
-        commands.add(lobby);
-        commands.add(fabric);
-
-        commands.add(report);
-        commands.add(bsudo);
-
-        commands.add(parties);
-        commands.add(guilds);
-        commands.add(party);
-        commands.add(guild);
-        commands.add(pc);
+        Command gc = new GCQuickCommand("gc", ConfigUtils.comBGuildPerm, getAliases(gca));
         commands.add(gc);
 
+        // Stats.
+        Command stats = new StatsCommand(ConfigUtils.comBStatsBase, ConfigUtils.comBStatsPerm, getAliases(ConfigUtils.comBStatsAliases));
         commands.add(stats);
 
+        Command sspy = new SSPYCommand(ConfigUtils.comBSSPYBase, ConfigUtils.comBSSPYPerm, getAliases(ConfigUtils.comBSSPYAliases));
         commands.add(sspy);
+        Command gspy = new GSPYCommand(ConfigUtils.comBGSPYPerm, ConfigUtils.comBGSPYPerm, getAliases(ConfigUtils.comBGSPYAliases));
         commands.add(gspy);
+        Command pspy = new PSPYCommand(ConfigUtils.comBPSPYBase, ConfigUtils.comBPSPYPerm, getAliases(ConfigUtils.comBPSPYAliases));
         commands.add(pspy);
 
+        // Events.
+        Command btag = new BTagCommand(ConfigUtils.comBBTagBase, ConfigUtils.comBBTagPerm, getAliases(ConfigUtils.comBBTagAliases));
         commands.add(btag);
+        Command reev = new EventReloadCommand(ConfigUtils.comBReloadBase, ConfigUtils.comBEReloadPerm, getAliases(ConfigUtils.comBEReloadAliases));
         commands.add(reev);
+        Command points = new NetworkPointsCommand(ConfigUtils.comBPointsBase, ConfigUtils.comBPointsPerm, getAliases(ConfigUtils.comBPointsAliases));
         commands.add(points);
+
+        // Messaging.
+        Command ignore = new IgnoreCommand(ConfigUtils.comBIgnoreBase, ConfigUtils.comBIgnorePerm, getAliases(ConfigUtils.comBIgnoreAliases));
+        commands.add(ignore);
+        Command message = new MessageCommand(ConfigUtils.comBMessageBase, ConfigUtils.comBMessagePerm, getAliases(ConfigUtils.comBMessageAliases));
+        commands.add(message);
+        Command reply = new ReplyCommand(ConfigUtils.comBReplyBase, ConfigUtils.comBMReplyPerm, getAliases(ConfigUtils.comBReplyAliases));
+        commands.add(reply);
 
         try {
             for (Command command : commands) {
@@ -125,7 +136,6 @@ public class PluginUtils {
         } catch (Exception e){
             MessagingUtils.logWarning("Command discriminator broke for the following reason: " + e.getMessage());
         }
-
 
         // Commands.
         if (ConfigUtils.comBStream)
@@ -188,6 +198,10 @@ public class PluginUtils {
             registerCommand(plugin, reev);
         if (ConfigUtils.comBPoints)
             registerCommand(plugin, points);
+        if (ConfigUtils.comBIgnore)
+            registerCommand(plugin, ignore);
+        if (ConfigUtils.comBMessage)
+            registerCommand(plugin, message);
 
         plugin.getLogger().info("Loaded " + commandsAmount + " command(s) into memory...!");
     }

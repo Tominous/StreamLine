@@ -9,8 +9,8 @@ import net.plasmere.streamline.events.EventsHandler;
 import net.plasmere.streamline.utils.MessagingUtils;
 
 public class EventReloadCommand extends Command {
-    public EventReloadCommand(String perm, String[] aliases){
-        super("evreload", perm, aliases);
+    public EventReloadCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override

@@ -14,11 +14,8 @@ import net.plasmere.streamline.utils.*;
 import java.util.*;
 
 public class GuildCommand extends Command implements TabExecutor {
-    private final StreamLine plugin;
-
-    public GuildCommand(StreamLine streamLine, String perm, String[] aliases){
-        super("guild", perm, aliases);
-        this.plugin = streamLine;
+    public GuildCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override
@@ -291,7 +288,7 @@ public class GuildCommand extends Command implements TabExecutor {
     @Override
     public Iterable<String> onTabComplete(final CommandSender sender, final String[] args)
     {
-        Collection<ProxiedPlayer> players = plugin.getProxy().getPlayers();
+        Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
         List<String> strPlayers = new ArrayList<>();
 
         for (ProxiedPlayer player : players){

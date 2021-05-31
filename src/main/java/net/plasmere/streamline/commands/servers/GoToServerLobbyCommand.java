@@ -24,12 +24,8 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class GoToServerLobbyCommand extends Command implements TabExecutor {
-    private final StreamLine plugin;
-
-    public GoToServerLobbyCommand(StreamLine streamLine, String perm, String[] aliases) {
-        super("hub", perm, aliases);
-
-        this.plugin = streamLine;
+    public GoToServerLobbyCommand(String base, String perm, String[] aliases) {
+        super(base, perm, aliases);
     }
 
     @Override
@@ -40,7 +36,7 @@ public class GoToServerLobbyCommand extends Command implements TabExecutor {
                 ProxiedPlayer player = (ProxiedPlayer) sender;
 
                 if (player.hasPermission("streamline.server.lobby") || player.hasPermission("streamline.*")) {
-                    ProxyServer proxy = plugin.getProxy();
+                    ProxyServer proxy = StreamLine.getInstance().getProxy();
 
                     ServerInfo vanServer = proxy.getServerInfo(ConfigUtils.comBLobbyEnd);
 

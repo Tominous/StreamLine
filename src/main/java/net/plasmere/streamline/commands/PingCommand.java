@@ -8,14 +8,12 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class PingCommand extends Command {
-    private final StreamLine plugin;
     private String perm = "";
 
-    public PingCommand(StreamLine streamLine, String perm, String[] aliases){
-        super("ping", perm, aliases);
+    public PingCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
 
         this.perm = perm;
-        this.plugin = streamLine;
     }
 
     @Override

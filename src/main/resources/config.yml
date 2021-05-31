@@ -114,6 +114,8 @@ commands:
     ping:
       # Enables / disables the use of the "ping" bungee command.
       enabled: true
+      # Main command that the aliases point to.
+      base: "ping"
       # Custom permission.
       permission: "streamline.command.ping"
       # All aliases for the command. Listed in yml list format.
@@ -124,16 +126,21 @@ commands:
     plugins:
       # Enables / disables the use of the "plugins" bungee command.
       enabled: true
+      # Main command that the aliases point to.
+      base: "plugins"
       # Custom permission.
       permission: "streamline.command.plugins"
       # All aliases for the command. Listed in yml list format.
       aliases:
         - "pl"
         - "plug"
+        - "plugs"
     # The stream command.
     stream:
       # Enables / disables the use of the "stream" bungee command.
       enabled: true
+      # Main command that the aliases point to.
+      base: "stream"
       # Custom permission.
       permission: "streamline.command.stream"
       # All aliases for the command. Listed in yml list format.
@@ -144,6 +151,8 @@ commands:
     report:
       # Enables / disables the use of the "report" bungee command.
       enabled: true
+      # Main command that the aliases point to.
+      base: "report"
       # Custom permission.
       permission: "streamline.command.report"
       # All aliases for the command. Listed in yml list format.
@@ -154,6 +163,8 @@ commands:
     party:
       # Enables / disables the use of the "party" bungee command.
       enabled: true
+      # Main command that the aliases point to.
+      base: "party"
       # Enables / disables the use of "/pc <msg>" for quick messaging.
       quick-chat: true
       # Custom permission.
@@ -248,6 +259,8 @@ commands:
     guild:
       # Enables / disables the use of the "party" bungee command.
       enabled: true
+      # Main command that the aliases point to.
+      base: "guild"
       # Enables / disables the use of "/gc <msg>" for quick messaging.
       quick-chat: true
       # Custom permission.
@@ -349,14 +362,22 @@ commands:
           - "rn"
     # Stats command.
     stats:
+      # Enables / disables the use of the "stats" bungee command.
       enabled: true
+      # Main command that the aliases point to.
+      base: "stats"
+      # Custom permission.
       permission: "streamline.command.stats"
+      # All aliases for the command. Listed in yml list format.
       aliases:
         - "st"
         - "myinfo"
         - "mi"
+      # For viewing others.
       view-others:
+        # Enables / disables viewing other stats.
         enabled: true
+        # Custom permission.
         permission: "streamline.command.stats.others"
     # Server commands...
     servers:
@@ -364,6 +385,8 @@ commands:
       lobby:
         # Enables / disables the use of the "lobby" bungee command.
         enabled: true
+        # Main command that the aliases point to.
+        base: "lobby"
         # Custom permission.
         permission: "streamline.command.servers.lobby"
         # Put the name of your main lobby / hub server. Not an IP.
@@ -386,6 +409,8 @@ commands:
       globalonline:
         # Enables / disables the use of the "globalonline" bungee command.
         enabled: true
+        # Main command that the aliases point to.
+        base: "globalonline"
         # Custom permission.
         permission: "streamline.command.globalonline"
         # All aliases for the command. Listed in yml list format.
@@ -397,6 +422,8 @@ commands:
       staffchat:
         # Enables / disables the use of the "staffchat" bungee command.
         enabled: true
+        # Main command that the aliases point to.
+        base: "staffchat"
         # Custom permission.
         permission: "streamline.command.staffchat"
         # All aliases for the command. Listed in yml list format.
@@ -408,6 +435,8 @@ commands:
       staffonline:
         # Enables / disables the use of the "staffonline" bungee command.
         enabled: true
+        # Main command that the aliases point to.
+        base: "staffonline"
         # Custom permission.
         permission: "streamline.command.staffonline"
         # All aliases for the command. Listed in yml list format.
@@ -416,6 +445,8 @@ commands:
           - "staff"
       # The streamline reload command.
       slreload:
+        # Main command that the aliases point to.
+        base: "slreload"
         # Custom permission.
         permission: "streamline.command.reload"
         # All aliases for the command. Listed in yml list format.
@@ -427,6 +458,8 @@ commands:
       parties:
         # Enables / disables the use of the command.
         enabled: true
+        # Main command that the aliases point to.
+        base: "parties"
         # Custom permission.
         permission: "streamline.command.parties"
         # All aliases for the command. Listed in yml list format.
@@ -438,6 +471,8 @@ commands:
       guilds:
         # Enables / disables the use of the command.
         enabled: true
+        # Main command that the aliases point to.
+        base: "guilds"
         # Custom permission.
         permission: "streamline.command.guilds"
         # All aliases for the command. Listed in yml list format.
@@ -449,6 +484,8 @@ commands:
       bsudo:
         # Enables / disables the use of the command.
         enabled: true
+        # Main command that the aliases point to.
+        base: "bsudo"
         # Custom permission.
         permission: "streamline.command.bsudo"
         # All aliases for the command. Listed in yml list format.
@@ -460,6 +497,8 @@ commands:
       sspy:
         # Enables / disables the use of the command.
         enabled: true
+        # Main command that the aliases point to.
+        base: "sspy"
         # Custom permission.
         permission: "streamline.command.sspy"
         # All aliases for the command. Listed in yml list format.
@@ -469,6 +508,8 @@ commands:
       gspy:
         # Enables / disables the use of the command.
         enabled: true
+        # Main command that the aliases point to.
+        base: "gspy"
         # Custom permission.
         permission: "streamline.command.gspy"
         # All aliases for the command. Listed in yml list format.
@@ -478,6 +519,8 @@ commands:
       pspy:
         # Enables / disables the use of the command.
         enabled: true
+        # Main command that the aliases point to.
+        base: "pspy"
         # Custom permission.
         permission: "streamline.command.pspy"
         # All aliases for the command. Listed in yml list format.
@@ -487,6 +530,8 @@ commands:
       btag:
         # Enables / disables the use of the command.
         enabled: true
+        # Main command that the aliases point to.
+        base: "btag"
         # Custom permission.
         permission: "streamline.command.btag"
         # View others permission.
@@ -500,6 +545,8 @@ commands:
       evreload:
         # Enables / disables the use of the command.
         enabled: true
+        # Main command that the aliases point to.
+        base: "evreload"
         # Custom permission.
         permission: "streamline.command.ereload"
         # All aliases for the command. Listed in yml list format.
@@ -511,6 +558,8 @@ commands:
       points:
         # Enables / disables the use of the command.
         enabled: true
+        # Main command that the aliases point to.
+        base: "points"
         # Custom permission.
         permission: "streamline.command.points"
         # View others permission.
@@ -523,19 +572,60 @@ commands:
           - "netp"
           - "np"
           - "gold"
+      # The server ping command.
+      serverping:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "serverping"
+        # Custom permission.
+        permission: "streamline.command.serverping"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "sping"
       # For messaging commands...
-      messaging:
-        # The ignore command.
-        ignore:
-          # Enables / disables the use of the command.
-          enabled: true
-          # Custom permission.
-          permission: "streamline.command.ignore"
-          # All aliases for the command. Listed in yml list format.
-          aliases:
-            - "ig"
-            - "shutup"
-            - "block"
+    messaging:
+      # The ignore command.
+      ignore:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "ignore"
+        # Custom permission.
+        permission: "streamline.command.ignore"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "ig"
+          - "shutup"
+          - "block"
+      # The message command.
+      message:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "message"
+        # Custom permission.
+        permission: "streamline.command.msg"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "m"
+          - "tell"
+          - "w"
+          - "msg"
+          - "whisper"
+      # The reply command.
+      reply:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "reply"
+        # Custom permission.
+        permission: "streamline.command.reply"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "r"
+          - "re"
+          - "followup"
 
 ### MODULE SETTINGS ###
 modules:
@@ -753,3 +843,21 @@ modules:
       # If the stacktrace should be sent to console.
       # Disable if you do not want random errors when players mistype a command.
       send-to-console: true
+    # For all punishments...
+    punishments:
+      # For mutes...
+      mutes:
+        # Enables / disables mutes.
+        enabled: true
+        # Enables / disables if mutes should also block all commands.
+        hard-mutes: false
+    # For all private messaging.
+    messaging:
+      # Permission for viewing private messages.
+      view-permission: "streamline.staff"
+      # If reply goes to last messenger, or to the last person they sent to, or both.
+      # Options:
+      # "sent-to" = Who the person last sent to.
+      # "sent-from" = Who sent to the person last.
+      # "very-last" (or anything else) = Whichever of the previous two is most recent.
+      reply-to: "very-last"

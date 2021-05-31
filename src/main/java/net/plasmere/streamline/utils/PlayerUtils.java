@@ -444,6 +444,147 @@ public class PlayerUtils {
         return ignored.toString();
     }
 
+    public static void doMessage(Player from, Player to, String message, boolean reply){
+        if (! to.online) {
+            MessagingUtils.sendBUserMessage(from, MessageConfUtils.noPlayer);
+            return;
+        }
+
+        switch (ConfigUtils.messReplyTo) {
+            case "sent-to":
+                from.updateLastTo(to);
+                break;
+            case "sent-from":
+                to.updateLastMessenger(from);
+                break;
+            default:
+                from.updateLastTo(to);
+                to.updateLastMessenger(from);
+                break;
+        }
+
+        from.updateLastToMessage(message);
+
+        if (reply) {
+            MessagingUtils.sendBUserMessage(from, MessageConfUtils.replySender
+                    .replace("%from%", getOffOnDisplayBungee(from))
+                    .replace("%to%", getOffOnDisplayBungee(to))
+                    .replace("%message%", message)
+            );
+
+            MessagingUtils.sendBUserMessage(to, MessageConfUtils.replyTo
+                    .replace("%from%", getOffOnDisplayBungee(from))
+                    .replace("%to%", getOffOnDisplayBungee(to))
+                    .replace("%message%", message)
+            );
+
+            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
+                if (! player.hasPermission(ConfigUtils.messViewPerm)) continue;
+
+                MessagingUtils.sendBUserMessage(player, MessageConfUtils.replySSPY
+                        .replace("%from%", getOffOnDisplayBungee(from))
+                        .replace("%to%", getOffOnDisplayBungee(to))
+                        .replace("%message%", message)
+                );
+            }
+        } else {
+            MessagingUtils.sendBUserMessage(from, MessageConfUtils.messageSender
+                    .replace("%from%", getOffOnDisplayBungee(from))
+                    .replace("%to%", getOffOnDisplayBungee(to))
+                    .replace("%message%", message)
+            );
+
+            MessagingUtils.sendBUserMessage(to, MessageConfUtils.messageTo
+                    .replace("%from%", getOffOnDisplayBungee(from))
+                    .replace("%to%", getOffOnDisplayBungee(to))
+                    .replace("%message%", message)
+            );
+
+            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
+                if (! player.hasPermission(ConfigUtils.messViewPerm)) continue;
+
+                MessagingUtils.sendBUserMessage(player, MessageConfUtils.messageSSPY
+                        .replace("%from%", getOffOnDisplayBungee(from))
+                        .replace("%to%", getOffOnDisplayBungee(to))
+                        .replace("%message%", message)
+                );
+            }
+        }
+    }
+
+    public static void doMessageWithIgnoreCheck(Player from, Player to, String message, boolean reply){
+        if (! to.online) {
+            MessagingUtils.sendBUserMessage(from, MessageConfUtils.noPlayer);
+            return;
+        }
+
+        if (to.ignoredList.contains(from.uuid)) {
+            MessagingUtils.sendBUserMessage(from, MessageConfUtils.messageIgnored);
+            return;
+        }
+
+        switch (ConfigUtils.messReplyTo) {
+            case "sent-to":
+                from.updateLastTo(to);
+                break;
+            case "sent-from":
+                to.updateLastMessenger(from);
+                break;
+            default:
+                from.updateLastTo(to);
+                to.updateLastMessenger(from);
+                break;
+        }
+
+        from.updateLastToMessage(message);
+
+        if (reply) {
+            MessagingUtils.sendBUserMessage(from, MessageConfUtils.replySender
+                    .replace("%from%", getOffOnDisplayBungee(from))
+                    .replace("%to%", getOffOnDisplayBungee(to))
+                    .replace("%message%", message)
+            );
+
+            MessagingUtils.sendBUserMessage(to, MessageConfUtils.replyTo
+                    .replace("%from%", getOffOnDisplayBungee(from))
+                    .replace("%to%", getOffOnDisplayBungee(to))
+                    .replace("%message%", message)
+            );
+
+            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
+                if (! player.hasPermission(ConfigUtils.messViewPerm)) continue;
+
+                MessagingUtils.sendBUserMessage(player, MessageConfUtils.replySSPY
+                        .replace("%from%", getOffOnDisplayBungee(from))
+                        .replace("%to%", getOffOnDisplayBungee(to))
+                        .replace("%message%", message)
+                );
+            }
+        } else {
+            MessagingUtils.sendBUserMessage(from, MessageConfUtils.messageSender
+                    .replace("%from%", getOffOnDisplayBungee(from))
+                    .replace("%to%", getOffOnDisplayBungee(to))
+                    .replace("%message%", message)
+            );
+
+            MessagingUtils.sendBUserMessage(to, MessageConfUtils.messageTo
+                    .replace("%from%", getOffOnDisplayBungee(from))
+                    .replace("%to%", getOffOnDisplayBungee(to))
+                    .replace("%message%", message)
+            );
+
+            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
+                if (! player.hasPermission(ConfigUtils.messViewPerm)) continue;
+
+                MessagingUtils.sendBUserMessage(player, MessageConfUtils.messageSSPY
+                        .replace("%from%", getOffOnDisplayBungee(from))
+                        .replace("%to%", getOffOnDisplayBungee(to))
+                        .replace("%message%", message)
+                );
+            }
+        }
+    }
+
     // No stats.
     public static final String noStatsFound = message.getString("stats.no-stats");
     // Not high enough permissions.

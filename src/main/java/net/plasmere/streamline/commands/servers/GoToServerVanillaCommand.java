@@ -12,12 +12,9 @@ import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.plugin.Command;
 
 public class GoToServerVanillaCommand extends Command {
-    private final StreamLine plugin;
 
-    public GoToServerVanillaCommand(StreamLine streamLine, String perm) {
+    public GoToServerVanillaCommand(String perm) {
         super("fabric", perm,"trampoline", "bungee-trampoline", "tramp");
-
-        this.plugin = streamLine;
     }
 
     @Override
@@ -26,7 +23,7 @@ public class GoToServerVanillaCommand extends Command {
             ProxiedPlayer player = (ProxiedPlayer) sender;
 
             if (player.hasPermission("streamline.server.fabric") || player.hasPermission("streamline.*")) {
-                ProxyServer proxy = plugin.getProxy();
+                ProxyServer proxy = StreamLine.getInstance().getProxy();
 
                 ServerInfo vanServer = proxy.getServerInfo(ConfigUtils.comBFabricEnd);
 

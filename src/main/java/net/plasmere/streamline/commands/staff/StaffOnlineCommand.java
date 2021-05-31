@@ -13,16 +13,13 @@ import net.plasmere.streamline.utils.UUIDFetcher;
 import java.util.*;
 
 public class StaffOnlineCommand extends Command {
-    private final StreamLine plugin;
 
-    public StaffOnlineCommand(StreamLine streamLine, String perm, String[] aliases){
-        super("staffonline", perm, aliases);
-
-        this.plugin = streamLine;
+    public StaffOnlineCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     public void execute(CommandSender sender, String[] args){
-        Collection<ProxiedPlayer> staffs = plugin.getProxy().getPlayers();
+        Collection<ProxiedPlayer> staffs = StreamLine.getInstance().getProxy().getPlayers();
         Set<ProxiedPlayer> lstaffs = new HashSet<>(staffs);
 
         for (ProxiedPlayer player : staffs){

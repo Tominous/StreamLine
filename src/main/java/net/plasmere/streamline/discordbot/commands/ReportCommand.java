@@ -13,7 +13,7 @@ public class ReportCommand {
     private final static EmbedBuilder eb = new EmbedBuilder();
     private final Configuration config = Config.getConf();
 
-    public static void sendMessage(String command, MessageReceivedEvent event, StreamLine plugin){
+    public static void sendMessage(String command, MessageReceivedEvent event){
         String om = event.getMessage().getContentDisplay();
         String prefix = ConfigUtils.botPrefix;
 
@@ -30,7 +30,7 @@ public class ReportCommand {
             );
 
         if (ConfigUtils.moduleReportsDToMinecraft)
-            MessagingUtils.sendStaffMessageReport(event.getAuthor().getName(), false, msg, plugin);
+            MessagingUtils.sendStaffMessageReport(event.getAuthor().getName(), false, msg);
 
         if (ConfigUtils.moduleReportToChannel) {
             if (ConfigUtils.moduleReportChannelPingsRole)
@@ -38,6 +38,6 @@ public class ReportCommand {
             MessagingUtils.sendDiscordReportMessage(event.getAuthor().getName(), false, msg);
         }
 
-        plugin.getLogger().info("Sent message for \"" + command + "\"!");
+        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Sent message for \"" + command + "\"!");
     }
 }

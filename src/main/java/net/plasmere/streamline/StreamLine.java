@@ -83,7 +83,7 @@ public class StreamLine extends Plugin {
 			JDABuilder jdaBuilder = JDABuilder.createDefault(ConfigUtils.botToken)
 					.setActivity(Activity.playing(ConfigUtils.botStatusMessage));
 			jdaBuilder.addEventListeners(
-					new MessageListener(this),
+					new MessageListener(),
 					new ReadyListener(this)
 			);
 			jda = jdaBuilder.build().awaitReady();

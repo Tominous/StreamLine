@@ -1,4 +1,4 @@
-package net.plasmere.streamline.commands;
+package net.plasmere.streamline.commands.messaging;
 
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -10,13 +10,15 @@ import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
+import net.plasmere.streamline.utils.TextUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.TreeSet;
 
-public class StatsCommand extends Command implements TabExecutor {
-    public StatsCommand(String base, String perm, String[] aliases){
+public class ReplyCommand extends Command {
+    public ReplyCommand(String base, String perm, String[] aliases){
         super(base, perm, aliases);
     }
 
@@ -35,20 +37,20 @@ public class StatsCommand extends Command implements TabExecutor {
                 }
             }
 
-            if (args.length <= 0 || ! ConfigUtils.comBStatsOthers) {
-                PlayerUtils.info(player, player);
+            if (args.length <= 0) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
             } else {
-                if (player.hasPermission(ConfigUtils.comBStatsPermOthers)){
+                if (player.hasPermission(ConfigUtils.comBMessagePerm)){
                     if (! PlayerUtils.exists(args[0])) {
                         MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
                         return;
                     }
 
-                    Player stat = PlayerUtils.getStat(args[0]);
+                    Player stat = PlayerUtils.getStat(sender);
 
                     if (stat == null) {
-                        PlayerUtils.addStat(new Player(args[0]));
-                        stat = PlayerUtils.getStat(args[0]);
+                        PlayerUtils.addStat(new Player(((ProxiedPlayer) sender).getUniqueId()));
+                        stat = PlayerUtils.getStat(sender);
                         if (stat == null) {
                             StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
                             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
@@ -56,7 +58,25 @@ public class StatsCommand extends Command implements TabExecutor {
                         }
                     }
 
-                    PlayerUtils.info(player, stat);
+                    Player statTo = PlayerUtils.getStatByUUID(stat.lastToUUID);
+
+                    if (statTo == null) {
+                        PlayerUtils.addStat(new Player(stat.lastToUUID));
+                        statTo = PlayerUtils.getStatByUUID(stat.lastToUUID);
+                        if (statTo == null) {
+                            StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                            return;
+                        }
+                    }
+
+                    TreeSet<String> argsSet = new TreeSet<>();
+
+                    for (int i = 1; i < args.length; i++) {
+                        argsSet.add(args[i]);
+                    }
+
+                    PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.normalize(argsSet), true);
                 } else {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
                 }
@@ -85,21 +105,5 @@ public class StatsCommand extends Command implements TabExecutor {
                 PlayerUtils.info(sender, stat);
             }
         }
-    }
-
-    @Override
-    public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
-        Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
-        List<String> strPlayers = new ArrayList<>();
-
-        for (ProxiedPlayer player : players){
-            strPlayers.add(player.getName());
-        }
-
-        if (sender.hasPermission(ConfigUtils.comBStatsPermOthers)) {
-            return strPlayers;
-        }
-
-        else return new ArrayList<>();
     }
 }

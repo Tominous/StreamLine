@@ -81,7 +81,7 @@ public class PartyUtils {
         return true;
     }
 
-    public static void createParty(StreamLine streamLine, Player player) {
+    public static void createParty(Player player) {
         ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(player.uuid);
 
         if (p == null) return;
@@ -92,7 +92,7 @@ public class PartyUtils {
         }
 
         try {
-            Party party = new Party(streamLine, player);
+            Party party = new Party(player);
 
             addParty(party);
 
@@ -102,7 +102,7 @@ public class PartyUtils {
         }
     }
 
-    public static void createPartySized(StreamLine streamLine, Player player, int size) {
+    public static void createPartySized(Player player, int size) {
         ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(player.uuid);
 
         if (p == null) return;
@@ -120,7 +120,7 @@ public class PartyUtils {
                 return;
             }
 
-            Party party = new Party(streamLine, player, size);
+            Party party = new Party(player, size);
 
             parties.add(party);
 

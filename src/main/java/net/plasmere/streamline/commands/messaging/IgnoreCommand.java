@@ -15,13 +15,11 @@ import net.plasmere.streamline.utils.TextUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class IgnoreCommand extends Command implements TabExecutor {
-    private final StreamLine plugin;
-
-    public IgnoreCommand(StreamLine plugin, String perm, String[] aliases){
-        super("ignore", perm, aliases);
-        this.plugin = plugin;
+    public IgnoreCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override
@@ -103,10 +101,11 @@ public class IgnoreCommand extends Command implements TabExecutor {
 
     @Override
     public Iterable<String> onTabComplete(final CommandSender sender, final String[] args) {
-        Collection<ProxiedPlayer> players = plugin.getProxy().getPlayers();
+        Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
         List<String> strPlayers = new ArrayList<>();
 
         for (ProxiedPlayer player : players){
+            if (sender instanceof ProxiedPlayer) if (player.equals(sender)) continue;
             strPlayers.add(player.getName());
         }
 
@@ -117,9 +116,17 @@ public class IgnoreCommand extends Command implements TabExecutor {
         options.add("list");
 
         if (args.length == 1) {
-            return options;
+            final String param1 = args[0];
+
+            return options.stream()
+                    .filter(completion -> completion.startsWith(param1))
+                    .collect(Collectors.toList());
         } else if (args.length == 2){
-            return strPlayers;
+            final String param2 = args[1];
+
+            return strPlayers.stream()
+                    .filter(completion -> completion.startsWith(param2))
+                    .collect(Collectors.toList());
         }
 
         return new ArrayList<>();

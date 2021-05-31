@@ -10,12 +10,9 @@ import net.md_5.bungee.api.plugin.Plugin;
 import java.util.Collection;
 
 public class PluginsCommand extends Command {
-    private final StreamLine plugin;
 
-    public PluginsCommand(StreamLine streamLine, String perm, String[] aliases){
-        super("plugins", perm, aliases);
-
-        this.plugin = streamLine;
+    public PluginsCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     public void execute(CommandSender sender, String[] args) {
@@ -30,7 +27,7 @@ public class PluginsCommand extends Command {
     }
 
     private String getPluginList(){
-        Collection<Plugin> plugins = plugin.getProxy().getPluginManager().getPlugins();
+        Collection<Plugin> plugins = StreamLine.getInstance().getProxy().getPluginManager().getPlugins();
 
         StringBuilder pl = new StringBuilder();
         int i = 0;

@@ -43,6 +43,9 @@ public class MessageConfUtils {
     public static final String onlineD = message.getString("players.discord.online");
     // Redirect.
     public static final String vbBlocked = message.getString("redirect.by-version.blocked");
+    // Punishments.
+    public static final String punMutedTemp = message.getString("punishments.muted.temp");
+    public static final String punMutedPerm = message.getString("punishments.muted.perm");
     // Reports.
     public static final String reportEmbedTitle = message.getString("report-message.embed-title");
     public static final String dToDReportMessage = message.getString("report-message.from-discord.discord");
@@ -162,4 +165,14 @@ public class MessageConfUtils {
     public static final String ignoreListMain = message.getString("ignore.list.main");
     public static final String ignoreListNLast = message.getString("ignore.list.ignores.not-last");
     public static final String ignoreListLast = message.getString("ignore.list.ignores.last");
+    // Message.
+    public static final String messageSender = message.getString("message.sender");
+    public static final String messageTo = message.getString("message.to");
+    public static final String messageIgnored = message.getString("message.ignored");
+    public static final String messageSSPY = message.getString("message.sspy");
+    // Reply.
+    public static final String replySender = message.getString("message.sender");
+    public static final String replyTo = message.getString("message.to");
+    public static final String replyIgnored = message.getString("message.ignored");
+    public static final String replySSPY = message.getString("message.sspy");
 }

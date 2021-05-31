@@ -62,6 +62,7 @@ not-a-command:
 improper-usage:
   # For bungee.
   bungee: "&cUsage: &b%usage%"
+
 # To determine how it shows up if a player is offline or online.
 # Fillers:
 # %player% = the player's name.
@@ -84,6 +85,15 @@ redirect:
   by-version:
     # If you are blocked.
     blocked: "&cYou were blocked from joining that server in version &3%version%"
+
+# For punishment messages.
+punishments:
+  # When trying to talk...
+  muted:
+    # If only temp.
+    temp: "&cYou are muted until &b%date%&c!"
+    # If permanent.
+    perm: "&cYou are muted!"
 
 # When reporting...
 # Fillers:
@@ -1089,3 +1099,25 @@ ignore:
       not-last: "&c%player%&e, "
       # If last ignored.
       last: "&c%player%&e."
+
+# For message command.
+message:
+  # For sender.
+  sender: "&7[ &d%from% &9(&c%from_server%&9) &8>> &d%to% &9(&c%to_server%&9) &7] &e%message%"
+  # For receiver.
+  to: "&7[ &d%from% &9(&c%from_server%&9) &8>> &d%to% &9(&c%to_server%&9) &7] &e%message%"
+  # If ignored.
+  ignored: "&cSorry, but this player has ignored you!"
+  # To SSPY.
+  sspy: "&7[ &e%from% &2(&4%from_server%&2) &8>> &e%to% &2(&4%to_server%&2) &7] &8%message%"
+
+# For reply command.
+reply:
+  # For sender.
+  sender: "&7[ &d%from% &9(&c%from_server%&9) &8>> &d%to% &9(&c%to_server%&9) &7] &e%message%"
+  # For receiver.
+  to: "&7[ &d%from% &9(&c%from_server%&9) &8>> &d%to% &9(&c%to_server%&9) &7] &e%message%"
+  # If ignored.
+  ignored: "&cSorry, but this player has ignored you!"
+  # To SSPY.
+  sspy: "&7[ &e%from% &2(&4%from_server%&2) &8>> &e%to% &2(&4%to_server%&2) &7] &8%message%"

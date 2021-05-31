@@ -17,7 +17,7 @@ import java.util.Set;
 
 public class JDAPingerUtils {
     private static JDA jda = null;
-    private static EmbedBuilder eb = new EmbedBuilder();
+    private static final EmbedBuilder eb = new EmbedBuilder();
 
     private static int i = 0;
 
@@ -62,7 +62,9 @@ public class JDAPingerUtils {
         return text.toString();
     }
 
-    public static void sendMessage(StreamLine plugin, TextChannel channel){
+    public static void sendMessage(TextChannel channel){
+        StreamLine plugin = StreamLine.getInstance();
+
         eb.setDescription("Pinging " + plugin.getProxy().getServers().size() + " servers... Give me about " + plugin.getProxy().getServers().size() * 1.2 + " seconds...");
         channel.sendMessage(eb.build()).queue();
         Map<String, ServerInfo> serversM = plugin.getProxy().getServers();

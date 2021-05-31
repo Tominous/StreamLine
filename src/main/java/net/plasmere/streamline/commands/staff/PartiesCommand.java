@@ -13,12 +13,8 @@ import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PartyUtils;
 
 public class PartiesCommand extends Command {
-
-    private final StreamLine plugin;
-
-    public PartiesCommand(StreamLine streamLine, String perm, String[] aliases){
-        super("parties", perm, aliases);
-        this.plugin = streamLine;
+    public PartiesCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override

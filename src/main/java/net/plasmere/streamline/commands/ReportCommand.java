@@ -9,11 +9,9 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 
 public class ReportCommand extends Command {
-    private final StreamLine plugin;
 
-    public ReportCommand(StreamLine streamLine, String perm, String[] aliases){
+    public ReportCommand(String base, String perm, String[] aliases){
         super("report", perm, aliases);
-        this.plugin = streamLine;
     }
 
     @Override
@@ -28,7 +26,7 @@ public class ReportCommand extends Command {
         if (ConfigUtils.moduleReportsMToDiscord)
             MessagingUtils.sendDiscordReportMessage(sender.getName(), true, msg);
         if (ConfigUtils.moduleReportsSendChat)
-            MessagingUtils.sendStaffMessageReport(sender.getName(), true, msg, plugin);
+            MessagingUtils.sendStaffMessageReport(sender.getName(), true, msg);
         if (ConfigUtils.moduleReportsBConfirmation)
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bConfirmReportMessage
                     .replace("%reporter%", sender.getName())

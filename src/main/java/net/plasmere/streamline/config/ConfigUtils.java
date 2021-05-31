@@ -62,22 +62,27 @@ public class ConfigUtils {
     // ... ... Bungee Stuff.
     // Ping.
     public static final boolean comBPing = config.getBoolean("commands.bungee.ping.enabled");
+    public static final String comBPingBase = config.getString("commands.bungee.ping.base");
     public static final List<String> comBPingAliases = config.getStringList("commands.bungee.ping.aliases");
     public static final String comBPingPerm = config.getString("commands.bungee.ping.permission");
     // Plugins.
     public static final boolean comBPlugins = config.getBoolean("commands.bungee.plugins.enabled");
+    public static final String comBPluginsBase = config.getString("commands.bungee.plugins.base");
     public static final List<String> comBPluginsAliases = config.getStringList("commands.bungee.plugins.aliases");
     public static final String comBPluginsPerm = config.getString("commands.bungee.plugins.permission");
     // Stream.
     public static final boolean comBStream = config.getBoolean("commands.bungee.stream.enabled");
+    public static final String comBStreamBase = config.getString("commands.bungee.stream.base");
     public static final List<String> comBStreamAliases = config.getStringList("commands.bungee.stream.aliases");
     public static final String comBStreamPerm = config.getString("commands.bungee.stream.permission");
     // Report.
     public static final boolean comBReport = config.getBoolean("commands.bungee.report.enabled");
+    public static final String comBReportBase = config.getString("commands.bungee.report.base");
     public static final List<String> comBReportAliases = config.getStringList("commands.bungee.report.aliases");
     public static final String comBReportPerm = config.getString("commands.bungee.report.permission");
     // StatsCommand
     public static final boolean comBStats = config.getBoolean("commands.bungee.stats.enabled");
+    public static final String comBStatsBase = config.getString("commands.bungee.stats.base");
     public static final List<String> comBStatsAliases = config.getStringList("commands.bungee.stats.aliases");
     public static final String comBStatsPerm = config.getString("commands.bungee.stats.permission");
     public static final boolean comBStatsOthers = config.getBoolean("commands.bungee.stats.view-others.enabled");
@@ -85,6 +90,7 @@ public class ConfigUtils {
     // ... Party.
     //
     public static final boolean comBParty = config.getBoolean("commands.bungee.party.enabled");
+    public static final String comBPartyBase = config.getString("commands.bungee.party.base");
     public static final boolean comBParQuick = config.getBoolean("commands.bungee.party.quick-chat");
     public static final List<String> comBParMainAliases = config.getStringList("commands.bungee.party.aliases.main");
     public static final String comBParPerm = config.getString("commands.bungee.party.permission");
@@ -123,6 +129,7 @@ public class ConfigUtils {
     // ... Guild.
     //
     public static final boolean comBGuild = config.getBoolean("commands.bungee.guild.enabled");
+    public static final String comBGuildBase = config.getString("commands.bungee.guild.base");
     public static final boolean comBGuildQuick = config.getBoolean("commands.bungee.guild.quick-chat");
     public static final String comBGuildPerm = config.getString("commands.bungee.guild.permission");
     public static final List<String> comBGuildMainAliases = config.getStringList("commands.bungee.guild.aliases.main");
@@ -165,6 +172,7 @@ public class ConfigUtils {
     // ... Servers.
     // Lobby.
     public static final boolean comBLobby = config.getBoolean("commands.bungee.servers.lobby.enabled");
+    public static final String comBLobbyBase = config.getString("commands.bungee.staff.lobby.base");
     public static final List<String> comBLobbyAliases = config.getStringList("commands.bungee.servers.lobby.aliases");
     public static final String comBLobbyEnd = config.getString("commands.bungee.servers.lobby.points-to");
     public static final String comBLobbyPerm = config.getString("commands.bungee.servers.lobby.permission");
@@ -175,68 +183,93 @@ public class ConfigUtils {
     // ... Staff.
     // GlobalOnline.
     public static final boolean comBGlobalOnline = config.getBoolean("commands.bungee.staff.globalonline.enabled");
+    public static final String comBGlobalOnlineBase = config.getString("commands.bungee.staff.globalonline.base");
     public static final List<String> comBGlobalOnlineAliases = config.getStringList("commands.bungee.staff.globalonline.aliases");
     public static final String comBGlobalOnlinePerm = config.getString("commands.bungee.staff.globalonline.permission");
     // StaffChat.
     public static final boolean comBStaffChat = config.getBoolean("commands.bungee.staff.staffchat.enabled");
+    public static final String comBStaffChatBase = config.getString("commands.bungee.staff.staffchat.base");
     public static final List<String> comBStaffChatAliases = config.getStringList("commands.bungee.staff.staffchat.aliases");
     public static final String comBStaffChatPerm = config.getString("commands.bungee.staff.staffchat.permission");
     // StaffOnline.
     public static final boolean comBStaffOnline = config.getBoolean("commands.bungee.staff.staffonline.enabled");
+    public static final String comBStaffOnlineBase = config.getString("commands.bungee.staff.staffonline.base");
     public static final List<String> comBStaffOnlineAliases = config.getStringList("commands.bungee.staff.staffonline.aliases");
     public static final String comBStaffOnlinePerm = config.getString("commands.bungee.staff.staffonline.permission");
     // Reload.
+    public static final String comBReloadBase = config.getString("commands.bungee.staff.slreload.base");
     public static final List<String> comBReloadAliases = config.getStringList("commands.bungee.staff.slreload.aliases");
     public static final String comBReloadPerm = config.getString("commands.bungee.staff.slreload.permission");
     // Parties.
     public static final boolean comBParties = config.getBoolean("commands.bungee.staff.parties.enabled");
+    public static final String comBPartiesBase = config.getString("commands.bungee.staff.parties.base");
     public static final List<String> comBPartiesAliases = config.getStringList("commands.bungee.staff.parties.aliases");
     public static final String comBPartiesPerm = config.getString("commands.bungee.staff.parties.permission");
     // Guilds.
     public static final boolean comBGuilds = config.getBoolean("commands.bungee.staff.guilds.enabled");
+    public static final String comBGuildsBase = config.getString("commands.bungee.staff.guilds.base");
     public static final List<String> comBGuildsAliases = config.getStringList("commands.bungee.staff.guilds.aliases");
     public static final String comBGuildsPerm = config.getString("commands.bungee.staff.guilds.permission");
     // BSudo.
     public static final boolean comBSudo = config.getBoolean("commands.bungee.staff.bsudo.enabled");
+    public static final String comBSudoBase = config.getString("commands.bungee.staff.bsudo.base");
     public static final List<String> comBSudoAliases = config.getStringList("commands.bungee.staff.bsudo.aliases");
     public static final String comBSudoPerm = config.getString("commands.bungee.staff.bsudo.permission");
     // SSPY.
     public static final boolean comBSSPY = config.getBoolean("commands.bungee.staff.sspy.enabled");
+    public static final String comBSSPYBase = config.getString("commands.bungee.staff.sspy.base");
     public static final List<String> comBSSPYAliases = config.getStringList("commands.bungee.staff.sspy.aliases");
     public static final String comBSSPYPerm = config.getString("commands.bungee.staff.sspy.permission");
     // GSPY.
     public static final boolean comBGSPY = config.getBoolean("commands.bungee.staff.gspy.enabled");
+    public static final String comBGSPYBase = config.getString("commands.bungee.staff.gspy.base");
     public static final List<String> comBGSPYAliases = config.getStringList("commands.bungee.staff.gspy.aliases");
     public static final String comBGSPYPerm = config.getString("commands.bungee.staff.gspy.permission");
     // PSPY.
     public static final boolean comBPSPY = config.getBoolean("commands.bungee.staff.pspy.enabled");
+    public static final String comBPSPYBase = config.getString("commands.bungee.staff.pspy.base");
     public static final List<String> comBPSPYAliases = config.getStringList("commands.bungee.staff.pspy.aliases");
     public static final String comBPSPYPerm = config.getString("commands.bungee.staff.pspy.permission");
     // BTag.
     public static final boolean comBBTag = config.getBoolean("commands.bungee.staff.btag.enabled");
+    public static final String comBBTagBase = config.getString("commands.bungee.staff.btag.base");
     public static final List<String> comBBTagAliases = config.getStringList("commands.bungee.staff.btag.aliases");
     public static final String comBBTagPerm = config.getString("commands.bungee.staff.btag.permission");
     public static final String comBBTagOPerm = config.getString("commands.bungee.staff.btag.other-perm");
     public static final String comBBTagChPerm = config.getString("commands.bungee.staff.btag.change-perm");
     // Event Reload.
     public static final boolean comBEReload = config.getBoolean("commands.bungee.staff.evreload.enabled");
+    public static final String comBEReloadBase = config.getString("commands.bungee.staff.evreload.base");
     public static final List<String> comBEReloadAliases = config.getStringList("commands.bungee.staff.evreload.aliases");
     public static final String comBEReloadPerm = config.getString("commands.bungee.staff.evreload.permission");
     // Network Points.
     public static final boolean comBPoints = config.getBoolean("commands.bungee.staff.points.enabled");
+    public static final String comBPointsBase = config.getString("commands.bungee.staff.points.base");
     public static final List<String> comBPointsAliases = config.getStringList("commands.bungee.staff.points.aliases");
     public static final String comBPointsPerm = config.getString("commands.bungee.staff.points.permission");
     public static final String comBPointsOPerm = config.getString("commands.bungee.staff.points.other-perm");
     public static final String comBPointsChPerm = config.getString("commands.bungee.staff.points.change-perm");
+    // Server Ping.
+    public static final boolean comBSPing = config.getBoolean("commands.bungee.staff.serverping.enabled");
+    public static final String comBSPingBase = config.getString("commands.bungee.staff.serverping.base");
+    public static final List<String> comBSPingAliases = config.getStringList("commands.bungee.staff.serverping.aliases");
+    public static final String comBSPingPerm = config.getString("commands.bungee.staff.serverping.permission");
     // ... Messaging.
     // Ignore.
     public static final boolean comBIgnore = config.getBoolean("commands.bungee.messaging.ignore.enabled");
+    public static final String comBIgnoreBase = config.getString("commands.bungee.messaging.ignore.base");
     public static final List<String> comBIgnoreAliases = config.getStringList("commands.bungee.messaging.ignore.aliases");
     public static final String comBIgnorePerm = config.getString("commands.bungee.messaging.ignore.permission");
-    // Ignores.
-    public static final boolean comBIgnores = config.getBoolean("commands.bungee.messaging.ignores.enabled");
-    public static final List<String> comBIgnoresAliases = config.getStringList("commands.bungee.messaging.ignores.aliases");
-    public static final String comBIgnoresPerm = config.getString("commands.bungee.messaging.ignores.permission");
+    // Message.
+    public static final boolean comBMessage = config.getBoolean("commands.bungee.messaging.message.enabled");
+    public static final String comBMessageBase = config.getString("commands.bungee.messaging.message.base");
+    public static final List<String> comBMessageAliases = config.getStringList("commands.bungee.messaging.message.aliases");
+    public static final String comBMessagePerm = config.getString("commands.bungee.messaging.message.permission");
+    // Reply.
+    public static final boolean comBReply = config.getBoolean("commands.bungee.messaging.reply.enabled");
+    public static final String comBReplyBase = config.getString("commands.bungee.messaging.reply.base");
+    public static final List<String> comBReplyAliases = config.getStringList("commands.bungee.messaging.reply.aliases");
+    public static final String comBMReplyPerm = config.getString("commands.bungee.messaging.reply.permission");
     // ... ... Modules.
     public static final String staffPerm = config.getString("modules.staff-permission");
     // ... Discord.
@@ -322,4 +355,10 @@ public class ConfigUtils {
     public static final boolean eventsWhenEmpty = config.getBoolean("modules.bungee.events.add-default-when-empty");
     // Errors.
     public static final boolean errSendToConsole = config.getBoolean("modules.bungee.user-errors.send-to-console");
+    // Punishments.
+    public static final boolean punMutes = config.getBoolean("modules.bungee.punishments.mutes.enabled");
+    public static final boolean punMutesHard = config.getBoolean("modules.bungee.punishments.mutes.hard-mutes");
+    // Messaging.
+    public static final String messViewPerm = config.getString("modules.bungee.messaging.view-permission");
+    public static final String messReplyTo = config.getString("modules.bungee.messaging.reply-to");
 }

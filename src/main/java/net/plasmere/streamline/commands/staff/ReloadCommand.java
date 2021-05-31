@@ -15,15 +15,13 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.dv8tion.jda.api.JDA;
 
 public class ReloadCommand extends Command {
-    private final StreamLine plugin;
     private String perm = "";
     private JDA jda = StreamLine.getJda();
 
-    public ReloadCommand(StreamLine streamLine, String perm, String[] aliases){
+    public ReloadCommand(String base, String perm, String[] aliases){
         super("slreload", perm, aliases);
 
         this.perm = perm;
-        this.plugin = streamLine;
     }
 
     @Override

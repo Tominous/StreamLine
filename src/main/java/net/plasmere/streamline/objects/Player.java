@@ -46,10 +46,13 @@ public class Player implements ProxiedPlayer {
     public List<String> tags;
     public int points;
     public String lastMessengerUUID;
+    public String lastToUUID;
     public String lastMessage;
     public String lastToMessage;
     public String ignoreds;
     public List<String> ignoredList;
+    public boolean muted;
+    public Date mutedTill;
 
     public Player(ProxiedPlayer player) {
         String ipSt = player.getSocketAddress().toString().replace("/", "");
@@ -314,9 +317,12 @@ public class Player implements ProxiedPlayer {
         defaults.add("tags=" + defaultTags());
         defaults.add("points=" + ConfigUtils.pointsDefault);
         defaults.add("last-messenger=");
+        defaults.add("last-to=");
         defaults.add("last-message=");
         defaults.add("last-to-message=");
         defaults.add("ignored=");
+        defaults.add("muted=false");
+        defaults.add("muted-till=");
         //defaults.add("");
         return defaults;
     }
@@ -363,9 +369,12 @@ public class Player implements ProxiedPlayer {
         this.tags = loadTags();
         this.points = Integer.parseInt(getFromKey("points"));
         this.lastMessengerUUID = getFromKey("last-messenger");
+        this.lastToUUID = getFromKey("last-to");
         this.lastMessage = getFromKey("last-message");
         this.lastToMessage = getFromKey("last-to-message");
         this.ignoredList = loadIgnored();
+        this.muted = Boolean.parseBoolean(getFromKey("muted"));
+        this.mutedTill = new Date(Long.parseLong(getFromKey("muted-till")));
     }
 
     public TreeMap<String, String> updatableKeys() {
@@ -661,6 +670,26 @@ public class Player implements ProxiedPlayer {
 
     public void toggleSC() { setSC(! sc); }
 
+    public void setMuted(boolean value) {
+        muted = value;
+        updateKey("muted", value);
+    }
+
+    public void setMutedTill(long value) {
+        updateKey("muted-till", value);
+    }
+
+    public void removeMutedTill(){
+        updateKey("muted-till", "");
+    }
+
+    public void updateMute(boolean set, Date newMutedUntil){
+        setMuted(set);
+        setMutedTill(newMutedUntil.getTime());
+    }
+
+    public void toggleMuted() { setMuted(! muted); }
+
     public void setPoints(int amount) {
         points = amount;
         updateKey("points", amount);
@@ -688,6 +717,10 @@ public class Player implements ProxiedPlayer {
 
     public void updateLastMessenger(Player messenger){
         updateKey("last-messenger", messenger.uuid);
+    }
+
+    public void updateLastTo(Player to){
+        updateKey("last-to", to.uuid);
     }
 
     @Override

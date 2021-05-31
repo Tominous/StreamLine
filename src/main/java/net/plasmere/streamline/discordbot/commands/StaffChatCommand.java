@@ -17,13 +17,13 @@ import java.util.Set;
 public class StaffChatCommand {
     private static final EmbedBuilder eb = new EmbedBuilder();
 
-    public static void sendMessage(String command, MessageReceivedEvent event, StreamLine plugin){
+    public static void sendMessage(String command, MessageReceivedEvent event){
         String om = event.getMessage().getContentDisplay();
         String prefix = ConfigUtils.botPrefix;
 
         String msg = om.substring((prefix + command + " ").length());
 
-        Collection<ProxiedPlayer> staff = plugin.getProxy().getPlayers();
+        Collection<ProxiedPlayer> staff = StreamLine.getInstance().getProxy().getPlayers();
         Set<ProxiedPlayer> staffs = new HashSet<>(staff);
 
         for (ProxiedPlayer player : staff){
@@ -52,6 +52,6 @@ public class StaffChatCommand {
             e.printStackTrace();
         }
 
-        plugin.getLogger().info("Sent message for \"" + command + "\"!");
+        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Sent message for \"" + command + "\"!");
     }
 }

@@ -9,12 +9,8 @@ import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 
 public class GuildsCommand extends Command {
-
-    private final StreamLine plugin;
-
-    public GuildsCommand(StreamLine streamLine, String perm, String[] aliases){
-        super("guilds", perm, aliases);
-        this.plugin = streamLine;
+    public GuildsCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override

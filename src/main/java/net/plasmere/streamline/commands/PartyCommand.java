@@ -13,11 +13,8 @@ import net.md_5.bungee.api.plugin.Command;
 import java.util.*;
 
 public class PartyCommand extends Command implements TabExecutor {
-    private final StreamLine plugin;
-
-    public PartyCommand(StreamLine streamLine, String perm, String[] aliases){
-        super("party", perm, aliases);
-        this.plugin = streamLine;
+    public PartyCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override
@@ -56,7 +53,7 @@ public class PartyCommand extends Command implements TabExecutor {
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParCreateAliases)) {
                 try {
-                    PartyUtils.createParty(plugin, Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                    PartyUtils.createParty(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
@@ -126,7 +123,7 @@ public class PartyCommand extends Command implements TabExecutor {
                         if (PartyUtils.getParty(PlayerUtils.getStat(sender)) != null) {
                             PartyUtils.openPartySized(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), Integer.parseInt(args[1]));
                         } else {
-                            PartyUtils.createPartySized(plugin, Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), Integer.parseInt(args[1]));
+                            PartyUtils.createPartySized(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), Integer.parseInt(args[1]));
                         }
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
@@ -249,7 +246,7 @@ public class PartyCommand extends Command implements TabExecutor {
     @Override
     public Iterable<String> onTabComplete(final CommandSender sender, final String[] args)
     {
-        Collection<ProxiedPlayer> players = plugin.getProxy().getPlayers();
+        Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
         List<String> strPlayers = new ArrayList<>();
 
         for (ProxiedPlayer player : players){

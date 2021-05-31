@@ -9,8 +9,8 @@ import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 
 public class PSPYCommand extends Command {
-    public PSPYCommand(String perm, String[] aliases){
-        super("pspy", perm, aliases);
+    public PSPYCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override

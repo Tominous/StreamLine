@@ -19,8 +19,8 @@ import java.nio.file.Files;
 
 public class GSPYCommand extends Command {
 
-    public GSPYCommand(String perm, String[] aliases){
-        super("gspy", perm, aliases);
+    public GSPYCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override

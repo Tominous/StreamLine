@@ -6,15 +6,12 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.utils.TextUtils;
 
 public class PCQuickCommand extends Command {
-    private final StreamLine plugin;
-
-    public PCQuickCommand(StreamLine streamLine, String perm, String[] aliases){
-        super("pc", perm, aliases);
-        this.plugin = streamLine;
+    public PCQuickCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        plugin.getProxy().getPluginManager().dispatchCommand(sender, "party chat " + TextUtils.normalize(args));
+        StreamLine.getInstance().getProxy().getPluginManager().dispatchCommand(sender, "party chat " + TextUtils.normalize(args));
     }
 }

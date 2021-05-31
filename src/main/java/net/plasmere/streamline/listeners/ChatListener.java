@@ -85,7 +85,27 @@ public class ChatListener implements Listener {
             ex.printStackTrace();
         }
 
+        if (ConfigUtils.punMutes && ConfigUtils.punMutesHard && stat.muted) {
+            e.setCancelled(true);
+            if (stat.mutedTill != null) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.punMutedTemp.replace("%date%", stat.mutedTill.toString()));
+            } else {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.punMutedPerm);
+            }
+            return;
+        }
+
         if (TextUtils.isCommand(msg)) return;
+
+        if (ConfigUtils.punMutes && stat.muted) {
+            e.setCancelled(true);
+            if (stat.mutedTill != null) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.punMutedTemp.replace("%date%", stat.mutedTill.toString()));
+            } else {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.punMutedPerm);
+            }
+            return;
+        }
 
         if (ConfigUtils.moduleStaffChat) {
             if (stat.sc) {

@@ -18,8 +18,8 @@ import java.util.Set;
 public class StaffOnlineCommand {
     private static final EmbedBuilder eb = new EmbedBuilder();
 
-    public static void sendMessage(String command, MessageReceivedEvent event, StreamLine plugin){
-        Collection<ProxiedPlayer> staffs = plugin.getProxy().getPlayers();
+    public static void sendMessage(String command, MessageReceivedEvent event){
+        Collection<ProxiedPlayer> staffs = StreamLine.getInstance().getProxy().getPlayers();
         Set<ProxiedPlayer> lstaffs = new HashSet<>(staffs);
 
         for (ProxiedPlayer player : staffs){
@@ -39,7 +39,7 @@ public class StaffOnlineCommand {
                         .replace("%staffbulk%", getStaffList(lstaffs))
         );
 
-        plugin.getLogger().info("Sent message for \"" + command + "\"!");
+        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Sent message for \"" + command + "\"!");
     }
 
     private static String getStaffList(Set<ProxiedPlayer> lstaffs){

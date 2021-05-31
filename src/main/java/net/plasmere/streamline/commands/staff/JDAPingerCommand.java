@@ -12,12 +12,8 @@ import net.dv8tion.jda.api.JDA;
 import java.util.Objects;
 
 public class JDAPingerCommand extends Command {
-    private final StreamLine plugin;
-
-    public JDAPingerCommand(StreamLine streamLine, String perm, String[] aliases){
-        super("jdaping", perm, aliases);
-
-        this.plugin = streamLine;
+    public JDAPingerCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override
@@ -27,6 +23,6 @@ public class JDAPingerCommand extends Command {
         ProxiedPlayer player = (ProxiedPlayer) sender;
         player.sendMessage(TextUtils.codedText("&aAttempting to ping..."));
 
-        JDAPingerUtils.sendMessage(this.plugin, Objects.requireNonNull(jda.getTextChannelById("747681194279436373")));
+        JDAPingerUtils.sendMessage(Objects.requireNonNull(jda.getTextChannelById("805575446107914260")));
     }
 }

@@ -9,8 +9,8 @@ import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 
 public class SSPYCommand extends Command {
-    public SSPYCommand(String perm, String[] aliases){
-        super("sspy", perm, aliases);
+    public SSPYCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override

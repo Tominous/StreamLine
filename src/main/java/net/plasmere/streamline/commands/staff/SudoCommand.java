@@ -14,11 +14,8 @@ import net.plasmere.streamline.utils.TextUtils;
 import java.util.*;
 
 public class SudoCommand extends Command implements TabExecutor {
-    private final StreamLine plugin;
-
-    public SudoCommand(StreamLine plugin, String perm, String[] aliases){
-        super("bsudo", perm, aliases);
-        this.plugin = plugin;
+    public SudoCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override
@@ -26,7 +23,7 @@ public class SudoCommand extends Command implements TabExecutor {
         if (args.length <= 1) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else {
-            ProxiedPlayer sudoOn = plugin.getProxy().getPlayer(args[0]);
+            ProxiedPlayer sudoOn = StreamLine.getInstance().getProxy().getPlayer(args[0]);
 
             TreeSet<String> argsSet = new TreeSet<>();
 
@@ -41,7 +38,7 @@ public class SudoCommand extends Command implements TabExecutor {
                 return;
             }
 
-            if (plugin.getProxy().getPluginManager().dispatchCommand(sudoOn, TextUtils.normalize(argsSet))){
+            if (StreamLine.getInstance().getProxy().getPluginManager().dispatchCommand(sudoOn, TextUtils.normalize(argsSet))){
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoWorked
                         .replace("%user%", sudoOn.getDisplayName())
                 );
@@ -55,14 +52,14 @@ public class SudoCommand extends Command implements TabExecutor {
 
     @Override
     public Iterable<String> onTabComplete(final CommandSender sender, final String[] args) {
-        Collection<ProxiedPlayer> players = plugin.getProxy().getPlayers();
+        Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
         List<String> strPlayers = new ArrayList<>();
 
         for (ProxiedPlayer player : players){
             strPlayers.add(player.getName());
         }
 
-        Collection<Map.Entry<String, Command>> commands = plugin.getProxy().getPluginManager().getCommands();
+        Collection<Map.Entry<String, Command>> commands = StreamLine.getInstance().getProxy().getPluginManager().getCommands();
         List<String> strCommands = new ArrayList<>();
 
         for (Map.Entry<String, Command> com : commands){

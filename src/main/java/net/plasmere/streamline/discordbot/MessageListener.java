@@ -15,12 +15,6 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class MessageListener extends ListenerAdapter {
-    private final StreamLine plugin;
-
-    public MessageListener(StreamLine streamLine){
-        this.plugin = streamLine;
-    }
-
     private final Configuration config = Config.getConf();
 
     private static final EmbedBuilder eb = new EmbedBuilder();
@@ -36,31 +30,31 @@ public class MessageListener extends ListenerAdapter {
             if (ConfigUtils.moduleSCOnlyStaffRole){
                 try {
                     if (Objects.requireNonNull(event.getMessage().getMember()).getRoles().contains(event.getJDA().getRoleById(ConfigUtils.roleStaff))) {
-                        MessagingUtils.sendStaffMessageSC(event.getAuthor().getName(), MessageConfUtils.discordStaffChatFrom, em, plugin);
+                        MessagingUtils.sendStaffMessageSC(event.getAuthor().getName(), MessageConfUtils.discordStaffChatFrom, em);
                     } else
                         return;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
-                MessagingUtils.sendStaffMessageSC(event.getAuthor().getName(), MessageConfUtils.discordStaffChatFrom, em, plugin);
+                MessagingUtils.sendStaffMessageSC(event.getAuthor().getName(), MessageConfUtils.discordStaffChatFrom, em);
             }
 
-            plugin.getLogger().info("Someone talked in staffchat (discord)... sending to bungee...");
+            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Someone talked in staffchat (discord)... sending to bungee...");
         }
 
         if (! event.getMessage().getContentRaw().toLowerCase().startsWith(prefix)) return;
 
         String[] args = event.getMessage().getContentRaw().toLowerCase().substring(ConfigUtils.botPrefix.length()).split(" ");
 
-        plugin.getLogger().info("[ " + event.getAuthor().getName() + " ] " + event.getMessage().getContentRaw());
+        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("[ " + event.getAuthor().getName() + " ] " + event.getMessage().getContentRaw());
 
         // Commands.
         if (MessagingUtils.compareWithList(args[0], ConfigUtils.comDCommandsAliases)) {
             if (ConfigUtils.comDCommands && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDCommandsPerm)) {
-                plugin.getLogger().info("So... Switching on case \"commands\"...");
+                if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("So... Switching on case \"commands\"...");
                 try {
-                    CommandsCommand.sendMessage(args[0], event, plugin);
+                    CommandsCommand.sendMessage(args[0], event);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -76,9 +70,9 @@ public class MessageListener extends ListenerAdapter {
         // Online.
         } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comDOnlineAliases)) {
             if (ConfigUtils.comDOnline && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDOnlinePerm)) {
-                plugin.getLogger().info("So... Switching on case \"online\"...");
+                if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("So... Switching on case \"online\"...");
                 try {
-                    OnlineCommand.sendMessage(args[0], event, plugin);
+                    OnlineCommand.sendMessage(args[0], event);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -94,9 +88,9 @@ public class MessageListener extends ListenerAdapter {
         // Report.
         } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comDReportAliases)) {
             if (ConfigUtils.comDReport && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDReportPerm)) {
-                plugin.getLogger().info("So... Switching on case \"report\"...");
+                if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("So... Switching on case \"report\"...");
                 try {
-                    ReportCommand.sendMessage(args[0], event, plugin);
+                    ReportCommand.sendMessage(args[0], event);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -112,9 +106,9 @@ public class MessageListener extends ListenerAdapter {
         // StaffChat.
         } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comDStaffChatAliases)) {
             if (ConfigUtils.comDStaffChat && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDStaffChatPerm)) {
-                plugin.getLogger().info("So... Switching on case \"staffchat\"...");
+                if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("So... Switching on case \"staffchat\"...");
                 try {
-                    StaffChatCommand.sendMessage(args[0], event, plugin);
+                    StaffChatCommand.sendMessage(args[0], event);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -130,9 +124,9 @@ public class MessageListener extends ListenerAdapter {
         // StaffOnline.
         } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comDStaffOnlineAliases)) {
             if (ConfigUtils.comDStaffOnline && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDStaffOnlinePerm)) {
-                plugin.getLogger().info("So... Switching on case \"staffonline\"...");
+                if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("So... Switching on case \"staffonline\"...");
                 try {
-                    StaffOnlineCommand.sendMessage(args[0], event, plugin);
+                    StaffOnlineCommand.sendMessage(args[0], event);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -147,7 +141,7 @@ public class MessageListener extends ListenerAdapter {
             }
         // IF NOT.
         } else {
-            plugin.getLogger().info("So... Switching on case default...");
+            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("So... Switching on case default...");
             if (ConfigUtils.moduleSayNotACommand.equals("yes")) {
                 event.getChannel().sendMessage(eb.setDescription(MessageConfUtils.discordNotACommand.replace("%newline%","\n")).build()).queue();
             } else if (ConfigUtils.moduleSayNotACommand.equals("staff")) {

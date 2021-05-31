@@ -6,15 +6,12 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.utils.TextUtils;
 
 public class GCQuickCommand extends Command {
-    private final StreamLine plugin;
-
-    public GCQuickCommand(StreamLine streamLine, String perm, String[] aliases){
-        super("gc", perm, aliases);
-        this.plugin = streamLine;
+    public GCQuickCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        plugin.getProxy().getPluginManager().dispatchCommand(sender, "guild chat " + TextUtils.normalize(args));
+        StreamLine.getInstance().getProxy().getPluginManager().dispatchCommand(sender, "guild chat " + TextUtils.normalize(args));
     }
 }

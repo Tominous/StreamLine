@@ -20,10 +20,9 @@ import java.util.*;
 public class MessagingUtils {
     private static final JDA jda = StreamLine.getJda();
     private static final EmbedBuilder eb = new EmbedBuilder();
-    private static final StreamLine plugin = StreamLine.getInstance();
 
-    public static void sendStaffMessage(CommandSender sender, String from, String msg, StreamLine plugin){
-        Collection<ProxiedPlayer> staff = plugin.getProxy().getPlayers();
+    public static void sendStaffMessage(CommandSender sender, String from, String msg){
+        Collection<ProxiedPlayer> staff = StreamLine.getInstance().getProxy().getPlayers();
         Set<ProxiedPlayer> staffs = new HashSet<>(staff);
 
         for (ProxiedPlayer player : staff){
@@ -93,7 +92,7 @@ public class MessagingUtils {
     }
 
     public static void sendBungeeMessage(BungeeMassMessage message){
-        Collection<ProxiedPlayer> staff = plugin.getProxy().getPlayers();
+        Collection<ProxiedPlayer> staff = StreamLine.getInstance().getProxy().getPlayers();
         Set<ProxiedPlayer> people = new HashSet<>(staff);
         List<ProxiedPlayer> ps = new ArrayList<>(people);
 
@@ -125,8 +124,8 @@ public class MessagingUtils {
         );
     }
 
-    public static void sendStaffMessageSC(String sender, String from, String msg, StreamLine plugin){
-        Collection<ProxiedPlayer> staff = plugin.getProxy().getPlayers();
+    public static void sendStaffMessageSC(String sender, String from, String msg){
+        Collection<ProxiedPlayer> staff = StreamLine.getInstance().getProxy().getPlayers();
         Set<ProxiedPlayer> staffs = new HashSet<>(staff);
 
         for (ProxiedPlayer player : staff){
@@ -149,8 +148,8 @@ public class MessagingUtils {
         }
     }
 
-    public static void sendStaffMessageReport(String sender, boolean fromBungee, String report, StreamLine plugin){
-        Collection<ProxiedPlayer> staff = plugin.getProxy().getPlayers();
+    public static void sendStaffMessageReport(String sender, boolean fromBungee, String report){
+        Collection<ProxiedPlayer> staff = StreamLine.getInstance().getProxy().getPlayers();
         Set<ProxiedPlayer> staffs = new HashSet<>(staff);
 
         for (ProxiedPlayer player : staff){

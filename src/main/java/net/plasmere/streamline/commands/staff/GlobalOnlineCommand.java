@@ -16,12 +16,9 @@ import net.plasmere.streamline.utils.UUIDFetcher;
 import java.util.*;
 
 public class GlobalOnlineCommand extends Command {
-    private final StreamLine plugin;
 
-    public GlobalOnlineCommand(StreamLine streamLine, String perm, String[] aliases){
+    public GlobalOnlineCommand(String base, String perm, String[] aliases){
         super("globalonline", perm, aliases);
-
-        this.plugin = streamLine;
     }
 
     @Override
@@ -35,7 +32,7 @@ public class GlobalOnlineCommand extends Command {
 
     // Use in a try statement:
     private void compileList(CommandSender sendTo){
-        if (plugin.getProxy().getOnlineCount() <= 0){
+        if (StreamLine.getInstance().getProxy().getOnlineCount() <= 0){
             sendTo.sendMessage(TextUtils.codedText(MessageConfUtils.onlineMessageNoPlayers));
             return;
         }
@@ -49,7 +46,7 @@ public class GlobalOnlineCommand extends Command {
 
         MessagingUtils.sendBUserMessage(sendTo,
                 MessageConfUtils.onlineMessageBMain
-                        .replace("%amount%", Integer.toString(plugin.getProxy().getOnlineCount()))
+                        .replace("%amount%", Integer.toString(StreamLine.getInstance().getProxy().getOnlineCount()))
                         .replace("%servers%", compileServers())
                         .replace("%online%", Objects.requireNonNull(getOnline(groups)))
         );
@@ -60,7 +57,7 @@ public class GlobalOnlineCommand extends Command {
 
         List<ServerInfo> servers = new ArrayList<>();
 
-        for (ServerInfo server : plugin.getProxy().getServers().values()){
+        for (ServerInfo server : StreamLine.getInstance().getProxy().getServers().values()){
             if (server.getPlayers().size() > 0) {
                 servers.add(server);
             }
@@ -85,7 +82,7 @@ public class GlobalOnlineCommand extends Command {
     }
 
     private String getOnline(Set<Group> groups){
-        Collection<ProxiedPlayer> players = plugin.getProxy().getPlayers();
+        Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
 
         HashMap<ProxiedPlayer, Server> playerServers = new HashMap<>();
         HashMap<ProxiedPlayer, String> playerGroup = new HashMap<>();

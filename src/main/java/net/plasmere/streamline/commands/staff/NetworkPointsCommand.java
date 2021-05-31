@@ -17,8 +17,8 @@ import java.util.Collection;
 import java.util.List;
 
 public class NetworkPointsCommand extends Command implements TabExecutor {
-    public NetworkPointsCommand(String perm, String[] aliases){
-        super("points", perm, aliases);
+    public NetworkPointsCommand(String base, String perm, String[] aliases){
+        super(base, perm, aliases);
     }
 
     @Override
