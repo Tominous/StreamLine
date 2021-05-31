@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "1.0.10.7"
+version: "1.0.10.8"
 
 # All bungee messages accept all color and formatting codes.
 # For new lines, use %newline%.
@@ -26,6 +26,7 @@ command-error:
   bungee:
     # If the error has not been defined yet.
     undefined: "&cThere was an error executing this command..."
+    # If the error was thrown because it needs an integer.
     needs-int: "&cYou need to specify an integer..."
 # If a command is disabled.
 command-disabled:
@@ -39,12 +40,21 @@ module-disabled:
   discord: "Sorry, but this module is disabled!"
   # Bungee error message when a module is not enabled.
   bungee: "&cSorry, but this module is disabled!"
-# If a command needs more arguments.
+# If a command needs more / less arguments.
 command-needs-args:
-  # Discord error message when a command needs more arguments.
-  discord: "Sorry, but you need to supply more information!"
-  # Bungee error message when a command needs more arguments.
-  bungee: "&cSorry, but you need to supply more information!"
+  # If needs more...
+  more:
+    # Discord error message when a command needs more arguments.
+    discord: "Sorry, but you need to supply more information!"
+    # Bungee error message when a command needs more arguments.
+    bungee: "&cSorry, but you need to supply more information!"
+  # If needs less...
+  less:
+    # Discord error message when a command needs more arguments.
+    discord: "Sorry, but you need to supply less information!"
+    # Bungee error message when a command needs more arguments.
+    bungee: "&cSorry, but you need to supply less information!"
+
 # If not a command.
 not-a-command:
   discord: "Not a command!%newline%Do !commands to see the commands!"
@@ -1028,16 +1038,54 @@ evreload:
   # Message.
   message: "&aReloaded all events (&6%count%&a)!"
 
+# For the points command.
 points:
+  # Viewing points...
   view:
+    # If you are viewing your own.
     self: "&dYou &ehave &6%points% &cNetwork Gold&e!"
+    # If you are viewing someone else's
     other: "&d%other% &ehas &6%points% &cNetwork Gold&e!"
+  # Adding points...
   add:
+    # Adding to self.
     self: "&eJust added &6%points% &cNetwork Gold &eto &dself&e!"
+    # Adding to someone else.
     other: "&eJust added &6%points% &cNetwork Gold &eto &d%other%&e!"
+  # Removing points...
   remove:
+    # Removing from self.
     self: "&eJust removed &6%points% &cNetwork Gold &efrom &dself&e!"
+    # Removing from someone else.
     other: "&eJust removed &6%points% &cNetwork Gold &efrom &d%other%&e!"
+  # Setting points...
   set:
+    # Setting own points.
     self: "&eJust set &down &cNetwork Gold &eto &6%points%&e!"
+    # Setting someone else's points.
     other: "&eJust set &d%other%&e's &cNetwork Gold &eto &6%points%&e!"
+
+# Ignore command...
+ignore:
+  # Adding someone to ignore.
+  add:
+    # What you see.
+    self: "&eYou just &cignored &d%player%&e!"
+    # What they see.
+    ignored: "&d%sender% &ejust &cignored &eyou!"
+  # Removing someone from ignore.
+  remove:
+    # What you see.
+    self: "&eYou just &aun-ignored &d%player%&e!"
+    # What they see.
+    ignored: "&d%sender% &ejust &aun-ignored &eyou!"
+  # Listing ignores.
+  list:
+    # Main message.
+    main: "&p%player%&e's ignores: %ignores%"
+    # For %ignores%.
+    ignores:
+      # If not the last ignored.
+      not-last: "&c%player%&e, "
+      # If last ignored.
+      last: "&c%player%&e."

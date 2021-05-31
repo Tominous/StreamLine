@@ -48,6 +48,8 @@ public class Player implements ProxiedPlayer {
     public String lastMessengerUUID;
     public String lastMessage;
     public String lastToMessage;
+    public String ignoreds;
+    public List<String> ignoredList;
 
     public Player(ProxiedPlayer player) {
         String ipSt = player.getSocketAddress().toString().replace("/", "");
@@ -314,6 +316,7 @@ public class Player implements ProxiedPlayer {
         defaults.add("last-messenger=");
         defaults.add("last-message=");
         defaults.add("last-to-message=");
+        defaults.add("ignored=");
         //defaults.add("");
         return defaults;
     }
@@ -362,6 +365,7 @@ public class Player implements ProxiedPlayer {
         this.lastMessengerUUID = getFromKey("last-messenger");
         this.lastMessage = getFromKey("last-message");
         this.lastToMessage = getFromKey("last-to-message");
+        this.ignoredList = loadIgnored();
     }
 
     public TreeMap<String, String> updatableKeys() {
@@ -397,6 +401,22 @@ public class Player implements ProxiedPlayer {
         this.nameList.add(name);
 
         this.names = stringifyList(nameList, ",");
+    }
+
+    public void tryAddNewIgnored(String uuid){
+        if (ignoredList.contains(uuid)) return;
+
+        this.ignoredList.add(uuid);
+
+        this.ignoreds = stringifyList(ignoredList, ",");
+    }
+
+    public void tryRemIgnored(String uuid){
+        if (! ignoredList.contains(uuid)) return;
+
+        this.ignoredList.remove(uuid);
+
+        this.ignoreds = stringifyList(ignoredList, ",");
     }
 
     public void tryAddNewIP(String ip){
@@ -491,6 +511,32 @@ public class Player implements ProxiedPlayer {
         List<String> thing = new ArrayList<>();
 
         String search = "names";
+
+        try {
+            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (! getFromKey(search).contains(",")) {
+                thing.add(getFromKey(search));
+                return thing;
+            }
+
+            for (String t : getFromKey(search).split(",")) {
+                try {
+                    thing.add(t);
+                } catch (Exception e) {
+                    //continue;
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return thing;
+    }
+
+    public List<String> loadIgnored(){
+        List<String> thing = new ArrayList<>();
+
+        String search = "ignored";
 
         try {
             if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;

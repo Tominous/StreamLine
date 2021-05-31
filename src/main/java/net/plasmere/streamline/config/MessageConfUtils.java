@@ -31,9 +31,11 @@ public class MessageConfUtils {
     // Not command / improper usage.
     public static final String discordNotACommand = message.getString("not-a-command.discord");
     public static final String bungeeImproperUsage = message.getString("improper-usage.bungee");
-    // Command needs more args.
-    public static final String discordNeedsMore = message.getString("command-needs-args.discord");
-    public static final String bungeeNeedsMore = message.getString("command-needs-args.bungee");
+    // Command needs args.
+    public static final String discordNeedsMore = message.getString("command-needs-args.more.discord");
+    public static final String bungeeNeedsMore = message.getString("command-needs-args.more.bungee");
+    public static final String discordNeedsLess = message.getString("command-needs-args.less.discord");
+    public static final String bungeeNeedsLess = message.getString("command-needs-args.less.bungee");
     // Players.
     public static final String offlineB = message.getString("players.bungee.offline");
     public static final String onlineB = message.getString("players.bungee.online");
@@ -152,4 +154,12 @@ public class MessageConfUtils {
     public static final String pointsRemoveO = message.getString("points.remove.other");
     public static final String pointsSetS = message.getString("points.set.self");
     public static final String pointsSetO = message.getString("points.set.other");
+    // Ignore.
+    public static final String ignoreAddSelf = message.getString("ignore.add.self");
+    public static final String ignoreAddIgnored = message.getString("ignore.add.ignored");
+    public static final String ignoreRemSelf = message.getString("ignore.remove.self");
+    public static final String ignoreRemIgnored = message.getString("ignore.remove.ignored");
+    public static final String ignoreListMain = message.getString("ignore.list.main");
+    public static final String ignoreListNLast = message.getString("ignore.list.ignores.not-last");
+    public static final String ignoreListLast = message.getString("ignore.list.ignores.last");
 }

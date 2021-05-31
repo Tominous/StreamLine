@@ -88,7 +88,22 @@ public class ChatListener implements Listener {
         if (TextUtils.isCommand(msg)) return;
 
         if (ConfigUtils.moduleStaffChat) {
-            if (ConfigUtils.moduleStaffChatDoPrefix) {
+            if (stat.sc) {
+                if (! sender.hasPermission(ConfigUtils.staffPerm)) {
+                    return;
+                }
+
+                e.setCancelled(true);
+                MessagingUtils.sendStaffChatMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg.substring(prefix.length()), plugin);
+                if (ConfigUtils.moduleStaffChatMToDiscord) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
+                            MessageConfUtils.staffChatEmbedTitle,
+                            MessageConfUtils.discordStaffChatMessage
+                                    .replace("%user%", sender.getName())
+                                    .replace("%message%", msg.substring(prefix.length())),
+                            ConfigUtils.textChannelStaffChat));
+                }
+            } else if (ConfigUtils.moduleStaffChatDoPrefix) {
                 if (msg.startsWith(prefix) && !prefix.equals("/")) {
                     if (!sender.hasPermission(ConfigUtils.staffPerm)) {
                         return;

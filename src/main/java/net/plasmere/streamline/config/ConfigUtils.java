@@ -218,16 +218,25 @@ public class ConfigUtils {
     public static final String comBBTagPerm = config.getString("commands.bungee.staff.btag.permission");
     public static final String comBBTagOPerm = config.getString("commands.bungee.staff.btag.other-perm");
     public static final String comBBTagChPerm = config.getString("commands.bungee.staff.btag.change-perm");
-    // Event Reload
+    // Event Reload.
     public static final boolean comBEReload = config.getBoolean("commands.bungee.staff.evreload.enabled");
     public static final List<String> comBEReloadAliases = config.getStringList("commands.bungee.staff.evreload.aliases");
     public static final String comBEReloadPerm = config.getString("commands.bungee.staff.evreload.permission");
-    // Network Points
+    // Network Points.
     public static final boolean comBPoints = config.getBoolean("commands.bungee.staff.points.enabled");
     public static final List<String> comBPointsAliases = config.getStringList("commands.bungee.staff.points.aliases");
     public static final String comBPointsPerm = config.getString("commands.bungee.staff.points.permission");
     public static final String comBPointsOPerm = config.getString("commands.bungee.staff.points.other-perm");
     public static final String comBPointsChPerm = config.getString("commands.bungee.staff.points.change-perm");
+    // ... Messaging.
+    // Ignore.
+    public static final boolean comBIgnore = config.getBoolean("commands.bungee.messaging.ignore.enabled");
+    public static final List<String> comBIgnoreAliases = config.getStringList("commands.bungee.messaging.ignore.aliases");
+    public static final String comBIgnorePerm = config.getString("commands.bungee.messaging.ignore.permission");
+    // Ignores.
+    public static final boolean comBIgnores = config.getBoolean("commands.bungee.messaging.ignores.enabled");
+    public static final List<String> comBIgnoresAliases = config.getStringList("commands.bungee.messaging.ignores.aliases");
+    public static final String comBIgnoresPerm = config.getString("commands.bungee.messaging.ignores.permission");
     // ... ... Modules.
     public static final String staffPerm = config.getString("modules.staff-permission");
     // ... Discord.

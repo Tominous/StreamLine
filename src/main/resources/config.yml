@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "1.0.10.7"
+version: "1.0.10.8"
 
 #### DEBUG ####
 # Enables debug mode.
@@ -523,6 +523,19 @@ commands:
           - "netp"
           - "np"
           - "gold"
+      # For messaging commands...
+      messaging:
+        # The ignore command.
+        ignore:
+          # Enables / disables the use of the command.
+          enabled: true
+          # Custom permission.
+          permission: "streamline.command.ignore"
+          # All aliases for the command. Listed in yml list format.
+          aliases:
+            - "ig"
+            - "shutup"
+            - "block"
 
 ### MODULE SETTINGS ###
 modules:

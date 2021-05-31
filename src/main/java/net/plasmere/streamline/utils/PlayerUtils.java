@@ -422,6 +422,28 @@ public class PlayerUtils {
         return stringBuilder.toString();
     }
 
+    public static String getIgnored(Player stat){
+        StringBuilder ignored = new StringBuilder();
+
+        int i = 1;
+
+        for (String uuid : stat.ignoredList) {
+            if (i <= stat.ignoredList.size()) {
+                ignored.append(MessageConfUtils.ignoreListLast
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(uuid)))
+                );
+            } else {
+                ignored.append(MessageConfUtils.ignoreListNLast
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(uuid)))
+                );
+            }
+
+            i ++;
+        }
+
+        return ignored.toString();
+    }
+
     // No stats.
     public static final String noStatsFound = message.getString("stats.no-stats");
     // Not high enough permissions.
