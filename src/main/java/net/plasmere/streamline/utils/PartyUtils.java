@@ -7,6 +7,7 @@ import net.luckperms.api.query.QueryOptions;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Party;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
@@ -60,6 +61,10 @@ public class PartyUtils {
 
     public static boolean isParty(Party party){
         return parties.contains(party);
+    }
+
+    public static void removeInvite(Party party, Player player) {
+        invites.get(party).remove(player);
     }
 
     public static boolean checkPlayer(Party party, Player player, Player sender){
@@ -141,66 +146,69 @@ public class PartyUtils {
     public static void removeParty(Party party){ parties.remove(party); }
 
     public static void sendInvite(Player to, Player from) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(from.uuid);
+        ProxiedPlayer player = UUIDFetcher.getPPlayerByUUID(from.uuid);
 
-        if (p == null) return;
+        if (player == null) return;
 
         try {
-            Party party = getParty(PlayerUtils.getStat(from));
+            Party party = getParty(from);
 
-            if (!checkPlayer(party, to, from)) return;
+            if (! checkPlayer(party, to, from)) return;
 
             if (to.equals(from)) {
-                MessagingUtils.sendBUserMessage(p, inviteNonSelf);
+                MessagingUtils.sendBUserMessage(player, inviteNonSelf);
                 return;
             }
 
-            if (! party.hasModPerms(from)) {
-                MessagingUtils.sendBUserMessage(p, noPermission);
+            if (! party.hasModPerms(from.uuid)) {
+                MessagingUtils.sendBUserMessage(player, noPermission);
                 return;
             }
 
             if (party.invites.contains(to)) {
-                MessagingUtils.sendBUserMessage(p, inviteFailure);
+                MessagingUtils.sendBUserMessage(player, inviteFailure);
                 return;
             }
 
             if (to.online) {
-                MessagingUtils.sendBPUserMessage(party, p, to, inviteUser
+                MessagingUtils.sendBPUserMessage(party, player, to, inviteUser
                         .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(from))
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
-                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
-                        .replace("%leaderdefault%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
+                        .replace("%leaderdefault%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
                 );
             }
 
             for (Player pl : party.totalMembers) {
-                StreamLine.getInstance().getLogger().info("sendInvite > " + pl.displayName);
-
                 if (! pl.online) continue;
 
                 ProxiedPlayer member = UUIDFetcher.getPPlayerByUUID(pl.uuid);
 
-                if (member == null) continue;
+                if (member == null) {
+                    if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("member == null");
+                    continue;
+                }
 
                 if (pl.equals(from)) {
-                    MessagingUtils.sendBPUserMessage(party, p, member, inviteLeader
+                    MessagingUtils.sendBPUserMessage(party, player, member, inviteLeader
                             .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(from))
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
-                            .replace("%leaderdefault%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
+                            .replace("%leaderdefault%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
                     );
                 } else {
-                    MessagingUtils.sendBPUserMessage(party, p, member, inviteMembers
+                    MessagingUtils.sendBPUserMessage(party, player, member, inviteMembers
                             .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(from))
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
-                            .replace("%leaderdefault%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
+                            .replace("%leaderdefault%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
                     );
                 }
             }
 
             party.addInvite(to);
+            invites.remove(party);
+            invites.put(party, party.invites);
         } catch (Exception e) {
             e.printStackTrace();
         }

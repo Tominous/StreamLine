@@ -95,9 +95,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        args[0] = "";
-
-                        PartyUtils.sendChat(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.normalize(args));
+                        PartyUtils.sendChat(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.argsToStringMinus(args, 0));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();

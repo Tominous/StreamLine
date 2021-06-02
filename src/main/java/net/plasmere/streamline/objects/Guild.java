@@ -33,6 +33,8 @@ public class Guild {
     public int lvl;
     public int maxSize = ConfigUtils.guildMax;
 
+    public List<String> savedKeys;
+
     public enum Level {
         MEMBER,
         MODERATOR,
@@ -84,7 +86,8 @@ public class Guild {
         return info.get(key);
     }
     public void updateKey(String key, Object value) {
-        info.put(key, String.valueOf(value));
+        info.remove(key);
+        addKeyValuePair(key, String.valueOf(value));
         loadVars();
     }
     public File getFile() { return file; }
@@ -97,10 +100,14 @@ public class Guild {
         return false;
     }
 
-    public List<String> getInfoAsPropertyList() {
-        List<String> infoList = new ArrayList<>();
+    public TreeSet<String> getInfoAsPropertyList() {
+        TreeSet<String> infoList = new TreeSet<>();
+        List<String> keys = new ArrayList<>();
         for (String key : info.keySet()){
+            if (keys.contains(key)) continue;
+
             infoList.add(key + "=" + getFromKey(key));
+            keys.add(key);
         }
 
         return infoList;
@@ -459,8 +466,14 @@ public class Guild {
         file.delete();
 
         file.createNewFile();
+
+        savedKeys = new ArrayList<>();
         FileWriter writer = new FileWriter(file);
         for (String s : getInfoAsPropertyList()){
+            String key = s.split("=")[0];
+            if (savedKeys.contains(key)) continue;
+            savedKeys.add(key);
+
             writer.write(s + "\n");
         }
         writer.close();

@@ -1,6 +1,7 @@
 package net.plasmere.streamline.commands.staff;
 
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.JDAPingerUtils;
 import net.plasmere.streamline.utils.TextUtils;
 import net.md_5.bungee.api.CommandSender;
@@ -23,6 +24,6 @@ public class JDAPingerCommand extends Command {
         ProxiedPlayer player = (ProxiedPlayer) sender;
         player.sendMessage(TextUtils.codedText("&aAttempting to ping..."));
 
-        JDAPingerUtils.sendMessage(Objects.requireNonNull(jda.getTextChannelById("805575446107914260")));
+        JDAPingerUtils.sendMessage(Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBConsole)));
     }
 }

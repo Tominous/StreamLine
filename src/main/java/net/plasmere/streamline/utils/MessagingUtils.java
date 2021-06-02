@@ -392,8 +392,8 @@ public class MessagingUtils {
         StringBuilder stringBuilder = new StringBuilder();
 
         int i = 1;
-        for (String tag : player.tags) {
-            if (i != player.tags.size()) {
+        for (String tag : player.tagList) {
+            if (i != player.tagList.size()) {
                 stringBuilder.append(PlayerUtils.tagsNLast.replace("%value%", tag));
             } else {
                 stringBuilder.append(PlayerUtils.tagsLast.replace("%value%", tag));

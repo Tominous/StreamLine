@@ -6,6 +6,8 @@ import net.luckperms.api.node.types.PermissionNode;
 import net.luckperms.api.query.QueryOptions;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.utils.GuildUtils;
+import net.plasmere.streamline.utils.PartyUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.*;
@@ -15,17 +17,17 @@ public class Party {
     public Player leader;
     public String leaderUUID;
     public List<Player> totalMembers = new ArrayList<>();
-    public List<String> totalUUIDs = new ArrayList<>();
+    public List<String> totalMembersByUUID = new ArrayList<>();
     public List<Player> members = new ArrayList<>();
-    public List<String> membersUUIDs = new ArrayList<>();
+    public List<String> membersByUUID = new ArrayList<>();
     public List<Player> moderators = new ArrayList<>();
-    public List<String> modUUIDs = new ArrayList<>();
+    public List<String> modsByUUID = new ArrayList<>();
     public String name;
     public boolean isPublic = false;
     public boolean isMuted = false;
     // to , from
     public List<Player> invites = new ArrayList<>();
-    public List<String> invitesUUIDs = new ArrayList<>();
+    public List<String> invitesByUUID = new ArrayList<>();
 
     public enum Level {
         MEMBER,
@@ -37,7 +39,7 @@ public class Party {
         this.leader = leader;
         this.leaderUUID = leader.uuid;
         this.totalMembers.add(leader);
-        this.totalUUIDs.add(leaderUUID);
+        this.totalMembersByUUID.add(leaderUUID);
         this.maxSize = getMaxSize(leader);
         this.isPublic = false;
     }
@@ -46,7 +48,7 @@ public class Party {
         this.leader = leader;
         this.leaderUUID = leader.uuid;
         this.totalMembers.add(leader);
-        this.totalUUIDs.add(leaderUUID);
+        this.totalMembersByUUID.add(leaderUUID);
         this.maxSize = Math.min(size, getMaxSize(leader));
         this.isPublic = true;
     }
@@ -77,12 +79,12 @@ public class Party {
 
     public void addInvite(Player invite){
         this.invites.add(invite);
-        this.invitesUUIDs.add(invite.uuid);
+        this.invitesByUUID.add(invite.uuid);
     }
 
     public void removeInvite(Player invite){
         this.invites.remove(invite);
-        this.invitesUUIDs.remove(invite.uuid);
+        this.invitesByUUID.remove(invite.uuid);
     }
 
     public void setPublic(boolean bool){
@@ -111,56 +113,119 @@ public class Party {
     }
 
     public void removeMod(Player mod){
-        forModeratorRemove(mod);
+        removeFromModerators(mod);
     }
 
     public void removeMember(Player member){
-        forMemberRemove(member);
+        remFromMembers(member);
     }
 
     public void setModerator(Player mod){
-        forModeratorRemove(mod);
+        removeFromModerators(mod);
         this.moderators.add(mod);
-        this.modUUIDs.add(mod.uuid);
+        this.modsByUUID.add(mod.uuid);
         this.members.remove(mod);
-        this.membersUUIDs.remove(mod.uuid);
+        this.membersByUUID.remove(mod.uuid);
     }
 
     public void setMember(Player member){
-        forMemberRemove(member);
+        remFromMembers(member);
         this.members.add(member);
-        this.membersUUIDs.add(member.uuid);
+        this.membersByUUID.add(member.uuid);
         this.moderators.remove(member);
-        this.modUUIDs.remove(member.uuid);
+        this.modsByUUID.remove(member.uuid);
     }
 
     public void addMember(Player member){
         removeMemberFromParty(member);
         this.members.add(member);
-        this.membersUUIDs.add(member.uuid);
+        this.membersByUUID.add(member.uuid);
         this.totalMembers.add(member);
-        this.totalUUIDs.add(member.uuid);
+        this.totalMembersByUUID.add(member.uuid);
     }
 
     public void removeMemberFromParty(Player member){
-        forMemberRemove(member);
-        forModeratorRemove(member);
-        forTotalMembers(member);
+        remFromMembers(member);
+        removeFromModerators(member);
+        remFromTMembers(member);
     }
 
-    public void forMemberRemove(Player member){
-        this.members.removeIf(m -> m.equals(member));
-        this.membersUUIDs.removeIf(m -> m.equals(member.uuid));
+    public String remFromMembers(Player player){
+        membersByUUID.remove(player.uuid);
+        members.remove(player);
+
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (String uuid : membersByUUID) {
+            i++;
+            if (i != membersByUUID.size()) {
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+        }
+
+        return builder.toString();
     }
 
-    public void forModeratorRemove(Player mod){
-        this.moderators.removeIf(m -> m.equals(mod));
-        this.modUUIDs.removeIf(m -> m.equals(mod.uuid));
+    public String removeFromModerators(Player player){
+        modsByUUID.remove(player.uuid);
+        moderators.remove(player);
+
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (String uuid : modsByUUID) {
+            i++;
+            if (i != modsByUUID.size()) {
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+        }
+
+        return builder.toString();
     }
 
-    public void forTotalMembers(Player member){
-        this.totalMembers.removeIf(m -> m.equals(member));
-        this.totalUUIDs.removeIf(m -> m.equals(member.uuid));
+    public String remFromTMembers(Player player){
+        totalMembersByUUID.remove(player.uuid);
+        totalMembers.remove(player);
+
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (String uuid : totalMembersByUUID) {
+            i++;
+            if (i != totalMembersByUUID.size()) {
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+        }
+
+        return builder.toString();
+    }
+
+    public String remFromInvites(Player from, Player player){
+        invitesByUUID.remove(player.uuid);
+        invites.remove(player);
+
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (String uuid : invitesByUUID) {
+            i++;
+            if (i != invitesByUUID.size()) {
+                builder.append(uuid).append(".");
+            } else {
+                builder.append(uuid);
+            }
+        }
+
+        PartyUtils.removeInvite(PartyUtils.getParty(from), player);
+
+        return builder.toString();
     }
 
     public boolean hasMember(Player member){
@@ -168,12 +233,12 @@ public class Party {
 
         loadLists();
 
-        return this.totalMembers.contains(member) || this.totalUUIDs.contains(member.uuid);
+        return this.totalMembers.contains(member) || this.totalMembersByUUID.contains(member.uuid);
     }
 
     public void loadLists(){
         totalMembers.clear();
-        for (String u : totalUUIDs) {
+        for (String u : totalMembersByUUID) {
             Player p = UUIDFetcher.getPlayer(u);
             if (p == null) continue;
 
@@ -181,7 +246,7 @@ public class Party {
         }
 
         members.clear();
-        for (String u : membersUUIDs) {
+        for (String u : membersByUUID) {
             Player p = UUIDFetcher.getPlayer(u);
             if (p == null) continue;
 
@@ -189,7 +254,7 @@ public class Party {
         }
 
         moderators.clear();
-        for (String u : modUUIDs) {
+        for (String u : modsByUUID) {
             Player p = UUIDFetcher.getPlayer(u);
             if (p == null) continue;
 
@@ -197,7 +262,7 @@ public class Party {
         }
 
         invites.clear();
-        for (String u : invitesUUIDs) {
+        for (String u : invitesByUUID) {
             Player p = UUIDFetcher.getPlayerByUUID(u, true);
             if (p == null) continue;
 
@@ -211,7 +276,7 @@ public class Party {
     }
 
     public boolean isModerator(Player member) {
-        return this.moderators.contains(member) || this.modUUIDs.contains(member.uuid);
+        return this.moderators.contains(member) || this.modsByUUID.contains(member.uuid);
     }
 
     public boolean isLeader(Player member) {
@@ -220,6 +285,14 @@ public class Party {
 
     public boolean hasModPerms(Player member){
         return isModerator(member) || isLeader(member);
+    }
+
+    public boolean hasModPerms(String uuid) {
+        try {
+            return modsByUUID.contains(uuid) || leaderUUID.equals(uuid);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public int getMaxSize(Player leader){

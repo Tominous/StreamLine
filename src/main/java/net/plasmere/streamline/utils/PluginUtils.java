@@ -11,6 +11,7 @@ import net.plasmere.streamline.commands.servers.GoToServerVanillaCommand;
 import net.plasmere.streamline.commands.staff.*;
 import net.plasmere.streamline.commands.staff.events.BTagCommand;
 import net.plasmere.streamline.commands.staff.events.EventReloadCommand;
+import net.plasmere.streamline.commands.staff.punishments.BanCommand;
 import net.plasmere.streamline.commands.staff.punishments.MuteCommand;
 import net.plasmere.streamline.commands.staff.spy.GSPYCommand;
 import net.plasmere.streamline.commands.staff.spy.PSPYCommand;
@@ -137,6 +138,7 @@ public class PluginUtils {
         // Punishments.
         Command mute = new MuteCommand(ConfigUtils.comBMuteBase, ConfigUtils.comBMutePerm, getAliases(ConfigUtils.comBMuteAliases));
         commands.add(mute);
+        Command ban = new BanCommand(ConfigUtils.comBBanBase, ConfigUtils.comBBanPerm, getAliases(ConfigUtils.comBBanAliases));
 
         try {
             for (Command command : commands) {
@@ -221,6 +223,8 @@ public class PluginUtils {
         // Punishments.
         if (ConfigUtils.comBMute)
             registerCommand(plugin, mute);
+        if (ConfigUtils.comBBan)
+            registerCommand(plugin, ban);
 
         plugin.getLogger().info("Loaded " + commandsAmount + " command(s) into memory...!");
     }

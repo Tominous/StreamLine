@@ -87,7 +87,9 @@ public class FriendCommand extends Command implements TabExecutor {
                     }
 
                     if (other.ignoredList.contains(stat.uuid)) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendReqIgnored);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendReqIgnored
+                                .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                        );
                         return;
                     }
 
@@ -105,12 +107,16 @@ public class FriendCommand extends Command implements TabExecutor {
                     break;
                 case "accept":
                     if (! stat.pendingFromFriendList.contains(other.uuid)) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendAcceptNone);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendAcceptNone
+                                .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                        );
                         return;
                     }
 
                     stat.tryAddNewFriend(other.uuid);
                     other.tryAddNewFriend(stat.uuid);
+                    other.tryRemPendingToFriend(stat.uuid);
+                    stat.tryRemPendingFromFriend(other.uuid);
 
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendAcceptSelf
                             .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
@@ -123,7 +129,9 @@ public class FriendCommand extends Command implements TabExecutor {
                     break;
                 case "deny":
                     if (! stat.pendingFromFriendList.contains(other.uuid)) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendDenyNone);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendDenyNone
+                                .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                        );
                         return;
                     }
 
@@ -145,7 +153,7 @@ public class FriendCommand extends Command implements TabExecutor {
                         return;
                     }
 
-                    if (stat.friendList.contains(other.uuid)) {
+                    if (! stat.friendList.contains(other.uuid)) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendRemAlready
                                 .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
                         );
@@ -153,6 +161,8 @@ public class FriendCommand extends Command implements TabExecutor {
                     }
 
                     stat.tryRemPendingToFriend(other.uuid);
+                    other.tryRemPendingToFriend(stat.uuid);
+                    stat.tryRemPendingFromFriend(other.uuid);
                     other.tryRemPendingFromFriend(stat.uuid);
                     stat.tryRemFriend(other.uuid);
                     other.tryRemFriend(stat.uuid);

@@ -86,7 +86,7 @@ public class ChatListener implements Listener {
         }
 
         if (ConfigUtils.punMutes && ConfigUtils.punMutesHard && stat.muted) {
-            if (PlayerUtils.checkMute(sender, stat)) {
+            if (PlayerUtils.checkIfMuted(sender, stat)) {
                 e.setCancelled(true);
                 return;
             }

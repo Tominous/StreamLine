@@ -21,7 +21,7 @@ import java.net.SocketAddress;
 import java.util.*;
 
 public class Player implements ProxiedPlayer {
-    private HashMap<String, String> info = new HashMap<>();
+    private TreeMap<String, String> info = new TreeMap<>();
     private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "players" + File.separator;
 
     public File file;
@@ -60,6 +60,8 @@ public class Player implements ProxiedPlayer {
     public List<String> pendingToFriendList;
     public String pendingFromFriends;
     public List<String> pendingFromFriendList;
+
+    public List<String> savedKeys = new ArrayList<>();
 
     public Player(ProxiedPlayer player) {
         String ipSt = player.getSocketAddress().toString().replace("/", "");
@@ -163,7 +165,7 @@ public class Player implements ProxiedPlayer {
         }
     }
 
-    public HashMap<String, String> getInfo() {
+    public TreeMap<String, String> getInfo() {
         return info;
     }
     public void remKey(String key){
@@ -173,13 +175,9 @@ public class Player implements ProxiedPlayer {
         return info.get(key);
     }
     public void updateKey(String key, Object value) {
-        info.put(key, String.valueOf(value));
+        info.remove(key);
+        addKeyValuePair(key, String.valueOf(value));
         loadVars();
-        try {
-            saveInfo();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
     public File getFile() { return file; }
 
@@ -191,10 +189,14 @@ public class Player implements ProxiedPlayer {
         return false;
     }
 
-    public List<String> getInfoAsPropertyList() {
-        List<String> infoList = new ArrayList<>();
+    public TreeSet<String> getInfoAsPropertyList() {
+        TreeSet<String> infoList = new TreeSet<>();
+        List<String> keys = new ArrayList<>();
         for (String key : info.keySet()){
+            if (keys.contains(key)) continue;
+
             infoList.add(key + "=" + getFromKey(key));
+            keys.add(key);
         }
 
         return infoList;
@@ -209,7 +211,7 @@ public class Player implements ProxiedPlayer {
     }
 
     public void flushInfo(){
-        this.info = new HashMap<>();
+        this.info = new TreeMap<>();
     }
 
     public void addKeyValuePair(String key, String value){
@@ -236,12 +238,15 @@ public class Player implements ProxiedPlayer {
         if (file.exists()){
             Scanner reader = new Scanner(file);
 
+            List<String> keys = new ArrayList<>();
             while (reader.hasNextLine()) {
                 String data = reader.nextLine();
                 while (data.startsWith("#")) {
                     data = reader.nextLine();
                 }
                 String[] dataSplit = data.split("=", 2);
+                if (keys.contains(dataSplit[0])) continue;
+                keys.add(dataSplit[0]);
                 addKeyValuePair(tryUpdateFormat(dataSplit[0]), dataSplit[1]);
             }
 
@@ -269,9 +274,18 @@ public class Player implements ProxiedPlayer {
 
     public void updateWithNewDefaults() throws IOException {
         file.delete();
+
+        file.createNewFile();
+
         FileWriter writer = new FileWriter(file);
 
+        savedKeys = new ArrayList<>();
+
         for (String p : propertiesDefaults()) {
+            String key = p.split("=", 2)[0];
+            if (savedKeys.contains(key)) continue;
+            savedKeys.add(key);
+
             String[] propSplit = p.split("=", 2);
 
             String property = propSplit[0];
@@ -283,7 +297,7 @@ public class Player implements ProxiedPlayer {
                 write = p;
             }
 
-            writer.write(write + "\n");
+            writer.write(tryUpdateFormatRaw(write) + "\n");
         }
 
         writer.close();
@@ -497,7 +511,7 @@ public class Player implements ProxiedPlayer {
     }
 
     public void tryAddNewPendingToFriend(String uuid){
-        if (pendingToFriends.contains(uuid)) return;
+        if (pendingToFriendList.contains(uuid)) return;
 
         this.pendingToFriendList.add(uuid);
 
@@ -760,8 +774,14 @@ public class Player implements ProxiedPlayer {
         file.delete();
 
         file.createNewFile();
+
+        savedKeys = new ArrayList<>();
         FileWriter writer = new FileWriter(file);
         for (String s : getInfoAsPropertyList()){
+            String key = s.split("=")[0];
+            if (savedKeys.contains(key)) continue;
+            savedKeys.add(key);
+
             writer.write(tryUpdateFormatRaw(s) + "\n");
         }
         writer.close();

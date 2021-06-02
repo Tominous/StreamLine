@@ -8,6 +8,7 @@ import net.luckperms.api.node.types.SuffixNode;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PostLoginEvent;
+import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
@@ -693,43 +694,50 @@ public class PlayerUtils {
         }
     }
 
-    public static boolean checkBan(PostLoginEvent ev, Player stat) {
+    public static String checkIfBanned(String uuid) {
         Configuration bans = StreamLine.bans.getBans();
 
-        if (bans.contains(stat.uuid)) {
-            if (! bans.getBoolean(stat.uuid + ".banned")) return false;
+        if (bans.contains(uuid)) {
+            if (! bans.getBoolean(uuid + ".banned")) return null;
 
-            String reason = bans.getString(stat.uuid + ".reason");
-            String bannedMillis = bans.getString(stat.uuid + ".till");
+            String reason = bans.getString(uuid + ".reason");
+            String bannedMillis = bans.getString(uuid + ".till");
             if (bannedMillis == null) bannedMillis = "";
-            Date date = new Date(Long.parseLong(bannedMillis));
+            Date date = new Date();
 
-            if (date.before(new Date())) {
-                bans.set(stat.uuid + ".banned", false);
-                return false;
-            } else {
-                if (bannedMillis.equals("")) {
-                    ev.getPlayer().disconnect(TextUtils.codedText(MessageConfUtils.punBannedPerm
-                            .replace("%reason%", reason)
-                    ));
-                } else {
-                    ev.getPlayer().disconnect(TextUtils.codedText(MessageConfUtils.punBannedTemp
-                            .replace("%reason%", reason)
-                            .replace("%date%", date.toString())
-                    ));
+            if (! bannedMillis.equals("")) {
+                date = new Date(Long.parseLong(bannedMillis));
+
+                if (date.before(new Date())) {
+                    bans.set(uuid + ".banned", false);
+                    StreamLine.bans.saveConfig();
+                    return null;
                 }
-                return true;
+            }
+
+
+            if (bannedMillis.equals("")) {
+                return TextUtils.codedString(MessageConfUtils.punBannedPerm
+                        .replace("%reason%", reason)
+                );
+            } else {
+                return TextUtils.codedString(MessageConfUtils.punBannedTemp
+                        .replace("%reason%", reason)
+                        .replace("%date%", date.toString())
+                );
             }
         }
 
-        return false;
+        return null;
     }
 
-    public static boolean checkMute(ProxiedPlayer sender, Player stat){
-        if (stat.mutedTill.before(new Date())) {
-            stat.setMuted(false);
-            stat.removeMutedTill();
-            return false;
+    public static boolean checkIfMuted(ProxiedPlayer sender, Player stat){
+        if (stat.mutedTill != null) {
+            if (stat.mutedTill.before(new Date())) {
+                stat.setMuted(false);
+                stat.removeMutedTill();
+                return false;
+            }
         }
 
         if (stat.mutedTill != null) {

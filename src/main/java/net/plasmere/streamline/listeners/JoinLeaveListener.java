@@ -14,7 +14,6 @@ import net.plasmere.streamline.events.enums.Condition;
 import net.plasmere.streamline.objects.GeyserFile;
 import net.plasmere.streamline.objects.Party;
 import net.plasmere.streamline.objects.lists.SingleSet;
-import net.plasmere.streamline.objects.messaging.BungeeMassMessage;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Player;
@@ -39,6 +38,19 @@ public class JoinLeaveListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
+    public void preJoin(PreLoginEvent ev) {
+        String uuid = UUIDFetcher.fetch(ev.getConnection().getName());
+
+        if (ConfigUtils.punBans) {
+            String reason = PlayerUtils.checkIfBanned(uuid);
+            if (reason != null) {
+                ev.setCancelReason(TextUtils.codedText(reason));
+                ev.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PostLoginEvent ev) {
         ProxiedPlayer player = ev.getPlayer();
 
@@ -59,10 +71,6 @@ public class JoinLeaveListener implements Listener {
                 StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
                 return;
             }
-        }
-
-        if (ConfigUtils.punBans) {
-            if (PlayerUtils.checkBan(ev, stat)) return;
         }
 
         stat.tryAddNewName(player.getName());
