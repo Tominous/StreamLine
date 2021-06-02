@@ -62,13 +62,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        TreeSet<String> argsSet = new TreeSet<>();
-
-                        for (int i = 1; i < args.length; i++) {
-                            argsSet.add(args[i]);
-                        }
-
-                        GuildUtils.createGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.normalize(argsSet));
+                        GuildUtils.createGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.argsToStringMinus(args, 0));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();
@@ -112,9 +106,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        args[0] = "";
-
-                        GuildUtils.sendChat(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.normalize(args));
+                        GuildUtils.sendChat(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.argsToStringMinus(args, 0));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();
@@ -243,13 +235,7 @@ public class GuildCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        TreeSet<String> argsSet = new TreeSet<>();
-
-                        for (int i = 1; i < args.length; i++) {
-                            argsSet.add(args[i]);
-                        }
-
-                        GuildUtils.rename(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.normalize(argsSet));
+                        GuildUtils.rename(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.argsToStringMinus(args, 0));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();

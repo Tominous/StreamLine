@@ -254,6 +254,21 @@ public class ConfigUtils {
     public static final String comBSPingBase = config.getString("commands.bungee.staff.serverping.base");
     public static final List<String> comBSPingAliases = config.getStringList("commands.bungee.staff.serverping.aliases");
     public static final String comBSPingPerm = config.getString("commands.bungee.staff.serverping.permission");
+    // Mute.
+    public static final boolean comBMute = config.getBoolean("commands.bungee.staff.mute.enabled");
+    public static final String comBMuteBase = config.getString("commands.bungee.staff.mute.base");
+    public static final List<String> comBMuteAliases = config.getStringList("commands.bungee.staff.mute.aliases");
+    public static final String comBMutePerm = config.getString("commands.bungee.staff.mute.permission");
+    // Kick.
+    public static final boolean comBKick = config.getBoolean("commands.bungee.staff.kick.enabled");
+    public static final String comBKickBase = config.getString("commands.bungee.staff.kick.base");
+    public static final List<String> comBKickAliases = config.getStringList("commands.bungee.staff.kick.aliases");
+    public static final String comBKickPerm = config.getString("commands.bungee.staff.kick.permission");
+    // Ban.
+    public static final boolean comBBan = config.getBoolean("commands.bungee.staff.ban.enabled");
+    public static final String comBBanBase = config.getString("commands.bungee.staff.ban.base");
+    public static final List<String> comBBanAliases = config.getStringList("commands.bungee.staff.ban.aliases");
+    public static final String comBBanPerm = config.getString("commands.bungee.staff.ban.permission");
     // ... Messaging.
     // Ignore.
     public static final boolean comBIgnore = config.getBoolean("commands.bungee.messaging.ignore.enabled");
@@ -269,7 +284,12 @@ public class ConfigUtils {
     public static final boolean comBReply = config.getBoolean("commands.bungee.messaging.reply.enabled");
     public static final String comBReplyBase = config.getString("commands.bungee.messaging.reply.base");
     public static final List<String> comBReplyAliases = config.getStringList("commands.bungee.messaging.reply.aliases");
-    public static final String comBMReplyPerm = config.getString("commands.bungee.messaging.reply.permission");
+    public static final String comBReplyPerm = config.getString("commands.bungee.messaging.reply.permission");
+    // Friend.
+    public static final boolean comBFriend = config.getBoolean("commands.bungee.messaging.friend.enabled");
+    public static final String comBFriendBase = config.getString("commands.bungee.messaging.friend.base");
+    public static final List<String> comBFriendAliases = config.getStringList("commands.bungee.messaging.friend.aliases");
+    public static final String comBFriendPerm = config.getString("commands.bungee.messaging.friend.permission");
     // ... ... Modules.
     public static final String staffPerm = config.getString("modules.staff-permission");
     // ... Discord.
@@ -306,9 +326,13 @@ public class ConfigUtils {
     public static final String moduleStaffChatPrefix = config.getString("modules.bungee.staffchat.prefix");
     public static final boolean moduleStaffChatMToDiscord = config.getBoolean("modules.bungee.staffchat.minecraft-to-discord");
     // Player logins / logouts.
-    public static final String moduleBPlayerJoins = config.getString("modules.bungee.player-joins");
+//    public static final String moduleBPlayerJoins = config.getString("modules.bungee.player-joins");
+//    public static final String moduleBPlayerJoinsPerm = config.getString("modules.bungee.joins-permission");
+//    public static final String moduleBPlayerLeaves = config.getString("modules.bungee.player-leaves");
+//    public static final String moduleBPlayerLeavesPerm = config.getString("modules.bungee.leaves-permission");
+    public static final String moduleBPlayerJoins = config.getString("modules.bungee.player-joins-order");
     public static final String moduleBPlayerJoinsPerm = config.getString("modules.bungee.joins-permission");
-    public static final String moduleBPlayerLeaves = config.getString("modules.bungee.player-leaves");
+    public static final String moduleBPlayerLeaves = config.getString("modules.bungee.player-leaves-order");
     public static final String moduleBPlayerLeavesPerm = config.getString("modules.bungee.leaves-permission");
     // ... Parties.
     public static final boolean partyToDiscord = config.getBoolean("modules.bungee.parties.to-discord");
@@ -316,6 +340,8 @@ public class ConfigUtils {
     public static final String partyMaxPerm = config.getString("modules.bungee.parties.base-permission");
     public static final boolean partyConsole = config.getBoolean("modules.bungee.parties.chat-to-console");
     public static final String partyView = config.getString("modules.bungee.parties.view-permission");
+    public static final boolean partySendJoins = config.getBoolean("modules.bungee.parties.send.join");
+    public static final boolean partySendLeaves = config.getBoolean("modules.bungee.parties.send.leave");
     // ... Guilds.
     public static final boolean guildToDiscord = config.getBoolean("modules.bungee.guilds.to-discord");
     public static final int guildMax = config.getInt("modules.bungee.guilds.max-size");
@@ -325,6 +351,8 @@ public class ConfigUtils {
     public static final String guildView = config.getString("modules.bungee.guilds.view-permission");
     public static final int guildMaxLength = config.getInt("modules.bungee.guilds.name.max-length");
     public static final boolean guildIncludeColors = config.getBoolean("modules.bungee.guilds.name.max-includes-colors");
+    public static final boolean guildSendJoins = config.getBoolean("modules.bungee.guilds.send.join");
+    public static final boolean guildSendLeaves = config.getBoolean("modules.bungee.guilds.send.leave");
     // ... Sudo.
     public static final String noSudoPerm = config.getString("modules.bungee.sudo.no-sudo-permission");
     // ... Stats.
@@ -355,9 +383,12 @@ public class ConfigUtils {
     public static final boolean eventsWhenEmpty = config.getBoolean("modules.bungee.events.add-default-when-empty");
     // Errors.
     public static final boolean errSendToConsole = config.getBoolean("modules.bungee.user-errors.send-to-console");
-    // Punishments.
+    // ... Punishments.
+    // Mutes.
     public static final boolean punMutes = config.getBoolean("modules.bungee.punishments.mutes.enabled");
     public static final boolean punMutesHard = config.getBoolean("modules.bungee.punishments.mutes.hard-mutes");
+    // Bans.
+    public static final boolean punBans = config.getBoolean("modules.bungee.punishments.bans.enabled");
     // Messaging.
     public static final String messViewPerm = config.getString("modules.bungee.messaging.view-permission");
     public static final String messReplyTo = config.getString("modules.bungee.messaging.reply-to");

@@ -70,13 +70,7 @@ public class MessageCommand extends Command implements TabExecutor {
                         }
                     }
 
-                    TreeSet<String> argsSet = new TreeSet<>();
-
-                    for (int i = 1; i < args.length; i++) {
-                        argsSet.add(args[i]);
-                    }
-
-                    PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.normalize(argsSet), false);
+                    PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.argsToStringMinus(args, 0), false);
                 } else {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
                 }

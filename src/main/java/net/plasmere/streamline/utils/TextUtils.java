@@ -1,14 +1,15 @@
 package net.plasmere.streamline.utils;
 
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 
+import java.awt.*;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,6 +51,63 @@ public class TextUtils {
         }
     }
 
+    public static TextComponent hexedText(String text){
+        text = codedString(text);
+
+        try {
+            //String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
+
+            Pattern pattern = Pattern.compile("([{][#][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][}])+", Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(text);
+            String found = "";
+
+            String textLeft = text;
+
+            TextComponent tc = new TextComponent();
+
+            int i = 0;
+            boolean find = false;
+
+            while (matcher.find()) {
+                find = true;
+                found = matcher.group(0);
+                String colorHex = found.substring(1, found.indexOf('}'));
+                String[] split = textLeft.split(Pattern.quote(found), 2);
+
+                if (i == 0) {
+                    tc.addExtra(codedString(split[0]));
+                }
+
+                BaseComponent[] bc = new ComponentBuilder(split[1]).color(ChatColor.of(Color.decode(colorHex))).create();
+
+                for (BaseComponent b : bc) {
+                    tc.addExtra(b);
+                }
+                i ++;
+            }
+            if (! find) return new TextComponent(text);
+
+            return tc;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new TextComponent(text);
+        }
+    }
+
+    public static String argsToStringMinus(String[] args, int... toRemove){
+        TreeMap<Integer, String> argsSet = new TreeMap<>();
+
+        for (int i = 0; i < args.length; i++) {
+            argsSet.put(i, args[i]);
+        }
+
+        for (int remove : toRemove) {
+            argsSet.remove(remove);
+        }
+
+        return normalize(argsSet);
+    }
+
     public static TextComponent codedText(String text) {
         text = ChatColor.translateAlternateColorCodes('&', newLined(text));
 
@@ -66,9 +124,9 @@ public class TextUtils {
                 return makeLinked(text, foundUrl);
             }
         } catch (Exception e) {
-            return new TextComponent(text);
+            return hexedText(text);
         }
-        return new TextComponent(text);
+        return hexedText(text);
     }
 
     public static TextComponent clhText(String text, String hoverPrefix){
@@ -88,9 +146,9 @@ public class TextUtils {
                 return makeHoverable(tc, hoverPrefix + foundUrl);
             }
         } catch (Exception e) {
-            return new TextComponent(text);
+            return hexedText(text);
         }
-        return new TextComponent(text);
+        return hexedText(text);
     }
 
     public static String codedString(String text){
@@ -98,7 +156,7 @@ public class TextUtils {
     }
 
     public static TextComponent makeLinked(String text, String url){
-        TextComponent tc = new TextComponent(text);
+        TextComponent tc = hexedText(text);
         ClickEvent ce = new ClickEvent(ClickEvent.Action.OPEN_URL, url);
         tc.setClickEvent(ce);
         return tc;
@@ -154,6 +212,23 @@ public class TextUtils {
                 text.append(split).append(" ");
             else
                 text.append(split);
+        }
+
+        return text.toString();
+    }
+
+    public static String normalize(TreeMap<Integer, String> splitMsg) {
+        int i = 0;
+        StringBuilder text = new StringBuilder();
+
+        for (Integer split : splitMsg.keySet()){
+            i++;
+            if (splitMsg.get(split).equals("")) continue;
+
+            if (i < splitMsg.size())
+                text.append(splitMsg.get(split)).append(" ");
+            else
+                text.append(splitMsg.get(split));
         }
 
         return text.toString();

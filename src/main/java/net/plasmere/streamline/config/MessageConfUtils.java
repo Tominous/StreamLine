@@ -22,6 +22,7 @@ public class MessageConfUtils {
     // Bungee.
     public static final String bungeeCommandErrorUnd = message.getString("command-error.bungee.undefined");
     public static final String bungeeCommandErrorInt = message.getString("command-error.bungee.needs-int");
+    public static final String bungeeCommandErrorSTime = message.getString("command-error.bungee.needs-stringed-time");
     // Command Disabled.
     public static final String discordCommandDisabled = message.getString("command-disabled.discord");
     public static final String bungeeCommandDisabled = message.getString("command-disabled.bungee");
@@ -43,9 +44,13 @@ public class MessageConfUtils {
     public static final String onlineD = message.getString("players.discord.online");
     // Redirect.
     public static final String vbBlocked = message.getString("redirect.by-version.blocked");
-    // Punishments.
+    // ... Punishments.
+    // Mutes.
     public static final String punMutedTemp = message.getString("punishments.muted.temp");
     public static final String punMutedPerm = message.getString("punishments.muted.perm");
+    // Bans.
+    public static final String punBannedTemp = message.getString("punishments.banned.temp");
+    public static final String punBannedPerm = message.getString("punishments.banned.perm");
     // Reports.
     public static final String reportEmbedTitle = message.getString("report-message.embed-title");
     public static final String dToDReportMessage = message.getString("report-message.from-discord.discord");
@@ -100,6 +105,12 @@ public class MessageConfUtils {
     public static final String streamNotLink = message.getString("stream.not-link");
     public static final String streamMessage = message.getString("stream.message");
     public static final String streamHoverPrefix = message.getString("stream.hover-prefix");
+    // Party.
+    public static final String partyConnect = message.getString("party.connect");
+    public static final String partyDisconnect = message.getString("party.disconnect");
+    // Guild.
+    public static final String guildConnect = message.getString("guild.connect");
+    public static final String guildDisconnect = message.getString("guild.disconnect");
     // Parties.
     public static final String partiesNone = message.getString("parties.no-parties");
     public static final String partiesMessage = message.getString("parties.parties");
@@ -160,8 +171,12 @@ public class MessageConfUtils {
     // Ignore.
     public static final String ignoreAddSelf = message.getString("ignore.add.self");
     public static final String ignoreAddIgnored = message.getString("ignore.add.ignored");
+    public static final String ignoreAddAlready = message.getString("ignore.add.already");
+    public static final String ignoreAddNSelf = message.getString("ignore.add.not-self");
     public static final String ignoreRemSelf = message.getString("ignore.remove.self");
     public static final String ignoreRemIgnored = message.getString("ignore.remove.ignored");
+    public static final String ignoreRemAlready = message.getString("ignore.remove.already");
+    public static final String ignoreRemNSelf = message.getString("ignore.remove.not-self");
     public static final String ignoreListMain = message.getString("ignore.list.main");
     public static final String ignoreListNLast = message.getString("ignore.list.ignores.not-last");
     public static final String ignoreListLast = message.getString("ignore.list.ignores.last");
@@ -175,4 +190,52 @@ public class MessageConfUtils {
     public static final String replyTo = message.getString("message.to");
     public static final String replyIgnored = message.getString("message.ignored");
     public static final String replySSPY = message.getString("message.sspy");
+    // Mute.
+    public static final String muteMTempSender = message.getString("mute.mute.temp.sender");
+    public static final String muteMTempMuted = message.getString("mute.mute.temp.muted");
+    public static final String muteMTempAlready = message.getString("mute.mute.temp.already");
+    public static final String muteMPermSender = message.getString("mute.mute.perm.sender");
+    public static final String muteMPermMuted = message.getString("mute.mute.perm.muted");
+    public static final String muteMPermAlready = message.getString("mute.mute.perm.already");
+    public static final String muteUnSender = message.getString("mute.unmute.sender");
+    public static final String muteUnMuted = message.getString("mute.unmute.muted");
+    public static final String muteUnAlready = message.getString("mute.unmute.already");
+    public static final String muteCheckMain = message.getString("mute.check.main");
+    public static final String muteCheckMuted = message.getString("mute.check.muted");
+    public static final String muteCheckUnMuted = message.getString("mute.check.unmuted");
+    // Ban.
+    public static final String banBTempSender = message.getString("ban.ban.temp.sender");
+    public static final String banBTempAlready = message.getString("ban.ban.temp.already");
+    public static final String banBPermSender = message.getString("ban.ban.perm.sender");
+    public static final String banBPermAlready = message.getString("ban.ban.perm.already");
+    public static final String banUnSender = message.getString("ban.unban.sender");
+    public static final String banUnAlready = message.getString("ban.unban.already");
+    public static final String banCheckMain = message.getString("ban.check.main");
+    public static final String banCheckBanned = message.getString("ban.check.banned");
+    public static final String banCheckUnBanned = message.getString("ban.check.unbanned");
+    // Ignore.
+    public static final String friendReqSelf = message.getString("friend.request.self");
+    public static final String friendReqOther = message.getString("friend.request.other");
+    public static final String friendReqAlready = message.getString("friend.request.already");
+    public static final String friendReqNSelf = message.getString("friend.request.not-self");
+    public static final String friendReqIgnored = message.getString("friend.request.ignored");
+    public static final String friendAcceptSelf = message.getString("friend.accept.self");
+    public static final String friendAcceptOther = message.getString("friend.accept.other");
+    public static final String friendAcceptNone = message.getString("friend.accept.none");
+    public static final String friendDenySelf = message.getString("friend.deny.self");
+    public static final String friendDenyOther = message.getString("friend.deny.other");
+    public static final String friendDenyNone = message.getString("friend.deny.none");
+    public static final String friendRemSelf = message.getString("friend.remove.self");
+    public static final String friendRemOther = message.getString("friend.remove.other");
+    public static final String friendRemAlready = message.getString("friend.remove.already");
+    public static final String friendRemNSelf = message.getString("friend.remove.not-self");
+    public static final String friendListMain = message.getString("friend.list.main");
+    public static final String friendListFNLast = message.getString("friend.list.friends.not-last");
+    public static final String friendListFLast = message.getString("friend.list.friends.last");
+    public static final String friendListPTNLast = message.getString("friend.list.pending-to.not-last");
+    public static final String friendListPTLast = message.getString("friend.list.pending-to.last");
+    public static final String friendListPFNLast = message.getString("friend.list.pending-from.not-last");
+    public static final String friendListPFLast = message.getString("friend.list.pending-from.last");
+    public static final String friendConnect = message.getString("friend.connect");
+    public static final String friendDisconnect = message.getString("friend.disconnect");
 }

@@ -9,6 +9,7 @@ import net.plasmere.streamline.events.Event;
 import net.plasmere.streamline.events.EventsHandler;
 import net.plasmere.streamline.events.EventsReader;
 import net.plasmere.streamline.objects.Guild;
+import net.plasmere.streamline.objects.configs.Bans;
 import net.plasmere.streamline.objects.configs.Lobbies;
 import net.plasmere.streamline.objects.configs.ServerPermissions;
 import net.plasmere.streamline.objects.timers.*;
@@ -42,6 +43,7 @@ public class StreamLine extends Plugin {
 	private static StreamLine instance = null;
 
 	public static Config config;
+	public static Bans bans;
 	public static ServerPermissions serverPermissions;
 	public static Lobbies lobbies;
 	public static ViaHolder viaHolder;
@@ -75,6 +77,7 @@ public class StreamLine extends Plugin {
 		return gDir;
 	}
 	public final File getEDir() { return eventsDir; }
+	public final File getConfDir() { return confDir; }
 
     private void init(){
 		if (jda != null) try { jda.shutdownNow(); jda = null; } catch (Exception e) { e.printStackTrace();}
@@ -211,6 +214,11 @@ public class StreamLine extends Plugin {
 
 		// Config.
 		config = new Config();
+
+		// Bans.
+		if (ConfigUtils.punBans) {
+			bans = new Bans();
+		}
 
 		// Commands.
 		PluginUtils.loadCommands(this);

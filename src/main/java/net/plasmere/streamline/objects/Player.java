@@ -43,7 +43,8 @@ public class Player implements ProxiedPlayer {
     public boolean pspy;
     public boolean sc;
     public String latestVersion;
-    public List<String> tags;
+    public String tags;
+    public List<String> tagList;
     public int points;
     public String lastMessengerUUID;
     public String lastToUUID;
@@ -53,6 +54,12 @@ public class Player implements ProxiedPlayer {
     public List<String> ignoredList;
     public boolean muted;
     public Date mutedTill;
+    public String friends;
+    public List<String> friendList;
+    public String pendingToFriends;
+    public List<String> pendingToFriendList;
+    public String pendingFromFriends;
+    public List<String> pendingFromFriendList;
 
     public Player(ProxiedPlayer player) {
         String ipSt = player.getSocketAddress().toString().replace("/", "");
@@ -67,7 +74,7 @@ public class Player implements ProxiedPlayer {
         this.names = player.getName();
         this.online = true;
         this.displayName = player.getDisplayName();
-        this.tags = ConfigUtils.tagsDefaults;
+        this.tagList = ConfigUtils.tagsDefaults;
 
         if (StreamLine.viaHolder.enabled) {
             if (StreamLine.geyserHolder.enabled && StreamLine.geyserHolder.file.hasProperty(this.uuid)) {
@@ -94,7 +101,7 @@ public class Player implements ProxiedPlayer {
         this.names = player.getName();
         this.online = true;
         this.displayName = player.getDisplayName();
-        this.tags = ConfigUtils.tagsDefaults;
+        this.tagList = ConfigUtils.tagsDefaults;
 
         if (StreamLine.viaHolder.enabled) {
             if (StreamLine.geyserHolder.enabled && StreamLine.geyserHolder.file.hasProperty(this.uuid)) {
@@ -206,6 +213,8 @@ public class Player implements ProxiedPlayer {
     }
 
     public void addKeyValuePair(String key, String value){
+        if (info.containsKey(key)) return;
+
         info.put(key, value);
     }
 
@@ -323,6 +332,9 @@ public class Player implements ProxiedPlayer {
         defaults.add("ignored=");
         defaults.add("muted=false");
         defaults.add("muted-till=");
+        defaults.add("friends=");
+        defaults.add("pending-to-friends=");
+        defaults.add("pending-from-friends=");
         //defaults.add("");
         return defaults;
     }
@@ -366,7 +378,7 @@ public class Player implements ProxiedPlayer {
         this.pspy = Boolean.parseBoolean(getFromKey("pspy"));
         this.sc = Boolean.parseBoolean(getFromKey("sc"));
         this.latestVersion = getFromKey("latest-version");
-        this.tags = loadTags();
+        this.tagList = loadTags();
         this.points = Integer.parseInt(getFromKey("points"));
         this.lastMessengerUUID = getFromKey("last-messenger");
         this.lastToUUID = getFromKey("last-to");
@@ -374,7 +386,14 @@ public class Player implements ProxiedPlayer {
         this.lastToMessage = getFromKey("last-to-message");
         this.ignoredList = loadIgnored();
         this.muted = Boolean.parseBoolean(getFromKey("muted"));
-        this.mutedTill = new Date(Long.parseLong(getFromKey("muted-till")));
+        try {
+            this.mutedTill = new Date(Long.parseLong(getFromKey("muted-till")));
+        } catch (Exception e) {
+            this.mutedTill = null;
+        }
+        this.friendList = loadFriends();
+        this.pendingToFriendList = loadPendingToFriends();
+        this.pendingFromFriendList = loadPendingFromFriends();
     }
 
     public TreeMap<String, String> updatableKeys() {
@@ -410,6 +429,28 @@ public class Player implements ProxiedPlayer {
         this.nameList.add(name);
 
         this.names = stringifyList(nameList, ",");
+
+        updateKey("names", this.names);
+    }
+
+    public void tryAddNewTag(String tag){
+        if (tagList.contains(tag)) return;
+
+        this.tagList.add(tag);
+
+        this.tags = stringifyList(tagList, ",");
+
+        updateKey("tags", this.tags);
+    }
+
+    public void tryRemTag(String tag){
+        if (! tagList.contains(tag)) return;
+
+        this.tagList.remove(tag);
+
+        this.tags = stringifyList(tagList, ",");
+
+        updateKey("tags", this.tags);
     }
 
     public void tryAddNewIgnored(String uuid){
@@ -418,6 +459,8 @@ public class Player implements ProxiedPlayer {
         this.ignoredList.add(uuid);
 
         this.ignoreds = stringifyList(ignoredList, ",");
+
+        updateKey("ignored", this.ignoreds);
     }
 
     public void tryRemIgnored(String uuid){
@@ -426,6 +469,71 @@ public class Player implements ProxiedPlayer {
         this.ignoredList.remove(uuid);
 
         this.ignoreds = stringifyList(ignoredList, ",");
+
+        updateKey("ignored", this.ignoreds);
+    }
+
+    public void tryAddNewFriend(String uuid){
+        tryRemPendingToFriend(uuid);
+        tryRemPendingFromFriend(uuid);
+
+        if (friendList.contains(uuid)) return;
+
+        this.friendList.add(uuid);
+
+        this.friends = stringifyList(friendList, ",");
+
+        updateKey("friends", this.friends);
+    }
+
+    public void tryRemFriend(String uuid){
+        if (friendList.contains(uuid)) return;
+
+        this.friendList.remove(uuid);
+
+        this.friends = stringifyList(friendList, ",");
+
+        updateKey("friends", this.friends);
+    }
+
+    public void tryAddNewPendingToFriend(String uuid){
+        if (pendingToFriends.contains(uuid)) return;
+
+        this.pendingToFriendList.add(uuid);
+
+        this.pendingToFriends = stringifyList(pendingToFriendList, ",");
+
+        updateKey("pending-to-friends", this.pendingToFriends);
+    }
+
+    public void tryRemPendingToFriend(String uuid){
+        if (pendingToFriendList.contains(uuid)) return;
+
+        this.pendingToFriendList.remove(uuid);
+
+        this.pendingToFriends = stringifyList(pendingToFriendList, ",");
+
+        updateKey("pending-to-friends", this.pendingToFriends);
+    }
+
+    public void tryAddNewPendingFromFriend(String uuid){
+        if (pendingFromFriendList.contains(uuid)) return;
+
+        this.pendingFromFriendList.add(uuid);
+
+        this.pendingFromFriends = stringifyList(pendingFromFriendList, ",");
+
+        updateKey("pending-from-friends", this.pendingFromFriends);
+    }
+
+    public void tryRemPendingFromFriend(String uuid){
+        if (pendingFromFriendList.contains(uuid)) return;
+
+        this.pendingFromFriendList.remove(uuid);
+
+        this.pendingFromFriends = stringifyList(pendingFromFriendList, ",");
+
+        updateKey("pending-from-friends", this.pendingFromFriends);
     }
 
     public void tryAddNewIP(String ip){
@@ -434,6 +542,8 @@ public class Player implements ProxiedPlayer {
         this.ipList.add(ip);
 
         this.ips = stringifyList(ipList, ",");
+
+        updateKey("ips", this.ips);
     }
 
     public void tryAddNewIP(ProxiedPlayer player){
@@ -568,6 +678,84 @@ public class Player implements ProxiedPlayer {
         return thing;
     }
 
+    public List<String> loadFriends(){
+        List<String> thing = new ArrayList<>();
+
+        String search = "friends";
+
+        try {
+            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (! getFromKey(search).contains(",")) {
+                thing.add(getFromKey(search));
+                return thing;
+            }
+
+            for (String t : getFromKey(search).split(",")) {
+                try {
+                    thing.add(t);
+                } catch (Exception e) {
+                    //continue;
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return thing;
+    }
+
+    public List<String> loadPendingToFriends(){
+        List<String> thing = new ArrayList<>();
+
+        String search = "pending-to-friends";
+
+        try {
+            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (! getFromKey(search).contains(",")) {
+                thing.add(getFromKey(search));
+                return thing;
+            }
+
+            for (String t : getFromKey(search).split(",")) {
+                try {
+                    thing.add(t);
+                } catch (Exception e) {
+                    //continue;
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return thing;
+    }
+
+    public List<String> loadPendingFromFriends(){
+        List<String> thing = new ArrayList<>();
+
+        String search = "pending-from-friends";
+
+        try {
+            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (! getFromKey(search).contains(",")) {
+                thing.add(getFromKey(search));
+                return thing;
+            }
+
+            for (String t : getFromKey(search).split(",")) {
+                try {
+                    thing.add(t);
+                } catch (Exception e) {
+                    //continue;
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return thing;
+    }
+
     public void saveInfo() throws IOException {
         file.delete();
 
@@ -587,16 +775,6 @@ public class Player implements ProxiedPlayer {
    5 × current_level – 38 (for levels 16–30)
    9 × current_level – 158 (for levels 31+)
     */
-
-    public void remTag(String tag){
-        tags.remove(tag);
-        updateKey("tags", stringifyList(tags, ","));
-    }
-
-    public void addTag(String tag){
-        tags.add(tag);
-        updateKey("tags", stringifyList(tags, ","));
-    }
 
     public int getNeededXp(){
         int needed = 0;

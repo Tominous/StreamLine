@@ -28,6 +28,8 @@ command-error:
     undefined: "&cThere was an error executing this command..."
     # If the error was thrown because it needs an integer.
     needs-int: "&cYou need to specify an integer..."
+    # If the error was thrown because it needs a stringed time duration.
+    needs-stringed-time: "&cYou have to specify a stringed time duration... i.e. 1y or 20d"
 # If a command is disabled.
 command-disabled:
   # Discord error message when a command is not enabled.
@@ -93,7 +95,13 @@ punishments:
     # If only temp.
     temp: "&cYou are muted until &b%date%&c!"
     # If permanent.
-    perm: "&cYou are muted!"
+    perm: "&cYou are &4PERMANENTLY &cmuted!"
+  # When trying to join...
+  banned:
+    # If only temp.
+    temp: "&cYou are banned until &b%date%&c!%newline%&cReason: &e%reason%"
+    # If permanent.
+    perm: "&cYou are &4PERMANENTLY &cbanned!%newline%&cReason: &e%reason%"
 
 # When reporting...
 # Fillers:
@@ -273,6 +281,10 @@ party:
   discord:
     # Embed title.
     title: "PARTY"
+  # When a player connects.
+  connect: "&bPARTY &9> &d%player% &a+"
+  # When a player disconnects.
+  disconnect: "&bPARTY &9> &d%player% &c-"
   # Guild Spy message.
   spy: "&d%leader%&a's PARTY &9>> &d%sender% &8: &e%message%"
   # When it finds no party.
@@ -608,6 +620,10 @@ guild:
   discord:
     # Embed title.
     title: "GUILD"
+  # When a player connects.
+  connect: "&2GUILD &9> &d%player% &a+"
+  # When a player disconnects.
+  disconnect: "&2GUILD &9> &d%player% &c-"
   # For Guild Spy.
   spy: "&d%leader%&a's GUILD &9>> &d%sender% &8: &e%message%"
   # When it finds no guild.
@@ -1083,16 +1099,24 @@ ignore:
     self: "&eYou just &cignored &d%player%&e!"
     # What they see.
     ignored: "&d%sender% &ejust &cignored &eyou!"
+    # Already added.
+    already: "&cYou already ignored this person!"
+    # Not self.
+    not-self: "&cCannot ignore yourself..."
   # Removing someone from ignore.
   remove:
     # What you see.
     self: "&eYou just &aun-ignored &d%player%&e!"
     # What they see.
     ignored: "&d%sender% &ejust &aun-ignored &eyou!"
+    # Already removed.
+    already: "&cYou don't have this person ignored!"
+    # Not self.
+    not-self: "&cCannot un-ignore yourself..."
   # Listing ignores.
   list:
     # Main message.
-    main: "&p%player%&e's ignores: %ignores%"
+    main: "&d%player%&e's ignores: %ignores%"
     # For %ignores%.
     ignores:
       # If not the last ignored.
@@ -1121,3 +1145,138 @@ reply:
   ignored: "&cSorry, but this player has ignored you!"
   # To SSPY.
   sspy: "&7[ &e%from% &2(&4%from_server%&2) &8>> &e%to% &2(&4%to_server%&2) &7] &8%message%"
+
+# For the mute command.
+mute:
+  # If being muted.
+  mute:
+    # If only temp.
+    temp:
+      # For sender.
+      sender: "&eYou have &cmuted &d%player% &euntil &b%date%&e!"
+      # For person being muted.
+      muted: "&eYou have been &cmuted &euntil &b%date%&e!"
+      # If already.
+      already: "&cThis player is already muted!"
+    # If perm.
+    perm:
+      # For sender.
+      sender: "&eYou have &cmuted &d%player%&e!"
+      # For person being muted.
+      muted: "&eYou have been &4PERMANENTLY &cmuted&e!"
+      # If already.
+      already: "&cThis player is already muted!"
+  # If being unmuted.
+  unmute:
+    # For sender.
+    sender: "&eYou have &aunmuted &d%player%&e!"
+    # For person being unmuted.
+    muted: "&eYou have been &aunmuted&e!"
+    # If already.
+    already: "&cThis player is already unmuted!"
+  # For checking if muted.
+  check:
+    # Main.
+    main: "&d%player% &eis %check%&e!"
+    # If muted.
+    muted: "&cmuted"
+    # If unmuted.
+    unmuted: "&aunmuted"
+
+# For the mute command.
+ban:
+  # If being banned.
+  ban:
+    # If temp.
+    temp:
+      # For sender.
+      sender: "&eYou have &cbanned &d%player% &euntil &b%date%&e!"
+      # If already banned.
+      already: "&d%player% &cis already banned!"
+    # If perm.
+    perm:
+      # For sender.
+      sender: "&eYou have &cbanned &d%player%&e!"
+      # If already banned.
+      already: "&d%player% &cis already banned!"
+  # If being unbanned.
+  unban:
+    # For sender.
+    sender: "&eYou have &aunbanned &d%player%&e!"
+    # If already unbanned.
+    already: "&cThis player is already unbanned!"
+  # If checking if banned.
+  check:
+    # Main.
+    main: "&d%player% &eis %check%!"
+    # If banned.
+    banned: "&cbanned"
+    # If unbanned.
+    unbanned: "&aunbanned"
+
+# Friend command...
+friend:
+  # For requesting...
+  request:
+    # What you see.
+    self: "&eYou just requested &d%player%&e to be your &afriend&e!"
+    # What they see.
+    other: "&d%sender% &ejust requested you to be their &afriend&e!%newline%&eType &b/f accept %sender_name% &eto accept!"
+    # Already added.
+    already: "&cYou already friended &d%player%&e!"
+    # Not self.
+    not-self: "&cCannot ignore yourself..."
+    # Ignored...
+    ignored: "&cThis person has you ignored..."
+  # Accepting someone's friend request.
+  accept:
+    # What you see.
+    self: "&eYou just &aaccepted &ethe friend request from &d%player%&e!"
+    # What they see.
+    other: "&d%sender% &ejust &aaccepted &ethe friend request from you!"
+    # No requests.
+    none: "&cNo requests from &d%player%&c!"
+  # Denying someone's friend request.
+  deny:
+    # What you see.
+    self: "&eYou just &cdenied &ethe friend request from &d%player%&e!"
+    # What they see.
+    other: "&d%sender% &ejust &cdenied &ethe friend request from you!"
+    # No requests.
+    none: "&cNo requests from &d%player%&c!"
+  # Removing someone from ignore.
+  remove:
+    # What you see.
+    self: "&eYou just &cun-friended &d%player%&e!"
+    # What they see.
+    other: "&d%sender% &ejust &cun-friended &eyou!"
+    # Already removed.
+    already: "&cYou don't have this person friended!"
+    # Not self.
+    not-self: "&cCannot un-friend yourself..."
+  # Listing ignores.
+  list:
+    # Main message.
+    main: "&d%player%&e's friends: %friends%%newline%&d%player%&e's pending-to: %pending-to%%newline%&d%player%&e's pending-from: %pending-from%"
+    # For %friends%.
+    friends:
+      # If not the last.
+      not-last: "&c%player%&e, "
+      # If last.
+      last: "&c%player%&e."
+    # For %pending-to%.
+    pending-to:
+      # If not the last.
+      not-last: "&c%player%&e, "
+      # If last ignored.
+      last: "&c%player%&e."
+    # For %pending-to%.
+    pending-from:
+      # If not the last.
+      not-last: "&c%player%&e, "
+      # If last.
+      last: "&c%player%&e."
+  # On player connect.
+  connect: "&aFRIEND &9> &d%player% &a+"
+  # On player disconnect.
+  disconnect: "&aFRIEND &9> &d%player% &c-"

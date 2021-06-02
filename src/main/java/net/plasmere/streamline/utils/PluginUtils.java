@@ -2,6 +2,7 @@ package net.plasmere.streamline.utils;
 
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.commands.*;
+import net.plasmere.streamline.commands.messaging.FriendCommand;
 import net.plasmere.streamline.commands.messaging.IgnoreCommand;
 import net.plasmere.streamline.commands.messaging.MessageCommand;
 import net.plasmere.streamline.commands.messaging.ReplyCommand;
@@ -10,6 +11,7 @@ import net.plasmere.streamline.commands.servers.GoToServerVanillaCommand;
 import net.plasmere.streamline.commands.staff.*;
 import net.plasmere.streamline.commands.staff.events.BTagCommand;
 import net.plasmere.streamline.commands.staff.events.EventReloadCommand;
+import net.plasmere.streamline.commands.staff.punishments.MuteCommand;
 import net.plasmere.streamline.commands.staff.spy.GSPYCommand;
 import net.plasmere.streamline.commands.staff.spy.PSPYCommand;
 import net.plasmere.streamline.commands.staff.spy.SSPYCommand;
@@ -74,6 +76,7 @@ public class PluginUtils {
         Command bsudo = new SudoCommand(ConfigUtils.comBSudoBase, ConfigUtils.comBSudoPerm, getAliases(ConfigUtils.comBSudoAliases));
         commands.add(bsudo);
         Command serverping = new JDAPingerCommand(ConfigUtils.comBSPingBase, ConfigUtils.comBSPingPerm, getAliases(ConfigUtils.comBSPingAliases));
+        commands.add(serverping);
 
         // Servers.
         Command lobby = new GoToServerLobbyCommand(ConfigUtils.comBLobbyBase, ConfigUtils.comBLobbyPerm, getAliases(ConfigUtils.comBLobbyAliases));
@@ -126,8 +129,14 @@ public class PluginUtils {
         commands.add(ignore);
         Command message = new MessageCommand(ConfigUtils.comBMessageBase, ConfigUtils.comBMessagePerm, getAliases(ConfigUtils.comBMessageAliases));
         commands.add(message);
-        Command reply = new ReplyCommand(ConfigUtils.comBReplyBase, ConfigUtils.comBMReplyPerm, getAliases(ConfigUtils.comBReplyAliases));
+        Command reply = new ReplyCommand(ConfigUtils.comBReplyBase, ConfigUtils.comBReplyPerm, getAliases(ConfigUtils.comBReplyAliases));
         commands.add(reply);
+        Command friend = new FriendCommand(ConfigUtils.comBFriendBase, ConfigUtils.comBFriendPerm, getAliases(ConfigUtils.comBFriendAliases));
+        commands.add(friend);
+
+        // Punishments.
+        Command mute = new MuteCommand(ConfigUtils.comBMuteBase, ConfigUtils.comBMutePerm, getAliases(ConfigUtils.comBMuteAliases));
+        commands.add(mute);
 
         try {
             for (Command command : commands) {
@@ -155,6 +164,8 @@ public class PluginUtils {
         if (ConfigUtils.comBGlobalOnline && StreamLine.lpHolder.enabled)
             registerCommand(plugin, globalOnline);
         registerCommand(plugin, reload);
+        if (ConfigUtils.comBSPing)
+            registerCommand(plugin, serverping);
 
         // All players.
         if (ConfigUtils.comBReport)
@@ -202,6 +213,14 @@ public class PluginUtils {
             registerCommand(plugin, ignore);
         if (ConfigUtils.comBMessage)
             registerCommand(plugin, message);
+        if (ConfigUtils.comBReply)
+            registerCommand(plugin, reply);
+        if (ConfigUtils.comBFriend)
+            registerCommand(plugin, friend);
+
+        // Punishments.
+        if (ConfigUtils.comBMute)
+            registerCommand(plugin, mute);
 
         plugin.getLogger().info("Loaded " + commandsAmount + " command(s) into memory...!");
     }

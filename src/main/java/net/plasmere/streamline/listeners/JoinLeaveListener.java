@@ -12,20 +12,18 @@ import net.plasmere.streamline.events.Event;
 import net.plasmere.streamline.events.EventsHandler;
 import net.plasmere.streamline.events.enums.Condition;
 import net.plasmere.streamline.objects.GeyserFile;
+import net.plasmere.streamline.objects.Party;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.objects.messaging.BungeeMassMessage;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Player;
-import net.plasmere.streamline.utils.GuildUtils;
-import net.plasmere.streamline.utils.MessagingUtils;
+import net.plasmere.streamline.utils.*;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
-import net.plasmere.streamline.utils.PlayerUtils;
-import net.plasmere.streamline.utils.UUIDFetcher;
 import net.plasmere.streamline.utils.holders.GeyserHolder;
 
 import java.util.*;
@@ -61,6 +59,10 @@ public class JoinLeaveListener implements Listener {
                 StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
                 return;
             }
+        }
+
+        if (ConfigUtils.punBans) {
+            if (PlayerUtils.checkBan(ev, stat)) return;
         }
 
         stat.tryAddNewName(player.getName());
@@ -101,24 +103,94 @@ public class JoinLeaveListener implements Listener {
             e.printStackTrace();
         }
 
-        switch (ConfigUtils.moduleBPlayerJoins) {
-            case "yes":
-                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                        MessageConfUtils.bungeeOnline.replace("%player_default%", player.getName())
-                                .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
-                        ConfigUtils.moduleBPlayerJoinsPerm));
-                break;
-            case "staff":
-                if (player.hasPermission(ConfigUtils.staffPerm)) {
-                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                            MessageConfUtils.bungeeOnline.replace("%player_default%", player.getName())
-                                    .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
-                            ConfigUtils.moduleBPlayerJoinsPerm));
+//        switch (ConfigUtils.moduleBPlayerJoins) {
+//            case "yes":
+//                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
+//                        MessageConfUtils.bungeeOnline.replace("%player_default%", player.getName())
+//                                .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
+//                        ConfigUtils.moduleBPlayerJoinsPerm));
+//                break;
+//            case "staff":
+//                if (player.hasPermission(ConfigUtils.staffPerm)) {
+//                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
+//                            MessageConfUtils.bungeeOnline.replace("%player_default%", player.getName())
+//                                    .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
+//                            ConfigUtils.moduleBPlayerJoinsPerm));
+//                }
+//                break;
+//            case "no":
+//            default:
+//                break;
+//        }
+
+        String joinsOrder = ConfigUtils.moduleBPlayerJoins;
+
+        if (! joinsOrder.equals("")) {
+            String[] order = joinsOrder.split(",");
+            for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()) {
+                if (! p.hasPermission(ConfigUtils.moduleBPlayerJoinsPerm)) continue;
+
+                Player other = PlayerUtils.getStat(p);
+
+                if (other == null) {
+                    PlayerUtils.addStat(new Player(UUIDFetcher.getCachedUUID(p.getName())));
+                    other = PlayerUtils.getStat(p);
+                    if (other == null) {
+                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + p.getName());
+                        break;
+                    }
                 }
-                break;
-            case "no":
-            default:
-                break;
+
+                label:
+                for (String s : order) {
+                    switch (s) {
+                        case "staff":
+                            if (player.hasPermission(ConfigUtils.staffPerm)) {
+                                if (p.hasPermission(ConfigUtils.staffPerm)) {
+                                    MessagingUtils.sendBUserMessage(p, MessageConfUtils.bungeeOnline
+                                            .replace("%player_default%", player.getName())
+                                            .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                    );
+                                    break label;
+                                }
+                            }
+                            break;
+                        case "guild":
+                            Guild guild = GuildUtils.getGuild(other);
+                            if (guild == null) continue;
+
+                            if (guild.hasMember(stat)) {
+                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.guildConnect
+                                        .replace("%player_default%", player.getName())
+                                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                );
+                                break label;
+                            }
+                            break;
+                        case "party":
+                            Party party = PartyUtils.getParty(other);
+                            if (party == null) continue;
+
+                            if (party.hasMember(stat)) {
+                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.partyConnect
+                                        .replace("%player_default%", player.getName())
+                                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                );
+                                break label;
+                            }
+                            break;
+                        case "friend":
+                            if (stat.friendList.contains(other.uuid)) {
+                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.friendConnect
+                                        .replace("%player_default%", player.getName())
+                                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                );
+                                break label;
+                            }
+                            break;
+                    }
+                }
+            }
         }
 
         if (ConfigUtils.joinsLeavesIcon) {
@@ -331,25 +403,96 @@ public class JoinLeaveListener implements Listener {
             }
         }
 
-        switch (ConfigUtils.moduleBPlayerLeaves) {
-            case "yes":
-                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                        MessageConfUtils.bungeeOffline.replace("%player_default%", player.getName())
-                                .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
-                        ConfigUtils.moduleBPlayerLeavesPerm));
-                break;
-            case "staff":
-                if (player.hasPermission(ConfigUtils.staffPerm)) {
-                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
-                            MessageConfUtils.bungeeOffline.replace("%player_default%", player.getName())
-                                    .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
-                            ConfigUtils.moduleBPlayerLeavesPerm));
+//        switch (ConfigUtils.moduleBPlayerLeaves) {
+//            case "yes":
+//                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
+//                        MessageConfUtils.bungeeOffline.replace("%player_default%", player.getName())
+//                                .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
+//                        ConfigUtils.moduleBPlayerLeavesPerm));
+//                break;
+//            case "staff":
+//                if (player.hasPermission(ConfigUtils.staffPerm)) {
+//                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
+//                            MessageConfUtils.bungeeOffline.replace("%player_default%", player.getName())
+//                                    .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
+//                            ConfigUtils.moduleBPlayerLeavesPerm));
+//                }
+//                break;
+//            case "no":
+//            default:
+//                break;
+//        }
+
+        String leavesOrder = ConfigUtils.moduleBPlayerLeaves;
+
+        if (! leavesOrder.equals("")) {
+            String[] order = leavesOrder.split(",");
+            for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()) {
+                if (! p.hasPermission(ConfigUtils.moduleBPlayerLeavesPerm)) continue;
+
+                Player other = PlayerUtils.getStat(p);
+
+                if (other == null) {
+                    PlayerUtils.addStat(new Player(UUIDFetcher.getCachedUUID(p.getName())));
+                    other = PlayerUtils.getStat(p);
+                    if (other == null) {
+                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + p.getName());
+                        break;
+                    }
                 }
-                break;
-            case "no":
-            default:
-                break;
+
+                label:
+                for (String s : order) {
+                    switch (s) {
+                        case "staff":
+                            if (player.hasPermission(ConfigUtils.staffPerm)) {
+                                if (p.hasPermission(ConfigUtils.staffPerm)) {
+                                    MessagingUtils.sendBUserMessage(p, MessageConfUtils.bungeeOffline
+                                            .replace("%player_default%", player.getName())
+                                            .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                    );
+                                    break label;
+                                }
+                            }
+                            break;
+                        case "guild":
+                            Guild guild = GuildUtils.getGuild(other);
+                            if (guild == null) continue;
+
+                            if (guild.hasMember(stat)) {
+                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.guildDisconnect
+                                        .replace("%player_default%", player.getName())
+                                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                );
+                                break label;
+                            }
+                            break;
+                        case "party":
+                            Party party = PartyUtils.getParty(other);
+                            if (party == null) continue;
+
+                            if (party.hasMember(stat)) {
+                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.partyDisconnect
+                                        .replace("%player_default%", player.getName())
+                                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                );
+                                break label;
+                            }
+                            break;
+                        case "friend":
+                            if (stat.friendList.contains(other.uuid)) {
+                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.friendDisconnect
+                                        .replace("%player_default%", player.getName())
+                                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                );
+                                break label;
+                            }
+                            break;
+                    }
+                }
+            }
         }
+
         switch (ConfigUtils.moduleDPlayerLeaves) {
             case "yes":
                 if (ConfigUtils.joinsLeavesAsConsole) {

@@ -70,13 +70,7 @@ public class ReplyCommand extends Command {
                         }
                     }
 
-                    TreeSet<String> argsSet = new TreeSet<>();
-
-                    for (int i = 1; i < args.length; i++) {
-                        argsSet.add(args[i]);
-                    }
-
-                    PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.normalize(argsSet), true);
+                    PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.normalize(args), true);
                 } else {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
                 }

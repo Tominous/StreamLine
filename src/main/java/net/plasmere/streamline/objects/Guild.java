@@ -119,6 +119,8 @@ public class Guild {
     }
 
     public void addKeyValuePair(String key, String value){
+        if (info.containsKey(key)) return;
+
         info.put(key, value);
     }
 

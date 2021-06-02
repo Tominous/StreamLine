@@ -583,6 +583,39 @@ commands:
         # All aliases for the command. Listed in yml list format.
         aliases:
           - "sping"
+      # The mute command.
+      mute:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "mute"
+        # Custom permission.
+        permission: "streamline.command.mute"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "silence"
+      # The kick command.
+      kick:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "kick"
+        # Custom permission.
+        permission: "streamline.command.kick"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "no"
+      # The ban command.
+      ban:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "ban"
+        # Custom permission.
+        permission: "streamline.command.ban"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "hammer"
       # For messaging commands...
     messaging:
       # The ignore command.
@@ -626,6 +659,18 @@ commands:
           - "r"
           - "re"
           - "followup"
+      # The reply command.
+      friend:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "friend"
+        # Custom permission.
+        permission: "streamline.command.friend"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "f"
+          - "fr"
 
 ### MODULE SETTINGS ###
 modules:
@@ -717,21 +762,38 @@ modules:
       prefix: "#"
       # Enables / disables the staff chat going to the Discord server.
       minecraft-to-discord: true
-    # Enables / disables telling people with the staff permission (on Discord) when all players joins.
-    # Can be:
-    # "yes" = all players.
-    # "no" = none.
-    # "staff" = only players with the staff permission.
+    # Hierarchy of what players should see when other people join.
+    # Can have:
+    # "staff" = ONLY for people with the modules.staff-permission permission.
+    # "guild" = guild members.
+    # "party" = party members.
+    # "friend" = friends.
+    # Set to empty to disable.
+    # Example: "staff,guild,party,friend"
+    # --> If a player joins who is staff, they will be shown (only to staff)
+    # --> If a player joins who is in your guild, they will be shown if not staff (and you are staff)
+    # --> If a player joins who is in your party, they will be shown if not staff (and you are staff), or in your guild.
+    # --> If a player joins who is in your friends list, they will be shown if not staff (and you are staff), or in your guild, or in your party.
+    # --> If none above, will not be shown.
     # NOTE: per-server connection events can be made with the events module.
-    player-joins: "yes"
+    player-joins-order: "staff,guild,party,friend"
     # Permission for players you want to see the join message.
     joins-permission: "streamline.joins.view"
-    # Enables / disables telling people with the staff permission (on Discord) when all players leave.
-    # Can be:
-    # "yes" = all players.
-    # "no" = none.
-    # "staff" = only players with the staff permission.
-    player-leaves: "yes"
+      # Hierarchy of what players should see when other people leave.
+      # Can have:
+      # "staff" = ONLY for people with the modules.staff-permission permission.
+      # "guild" = guild members.
+      # "party" = party members.
+      # "friend" = friends.
+      # Set to empty to disable.
+      # Example: "staff,guild,party,friend"
+      # --> If a player leaves who is staff, they will be shown (only to staff)
+      # --> If a player leaves who is in your guild, they will be shown if not staff (and you are staff)
+      # --> If a player leaves who is in your party, they will be shown if not staff (and you are staff), or in your guild.
+      # --> If a player leaves who is in your friends list, they will be shown if not staff (and you are staff), or in your guild, or in your party.
+    # --> If none above, will not be shown.
+    # NOTE: per-server connection events can be made with the events module.
+    player-leaves-order: "staff,guild,party,friend"
     # Permission for players you want to see the leaving message.
     leaves-permission: "streamline.leaves.view"
     # Parties...
@@ -750,6 +812,11 @@ modules:
       chat-to-console: true
       # (Staff) permission to see party messages.
       view-permission: "streamline.view.party"
+      # For network joins / leaves.
+      send:
+        # If they should be sent to all party members.
+        join: true
+        leave: true
     # Sudoing...
     sudo:
       # Permission for players you don't want to be able to be sudoed.
@@ -772,8 +839,15 @@ modules:
       view-permission: "streamline.view.guild"
       # Name info.
       name:
+        # Max length a name can be.
         max-length: 16
+        # If the max length should include colors.
         max-includes-colors: false
+      # For network joins / leaves.
+      send:
+        # If they should be sent to all guild members.
+        join: true
+        leave: true
     # Stats command...
     stats:
       # Enables / disables telling the player when their stats have been created.
@@ -851,6 +925,10 @@ modules:
         enabled: true
         # Enables / disables if mutes should also block all commands.
         hard-mutes: false
+      # For bans.
+      bans:
+        # Enables / disables bans.
+        enabled: true
     # For all private messaging.
     messaging:
       # Permission for viewing private messages.

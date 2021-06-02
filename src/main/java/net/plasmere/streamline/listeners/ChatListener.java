@@ -86,13 +86,10 @@ public class ChatListener implements Listener {
         }
 
         if (ConfigUtils.punMutes && ConfigUtils.punMutesHard && stat.muted) {
-            e.setCancelled(true);
-            if (stat.mutedTill != null) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.punMutedTemp.replace("%date%", stat.mutedTill.toString()));
-            } else {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.punMutedPerm);
+            if (PlayerUtils.checkMute(sender, stat)) {
+                e.setCancelled(true);
+                return;
             }
-            return;
         }
 
         if (TextUtils.isCommand(msg)) return;
@@ -114,13 +111,13 @@ public class ChatListener implements Listener {
                 }
 
                 e.setCancelled(true);
-                MessagingUtils.sendStaffChatMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg.substring(prefix.length()), plugin);
+                MessagingUtils.sendStaffChatMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg, plugin);
                 if (ConfigUtils.moduleStaffChatMToDiscord) {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                             MessageConfUtils.staffChatEmbedTitle,
                             MessageConfUtils.discordStaffChatMessage
                                     .replace("%user%", sender.getName())
-                                    .replace("%message%", msg.substring(prefix.length())),
+                                    .replace("%message%", msg),
                             ConfigUtils.textChannelStaffChat));
                 }
             } else if (ConfigUtils.moduleStaffChatDoPrefix) {
