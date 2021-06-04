@@ -6,10 +6,7 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.PlayerUtils;
 
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class PlaytimeTimer implements Runnable {
     public int countdown;
@@ -39,27 +36,33 @@ public class PlaytimeTimer implements Runnable {
                 if (! p.online) continue;
 
                 p.addPlaySecond(1);
-
-                p.saveInfo();
             }
+
+            //if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Just gave out PlayTime to " + StreamLine.getInstance().getProxy().getPlayers().size() + " online players!");
         } catch (Exception e){
             e.printStackTrace();
         }
 
         try {
-            PlayerUtils.removePlayerIf(player -> {
-                if (! player.onlineCheck()) {
-                    try {
-                        player.saveInfo();
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
+            int count = 0;
+            List<Player> players = PlayerUtils.getStats();
+            List<Player> toRemove = new ArrayList<>();
 
-                    return true;
+            for (Player player : players) {
+                if (! player.online) {
+                    toRemove.add(player);
                 }
+            }
 
-                return false;
-            });
+            for (Player player : toRemove) {
+                try {
+                    player.saveInfo();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                PlayerUtils.removeStat(player);
+                count ++;
+            }
         } catch (Exception e){
             e.printStackTrace();
         }

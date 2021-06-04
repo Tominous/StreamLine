@@ -238,4 +238,9 @@ public class MessageConfUtils {
     public static final String friendListPFLast = message.getString("friend.list.pending-from.last");
     public static final String friendConnect = message.getString("friend.connect");
     public static final String friendDisconnect = message.getString("friend.disconnect");
+    // GetStats.
+    public static final String getStatsNone = message.getString("getstats.no-stats");
+    public static final String getStatsMessage = message.getString("getstats.message.main");
+    public static final String getStatsNLast = message.getString("getstats.message.not-last");
+    public static final String getStatsLast = message.getString("getstats.message.last");
 }

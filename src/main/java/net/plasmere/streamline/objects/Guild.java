@@ -502,13 +502,7 @@ public class Guild {
     public void addXp(int amount){
         int setAmount = this.xp + amount;
 
-        while (setAmount >= getNeededXp()) {
-            setAmount -= getNeededXp();
-            int setLevel = this.lvl + 1;
-            updateKey("lvl", setLevel);
-        }
-
-        updateKey("xp", setAmount);
+        setXp(setAmount);
     }
 
     public void setXp(int amount){

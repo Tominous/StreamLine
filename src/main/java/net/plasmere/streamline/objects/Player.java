@@ -10,6 +10,7 @@ import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.score.Scoreboard;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
@@ -26,7 +27,8 @@ public class Player implements ProxiedPlayer {
 
     public File file;
     public String uuid;
-    public int xp;
+    public int totalXP;
+    public int currentXP;
     public int lvl;
     public int playSeconds;
     public String ips;
@@ -171,15 +173,25 @@ public class Player implements ProxiedPlayer {
     public void remKey(String key){
         info.remove(key);
     }
+    public File getFile() { return file; }
+
     public String getFromKey(String key){
         return info.get(key);
     }
+
+//    public int getInfoIntFor(String key) {
+//        for (Integer i : info.keySet()) {
+//            if (info.get(i).key.equals(key)) return i;
+//        }
+//
+//        return 0;
+//    }
+
     public void updateKey(String key, Object value) {
         info.remove(key);
         addKeyValuePair(key, String.valueOf(value));
         loadVars();
     }
-    public File getFile() { return file; }
 
     public boolean hasProperty(String property) {
         for (String info : getInfoAsPropertyList()) {
@@ -219,6 +231,14 @@ public class Player implements ProxiedPlayer {
 
         info.put(key, value);
     }
+
+//    public boolean infoContainsKey(String key){
+//        for (Integer i : info.keySet()) {
+//            if (info.get(i).key.equals(key)) return true;
+//        }
+//
+//        return false;
+//    }
 
     public String stringifyList(List<String> list, String splitter){
         StringBuilder stringBuilder = new StringBuilder();
@@ -265,8 +285,16 @@ public class Player implements ProxiedPlayer {
 
         int i = 0;
         for (String p : getInfoAsPropertyList()) {
-            if (! p.startsWith(propertiesDefaults().get(i).split("=", 2)[0])) return true;
+            if (! startsWithForKeys(p)) return true;
             i++;
+        }
+
+        return false;
+    }
+
+    public boolean startsWithForKeys(String string){
+        for (String p : propertiesDefaults()) {
+            if (tryUpdateFormat(string.split("=", 2)[0]).equals(p.split("=", 2)[0])) return true;
         }
 
         return false;
@@ -312,7 +340,7 @@ public class Player implements ProxiedPlayer {
                 data = reader.nextLine();
             }
             String[] dataSplit = data.split("=", 2);
-            addKeyValuePair(dataSplit[0], dataSplit[1]);
+            addKeyValuePair(tryUpdateFormat(dataSplit[0]), dataSplit[1]);
         }
 
         reader.close();
@@ -320,17 +348,18 @@ public class Player implements ProxiedPlayer {
         loadVars();
     }
 
-    public List<String> propertiesDefaults() {
-        List<String> defaults = new ArrayList<>();
+    public TreeSet<String> propertiesDefaults() {
+        TreeSet<String> defaults = new TreeSet<>();
         defaults.add("uuid=" + uuid);
         defaults.add("ips=" + ips);
         defaults.add("names=" + names);
         defaults.add("latest-ip=" + latestIP);
         defaults.add("latest-name=" + latestName);
-        defaults.add("xp=0");
         defaults.add("lvl=1");
+        defaults.add("total-xp=0");
+        defaults.add("currentXP=0");
         defaults.add("playtime=0");
-        defaults.add("display-name=" + displayName);
+        defaults.add("display-name=" + PlayerUtils.getDisplayName(this.latestName));
         defaults.add("guild=");
         defaults.add("sspy=true");
         defaults.add("gspy=true");
@@ -381,8 +410,9 @@ public class Player implements ProxiedPlayer {
         this.latestName = getFromKey("latest-name");
         this.ipList = loadIPs();
         this.nameList = loadNames();
-        this.xp = Integer.parseInt(getFromKey("xp"));
         this.lvl = Integer.parseInt(getFromKey("lvl"));
+        this.totalXP = Integer.parseInt(getFromKey("total-xp"));
+        this.currentXP = Integer.parseInt(getFromKey("current-xp"));
         this.playSeconds = Integer.parseInt(getFromKey("playtime"));
         this.displayName = getFromKey("display-name");
         this.guild = getFromKey("guild");
@@ -417,6 +447,9 @@ public class Player implements ProxiedPlayer {
         thing.put("latestname", "latest-name");
         thing.put("displayname", "display-name");
         thing.put("latestversion", "latest-version");
+        thing.put("xp", "total-xp");
+        thing.put("totalXP", "total-xp");
+        thing.put("currentXP", "current-xp");
 
         return thing;
     }
@@ -796,40 +829,47 @@ public class Player implements ProxiedPlayer {
    9 × current_level – 158 (for levels 31+)
     */
 
-    public int getNeededXp(){
+    public int getNeededXp(int fromLevel){
         int needed = 0;
 
-        needed = 2500 + (2500 * lvl);
+        needed = 2500 + (2500 * fromLevel);
 
         return needed;
     }
 
     public int xpUntilNextLevel(){
-        return getNeededXp() - this.xp;
+        return getNeededXp(this.lvl + 1) - this.totalXP;
     }
 
-    public void addXp(int amount){
-        int setAmount = this.xp + amount;
-
-        while (setAmount >= getNeededXp()) {
-            setAmount -= getNeededXp();
-            int setLevel = this.lvl + 1;
-            updateKey("lvl", setLevel);
-        }
-
-        updateKey("xp", setAmount);
+    public void addTotalXP(int amount){
+        setTotalXP(amount + this.totalXP);
     }
 
-    public void setXp(int amount){
+    public void setTotalXP(int amount){
         int setAmount = amount;
+        int required = getNeededXp(this.lvl + 1);
 
-        while (setAmount >= getNeededXp()) {
-            setAmount -= getNeededXp();
+        while (setAmount >= required) {
+            setAmount -= required;
             int setLevel = this.lvl + 1;
             updateKey("lvl", setLevel);
         }
 
-        updateKey("xp", setAmount);
+        updateKey("total-xp", setAmount);
+        updateKey("current-xp", getCurrentXP());
+    }
+
+    public int getCurrentLevelXP(){
+        int xpTill = 0;
+        for (int i = 0; i <= this.lvl; i++) {
+            xpTill += getNeededXp(i);
+        }
+
+        return xpTill;
+    }
+
+    public int getCurrentXP(){
+        return this.totalXP - getCurrentLevelXP();
     }
 
     public void dispose() throws Throwable {
@@ -928,7 +968,7 @@ public class Player implements ProxiedPlayer {
 
     @Override
     public void setDisplayName(String name) {
-        updateKey("displayname", name);
+        updateKey("display-name", name);
     }
 
     @Override

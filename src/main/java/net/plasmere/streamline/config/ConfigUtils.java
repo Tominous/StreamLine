@@ -210,6 +210,11 @@ public class ConfigUtils {
     public static final String comBGuildsBase = config.getString("commands.bungee.staff.guilds.base");
     public static final List<String> comBGuildsAliases = config.getStringList("commands.bungee.staff.guilds.aliases");
     public static final String comBGuildsPerm = config.getString("commands.bungee.staff.guilds.permission");
+    // GetStats.
+    public static final boolean comBGetStats = config.getBoolean("commands.bungee.staff.getstats.enabled");
+    public static final String comBGetStatsBase = config.getString("commands.bungee.staff.getstats.base");
+    public static final List<String> comBGetStatsAliases = config.getStringList("commands.bungee.staff.getstats.aliases");
+    public static final String comBGetStatsPerm = config.getString("commands.bungee.staff.getstats.permission");
     // BSudo.
     public static final boolean comBSudo = config.getBoolean("commands.bungee.staff.bsudo.enabled");
     public static final String comBSudoBase = config.getString("commands.bungee.staff.bsudo.base");
@@ -346,8 +351,8 @@ public class ConfigUtils {
     public static final boolean guildToDiscord = config.getBoolean("modules.bungee.guilds.to-discord");
     public static final int guildMax = config.getInt("modules.bungee.guilds.max-size");
     public static final boolean guildConsole = config.getBoolean("modules.bungee.guilds.chat-to-console");
-    public static final int xpPerGiveG = config.getInt("modules.bungee.guilds.xp.amount-per");
-    public static final int timePerGiveG = config.getInt("modules.bungee.guilds.xp.time-per");
+    public static final int xpPerGiveG = config.getInt("modules.bungee.guilds.totalXP.amount-per");
+    public static final int timePerGiveG = config.getInt("modules.bungee.guilds.totalXP.time-per");
     public static final String guildView = config.getString("modules.bungee.guilds.view-permission");
     public static final int guildMaxLength = config.getInt("modules.bungee.guilds.name.max-length");
     public static final boolean guildIncludeColors = config.getBoolean("modules.bungee.guilds.name.max-includes-colors");
@@ -357,8 +362,8 @@ public class ConfigUtils {
     public static final String noSudoPerm = config.getString("modules.bungee.sudo.no-sudo-permission");
     // ... Stats.
     public static final boolean statsTell = config.getBoolean("modules.bungee.stats.tell-when-create");
-    public static final int xpPerGiveP = config.getInt("modules.bungee.stats.xp.amount-per");
-    public static final int timePerGiveP = config.getInt("modules.bungee.stats.xp.time-per");
+    public static final int xpPerGiveP = config.getInt("modules.bungee.stats.totalXP.amount-per");
+    public static final int timePerGiveP = config.getInt("modules.bungee.stats.totalXP.time-per");
     public static final int cachedPClear = config.getInt("modules.bungee.stats.cache-clear");
     public static final boolean updateDisplayNames = config.getBoolean("modules.bungee.stats.update-display-names");
     // ... Redirect.

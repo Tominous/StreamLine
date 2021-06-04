@@ -6,8 +6,8 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.PlayerUtils;
 
-import java.util.ListIterator;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerXPTimer implements Runnable {
     public int countdown;
@@ -36,26 +36,34 @@ public class PlayerXPTimer implements Runnable {
                 if (p == null) continue;
                 if (! p.online) continue;
 
-                p.addXp(ConfigUtils.xpPerGiveP);
+                p.addTotalXP(ConfigUtils.xpPerGiveP);
 
-                p.saveInfo();
             }
+
+            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Just gave out XP to " + StreamLine.getInstance().getProxy().getPlayers().size() + " online players!");
         } catch (Exception e){
             e.printStackTrace();
         }
 
         try {
-            ListIterator<Player> players = PlayerUtils.getStats().listIterator();
+            int count = 0;
+            List<Player> players = PlayerUtils.getStats();
+            List<Player> toRemove = new ArrayList<>();
 
-            while (players.hasNext()) {
-                Player player = players.next();
-
+            for (Player player : players) {
                 if (! player.online) {
-                    player.saveInfo();
-                    players.remove();
-
-                    PlayerUtils.removeStat(player);
+                    toRemove.add(player);
                 }
+            }
+
+            for (Player player : toRemove) {
+                try {
+                    player.saveInfo();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                PlayerUtils.removeStat(player);
+                count ++;
             }
         } catch (Exception e){
             e.printStackTrace();

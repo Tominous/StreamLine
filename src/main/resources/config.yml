@@ -480,6 +480,19 @@ commands:
           - "gilds"
           - "gds"
           - "gs"
+      # The getstats command.
+      getstats:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "getstats"
+        # Custom permission.
+        permission: "streamline.command.getstats"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "gets"
+          - "gstats"
+          - "players"
       # The bungee sudo command.
       bsudo:
         # Enables / disables the use of the command.
@@ -833,7 +846,7 @@ modules:
       xp:
         # Amount to give each guild per player online every "time-per" seconds.
         amount-per: 1
-        # Amount of seconds per xp handout.
+        # Amount of seconds per totalXP handout.
         time-per: 20
       # (Staff) permission to see guild messages.
       view-permission: "streamline.view.guild"
@@ -856,7 +869,7 @@ modules:
       xp:
         # Amount to give each guild per player online every "time-per" seconds.
         amount-per: 1
-        # Amount of seconds per xp handout.
+        # Amount of seconds per totalXP handout.
         time-per: 20
       # Time in seconds to wait before trying to clear the cached stats.
       cache-clear: 300

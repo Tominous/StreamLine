@@ -605,11 +605,11 @@ guild:
   # %size% = guild size.
   # %max% = guild max size.
   # %sender% = command sender.
-  # %xp% = guild xp.
+  # %totalXP% = guild totalXP.
   # %level% = guild level.
   # %name% = guild name.
-  # %xpneeded% = guild xp needed FOR level up.
-  # %xplevel% = guild xp needed UNTIL level up.
+  # %xpneeded% = guild totalXP needed FOR level up.
+  # %xplevel% = guild totalXP needed UNTIL level up.
   # Text used for when talking about each guild level...
   text:
     # Defines what each should be when you promote or demote a player.
@@ -854,7 +854,7 @@ guild:
     # For members.
     members: "&d%sender% &ewarped you to their server!"
   # Info message.
-  info: "&9----- &2Guild Info For &4%name% &9-----%newline%&eGEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eGEXP Needed For Level Up&8: &6%xplevel% &9(&6%xpneeded%&9)"
+  info: "&9----- &2Guild Info For &4%name% &9-----%newline%&eGEXP&8: &6%totalXP%%newline%&eLevel&8: &6%level%%newline%&eGEXP Needed For Level Up&8: &6%xplevel% &9(&6%xpneeded%&9)"
   # Rename messages...
   rename:
     sender: "&eYou just renamed the guild from &c%old% &eto &c%new%&e!"
@@ -922,11 +922,11 @@ guilds:
 
 # Info for stats.
 # Fillers:
-# %xp% = network exp.
+# %totalXP% = network exp.
 # %level% = network level.
 # %player% = the player you are looking at stats of's name.
-# %xpneeded% = the player you are looking at stats of's xp needed FOR level up.
-# %xplevel% = the player you are looking at stats of's xp needed UNTIL level up.
+# %xpneeded% = the player you are looking at stats of's totalXP needed FOR level up.
+# %xplevel% = the player you are looking at stats of's totalXP needed UNTIL level up.
 # %playtime% = the player you are looking at stats of's playtime in hours.
 # %version% = the player you are looking at stats of's version. (Need to have ViaVersion installed.)
 # %points% = the player you are looking at stats of's points.
@@ -958,7 +958,7 @@ stats:
   # Points name.
   points-name: "&6Network Gold"
   # Info bulk message.
-  info: "&9----- &d%player% &7Network Info &9-----%newline%&eUUID&8: &b%uuid%%newline%&eMinecraft Version&8: &c%version%%newline%&eEXP&8: &6%xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel% &0(&6%xpneeded% &etotal needed&0)%newline%&ePlaytime&8: &6%playtime% &ehours%newline%&e%points_name%&8: &6%points%%newline%&eTags&8: &c%tags%%newline%&eDisplay Name&8: &d%display%%newline%&eAll names&8: &c%names%%newline%&2Guild&8: &r%guild%%newline%&2Guild Members&8: &6%guild_members%%newline%&2Guild EXP&7/&2LVL&8: &6%guild_xp%&7/&6%guild_lvl%%newline%&2Guild Leader&8: &d%guild_leader% &0(&b%guild_uuid%&0)%newline%&eSocial SPY &0(%sspy%&0) &eGuild SPY &0(%gspy%&0) &eParty SPY &0(%pspy%&0) &eOnline &0(&%online%&0)"
+  info: "&9----- &d%player% &7Network Info &9-----%newline%&eUUID&8: &b%uuid%%newline%&eMinecraft Version&8: &c%version%%newline%&eEXP&8: &6%totalXP%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel% &0(&6%xpneeded% &etotal needed&0)%newline%&ePlaytime&8: &6%playtime% &ehours%newline%&e%points_name%&8: &6%points%%newline%&eTags&8: &c%tags%%newline%&eDisplay Name&8: &d%display%%newline%&eAll names&8: &c%names%%newline%&2Guild&8: &r%guild%%newline%&2Guild Members&8: &6%guild_members%%newline%&2Guild EXP&7/&2LVL&8: &6%guild_xp%&7/&6%guild_lvl%%newline%&2Guild Leader&8: &d%guild_leader% &0(&b%guild_uuid%&0)%newline%&eSocial SPY &0(%sspy%&0) &eGuild SPY &0(%gspy%&0) &eParty SPY &0(%pspy%&0) &eOnline &0(&%online%&0)"
   # Tags.
   tags:
     # If not last in list.
@@ -1280,3 +1280,10 @@ friend:
   connect: "&aFRIEND &9> &d%player% &a+"
   # On player disconnect.
   disconnect: "&aFRIEND &9> &d%player% &c-"
+
+getstats:
+  no-stats: "&cSorry, but there are no loaded stats..."
+  message:
+    main: "&eLoaded stats: %stats%"
+    not-last: "&d%player%&8, "
+    last: "&d%player%&8."

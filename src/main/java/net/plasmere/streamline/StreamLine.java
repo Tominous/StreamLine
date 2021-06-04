@@ -297,6 +297,8 @@ public class StreamLine extends Plugin {
 		}
 
 		saveGuilds();
+
+		PlayerUtils.saveAll();
 	}
 
 	public void saveGuilds(){

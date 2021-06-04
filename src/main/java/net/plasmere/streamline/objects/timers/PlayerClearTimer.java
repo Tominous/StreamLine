@@ -31,9 +31,8 @@ public class PlayerClearTimer implements Runnable {
     public void done(){
         countdown = reset;
 
-        int count = 0;
-
         try {
+            int count = 0;
             List<Player> players = PlayerUtils.getStats();
             List<Player> toRemove = new ArrayList<>();
 
@@ -44,10 +43,14 @@ public class PlayerClearTimer implements Runnable {
             }
 
             for (Player player : toRemove) {
-                player.saveInfo();
+                try {
+                    player.saveInfo();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 PlayerUtils.removeStat(player);
 
-                count++;
+                count ++;
             }
         } catch (Exception e){
             e.printStackTrace();

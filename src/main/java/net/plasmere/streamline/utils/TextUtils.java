@@ -57,7 +57,7 @@ public class TextUtils {
         try {
             //String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
 
-            Pattern pattern = Pattern.compile("([{][#][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][}])+", Pattern.CASE_INSENSITIVE);
+            Pattern pattern = Pattern.compile("([<][#][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][>])+", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(text);
             String found = "";
 
@@ -71,8 +71,8 @@ public class TextUtils {
             while (matcher.find()) {
                 find = true;
                 found = matcher.group(0);
-                String colorHex = found.substring(1, found.indexOf('}'));
-                String[] split = textLeft.split(Pattern.quote(found), 2);
+                String colorHex = found.substring(1, found.indexOf('>'));
+                String[] split = textLeft.split(Pattern.quote(found));
 
                 if (i == 0) {
                     tc.addExtra(codedString(split[0]));

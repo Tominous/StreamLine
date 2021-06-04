@@ -23,6 +23,7 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Listener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PluginUtils {
@@ -52,179 +53,119 @@ public class PluginUtils {
     public static void loadCommands(StreamLine plugin){
         commandsAmount = 0;
 
-        // Setup...
-        List<Command> commands = new ArrayList<>();
-
-        // Misc.
-        Command stream = new StreamCommand(ConfigUtils.comBStreamBase, ConfigUtils.comBStreamPerm, getAliases(ConfigUtils.comBStreamAliases));
-        commands.add(stream);
-        Command ping = new PingCommand(ConfigUtils.comBPingBase, ConfigUtils.comBPingPerm, getAliases(ConfigUtils.comBPingAliases));
-        commands.add(ping);
-        Command plugins = new PluginsCommand(ConfigUtils.comBPluginsBase, ConfigUtils.comBPluginsPerm, getAliases(ConfigUtils.comBPluginsAliases));
-        commands.add(plugins);
-        Command report = new ReportCommand(ConfigUtils.comBReportBase, ConfigUtils.comBReportPerm, getAliases(ConfigUtils.comBReportAliases));
-        commands.add(report);
-
         // Staff.
-        Command staffChat = new StaffChatCommand(ConfigUtils.comBStaffChatBase, ConfigUtils.comBStaffChatPerm, getAliases(ConfigUtils.comBStaffChatAliases));
-        commands.add(staffChat);
-        Command staffOnline = new StaffOnlineCommand(ConfigUtils.comBStaffOnlineBase, ConfigUtils.comBStaffOnlinePerm, getAliases(ConfigUtils.comBStaffOnlineAliases));
-        commands.add(staffOnline);
-        Command globalOnline = new GlobalOnlineCommand(ConfigUtils.comBGlobalOnlineBase, ConfigUtils.comBGlobalOnlinePerm, getAliases(ConfigUtils.comBGlobalOnlineAliases));
-        commands.add(globalOnline);
-        Command reload = new ReloadCommand(ConfigUtils.comBReloadBase, ConfigUtils.comBReloadPerm, getAliases(ConfigUtils.comBReloadAliases));
-        commands.add(reload);
-        Command bsudo = new SudoCommand(ConfigUtils.comBSudoBase, ConfigUtils.comBSudoPerm, getAliases(ConfigUtils.comBSudoAliases));
-        commands.add(bsudo);
-        Command serverping = new JDAPingerCommand(ConfigUtils.comBSPingBase, ConfigUtils.comBSPingPerm, getAliases(ConfigUtils.comBSPingAliases));
-        commands.add(serverping);
-
-        // Servers.
-        Command lobby = new GoToServerLobbyCommand(ConfigUtils.comBLobbyBase, ConfigUtils.comBLobbyPerm, getAliases(ConfigUtils.comBLobbyAliases));
-        commands.add(lobby);
-        Command fabric = new GoToServerVanillaCommand(ConfigUtils.comBFabricPerm);
-        commands.add(fabric);
-
-        // Parties / Guilds.
-        Command parties = new PartiesCommand(ConfigUtils.comBPartiesBase, ConfigUtils.comBPartiesPerm, getAliases(ConfigUtils.comBPartiesAliases));
-        commands.add(parties);
-        Command guilds = new GuildsCommand(ConfigUtils.comBPartiesBase, ConfigUtils.comBGuildsPerm, getAliases(ConfigUtils.comBGuildsAliases));
-        commands.add(guilds);
-        Command party = new PartyCommand(ConfigUtils.comBPartyBase, ConfigUtils.comBParPerm, getAliases(ConfigUtils.comBParMainAliases));
-        commands.add(party);
-        Command guild = new GuildCommand(ConfigUtils.comBGuildBase, ConfigUtils.comBGuildPerm, getAliases(ConfigUtils.comBGuildMainAliases));
-        commands.add(guild);
-
-        List<String> pca = new ArrayList<>();
-        pca.add("pch");
-        pca.add("pchat");
-        Command pc = new PCQuickCommand("pc", ConfigUtils.comBParPerm, getAliases(pca));
-        commands.add(pc);
-        List<String> gca = new ArrayList<>();
-        gca.add("gch");
-        gca.add("gchat");
-        Command gc = new GCQuickCommand("gc", ConfigUtils.comBGuildPerm, getAliases(gca));
-        commands.add(gc);
-
-        // Stats.
-        Command stats = new StatsCommand(ConfigUtils.comBStatsBase, ConfigUtils.comBStatsPerm, getAliases(ConfigUtils.comBStatsAliases));
-        commands.add(stats);
-
-        Command sspy = new SSPYCommand(ConfigUtils.comBSSPYBase, ConfigUtils.comBSSPYPerm, getAliases(ConfigUtils.comBSSPYAliases));
-        commands.add(sspy);
-        Command gspy = new GSPYCommand(ConfigUtils.comBGSPYPerm, ConfigUtils.comBGSPYPerm, getAliases(ConfigUtils.comBGSPYAliases));
-        commands.add(gspy);
-        Command pspy = new PSPYCommand(ConfigUtils.comBPSPYBase, ConfigUtils.comBPSPYPerm, getAliases(ConfigUtils.comBPSPYAliases));
-        commands.add(pspy);
-
-        // Events.
-        Command btag = new BTagCommand(ConfigUtils.comBBTagBase, ConfigUtils.comBBTagPerm, getAliases(ConfigUtils.comBBTagAliases));
-        commands.add(btag);
-        Command reev = new EventReloadCommand(ConfigUtils.comBReloadBase, ConfigUtils.comBEReloadPerm, getAliases(ConfigUtils.comBEReloadAliases));
-        commands.add(reev);
-        Command points = new NetworkPointsCommand(ConfigUtils.comBPointsBase, ConfigUtils.comBPointsPerm, getAliases(ConfigUtils.comBPointsAliases));
-        commands.add(points);
-
-        // Messaging.
-        Command ignore = new IgnoreCommand(ConfigUtils.comBIgnoreBase, ConfigUtils.comBIgnorePerm, getAliases(ConfigUtils.comBIgnoreAliases));
-        commands.add(ignore);
-        Command message = new MessageCommand(ConfigUtils.comBMessageBase, ConfigUtils.comBMessagePerm, getAliases(ConfigUtils.comBMessageAliases));
-        commands.add(message);
-        Command reply = new ReplyCommand(ConfigUtils.comBReplyBase, ConfigUtils.comBReplyPerm, getAliases(ConfigUtils.comBReplyAliases));
-        commands.add(reply);
-        Command friend = new FriendCommand(ConfigUtils.comBFriendBase, ConfigUtils.comBFriendPerm, getAliases(ConfigUtils.comBFriendAliases));
-        commands.add(friend);
-
-        // Punishments.
-        Command mute = new MuteCommand(ConfigUtils.comBMuteBase, ConfigUtils.comBMutePerm, getAliases(ConfigUtils.comBMuteAliases));
-        commands.add(mute);
-        Command ban = new BanCommand(ConfigUtils.comBBanBase, ConfigUtils.comBBanPerm, getAliases(ConfigUtils.comBBanAliases));
-
-        try {
-            for (Command command : commands) {
-                plugin.getProxy().getPluginManager().unregisterCommand(command);
-            }
-        } catch (Exception e){
-            MessagingUtils.logWarning("Command discriminator broke for the following reason: " + e.getMessage());
+        // // Reg.
+        if (ConfigUtils.comBStream) {
+            registerCommand(plugin, new StreamCommand(ConfigUtils.comBStreamBase, ConfigUtils.comBStreamPerm, getAliases(ConfigUtils.comBStreamAliases)));
+        }
+        if (ConfigUtils.comBStaffChat) {
+            registerCommand(plugin, new StaffChatCommand(ConfigUtils.comBStaffChatBase, ConfigUtils.comBStaffChatPerm, getAliases(ConfigUtils.comBStaffChatAliases)));
+        }
+        if (ConfigUtils.comBSudo) {
+            registerCommand(plugin, new SudoCommand(ConfigUtils.comBSudoBase, ConfigUtils.comBSudoPerm, getAliases(ConfigUtils.comBSudoAliases)));
+        }
+        if (ConfigUtils.comBStaffOnline) {
+            registerCommand(plugin, new StaffOnlineCommand(ConfigUtils.comBStaffOnlineBase, ConfigUtils.comBStaffOnlinePerm, getAliases(ConfigUtils.comBStaffOnlineAliases)));
+        }
+        if (ConfigUtils.comBGlobalOnline && StreamLine.lpHolder.enabled) {
+            registerCommand(plugin, new GlobalOnlineCommand(ConfigUtils.comBGlobalOnlineBase, ConfigUtils.comBGlobalOnlinePerm, getAliases(ConfigUtils.comBGlobalOnlineAliases)));
+        }
+        // // Spying.
+        if (ConfigUtils.comBSSPY) {
+            registerCommand(plugin, new SSPYCommand(ConfigUtils.comBSSPYBase, ConfigUtils.comBSSPYPerm, getAliases(ConfigUtils.comBSSPYAliases)));
+        }
+        if (ConfigUtils.comBGSPY) {
+            registerCommand(plugin, new GSPYCommand(ConfigUtils.comBGSPYPerm, ConfigUtils.comBGSPYPerm, getAliases(ConfigUtils.comBGSPYAliases)));
+        }
+        if (ConfigUtils.comBPSPY) {
+            registerCommand(plugin, new PSPYCommand(ConfigUtils.comBPSPYBase, ConfigUtils.comBPSPYPerm, getAliases(ConfigUtils.comBPSPYAliases)));
+        }
+        // // Punishments.
+        if (ConfigUtils.comBMute) {
+            registerCommand(plugin, new MuteCommand(ConfigUtils.comBMuteBase, ConfigUtils.comBMutePerm, getAliases(ConfigUtils.comBMuteAliases)));
+        }
+        if (ConfigUtils.comBBan) {
+            registerCommand(plugin, new BanCommand(ConfigUtils.comBBanBase, ConfigUtils.comBBanPerm, getAliases(ConfigUtils.comBBanAliases)));
         }
 
-        // Commands.
-        if (ConfigUtils.comBStream)
-            registerCommand(plugin, stream);
-        if (ConfigUtils.comBStaffChat)
-            registerCommand(plugin, staffChat);
-        if (ConfigUtils.comBSudo)
-            registerCommand(plugin, bsudo);
-
         // Utils.
-        if (ConfigUtils.comBPing)
-            registerCommand(plugin, ping);
-        if (ConfigUtils.comBPlugins)
-            registerCommand(plugin, plugins);
-        if (ConfigUtils.comBStaffOnline)
-            registerCommand(plugin, staffOnline);
-        if (ConfigUtils.comBGlobalOnline && StreamLine.lpHolder.enabled)
-            registerCommand(plugin, globalOnline);
-        registerCommand(plugin, reload);
-        if (ConfigUtils.comBSPing)
-            registerCommand(plugin, serverping);
+        // // Other.
+        registerCommand(plugin, new ReloadCommand(ConfigUtils.comBReloadBase, ConfigUtils.comBReloadPerm, getAliases(ConfigUtils.comBReloadAliases)));
+        if (ConfigUtils.comBPing) {
+            registerCommand(plugin, new PingCommand(ConfigUtils.comBPingBase, ConfigUtils.comBPingPerm, getAliases(ConfigUtils.comBPingAliases)));
+        }
+        if (ConfigUtils.comBPlugins) {
+            registerCommand(plugin, new PluginsCommand(ConfigUtils.comBPluginsBase, ConfigUtils.comBPluginsPerm, getAliases(ConfigUtils.comBPluginsAliases)));
+        }
+        if (ConfigUtils.comBSPing) {
+            registerCommand(plugin, new JDAPingerCommand(ConfigUtils.comBSPingBase, ConfigUtils.comBSPingPerm, getAliases(ConfigUtils.comBSPingAliases)));
+        }
+        // // Events.
+        if (ConfigUtils.comBEReload) {
+            registerCommand(plugin, new EventReloadCommand(ConfigUtils.comBReloadBase, ConfigUtils.comBEReloadPerm, getAliases(ConfigUtils.comBEReloadAliases)));
+        }
 
         // All players.
-        if (ConfigUtils.comBReport)
-            registerCommand(plugin, report);
+        // // Reports.
+        if (ConfigUtils.comBReport) {
+            registerCommand(plugin, new ReportCommand(ConfigUtils.comBReportBase, ConfigUtils.comBReportPerm, getAliases(ConfigUtils.comBReportAliases)));
+        }
+        // // Messaging.
+        if (ConfigUtils.comBIgnore) {
+            registerCommand(plugin, new IgnoreCommand(ConfigUtils.comBIgnoreBase, ConfigUtils.comBIgnorePerm, getAliases(ConfigUtils.comBIgnoreAliases)));
+        }
+        if (ConfigUtils.comBMessage) {
+            registerCommand(plugin, new MessageCommand(ConfigUtils.comBMessageBase, ConfigUtils.comBMessagePerm, getAliases(ConfigUtils.comBMessageAliases)));
+        }
+        if (ConfigUtils.comBReply) {
+            registerCommand(plugin, new ReplyCommand(ConfigUtils.comBReplyBase, ConfigUtils.comBReplyPerm, getAliases(ConfigUtils.comBReplyAliases)));
+        }
+        if (ConfigUtils.comBFriend) {
+            registerCommand(plugin, new FriendCommand(ConfigUtils.comBFriendBase, ConfigUtils.comBFriendPerm, getAliases(ConfigUtils.comBFriendAliases)));
+        }
 
-        // JDA
-        //registerCommand(plugin, new JDAPingerCommand(plugin));
+        // Servers.
+        if (ConfigUtils.comBLobby) {
+            registerCommand(plugin, new GoToServerLobbyCommand(ConfigUtils.comBLobbyBase, ConfigUtils.comBLobbyPerm, getAliases(ConfigUtils.comBLobbyAliases)));
+        }
+        if (ConfigUtils.comBFabric) {
+            registerCommand(plugin, new GoToServerVanillaCommand(ConfigUtils.comBFabricPerm));
+        }
 
-        // servers
-        if (ConfigUtils.comBLobby)
-            registerCommand(plugin, lobby);
-        if (ConfigUtils.comBFabric)
-            registerCommand(plugin, fabric);
-
-
-        if (ConfigUtils.comBParties)
-            registerCommand(plugin, parties);
-        if (ConfigUtils.comBGuilds)
-            registerCommand(plugin, guilds);
-        if (ConfigUtils.comBParty)
-            registerCommand(plugin, party);
-        if (ConfigUtils.comBGuild)
-            registerCommand(plugin, guild);
-        if (ConfigUtils.comBParQuick)
-            registerCommand(plugin, pc);
-        if (ConfigUtils.comBGuildQuick)
-            registerCommand(plugin, gc);
-
-        if (ConfigUtils.comBStats)
-            registerCommand(plugin, stats);
-
-        if (ConfigUtils.comBSSPY)
-            registerCommand(plugin, sspy);
-        if (ConfigUtils.comBGSPY)
-            registerCommand(plugin, gspy);
-        if (ConfigUtils.comBPSPY)
-            registerCommand(plugin, pspy);
-        if (ConfigUtils.comBBTag)
-            registerCommand(plugin, btag);
-        if (ConfigUtils.comBEReload)
-            registerCommand(plugin, reev);
-        if (ConfigUtils.comBPoints)
-            registerCommand(plugin, points);
-        if (ConfigUtils.comBIgnore)
-            registerCommand(plugin, ignore);
-        if (ConfigUtils.comBMessage)
-            registerCommand(plugin, message);
-        if (ConfigUtils.comBReply)
-            registerCommand(plugin, reply);
-        if (ConfigUtils.comBFriend)
-            registerCommand(plugin, friend);
-
-        // Punishments.
-        if (ConfigUtils.comBMute)
-            registerCommand(plugin, mute);
-        if (ConfigUtils.comBBan)
-            registerCommand(plugin, ban);
+        // Parties / Guilds / Stats.
+        // // Stats.
+        if (ConfigUtils.comBGetStats) {
+            registerCommand(plugin, new GetStatsCommand(ConfigUtils.comBGetStatsBase, ConfigUtils.comBGetStatsPerm, getAliases(ConfigUtils.comBGetStatsAliases)));
+        }
+        if (ConfigUtils.comBStats) {
+            registerCommand(plugin, new StatsCommand(ConfigUtils.comBStatsBase, ConfigUtils.comBStatsPerm, getAliases(ConfigUtils.comBStatsAliases)));
+        }
+        if (ConfigUtils.comBBTag) {
+            registerCommand(plugin, new BTagCommand(ConfigUtils.comBBTagBase, ConfigUtils.comBBTagPerm, getAliases(ConfigUtils.comBBTagAliases)));
+        }
+        // // Stats.
+        if (ConfigUtils.comBParties) {
+            registerCommand(plugin, new PartiesCommand(ConfigUtils.comBPartiesBase, ConfigUtils.comBPartiesPerm, getAliases(ConfigUtils.comBPartiesAliases)));
+        }
+        if (ConfigUtils.comBParty) {
+            registerCommand(plugin, new PartyCommand(ConfigUtils.comBPartyBase, ConfigUtils.comBParPerm, getAliases(ConfigUtils.comBParMainAliases)));
+        }
+        if (ConfigUtils.comBParQuick) {
+            registerCommand(plugin, new PCQuickCommand("pc", ConfigUtils.comBParPerm, getAliases(Arrays.asList("pch", "pchat"))));
+        }
+        if (ConfigUtils.comBPoints) {
+            registerCommand(plugin, new NetworkPointsCommand(ConfigUtils.comBPointsBase, ConfigUtils.comBPointsPerm, getAliases(ConfigUtils.comBPointsAliases)));
+        }
+        // // Guilds.
+        if (ConfigUtils.comBGuilds) {
+            registerCommand(plugin, new GuildsCommand(ConfigUtils.comBPartiesBase, ConfigUtils.comBGuildsPerm, getAliases(ConfigUtils.comBGuildsAliases)));
+        }
+        if (ConfigUtils.comBGuild) {
+            registerCommand(plugin, new GuildCommand(ConfigUtils.comBGuildBase, ConfigUtils.comBGuildPerm, getAliases(ConfigUtils.comBGuildMainAliases)));
+        }
+        if (ConfigUtils.comBGuildQuick) {
+            registerCommand(plugin, new GCQuickCommand("gc", ConfigUtils.comBGuildPerm, getAliases(Arrays.asList("gch", "gchat"))));
+        }
 
         plugin.getLogger().info("Loaded " + commandsAmount + " command(s) into memory...!");
     }
@@ -244,23 +185,8 @@ public class PluginUtils {
     public static void loadListeners(StreamLine plugin){
         listenerAmount = 0;
 
-        List<Listener> listeners = new ArrayList<>();
-        Listener staffchat = new ChatListener(plugin);
-        Listener joinleave = new JoinLeaveListener(plugin);
-
-        listeners.add(staffchat);
-        listeners.add(joinleave);
-
-        try {
-            for (Listener listener : listeners) {
-                plugin.getProxy().getPluginManager().unregisterListener(listener);
-            }
-        } catch (Exception e){
-            MessagingUtils.logWarning("Listener discriminator broke for the following reason: " + e.getMessage());
-        }
-
-        registerListener(plugin, staffchat);
-        registerListener(plugin, joinleave);
+        registerListener(plugin, new ChatListener(plugin));
+        registerListener(plugin, new JoinLeaveListener(plugin));
 
         plugin.getLogger().info("Loaded " + listenerAmount + " listener(s) into memory...!");
     }

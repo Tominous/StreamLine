@@ -130,6 +130,23 @@ public class PlayerUtils {
         return player.latestName.equals(name);
     }
 
+    public static String forStats(List<Player> players){
+        StringBuilder builder = new StringBuilder("[");
+
+        int i = 1;
+        for (Player p : players){
+            if (i != players.size()) {
+                builder.append(p.toString()).append(", ");
+            } else {
+                builder.append(p.toString()).append("]");
+            }
+
+            i++;
+        }
+
+        return builder.toString();
+    }
+
     public static Player getStat(ProxiedPlayer player) {
         if (player instanceof Player) {
             return getStat(player.getName());
@@ -146,23 +163,6 @@ public class PlayerUtils {
         }
 
         return null;
-    }
-
-    public static String forStats(List<Player> players){
-        StringBuilder builder = new StringBuilder("[");
-
-        int i = 1;
-        for (Player p : players){
-            if (i != players.size()) {
-                builder.append(p.toString()).append(", ");
-            } else {
-                builder.append(p.toString()).append("]");
-            }
-
-            i++;
-        }
-
-        return builder.toString();
     }
 
     public static Player getStat(CommandSender player) {
@@ -224,11 +224,15 @@ public class PlayerUtils {
         if (! ConfigUtils.updateDisplayNames) return;
         if (! StreamLine.lpHolder.enabled) return;
 
+        player.setDisplayName(getDisplayName(player));
+    }
+
+    public static String getDisplayName(Player player) {
         User user = StreamLine.lpHolder.api.getUserManager().getUser(player.latestName);
-        if (user == null) return;
+        if (user == null) return player.displayName;
 
         Group group = StreamLine.lpHolder.api.getGroupManager().getGroup(user.getPrimaryGroup());
-        if (group == null) return;
+        if (group == null) return player.displayName;
 
         String prefix = "";
         String suffix = "";
@@ -258,7 +262,45 @@ public class PlayerUtils {
         if (prefix == null) prefix = "";
         if (suffix == null) suffix = "";
 
-        player.setDisplayName(TextUtils.codedString(prefix + player.latestName + suffix));
+        return TextUtils.codedString(prefix + player.latestName + suffix);
+    }
+
+    public static String getDisplayName(String username) {
+        User user = StreamLine.lpHolder.api.getUserManager().getUser(username);
+        if (user == null) return username;
+
+        Group group = StreamLine.lpHolder.api.getGroupManager().getGroup(user.getPrimaryGroup());
+        if (group == null) return username;
+
+        String prefix = "";
+        String suffix = "";
+
+        TreeMap<Integer, String> preWeight = new TreeMap<>();
+        TreeMap<Integer, String> sufWeight = new TreeMap<>();
+
+        for (PrefixNode node : group.getNodes(NodeType.PREFIX)) {
+            preWeight.put(node.getPriority(), node.getMetaValue());
+        }
+
+        for (PrefixNode node : user.getNodes(NodeType.PREFIX)) {
+            preWeight.put(node.getPriority(), node.getMetaValue());
+        }
+
+        for (SuffixNode node : group.getNodes(NodeType.SUFFIX)) {
+            sufWeight.put(node.getPriority(), node.getMetaValue());
+        }
+
+        for (SuffixNode node : user.getNodes(NodeType.SUFFIX)) {
+            sufWeight.put(node.getPriority(), node.getMetaValue());
+        }
+
+        prefix = preWeight.get(getCeilingInt(preWeight.keySet()));
+        suffix = sufWeight.get(getCeilingInt(sufWeight.keySet()));
+
+        if (prefix == null) prefix = "";
+        if (suffix == null) suffix = "";
+
+        return TextUtils.codedString(prefix + username + suffix);
     }
 
     public static int getCeilingInt(Set<Integer> ints){
@@ -341,16 +383,50 @@ public class PlayerUtils {
     }
 
     public static void addStat(Player stat){
+        if (isInStatsList(stat)) return;
+
         stats.add(stat);
     }
 
-    public static void removeStat(Player stat){
-        try {
-            stat.saveInfo();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static boolean isInStatsList(Player stat) {
+            return isInStatsList(stat.latestName);
+    }
+
+    public static boolean isInStatsList(String username) {
+        for (Player player : getStats()) {
+            if (player.latestName.equals(username)) return true;
         }
-        stats.remove(stat);
+
+        return false;
+    }
+
+    public static void removeStat(Player stat){
+        List<Player> toRemove = new ArrayList<>();
+
+        for (Player player : getStats()) {
+            if (player.latestName.equals(stat.latestName)) {
+                toRemove.add(player);
+            }
+        }
+
+        for (Player player : toRemove) {
+            stats.remove(player);
+            try {
+                stat.saveInfo();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void saveAll(){
+        for (Player player : getStats()) {
+            try {
+                player.saveInfo();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static void info(CommandSender sender, Player of){
