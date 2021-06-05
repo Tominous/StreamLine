@@ -228,44 +228,12 @@ public class PlayerUtils {
     }
 
     public static String getDisplayName(Player player) {
-        User user = StreamLine.lpHolder.api.getUserManager().getUser(player.latestName);
-        if (user == null) return player.displayName;
-
-        Group group = StreamLine.lpHolder.api.getGroupManager().getGroup(user.getPrimaryGroup());
-        if (group == null) return player.displayName;
-
-        String prefix = "";
-        String suffix = "";
-
-        TreeMap<Integer, String> preWeight = new TreeMap<>();
-        TreeMap<Integer, String> sufWeight = new TreeMap<>();
-
-        for (PrefixNode node : group.getNodes(NodeType.PREFIX)) {
-            preWeight.put(node.getPriority(), node.getMetaValue());
-        }
-
-        for (PrefixNode node : user.getNodes(NodeType.PREFIX)) {
-            preWeight.put(node.getPriority(), node.getMetaValue());
-        }
-
-        for (SuffixNode node : group.getNodes(NodeType.SUFFIX)) {
-            sufWeight.put(node.getPriority(), node.getMetaValue());
-        }
-
-        for (SuffixNode node : user.getNodes(NodeType.SUFFIX)) {
-            sufWeight.put(node.getPriority(), node.getMetaValue());
-        }
-
-        prefix = preWeight.get(getCeilingInt(preWeight.keySet()));
-        suffix = sufWeight.get(getCeilingInt(sufWeight.keySet()));
-
-        if (prefix == null) prefix = "";
-        if (suffix == null) suffix = "";
-
-        return TextUtils.codedString(prefix + player.latestName + suffix);
+        return getDisplayName(player.latestName);
     }
 
     public static String getDisplayName(String username) {
+        if (! StreamLine.lpHolder.enabled) return username;
+
         User user = StreamLine.lpHolder.api.getUserManager().getUser(username);
         if (user == null) return username;
 
@@ -404,6 +372,11 @@ public class PlayerUtils {
         List<Player> toRemove = new ArrayList<>();
 
         for (Player player : getStats()) {
+            if (player.latestName == null) {
+                toRemove.add(player);
+                continue;
+            }
+
             if (player.latestName.equals(stat.latestName)) {
                 toRemove.add(player);
             }
@@ -427,6 +400,31 @@ public class PlayerUtils {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static int removeOfflineStats(){
+        int count = 0;
+        List<Player> players = PlayerUtils.getStats();
+        List<Player> toRemove = new ArrayList<>();
+
+        for (Player player : players) {
+            if (! player.online) {
+                toRemove.add(player);
+            }
+        }
+
+        for (Player player : toRemove) {
+            try {
+                player.saveInfo();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            PlayerUtils.removeStat(player);
+
+            count ++;
+        }
+
+        return count;
     }
 
     public static void info(CommandSender sender, Player of){

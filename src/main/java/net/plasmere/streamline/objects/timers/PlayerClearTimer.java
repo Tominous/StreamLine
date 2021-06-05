@@ -31,30 +31,7 @@ public class PlayerClearTimer implements Runnable {
     public void done(){
         countdown = reset;
 
-        try {
-            int count = 0;
-            List<Player> players = PlayerUtils.getStats();
-            List<Player> toRemove = new ArrayList<>();
-
-            for (Player player : players) {
-                if (! player.online) {
-                    toRemove.add(player);
-                }
-            }
-
-            for (Player player : toRemove) {
-                try {
-                    player.saveInfo();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                PlayerUtils.removeStat(player);
-
-                count ++;
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        int count = PlayerUtils.removeOfflineStats();
 
         //StreamLine.getInstance().getLogger().info("Just removed " + count + " cached players... Now at " + PlayerUtils.getStats().size() + " cached players!");
     }

@@ -803,25 +803,6 @@ public class Player implements ProxiedPlayer {
         return thing;
     }
 
-    public void saveInfo() throws IOException {
-        file.delete();
-
-        file.createNewFile();
-
-        savedKeys = new ArrayList<>();
-        FileWriter writer = new FileWriter(file);
-        for (String s : getInfoAsPropertyList()){
-            String key = s.split("=")[0];
-            if (savedKeys.contains(key)) continue;
-            savedKeys.add(key);
-
-            writer.write(tryUpdateFormatRaw(s) + "\n");
-        }
-        writer.close();
-
-        //StreamLine.getInstance().getLogger().info("Just saved Player info for player: " + PlayerUtils.getOffOnReg(player));
-    }
-
     /*
    Experience required =
    2 × current_level + 7 (for levels 0–15)
@@ -939,6 +920,25 @@ public class Player implements ProxiedPlayer {
 
     public void remPoints(int amount) {
         setPoints(points - amount);
+    }
+
+    public void saveInfo() throws IOException {
+        file.delete();
+
+        file.createNewFile();
+
+        savedKeys = new ArrayList<>();
+        FileWriter writer = new FileWriter(file);
+        for (String s : getInfoAsPropertyList()){
+            String key = s.split("=")[0];
+            if (savedKeys.contains(key)) continue;
+            savedKeys.add(key);
+
+            writer.write(tryUpdateFormatRaw(s) + "\n");
+        }
+        writer.close();
+
+        //StreamLine.getInstance().getLogger().info("Just saved Player info for player: " + PlayerUtils.getOffOnReg(player));
     }
 
     public String toString(){

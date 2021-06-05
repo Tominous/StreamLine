@@ -298,7 +298,7 @@ public class StreamLine extends Plugin {
 
 		saveGuilds();
 
-		PlayerUtils.saveAll();
+		PlayerUtils.removeOfflineStats();
 	}
 
 	public void saveGuilds(){

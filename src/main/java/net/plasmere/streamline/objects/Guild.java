@@ -1,5 +1,6 @@
 package net.plasmere.streamline.objects;
 
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.GuildUtils;
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class Guild {
-    private HashMap<String, String> info = new HashMap<>();
+    private TreeMap<String, String> info = new TreeMap<>();
     private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "guilds" + File.separator;
 
     public File file;
@@ -29,7 +30,8 @@ public class Guild {
     public List<String> invitesByUUID = new ArrayList<>();
     public boolean isMuted;
     public boolean isPublic;
-    public int xp;
+    public int totalXP;
+    public int currentXP;
     public int lvl;
     public int maxSize = ConfigUtils.guildMax;
 
@@ -58,7 +60,17 @@ public class Guild {
         construct(uuid, create);
     }
 
-    private void construct(String uuid, boolean createNew) {
+    public void createCheck(String thing){
+        if (thing.contains("-")){
+            construct(thing, false);
+        } else {
+            construct(Objects.requireNonNull(UUIDFetcher.getCachedUUID(thing)), false);
+        }
+    }
+
+    private void construct(String uuid, boolean createNew){
+        if (uuid == null) return;
+
         this.file = new File(filePrePath + uuid + ".properties");
 
         if (createNew) {
@@ -76,21 +88,31 @@ public class Guild {
         }
     }
 
-    public HashMap<String, String> getInfo() {
+    public TreeMap<String, String> getInfo() {
         return info;
     }
     public void remKey(String key){
         info.remove(key);
     }
+    public File getFile() { return file; }
+
     public String getFromKey(String key){
         return info.get(key);
     }
+
+//    public int getInfoIntFor(String key) {
+//        for (Integer i : info.keySet()) {
+//            if (info.get(i).key.equals(key)) return i;
+//        }
+//
+//        return 0;
+//    }
+
     public void updateKey(String key, Object value) {
         info.remove(key);
         addKeyValuePair(key, String.valueOf(value));
         loadVars();
     }
-    public File getFile() { return file; }
 
     public boolean hasProperty(String property) {
         for (String info : getInfoAsPropertyList()) {
@@ -122,7 +144,7 @@ public class Guild {
     }
 
     public void flushInfo(){
-        this.info = new HashMap<>();
+        this.info = new TreeMap<>();
     }
 
     public void addKeyValuePair(String key, String value){
@@ -131,28 +153,42 @@ public class Guild {
         info.put(key, value);
     }
 
-    public Player getMember(String uuid) {
-        Player player = UUIDFetcher.getPlayerByUUID(uuid, true);
+//    public boolean infoContainsKey(String key){
+//        for (Integer i : info.keySet()) {
+//            if (info.get(i).key.equals(key)) return true;
+//        }
+//
+//        return false;
+//    }
 
-        if (player == null) {
-            removeUUID(uuid);
-            return null;
+    public String stringifyList(List<String> list, String splitter){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 1; i <= list.size(); i++) {
+            if (i < list.size()) {
+                stringBuilder.append(list.get(i - 1)).append(splitter);
+            } else {
+                stringBuilder.append(list.get(i - 1));
+            }
         }
 
-        return player;
+        return stringBuilder.toString();
     }
 
     public void getFromConfigFile() throws IOException {
         if (file.exists()){
             Scanner reader = new Scanner(file);
 
+            List<String> keys = new ArrayList<>();
             while (reader.hasNextLine()) {
                 String data = reader.nextLine();
                 while (data.startsWith("#")) {
                     data = reader.nextLine();
                 }
                 String[] dataSplit = data.split("=", 2);
-                addKeyValuePair(dataSplit[0], dataSplit[1]);
+                if (keys.contains(dataSplit[0])) continue;
+                keys.add(dataSplit[0]);
+                addKeyValuePair(tryUpdateFormat(dataSplit[0]), dataSplit[1]);
             }
 
             reader.close();
@@ -170,8 +206,16 @@ public class Guild {
 
         int i = 0;
         for (String p : getInfoAsPropertyList()) {
-            if (! p.startsWith(propertiesDefaults().get(i).split("=", 2)[0])) return true;
+            if (! startsWithForKeys(p)) return true;
             i++;
+        }
+
+        return false;
+    }
+
+    public boolean startsWithForKeys(String string){
+        for (String p : propertiesDefaults()) {
+            if (tryUpdateFormat(string.split("=", 2)[0]).equals(p.split("=", 2)[0])) return true;
         }
 
         return false;
@@ -179,9 +223,18 @@ public class Guild {
 
     public void updateWithNewDefaults() throws IOException {
         file.delete();
+
+        file.createNewFile();
+
         FileWriter writer = new FileWriter(file);
 
+        savedKeys = new ArrayList<>();
+
         for (String p : propertiesDefaults()) {
+            String key = p.split("=", 2)[0];
+            if (savedKeys.contains(key)) continue;
+            savedKeys.add(key);
+
             String[] propSplit = p.split("=", 2);
 
             String property = propSplit[0];
@@ -193,7 +246,7 @@ public class Guild {
                 write = p;
             }
 
-            writer.write(write + "\n");
+            writer.write(tryUpdateFormatRaw(write) + "\n");
         }
 
         writer.close();
@@ -208,12 +261,29 @@ public class Guild {
                 data = reader.nextLine();
             }
             String[] dataSplit = data.split("=", 2);
-            addKeyValuePair(dataSplit[0], dataSplit[1]);
+            addKeyValuePair(tryUpdateFormat(dataSplit[0]), dataSplit[1]);
         }
 
         reader.close();
 
         loadVars();
+    }
+
+    public TreeSet<String> propertiesDefaults() {
+        TreeSet<String> defaults = new TreeSet<>();
+        defaults.add("name=" + name);
+        defaults.add("leader=" + leaderUUID);
+        defaults.add("mods=" + "");
+        defaults.add("members=" + "");
+        defaults.add("total-members=" + leaderUUID);
+        defaults.add("invites=" + "");
+        defaults.add("muted=false");
+        defaults.add("public=false");
+        defaults.add("total-xp=0");
+        defaults.add("current-xp=0");
+        defaults.add("lvl=1");
+        //defaults.add("");
+        return defaults;
     }
 
     public void loadVars(){
@@ -250,7 +320,8 @@ public class Guild {
         this.invitesByUUID = loadInvites();
         this.isMuted = Boolean.parseBoolean(getFromKey("muted"));
         this.isPublic = Boolean.parseBoolean(getFromKey("public"));
-        this.xp = Integer.parseInt(getFromKey("xp"));
+        this.totalXP = Integer.parseInt(getFromKey("total-xp"));
+        this.currentXP = getCurrentXP();
         this.lvl = Integer.parseInt(getFromKey("lvl"));
 
         try {
@@ -266,8 +337,44 @@ public class Guild {
         }
     }
 
+    public TreeMap<String, String> updatableKeys() {
+        TreeMap<String, String> thing = new TreeMap<>();
+
+        thing.put("xp", "total-xp");
+        thing.put("totalmembers", "total-members");
+
+        return thing;
+    }
+
+    public String tryUpdateFormat(String from){
+        for (String key : updatableKeys().keySet()) {
+            if (! from.equals(key)) continue;
+
+            return updatableKeys().get(key);
+        }
+
+        return from;
+    }
+
+    public String tryUpdateFormatRaw(String from){
+        String[] fromSplit = from.split("=", 2);
+
+        return tryUpdateFormat(fromSplit[0]) + "=" + fromSplit[1];
+    }
+
+    public Player getMember(String uuid) {
+        Player player = UUIDFetcher.getPlayerByUUID(uuid, true);
+
+        if (player == null) {
+            removeUUID(uuid);
+            return null;
+        }
+
+        return player;
+    }
+
     public void removeUUID(String uuid) {
-        updateKey("totalmembers", TextUtils.removeExtraDot(getFromKey("totalmembers").replace(uuid, "")));
+        updateKey("total-members", TextUtils.removeExtraDot(getFromKey("total-members").replace(uuid, "")));
         updateKey("members", TextUtils.removeExtraDot(getFromKey("members").replace(uuid, "")));
         updateKey("mods", TextUtils.removeExtraDot(getFromKey("mods").replace(uuid, "")));
         updateKey("uuid", TextUtils.removeExtraDot(getFromKey("uuid").replace(uuid, "")));
@@ -402,13 +509,13 @@ public class Guild {
         List<String> uuids = new ArrayList<>();
 
         try {
-            if (getFromKey("totalmembers").equals("") || getFromKey("totalmembers") == null) return uuids;
-            if (! getFromKey("totalmembers").contains(".")) {
-                uuids.add(getFromKey("totalmembers"));
+            if (getFromKey("total-members").equals("") || getFromKey("total-members") == null) return uuids;
+            if (! getFromKey("total-members").contains(".")) {
+                uuids.add(getFromKey("total-members"));
                 return uuids;
             }
 
-            for (String uuid : getFromKey("totalmembers").split("\\.")) {
+            for (String uuid : getFromKey("total-members").split("\\.")) {
                 try {
                     uuids.add(uuid);
                 } catch (Exception e) {
@@ -446,75 +553,53 @@ public class Guild {
         return uuids;
     }
 
-    public List<String> propertiesDefaults() {
-        List<String> defaults = new ArrayList<>();
-        defaults.add("name=" + name);
-        defaults.add("leader=" + leaderUUID);
-        defaults.add("mods=" + "");
-        defaults.add("members=" + "");
-        defaults.add("totalmembers=" + leaderUUID);
-        defaults.add("invites=" + "");
-        defaults.add("muted=false");
-        defaults.add("public=false");
-        defaults.add("xp=0");
-        defaults.add("lvl=1");
-        //defaults.add("");
-        return defaults;
-    }
-
-    public void saveInfo() throws IOException {
-        file.delete();
-
-        file.createNewFile();
-
-        savedKeys = new ArrayList<>();
-        FileWriter writer = new FileWriter(file);
-        for (String s : getInfoAsPropertyList()){
-            String key = s.split("=")[0];
-            if (savedKeys.contains(key)) continue;
-            savedKeys.add(key);
-
-            writer.write(s + "\n");
-        }
-        writer.close();
-
-        //StreamLine.getInstance().getLogger().info("Just saved Guild info for leader (UUID): " + leaderUUID);
-    }
-
     /*
    Experience required =
    2 × current_level + 7 (for levels 0–15)
    5 × current_level – 38 (for levels 16–30)
    9 × current_level – 158 (for levels 31+)
     */
-    public int getNeededXp(){
+    public int getNeededXp(int fromLevel){
         int needed = 0;
 
-        needed = 5000 + (5000 * lvl);
+        needed = 2500 + (2500 * fromLevel);
 
         return needed;
     }
 
     public int xpUntilNextLevel(){
-        return getNeededXp() - this.xp;
+        return getNeededXp(this.lvl + 1) - this.totalXP;
     }
 
-    public void addXp(int amount){
-        int setAmount = this.xp + amount;
-
-        setXp(setAmount);
+    public void addTotalXP(int amount){
+        setTotalXP(amount + this.totalXP);
     }
 
-    public void setXp(int amount){
+    public void setTotalXP(int amount){
         int setAmount = amount;
+        int required = getNeededXp(this.lvl + 1);
 
-        while (setAmount >= getNeededXp()) {
-            setAmount -= getNeededXp();
+        while (setAmount >= required) {
+            setAmount -= required;
             int setLevel = this.lvl + 1;
             updateKey("lvl", setLevel);
         }
 
-        updateKey("xp", setAmount);
+        updateKey("total-xp", setAmount);
+        updateKey("current-xp", getCurrentXP());
+    }
+
+    public int getCurrentLevelXP(){
+        int xpTill = 0;
+        for (int i = 0; i <= this.lvl; i++) {
+            xpTill += getNeededXp(i);
+        }
+
+        return xpTill;
+    }
+
+    public int getCurrentXP(){
+        return this.totalXP - getCurrentLevelXP();
     }
 
     private String getInvitesAsStringed(){
@@ -787,7 +872,7 @@ public class Guild {
     }
 
     public void addMember(Player player){
-        updateKey("totalmembers", addToTMembers(player));
+        updateKey("total-members", addToTMembers(player));
         updateKey("members", addToMembers(player));
 
         player.updateKey("guild", leaderUUID.toString());
@@ -805,7 +890,7 @@ public class Guild {
         if (leaderUUID.equals(player.uuid)){
             if (totalMembers.size() <= 1) {
                 try {
-                    updateKey("totalmembers", remFromTMembers(player));
+                    updateKey("total-members", remFromTMembers(player));
                     updateKey("members", remFromMembers(player));
                     updateKey("mods", removeFromModerators(player));
                     disband();
@@ -832,7 +917,7 @@ public class Guild {
             }
         }
 
-        updateKey("totalmembers", remFromTMembers(player));
+        updateKey("total-members", remFromTMembers(player));
         updateKey("leader", leaderUUID);
         updateKey("members", remFromMembers(player));
         updateKey("mods", removeFromModerators(player));
@@ -870,7 +955,7 @@ public class Guild {
         if (leaderUUID.equals(player.uuid)){
             if (totalMembers.size() <= 1) {
                 try {
-                    updateKey("totalmembers", remFromTMembers(player));
+                    updateKey("total-members", remFromTMembers(player));
                     updateKey("members", remFromMembers(player));
                     updateKey("mods", removeFromModerators(player));
                     disband();
@@ -919,7 +1004,7 @@ public class Guild {
         if (leaderUUID.equals(player.uuid)){
             if (totalMembers.size() <= 1) {
                 try {
-                    updateKey("totalmembers", remFromTMembers(player));
+                    updateKey("total-members", remFromTMembers(player));
                     updateKey("members", remFromMembers(player));
                     updateKey("mods", removeFromModerators(player));
                     disband();
@@ -972,7 +1057,7 @@ public class Guild {
 
     public void forTotalMembersRemove(Player player){
         this.totalMembersByUUID.removeIf(m -> m.equals(player.uuid));
-        updateKey("totalmembers", getTotalMembersAsStringed());
+        updateKey("total-members", getTotalMembersAsStringed());
     }
 
     public void replaceLeader(Player player){
@@ -1044,5 +1129,24 @@ public class Guild {
 
     public String toString(){
         return PlayerUtils.forStats(totalMembers);
+    }
+
+    public void saveInfo() throws IOException {
+        file.delete();
+
+        file.createNewFile();
+
+        savedKeys = new ArrayList<>();
+        FileWriter writer = new FileWriter(file);
+        for (String s : getInfoAsPropertyList()){
+            String key = s.split("=")[0];
+            if (savedKeys.contains(key)) continue;
+            savedKeys.add(key);
+
+            writer.write(tryUpdateFormatRaw(s) + "\n");
+        }
+        writer.close();
+
+        //StreamLine.getInstance().getLogger().info("Just saved Player info for player: " + PlayerUtils.getOffOnReg(player));
     }
 }

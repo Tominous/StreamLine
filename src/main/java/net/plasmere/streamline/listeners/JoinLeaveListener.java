@@ -164,6 +164,8 @@ public class JoinLeaveListener implements Listener {
                             }
                             break;
                         case "guild":
+                            if (! ConfigUtils.guildSendJoins) continue;
+
                             Guild guild = GuildUtils.getGuild(other);
                             if (guild == null) continue;
 
@@ -176,6 +178,8 @@ public class JoinLeaveListener implements Listener {
                             }
                             break;
                         case "party":
+                            if (! ConfigUtils.partySendJoins) continue;
+
                             Party party = PartyUtils.getParty(other);
                             if (party == null) continue;
 
@@ -464,6 +468,8 @@ public class JoinLeaveListener implements Listener {
                             }
                             break;
                         case "guild":
+                            if (! ConfigUtils.guildSendLeaves) continue;
+
                             Guild guild = GuildUtils.getGuild(other);
                             if (guild == null) continue;
 
@@ -476,6 +482,8 @@ public class JoinLeaveListener implements Listener {
                             }
                             break;
                         case "party":
+                            if (! ConfigUtils.partySendLeaves) continue;
+
                             Party party = PartyUtils.getParty(other);
                             if (party == null) continue;
 

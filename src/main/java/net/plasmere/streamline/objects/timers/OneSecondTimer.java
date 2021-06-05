@@ -46,6 +46,8 @@ public class OneSecondTimer implements Runnable {
 
             if (StreamLine.lpHolder.enabled) {
                 for (Player player : PlayerUtils.getStats()) {
+                    if (player.latestName == null) continue;
+                    if (player.latestName.equals("")) continue;
                     PlayerUtils.updateDisplayName(player);
                 }
             }

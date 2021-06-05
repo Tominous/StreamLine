@@ -102,6 +102,8 @@ public class PartyUtils {
             addParty(party);
 
             MessagingUtils.sendBPUserMessage(party, p, p, create);
+
+            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("CREATE : totalMembers --> "  + party.totalMembers.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,6 +132,8 @@ public class PartyUtils {
             parties.add(party);
 
             MessagingUtils.sendBPUserMessage(party, p, p, create);
+
+            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("OPEN : totalMembers --> "  + party.totalMembers.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,7 +157,19 @@ public class PartyUtils {
         try {
             Party party = getParty(from);
 
+            if (party != null) {
+                if (party.totalMembers.size() <= 0) {
+                    if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("#1 NO PARTY MEMBERS!");
+                }
+            }
+
             if (! checkPlayer(party, to, from)) return;
+
+            if (party != null) {
+                if (party.totalMembers.size() <= 0) {
+                    if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("#2 NO PARTY MEMBERS!");
+                }
+            }
 
             if (to.equals(from)) {
                 MessagingUtils.sendBUserMessage(player, inviteNonSelf);
@@ -170,6 +186,10 @@ public class PartyUtils {
                 return;
             }
 
+            if (party.totalMembers.size() <= 0) {
+                if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("#3 NO PARTY MEMBERS!");
+            }
+
             if (to.online) {
                 MessagingUtils.sendBPUserMessage(party, player, to, inviteUser
                         .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(from))
@@ -177,6 +197,10 @@ public class PartyUtils {
                         .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
                         .replace("%leaderdefault%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
                 );
+            }
+
+            if (party.totalMembers.size() <= 0) {
+                if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("#4 NO PARTY MEMBERS!");
             }
 
             for (Player pl : party.totalMembers) {
