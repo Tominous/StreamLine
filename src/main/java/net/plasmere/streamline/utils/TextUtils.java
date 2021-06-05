@@ -51,7 +51,7 @@ public class TextUtils {
         }
     }
 
-    public static TextComponent hexedText(String text){
+    public static TextComponent hexedText(String text) {
         text = codedString(text);
 
         try {
@@ -67,25 +67,46 @@ public class TextUtils {
 
             int i = 0;
             boolean find = false;
+            TreeMap<Integer, String> founds = new TreeMap<>();
 
             while (matcher.find()) {
                 find = true;
                 found = matcher.group(0);
-                String colorHex = found.substring(1, found.indexOf('>'));
-                String[] split = textLeft.split(Pattern.quote(found));
 
-                if (i == 0) {
-                    tc.addExtra(codedString(split[0]));
-                }
+                founds.put(i, found);
 
-                BaseComponent[] bc = new ComponentBuilder(split[1]).color(ChatColor.of(Color.decode(colorHex))).create();
+                i ++;
+            }
+            if (! find) return new TextComponent(text);
+
+            TreeMap<Integer, String> pieces = new TreeMap<>();
+            int iter = 0;
+            int from = 0;
+            for (Integer key : founds.keySet()) {
+                int at = text.indexOf(founds.get(key), from);
+                pieces.put(iter, text.substring(at));
+                from = at;
+                iter ++;
+            }
+
+            tc = new TextComponent(pieces.get(0));
+
+            for (Integer key : pieces.keySet()) {
+                if (key == 0) continue;
+
+                String p = pieces.get(key);
+                String f = p.substring(0, "<#123456>".length());
+
+                String colorHex = f.substring(1, f.indexOf('>'));
+                String after = p.substring(f.length());
+
+//                tc.addExtra(new LiteralText(after).styled(style -> style.withColor(Integer.decode(colorHex))));
+                BaseComponent[] bc = new ComponentBuilder(after).color(ChatColor.of(Color.decode(colorHex))).create();
 
                 for (BaseComponent b : bc) {
                     tc.addExtra(b);
                 }
-                i ++;
             }
-            if (! find) return new TextComponent(text);
 
             return tc;
         } catch (Exception e) {
@@ -93,6 +114,49 @@ public class TextUtils {
             return new TextComponent(text);
         }
     }
+
+//    public static TextComponent hexedText(String text){
+//        text = codedString(text);
+//
+//        try {
+//            //String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
+//
+//            Pattern pattern = Pattern.compile("([<][#][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][>])+", Pattern.CASE_INSENSITIVE);
+//            Matcher matcher = pattern.matcher(text);
+//            String found = "";
+//
+//            String textLeft = text;
+//
+//            TextComponent tc = new TextComponent();
+//
+//            int i = 0;
+//            boolean find = false;
+//
+//            while (matcher.find()) {
+//                find = true;
+//                found = matcher.group(0);
+//                String colorHex = found.substring(1, found.indexOf('>'));
+//                String[] split = textLeft.split(Pattern.quote(found));
+//
+//                if (i == 0) {
+//                    tc.addExtra(codedString(split[0]));
+//                }
+//
+//                BaseComponent[] bc = new ComponentBuilder(split[1]).color(ChatColor.of(Color.decode(colorHex))).create();
+//
+//                for (BaseComponent b : bc) {
+//                    tc.addExtra(b);
+//                }
+//                i ++;
+//            }
+//            if (! find) return new TextComponent(text);
+//
+//            return tc;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new TextComponent(text);
+//        }
+//    }
 
     public static String argsToStringMinus(String[] args, int... toRemove){
         TreeMap<Integer, String> argsSet = new TreeMap<>();
