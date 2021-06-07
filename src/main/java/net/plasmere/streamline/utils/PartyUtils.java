@@ -7,7 +7,6 @@ import net.luckperms.api.query.QueryOptions;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
-import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Party;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
@@ -103,7 +102,16 @@ public class PartyUtils {
 
             MessagingUtils.sendBPUserMessage(party, p, p, create);
 
-            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("CREATE : totalMembers --> "  + party.totalMembers.size());
+            // if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("CREATE : totalMembers --> "  + party.totalMembers.size());
+
+            if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleCreates) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, createTitle,
+                        createConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%size%", String.valueOf(party.maxSize))
+                        , ConfigUtils.textChannelParties));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -133,7 +141,25 @@ public class PartyUtils {
 
             MessagingUtils.sendBPUserMessage(party, p, p, create);
 
-            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("OPEN : totalMembers --> "  + party.totalMembers.size());
+            // if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("OPEN : totalMembers --> "  + party.totalMembers.size());
+
+            if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleCreates) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, createTitle,
+                        createConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%size%", String.valueOf(party.maxSize))
+                        , ConfigUtils.textChannelParties));
+            }
+
+            if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleOpens) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, openTitle,
+                        openConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%size%", String.valueOf(party.maxSize))
+                        , ConfigUtils.textChannelParties));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -233,6 +259,16 @@ public class PartyUtils {
             party.addInvite(to);
             invites.remove(party);
             invites.put(party, party.invites);
+
+            if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleInvites) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player, inviteTitle,
+                        inviteConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(from))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%size%", String.valueOf(party.maxSize))
+                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(to))
+                        , ConfigUtils.textChannelParties));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -294,6 +330,24 @@ public class PartyUtils {
 
                 party.addMember(accepter);
                 party.removeInvite(accepter);
+
+                if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleJoins) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, joinsTitle,
+                            joinsConsole
+                                    .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(accepter))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                    .replace("%size%", String.valueOf(party.maxSize))
+                            , ConfigUtils.textChannelParties));
+                }
+
+                if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleAccepts) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, acceptTitle,
+                            acceptConsole
+                                    .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(accepter))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                    .replace("%size%", String.valueOf(party.maxSize))
+                            , ConfigUtils.textChannelParties));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -349,6 +403,15 @@ public class PartyUtils {
                     );
                 }
             }
+
+            if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleDenies) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, denyTitle,
+                        denyConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(denier))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%size%", String.valueOf(party.maxSize))
+                        , ConfigUtils.textChannelParties));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -390,6 +453,15 @@ public class PartyUtils {
             }
 
             m.connect(sender.getServer().getInfo());
+        }
+
+        if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleWarps) {
+            MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, warpTitle,
+                    warpConsole
+                            .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                            .replace("%size%", String.valueOf(party.maxSize))
+                    , ConfigUtils.textChannelParties));
         }
     }
 
@@ -447,6 +519,16 @@ public class PartyUtils {
 
         }
         party.toggleMute();
+
+        if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleMutes) {
+            MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, muteTitle,
+                    muteConsole
+                            .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                            .replace("%size%", String.valueOf(party.maxSize))
+                            .replace("%toggle%", party.isMuted ? muteToggleMuted : muteToggleUnMuted)
+                    , ConfigUtils.textChannelParties));
+        }
     }
 
     public static void kickMember(Player sender, Player player) {
@@ -512,6 +594,17 @@ public class PartyUtils {
 
             party.removeMemberFromParty(player);
         }
+
+
+        if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleKicks) {
+            MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player, kickTitle,
+                    kickConsole
+                            .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                            .replace("%size%", String.valueOf(party.maxSize))
+                            .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
+                    , ConfigUtils.textChannelParties));
+        }
     }
 
     public static void disband(Player sender) {
@@ -554,6 +647,15 @@ public class PartyUtils {
                     );
                 }
 
+            }
+
+            if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleDisbands) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, disbandTitle,
+                        disbandConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%size%", String.valueOf(party.maxSize))
+                        , ConfigUtils.textChannelParties));
             }
 
             removeParty(party);
@@ -615,6 +717,15 @@ public class PartyUtils {
                     }
                 }
             }
+
+            if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleOpens) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, openTitle,
+                        openConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%size%", String.valueOf(party.maxSize))
+                        , ConfigUtils.textChannelParties));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -628,7 +739,7 @@ public class PartyUtils {
         try {
             Party party = getParty(PlayerUtils.getStat(sender));
 
-            if (!isParty(party) || party == null) {
+            if (! isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(p, noPartyFound);
                 return;
             }
@@ -671,6 +782,15 @@ public class PartyUtils {
                         );
                     }
                 }
+            }
+
+            if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleOpens) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, openTitle,
+                        openConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%size%", String.valueOf(party.maxSize))
+                        , ConfigUtils.textChannelParties));
             }
         }  catch (Exception e) {
             e.printStackTrace();
@@ -726,6 +846,15 @@ public class PartyUtils {
                         );
                     }
                 }
+            }
+
+            if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleCloses) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, closeTitle,
+                        closeConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%size%", String.valueOf(party.maxSize))
+                        , ConfigUtils.textChannelParties));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -965,6 +1094,16 @@ public class PartyUtils {
                     }
                     break;
             }
+
+            if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsolePromotes) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, promoteTitle,
+                        promoteConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%size%", String.valueOf(party.maxSize))
+                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
+                        , ConfigUtils.textChannelParties));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1045,6 +1184,16 @@ public class PartyUtils {
                     );
                     break;
             }
+
+            if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleDemotes) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, demoteTitle,
+                        demoteConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%size%", String.valueOf(party.maxSize))
+                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
+                        , ConfigUtils.textChannelParties));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1093,6 +1242,15 @@ public class PartyUtils {
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
                         );
                     }
+                }
+
+                if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleJoins) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, joinsTitle,
+                            joinsConsole
+                                    .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                    .replace("%size%", String.valueOf(party.maxSize))
+                            , ConfigUtils.textChannelParties));
                 }
             } else {
                 MessagingUtils.sendBPUserMessage(party, p, p, joinFailure);
@@ -1208,6 +1366,15 @@ public class PartyUtils {
                 }
 
                 party.removeMemberFromParty(sender);
+
+                if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleLeaves) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, leaveTitle,
+                            leaveConsole
+                                    .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                    .replace("%size%", String.valueOf(party.maxSize))
+                            , ConfigUtils.textChannelParties));
+                }
             } else {
                 MessagingUtils.sendBPUserMessage(party, p, p, leaveFailure);
             }
@@ -1241,12 +1408,12 @@ public class PartyUtils {
                 return;
             }
 
-            if (ConfigUtils.partyConsole) {
-                MessagingUtils.sendBPUserMessage(party, p, StreamLine.getInstance().getProxy().getConsole(), chatConsole
-                        .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(sender))
-                        .replace("%message%", msg)
-                );
-            }
+//            if (ConfigUtils.partyConsoleChats) {
+//                MessagingUtils.sendBPUserMessage(party, p, StreamLine.getInstance().getProxy().getConsole(), chatConsole
+//                        .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(sender))
+//                        .replace("%message%", msg)
+//                );
+//            }
 
             for (Player pl : party.totalMembers) {
                 if (! pl.online) continue;
@@ -1261,8 +1428,14 @@ public class PartyUtils {
                 );
             }
 
-            if (ConfigUtils.partyToDiscord) {
-                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, discordTitle, msg, ConfigUtils.textChannelParties));
+            if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleChats) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, chatTitle,
+                        chatConsole
+                        .replace("%message%", msg)
+                        .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                        .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                        .replace("%size%", String.valueOf(party.maxSize))
+                        , ConfigUtils.textChannelParties));
             }
 
             for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
@@ -1286,8 +1459,6 @@ public class PartyUtils {
     public static final String textLeader = message.getString("party.text.leader");
     public static final String textModerator = message.getString("party.text.moderator");
     public static final String textMember = message.getString("party.text.member");
-    // Discord.
-    public static final String discordTitle = message.getString("party.discord.title");
     // Spy.
     public static final String spy = message.getString("party.spy");
     // No party.
@@ -1308,28 +1479,39 @@ public class PartyUtils {
     // Chat.
     public static final String chat = message.getString("party.chat.message");
     public static final String chatMuted = message.getString("party.chat.muted");
-    public static final String chatConsole = message.getString("party.chat.console");
+    public static final String chatConsole = message.getString("party.chat.console");;
+    public static final String chatTitle = message.getString("party.chat.title");
     // Create.
-    public static final String create = message.getString("party.create");
+    public static final String create = message.getString("party.create.sender");
+    public static final String createConsole = message.getString("party.create.console");
+    public static final String createTitle = message.getString("party.create.title");
     // Join.
     public static final String joinMembers = message.getString("party.join.members");
     public static final String joinUser = message.getString("party.join.user");
     public static final String joinFailure = message.getString("party.join.failure");
+    public static final String joinsConsole = message.getString("party.join.console");
+    public static final String joinsTitle = message.getString("party.join.title");
     // Leave.
     public static final String leaveMembers = message.getString("party.leave.members");
     public static final String leaveUser = message.getString("party.leave.user");
     public static final String leaveFailure = message.getString("party.leave.failure");
+    public static final String leaveConsole = message.getString("party.leave.console");
+    public static final String leaveTitle = message.getString("party.leave.title");
     // Promote.
     public static final String promoteMembers = message.getString("party.promote.members");
     public static final String promoteUser = message.getString("party.promote.user");
     public static final String promoteLeader = message.getString("party.promote.leader");
     public static final String promoteFailure = message.getString("party.promote.failure");
+    public static final String promoteConsole = message.getString("party.promote.console");
+    public static final String promoteTitle = message.getString("party.promote.title");
     // Demote.
     public static final String demoteMembers = message.getString("party.demote.members");
     public static final String demoteUser = message.getString("party.demote.user");
     public static final String demoteLeader = message.getString("party.demote.leader");
     public static final String demoteFailure = message.getString("party.demote.failure");
     public static final String demoteIsLeader = message.getString("party.demote.is-leader");
+    public static final String demoteConsole = message.getString("party.demote.console");
+    public static final String demoteTitle = message.getString("party.demote.title");
     // List.
     public static final String listMain = message.getString("party.list.main");
     public static final String listLeaderBulk = message.getString("party.list.leaderbulk");
@@ -1345,29 +1527,41 @@ public class PartyUtils {
     public static final String openMembers = message.getString("party.open.members");
     public static final String openLeader = message.getString("party.open.leader");
     public static final String openFailure = message.getString("party.open.failure");
+    public static final String openConsole = message.getString("party.open.console");
+    public static final String openTitle = message.getString("party.open.title");
     // Close.
     public static final String closeMembers = message.getString("party.close.members");
     public static final String closeSender = message.getString("party.close.sender");
     public static final String closeFailure = message.getString("party.close.failure");
+    public static final String closeConsole = message.getString("party.close.console");
+    public static final String closeTitle = message.getString("party.close.title");
     // Disband.
     public static final String disbandMembers = message.getString("party.disband.members");
     public static final String disbandLeader = message.getString("party.disband.leader");
+    public static final String disbandConsole = message.getString("party.disband.console");
+    public static final String disbandTitle = message.getString("party.disband.title");
     // Accept.
     public static final String acceptUser = message.getString("party.accept.user");
     public static final String acceptLeader = message.getString("party.accept.leader");
     public static final String acceptMembers = message.getString("party.accept.members");
     public static final String acceptFailure = message.getString("party.accept.failure");
+    public static final String acceptConsole = message.getString("party.accept.console");
+    public static final String acceptTitle = message.getString("party.accept.title");
     // Deny.
     public static final String denyUser = message.getString("party.deny.user");
     public static final String denyLeader = message.getString("party.deny.leader");
     public static final String denyMembers = message.getString("party.deny.members");
     public static final String denyFailure = message.getString("party.deny.failure");
+    public static final String denyConsole = message.getString("party.deny.console");
+    public static final String denyTitle = message.getString("party.deny.title");
     // Invite.
     public static final String inviteUser = message.getString("party.invite.user");
     public static final String inviteLeader = message.getString("party.invite.leader");
     public static final String inviteMembers = message.getString("party.invite.members");
     public static final String inviteFailure = message.getString("party.invite.failure");
     public static final String inviteNonSelf = message.getString("party.invite.non-self");
+    public static final String inviteConsole = message.getString("party.invite.console");
+    public static final String inviteTitle = message.getString("party.invite.title");
     // Kick.
     public static final String kickUser = message.getString("party.kick.user");
     public static final String kickSender = message.getString("party.kick.sender");
@@ -1375,12 +1569,20 @@ public class PartyUtils {
     public static final String kickFailure = message.getString("party.kick.failure");
     public static final String kickMod = message.getString("party.kick.mod");
     public static final String kickSelf = message.getString("party.kick.self");
+    public static final String kickConsole = message.getString("party.kick.console");
+    public static final String kickTitle = message.getString("party.kick.title");
     // Mute.
     public static final String muteUser = message.getString("party.mute.mute.user");
     public static final String muteMembers = message.getString("party.mute.mute.members");
     public static final String unmuteUser = message.getString("party.mute.unmute.user");
     public static final String unmuteMembers = message.getString("party.mute.unmute.members");
+    public static final String muteConsole = message.getString("party.mute.console");
+    public static final String muteTitle = message.getString("party.mute.title");
+    public static final String muteToggleMuted = message.getString("party.mute.toggle.muted");
+    public static final String muteToggleUnMuted = message.getString("party.mute.toggle.unmuted");
     // Warp.
     public static final String warpSender = message.getString("party.warp.sender");
     public static final String warpMembers = message.getString("party.warp.members");
+    public static final String warpConsole = message.getString("party.warp.console");
+    public static final String warpTitle = message.getString("party.warp.title");
 }

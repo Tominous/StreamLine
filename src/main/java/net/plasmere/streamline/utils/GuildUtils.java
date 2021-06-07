@@ -143,6 +143,16 @@ public class GuildUtils {
             addGuild(guild);
 
             MessagingUtils.sendBGUserMessage(guild, p, p, create);
+
+            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleCreates) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, createTitle,
+                        createConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%size%", String.valueOf(guild.maxSize))
+                                .replace("%name%", name)
+                        , ConfigUtils.textChannelParties));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -284,6 +294,17 @@ public class GuildUtils {
             guild.addInvite(to);
             invites.remove(guild);
             invites.put(guild, guild.invites);
+
+            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleInvites) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player, inviteTitle,
+                        inviteConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(to))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%size%", String.valueOf(guild.maxSize))
+                                .replace("%name%", guild.name)
+                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(from))
+                        , ConfigUtils.textChannelParties));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -345,6 +366,26 @@ public class GuildUtils {
 
                 guild.addMember(accepter);
                 guild.remFromInvites(from, accepter);
+
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleJoins) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, joinsTitle,
+                            joinsConsole
+                                    .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(accepter))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                    .replace("%size%", String.valueOf(guild.maxSize))
+                                    .replace("%name%", guild.name)
+                            , ConfigUtils.textChannelParties));
+                }
+
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleAccepts) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, acceptTitle,
+                            acceptConsole
+                                    .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(accepter))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                    .replace("%size%", String.valueOf(guild.maxSize))
+                                    .replace("%name%", guild.name)
+                            , ConfigUtils.textChannelParties));
+                }
             } else {
                 MessagingUtils.sendBUserMessage(p, acceptFailure);
             }
@@ -403,6 +444,16 @@ public class GuildUtils {
                 }
 
                 guild.remFromInvites(from, denier);
+
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleDenies) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, denyTitle,
+                            denyConsole
+                                    .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(denier))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                    .replace("%size%", String.valueOf(guild.maxSize))
+                                    .replace("%name%", guild.name)
+                            , ConfigUtils.textChannelParties));
+                }
             } else {
                 MessagingUtils.sendBUserMessage(p, denyFailure);
             }
@@ -447,6 +498,16 @@ public class GuildUtils {
             }
 
             m.connect(sender.getServer().getInfo());
+        }
+
+        if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleWarps) {
+            MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, warpTitle,
+                    warpConsole
+                            .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                            .replace("%size%", String.valueOf(guild.maxSize))
+                            .replace("%name%", guild.name)
+                    , ConfigUtils.textChannelParties));
         }
     }
 
@@ -504,6 +565,17 @@ public class GuildUtils {
 
         }
         guild.toggleMute();
+
+        if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleMutes) {
+            MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, muteTitle,
+                    muteConsole
+                            .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                            .replace("%size%", String.valueOf(guild.maxSize))
+                            .replace("%name%", guild.name)
+                            .replace("%toggle%", guild.isMuted ? muteToggleMuted : muteToggleUnMuted)
+                    , ConfigUtils.textChannelParties));
+        }
     }
 
     public static void kickMember(Player sender, Player player) {
@@ -567,6 +639,17 @@ public class GuildUtils {
                 }
 
                 guild.removeMemberFromGuild(player);
+            }
+
+            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleKicks) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, kickTitle,
+                        kickConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%size%", String.valueOf(guild.maxSize))
+                                .replace("%name%", guild.name)
+                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
+                        , ConfigUtils.textChannelParties));
             }
         } catch (Exception e) {
             MessagingUtils.sendBGUserMessage(guild, sender, sender, MessageConfUtils.bungeeCommandErrorUnd);
@@ -636,6 +719,16 @@ public class GuildUtils {
 
             }
 
+            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleDisbands) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, disbandTitle,
+                        disbandConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%size%", String.valueOf(guild.maxSize))
+                                .replace("%name%", guild.name)
+                        , ConfigUtils.textChannelParties));
+            }
+
             guilds.remove(guild);
             guild.disband();
         } catch (Exception e) {
@@ -694,6 +787,16 @@ public class GuildUtils {
                     }
                 }
             }
+
+            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleOpens) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, openTitle,
+                        openConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%size%", String.valueOf(guild.maxSize))
+                                .replace("%name%", guild.name)
+                        , ConfigUtils.textChannelParties));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -749,6 +852,16 @@ public class GuildUtils {
                         );
                     }
                 }
+            }
+
+            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleCloses) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, closeTitle,
+                        closeConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%size%", String.valueOf(guild.maxSize))
+                                .replace("%name%", guild.name)
+                        , ConfigUtils.textChannelParties));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -991,6 +1104,17 @@ public class GuildUtils {
                     }
                     break;
             }
+
+            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsolePromotes) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, promoteTitle,
+                        promoteConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%size%", String.valueOf(guild.maxSize))
+                                .replace("%name%", guild.name)
+                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
+                        , ConfigUtils.textChannelParties));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1087,6 +1211,17 @@ public class GuildUtils {
                     );
                     break;
             }
+
+            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleDemotes) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, demoteTitle,
+                        demoteConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%size%", String.valueOf(guild.maxSize))
+                                .replace("%name%", guild.name)
+                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
+                        , ConfigUtils.textChannelParties));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1136,6 +1271,16 @@ public class GuildUtils {
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(guild.leaderUUID, true))))
                         );
                     }
+                }
+
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleJoins) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, joinsTitle,
+                            joinsConsole
+                                    .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                    .replace("%size%", String.valueOf(guild.maxSize))
+                                    .replace("%name%", guild.name)
+                            , ConfigUtils.textChannelParties));
                 }
             } else {
                 MessagingUtils.sendBGUserMessage(guild, p, p, joinFailure);
@@ -1207,6 +1352,16 @@ public class GuildUtils {
                 }
 
                 guild.removeMemberFromGuild(sender);
+
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleLeaves) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, leaveTitle,
+                            leaveConsole
+                                    .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                    .replace("%size%", String.valueOf(guild.maxSize))
+                                    .replace("%name%", guild.name)
+                            , ConfigUtils.textChannelParties));
+                }
             } else {
                 MessagingUtils.sendBGUserMessage(guild, p, p, leaveFailure);
             }
@@ -1241,12 +1396,12 @@ public class GuildUtils {
                 return;
             }
 
-            if (ConfigUtils.guildConsole) {
-                MessagingUtils.sendBGUserMessage(guild, p, StreamLine.getInstance().getProxy().getConsole(), chatConsole
-                        .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(sender))
-                        .replace("%message%", msg)
-                );
-            }
+//            if (ConfigUtils.guildConsoleChats) {
+//                MessagingUtils.sendBGUserMessage(guild, p, StreamLine.getInstance().getProxy().getConsole(), chatConsole
+//                        .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(sender))
+//                        .replace("%message%", msg)
+//                );
+//            }
 
             for (Player pl : guild.totalMembers) {
                 if (! pl.online) continue;
@@ -1261,8 +1416,15 @@ public class GuildUtils {
                 );
             }
 
-            if (ConfigUtils.guildToDiscord) {
-                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, discordTitle, msg, ConfigUtils.textChannelGuilds));
+            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleChats) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, chatTitle,
+                        chatConsole
+                                .replace("%message%", msg)
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%size%", String.valueOf(guild.maxSize))
+                                .replace("%name%", guild.name)
+                        , ConfigUtils.textChannelParties));
             }
 
             for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
@@ -1325,6 +1487,17 @@ public class GuildUtils {
                     );
                 }
             }
+
+            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleRenames) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, renameTitle,
+                        renameConsole
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%size%", String.valueOf(guild.maxSize))
+                                .replace("%name%", guild.name)
+                                .replace("%old_name%", oldName)
+                        , ConfigUtils.textChannelParties));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1355,28 +1528,39 @@ public class GuildUtils {
     // Chat.
     public static final String chat = message.getString("guild.chat.message");
     public static final String chatMuted = message.getString("guild.chat.muted");
-    public static final String chatConsole = message.getString("guild.chat.console");
+    public static final String chatConsole = message.getString("guild.chat.console");;
+    public static final String chatTitle = message.getString("guild.chat.title");
     // Create.
-    public static final String create = message.getString("guild.create");
+    public static final String create = message.getString("guild.create.sender");
+    public static final String createConsole = message.getString("guild.create.console");
+    public static final String createTitle = message.getString("guild.create.title");
     // Join.
     public static final String joinMembers = message.getString("guild.join.members");
     public static final String joinUser = message.getString("guild.join.user");
     public static final String joinFailure = message.getString("guild.join.failure");
+    public static final String joinsConsole = message.getString("guild.join.console");
+    public static final String joinsTitle = message.getString("guild.join.title");
     // Leave.
     public static final String leaveMembers = message.getString("guild.leave.members");
     public static final String leaveUser = message.getString("guild.leave.user");
     public static final String leaveFailure = message.getString("guild.leave.failure");
+    public static final String leaveConsole = message.getString("guild.leave.console");
+    public static final String leaveTitle = message.getString("guild.leave.title");
     // Promote.
     public static final String promoteMembers = message.getString("guild.promote.members");
     public static final String promoteUser = message.getString("guild.promote.user");
     public static final String promoteLeader = message.getString("guild.promote.leader");
     public static final String promoteFailure = message.getString("guild.promote.failure");
+    public static final String promoteConsole = message.getString("guild.promote.console");
+    public static final String promoteTitle = message.getString("guild.promote.title");
     // Demote.
     public static final String demoteMembers = message.getString("guild.demote.members");
     public static final String demoteUser = message.getString("guild.demote.user");
     public static final String demoteLeader = message.getString("guild.demote.leader");
     public static final String demoteFailure = message.getString("guild.demote.failure");
     public static final String demoteIsLeader = message.getString("guild.demote.is-leader");
+    public static final String demoteConsole = message.getString("guild.demote.console");
+    public static final String demoteTitle = message.getString("guild.demote.title");
     // List.
     public static final String listMain = message.getString("guild.list.main");
     public static final String listLeaderBulk = message.getString("guild.list.leaderbulk");
@@ -1392,29 +1576,41 @@ public class GuildUtils {
     public static final String openMembers = message.getString("guild.open.members");
     public static final String openLeader = message.getString("guild.open.leader");
     public static final String openFailure = message.getString("guild.open.failure");
+    public static final String openConsole = message.getString("guild.open.console");
+    public static final String openTitle = message.getString("guild.open.title");
     // Close.
     public static final String closeMembers = message.getString("guild.close.members");
     public static final String closeSender = message.getString("guild.close.sender");
     public static final String closeFailure = message.getString("guild.close.failure");
+    public static final String closeConsole = message.getString("guild.close.console");
+    public static final String closeTitle = message.getString("guild.close.title");
     // Disband.
     public static final String disbandMembers = message.getString("guild.disband.members");
     public static final String disbandLeader = message.getString("guild.disband.leader");
+    public static final String disbandConsole = message.getString("guild.disband.console");
+    public static final String disbandTitle = message.getString("guild.disband.title");
     // Accept.
     public static final String acceptUser = message.getString("guild.accept.user");
     public static final String acceptLeader = message.getString("guild.accept.leader");
     public static final String acceptMembers = message.getString("guild.accept.members");
     public static final String acceptFailure = message.getString("guild.accept.failure");
+    public static final String acceptConsole = message.getString("guild.accept.console");
+    public static final String acceptTitle = message.getString("guild.accept.title");
     // Deny.
     public static final String denyUser = message.getString("guild.deny.user");
     public static final String denyLeader = message.getString("guild.deny.leader");
     public static final String denyMembers = message.getString("guild.deny.members");
     public static final String denyFailure = message.getString("guild.deny.failure");
+    public static final String denyConsole = message.getString("guild.deny.console");
+    public static final String denyTitle = message.getString("guild.deny.title");
     // Invite.
     public static final String inviteUser = message.getString("guild.invite.user");
     public static final String inviteLeader = message.getString("guild.invite.leader");
     public static final String inviteMembers = message.getString("guild.invite.members");
     public static final String inviteFailure = message.getString("guild.invite.failure");
     public static final String inviteNonSelf = message.getString("guild.invite.non-self");
+    public static final String inviteConsole = message.getString("guild.invite.console");
+    public static final String inviteTitle = message.getString("guild.invite.title");
     // Kick.
     public static final String kickUser = message.getString("guild.kick.user");
     public static final String kickSender = message.getString("guild.kick.sender");
@@ -1422,18 +1618,28 @@ public class GuildUtils {
     public static final String kickFailure = message.getString("guild.kick.failure");
     public static final String kickMod = message.getString("guild.kick.mod");
     public static final String kickSelf = message.getString("guild.kick.self");
+    public static final String kickConsole = message.getString("guild.kick.console");
+    public static final String kickTitle = message.getString("guild.kick.title");
     // Mute.
     public static final String muteUser = message.getString("guild.mute.mute.user");
     public static final String muteMembers = message.getString("guild.mute.mute.members");
     public static final String unmuteUser = message.getString("guild.mute.unmute.user");
     public static final String unmuteMembers = message.getString("guild.mute.unmute.members");
+    public static final String muteConsole = message.getString("guild.mute.console");
+    public static final String muteTitle = message.getString("guild.mute.title");
+    public static final String muteToggleMuted = message.getString("guild.mute.toggle.muted");
+    public static final String muteToggleUnMuted = message.getString("guild.mute.toggle.unmuted");
     // Warp.
     public static final String warpSender = message.getString("guild.warp.sender");
     public static final String warpMembers = message.getString("guild.warp.members");
+    public static final String warpConsole = message.getString("guild.warp.console");
+    public static final String warpTitle = message.getString("guild.warp.title");
     // Info.
     public static final String info = message.getString("guild.info");
     // Rename.
-    public static final String renameSender = message.getString("guilds.rename.sender");
-    public static final String renameMembers = message.getString("guilds.rename.members");
-    public static final String renameNonEmpty = message.getString("guilds.rename.non-empty");
+    public static final String renameSender = message.getString("guild.rename.sender");
+    public static final String renameMembers = message.getString("guild.rename.members");
+    public static final String renameNonEmpty = message.getString("guild.rename.non-empty");
+    public static final String renameConsole = message.getString("guild.rename.console");
+    public static final String renameTitle = message.getString("guild.rename.title");
 }

@@ -821,8 +821,23 @@ modules:
       # but less than the "max-size" above.
       # EXAMPLE: give people "streamline.party.max.10"
       base-permission: "streamline.party.max."
-      # Whether or not party chat should be able to be seen on console.
-      chat-to-console: true
+      # Whether or not party things should be able to be seen on discord console.
+      console:
+        chats: true
+        creates: true
+        disbands: true
+        opens: true
+        closes: true
+        joins: true
+        accepts: true
+        denies: true
+        leaves: true
+        promotes: true
+        demotes: true
+        invites: true
+        kicks: true
+        mutes: true
+        warps: true
       # (Staff) permission to see party messages.
       view-permission: "streamline.view.party"
       # For network joins / leaves.
@@ -840,8 +855,24 @@ modules:
       to-discord: true
       # Maximum size of any guild.
       max-size: 120
-      # Whether or not party chat should be able to be seen on console.
-      chat-to-console: true
+      # Whether or not guild things should be able to be seen on discord console.
+      console:
+        chats: true
+        creates: true
+        disbands: true
+        opens: true
+        closes: true
+        joins: true
+        leaves: true
+        accepts: true
+        denies: true
+        promotes: true
+        demotes: true
+        invites: true
+        kicks: true
+        mutes: true
+        warps: true
+        renames: true
       # GEXP for guilds.
       xp:
         # Amount to give each guild per player online every "time-per" seconds.

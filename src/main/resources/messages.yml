@@ -277,10 +277,6 @@ party:
     leader: "LEADER"
     moderator: "MODERATOR"
     member: "MEMBER"
-  # For Discord...
-  discord:
-    # Embed title.
-    title: "PARTY"
   # When a player connects.
   connect: "&bPARTY &9> &d%player% &a+"
   # When a player disconnects.
@@ -299,13 +295,21 @@ party:
   too-big: "&cSorry, but you can't create a party that big."
   # Not high enough party permissions.
   no-permission: "&cYou do not have high enough party permissions to do this!"
-  # When creating a party...
-  create: "&eYou have just created a party with size of &3%max%&e!"
   # Not in a party...
   not-in-a-party: "&cSorry, but you are not in a party..."
   other-not-in-party: "&cSorry, but they are not in the party..."
   # Not enough space in party...
   not-enough-space: "&cSorry, but the party is full!"
+  # When creating a party...
+  create:
+    sender: "&eYou have just created a party with size of &3%max%&e!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %size% = the size of the party.
+    console: "%sender% created a party with size %size%!"
+    # Discord embed title.
+    title: "PARTY CREATE"
   # Message for when someone joins a party...
   join:
     # Fillers:
@@ -317,6 +321,14 @@ party:
     user: "&eYou just joined &b%leader%&e's party!"
     # If failed.
     failure: "&cThere is no party to join."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %size% = the size of the party.
+    console: "%sender% joined %leader%'s party!"
+    # Discord embed title.
+    title: "PARTY JOIN"
   # Message for when someone leaves a party...
   leave:
     # Fillers:
@@ -328,6 +340,14 @@ party:
     user: "&eYou just left &b%leader%&e's party."
     # If failed.
     failure: "&cThere is no party to leave."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %size% = the size of the party.
+    console: "%sender% left %leader%'s party!"
+    # Discord embed title.
+    title: "PARTY LEAVE"
   # Message for when promoting someone...
   promote:
     # Fillers:
@@ -342,6 +362,15 @@ party:
     leader: "&eYou just promoted &b%user% to &c%level%&e!"
     # If failed.
     failure: "&cAlready at highest level."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %user% = the user the action is being used on.
+    # %leader% = the leader-of-the-party's display name.
+    # %size% = the size of the party.
+    console: "%sender% promoted %user% in %leader%'s party!"
+    # Discord embed title.
+    title: "PARTY PROMOTE"
   # Message for demoting someone...
   demote:
     # Fillers:
@@ -358,6 +387,15 @@ party:
     failure: "&cAlready at lowest level."
     # If you are the party leader.
     is-leader: "&cCannot demote yourself..."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %user% = the user the action is being used on.
+    # %leader% = the leader-of-the-party's display name.
+    # %size% = the size of the party.
+    console: "%sender% demoted %user% in %leader%'s party!"
+    # Discord embed title.
+    title: "PARTY DEMOTE"
   # Message when someone chats...
   # Fillers:
   # %sender% = Messager.
@@ -367,8 +405,15 @@ party:
     message: "&aPARTY &9&l>> &b%sender% &8: &f%message%"
     # If the party is muted.
     muted: "&cSorry, but the party is muted!"
-    # Message in console when people chat in parties.
-    console: "&d%leader%&a's PARTY &9>> &d%sender% &8: &e%message%"
+    # Message in discord console when people chat in parties.
+    # Options:
+    # %message% = the message.
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %size% = the size of the party.
+    console: "%message%"
+    # Discord embed title.
+    title: "PARTY CHAT"
   # Message when some lists the party...
   list:
     # Fillers:
@@ -416,6 +461,13 @@ party:
     leader: "&eYou just opened the party to a size of &3%max%&e."
     # If failure.
     failure: "&cAlready open."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %size% = the size of the party.
+    console: "%sender% opened a party with size %size%!"
+    # Discord embed title.
+    title: "PARTY OPEN"
   # Message for closing the party...
   close:
     # Fillers:
@@ -427,6 +479,14 @@ party:
     sender: "&eYou just closed the party."
     # If failure.
     failure: "&cAlready closed."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-party's display name.
+    # %size% = the size of the party.
+    console: "%sender% closed %leader%'s party!"
+    # Discord embed title.
+    title: "PARTY CLOSE"
   # Message for disbanding the party...
   disband:
     # Fillers:
@@ -435,6 +495,14 @@ party:
     members: "&b%sender% &ejust disbanded the party."
     # For leader.
     leader: "&eYou just disbanded the party."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %size% = the size of the party.
+    console: "%sender% disbanded %leader%'s party!"
+    # Discord embed title.
+    title: "PARTY DISBAND"
   # Message for accepting an invite to a party...
   accept:
     # Fillers:
@@ -448,6 +516,14 @@ party:
     members: "&b%user% &ejust &aaccepted &ethe invite!"
     # If failed.
     failure: "&cNo invites!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %size% = the size of the party.
+    console: "%sender% accepted invite to %leader%'s party!"
+    # Discord embed title.
+    title: "PARTY ACCEPT"
   # Message for denying an invite to a party...
   deny:
     # Fillers:
@@ -461,6 +537,14 @@ party:
     members: "&b%user% &ejust &cdenied &ethe invite!"
     # If failed.
     failure: "&cNo invites!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %size% = the size of the party.
+    console: "%sender% denied the invite to %leader%'s party!"
+    # Discord embed title.
+    title: "PARTY DENY"
   # Message for sending an invite of a party...
   invite:
     # Fillers:
@@ -478,6 +562,15 @@ party:
     failure: "&cAlready invited this person."
     # If self.
     non-self: "&cCannot invite yourself!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %user% = the user the action is being used on.
+    # %leader% = the leader-of-the-party's display name.
+    # %size% = the size of the party.
+    console: "%sender% invited %user% to %leader%'s party!"
+    # Discord embed title.
+    title: "PARTY INVITE"
   # Messages for kicking...
   kick:
     # Fillers:
@@ -494,6 +587,15 @@ party:
     mod: "&cCannot kick a party mod."
     # If self.
     self: "&cCannot kick self."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %user% = the user the action is being used on.
+    # %leader% = the leader-of-the-party's display name.
+    # %size% = the size of the party.
+    console: "%sender% kicked %user% from %leader%'s party!"
+    # Discord embed title.
+    title: "PARTY KICK"
   # Messages for muting...
   mute:
     # Fillers:
@@ -510,12 +612,32 @@ party:
       user: "&eYou just &aunmuted &ethe party."
       # For members.
       members: "&b%sender% &ejust &aunmuted &ethe party."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-party's display name.
+    # %size% = the size of the party.
+    console: "%sender% set %leader%'s party's to %toggle%!"
+    # Toggle for message above.
+    toggle:
+      muted: "muted"
+      unmuted: "unmuted"
+    # Discord embed title.
+    title: "PARTY MUTE"
   # Messages for warping...
   warp:
     # Command sender.
     sender: "&eYou warped your party of &3%size% &eto your server!"
     # For members.
     members: "&b%sender% &ewarped you to their server!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-guild's display name.
+    # %size% = the size of the guild.
+    console: "%sender% warped %leader%'s party's to their server!"
+    # Discord embed title.
+    title: "PARTY WARP"
 
 # Messages for the stream command:
 stream:
@@ -636,14 +758,23 @@ guild:
   already-has: "&cSorry, but &d%player% &cis already in a guild..."
   # Not high enough guild permissions.
   no-permission: "&cYou do not have high enough guild permissions to do this!"
-  # When creating a guild...
-  create: "&eYou have just created the guild &4%name%&e!"
   # Not in a guild...
   not-in-a-guild: "&cSorry, but you are not in a guild..."
   # If that player is not in a guild.
   other-not-in-guild: "&cSorry, but they are not in the guild..."
   # Not enough space in guild...
   not-enough-space: "&cSorry, but the guild is full!"
+  # When creating a guild...
+  create:
+    sender: "&eYou have just created the guild &4%name%&e!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender% created a guild with size %size% named %name%!"
+    # Discord embed title.
+    title: "PARTY CREATE"
   # Message for when someone joins a guild...
   join:
     # Fillers:
@@ -655,6 +786,15 @@ guild:
     user: "&eYou just joined &b%leader%&e's guild!"
     # If failed.
     failure: "&cThere is no guild to join."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-guild's display name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender% joined %leader%'s guild!"
+    # Discord embed title.
+    title: "GUILD JOIN"
   # Message for when someone leaves a guild...
   leave:
     # Fillers:
@@ -665,6 +805,15 @@ guild:
     # For user who left.
     user: "&eYou just left &b%leader%&e's guild."
     failure: "&cThere is no guild to leave."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-guild's display name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender% left %leader%'s guild!"
+    # Discord embed title.
+    title: "GUILD LEAVE"
   # Message for when promoting someone...
   promote:
     # Fillers:
@@ -679,6 +828,16 @@ guild:
     leader: "&eYou just promoted &b%user% to &c%level%&e!"
     # If failed.
     failure: "&cAlready at highest level."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %user% = the user being promoted.
+    # %leader% = the leader-of-the-guild's display name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender% promoted %user% in %leader%'s guild!"
+    # Discord embed title.
+    title: "GUILD PROMOTE"
   # Message for demoting someone...
   demote:
     # Fillers:
@@ -695,6 +854,16 @@ guild:
     failure: "&cAlready at lowest level."
     # If it is leader.
     is-leader: "&cCannot demote yourself..."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %user% = the user being promoted.
+    # %leader% = the leader-of-the-guild's display name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender% demoted %user% in %leader%'s guild!"
+    # Discord embed title.
+    title: "GUILD DEMOTE"
   # Message when someone chats...
   # Fillers:
   # %sender% = Messager.
@@ -704,8 +873,16 @@ guild:
     message: "&aGUILD &9&l>> &b%sender% &8: &f%message%"
     # If the guild is muted.
     muted: "&cSorry, but the guild is muted!"
-    # Message in console when people chat in parties.
-    console: "&d%leader%&a's GUILD &9>> &d%sender% &8: &e%message%"
+    # Message in discord console.
+    # Options:
+    # %message% = the message.
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-guild's display name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%message%"
+    # Discord embed title.
+    title: "GUILD CHAT"
   # Message when some lists the guild...
   list:
     # Fillers:
@@ -753,6 +930,15 @@ guild:
     sender: "&eYou just opened the guild."
     # If failed.
     failure: "&cAlready open."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-guild's display name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%leader% just opened a guild with size %size%!"
+    # Discord embed title.
+    title: "GUILD OPEN"
   # Message for closing the guild...
   close:
     # Fillers:
@@ -764,6 +950,15 @@ guild:
     sender: "&eYou just closed the guild."
     # If failed.
     failure: "&cAlready closed."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-guild's display name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender% closed %leader%'s guild!"
+    # Discord embed title.
+    title: "GUILD CLOSE"
   # Message for disbanding the guild...
   disband:
     # Fillers:
@@ -772,6 +967,15 @@ guild:
     members: "&b%sender% &ejust disbanded the guild."
     # For leader.
     leader: "&eYou just disbanded the guild."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-guild's display name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender% disbanded %leader%'s guild!"
+    # Discord embed title.
+    title: "GUILD DISBAND"
   # Message for accepting an invite to a guild...
   accept:
     # Fillers:
@@ -785,6 +989,14 @@ guild:
     members: "&b%user% &ejust &aaccepted &ethe invite!"
     # If failed.
     failure: "&cNo invites!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %size% = the size of the guild.
+    console: "%sender% accepted invite to %leader%'s guild!"
+    # Discord embed title.
+    title: "GUILD ACCEPT"
   # Message for denying an invite to a guild...
   deny:
     # Fillers:
@@ -798,6 +1010,14 @@ guild:
     members: "&b%user% &ejust &cdenied &ethe invite!"
     # If failed.
     failure: "&cNo invites!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %size% = the size of the guild.
+    console: "%sender% denied invite to %leader%'s guild!"
+    # Discord embed title.
+    title: "GUILD DENY"
   # Message for sending an invite of a guild...
   invite:
     # Fillers:
@@ -815,6 +1035,16 @@ guild:
     failure: "&cAlready invited this person."
     # If self.
     non-self: "&cCannot invite yourself!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %user% = the user being promoted.
+    # %leader% = the leader-of-the-guild's display name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender% invited %user% to %leader%'s guild!"
+    # Discord embed title.
+    title: "GUILD INVITE"
   # Kick messages...
   kick:
     # Fillers:
@@ -831,6 +1061,16 @@ guild:
     mod: "&cCannot kick a guild mod."
     # If self.
     self: "&cCannot kick self."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %user% = the user being promoted.
+    # %leader% = the leader-of-the-guild's display name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender% kicked %user% from %leader%'s guild!"
+    # Discord embed title.
+    title: "GUILD KICK"
   # Mute messages.
   mute:
     # Fillers:
@@ -847,12 +1087,34 @@ guild:
       user: "&eYou just &aunmuted &ethe guild."
       # For members.
       members: "&b%sender% &ejust &aunmuted &ethe guild."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-guild's display name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender% set %leader%'s guild's to %toggle%!"
+    # Toggle for message above.
+    toggle:
+      muted: "muted"
+      unmuted: "unmuted"
+    # Discord embed title.
+    title: "GUILD MUTE"
   # Warp messages...
   warp:
     # For sender.
     sender: "&eYou warped your guild of &3%size% &eto your server!"
     # For members.
     members: "&d%sender% &ewarped you to their server!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-guild's display name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender% warped %leader%'s guild to their server!"
+    # Discord embed title.
+    title: "GUILD WARP"
   # Info message.
   info: "&9----- &2Guild Info For &4%name% &9-----%newline%&eGEXP&8: &6%total_xp%%newline%&eLevel&8: &6%level%%newline%&eGEXP Needed For Level Up&8: &6%xplevel% &9(&6%xpneeded%&9)"
   # Rename messages...
@@ -860,6 +1122,16 @@ guild:
     sender: "&eYou just renamed the guild from &c%old% &eto &c%new%&e!"
     members: "&d%sender% &erenamed the guild from &c%old% &eto &c%new%&e!"
     non-empty: "&cName cannot be empty!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-guild's display name.
+    # %name% = the name of the guild.
+    # %old_name% = the old name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender% renamed %leader%'s guild to %name% from %old_name%!"
+    # Discord embed title.
+    title: "GUILD RENAME"
 
 # Messages for the guilds command:
 guilds:
