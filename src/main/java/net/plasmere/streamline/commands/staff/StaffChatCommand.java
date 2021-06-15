@@ -30,7 +30,7 @@ public class StaffChatCommand extends Command {
 
                     if (player == null) return;
 
-                    if (args.length <= 0) {
+                    if (args.length <= 0 || args[0].equals("") || args[0].equals(" ")) {
                         player.toggleSC();
 
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.staffChatToggle
