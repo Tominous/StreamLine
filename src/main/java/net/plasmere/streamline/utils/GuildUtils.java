@@ -149,6 +149,8 @@ public class GuildUtils {
                         createConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(player))
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(player))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", name)
                         , ConfigUtils.textChannelGuilds));
@@ -298,11 +300,14 @@ public class GuildUtils {
             if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleInvites) {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player, inviteTitle,
                         inviteConsole
-                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(to))
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(from))
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(from))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(to))
+                                .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
-                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(from))
                         , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {
@@ -372,6 +377,8 @@ public class GuildUtils {
                             joinsConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(accepter))
                                     .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                    .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
                             , ConfigUtils.textChannelGuilds));
@@ -382,6 +389,8 @@ public class GuildUtils {
                             acceptConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(accepter))
                                     .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                    .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
                             , ConfigUtils.textChannelGuilds));
@@ -450,6 +459,8 @@ public class GuildUtils {
                             denyConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(denier))
                                     .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                    .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(denier))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
                             , ConfigUtils.textChannelGuilds));
@@ -505,6 +516,8 @@ public class GuildUtils {
                     warpConsole
                             .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
                             .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                            .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                             .replace("%size%", String.valueOf(guild.maxSize))
                             .replace("%name%", guild.name)
                     , ConfigUtils.textChannelGuilds));
@@ -571,6 +584,8 @@ public class GuildUtils {
                     muteConsole
                             .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
                             .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                            .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                             .replace("%size%", String.valueOf(guild.maxSize))
                             .replace("%name%", guild.name)
                             .replace("%toggle%", guild.isMuted ? muteToggleMuted : muteToggleUnMuted)
@@ -646,9 +661,12 @@ public class GuildUtils {
                         kickConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
-                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
                         , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {
@@ -724,6 +742,8 @@ public class GuildUtils {
                         disbandConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                         , ConfigUtils.textChannelGuilds));
@@ -793,6 +813,8 @@ public class GuildUtils {
                         openConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                         , ConfigUtils.textChannelGuilds));
@@ -859,6 +881,8 @@ public class GuildUtils {
                         closeConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                         , ConfigUtils.textChannelGuilds));
@@ -1110,9 +1134,12 @@ public class GuildUtils {
                         promoteConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
+                                .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(member))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
-                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
                         , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {
@@ -1217,9 +1244,12 @@ public class GuildUtils {
                         demoteConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
+                                .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(member))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
-                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
                         , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {
@@ -1278,6 +1308,8 @@ public class GuildUtils {
                             joinsConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
                                     .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                    .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
                             , ConfigUtils.textChannelGuilds));
@@ -1358,6 +1390,8 @@ public class GuildUtils {
                             leaveConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
                                     .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                    .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
                             , ConfigUtils.textChannelGuilds));
@@ -1422,6 +1456,8 @@ public class GuildUtils {
                                 .replace("%message%", msg)
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                         , ConfigUtils.textChannelGuilds));
@@ -1493,6 +1529,8 @@ public class GuildUtils {
                         renameConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                                 .replace("%old_name%", oldName)

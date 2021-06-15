@@ -108,7 +108,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, createTitle,
                         createConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(player))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(player))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -147,7 +149,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, createTitle,
                         createConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(player))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(player))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -156,7 +160,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, openTitle,
                         openConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(player))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(player))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -264,9 +270,12 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player, inviteTitle,
                         inviteConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(from))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
-                                .replace("%size%", String.valueOf(party.maxSize))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(from))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(to))
+                                .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
+                                .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
         } catch (Exception e) {
@@ -335,7 +344,9 @@ public class PartyUtils {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, joinsTitle,
                             joinsConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(accepter))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                    .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                     .replace("%size%", String.valueOf(party.maxSize))
                             , ConfigUtils.textChannelParties));
                 }
@@ -344,7 +355,9 @@ public class PartyUtils {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, acceptTitle,
                             acceptConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(accepter))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                    .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                     .replace("%size%", String.valueOf(party.maxSize))
                             , ConfigUtils.textChannelParties));
                 }
@@ -408,7 +421,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, denyTitle,
                         denyConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(denier))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(denier))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -459,7 +474,9 @@ public class PartyUtils {
             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, warpTitle,
                     warpConsole
                             .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                            .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                             .replace("%size%", String.valueOf(party.maxSize))
                     , ConfigUtils.textChannelParties));
         }
@@ -524,7 +541,9 @@ public class PartyUtils {
             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, muteTitle,
                     muteConsole
                             .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                            .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                             .replace("%size%", String.valueOf(party.maxSize))
                             .replace("%toggle%", party.isMuted ? muteToggleMuted : muteToggleUnMuted)
                     , ConfigUtils.textChannelParties));
@@ -600,9 +619,12 @@ public class PartyUtils {
             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player, kickTitle,
                     kickConsole
                             .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
-                            .replace("%size%", String.valueOf(party.maxSize))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                            .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                             .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
+                            .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
+                            .replace("%size%", String.valueOf(party.maxSize))
                     , ConfigUtils.textChannelParties));
         }
     }
@@ -653,7 +675,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, disbandTitle,
                         disbandConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -722,7 +746,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, openTitle,
                         openConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -788,7 +814,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, openTitle,
                         openConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -852,7 +880,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, closeTitle,
                         closeConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -1099,9 +1129,12 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, promoteTitle,
                         promoteConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
-                                .replace("%size%", String.valueOf(party.maxSize))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
+                                .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(member))
+                                .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
         } catch (Exception e) {
@@ -1189,9 +1222,12 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, demoteTitle,
                         demoteConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
-                                .replace("%size%", String.valueOf(party.maxSize))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
+                                .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(member))
+                                .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
         } catch (Exception e) {
@@ -1248,7 +1284,9 @@ public class PartyUtils {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, joinsTitle,
                             joinsConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                    .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                     .replace("%size%", String.valueOf(party.maxSize))
                             , ConfigUtils.textChannelParties));
                 }
@@ -1371,7 +1409,9 @@ public class PartyUtils {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, leaveTitle,
                             leaveConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                    .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
                                     .replace("%size%", String.valueOf(party.maxSize))
                             , ConfigUtils.textChannelParties));
                 }
@@ -1431,10 +1471,12 @@ public class PartyUtils {
             if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleChats) {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, chatTitle,
                         chatConsole
-                        .replace("%message%", msg)
-                        .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                        .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(party.leader))
-                        .replace("%size%", String.valueOf(party.maxSize))
+                                .replace("%message%", msg)
+                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
 
