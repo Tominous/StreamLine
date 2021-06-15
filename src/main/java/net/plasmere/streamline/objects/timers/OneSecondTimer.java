@@ -6,9 +6,7 @@ import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.utils.PlayerUtils;
 
-import java.util.ConcurrentModificationException;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 public class OneSecondTimer implements Runnable {
     public int countdown;
@@ -32,16 +30,25 @@ public class OneSecondTimer implements Runnable {
         try {
             countdown = reset;
 
-            Iterator<Player> conns = PlayerUtils.getConnections().keySet().iterator();
+            Set<Player> c = PlayerUtils.getConnections().keySet();
+            List<Player> conns = new ArrayList<>(c);
+            List<Player> toRemove = new ArrayList<>();
 
-            while (conns.hasNext()) {
-                Player player = conns.next();
-
-                PlayerUtils.removeSecondFromConn(player);
-
+            for (Player player : conns) {
                 SingleSet<Integer, Integer> conn = PlayerUtils.getConnection(player);
+
                 if (conn == null) continue;
-                if (conn.key <= 0) PlayerUtils.removeConn(player);
+
+                PlayerUtils.removeSecondFromConn(player, conn);
+
+                conn = PlayerUtils.getConnection(player);
+
+                if (conn == null) continue;
+                if (conn.key <= 0) toRemove.add(player);
+            }
+
+            for (Player remove : toRemove) {
+                PlayerUtils.removeConn(remove);
             }
 
             if (StreamLine.lpHolder.enabled) {

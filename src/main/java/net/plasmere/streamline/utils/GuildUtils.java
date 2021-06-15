@@ -151,7 +151,7 @@ public class GuildUtils {
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", name)
-                        , ConfigUtils.textChannelParties));
+                        , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -303,7 +303,7 @@ public class GuildUtils {
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(from))
-                        , ConfigUtils.textChannelParties));
+                        , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -374,7 +374,7 @@ public class GuildUtils {
                                     .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
-                            , ConfigUtils.textChannelParties));
+                            , ConfigUtils.textChannelGuilds));
                 }
 
                 if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleAccepts) {
@@ -384,7 +384,7 @@ public class GuildUtils {
                                     .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
-                            , ConfigUtils.textChannelParties));
+                            , ConfigUtils.textChannelGuilds));
                 }
             } else {
                 MessagingUtils.sendBUserMessage(p, acceptFailure);
@@ -452,7 +452,7 @@ public class GuildUtils {
                                     .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
-                            , ConfigUtils.textChannelParties));
+                            , ConfigUtils.textChannelGuilds));
                 }
             } else {
                 MessagingUtils.sendBUserMessage(p, denyFailure);
@@ -507,7 +507,7 @@ public class GuildUtils {
                             .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                             .replace("%size%", String.valueOf(guild.maxSize))
                             .replace("%name%", guild.name)
-                    , ConfigUtils.textChannelParties));
+                    , ConfigUtils.textChannelGuilds));
         }
     }
 
@@ -574,7 +574,7 @@ public class GuildUtils {
                             .replace("%size%", String.valueOf(guild.maxSize))
                             .replace("%name%", guild.name)
                             .replace("%toggle%", guild.isMuted ? muteToggleMuted : muteToggleUnMuted)
-                    , ConfigUtils.textChannelParties));
+                    , ConfigUtils.textChannelGuilds));
         }
     }
 
@@ -649,7 +649,7 @@ public class GuildUtils {
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
-                        , ConfigUtils.textChannelParties));
+                        , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {
             MessagingUtils.sendBGUserMessage(guild, sender, sender, MessageConfUtils.bungeeCommandErrorUnd);
@@ -726,7 +726,7 @@ public class GuildUtils {
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
-                        , ConfigUtils.textChannelParties));
+                        , ConfigUtils.textChannelGuilds));
             }
 
             guilds.remove(guild);
@@ -795,7 +795,7 @@ public class GuildUtils {
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
-                        , ConfigUtils.textChannelParties));
+                        , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -861,7 +861,7 @@ public class GuildUtils {
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
-                        , ConfigUtils.textChannelParties));
+                        , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1113,7 +1113,7 @@ public class GuildUtils {
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
-                        , ConfigUtils.textChannelParties));
+                        , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1220,7 +1220,7 @@ public class GuildUtils {
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
-                        , ConfigUtils.textChannelParties));
+                        , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1280,7 +1280,7 @@ public class GuildUtils {
                                     .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
-                            , ConfigUtils.textChannelParties));
+                            , ConfigUtils.textChannelGuilds));
                 }
             } else {
                 MessagingUtils.sendBGUserMessage(guild, p, p, joinFailure);
@@ -1360,7 +1360,7 @@ public class GuildUtils {
                                     .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
-                            , ConfigUtils.textChannelParties));
+                            , ConfigUtils.textChannelGuilds));
                 }
             } else {
                 MessagingUtils.sendBGUserMessage(guild, p, p, leaveFailure);
@@ -1424,7 +1424,7 @@ public class GuildUtils {
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
-                        , ConfigUtils.textChannelParties));
+                        , ConfigUtils.textChannelGuilds));
             }
 
             for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
@@ -1496,7 +1496,7 @@ public class GuildUtils {
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                                 .replace("%old_name%", oldName)
-                        , ConfigUtils.textChannelParties));
+                        , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {
             e.printStackTrace();

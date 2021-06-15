@@ -179,13 +179,14 @@ public class MessagingUtils {
         }
     }
 
-    public static void sendDiscordJoinLeaveMessage(boolean isJoin, Player player){
+    public static void sendDiscordJoinLeaveMessagePlain(boolean isJoin, Player player){
         try {
             if (isJoin) {
                 Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBJoins))
                         .sendMessage(
                                 eb
-                                        .setDescription(MessageConfUtils.discordOnline.replace("%player_default%", player.getName()).replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
+                                        .setDescription(MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
+                                                .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
                                         .setAuthor(MessageConfUtils.discordOnlineEmbed, jda.getSelfUser().getAvatarUrl(), jda.getSelfUser().getAvatarUrl())
                                         .build()
                         ).queue();
@@ -196,6 +197,32 @@ public class MessagingUtils {
                                         .setDescription(MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
                                                 .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
                                         .setAuthor(MessageConfUtils.discordOfflineEmbed, jda.getSelfUser().getAvatarUrl(), jda.getSelfUser().getAvatarUrl())
+                                        .build()
+                        ).queue();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendDiscordJoinLeaveMessageIcon(boolean isJoin, Player player){
+        try {
+            if (isJoin) {
+                Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBJoins))
+                        .sendMessage(
+                                eb
+                                        .setDescription(MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
+                                                .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
+                                        .setAuthor(MessageConfUtils.discordOnlineEmbed, jda.getSelfUser().getAvatarUrl(), FaceFetcher.getFaceAvatarURL(player))
+                                        .build()
+                        ).queue();
+            } else {
+                Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBLeaves))
+                        .sendMessage(
+                                eb
+                                        .setDescription(MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
+                                                .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
+                                        .setAuthor(MessageConfUtils.discordOfflineEmbed, jda.getSelfUser().getAvatarUrl(), FaceFetcher.getFaceAvatarURL(player))
                                         .build()
                         ).queue();
             }

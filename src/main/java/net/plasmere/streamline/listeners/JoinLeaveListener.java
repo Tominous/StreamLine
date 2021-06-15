@@ -54,7 +54,7 @@ public class JoinLeaveListener implements Listener {
     public void onJoin(PostLoginEvent ev) {
         ProxiedPlayer player = ev.getPlayer();
 
-        if (holder.enabled && holder.isGeyserPlayer(player) && ! file.hasProperty(player.getUniqueId().toString())) {
+        if (holder.enabled && holder.isGeyserPlayer(player) && !file.hasProperty(player.getUniqueId().toString())) {
             file.updateKey(holder.getGeyserUUID(player.getName()), player.getName());
         }
 
@@ -77,7 +77,7 @@ public class JoinLeaveListener implements Listener {
         stat.tryAddNewIP(player);
 
         try {
-            for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
+            for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()) {
                 Player p = PlayerUtils.getStat(pl);
 
                 if (p == null) {
@@ -95,7 +95,7 @@ public class JoinLeaveListener implements Listener {
 
                 if (stat.guild == null) continue;
                 if (stat.guild.equals("")) continue;
-                if (p.guild.equals(stat.guild) && ! p.equals(stat)) continue;
+                if (p.guild.equals(stat.guild) && !p.equals(stat)) continue;
 
                 try {
                     if (GuildUtils.existsByUUID(stat.guild)) {
@@ -133,10 +133,10 @@ public class JoinLeaveListener implements Listener {
 
         String joinsOrder = ConfigUtils.moduleBPlayerJoins;
 
-        if (! joinsOrder.equals("")) {
+        if (!joinsOrder.equals("")) {
             String[] order = joinsOrder.split(",");
             for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()) {
-                if (! p.hasPermission(ConfigUtils.moduleBPlayerJoinsPerm)) continue;
+                if (!p.hasPermission(ConfigUtils.moduleBPlayerJoinsPerm)) continue;
 
                 Player other = PlayerUtils.getStat(p);
 
@@ -164,7 +164,7 @@ public class JoinLeaveListener implements Listener {
                             }
                             break;
                         case "guild":
-                            if (! ConfigUtils.guildSendJoins) continue;
+                            if (!ConfigUtils.guildSendJoins) continue;
 
                             Guild guild = GuildUtils.getGuild(other);
                             if (guild == null) continue;
@@ -178,7 +178,7 @@ public class JoinLeaveListener implements Listener {
                             }
                             break;
                         case "party":
-                            if (! ConfigUtils.partySendJoins) continue;
+                            if (!ConfigUtils.partySendJoins) continue;
 
                             Party party = PartyUtils.getParty(other);
                             if (party == null) continue;
@@ -205,9 +205,25 @@ public class JoinLeaveListener implements Listener {
             }
         }
 
-        if (ConfigUtils.joinsLeavesIcon) {
-            switch (ConfigUtils.moduleDPlayerJoins) {
-                case "yes":
+
+        switch (ConfigUtils.moduleDPlayerJoins) {
+            case "yes":
+                if (ConfigUtils.joinsLeavesAsConsole) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
+                            MessageConfUtils.discordOnlineEmbed,
+                            MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
+                                    .replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
+                            ConfigUtils.textChannelBJoins));
+                } else {
+                    if (ConfigUtils.joinsLeavesIcon) {
+                        MessagingUtils.sendDiscordJoinLeaveMessageIcon(true, stat);
+                    } else {
+                        MessagingUtils.sendDiscordJoinLeaveMessagePlain(true, stat);
+                    }
+                }
+                break;
+            case "staff":
+                if (player.hasPermission(ConfigUtils.staffPerm)) {
                     if (ConfigUtils.joinsLeavesAsConsole) {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
                                 MessageConfUtils.discordOnlineEmbed,
@@ -215,26 +231,17 @@ public class JoinLeaveListener implements Listener {
                                         .replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
                                 ConfigUtils.textChannelBJoins));
                     } else {
-                        MessagingUtils.sendDiscordJoinLeaveMessage(true, stat);
-                    }
-                    break;
-                case "staff":
-                    if (player.hasPermission(ConfigUtils.staffPerm)) {
-                        if (ConfigUtils.joinsLeavesAsConsole) {
-                            MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
-                                    MessageConfUtils.discordOnlineEmbed,
-                                    MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
-                                            .replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
-                                    ConfigUtils.textChannelBJoins));
+                        if (ConfigUtils.joinsLeavesIcon) {
+                            MessagingUtils.sendDiscordJoinLeaveMessageIcon(true, stat);
                         } else {
-                            MessagingUtils.sendDiscordJoinLeaveMessage(true, stat);
+                            MessagingUtils.sendDiscordJoinLeaveMessagePlain(true, stat);
                         }
                     }
-                    break;
-                case "no":
-                default:
-                    break;
-            }
+                }
+                break;
+            case "no":
+            default:
+                break;
         }
 
         if (ConfigUtils.events) {
@@ -518,7 +525,11 @@ public class JoinLeaveListener implements Listener {
                                 .replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
                         ConfigUtils.textChannelBLeaves));
                 } else {
-                    MessagingUtils.sendDiscordJoinLeaveMessage(false, stat);
+                    if (ConfigUtils.joinsLeavesIcon) {
+                        MessagingUtils.sendDiscordJoinLeaveMessageIcon(false, stat);
+                    } else {
+                        MessagingUtils.sendDiscordJoinLeaveMessagePlain(false, stat);
+                    }
                 }
                 break;
             case "staff":
@@ -530,7 +541,11 @@ public class JoinLeaveListener implements Listener {
                                         .replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
                                 ConfigUtils.textChannelBLeaves));
                     } else {
-                        MessagingUtils.sendDiscordJoinLeaveMessage(false, stat);
+                        if (ConfigUtils.joinsLeavesIcon) {
+                            MessagingUtils.sendDiscordJoinLeaveMessageIcon(false, stat);
+                        } else {
+                            MessagingUtils.sendDiscordJoinLeaveMessagePlain(false, stat);
+                        }
                     }
                 }
                 break;

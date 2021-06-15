@@ -85,9 +85,7 @@ public class PlayerUtils {
         connections.put(player, new SingleSet<>(timer, num));
     }
 
-    public static void removeSecondFromConn(Player player){
-        SingleSet<Integer, Integer> conn = connections.get(player);
-
+    public static void removeSecondFromConn(Player player, SingleSet<Integer, Integer> conn){
         int timer = conn.key;
         int num = conn.value;
 

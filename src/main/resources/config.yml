@@ -706,7 +706,7 @@ modules:
       # whether it should be as console or be as defined in
       # messages.yml > join-leave > discord
       # use-bot-icon must be true
-      send-as-console: true
+      send-as-console: false
     # Reports...
     reports:
       # Enables / disables sending a confirmation message to the sender of the report.
@@ -748,13 +748,13 @@ modules:
     # "yes" = all players.
     # "no" = none.
     # "staff" = only players with the staff permission.
-    player-joins: "no"
+    player-joins: "staff"
     # Enables / disables telling the text channel defined in "leaves" (in the discord > text-channels section) (on Discord) when all players leaves.
     # Can be:
     # "yes" = all players.
     # "no" = none.
     # "staff" = only players with the staff permission.
-    player-leaves: "no"
+    player-leaves: "staff"
   # Bungee modules...
   bungee:
     # Reports...

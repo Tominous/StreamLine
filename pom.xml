@@ -78,6 +78,10 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>viaversion-repo</id>
+            <url>https://repo.viaversion.com</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -125,11 +129,10 @@
         </dependency>
         <!--ViaVersion-->
         <dependency>
-            <groupId>us.myles</groupId>
-            <artifactId>viaversion</artifactId>
-            <version>LASTEST</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/ViaVersion.jar</systemPath>
+            <groupId>com.viaversion</groupId>
+            <artifactId>viaversion-api</artifactId>
+            <version>LATEST</version>
+            <scope>provided</scope>
         </dependency>
         <!--Geyser-->
         <dependency>
