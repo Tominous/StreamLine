@@ -22,7 +22,7 @@ public class UUIDFetcher {
 
     public static String getCachedUUID(String username) {
         try {
-            String finalUsername = username.replace("\"", "");
+            String finalUsername = username.replace("\"", "").toLowerCase(Locale.ROOT);
             return cachedUUIDs.get(username, (u) -> fetch(finalUsername));
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,7 +86,7 @@ public class UUIDFetcher {
         try {
             if (StreamLine.geyserHolder.enabled) {
                 String name = StreamLine.geyserHolder.file.getName(uuid);
-                if (name != null) if (!name.equals("")) return name;
+                if (name != null) if (! name.equals("")) return name;
             }
         } catch (Exception e) {
             e.printStackTrace();
