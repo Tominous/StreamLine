@@ -339,6 +339,12 @@ public class Player implements ProxiedPlayer {
             while (data.startsWith("#")) {
                 data = reader.nextLine();
             }
+
+            if (! data.contains("=")) if (ConfigUtils.debug) {
+                StreamLine.getInstance().getLogger().info("PLAYER DATA (" + this.latestName + ") ERROR : data has no split for --> " + data);
+                continue;
+            }
+
             String[] dataSplit = data.split("=", 2);
             addKeyValuePair(tryUpdateFormat(dataSplit[0]), dataSplit[1]);
         }
@@ -359,7 +365,7 @@ public class Player implements ProxiedPlayer {
         defaults.add("total-xp=0");
         defaults.add("currentXP=0");
         defaults.add("playtime=0");
-        defaults.add("display-name=" + PlayerUtils.getDisplayName(this.latestName));
+        defaults.add("display-name=" + (PlayerUtils.getDisplayName(this.latestName) != null ? PlayerUtils.getDisplayName(this.latestName) : latestName));
         defaults.add("guild=");
         defaults.add("sspy=true");
         defaults.add("gspy=true");
@@ -471,6 +477,8 @@ public class Player implements ProxiedPlayer {
     }
 
     public void tryAddNewName(String name){
+        if (nameList == null) this.nameList = new ArrayList<>();
+
         if (nameList.contains(name)) return;
 
         this.nameList.add(name);
@@ -481,6 +489,8 @@ public class Player implements ProxiedPlayer {
     }
 
     public void tryAddNewTag(String tag){
+        if (tagList == null) this.tagList = new ArrayList<>();
+
         if (tagList.contains(tag)) return;
 
         this.tagList.add(tag);
@@ -491,6 +501,8 @@ public class Player implements ProxiedPlayer {
     }
 
     public void tryRemTag(String tag){
+        if (tagList == null) this.tagList = new ArrayList<>();
+
         if (! tagList.contains(tag)) return;
 
         this.tagList.remove(tag);
@@ -501,6 +513,8 @@ public class Player implements ProxiedPlayer {
     }
 
     public void tryAddNewIgnored(String uuid){
+        if (ignoredList == null) this.ignoredList = new ArrayList<>();
+
         if (ignoredList.contains(uuid)) return;
 
         this.ignoredList.add(uuid);
@@ -511,6 +525,8 @@ public class Player implements ProxiedPlayer {
     }
 
     public void tryRemIgnored(String uuid){
+        if (ignoredList == null) this.ignoredList = new ArrayList<>();
+
         if (! ignoredList.contains(uuid)) return;
 
         this.ignoredList.remove(uuid);
@@ -521,6 +537,8 @@ public class Player implements ProxiedPlayer {
     }
 
     public void tryAddNewFriend(String uuid){
+        if (friendList == null) this.friendList = new ArrayList<>();
+
         tryRemPendingToFriend(uuid);
         tryRemPendingFromFriend(uuid);
 
@@ -534,7 +552,9 @@ public class Player implements ProxiedPlayer {
     }
 
     public void tryRemFriend(String uuid){
-        if (friendList.contains(uuid)) return;
+        if (friendList == null) this.friendList = new ArrayList<>();
+
+        if (! friendList.contains(uuid)) return;
 
         this.friendList.remove(uuid);
 
@@ -544,6 +564,8 @@ public class Player implements ProxiedPlayer {
     }
 
     public void tryAddNewPendingToFriend(String uuid){
+        if (pendingToFriendList == null) this.pendingToFriendList = new ArrayList<>();
+
         if (pendingToFriendList.contains(uuid)) return;
 
         this.pendingToFriendList.add(uuid);
@@ -554,7 +576,9 @@ public class Player implements ProxiedPlayer {
     }
 
     public void tryRemPendingToFriend(String uuid){
-        if (pendingToFriendList.contains(uuid)) return;
+        if (pendingToFriendList == null) this.pendingToFriendList = new ArrayList<>();
+
+        if (! pendingToFriendList.contains(uuid)) return;
 
         this.pendingToFriendList.remove(uuid);
 
@@ -564,6 +588,8 @@ public class Player implements ProxiedPlayer {
     }
 
     public void tryAddNewPendingFromFriend(String uuid){
+        if (pendingFromFriendList == null) this.pendingFromFriendList = new ArrayList<>();
+
         if (pendingFromFriendList.contains(uuid)) return;
 
         this.pendingFromFriendList.add(uuid);
@@ -574,7 +600,9 @@ public class Player implements ProxiedPlayer {
     }
 
     public void tryRemPendingFromFriend(String uuid){
-        if (pendingFromFriendList.contains(uuid)) return;
+        if (pendingFromFriendList == null) this.pendingFromFriendList = new ArrayList<>();
+
+        if (! pendingFromFriendList.contains(uuid)) return;
 
         this.pendingFromFriendList.remove(uuid);
 
@@ -584,6 +612,8 @@ public class Player implements ProxiedPlayer {
     }
 
     public void tryAddNewIP(String ip){
+        if (ipList == null) this.ipList = new ArrayList<>();
+
         if (ipList.contains(ip)) return;
 
         this.ipList.add(ip);
@@ -602,7 +632,7 @@ public class Player implements ProxiedPlayer {
     }
 
     public void addPlaySecond(int amount){
-        updateKey("playtime", playSeconds + amount);
+        setPlaySeconds(playSeconds + amount);
     }
 
     public void setPlaySeconds(int amount){
@@ -895,10 +925,12 @@ public class Player implements ProxiedPlayer {
     }
 
     public void setMutedTill(long value) {
+        mutedTill = new Date(value);
         updateKey("muted-till", value);
     }
 
     public void removeMutedTill(){
+        mutedTill = null;
         updateKey("muted-till", "");
     }
 

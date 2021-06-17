@@ -19,6 +19,7 @@ import net.plasmere.streamline.objects.lists.SingleSet;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -360,6 +361,7 @@ public class PlayerUtils {
 
     public static boolean isInStatsList(String username) {
         for (Player player : getStats()) {
+            if (player.latestName == null) continue;
             if (player.latestName.equals(username)) return true;
         }
 
@@ -804,13 +806,7 @@ public class PlayerUtils {
     }
 
     public static boolean checkIfMuted(ProxiedPlayer sender, Player stat){
-        if (stat.mutedTill != null) {
-            if (stat.mutedTill.before(new Date())) {
-                stat.setMuted(false);
-                stat.removeMutedTill();
-                return false;
-            }
-        }
+        checkAndUpdateIfMuted(stat);
 
         if (stat.mutedTill != null) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.punMutedTemp.replace("%date%", stat.mutedTill.toString()));
@@ -818,6 +814,15 @@ public class PlayerUtils {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.punMutedPerm);
         }
         return true;
+    }
+
+    public static void checkAndUpdateIfMuted(Player stat){
+        if (stat.mutedTill != null) {
+            if (stat.mutedTill.before(Date.from(Instant.now()))) {
+                stat.setMuted(false);
+                stat.removeMutedTill();
+            }
+        }
     }
 
     // No stats.

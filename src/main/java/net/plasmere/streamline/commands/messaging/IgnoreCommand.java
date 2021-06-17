@@ -50,6 +50,8 @@ public class IgnoreCommand extends Command implements TabExecutor {
                     .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
                     .replace("%ignores%", PlayerUtils.getIgnored(stat))
             );
+        } else if (args.length < 2) {
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else if (args.length > 2) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess);
         } else {

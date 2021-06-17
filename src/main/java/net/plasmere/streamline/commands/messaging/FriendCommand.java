@@ -52,6 +52,8 @@ public class FriendCommand extends Command implements TabExecutor {
                     .replace("%pending-to%", PlayerUtils.getPTFriended(stat))
                     .replace("%pending-from%", PlayerUtils.getPFFriended(stat))
             );
+        } else if (args.length < 2) {
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else if (args.length > 2) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess);
         } else {
@@ -177,10 +179,10 @@ public class FriendCommand extends Command implements TabExecutor {
                     break;
                 case "list":
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendListMain
-                            .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
-                            .replace("%friends%", PlayerUtils.getFriended(stat))
-                            .replace("%pending-to%", PlayerUtils.getPTFriended(stat))
-                            .replace("%pending-from%", PlayerUtils.getPFFriended(stat))
+                            .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                            .replace("%friends%", PlayerUtils.getFriended(other))
+                            .replace("%pending-to%", PlayerUtils.getPTFriended(other))
+                            .replace("%pending-from%", PlayerUtils.getPFFriended(other))
                     );
                     break;
             }

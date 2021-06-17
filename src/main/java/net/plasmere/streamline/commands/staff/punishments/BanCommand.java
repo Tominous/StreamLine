@@ -7,10 +7,12 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -49,12 +51,60 @@ public class BanCommand extends Command implements TabExecutor {
             }
 
             if (args[0].equals("add")) {
-                if (bans.contains(other.uuid)) {
-                    if (bans.getBoolean(other.uuid + ".banned")) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMPermAlready
-                                .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
-                        );
+                if (args.length == 3) {
+                    if (! ConfigUtils.punBansReplaceable) {
+                        if (bans.contains(other.uuid)) {
+                            if (bans.getBoolean(other.uuid + ".banned")) {
+                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMTempAlready
+                                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                                );
+                                return;
+                            }
+                        }
+                    }
+
+                    double toAdd = 0d;
+
+                    try {
+                        toAdd = TimeUtil.convertStringTimeToDouble(args[2]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorSTime);
                         return;
+                    }
+
+                    String till = String.valueOf((long) (System.currentTimeMillis() + toAdd));
+
+                    String reason = TextUtils.argsToStringMinus(args, 0, 1, 2);
+
+                    bans.set(other.uuid + ".banned", true);
+                    bans.set(other.uuid + ".reason", reason);
+                    bans.set(other.uuid + ".till", till);
+                    bans.set(other.uuid + ".sentenced", Instant.now().toString());
+                    StreamLine.bans.saveConfig();
+
+                    if (other.online) {
+                        ProxiedPlayer pp = UUIDFetcher.getPPlayerByUUID(other.uuid);
+                        pp.disconnect(TextUtils.codedText(MessageConfUtils.punBannedTemp
+                                .replace("%reason%", reason)
+                                .replace("%date%", new Date(Long.parseLong(till)).toString())
+                        ));
+                    }
+
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banBTempSender
+                            .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                            .replace("%date%", new Date(Long.parseLong(till)).toString())
+                    );
+                }
+
+                if (! ConfigUtils.punBansReplaceable) {
+                    if (bans.contains(other.uuid)) {
+                        if (bans.getBoolean(other.uuid + ".banned")) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMPermAlready
+                                    .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                            );
+                            return;
+                        }
                     }
                 }
 
@@ -63,6 +113,7 @@ public class BanCommand extends Command implements TabExecutor {
                 bans.set(other.uuid + ".banned", true);
                 bans.set(other.uuid + ".reason", reason);
                 bans.set(other.uuid + ".till", "");
+                bans.set(other.uuid + ".sentenced", Instant.now().toString());
                 StreamLine.bans.saveConfig();
 
                 if (other.online) {
@@ -76,46 +127,53 @@ public class BanCommand extends Command implements TabExecutor {
                         .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
                 );
             } else if (args[0].equals("temp")) {
-                if (bans.contains(other.uuid)) {
-                    if (bans.getBoolean(other.uuid + ".banned")) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banBTempAlready
-                                .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
-                        );
+                if (args.length < 3) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                } else {
+                    if (! ConfigUtils.punBansReplaceable) {
+                        if (bans.contains(other.uuid)) {
+                            if (bans.getBoolean(other.uuid + ".banned")) {
+                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMTempAlready
+                                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                                );
+                                return;
+                            }
+                        }
+                    }
+
+                    double toAdd = 0d;
+
+                    try {
+                        toAdd = TimeUtil.convertStringTimeToDouble(args[2]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorSTime);
                         return;
                     }
-                }
 
-                double toAdd = 0d;
+                    String till = String.valueOf((long) (System.currentTimeMillis() + toAdd));
 
-                try {
-                    toAdd = TimeUtil.convertStringTimeToDouble(args[2]);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorSTime);
-                    return;
-                }
+                    String reason = TextUtils.argsToStringMinus(args, 0, 1, 2);
 
-                String till = String.valueOf((long) (System.currentTimeMillis() + toAdd));
+                    bans.set(other.uuid + ".banned", true);
+                    bans.set(other.uuid + ".reason", reason);
+                    bans.set(other.uuid + ".till", till);
+                    bans.set(other.uuid + ".sentenced", Instant.now().toString());
+                    StreamLine.bans.saveConfig();
 
-                String reason = TextUtils.argsToStringMinus(args, 0, 1, 2);
+                    if (other.online) {
+                        ProxiedPlayer pp = UUIDFetcher.getPPlayerByUUID(other.uuid);
+                        pp.disconnect(TextUtils.codedText(MessageConfUtils.punBannedTemp
+                                .replace("%reason%", reason)
+                                .replace("%date%", new Date(Long.parseLong(till)).toString())
+                        ));
+                    }
 
-                bans.set(other.uuid + ".banned", true);
-                bans.set(other.uuid + ".reason", reason);
-                bans.set(other.uuid + ".till", till);
-                StreamLine.bans.saveConfig();
-
-                if (other.online) {
-                    ProxiedPlayer pp = UUIDFetcher.getPPlayerByUUID(other.uuid);
-                    pp.disconnect(TextUtils.codedText(MessageConfUtils.punBannedTemp
-                            .replace("%reason%", reason)
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banBTempSender
+                            .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
                             .replace("%date%", new Date(Long.parseLong(till)).toString())
-                    ));
+                    );
                 }
-
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banBTempSender
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
-                        .replace("%date%", new Date(Long.parseLong(till)).toString())
-                );
             } else if (args[0].equals("remove")) {
                 if (! bans.contains(other.uuid)) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banUnAlready
@@ -137,7 +195,7 @@ public class BanCommand extends Command implements TabExecutor {
 
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banCheckMain
                         .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
-                        .replace("%check%", reason != null ? MessageConfUtils.banCheckBanned : MessageConfUtils.banCheckUnBanned)
+                        .replace("%check%", bans.getBoolean(other.uuid + ".banned") ? MessageConfUtils.banCheckBanned : MessageConfUtils.banCheckUnBanned)
                 );
             }
         }

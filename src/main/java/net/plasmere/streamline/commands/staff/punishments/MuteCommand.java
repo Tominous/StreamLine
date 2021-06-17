@@ -6,6 +6,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
@@ -28,7 +29,7 @@ public class MuteCommand extends Command implements TabExecutor {
     public void execute(CommandSender sender, String[] args) {
         if (args.length <= 0) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-        } else if (args.length > 2 && ! args[0].equals("add")) {
+        } else if (args.length > 2 && ! (args[0].equals("add") || args[0].equals("temp"))) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess);
         } else if (args.length > 3) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess);
@@ -52,9 +53,11 @@ public class MuteCommand extends Command implements TabExecutor {
 
             if (args[0].equals("add")) {
                 if (args.length == 3) {
-                    if (other.muted) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMTempAlready);
-                        return;
+                    if (! ConfigUtils.punMutesReplaceable) {
+                        if (other.muted) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMTempAlready);
+                            return;
+                        }
                     }
 
                     final double timeAmount = TimeUtil.convertStringTimeToDouble(args[2]);
@@ -74,9 +77,11 @@ public class MuteCommand extends Command implements TabExecutor {
                     return;
                 }
 
-                if (other.muted) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMPermAlready);
-                    return;
+                if (! ConfigUtils.punMutesReplaceable) {
+                    if (other.muted) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMPermAlready);
+                        return;
+                    }
                 }
 
                 other.setMuted(true);
@@ -89,6 +94,32 @@ public class MuteCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(UUIDFetcher.getPPlayerByUUID(other.uuid), MessageConfUtils.muteMPermMuted
                             .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(((ProxiedPlayer) sender).getUniqueId().toString())))
                     );
+                }
+            } else if (args[0].equals("temp")) {
+                if (args.length < 3) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                } else {
+                    if (! ConfigUtils.punMutesReplaceable) {
+                        if (other.muted) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMTempAlready);
+                            return;
+                        }
+                    }
+
+                    final double timeAmount = TimeUtil.convertStringTimeToDouble(args[2]);
+
+                    other.updateMute(true, new Date((long) (System.currentTimeMillis() + timeAmount)));
+
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMTempSender
+                            .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                            .replace("%date%", other.mutedTill.toString())
+                    );
+                    if (other.online) {
+                        MessagingUtils.sendBUserMessage(UUIDFetcher.getPPlayerByUUID(other.uuid), MessageConfUtils.muteMTempMuted
+                                .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(((ProxiedPlayer) sender).getUniqueId().toString())))
+                                .replace("%date%", other.mutedTill.toString())
+                        );
+                    }
                 }
             } else if (args[0].equals("remove")) {
                 if (! other.muted) {
@@ -129,6 +160,7 @@ public class MuteCommand extends Command implements TabExecutor {
         List<String> options = new ArrayList<>();
 
         options.add("add");
+        options.add("temp");
         options.add("remove");
         options.add("check");
 

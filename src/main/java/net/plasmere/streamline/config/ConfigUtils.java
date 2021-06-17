@@ -421,8 +421,10 @@ public class ConfigUtils {
     // Mutes.
     public static final boolean punMutes = config.getBoolean("modules.bungee.punishments.mutes.enabled");
     public static final boolean punMutesHard = config.getBoolean("modules.bungee.punishments.mutes.hard-mutes");
+    public static final boolean punMutesReplaceable = config.getBoolean("modules.bungee.punishments.mutes.replaceable");
     // Bans.
     public static final boolean punBans = config.getBoolean("modules.bungee.punishments.bans.enabled");
+    public static final boolean punBansReplaceable = config.getBoolean("modules.bungee.punishments.bans.replaceable");
     // Messaging.
     public static final String messViewPerm = config.getString("modules.bungee.messaging.view-permission");
     public static final String messReplyTo = config.getString("modules.bungee.messaging.reply-to");

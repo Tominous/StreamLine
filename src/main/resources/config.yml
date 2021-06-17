@@ -969,10 +969,14 @@ modules:
         enabled: true
         # Enables / disables if mutes should also block all commands.
         hard-mutes: false
+        # Makes it so that you can write over previous mutes so that you do not have to unban then reban to change a message.
+        replaceable: true
       # For bans.
       bans:
         # Enables / disables bans.
         enabled: true
+        # Makes it so that you can write over previous bans so that you do not have to unban then reban to change a message.
+        replaceable: true
     # For all private messaging.
     messaging:
       # Permission for viewing private messages.

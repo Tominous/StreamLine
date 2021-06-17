@@ -58,9 +58,12 @@ public class OneSecondTimer implements Runnable {
                     PlayerUtils.updateDisplayName(player);
                 }
             }
+
+            for (Player player : PlayerUtils.getStats()) {
+                PlayerUtils.checkAndUpdateIfMuted(player);
+            }
         } catch (ConcurrentModificationException e) {
             if (ConfigUtils.debug) e.printStackTrace();
-            // do nothing
         }
     }
 }
