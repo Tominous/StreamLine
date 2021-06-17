@@ -73,7 +73,9 @@ public class PluginUtils {
             registerCommand(plugin, new GlobalOnlineCommand(ConfigUtils.comBGlobalOnlineBase, ConfigUtils.comBGlobalOnlinePerm, getAliases(ConfigUtils.comBGlobalOnlineAliases)));
         }
         if (ConfigUtils.comBSettings) {
+            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Settings make start...");
             registerCommand(plugin, new SettingsEditCommand(ConfigUtils.comBSettingsBase, ConfigUtils.comBSettingsPerm, getAliases(ConfigUtils.comBSettingsAliases)));
+            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Settings make finish...");
         }
         // // Spying.
         if (ConfigUtils.comBSSPY) {

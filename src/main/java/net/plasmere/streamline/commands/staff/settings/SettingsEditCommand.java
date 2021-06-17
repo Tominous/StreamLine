@@ -6,6 +6,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
@@ -14,6 +15,7 @@ import net.plasmere.streamline.utils.TextUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +23,10 @@ import java.util.stream.Collectors;
 public class SettingsEditCommand extends Command implements TabExecutor {
     public SettingsEditCommand(String base, String perm, String[] aliases){
         super(base, perm, aliases);
+
+        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Settings make base: " + base);
+        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Settings make perm: " + perm);
+        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Settings make aliases: " + Arrays.toString(aliases));
     }
 
     @Override
@@ -180,7 +186,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                                 return;
                             }
 
-                            String sample = StreamLine.serverConfig.getSampleAt(at);
+                            String sample = StreamLine.serverConfig.getSampleAt(atS);
 
                             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetSample
                                     .replace("%number%", Integer.toString(atS))

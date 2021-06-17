@@ -202,16 +202,6 @@ public class StreamLine extends Plugin {
 		if (ConfigUtils.lobbies) {
 			lobbies = new Lobbies(false);
 		}
-
-		// Bans.
-		if (ConfigUtils.punBans) {
-			bans = new Bans();
-		}
-
-		// Server Config.
-		if (ConfigUtils.sc) {
-			serverConfig = new ServerConfig();
-		}
 	}
 
     public void onLoad(){
@@ -236,6 +226,16 @@ public class StreamLine extends Plugin {
 
 		// Config.
 		config = new Config();
+
+		// Bans.
+		if (ConfigUtils.punBans) {
+			bans = new Bans();
+		}
+
+		// Server Config.
+		if (ConfigUtils.sc) {
+			serverConfig = new ServerConfig();
+		}
 
 		// Commands.
 		PluginUtils.loadCommands(this);

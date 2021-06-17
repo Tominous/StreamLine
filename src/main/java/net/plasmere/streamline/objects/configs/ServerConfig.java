@@ -66,7 +66,9 @@ public class ServerConfig {
         }
         StreamLine.getInstance().getLogger().info("Loaded serverConfig!");
 
-        motdUpdater.cancel();
+        if (motdUpdater != null) {
+            motdUpdater.cancel();
+        }
 
         motdUpdater = StreamLine.getInstance().getProxy().getScheduler().schedule(StreamLine.getInstance(), new MOTDUpdaterTimer(thing.getInt("motd-timer")), 0, 1, TimeUnit.SECONDS);
 
