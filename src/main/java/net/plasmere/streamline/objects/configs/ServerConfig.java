@@ -105,9 +105,7 @@ public class ServerConfig {
         String[] array = new String[getComparedSample().size()];
         int i = 0;
         for (int it : getComparedSample().keySet()) {
-            array[i] = getComparedSample().get(it)
-                    .replace("%online%", String.valueOf(StreamLine.getInstance().getProxy().getPlayers().size()))
-                    .replace("%max%", String.valueOf(StreamLine.getInstance().getProxy().getConfig().getPlayerLimit()));
+            array[i] = getComparedSample().get(it);
             i ++;
         }
 

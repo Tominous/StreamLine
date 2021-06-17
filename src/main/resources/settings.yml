@@ -1,3 +1,6 @@
+# All Fillers:
+# %online% = players online.
+# %max% = max players online.
 # MOTD.
 motd:
   1: "&eThis &5BungeeCord &7server &eruns the &dStreamLine &cplugin&e!%newline%&4JOIN NOW!"

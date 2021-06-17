@@ -432,10 +432,12 @@ public class ConfigUtils {
     // Messaging.
     public static final String messViewPerm = StreamLine.getConfig().getConfString("modules.bungee.messaging.view-permission");
     public static final String messReplyTo = StreamLine.getConfig().getConfString("modules.bungee.messaging.reply-to");
-    // ... Server Config.
+    // Server Config.
     public static final boolean sc = StreamLine.getConfig().getConfBoolean("modules.bungee.server-config.enabled");
     public static final boolean scMakeDefault = StreamLine.getConfig().getConfBoolean("modules.bungee.server-config.make-if-not-exist");
     public static final boolean scMOTD = StreamLine.getConfig().getConfBoolean("modules.bungee.server-config.motd");
     public static final boolean scVersion = StreamLine.getConfig().getConfBoolean("modules.bungee.server-config.version");
     public static final boolean scSample = StreamLine.getConfig().getConfBoolean("modules.bungee.server-config.sample");
+    public static final boolean scMaxPlayers = StreamLine.getConfig().getConfBoolean("modules.bungee.server-config.max-players");
+    public static final boolean scOnlinePlayers = StreamLine.getConfig().getConfBoolean("modules.bungee.server-config.online-players");
 }

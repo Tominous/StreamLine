@@ -1013,3 +1013,7 @@ modules:
       version: true
       # Allows the use of the Sample in the server list.
       sample: true
+      # Allows the use of the Max Players in the server list.
+      max-players: true
+      # Allows the use of the Online Players in the server list.
+      online-players: true
