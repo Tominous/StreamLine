@@ -370,7 +370,7 @@ public class Player implements ProxiedPlayer {
         defaults.add("sspy=true");
         defaults.add("gspy=true");
         defaults.add("pspy=true");
-        defaults.add("sc=true");
+        defaults.add("sc=false");
         defaults.add("latest-version=" + latestVersion);
         defaults.add("tags=" + defaultTags());
         defaults.add("points=" + ConfigUtils.pointsDefault);
