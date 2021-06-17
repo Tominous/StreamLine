@@ -3,6 +3,7 @@ package net.plasmere.streamline.listeners;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Cancellable;
+import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 import net.plasmere.streamline.StreamLine;
@@ -11,7 +12,7 @@ import net.plasmere.streamline.utils.TextUtils;
 
 import java.util.UUID;
 
-public class ProxyPingListener {
+public class ProxyPingListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onProxyPing(ProxyPingEvent event){
         ServerPing response = event.getResponse();

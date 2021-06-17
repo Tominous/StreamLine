@@ -28,13 +28,8 @@ import net.plasmere.streamline.utils.holders.GeyserHolder;
 import java.util.*;
 
 public class JoinLeaveListener implements Listener {
-    private final StreamLine plugin;
     private final GeyserFile file = StreamLine.geyserHolder.file;
     private final GeyserHolder holder = StreamLine.geyserHolder;
-
-    public JoinLeaveListener(StreamLine streamLine){
-        this.plugin = streamLine;
-    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void preJoin(PreLoginEvent ev) {
@@ -112,14 +107,14 @@ public class JoinLeaveListener implements Listener {
 
 //        switch (ConfigUtils.moduleBPlayerJoins) {
 //            case "yes":
-//                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
+//                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(StreamLine.getInstance().getProxy().getConsole(),
 //                        MessageConfUtils.bungeeOnline.replace("%player_default%", player.getName())
 //                                .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
 //                        ConfigUtils.moduleBPlayerJoinsPerm));
 //                break;
 //            case "staff":
 //                if (player.hasPermission(ConfigUtils.staffPerm)) {
-//                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
+//                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(StreamLine.getInstance().getProxy().getConsole(),
 //                            MessageConfUtils.bungeeOnline.replace("%player_default%", player.getName())
 //                                    .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
 //                            ConfigUtils.moduleBPlayerJoinsPerm));
@@ -208,7 +203,7 @@ public class JoinLeaveListener implements Listener {
         switch (ConfigUtils.moduleDPlayerJoins) {
             case "yes":
                 if (ConfigUtils.joinsLeavesAsConsole) {
-                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
                             MessageConfUtils.discordOnlineEmbed,
                             MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
                                     .replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
@@ -224,7 +219,7 @@ public class JoinLeaveListener implements Listener {
             case "staff":
                 if (player.hasPermission(ConfigUtils.staffPerm)) {
                     if (ConfigUtils.joinsLeavesAsConsole) {
-                        MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
+                        MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
                                 MessageConfUtils.discordOnlineEmbed,
                                 MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
                                         .replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
@@ -423,14 +418,14 @@ public class JoinLeaveListener implements Listener {
 
 //        switch (ConfigUtils.moduleBPlayerLeaves) {
 //            case "yes":
-//                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
+//                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(StreamLine.getInstance().getProxy().getConsole(),
 //                        MessageConfUtils.bungeeOffline.replace("%player_default%", player.getName())
 //                                .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
 //                        ConfigUtils.moduleBPlayerLeavesPerm));
 //                break;
 //            case "staff":
 //                if (player.hasPermission(ConfigUtils.staffPerm)) {
-//                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(plugin.getProxy().getConsole(),
+//                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(StreamLine.getInstance().getProxy().getConsole(),
 //                            MessageConfUtils.bungeeOffline.replace("%player_default%", player.getName())
 //                                    .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
 //                            ConfigUtils.moduleBPlayerLeavesPerm));
@@ -518,7 +513,7 @@ public class JoinLeaveListener implements Listener {
         switch (ConfigUtils.moduleDPlayerLeaves) {
             case "yes":
                 if (ConfigUtils.joinsLeavesAsConsole) {
-                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
                         MessageConfUtils.discordOfflineEmbed,
                         MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
                                 .replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),
@@ -534,7 +529,7 @@ public class JoinLeaveListener implements Listener {
             case "staff":
                 if (player.hasPermission(ConfigUtils.staffPerm)) {
                     if (ConfigUtils.joinsLeavesAsConsole) {
-                        MessagingUtils.sendDiscordEBMessage(new DiscordMessage(plugin.getProxy().getConsole(),
+                        MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
                                 MessageConfUtils.discordOfflineEmbed,
                                 MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
                                         .replace("%player%", PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))),

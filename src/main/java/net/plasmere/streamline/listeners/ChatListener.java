@@ -26,11 +26,6 @@ import java.util.Objects;
 
 public class ChatListener implements Listener {
     private final String prefix = ConfigUtils.moduleStaffChatPrefix;
-    private final StreamLine plugin;
-
-    public ChatListener(StreamLine streamLine){
-        this.plugin = streamLine;
-    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerChat(ChatEvent e){
@@ -110,7 +105,7 @@ public class ChatListener implements Listener {
                 }
 
                 e.setCancelled(true);
-                MessagingUtils.sendStaffChatMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg, plugin);
+                MessagingUtils.sendStaffChatMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg);
                 if (ConfigUtils.moduleStaffChatMToDiscord) {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                             MessageConfUtils.staffChatEmbedTitle,
@@ -132,7 +127,7 @@ public class ChatListener implements Listener {
                     }
 
                     e.setCancelled(true);
-                    MessagingUtils.sendStaffChatMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg.substring(prefix.length()), plugin);
+                    MessagingUtils.sendStaffChatMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg.substring(prefix.length()));
                     if (ConfigUtils.moduleStaffChatMToDiscord) {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                                 MessageConfUtils.staffChatEmbedTitle,

@@ -23,6 +23,7 @@ import net.plasmere.streamline.listeners.JoinLeaveListener;
 import net.plasmere.streamline.listeners.ChatListener;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Listener;
+import net.plasmere.streamline.listeners.ProxyPingListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -197,8 +198,9 @@ public class PluginUtils {
     public static void loadListeners(StreamLine plugin){
         listenerAmount = 0;
 
-        registerListener(plugin, new ChatListener(plugin));
-        registerListener(plugin, new JoinLeaveListener(plugin));
+        registerListener(plugin, new ChatListener());
+        registerListener(plugin, new JoinLeaveListener());
+        registerListener(plugin, new ProxyPingListener());
 
         plugin.getLogger().info("Loaded " + listenerAmount + " listener(s) into memory...!");
     }

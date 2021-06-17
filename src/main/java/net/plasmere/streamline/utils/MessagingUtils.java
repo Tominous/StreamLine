@@ -53,8 +53,8 @@ public class MessagingUtils {
         }
     }
 
-    public static void sendStaffChatMessage(CommandSender sender, String from, String msg, StreamLine plugin){
-        Collection<ProxiedPlayer> staff = plugin.getProxy().getPlayers();
+    public static void sendStaffChatMessage(CommandSender sender, String from, String msg){
+        Collection<ProxiedPlayer> staff = StreamLine.getInstance().getProxy().getPlayers();
         Set<ProxiedPlayer> staffs = new HashSet<>(staff);
 
         for (ProxiedPlayer player : staff){
