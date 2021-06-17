@@ -243,4 +243,7 @@ public class MessageConfUtils {
     public static final String getStatsMessage = message.getString("getstats.message.main");
     public static final String getStatsNLast = message.getString("getstats.message.not-last");
     public static final String getStatsLast = message.getString("getstats.message.last");
+    // Kick.
+    public static final String kickSender = message.getString("kick.sender");
+    public static final String kickKicked = message.getString("kick.kicked");
 }

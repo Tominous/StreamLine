@@ -368,6 +368,21 @@ public class PlayerUtils {
         return false;
     }
 
+    public static boolean isOnline(String username){
+        if (isInStatsList(username)) {
+            Player player = getStat(username);
+            if (player != null) {
+                return player.online;
+            }
+        }
+
+        for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()) {
+            if (p.getName().equals(username)) return true;
+        }
+
+        return false;
+    }
+
     public static void removeStat(Player stat){
         List<Player> toRemove = new ArrayList<>();
 

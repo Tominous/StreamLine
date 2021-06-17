@@ -1625,3 +1625,9 @@ getstats:
     main: "&eLoaded stats: %stats%"
     not-last: "&d%player%&8, "
     last: "&d%player%&8."
+
+kick:
+  # For sender.
+  sender: "&eYou have &ckicked &d%player% &efor reason &a\"&b%reason%&a\"&e!"
+  # For kicked.
+  kicked: "&cYou have been &ckicked&c! Reason: &b%reason%"
