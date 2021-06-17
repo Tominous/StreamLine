@@ -15,8 +15,6 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class MessageListener extends ListenerAdapter {
-    private final Configuration config = Config.getConf();
-
     private static final EmbedBuilder eb = new EmbedBuilder();
 
     @Override

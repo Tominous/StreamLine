@@ -9,12 +9,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.Collection;
+import java.util.List;
 
 public class Config {
-    private static Configuration conf;
-    private static Configuration oConf;
-    private static Configuration mess;
-    private static Configuration oMess;
+    static Configuration conf;
+    static Configuration oConf;
+    static Configuration mess;
+    static Configuration oMess;
+
     private String configVer = "";
     private String messagesVer = "";
 
@@ -35,15 +38,17 @@ public class Config {
 //        System.out.println("config load - start");
 
         conf = loadConf();
+        inst.getLogger().info("Loaded configuration!");
         mess = loadMess();
+        inst.getLogger().info("Loaded messages!");
 
 //        System.out.println("config load - end");
     }
 
-    public static Configuration getConf() { return conf; }
-    public static Configuration getMess() { return mess; }
-    public static Configuration getoConf() { return oConf; }
-    public static Configuration getoMess() { return oMess; }
+//    public static Configuration getConf() { return conf; }
+//    public static Configuration getMess() { return mess; }
+//    public static Configuration getoConf() { return oConf; }
+//    public static Configuration getoMess() { return oMess; }
 
     public void reloadConfig(){
         try {
@@ -70,10 +75,12 @@ public class Config {
             }
         }
 
+        Configuration thing = new Configuration();
+
         try {
-            conf = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(inst.getDataFolder(), "config.yml"));
-            if (! this.configVer.equals(ConfigUtils.version)){
-                conf = iterateConfigs("oldconfig.yml");
+            thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(inst.getDataFolder(), "config.yml"));
+            if (! this.configVer.equals(thing.getString("version"))){
+                thing = iterateConfigs("oldconfig.yml");
 
                 inst.getLogger().severe("----------------------------------------------------------");
                 inst.getLogger().severe("YOU NEED TO UPDATE THE VALUES IN YOUR NEW CONFIG FILE AS");
@@ -83,9 +90,9 @@ public class Config {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        inst.getLogger().info("Loaded configuration!");
+        //inst.getLogger().info("Loaded configuration!");
 
-        return conf;
+        return thing;
     }
 
     public Configuration loadMess(){
@@ -97,10 +104,12 @@ public class Config {
             }
         }
 
+        Configuration thing = new Configuration();
+
         try {
-            mess = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(inst.getDataFolder(), "messages.yml"));
-            if (! this.messagesVer.equals(MessageConfUtils.version)){
-                mess = iterateMessagesConf("oldmessages.yml");
+            thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(inst.getDataFolder(), "messages.yml"));
+            if (! this.messagesVer.equals(thing.getString("version"))){
+                thing = iterateMessagesConf("oldmessages.yml");
 
                 inst.getLogger().severe("----------------------------------------------------------");
                 inst.getLogger().severe("YOU NEED TO UPDATE THE VALUES IN YOUR NEW MESSAGES FILE AS");
@@ -110,15 +119,15 @@ public class Config {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        inst.getLogger().info("Loaded messages!");
+        //inst.getLogger().info("Loaded messages!");
 
-        return mess;
+        return thing;
     }
 
     private static Configuration iterateConfigs(String old) throws IOException {
         File oldfile = new File(inst.getDataFolder(), old);
         if (oldfile.exists()) {
-            iterateConfigs("new" + old);
+            return iterateConfigs("new" + old);
         } else {
             try (InputStream in = inst.getResourceAsStream("config.yml")) {
                 Files.move(cfile.toPath(), oldfile.toPath());
@@ -128,16 +137,14 @@ public class Config {
             }
 
             oConf = conf;
-            conf = ConfigurationProvider.getProvider(YamlConfiguration.class).load(cfile);
+            return ConfigurationProvider.getProvider(YamlConfiguration.class).load(cfile);
         }
-
-        return conf;
     }
 
     private static Configuration iterateMessagesConf(String old) throws IOException {
         File oldfile = new File(inst.getDataFolder(), old);
         if (oldfile.exists()) {
-            iterateMessagesConf("new" + old);
+            return iterateMessagesConf("new" + old);
         } else {
             try (InputStream in = inst.getResourceAsStream("messages.yml")) {
                 Files.move(mfile.toPath(), oldfile.toPath());
@@ -147,9 +154,77 @@ public class Config {
             }
 
             oMess = mess;
-            mess = ConfigurationProvider.getProvider(YamlConfiguration.class).load(mfile);
+            return ConfigurationProvider.getProvider(YamlConfiguration.class).load(mfile);
         }
+    }
 
-        return mess;
+    public String getConfString(String path) {
+        reloadConfig();
+        return conf.getString(path);
+    }
+
+    public boolean getConfBoolean(String path) {
+        reloadConfig();
+        return conf.getBoolean(path);
+    }
+
+    public int getConfInteger(String path) {
+        reloadConfig();
+        return conf.getInt(path);
+    }
+
+    public List<String> getConfStringList(String path) {
+        reloadConfig();
+        return conf.getStringList(path);
+    }
+
+    public List<Integer> getConfIntegerList(String path) {
+        reloadConfig();
+        return conf.getIntList(path);
+    }
+
+    public Configuration getConfSection(String path) {
+        reloadConfig();
+        return conf.getSection(path);
+    }
+
+    public Collection<String> getConfKeys() {
+        reloadConfig();
+        return conf.getKeys();
+    }
+
+    public String getMessString(String path) {
+        reloadMessages();
+        return mess.getString(path);
+    }
+
+    public boolean getMessBoolean(String path) {
+        reloadMessages();
+        return mess.getBoolean(path);
+    }
+
+    public int getMessInteger(String path) {
+        reloadMessages();
+        return mess.getInt(path);
+    }
+
+    public List<String> getMessStringList(String path) {
+        reloadMessages();
+        return mess.getStringList(path);
+    }
+
+    public List<Integer> getMessIntegerList(String path) {
+        reloadMessages();
+        return conf.getIntList(path);
+    }
+
+    public Configuration getMessSection(String path) {
+        reloadMessages();
+        return mess.getSection(path);
+    }
+
+    public Collection<String> getMessKeys() {
+        reloadMessages();
+        return mess.getKeys();
     }
 }

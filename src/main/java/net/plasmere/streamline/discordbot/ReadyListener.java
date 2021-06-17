@@ -13,8 +13,6 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class ReadyListener implements EventListener {
-    private final Configuration config = Config.getConf();
-
     private static final EmbedBuilder eb = new EmbedBuilder();
 
     @Override

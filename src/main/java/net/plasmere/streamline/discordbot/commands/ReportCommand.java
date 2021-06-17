@@ -11,7 +11,6 @@ import net.md_5.bungee.config.Configuration;
 
 public class ReportCommand {
     private final static EmbedBuilder eb = new EmbedBuilder();
-    private final Configuration config = Config.getConf();
 
     public static void sendMessage(String command, MessageReceivedEvent event){
         String om = event.getMessage().getContentDisplay();

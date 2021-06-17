@@ -17,7 +17,6 @@ import java.util.*;
 
 public class PartyUtils {
     private static final List<Party> parties = new ArrayList<>();
-    private static final Configuration message = Config.getMess();
 
     public static List<Party> getParties() {
         return parties;
@@ -1498,133 +1497,133 @@ public class PartyUtils {
 
     // MESSAGES...
     // Text.
-    public static final String textLeader = message.getString("party.text.leader");
-    public static final String textModerator = message.getString("party.text.moderator");
-    public static final String textMember = message.getString("party.text.member");
+    public static final String textLeader = StreamLine.getConfig().getMessString("party.text.leader");
+    public static final String textModerator = StreamLine.getConfig().getMessString("party.text.moderator");
+    public static final String textMember = StreamLine.getConfig().getMessString("party.text.member");
     // Spy.
-    public static final String spy = message.getString("party.spy");
+    public static final String spy = StreamLine.getConfig().getMessString("party.spy");
     // No party.
-    public static final String noPartyFound = message.getString("party.no-party");
+    public static final String noPartyFound = StreamLine.getConfig().getMessString("party.no-party");
     // Already made.
-    public static final String already = message.getString("party.already-made");
+    public static final String already = StreamLine.getConfig().getMessString("party.already-made");
     // Already in one.
-    public static final String alreadyHasOne = message.getString("party.already-has");
+    public static final String alreadyHasOne = StreamLine.getConfig().getMessString("party.already-has");
     // Too big.
-    public static final String tooBig = message.getString("party.too-big");
+    public static final String tooBig = StreamLine.getConfig().getMessString("party.too-big");
     // Not high enough permissions.
-    public static final String noPermission = message.getString("party.no-permission");
+    public static final String noPermission = StreamLine.getConfig().getMessString("party.no-permission");
     // Not in a party.
-    public static final String notInParty = message.getString("party.not-in-a-party");
-    public static final String otherNotInParty = message.getString("party.other-not-in-party");
+    public static final String notInParty = StreamLine.getConfig().getMessString("party.not-in-a-party");
+    public static final String otherNotInParty = StreamLine.getConfig().getMessString("party.other-not-in-party");
     // Not enough space in party.
-    public static final String notEnoughSpace = message.getString("party.not-enough-space");
+    public static final String notEnoughSpace = StreamLine.getConfig().getMessString("party.not-enough-space");
     // Chat.
-    public static final String chat = message.getString("party.chat.message");
-    public static final String chatMuted = message.getString("party.chat.muted");
-    public static final String chatConsole = message.getString("party.chat.console");;
-    public static final String chatTitle = message.getString("party.chat.title");
+    public static final String chat = StreamLine.getConfig().getMessString("party.chat.message");
+    public static final String chatMuted = StreamLine.getConfig().getMessString("party.chat.muted");
+    public static final String chatConsole = StreamLine.getConfig().getMessString("party.chat.console");;
+    public static final String chatTitle = StreamLine.getConfig().getMessString("party.chat.title");
     // Create.
-    public static final String create = message.getString("party.create.sender");
-    public static final String createConsole = message.getString("party.create.console");
-    public static final String createTitle = message.getString("party.create.title");
+    public static final String create = StreamLine.getConfig().getMessString("party.create.sender");
+    public static final String createConsole = StreamLine.getConfig().getMessString("party.create.console");
+    public static final String createTitle = StreamLine.getConfig().getMessString("party.create.title");
     // Join.
-    public static final String joinMembers = message.getString("party.join.members");
-    public static final String joinUser = message.getString("party.join.user");
-    public static final String joinFailure = message.getString("party.join.failure");
-    public static final String joinsConsole = message.getString("party.join.console");
-    public static final String joinsTitle = message.getString("party.join.title");
+    public static final String joinMembers = StreamLine.getConfig().getMessString("party.join.members");
+    public static final String joinUser = StreamLine.getConfig().getMessString("party.join.user");
+    public static final String joinFailure = StreamLine.getConfig().getMessString("party.join.failure");
+    public static final String joinsConsole = StreamLine.getConfig().getMessString("party.join.console");
+    public static final String joinsTitle = StreamLine.getConfig().getMessString("party.join.title");
     // Leave.
-    public static final String leaveMembers = message.getString("party.leave.members");
-    public static final String leaveUser = message.getString("party.leave.user");
-    public static final String leaveFailure = message.getString("party.leave.failure");
-    public static final String leaveConsole = message.getString("party.leave.console");
-    public static final String leaveTitle = message.getString("party.leave.title");
+    public static final String leaveMembers = StreamLine.getConfig().getMessString("party.leave.members");
+    public static final String leaveUser = StreamLine.getConfig().getMessString("party.leave.user");
+    public static final String leaveFailure = StreamLine.getConfig().getMessString("party.leave.failure");
+    public static final String leaveConsole = StreamLine.getConfig().getMessString("party.leave.console");
+    public static final String leaveTitle = StreamLine.getConfig().getMessString("party.leave.title");
     // Promote.
-    public static final String promoteMembers = message.getString("party.promote.members");
-    public static final String promoteUser = message.getString("party.promote.user");
-    public static final String promoteLeader = message.getString("party.promote.leader");
-    public static final String promoteFailure = message.getString("party.promote.failure");
-    public static final String promoteConsole = message.getString("party.promote.console");
-    public static final String promoteTitle = message.getString("party.promote.title");
+    public static final String promoteMembers = StreamLine.getConfig().getMessString("party.promote.members");
+    public static final String promoteUser = StreamLine.getConfig().getMessString("party.promote.user");
+    public static final String promoteLeader = StreamLine.getConfig().getMessString("party.promote.leader");
+    public static final String promoteFailure = StreamLine.getConfig().getMessString("party.promote.failure");
+    public static final String promoteConsole = StreamLine.getConfig().getMessString("party.promote.console");
+    public static final String promoteTitle = StreamLine.getConfig().getMessString("party.promote.title");
     // Demote.
-    public static final String demoteMembers = message.getString("party.demote.members");
-    public static final String demoteUser = message.getString("party.demote.user");
-    public static final String demoteLeader = message.getString("party.demote.leader");
-    public static final String demoteFailure = message.getString("party.demote.failure");
-    public static final String demoteIsLeader = message.getString("party.demote.is-leader");
-    public static final String demoteConsole = message.getString("party.demote.console");
-    public static final String demoteTitle = message.getString("party.demote.title");
+    public static final String demoteMembers = StreamLine.getConfig().getMessString("party.demote.members");
+    public static final String demoteUser = StreamLine.getConfig().getMessString("party.demote.user");
+    public static final String demoteLeader = StreamLine.getConfig().getMessString("party.demote.leader");
+    public static final String demoteFailure = StreamLine.getConfig().getMessString("party.demote.failure");
+    public static final String demoteIsLeader = StreamLine.getConfig().getMessString("party.demote.is-leader");
+    public static final String demoteConsole = StreamLine.getConfig().getMessString("party.demote.console");
+    public static final String demoteTitle = StreamLine.getConfig().getMessString("party.demote.title");
     // List.
-    public static final String listMain = message.getString("party.list.main");
-    public static final String listLeaderBulk = message.getString("party.list.leaderbulk");
-    public static final String listModBulkMain = message.getString("party.list.moderatorbulk.main");
-    public static final String listModBulkNotLast = message.getString("party.list.moderatorbulk.moderators.not-last");
-    public static final String listModBulkLast = message.getString("party.list.moderatorbulk.moderators.last");
-    public static final String listModBulkNone = message.getString("party.list.moderatorbulk.moderators.if-none");
-    public static final String listMemberBulkMain = message.getString("party.list.memberbulk.main");
-    public static final String listMemberBulkNotLast = message.getString("party.list.memberbulk.members.not-last");
-    public static final String listMemberBulkLast = message.getString("party.list.memberbulk.members.last");
-    public static final String listMemberBulkNone = message.getString("party.list.memberbulk.members.if-none");
+    public static final String listMain = StreamLine.getConfig().getMessString("party.list.main");
+    public static final String listLeaderBulk = StreamLine.getConfig().getMessString("party.list.leaderbulk");
+    public static final String listModBulkMain = StreamLine.getConfig().getMessString("party.list.moderatorbulk.main");
+    public static final String listModBulkNotLast = StreamLine.getConfig().getMessString("party.list.moderatorbulk.moderators.not-last");
+    public static final String listModBulkLast = StreamLine.getConfig().getMessString("party.list.moderatorbulk.moderators.last");
+    public static final String listModBulkNone = StreamLine.getConfig().getMessString("party.list.moderatorbulk.moderators.if-none");
+    public static final String listMemberBulkMain = StreamLine.getConfig().getMessString("party.list.memberbulk.main");
+    public static final String listMemberBulkNotLast = StreamLine.getConfig().getMessString("party.list.memberbulk.members.not-last");
+    public static final String listMemberBulkLast = StreamLine.getConfig().getMessString("party.list.memberbulk.members.last");
+    public static final String listMemberBulkNone = StreamLine.getConfig().getMessString("party.list.memberbulk.members.if-none");
     // Open.
-    public static final String openMembers = message.getString("party.open.members");
-    public static final String openLeader = message.getString("party.open.leader");
-    public static final String openFailure = message.getString("party.open.failure");
-    public static final String openConsole = message.getString("party.open.console");
-    public static final String openTitle = message.getString("party.open.title");
+    public static final String openMembers = StreamLine.getConfig().getMessString("party.open.members");
+    public static final String openLeader = StreamLine.getConfig().getMessString("party.open.leader");
+    public static final String openFailure = StreamLine.getConfig().getMessString("party.open.failure");
+    public static final String openConsole = StreamLine.getConfig().getMessString("party.open.console");
+    public static final String openTitle = StreamLine.getConfig().getMessString("party.open.title");
     // Close.
-    public static final String closeMembers = message.getString("party.close.members");
-    public static final String closeSender = message.getString("party.close.sender");
-    public static final String closeFailure = message.getString("party.close.failure");
-    public static final String closeConsole = message.getString("party.close.console");
-    public static final String closeTitle = message.getString("party.close.title");
+    public static final String closeMembers = StreamLine.getConfig().getMessString("party.close.members");
+    public static final String closeSender = StreamLine.getConfig().getMessString("party.close.sender");
+    public static final String closeFailure = StreamLine.getConfig().getMessString("party.close.failure");
+    public static final String closeConsole = StreamLine.getConfig().getMessString("party.close.console");
+    public static final String closeTitle = StreamLine.getConfig().getMessString("party.close.title");
     // Disband.
-    public static final String disbandMembers = message.getString("party.disband.members");
-    public static final String disbandLeader = message.getString("party.disband.leader");
-    public static final String disbandConsole = message.getString("party.disband.console");
-    public static final String disbandTitle = message.getString("party.disband.title");
+    public static final String disbandMembers = StreamLine.getConfig().getMessString("party.disband.members");
+    public static final String disbandLeader = StreamLine.getConfig().getMessString("party.disband.leader");
+    public static final String disbandConsole = StreamLine.getConfig().getMessString("party.disband.console");
+    public static final String disbandTitle = StreamLine.getConfig().getMessString("party.disband.title");
     // Accept.
-    public static final String acceptUser = message.getString("party.accept.user");
-    public static final String acceptLeader = message.getString("party.accept.leader");
-    public static final String acceptMembers = message.getString("party.accept.members");
-    public static final String acceptFailure = message.getString("party.accept.failure");
-    public static final String acceptConsole = message.getString("party.accept.console");
-    public static final String acceptTitle = message.getString("party.accept.title");
+    public static final String acceptUser = StreamLine.getConfig().getMessString("party.accept.user");
+    public static final String acceptLeader = StreamLine.getConfig().getMessString("party.accept.leader");
+    public static final String acceptMembers = StreamLine.getConfig().getMessString("party.accept.members");
+    public static final String acceptFailure = StreamLine.getConfig().getMessString("party.accept.failure");
+    public static final String acceptConsole = StreamLine.getConfig().getMessString("party.accept.console");
+    public static final String acceptTitle = StreamLine.getConfig().getMessString("party.accept.title");
     // Deny.
-    public static final String denyUser = message.getString("party.deny.user");
-    public static final String denyLeader = message.getString("party.deny.leader");
-    public static final String denyMembers = message.getString("party.deny.members");
-    public static final String denyFailure = message.getString("party.deny.failure");
-    public static final String denyConsole = message.getString("party.deny.console");
-    public static final String denyTitle = message.getString("party.deny.title");
+    public static final String denyUser = StreamLine.getConfig().getMessString("party.deny.user");
+    public static final String denyLeader = StreamLine.getConfig().getMessString("party.deny.leader");
+    public static final String denyMembers = StreamLine.getConfig().getMessString("party.deny.members");
+    public static final String denyFailure = StreamLine.getConfig().getMessString("party.deny.failure");
+    public static final String denyConsole = StreamLine.getConfig().getMessString("party.deny.console");
+    public static final String denyTitle = StreamLine.getConfig().getMessString("party.deny.title");
     // Invite.
-    public static final String inviteUser = message.getString("party.invite.user");
-    public static final String inviteLeader = message.getString("party.invite.leader");
-    public static final String inviteMembers = message.getString("party.invite.members");
-    public static final String inviteFailure = message.getString("party.invite.failure");
-    public static final String inviteNonSelf = message.getString("party.invite.non-self");
-    public static final String inviteConsole = message.getString("party.invite.console");
-    public static final String inviteTitle = message.getString("party.invite.title");
+    public static final String inviteUser = StreamLine.getConfig().getMessString("party.invite.user");
+    public static final String inviteLeader = StreamLine.getConfig().getMessString("party.invite.leader");
+    public static final String inviteMembers = StreamLine.getConfig().getMessString("party.invite.members");
+    public static final String inviteFailure = StreamLine.getConfig().getMessString("party.invite.failure");
+    public static final String inviteNonSelf = StreamLine.getConfig().getMessString("party.invite.non-self");
+    public static final String inviteConsole = StreamLine.getConfig().getMessString("party.invite.console");
+    public static final String inviteTitle = StreamLine.getConfig().getMessString("party.invite.title");
     // Kick.
-    public static final String kickUser = message.getString("party.kick.user");
-    public static final String kickSender = message.getString("party.kick.sender");
-    public static final String kickMembers = message.getString("party.kick.members");
-    public static final String kickFailure = message.getString("party.kick.failure");
-    public static final String kickMod = message.getString("party.kick.mod");
-    public static final String kickSelf = message.getString("party.kick.self");
-    public static final String kickConsole = message.getString("party.kick.console");
-    public static final String kickTitle = message.getString("party.kick.title");
+    public static final String kickUser = StreamLine.getConfig().getMessString("party.kick.user");
+    public static final String kickSender = StreamLine.getConfig().getMessString("party.kick.sender");
+    public static final String kickMembers = StreamLine.getConfig().getMessString("party.kick.members");
+    public static final String kickFailure = StreamLine.getConfig().getMessString("party.kick.failure");
+    public static final String kickMod = StreamLine.getConfig().getMessString("party.kick.mod");
+    public static final String kickSelf = StreamLine.getConfig().getMessString("party.kick.self");
+    public static final String kickConsole = StreamLine.getConfig().getMessString("party.kick.console");
+    public static final String kickTitle = StreamLine.getConfig().getMessString("party.kick.title");
     // Mute.
-    public static final String muteUser = message.getString("party.mute.mute.user");
-    public static final String muteMembers = message.getString("party.mute.mute.members");
-    public static final String unmuteUser = message.getString("party.mute.unmute.user");
-    public static final String unmuteMembers = message.getString("party.mute.unmute.members");
-    public static final String muteConsole = message.getString("party.mute.console");
-    public static final String muteTitle = message.getString("party.mute.title");
-    public static final String muteToggleMuted = message.getString("party.mute.toggle.muted");
-    public static final String muteToggleUnMuted = message.getString("party.mute.toggle.unmuted");
+    public static final String muteUser = StreamLine.getConfig().getMessString("party.mute.mute.user");
+    public static final String muteMembers = StreamLine.getConfig().getMessString("party.mute.mute.members");
+    public static final String unmuteUser = StreamLine.getConfig().getMessString("party.mute.unmute.user");
+    public static final String unmuteMembers = StreamLine.getConfig().getMessString("party.mute.unmute.members");
+    public static final String muteConsole = StreamLine.getConfig().getMessString("party.mute.console");
+    public static final String muteTitle = StreamLine.getConfig().getMessString("party.mute.title");
+    public static final String muteToggleMuted = StreamLine.getConfig().getMessString("party.mute.toggle.muted");
+    public static final String muteToggleUnMuted = StreamLine.getConfig().getMessString("party.mute.toggle.unmuted");
     // Warp.
-    public static final String warpSender = message.getString("party.warp.sender");
-    public static final String warpMembers = message.getString("party.warp.members");
-    public static final String warpConsole = message.getString("party.warp.console");
-    public static final String warpTitle = message.getString("party.warp.title");
+    public static final String warpSender = StreamLine.getConfig().getMessString("party.warp.sender");
+    public static final String warpMembers = StreamLine.getConfig().getMessString("party.warp.members");
+    public static final String warpConsole = StreamLine.getConfig().getMessString("party.warp.console");
+    public static final String warpTitle = StreamLine.getConfig().getMessString("party.warp.title");
 }

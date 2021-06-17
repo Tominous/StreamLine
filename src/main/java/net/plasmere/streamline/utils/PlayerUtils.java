@@ -25,7 +25,6 @@ import java.util.function.Predicate;
 
 public class PlayerUtils {
     private static final List<Player> stats = new ArrayList<>();
-    private static final Configuration message = Config.getMess();
 
     private static HashMap<Player, SingleSet<Integer, Integer>> connections = new HashMap<>();
 
@@ -841,34 +840,34 @@ public class PlayerUtils {
     }
 
     // No stats.
-    public static final String noStatsFound = message.getString("stats.no-stats");
+    public static final String noStatsFound = StreamLine.getConfig().getMessString("stats.no-stats");
     // Not high enough permissions.
-    public static final String noPermission = message.getString("stats.no-permission");
+    public static final String noPermission = StreamLine.getConfig().getMessString("stats.no-permission");
     // Create.
-    public static final String create = message.getString("stats.create");
+    public static final String create = StreamLine.getConfig().getMessString("stats.create");
     // Info.
-    public static final String info = message.getString("stats.info");
-    public static final String tagsLast = message.getString("stats.tags.last");
-    public static final String tagsNLast = message.getString("stats.tags.not-last");
-    public static final String ipsLast = message.getString("stats.ips.last");
-    public static final String ipsNLast = message.getString("stats.ips.not-last");
-    public static final String namesLast = message.getString("stats.names.last");
-    public static final String namesNLast = message.getString("stats.names.not-last");
-    public static final String sspyT = message.getString("stats.sspy.true");
-    public static final String sspyF = message.getString("stats.sspy.false");
-    public static final String gspyT = message.getString("stats.gspy.true");
-    public static final String gspyF = message.getString("stats.gspy.false");
-    public static final String pspyT = message.getString("stats.pspy.true");
-    public static final String pspyF = message.getString("stats.pspy.false");
-    public static final String onlineT = message.getString("stats.online.true");
-    public static final String onlineF = message.getString("stats.online.false");
-    public static final String notSet = message.getString("stats.not-set");
+    public static final String info = StreamLine.getConfig().getMessString("stats.info");
+    public static final String tagsLast = StreamLine.getConfig().getMessString("stats.tags.last");
+    public static final String tagsNLast = StreamLine.getConfig().getMessString("stats.tags.not-last");
+    public static final String ipsLast = StreamLine.getConfig().getMessString("stats.ips.last");
+    public static final String ipsNLast = StreamLine.getConfig().getMessString("stats.ips.not-last");
+    public static final String namesLast = StreamLine.getConfig().getMessString("stats.names.last");
+    public static final String namesNLast = StreamLine.getConfig().getMessString("stats.names.not-last");
+    public static final String sspyT = StreamLine.getConfig().getMessString("stats.sspy.true");
+    public static final String sspyF = StreamLine.getConfig().getMessString("stats.sspy.false");
+    public static final String gspyT = StreamLine.getConfig().getMessString("stats.gspy.true");
+    public static final String gspyF = StreamLine.getConfig().getMessString("stats.gspy.false");
+    public static final String pspyT = StreamLine.getConfig().getMessString("stats.pspy.true");
+    public static final String pspyF = StreamLine.getConfig().getMessString("stats.pspy.false");
+    public static final String onlineT = StreamLine.getConfig().getMessString("stats.online.true");
+    public static final String onlineF = StreamLine.getConfig().getMessString("stats.online.false");
+    public static final String notSet = StreamLine.getConfig().getMessString("stats.not-set");
     // Tags.
-    public static final String tagRem = message.getString("btag.remove");
-    public static final String tagAdd = message.getString("btag.add");
-    public static final String tagListMain = message.getString("btag.list.main");
-    public static final String tagListLast = message.getString("btag.list.tags.last");
-    public static final String tagListNotLast = message.getString("btag.list.tags.not-last");
+    public static final String tagRem = StreamLine.getConfig().getMessString("btag.remove");
+    public static final String tagAdd = StreamLine.getConfig().getMessString("btag.add");
+    public static final String tagListMain = StreamLine.getConfig().getMessString("btag.list.main");
+    public static final String tagListLast = StreamLine.getConfig().getMessString("btag.list.tags.last");
+    public static final String tagListNotLast = StreamLine.getConfig().getMessString("btag.list.tags.not-last");
     // Points.
-    public static final String pointsName = message.getString("stats.points-name");
+    public static final String pointsName = StreamLine.getConfig().getMessString("stats.points-name");
 }

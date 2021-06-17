@@ -31,185 +31,189 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (args.length <= 2) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-        } else {
-            switch (args[0]) {
-                case "set":
-                    switch (args[1]) {
-                        case "motd":
-                            if (args.length < 4) {
-                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                                return;
-                            }
+        switch (args[0]) {
+            case "set":
+                if (args.length <= 2) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    return;
+                }
+                switch (args[1]) {
+                    case "motd":
+                        if (args.length < 4) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            return;
+                        }
 
-                            int at = 0;
-                            try {
-                                at = Integer.parseInt(args[2]);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
-                                return;
-                            }
+                        int at = 0;
+                        try {
+                            at = Integer.parseInt(args[2]);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            return;
+                        }
 
-                            String rest = TextUtils.argsToStringMinus(args, 0, 1, 2);
+                        String rest = TextUtils.argsToStringMinus(args, 0, 1, 2);
 
-                            StreamLine.serverConfig.setMOTD(Integer.toString(at), rest);
+                        StreamLine.serverConfig.setMOTD(Integer.toString(at), rest);
 
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetMOTD
-                                    .replace("%number%", Integer.toString(at))
-                                    .replace("%set%", rest)
-                            );
-                            break;
-                        case "motd-time":
-                            String motdtime = TextUtils.argsToStringMinus(args, 0, 1);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetMOTD
+                                .replace("%number%", Integer.toString(at))
+                                .replace("%set%", rest)
+                        );
+                        break;
+                    case "motd-time":
+                        String motdtime = TextUtils.argsToStringMinus(args, 0, 1);
 
-                            int time = 0;
-                            try {
-                                time = Integer.parseInt(motdtime);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
-                                return;
-                            }
+                        int time = 0;
+                        try {
+                            time = Integer.parseInt(motdtime);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            return;
+                        }
 
-                            StreamLine.serverConfig.setMOTDTime(time);
+                        StreamLine.serverConfig.setMOTDTime(time);
 
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetMOTDTime
-                                    .replace("%set%", motdtime)
-                            );
-                            break;
-                        case "version":
-                            String version = TextUtils.argsToStringMinus(args, 0, 1);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetMOTDTime
+                                .replace("%set%", motdtime)
+                        );
+                        break;
+                    case "version":
+                        String version = TextUtils.argsToStringMinus(args, 0, 1);
 
-                            StreamLine.serverConfig.setVersion(version);
+                        StreamLine.serverConfig.setVersion(version);
 
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetVersion
-                                    .replace("%set%", version)
-                            );
-                            break;
-                        case "sample":
-                            if (args.length < 4) {
-                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                                return;
-                            }
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetVersion
+                                .replace("%set%", version)
+                        );
+                        break;
+                    case "sample":
+                        if (args.length < 4) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            return;
+                        }
 
-                            int atS = 0;
-                            try {
-                                atS = Integer.parseInt(args[2]);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
-                                return;
-                            }
+                        int atS = 0;
+                        try {
+                            atS = Integer.parseInt(args[2]);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            return;
+                        }
 
-                            String sample = TextUtils.argsToStringMinus(args, 0, 1, 2);
+                        String sample = TextUtils.argsToStringMinus(args, 0, 1, 2);
 
-                            StreamLine.serverConfig.setSample(Integer.toString(atS), sample);
+                        StreamLine.serverConfig.setSample(Integer.toString(atS), sample);
 
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetSample
-                                    .replace("%number%", Integer.toString(atS))
-                                    .replace("%set%", sample)
-                            );
-                            break;
-                        case "max-players":
-                            String maxp = TextUtils.argsToStringMinus(args, 0, 1);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetSample
+                                .replace("%number%", Integer.toString(atS))
+                                .replace("%set%", sample)
+                        );
+                        break;
+                    case "max-players":
+                        String maxp = TextUtils.argsToStringMinus(args, 0, 1);
 
-                            StreamLine.serverConfig.setMaxPlayers(maxp);
+                        StreamLine.serverConfig.setMaxPlayers(maxp);
 
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetMaxP
-                                    .replace("%set%", maxp)
-                            );
-                            break;
-                        case "online-players":
-                            String onp = TextUtils.argsToStringMinus(args, 0, 1);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetMaxP
+                                .replace("%set%", maxp)
+                        );
+                        break;
+                    case "online-players":
+                        String onp = TextUtils.argsToStringMinus(args, 0, 1);
 
-                            StreamLine.serverConfig.setOnlinePlayers(onp);
+                        StreamLine.serverConfig.setOnlinePlayers(onp);
 
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetOnlineP
-                                    .replace("%set%", onp)
-                            );
-                            break;
-                    }
-                    break;
-                case "check":
-                case "get":
-                    switch (args[1]) {
-                        case "motd":
-                            if (args.length < 4) {
-                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                                return;
-                            }
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetOnlineP
+                                .replace("%set%", onp)
+                        );
+                        break;
+                }
+                break;
+            case "check":
+            case "get":
+                if (args.length <= 1) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    return;
+                }
+                switch (args[1]) {
+                    case "motd":
+                        if (args.length < 3) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            return;
+                        }
 
-                            int at = 0;
-                            try {
-                                at = Integer.parseInt(args[2]);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
-                                return;
-                            }
+                        int at = 0;
+                        try {
+                            at = Integer.parseInt(args[2]);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            return;
+                        }
 
-                            String motd = StreamLine.serverConfig.getMOTDat(at);
+                        String motd = StreamLine.serverConfig.getMOTDat(at);
 
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMOTD
-                                    .replace("%number%", Integer.toString(at))
-                                    .replace("%set%", motd)
-                            );
-                            break;
-                        case "motd-time":
-                            String motdtime = Integer.toString(StreamLine.serverConfig.getMOTDTime());
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMOTD
+                                .replace("%number%", Integer.toString(at))
+                                .replace("%set%", motd)
+                        );
+                        break;
+                    case "motd-time":
+                        String motdtime = Integer.toString(StreamLine.serverConfig.getMOTDTime());
 
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMOTDTime
-                                    .replace("%set%", motdtime)
-                            );
-                            break;
-                        case "version":
-                            String version = StreamLine.serverConfig.getVersion();
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMOTDTime
+                                .replace("%set%", motdtime)
+                        );
+                        break;
+                    case "version":
+                        String version = StreamLine.serverConfig.getVersion();
 
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetVersion
-                                    .replace("%set%", version)
-                            );
-                            break;
-                        case "sample":
-                            if (args.length < 4) {
-                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                                return;
-                            }
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetVersion
+                                .replace("%set%", version)
+                        );
+                        break;
+                    case "sample":
+                        if (args.length < 3) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            return;
+                        }
 
-                            int atS = 0;
-                            try {
-                                atS = Integer.parseInt(args[2]);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
-                                return;
-                            }
+                        int atS = 0;
+                        try {
+                            atS = Integer.parseInt(args[2]);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            return;
+                        }
 
-                            String sample = StreamLine.serverConfig.getSampleAt(atS);
+                        String sample = StreamLine.serverConfig.getSampleAt(atS);
 
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetSample
-                                    .replace("%number%", Integer.toString(atS))
-                                    .replace("%set%", sample)
-                            );
-                            break;
-                        case "max-players":
-                            String maxp = StreamLine.serverConfig.getMaxPlayers();
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetSample
+                                .replace("%number%", Integer.toString(atS))
+                                .replace("%set%", sample)
+                        );
+                        break;
+                    case "max-players":
+                        String maxp = StreamLine.serverConfig.getMaxPlayers();
 
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMaxP
-                                    .replace("%set%", maxp)
-                            );
-                            break;
-                        case "online-players":
-                            String onp = StreamLine.serverConfig.getOnlinePlayers();
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMaxP
+                                .replace("%set%", maxp)
+                        );
+                        break;
+                    case "online-players":
+                        String onp = StreamLine.serverConfig.getOnlinePlayers();
 
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetOnlineP
-                                    .replace("%set%", onp)
-                            );
-                            break;
-                    }
-                    break;
-            }
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetOnlineP
+                                .replace("%set%", onp)
+                        );
+                        break;
+                }
+                break;
         }
     }
 
@@ -242,6 +246,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
             options.add("set");
             options.add("check");
+            options.add("get");
 
             List<String> options2 = new ArrayList<>();
 

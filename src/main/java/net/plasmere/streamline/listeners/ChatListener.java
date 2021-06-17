@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class ChatListener implements Listener {
-    private final Configuration config = Config.getConf();
     private final String prefix = ConfigUtils.moduleStaffChatPrefix;
     private final StreamLine plugin;
 

@@ -28,7 +28,6 @@ import net.plasmere.streamline.utils.holders.GeyserHolder;
 import java.util.*;
 
 public class JoinLeaveListener implements Listener {
-    private final Configuration config = Config.getConf();
     private final StreamLine plugin;
     private final GeyserFile file = StreamLine.geyserHolder.file;
     private final GeyserHolder holder = StreamLine.geyserHolder;

@@ -76,6 +76,8 @@ public class PluginUtils {
             if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Settings make start...");
             registerCommand(plugin, new SettingsEditCommand(ConfigUtils.comBSettingsBase, ConfigUtils.comBSettingsPerm, getAliases(ConfigUtils.comBSettingsAliases)));
             if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Settings make finish...");
+        } else {
+            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Settings enabled = false...");
         }
         // // Spying.
         if (ConfigUtils.comBSSPY) {

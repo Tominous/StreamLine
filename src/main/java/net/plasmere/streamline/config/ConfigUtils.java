@@ -9,434 +9,433 @@ import java.util.Collection;
 import java.util.List;
 
 public class ConfigUtils {
-    private static final Configuration config = Config.getConf();
     // Config //
-//    public static final String s = config.getString("");
+//    public static final String s = StreamLine.getConfig().getConfString("");
     // Important.
-    public static final String version = config.getString("version");
+    public static final String version = StreamLine.getConfig().getConfString("version");
     // Debug.
-    public static final boolean debug = config.getBoolean("debug");
+    public static final boolean debug = StreamLine.getConfig().getConfBoolean("debug");
     // ... Basics.
     // Links.
-    public static final String linkPre = config.getString("link-prefix");
-//    public static final String linkSuff = config.getString("link.suffix");
+    public static final String linkPre = StreamLine.getConfig().getConfString("link-prefix");
+//    public static final String linkSuff = StreamLine.getConfig().getConfString("link.suffix");
     // Bot Stuff.
-    public static final String botPrefix = config.getString("bot.prefix");
-    public static final String botToken = config.getString("bot.token");
-    public static final String botStatusMessage = config.getString("bot.server-ip");
+    public static final String botPrefix = StreamLine.getConfig().getConfString("bot.prefix");
+    public static final String botToken = StreamLine.getConfig().getConfString("bot.token");
+    public static final String botStatusMessage = StreamLine.getConfig().getConfString("bot.server-ip");
     // ... Discord.
     // Text Channels.
-    public static final String textChannelReports = config.getString("discord.text-channels.reports");
-    public static final String textChannelStaffChat = config.getString("discord.text-channels.staffchat");
-    public static final String textChannelOfflineOnline = config.getString("discord.text-channels.offline-online");
-    public static final String textChannelBJoins = config.getString("discord.text-channels.bungee-joins");
-    public static final String textChannelBLeaves = config.getString("discord.text-channels.bungee-leaves");
-    public static final String textChannelBConsole = config.getString("discord.text-channels.console");
-    public static final String textChannelGuilds = config.getString("discord.text-channels.guilds");
-    public static final String textChannelParties = config.getString("discord.text-channels.parties");
+    public static final String textChannelReports = StreamLine.getConfig().getConfString("discord.text-channels.reports");
+    public static final String textChannelStaffChat = StreamLine.getConfig().getConfString("discord.text-channels.staffchat");
+    public static final String textChannelOfflineOnline = StreamLine.getConfig().getConfString("discord.text-channels.offline-online");
+    public static final String textChannelBJoins = StreamLine.getConfig().getConfString("discord.text-channels.bungee-joins");
+    public static final String textChannelBLeaves = StreamLine.getConfig().getConfString("discord.text-channels.bungee-leaves");
+    public static final String textChannelBConsole = StreamLine.getConfig().getConfString("discord.text-channels.console");
+    public static final String textChannelGuilds = StreamLine.getConfig().getConfString("discord.text-channels.guilds");
+    public static final String textChannelParties = StreamLine.getConfig().getConfString("discord.text-channels.parties");
     // Roles.
-    public static final String roleReports = config.getString("discord.roles.reports");
-    public static final String roleStaff = config.getString("discord.roles.staff");
+    public static final String roleReports = StreamLine.getConfig().getConfString("discord.roles.reports");
+    public static final String roleStaff = StreamLine.getConfig().getConfString("discord.roles.staff");
     // ... ... ... Commands.
     // ... ... Discord Stuff.
     // Commands.
-    public static final boolean comDCommands = config.getBoolean("commands.discord.help.enabled");
-    public static final List<String> comDCommandsAliases = config.getStringList("commands.discord.help.aliases");
-    public static final String comDCommandsPerm = config.getString("commands.discord.help.permission");
+    public static final boolean comDCommands = StreamLine.getConfig().getConfBoolean("commands.discord.help.enabled");
+    public static final List<String> comDCommandsAliases = StreamLine.getConfig().getConfStringList("commands.discord.help.aliases");
+    public static final String comDCommandsPerm = StreamLine.getConfig().getConfString("commands.discord.help.permission");
     // Online.
-    public static final boolean comDOnline = config.getBoolean("commands.discord.online.enabled");
-    public static final List<String> comDOnlineAliases = config.getStringList("commands.discord.online.aliases");
-    public static final String comDOnlinePerm = config.getString("commands.discord.online.permission");
+    public static final boolean comDOnline = StreamLine.getConfig().getConfBoolean("commands.discord.online.enabled");
+    public static final List<String> comDOnlineAliases = StreamLine.getConfig().getConfStringList("commands.discord.online.aliases");
+    public static final String comDOnlinePerm = StreamLine.getConfig().getConfString("commands.discord.online.permission");
     // Report.
-    public static final boolean comDReport = config.getBoolean("commands.discord.report.enabled");
-    public static final List<String> comDReportAliases = config.getStringList("commands.discord.report.aliases");
-    public static final String comDReportPerm = config.getString("commands.discord.report.permission");
+    public static final boolean comDReport = StreamLine.getConfig().getConfBoolean("commands.discord.report.enabled");
+    public static final List<String> comDReportAliases = StreamLine.getConfig().getConfStringList("commands.discord.report.aliases");
+    public static final String comDReportPerm = StreamLine.getConfig().getConfString("commands.discord.report.permission");
     // StaffChat.
-    public static final boolean comDStaffChat = config.getBoolean("commands.discord.staffchat.enabled");
-    public static final List<String> comDStaffChatAliases = config.getStringList("commands.discord.staffchat.aliases");
-    public static final String comDStaffChatPerm = config.getString("commands.discord.staffchat.permission");
+    public static final boolean comDStaffChat = StreamLine.getConfig().getConfBoolean("commands.discord.staffchat.enabled");
+    public static final List<String> comDStaffChatAliases = StreamLine.getConfig().getConfStringList("commands.discord.staffchat.aliases");
+    public static final String comDStaffChatPerm = StreamLine.getConfig().getConfString("commands.discord.staffchat.permission");
     // StaffOnline.
-    public static final boolean comDStaffOnline = config.getBoolean("commands.discord.staffonline.enabled");
-    public static final List<String> comDStaffOnlineAliases = config.getStringList("commands.discord.staffonline.aliases");
-    public static final String comDStaffOnlinePerm = config.getString("commands.discord.staffonline.permission");
+    public static final boolean comDStaffOnline = StreamLine.getConfig().getConfBoolean("commands.discord.staffonline.enabled");
+    public static final List<String> comDStaffOnlineAliases = StreamLine.getConfig().getConfStringList("commands.discord.staffonline.aliases");
+    public static final String comDStaffOnlinePerm = StreamLine.getConfig().getConfString("commands.discord.staffonline.permission");
     // ... ... Bungee Stuff.
     // Ping.
-    public static final boolean comBPing = config.getBoolean("commands.bungee.ping.enabled");
-    public static final String comBPingBase = config.getString("commands.bungee.ping.base");
-    public static final List<String> comBPingAliases = config.getStringList("commands.bungee.ping.aliases");
-    public static final String comBPingPerm = config.getString("commands.bungee.ping.permission");
+    public static final boolean comBPing = StreamLine.getConfig().getConfBoolean("commands.bungee.ping.enabled");
+    public static final String comBPingBase = StreamLine.getConfig().getConfString("commands.bungee.ping.base");
+    public static final List<String> comBPingAliases = StreamLine.getConfig().getConfStringList("commands.bungee.ping.aliases");
+    public static final String comBPingPerm = StreamLine.getConfig().getConfString("commands.bungee.ping.permission");
     // Plugins.
-    public static final boolean comBPlugins = config.getBoolean("commands.bungee.plugins.enabled");
-    public static final String comBPluginsBase = config.getString("commands.bungee.plugins.base");
-    public static final List<String> comBPluginsAliases = config.getStringList("commands.bungee.plugins.aliases");
-    public static final String comBPluginsPerm = config.getString("commands.bungee.plugins.permission");
+    public static final boolean comBPlugins = StreamLine.getConfig().getConfBoolean("commands.bungee.plugins.enabled");
+    public static final String comBPluginsBase = StreamLine.getConfig().getConfString("commands.bungee.plugins.base");
+    public static final List<String> comBPluginsAliases = StreamLine.getConfig().getConfStringList("commands.bungee.plugins.aliases");
+    public static final String comBPluginsPerm = StreamLine.getConfig().getConfString("commands.bungee.plugins.permission");
     // Stream.
-    public static final boolean comBStream = config.getBoolean("commands.bungee.stream.enabled");
-    public static final String comBStreamBase = config.getString("commands.bungee.stream.base");
-    public static final List<String> comBStreamAliases = config.getStringList("commands.bungee.stream.aliases");
-    public static final String comBStreamPerm = config.getString("commands.bungee.stream.permission");
+    public static final boolean comBStream = StreamLine.getConfig().getConfBoolean("commands.bungee.stream.enabled");
+    public static final String comBStreamBase = StreamLine.getConfig().getConfString("commands.bungee.stream.base");
+    public static final List<String> comBStreamAliases = StreamLine.getConfig().getConfStringList("commands.bungee.stream.aliases");
+    public static final String comBStreamPerm = StreamLine.getConfig().getConfString("commands.bungee.stream.permission");
     // Report.
-    public static final boolean comBReport = config.getBoolean("commands.bungee.report.enabled");
-    public static final String comBReportBase = config.getString("commands.bungee.report.base");
-    public static final List<String> comBReportAliases = config.getStringList("commands.bungee.report.aliases");
-    public static final String comBReportPerm = config.getString("commands.bungee.report.permission");
+    public static final boolean comBReport = StreamLine.getConfig().getConfBoolean("commands.bungee.report.enabled");
+    public static final String comBReportBase = StreamLine.getConfig().getConfString("commands.bungee.report.base");
+    public static final List<String> comBReportAliases = StreamLine.getConfig().getConfStringList("commands.bungee.report.aliases");
+    public static final String comBReportPerm = StreamLine.getConfig().getConfString("commands.bungee.report.permission");
     // StatsCommand
-    public static final boolean comBStats = config.getBoolean("commands.bungee.stats.enabled");
-    public static final String comBStatsBase = config.getString("commands.bungee.stats.base");
-    public static final List<String> comBStatsAliases = config.getStringList("commands.bungee.stats.aliases");
-    public static final String comBStatsPerm = config.getString("commands.bungee.stats.permission");
-    public static final boolean comBStatsOthers = config.getBoolean("commands.bungee.stats.view-others.enabled");
-    public static final String comBStatsPermOthers = config.getString("commands.bungee.stats.view-others.permission");
+    public static final boolean comBStats = StreamLine.getConfig().getConfBoolean("commands.bungee.stats.enabled");
+    public static final String comBStatsBase = StreamLine.getConfig().getConfString("commands.bungee.stats.base");
+    public static final List<String> comBStatsAliases = StreamLine.getConfig().getConfStringList("commands.bungee.stats.aliases");
+    public static final String comBStatsPerm = StreamLine.getConfig().getConfString("commands.bungee.stats.permission");
+    public static final boolean comBStatsOthers = StreamLine.getConfig().getConfBoolean("commands.bungee.stats.view-others.enabled");
+    public static final String comBStatsPermOthers = StreamLine.getConfig().getConfString("commands.bungee.stats.view-others.permission");
     // ... Party.
     //
-    public static final boolean comBParty = config.getBoolean("commands.bungee.party.enabled");
-    public static final String comBPartyBase = config.getString("commands.bungee.party.base");
-    public static final boolean comBParQuick = config.getBoolean("commands.bungee.party.quick-chat");
-    public static final List<String> comBParMainAliases = config.getStringList("commands.bungee.party.aliases.main");
-    public static final String comBParPerm = config.getString("commands.bungee.party.permission");
+    public static final boolean comBParty = StreamLine.getConfig().getConfBoolean("commands.bungee.party.enabled");
+    public static final String comBPartyBase = StreamLine.getConfig().getConfString("commands.bungee.party.base");
+    public static final boolean comBParQuick = StreamLine.getConfig().getConfBoolean("commands.bungee.party.quick-chat");
+    public static final List<String> comBParMainAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.main");
+    public static final String comBParPerm = StreamLine.getConfig().getConfString("commands.bungee.party.permission");
     // Join.
-    public static final List<String> comBParJoinAliases = config.getStringList("commands.bungee.party.aliases.join");
+    public static final List<String> comBParJoinAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.join");
     // Leave.
-    public static final List<String> comBParLeaveAliases = config.getStringList("commands.bungee.party.aliases.leave");
+    public static final List<String> comBParLeaveAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.leave");
     // Create.
-    public static final List<String> comBParCreateAliases = config.getStringList("commands.bungee.party.aliases.create");
+    public static final List<String> comBParCreateAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.create");
     // Promote.
-    public static final List<String> comBParPromoteAliases = config.getStringList("commands.bungee.party.aliases.promote");
+    public static final List<String> comBParPromoteAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.promote");
     // Demote.
-    public static final List<String> comBParDemoteAliases = config.getStringList("commands.bungee.party.aliases.demote");
+    public static final List<String> comBParDemoteAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.demote");
     // Chat.
-    public static final List<String> comBParChatAliases = config.getStringList("commands.bungee.party.aliases.chat");
+    public static final List<String> comBParChatAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.chat");
     // List.
-    public static final List<String> comBParListAliases = config.getStringList("commands.bungee.party.aliases.list");
+    public static final List<String> comBParListAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.list");
     // Open.
-    public static final List<String> comBParOpenAliases = config.getStringList("commands.bungee.party.aliases.open");
+    public static final List<String> comBParOpenAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.open");
     // Close.
-    public static final List<String> comBParCloseAliases = config.getStringList("commands.bungee.party.aliases.close");
+    public static final List<String> comBParCloseAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.close");
     // Disband.
-    public static final List<String> comBParDisbandAliases = config.getStringList("commands.bungee.party.aliases.disband");
+    public static final List<String> comBParDisbandAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.disband");
     // Accept.
-    public static final List<String> comBParAcceptAliases = config.getStringList("commands.bungee.party.aliases.accept");
+    public static final List<String> comBParAcceptAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.accept");
     // Deny.
-    public static final List<String> comBParDenyAliases = config.getStringList("commands.bungee.party.aliases.deny");
+    public static final List<String> comBParDenyAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.deny");
     // Invite.
-    public static final List<String> comBParInvAliases = config.getStringList("commands.bungee.party.aliases.invite");
+    public static final List<String> comBParInvAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.invite");
     // Kick.
-    public static final List<String> comBParKickAliases = config.getStringList("commands.bungee.party.aliases.kick");
+    public static final List<String> comBParKickAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.kick");
     // Mute.
-    public static final List<String> comBParMuteAliases = config.getStringList("commands.bungee.party.aliases.mute");
+    public static final List<String> comBParMuteAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.mute");
     // Warp.
-    public static final List<String> comBParWarpAliases = config.getStringList("commands.bungee.party.aliases.warp");
+    public static final List<String> comBParWarpAliases = StreamLine.getConfig().getConfStringList("commands.bungee.party.aliases.warp");
     // ... Guild.
     //
-    public static final boolean comBGuild = config.getBoolean("commands.bungee.guild.enabled");
-    public static final String comBGuildBase = config.getString("commands.bungee.guild.base");
-    public static final boolean comBGuildQuick = config.getBoolean("commands.bungee.guild.quick-chat");
-    public static final String comBGuildPerm = config.getString("commands.bungee.guild.permission");
-    public static final List<String> comBGuildMainAliases = config.getStringList("commands.bungee.guild.aliases.main");
+    public static final boolean comBGuild = StreamLine.getConfig().getConfBoolean("commands.bungee.guild.enabled");
+    public static final String comBGuildBase = StreamLine.getConfig().getConfString("commands.bungee.guild.base");
+    public static final boolean comBGuildQuick = StreamLine.getConfig().getConfBoolean("commands.bungee.guild.quick-chat");
+    public static final String comBGuildPerm = StreamLine.getConfig().getConfString("commands.bungee.guild.permission");
+    public static final List<String> comBGuildMainAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.main");
     // Join.
-    public static final List<String> comBGuildJoinAliases = config.getStringList("commands.bungee.guild.aliases.join");
+    public static final List<String> comBGuildJoinAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.join");
     // Leave.
-    public static final List<String> comBGuildLeaveAliases = config.getStringList("commands.bungee.guild.aliases.leave");
+    public static final List<String> comBGuildLeaveAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.leave");
     // Create.
-    public static final List<String> comBGuildCreateAliases = config.getStringList("commands.bungee.guild.aliases.create");
+    public static final List<String> comBGuildCreateAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.create");
     // Promote.
-    public static final List<String> comBGuildPromoteAliases = config.getStringList("commands.bungee.guild.aliases.promote");
+    public static final List<String> comBGuildPromoteAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.promote");
     // Demote.
-    public static final List<String> comBGuildDemoteAliases = config.getStringList("commands.bungee.guild.aliases.demote");
+    public static final List<String> comBGuildDemoteAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.demote");
     // Chat.
-    public static final List<String> comBGuildChatAliases = config.getStringList("commands.bungee.guild.aliases.chat");
+    public static final List<String> comBGuildChatAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.chat");
     // List.
-    public static final List<String> comBGuildListAliases = config.getStringList("commands.bungee.guild.aliases.list");
+    public static final List<String> comBGuildListAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.list");
     // Open.
-    public static final List<String> comBGuildOpenAliases = config.getStringList("commands.bungee.guild.aliases.open");
+    public static final List<String> comBGuildOpenAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.open");
     // Close.
-    public static final List<String> comBGuildCloseAliases = config.getStringList("commands.bungee.guild.aliases.close");
+    public static final List<String> comBGuildCloseAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.close");
     // Disband.
-    public static final List<String> comBGuildDisbandAliases = config.getStringList("commands.bungee.guild.aliases.disband");
+    public static final List<String> comBGuildDisbandAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.disband");
     // Accept.
-    public static final List<String> comBGuildAcceptAliases = config.getStringList("commands.bungee.guild.aliases.accept");
+    public static final List<String> comBGuildAcceptAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.accept");
     // Deny.
-    public static final List<String> comBGuildDenyAliases = config.getStringList("commands.bungee.guild.aliases.deny");
+    public static final List<String> comBGuildDenyAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.deny");
     // Invite.
-    public static final List<String> comBGuildInvAliases = config.getStringList("commands.bungee.guild.aliases.invite");
+    public static final List<String> comBGuildInvAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.invite");
     // Kick.
-    public static final List<String> comBGuildKickAliases = config.getStringList("commands.bungee.guild.aliases.kick");
+    public static final List<String> comBGuildKickAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.kick");
     // Mute.
-    public static final List<String> comBGuildMuteAliases = config.getStringList("commands.bungee.guild.aliases.mute");
+    public static final List<String> comBGuildMuteAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.mute");
     // Warp.
-    public static final List<String> comBGuildWarpAliases = config.getStringList("commands.bungee.guild.aliases.warp");
+    public static final List<String> comBGuildWarpAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.warp");
     // Info.
-    public static final List<String> comBGuildInfoAliases = config.getStringList("commands.bungee.guild.aliases.info");
+    public static final List<String> comBGuildInfoAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.info");
     // Rename.
-    public static final List<String> comBGuildRenameAliases = config.getStringList("commands.bungee.guild.aliases.rename");
+    public static final List<String> comBGuildRenameAliases = StreamLine.getConfig().getConfStringList("commands.bungee.guild.aliases.rename");
     // ... Servers.
     // Lobby.
-    public static final boolean comBLobby = config.getBoolean("commands.bungee.servers.lobby.enabled");
-    public static final String comBLobbyBase = config.getString("commands.bungee.staff.lobby.base");
-    public static final List<String> comBLobbyAliases = config.getStringList("commands.bungee.servers.lobby.aliases");
-    public static final String comBLobbyEnd = config.getString("commands.bungee.servers.lobby.points-to");
-    public static final String comBLobbyPerm = config.getString("commands.bungee.servers.lobby.permission");
+    public static final boolean comBLobby = StreamLine.getConfig().getConfBoolean("commands.bungee.servers.lobby.enabled");
+    public static final String comBLobbyBase = StreamLine.getConfig().getConfString("commands.bungee.staff.lobby.base");
+    public static final List<String> comBLobbyAliases = StreamLine.getConfig().getConfStringList("commands.bungee.servers.lobby.aliases");
+    public static final String comBLobbyEnd = StreamLine.getConfig().getConfString("commands.bungee.servers.lobby.points-to");
+    public static final String comBLobbyPerm = StreamLine.getConfig().getConfString("commands.bungee.servers.lobby.permission");
     // Fabric Fix.
-    public static final boolean comBFabric = config.getBoolean("commands.bungee.servers.fabric-fix.enabled");
-    public static final String comBFabricEnd = config.getString("commands.bungee.servers.fabric-fix.points-to");
-    public static final String comBFabricPerm = config.getString("commands.bungee.servers.fabric-fix.permission");
+    public static final boolean comBFabric = StreamLine.getConfig().getConfBoolean("commands.bungee.servers.fabric-fix.enabled");
+    public static final String comBFabricEnd = StreamLine.getConfig().getConfString("commands.bungee.servers.fabric-fix.points-to");
+    public static final String comBFabricPerm = StreamLine.getConfig().getConfString("commands.bungee.servers.fabric-fix.permission");
     // ... Staff.
     // GlobalOnline.
-    public static final boolean comBGlobalOnline = config.getBoolean("commands.bungee.staff.globalonline.enabled");
-    public static final String comBGlobalOnlineBase = config.getString("commands.bungee.staff.globalonline.base");
-    public static final List<String> comBGlobalOnlineAliases = config.getStringList("commands.bungee.staff.globalonline.aliases");
-    public static final String comBGlobalOnlinePerm = config.getString("commands.bungee.staff.globalonline.permission");
+    public static final boolean comBGlobalOnline = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.globalonline.enabled");
+    public static final String comBGlobalOnlineBase = StreamLine.getConfig().getConfString("commands.bungee.staff.globalonline.base");
+    public static final List<String> comBGlobalOnlineAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.globalonline.aliases");
+    public static final String comBGlobalOnlinePerm = StreamLine.getConfig().getConfString("commands.bungee.staff.globalonline.permission");
     // StaffChat.
-    public static final boolean comBStaffChat = config.getBoolean("commands.bungee.staff.staffchat.enabled");
-    public static final String comBStaffChatBase = config.getString("commands.bungee.staff.staffchat.base");
-    public static final List<String> comBStaffChatAliases = config.getStringList("commands.bungee.staff.staffchat.aliases");
-    public static final String comBStaffChatPerm = config.getString("commands.bungee.staff.staffchat.permission");
+    public static final boolean comBStaffChat = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.staffchat.enabled");
+    public static final String comBStaffChatBase = StreamLine.getConfig().getConfString("commands.bungee.staff.staffchat.base");
+    public static final List<String> comBStaffChatAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.staffchat.aliases");
+    public static final String comBStaffChatPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.staffchat.permission");
     // StaffOnline.
-    public static final boolean comBStaffOnline = config.getBoolean("commands.bungee.staff.staffonline.enabled");
-    public static final String comBStaffOnlineBase = config.getString("commands.bungee.staff.staffonline.base");
-    public static final List<String> comBStaffOnlineAliases = config.getStringList("commands.bungee.staff.staffonline.aliases");
-    public static final String comBStaffOnlinePerm = config.getString("commands.bungee.staff.staffonline.permission");
+    public static final boolean comBStaffOnline = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.staffonline.enabled");
+    public static final String comBStaffOnlineBase = StreamLine.getConfig().getConfString("commands.bungee.staff.staffonline.base");
+    public static final List<String> comBStaffOnlineAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.staffonline.aliases");
+    public static final String comBStaffOnlinePerm = StreamLine.getConfig().getConfString("commands.bungee.staff.staffonline.permission");
     // Reload.
-    public static final String comBReloadBase = config.getString("commands.bungee.staff.slreload.base");
-    public static final List<String> comBReloadAliases = config.getStringList("commands.bungee.staff.slreload.aliases");
-    public static final String comBReloadPerm = config.getString("commands.bungee.staff.slreload.permission");
+    public static final String comBReloadBase = StreamLine.getConfig().getConfString("commands.bungee.staff.slreload.base");
+    public static final List<String> comBReloadAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.slreload.aliases");
+    public static final String comBReloadPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.slreload.permission");
     // Parties.
-    public static final boolean comBParties = config.getBoolean("commands.bungee.staff.parties.enabled");
-    public static final String comBPartiesBase = config.getString("commands.bungee.staff.parties.base");
-    public static final List<String> comBPartiesAliases = config.getStringList("commands.bungee.staff.parties.aliases");
-    public static final String comBPartiesPerm = config.getString("commands.bungee.staff.parties.permission");
+    public static final boolean comBParties = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.parties.enabled");
+    public static final String comBPartiesBase = StreamLine.getConfig().getConfString("commands.bungee.staff.parties.base");
+    public static final List<String> comBPartiesAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.parties.aliases");
+    public static final String comBPartiesPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.parties.permission");
     // Guilds.
-    public static final boolean comBGuilds = config.getBoolean("commands.bungee.staff.guilds.enabled");
-    public static final String comBGuildsBase = config.getString("commands.bungee.staff.guilds.base");
-    public static final List<String> comBGuildsAliases = config.getStringList("commands.bungee.staff.guilds.aliases");
-    public static final String comBGuildsPerm = config.getString("commands.bungee.staff.guilds.permission");
+    public static final boolean comBGuilds = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.guilds.enabled");
+    public static final String comBGuildsBase = StreamLine.getConfig().getConfString("commands.bungee.staff.guilds.base");
+    public static final List<String> comBGuildsAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.guilds.aliases");
+    public static final String comBGuildsPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.guilds.permission");
     // GetStats.
-    public static final boolean comBGetStats = config.getBoolean("commands.bungee.staff.getstats.enabled");
-    public static final String comBGetStatsBase = config.getString("commands.bungee.staff.getstats.base");
-    public static final List<String> comBGetStatsAliases = config.getStringList("commands.bungee.staff.getstats.aliases");
-    public static final String comBGetStatsPerm = config.getString("commands.bungee.staff.getstats.permission");
+    public static final boolean comBGetStats = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.getstats.enabled");
+    public static final String comBGetStatsBase = StreamLine.getConfig().getConfString("commands.bungee.staff.getstats.base");
+    public static final List<String> comBGetStatsAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.getstats.aliases");
+    public static final String comBGetStatsPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.getstats.permission");
     // BSudo.
-    public static final boolean comBSudo = config.getBoolean("commands.bungee.staff.bsudo.enabled");
-    public static final String comBSudoBase = config.getString("commands.bungee.staff.bsudo.base");
-    public static final List<String> comBSudoAliases = config.getStringList("commands.bungee.staff.bsudo.aliases");
-    public static final String comBSudoPerm = config.getString("commands.bungee.staff.bsudo.permission");
+    public static final boolean comBSudo = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.bsudo.enabled");
+    public static final String comBSudoBase = StreamLine.getConfig().getConfString("commands.bungee.staff.bsudo.base");
+    public static final List<String> comBSudoAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.bsudo.aliases");
+    public static final String comBSudoPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.bsudo.permission");
     // SSPY.
-    public static final boolean comBSSPY = config.getBoolean("commands.bungee.staff.sspy.enabled");
-    public static final String comBSSPYBase = config.getString("commands.bungee.staff.sspy.base");
-    public static final List<String> comBSSPYAliases = config.getStringList("commands.bungee.staff.sspy.aliases");
-    public static final String comBSSPYPerm = config.getString("commands.bungee.staff.sspy.permission");
+    public static final boolean comBSSPY = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.sspy.enabled");
+    public static final String comBSSPYBase = StreamLine.getConfig().getConfString("commands.bungee.staff.sspy.base");
+    public static final List<String> comBSSPYAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.sspy.aliases");
+    public static final String comBSSPYPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.sspy.permission");
     // GSPY.
-    public static final boolean comBGSPY = config.getBoolean("commands.bungee.staff.gspy.enabled");
-    public static final String comBGSPYBase = config.getString("commands.bungee.staff.gspy.base");
-    public static final List<String> comBGSPYAliases = config.getStringList("commands.bungee.staff.gspy.aliases");
-    public static final String comBGSPYPerm = config.getString("commands.bungee.staff.gspy.permission");
+    public static final boolean comBGSPY = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.gspy.enabled");
+    public static final String comBGSPYBase = StreamLine.getConfig().getConfString("commands.bungee.staff.gspy.base");
+    public static final List<String> comBGSPYAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.gspy.aliases");
+    public static final String comBGSPYPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.gspy.permission");
     // PSPY.
-    public static final boolean comBPSPY = config.getBoolean("commands.bungee.staff.pspy.enabled");
-    public static final String comBPSPYBase = config.getString("commands.bungee.staff.pspy.base");
-    public static final List<String> comBPSPYAliases = config.getStringList("commands.bungee.staff.pspy.aliases");
-    public static final String comBPSPYPerm = config.getString("commands.bungee.staff.pspy.permission");
+    public static final boolean comBPSPY = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.pspy.enabled");
+    public static final String comBPSPYBase = StreamLine.getConfig().getConfString("commands.bungee.staff.pspy.base");
+    public static final List<String> comBPSPYAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.pspy.aliases");
+    public static final String comBPSPYPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.pspy.permission");
     // BTag.
-    public static final boolean comBBTag = config.getBoolean("commands.bungee.staff.btag.enabled");
-    public static final String comBBTagBase = config.getString("commands.bungee.staff.btag.base");
-    public static final List<String> comBBTagAliases = config.getStringList("commands.bungee.staff.btag.aliases");
-    public static final String comBBTagPerm = config.getString("commands.bungee.staff.btag.permission");
-    public static final String comBBTagOPerm = config.getString("commands.bungee.staff.btag.other-perm");
-    public static final String comBBTagChPerm = config.getString("commands.bungee.staff.btag.change-perm");
+    public static final boolean comBBTag = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.btag.enabled");
+    public static final String comBBTagBase = StreamLine.getConfig().getConfString("commands.bungee.staff.btag.base");
+    public static final List<String> comBBTagAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.btag.aliases");
+    public static final String comBBTagPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.btag.permission");
+    public static final String comBBTagOPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.btag.other-perm");
+    public static final String comBBTagChPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.btag.change-perm");
     // Event Reload.
-    public static final boolean comBEReload = config.getBoolean("commands.bungee.staff.evreload.enabled");
-    public static final String comBEReloadBase = config.getString("commands.bungee.staff.evreload.base");
-    public static final List<String> comBEReloadAliases = config.getStringList("commands.bungee.staff.evreload.aliases");
-    public static final String comBEReloadPerm = config.getString("commands.bungee.staff.evreload.permission");
+    public static final boolean comBEReload = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.evreload.enabled");
+    public static final String comBEReloadBase = StreamLine.getConfig().getConfString("commands.bungee.staff.evreload.base");
+    public static final List<String> comBEReloadAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.evreload.aliases");
+    public static final String comBEReloadPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.evreload.permission");
     // Network Points.
-    public static final boolean comBPoints = config.getBoolean("commands.bungee.staff.points.enabled");
-    public static final String comBPointsBase = config.getString("commands.bungee.staff.points.base");
-    public static final List<String> comBPointsAliases = config.getStringList("commands.bungee.staff.points.aliases");
-    public static final String comBPointsPerm = config.getString("commands.bungee.staff.points.permission");
-    public static final String comBPointsOPerm = config.getString("commands.bungee.staff.points.other-perm");
-    public static final String comBPointsChPerm = config.getString("commands.bungee.staff.points.change-perm");
+    public static final boolean comBPoints = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.points.enabled");
+    public static final String comBPointsBase = StreamLine.getConfig().getConfString("commands.bungee.staff.points.base");
+    public static final List<String> comBPointsAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.points.aliases");
+    public static final String comBPointsPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.points.permission");
+    public static final String comBPointsOPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.points.other-perm");
+    public static final String comBPointsChPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.points.change-perm");
     // Server Ping.
-    public static final boolean comBSPing = config.getBoolean("commands.bungee.staff.serverping.enabled");
-    public static final String comBSPingBase = config.getString("commands.bungee.staff.serverping.base");
-    public static final List<String> comBSPingAliases = config.getStringList("commands.bungee.staff.serverping.aliases");
-    public static final String comBSPingPerm = config.getString("commands.bungee.staff.serverping.permission");
+    public static final boolean comBSPing = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.serverping.enabled");
+    public static final String comBSPingBase = StreamLine.getConfig().getConfString("commands.bungee.staff.serverping.base");
+    public static final List<String> comBSPingAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.serverping.aliases");
+    public static final String comBSPingPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.serverping.permission");
     // Mute.
-    public static final boolean comBMute = config.getBoolean("commands.bungee.staff.mute.enabled");
-    public static final String comBMuteBase = config.getString("commands.bungee.staff.mute.base");
-    public static final List<String> comBMuteAliases = config.getStringList("commands.bungee.staff.mute.aliases");
-    public static final String comBMutePerm = config.getString("commands.bungee.staff.mute.permission");
+    public static final boolean comBMute = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.mute.enabled");
+    public static final String comBMuteBase = StreamLine.getConfig().getConfString("commands.bungee.staff.mute.base");
+    public static final List<String> comBMuteAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.mute.aliases");
+    public static final String comBMutePerm = StreamLine.getConfig().getConfString("commands.bungee.staff.mute.permission");
     // Kick.
-    public static final boolean comBKick = config.getBoolean("commands.bungee.staff.kick.enabled");
-    public static final String comBKickBase = config.getString("commands.bungee.staff.kick.base");
-    public static final List<String> comBKickAliases = config.getStringList("commands.bungee.staff.kick.aliases");
-    public static final String comBKickPerm = config.getString("commands.bungee.staff.kick.permission");
+    public static final boolean comBKick = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.kick.enabled");
+    public static final String comBKickBase = StreamLine.getConfig().getConfString("commands.bungee.staff.kick.base");
+    public static final List<String> comBKickAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.kick.aliases");
+    public static final String comBKickPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.kick.permission");
     // Ban.
-    public static final boolean comBBan = config.getBoolean("commands.bungee.staff.ban.enabled");
-    public static final String comBBanBase = config.getString("commands.bungee.staff.ban.base");
-    public static final List<String> comBBanAliases = config.getStringList("commands.bungee.staff.ban.aliases");
-    public static final String comBBanPerm = config.getString("commands.bungee.staff.ban.permission");
+    public static final boolean comBBan = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.ban.enabled");
+    public static final String comBBanBase = StreamLine.getConfig().getConfString("commands.bungee.staff.ban.base");
+    public static final List<String> comBBanAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.ban.aliases");
+    public static final String comBBanPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.ban.permission");
     // Settings.
-    public static final boolean comBSettings = config.getBoolean("commands.bungee.staff.settings.enabled");
-    public static final String comBSettingsBase = config.getString("commands.bungee.staff.settings.base");
-    public static final List<String> comBSettingsAliases = config.getStringList("commands.bungee.staff.settings.aliases");
-    public static final String comBSettingsPerm = config.getString("commands.bungee.staff.settings.permission");
+    public static final boolean comBSettings = StreamLine.getConfig().getConfBoolean("commands.bungee.configs.settings.enabled");
+    public static final String comBSettingsBase = StreamLine.getConfig().getConfString("commands.bungee.configs.settings.base");
+    public static final List<String> comBSettingsAliases = StreamLine.getConfig().getConfStringList("commands.bungee.configs.settings.aliases");
+    public static final String comBSettingsPerm = StreamLine.getConfig().getConfString("commands.bungee.configs.settings.permission");
     // ... Messaging.
     // Ignore.
-    public static final boolean comBIgnore = config.getBoolean("commands.bungee.messaging.ignore.enabled");
-    public static final String comBIgnoreBase = config.getString("commands.bungee.messaging.ignore.base");
-    public static final List<String> comBIgnoreAliases = config.getStringList("commands.bungee.messaging.ignore.aliases");
-    public static final String comBIgnorePerm = config.getString("commands.bungee.messaging.ignore.permission");
+    public static final boolean comBIgnore = StreamLine.getConfig().getConfBoolean("commands.bungee.messaging.ignore.enabled");
+    public static final String comBIgnoreBase = StreamLine.getConfig().getConfString("commands.bungee.messaging.ignore.base");
+    public static final List<String> comBIgnoreAliases = StreamLine.getConfig().getConfStringList("commands.bungee.messaging.ignore.aliases");
+    public static final String comBIgnorePerm = StreamLine.getConfig().getConfString("commands.bungee.messaging.ignore.permission");
     // Message.
-    public static final boolean comBMessage = config.getBoolean("commands.bungee.messaging.message.enabled");
-    public static final String comBMessageBase = config.getString("commands.bungee.messaging.message.base");
-    public static final List<String> comBMessageAliases = config.getStringList("commands.bungee.messaging.message.aliases");
-    public static final String comBMessagePerm = config.getString("commands.bungee.messaging.message.permission");
+    public static final boolean comBMessage = StreamLine.getConfig().getConfBoolean("commands.bungee.messaging.message.enabled");
+    public static final String comBMessageBase = StreamLine.getConfig().getConfString("commands.bungee.messaging.message.base");
+    public static final List<String> comBMessageAliases = StreamLine.getConfig().getConfStringList("commands.bungee.messaging.message.aliases");
+    public static final String comBMessagePerm = StreamLine.getConfig().getConfString("commands.bungee.messaging.message.permission");
     // Reply.
-    public static final boolean comBReply = config.getBoolean("commands.bungee.messaging.reply.enabled");
-    public static final String comBReplyBase = config.getString("commands.bungee.messaging.reply.base");
-    public static final List<String> comBReplyAliases = config.getStringList("commands.bungee.messaging.reply.aliases");
-    public static final String comBReplyPerm = config.getString("commands.bungee.messaging.reply.permission");
+    public static final boolean comBReply = StreamLine.getConfig().getConfBoolean("commands.bungee.messaging.reply.enabled");
+    public static final String comBReplyBase = StreamLine.getConfig().getConfString("commands.bungee.messaging.reply.base");
+    public static final List<String> comBReplyAliases = StreamLine.getConfig().getConfStringList("commands.bungee.messaging.reply.aliases");
+    public static final String comBReplyPerm = StreamLine.getConfig().getConfString("commands.bungee.messaging.reply.permission");
     // Friend.
-    public static final boolean comBFriend = config.getBoolean("commands.bungee.messaging.friend.enabled");
-    public static final String comBFriendBase = config.getString("commands.bungee.messaging.friend.base");
-    public static final List<String> comBFriendAliases = config.getStringList("commands.bungee.messaging.friend.aliases");
-    public static final String comBFriendPerm = config.getString("commands.bungee.messaging.friend.permission");
+    public static final boolean comBFriend = StreamLine.getConfig().getConfBoolean("commands.bungee.messaging.friend.enabled");
+    public static final String comBFriendBase = StreamLine.getConfig().getConfString("commands.bungee.messaging.friend.base");
+    public static final List<String> comBFriendAliases = StreamLine.getConfig().getConfStringList("commands.bungee.messaging.friend.aliases");
+    public static final String comBFriendPerm = StreamLine.getConfig().getConfString("commands.bungee.messaging.friend.permission");
     // ... ... Modules.
-    public static final String staffPerm = config.getString("modules.staff-permission");
+    public static final String staffPerm = StreamLine.getConfig().getConfString("modules.staff-permission");
     // ... Discord.
     // Basics.
-    public static final boolean moduleDMainConsole = config.getBoolean("modules.discord.main-console");
-    public static final boolean moduleUseMCAvatar = config.getBoolean("modules.discord.use-mc-avatar");
-    public static final boolean joinsLeavesIcon = config.getBoolean("modules.discord.joins-leaves.use-bot-icon");
-    public static final boolean joinsLeavesAsConsole = config.getBoolean("modules.discord.joins-leaves.send-as-console");
+    public static final boolean moduleDMainConsole = StreamLine.getConfig().getConfBoolean("modules.discord.main-console");
+    public static final boolean moduleUseMCAvatar = StreamLine.getConfig().getConfBoolean("modules.discord.use-mc-avatar");
+    public static final boolean joinsLeavesIcon = StreamLine.getConfig().getConfBoolean("modules.discord.joins-leaves.use-bot-icon");
+    public static final boolean joinsLeavesAsConsole = StreamLine.getConfig().getConfBoolean("modules.discord.joins-leaves.send-as-console");
     // Reports.
-    public static final boolean moduleReportsDConfirmation = config.getBoolean("modules.discord.reports.send-confirmation");
-    public static final boolean moduleReportToChannel = config.getBoolean("modules.discord.reports.report-to-channel");
-    public static final boolean moduleReportsDToMinecraft = config.getBoolean("modules.discord.reports.discord-to-minecraft");
-    public static final boolean moduleReportChannelPingsRole = config.getBoolean("modules.discord.report-channel-pings-a-role");
+    public static final boolean moduleReportsDConfirmation = StreamLine.getConfig().getConfBoolean("modules.discord.reports.send-confirmation");
+    public static final boolean moduleReportToChannel = StreamLine.getConfig().getConfBoolean("modules.discord.reports.report-to-channel");
+    public static final boolean moduleReportsDToMinecraft = StreamLine.getConfig().getConfBoolean("modules.discord.reports.discord-to-minecraft");
+    public static final boolean moduleReportChannelPingsRole = StreamLine.getConfig().getConfBoolean("modules.discord.report-channel-pings-a-role");
     // StaffChat.
-    public static final boolean moduleStaffChatToMinecraft = config.getBoolean("modules.discord.staffchat-to-minecraft");
-    public static final boolean moduleSCOnlyStaffRole = config.getBoolean("modules.discord.staffchat-to-minecraft-only-staff-role");
+    public static final boolean moduleStaffChatToMinecraft = StreamLine.getConfig().getConfBoolean("modules.discord.staffchat-to-minecraft");
+    public static final boolean moduleSCOnlyStaffRole = StreamLine.getConfig().getConfBoolean("modules.discord.staffchat-to-minecraft-only-staff-role");
     // Startup / Shutdowns.
-    public static final boolean moduleStartups = config.getBoolean("modules.discord.startup-messages");
-    public static final boolean moduleShutdowns = config.getBoolean("modules.discord.shutdown-messages");
+    public static final boolean moduleStartups = StreamLine.getConfig().getConfBoolean("modules.discord.startup-messages");
+    public static final boolean moduleShutdowns = StreamLine.getConfig().getConfBoolean("modules.discord.shutdown-messages");
     // Say if...
-    public static final String moduleSayNotACommand = config.getString("modules.discord.say-if-not-a-command");
-    public static final String moduleSayCommandDisabled = config.getString("modules.discord.say-if-command-disabled");
+    public static final String moduleSayNotACommand = StreamLine.getConfig().getConfString("modules.discord.say-if-not-a-command");
+    public static final String moduleSayCommandDisabled = StreamLine.getConfig().getConfString("modules.discord.say-if-command-disabled");
     // Player logins / logouts.
-    public static final String moduleDPlayerJoins = config.getString("modules.discord.player-joins");
-    public static final String moduleDPlayerLeaves = config.getString("modules.discord.player-leaves");
+    public static final String moduleDPlayerJoins = StreamLine.getConfig().getConfString("modules.discord.player-joins");
+    public static final String moduleDPlayerLeaves = StreamLine.getConfig().getConfString("modules.discord.player-leaves");
     // ... Bungee.
     // Reports.
-    public static final boolean moduleReportsBConfirmation = config.getBoolean("modules.bungee.reports.send-confirmation");
-    public static final boolean moduleReportsMToDiscord = config.getBoolean("modules.bungee.reports.minecraft-to-discord");
-    public static final boolean moduleReportsSendChat = config.getBoolean("modules.bungee.reports.send-in-chat");
+    public static final boolean moduleReportsBConfirmation = StreamLine.getConfig().getConfBoolean("modules.bungee.reports.send-confirmation");
+    public static final boolean moduleReportsMToDiscord = StreamLine.getConfig().getConfBoolean("modules.bungee.reports.minecraft-to-discord");
+    public static final boolean moduleReportsSendChat = StreamLine.getConfig().getConfBoolean("modules.bungee.reports.send-in-chat");
     // StaffChat.
-    public static final boolean moduleStaffChat = config.getBoolean("modules.bungee.staffchat.enabled");
-    public static final boolean moduleStaffChatDoPrefix = config.getBoolean("modules.bungee.staffchat.enable-prefix");
-    public static final String moduleStaffChatPrefix = config.getString("modules.bungee.staffchat.prefix");
-    public static final boolean moduleStaffChatMToDiscord = config.getBoolean("modules.bungee.staffchat.minecraft-to-discord");
+    public static final boolean moduleStaffChat = StreamLine.getConfig().getConfBoolean("modules.bungee.staffchat.enabled");
+    public static final boolean moduleStaffChatDoPrefix = StreamLine.getConfig().getConfBoolean("modules.bungee.staffchat.enable-prefix");
+    public static final String moduleStaffChatPrefix = StreamLine.getConfig().getConfString("modules.bungee.staffchat.prefix");
+    public static final boolean moduleStaffChatMToDiscord = StreamLine.getConfig().getConfBoolean("modules.bungee.staffchat.minecraft-to-discord");
     // Player logins / logouts.
-//    public static final String moduleBPlayerJoins = config.getString("modules.bungee.player-joins");
-//    public static final String moduleBPlayerJoinsPerm = config.getString("modules.bungee.joins-permission");
-//    public static final String moduleBPlayerLeaves = config.getString("modules.bungee.player-leaves");
-//    public static final String moduleBPlayerLeavesPerm = config.getString("modules.bungee.leaves-permission");
-    public static final String moduleBPlayerJoins = config.getString("modules.bungee.player-joins-order");
-    public static final String moduleBPlayerJoinsPerm = config.getString("modules.bungee.joins-permission");
-    public static final String moduleBPlayerLeaves = config.getString("modules.bungee.player-leaves-order");
-    public static final String moduleBPlayerLeavesPerm = config.getString("modules.bungee.leaves-permission");
+//    public static final String moduleBPlayerJoins = StreamLine.getConfig().getConfString("modules.bungee.player-joins");
+//    public static final String moduleBPlayerJoinsPerm = StreamLine.getConfig().getConfString("modules.bungee.joins-permission");
+//    public static final String moduleBPlayerLeaves = StreamLine.getConfig().getConfString("modules.bungee.player-leaves");
+//    public static final String moduleBPlayerLeavesPerm = StreamLine.getConfig().getConfString("modules.bungee.leaves-permission");
+    public static final String moduleBPlayerJoins = StreamLine.getConfig().getConfString("modules.bungee.player-joins-order");
+    public static final String moduleBPlayerJoinsPerm = StreamLine.getConfig().getConfString("modules.bungee.joins-permission");
+    public static final String moduleBPlayerLeaves = StreamLine.getConfig().getConfString("modules.bungee.player-leaves-order");
+    public static final String moduleBPlayerLeavesPerm = StreamLine.getConfig().getConfString("modules.bungee.leaves-permission");
     // ... Parties.
-    public static final boolean partyToDiscord = config.getBoolean("modules.bungee.parties.to-discord");
-    public static final int partyMax = config.getInt("modules.bungee.parties.max-size");
-    public static final String partyMaxPerm = config.getString("modules.bungee.parties.base-permission");
-    public static final boolean partyConsoleChats = config.getBoolean("modules.bungee.parties.console.chat");
-    public static final boolean partyConsoleCreates = config.getBoolean("modules.bungee.parties.console.creates");
-    public static final boolean partyConsoleDisbands = config.getBoolean("modules.bungee.parties.console.disbands");
-    public static final boolean partyConsoleOpens = config.getBoolean("modules.bungee.parties.console.opens");
-    public static final boolean partyConsoleCloses = config.getBoolean("modules.bungee.parties.console.closes");
-    public static final boolean partyConsoleJoins = config.getBoolean("modules.bungee.parties.console.joins");
-    public static final boolean partyConsoleLeaves = config.getBoolean("modules.bungee.parties.console.leaves");
-    public static final boolean partyConsoleAccepts = config.getBoolean("modules.bungee.parties.console.accepts");
-    public static final boolean partyConsoleDenies = config.getBoolean("modules.bungee.parties.console.denies");
-    public static final boolean partyConsolePromotes = config.getBoolean("modules.bungee.parties.console.promotes");
-    public static final boolean partyConsoleDemotes = config.getBoolean("modules.bungee.parties.console.demotes");
-    public static final boolean partyConsoleInvites = config.getBoolean("modules.bungee.parties.console.invites");
-    public static final boolean partyConsoleKicks = config.getBoolean("modules.bungee.parties.console.kicks");
-    public static final boolean partyConsoleMutes = config.getBoolean("modules.bungee.parties.console.mutes");
-    public static final boolean partyConsoleWarps = config.getBoolean("modules.bungee.parties.console.warps");
-    public static final String partyView = config.getString("modules.bungee.parties.view-permission");
-    public static final boolean partySendJoins = config.getBoolean("modules.bungee.parties.send.join");
-    public static final boolean partySendLeaves = config.getBoolean("modules.bungee.parties.send.leave");
+    public static final boolean partyToDiscord = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.to-discord");
+    public static final int partyMax = StreamLine.getConfig().getConfInteger("modules.bungee.parties.max-size");
+    public static final String partyMaxPerm = StreamLine.getConfig().getConfString("modules.bungee.parties.base-permission");
+    public static final boolean partyConsoleChats = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.chat");
+    public static final boolean partyConsoleCreates = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.creates");
+    public static final boolean partyConsoleDisbands = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.disbands");
+    public static final boolean partyConsoleOpens = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.opens");
+    public static final boolean partyConsoleCloses = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.closes");
+    public static final boolean partyConsoleJoins = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.joins");
+    public static final boolean partyConsoleLeaves = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.leaves");
+    public static final boolean partyConsoleAccepts = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.accepts");
+    public static final boolean partyConsoleDenies = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.denies");
+    public static final boolean partyConsolePromotes = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.promotes");
+    public static final boolean partyConsoleDemotes = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.demotes");
+    public static final boolean partyConsoleInvites = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.invites");
+    public static final boolean partyConsoleKicks = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.kicks");
+    public static final boolean partyConsoleMutes = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.mutes");
+    public static final boolean partyConsoleWarps = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.console.warps");
+    public static final String partyView = StreamLine.getConfig().getConfString("modules.bungee.parties.view-permission");
+    public static final boolean partySendJoins = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.send.join");
+    public static final boolean partySendLeaves = StreamLine.getConfig().getConfBoolean("modules.bungee.parties.send.leave");
     // ... Guilds.
-    public static final boolean guildToDiscord = config.getBoolean("modules.bungee.guilds.to-discord");
-    public static final int guildMax = config.getInt("modules.bungee.guilds.max-size");
-    public static final boolean guildConsoleChats = config.getBoolean("modules.bungee.guilds.console.chats");
-    public static final boolean guildConsoleCreates = config.getBoolean("modules.bungee.guilds.console.creates");
-    public static final boolean guildConsoleDisbands = config.getBoolean("modules.bungee.guilds.console.disbands");
-    public static final boolean guildConsoleOpens = config.getBoolean("modules.bungee.guilds.console.opens");
-    public static final boolean guildConsoleCloses = config.getBoolean("modules.bungee.guilds.console.closes");
-    public static final boolean guildConsoleJoins = config.getBoolean("modules.bungee.guilds.console.joins");
-    public static final boolean guildConsoleLeaves = config.getBoolean("modules.bungee.guilds.console.leaves");
-    public static final boolean guildConsoleAccepts = config.getBoolean("modules.bungee.guilds.console.accepts");
-    public static final boolean guildConsoleDenies = config.getBoolean("modules.bungee.guilds.console.denies");
-    public static final boolean guildConsolePromotes = config.getBoolean("modules.bungee.guilds.console.promotes");
-    public static final boolean guildConsoleDemotes = config.getBoolean("modules.bungee.guilds.console.demotes");
-    public static final boolean guildConsoleInvites = config.getBoolean("modules.bungee.guilds.console.invites");
-    public static final boolean guildConsoleKicks = config.getBoolean("modules.bungee.guilds.console.kicks");
-    public static final boolean guildConsoleMutes = config.getBoolean("modules.bungee.guilds.console.mutes");
-    public static final boolean guildConsoleWarps = config.getBoolean("modules.bungee.guilds.console.warps");
-    public static final boolean guildConsoleRenames = config.getBoolean("modules.bungee.guilds.console.renames");
-    public static final int xpPerGiveG = config.getInt("modules.bungee.guilds.totalXP.amount-per");
-    public static final int timePerGiveG = config.getInt("modules.bungee.guilds.totalXP.time-per");
-    public static final String guildView = config.getString("modules.bungee.guilds.view-permission");
-    public static final int guildMaxLength = config.getInt("modules.bungee.guilds.name.max-length");
-    public static final boolean guildIncludeColors = config.getBoolean("modules.bungee.guilds.name.max-includes-colors");
-    public static final boolean guildSendJoins = config.getBoolean("modules.bungee.guilds.send.join");
-    public static final boolean guildSendLeaves = config.getBoolean("modules.bungee.guilds.send.leave");
+    public static final boolean guildToDiscord = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.to-discord");
+    public static final int guildMax = StreamLine.getConfig().getConfInteger("modules.bungee.guilds.max-size");
+    public static final boolean guildConsoleChats = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.chats");
+    public static final boolean guildConsoleCreates = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.creates");
+    public static final boolean guildConsoleDisbands = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.disbands");
+    public static final boolean guildConsoleOpens = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.opens");
+    public static final boolean guildConsoleCloses = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.closes");
+    public static final boolean guildConsoleJoins = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.joins");
+    public static final boolean guildConsoleLeaves = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.leaves");
+    public static final boolean guildConsoleAccepts = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.accepts");
+    public static final boolean guildConsoleDenies = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.denies");
+    public static final boolean guildConsolePromotes = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.promotes");
+    public static final boolean guildConsoleDemotes = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.demotes");
+    public static final boolean guildConsoleInvites = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.invites");
+    public static final boolean guildConsoleKicks = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.kicks");
+    public static final boolean guildConsoleMutes = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.mutes");
+    public static final boolean guildConsoleWarps = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.warps");
+    public static final boolean guildConsoleRenames = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.console.renames");
+    public static final int xpPerGiveG = StreamLine.getConfig().getConfInteger("modules.bungee.guilds.totalXP.amount-per");
+    public static final int timePerGiveG = StreamLine.getConfig().getConfInteger("modules.bungee.guilds.totalXP.time-per");
+    public static final String guildView = StreamLine.getConfig().getConfString("modules.bungee.guilds.view-permission");
+    public static final int guildMaxLength = StreamLine.getConfig().getConfInteger("modules.bungee.guilds.name.max-length");
+    public static final boolean guildIncludeColors = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.name.max-includes-colors");
+    public static final boolean guildSendJoins = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.send.join");
+    public static final boolean guildSendLeaves = StreamLine.getConfig().getConfBoolean("modules.bungee.guilds.send.leave");
     // ... Sudo.
-    public static final String noSudoPerm = config.getString("modules.bungee.sudo.no-sudo-permission");
+    public static final String noSudoPerm = StreamLine.getConfig().getConfString("modules.bungee.sudo.no-sudo-permission");
     // ... Stats.
-    public static final boolean statsTell = config.getBoolean("modules.bungee.stats.tell-when-create");
-    public static final int xpPerGiveP = config.getInt("modules.bungee.stats.totalXP.amount-per");
-    public static final int timePerGiveP = config.getInt("modules.bungee.stats.totalXP.time-per");
-    public static final int cachedPClear = config.getInt("modules.bungee.stats.cache-clear");
-    public static final boolean updateDisplayNames = config.getBoolean("modules.bungee.stats.update-display-names");
+    public static final boolean statsTell = StreamLine.getConfig().getConfBoolean("modules.bungee.stats.tell-when-create");
+    public static final int xpPerGiveP = StreamLine.getConfig().getConfInteger("modules.bungee.stats.totalXP.amount-per");
+    public static final int timePerGiveP = StreamLine.getConfig().getConfInteger("modules.bungee.stats.totalXP.time-per");
+    public static final int cachedPClear = StreamLine.getConfig().getConfInteger("modules.bungee.stats.cache-clear");
+    public static final boolean updateDisplayNames = StreamLine.getConfig().getConfBoolean("modules.bungee.stats.update-display-names");
     // ... Redirect.
-    public static final boolean redirectEnabled = config.getBoolean("modules.bungee.redirect.enabled");
-    public static final String redirectPre = config.getString("modules.bungee.redirect.permission-prefix");
-    public static final String redirectMain = config.getString("modules.bungee.redirect.main");
+    public static final boolean redirectEnabled = StreamLine.getConfig().getConfBoolean("modules.bungee.redirect.enabled");
+    public static final String redirectPre = StreamLine.getConfig().getConfString("modules.bungee.redirect.permission-prefix");
+    public static final String redirectMain = StreamLine.getConfig().getConfString("modules.bungee.redirect.main");
     // Version Block.
-    public static final boolean vbEnabled = config.getBoolean("modules.bungee.redirect.version-block.enabled");
-    public static final String vbOverridePerm = config.getString("modules.bungee.redirect.version-block.override-permission");
-    public static final String vbServerFile = config.getString("modules.bungee.redirect.version-block.server-permission-file");
+    public static final boolean vbEnabled = StreamLine.getConfig().getConfBoolean("modules.bungee.redirect.version-block.enabled");
+    public static final String vbOverridePerm = StreamLine.getConfig().getConfString("modules.bungee.redirect.version-block.override-permission");
+    public static final String vbServerFile = StreamLine.getConfig().getConfString("modules.bungee.redirect.version-block.server-permission-file");
     // Lobbies.
-    public static final boolean lobbies = config.getBoolean("modules.bungee.redirect.lobbies.enabled");
-    public static final String lobbiesFile = config.getString("modules.bungee.redirect.lobbies.file");
-    public static final int lobbyTimeOut = config.getInt("modules.bungee.redirect.lobbies.time-out");
+    public static final boolean lobbies = StreamLine.getConfig().getConfBoolean("modules.bungee.redirect.lobbies.enabled");
+    public static final String lobbiesFile = StreamLine.getConfig().getConfString("modules.bungee.redirect.lobbies.file");
+    public static final int lobbyTimeOut = StreamLine.getConfig().getConfInteger("modules.bungee.redirect.lobbies.time-out");
     // Points.
-    public static final int pointsDefault = config.getInt("modules.bungee.points.default");
+    public static final int pointsDefault = StreamLine.getConfig().getConfInteger("modules.bungee.points.default");
     // Tags.
-    public static final List<String> tagsDefaults = config.getStringList("modules.bungee.tags.defaults");
+    public static final List<String> tagsDefaults = StreamLine.getConfig().getConfStringList("modules.bungee.tags.defaults");
     // Events.
-    public static final boolean events = config.getBoolean("modules.bungee.events.enabled");
-    public static final String eventsFolder = config.getString("modules.bungee.events.folder");
-    public static final boolean eventsWhenEmpty = config.getBoolean("modules.bungee.events.add-default-when-empty");
+    public static final boolean events = StreamLine.getConfig().getConfBoolean("modules.bungee.events.enabled");
+    public static final String eventsFolder = StreamLine.getConfig().getConfString("modules.bungee.events.folder");
+    public static final boolean eventsWhenEmpty = StreamLine.getConfig().getConfBoolean("modules.bungee.events.add-default-when-empty");
     // Errors.
-    public static final boolean errSendToConsole = config.getBoolean("modules.bungee.user-errors.send-to-console");
+    public static final boolean errSendToConsole = StreamLine.getConfig().getConfBoolean("modules.bungee.user-errors.send-to-console");
     // ... Punishments.
     // Mutes.
-    public static final boolean punMutes = config.getBoolean("modules.bungee.punishments.mutes.enabled");
-    public static final boolean punMutesHard = config.getBoolean("modules.bungee.punishments.mutes.hard-mutes");
-    public static final boolean punMutesReplaceable = config.getBoolean("modules.bungee.punishments.mutes.replaceable");
+    public static final boolean punMutes = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.mutes.enabled");
+    public static final boolean punMutesHard = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.mutes.hard-mutes");
+    public static final boolean punMutesReplaceable = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.mutes.replaceable");
     // Bans.
-    public static final boolean punBans = config.getBoolean("modules.bungee.punishments.bans.enabled");
-    public static final boolean punBansReplaceable = config.getBoolean("modules.bungee.punishments.bans.replaceable");
+    public static final boolean punBans = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.bans.enabled");
+    public static final boolean punBansReplaceable = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.bans.replaceable");
     // Messaging.
-    public static final String messViewPerm = config.getString("modules.bungee.messaging.view-permission");
-    public static final String messReplyTo = config.getString("modules.bungee.messaging.reply-to");
+    public static final String messViewPerm = StreamLine.getConfig().getConfString("modules.bungee.messaging.view-permission");
+    public static final String messReplyTo = StreamLine.getConfig().getConfString("modules.bungee.messaging.reply-to");
     // ... Server Config.
-    public static final boolean sc = config.getBoolean("modules.bungee.server-config.enabled");
-    public static final boolean scMakeDefault = config.getBoolean("modules.bungee.server-config.make-if-not-exist");
-    public static final boolean scMOTD = config.getBoolean("modules.bungee.server-config.motd");
-    public static final boolean scVersion = config.getBoolean("modules.bungee.server-config.version");
-    public static final boolean scSample = config.getBoolean("modules.bungee.server-config.sample");
+    public static final boolean sc = StreamLine.getConfig().getConfBoolean("modules.bungee.server-config.enabled");
+    public static final boolean scMakeDefault = StreamLine.getConfig().getConfBoolean("modules.bungee.server-config.make-if-not-exist");
+    public static final boolean scMOTD = StreamLine.getConfig().getConfBoolean("modules.bungee.server-config.motd");
+    public static final boolean scVersion = StreamLine.getConfig().getConfBoolean("modules.bungee.server-config.version");
+    public static final boolean scSample = StreamLine.getConfig().getConfBoolean("modules.bungee.server-config.sample");
 }

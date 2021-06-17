@@ -15,8 +15,6 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.config.Configuration;
 
 public class StaffChatCommand extends Command {
-    private final Configuration config = Config.getConf();
-
     public StaffChatCommand(String base, String perm, String[] aliases){
         super(base, perm, aliases);
     }

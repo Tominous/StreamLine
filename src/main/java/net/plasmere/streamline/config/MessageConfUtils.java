@@ -5,260 +5,259 @@ import net.plasmere.streamline.config.Config;
 import net.md_5.bungee.config.Configuration;
 
 public class MessageConfUtils {
-    private static final Configuration message = Config.getMess();
     // Messages:
-//    public static final String s = message.getString("");
+//    public static final String s = StreamLine.getConfig().getMessString("");
     // Basics.
-    public static final String version = message.getString("version");
-    public static final String prefix = message.getString("message-prefix");
-    public static final String noPerm = message.getString("no-permission");
-    public static final String reload = message.getString("reload-message");
-    public static final String onlyPlayers = message.getString("only-players");
-    public static final String noPlayer = message.getString("no-player");
-    public static final String discordErrTitle = message.getString("discord-err-title");
+    public static final String version = StreamLine.getConfig().getMessString("version");
+    public static final String prefix = StreamLine.getConfig().getMessString("message-prefix");
+    public static final String noPerm = StreamLine.getConfig().getMessString("no-permission");
+    public static final String reload = StreamLine.getConfig().getMessString("reload-message");
+    public static final String onlyPlayers = StreamLine.getConfig().getMessString("only-players");
+    public static final String noPlayer = StreamLine.getConfig().getMessString("no-player");
+    public static final String discordErrTitle = StreamLine.getConfig().getMessString("discord-err-title");
     // ... Command Error.
     // Discord.
-    public static final String discordCommandErrorUnd = message.getString("command-error.discord.undefined");
+    public static final String discordCommandErrorUnd = StreamLine.getConfig().getMessString("command-error.discord.undefined");
     // Bungee.
-    public static final String bungeeCommandErrorUnd = message.getString("command-error.bungee.undefined");
-    public static final String bungeeCommandErrorInt = message.getString("command-error.bungee.needs-int");
-    public static final String bungeeCommandErrorSTime = message.getString("command-error.bungee.needs-stringed-time");
+    public static final String bungeeCommandErrorUnd = StreamLine.getConfig().getMessString("command-error.bungee.undefined");
+    public static final String bungeeCommandErrorInt = StreamLine.getConfig().getMessString("command-error.bungee.needs-int");
+    public static final String bungeeCommandErrorSTime = StreamLine.getConfig().getMessString("command-error.bungee.needs-stringed-time");
     // Command Disabled.
-    public static final String discordCommandDisabled = message.getString("command-disabled.discord");
-    public static final String bungeeCommandDisabled = message.getString("command-disabled.bungee");
+    public static final String discordCommandDisabled = StreamLine.getConfig().getMessString("command-disabled.discord");
+    public static final String bungeeCommandDisabled = StreamLine.getConfig().getMessString("command-disabled.bungee");
     // Module Disabled.
-    public static final String discordModuleDisabled = message.getString("module-disabled.discord");
-    public static final String bungeeModuleDisabled = message.getString("module-disabled.bungee");
+    public static final String discordModuleDisabled = StreamLine.getConfig().getMessString("module-disabled.discord");
+    public static final String bungeeModuleDisabled = StreamLine.getConfig().getMessString("module-disabled.bungee");
     // Not command / improper usage.
-    public static final String discordNotACommand = message.getString("not-a-command.discord");
-    public static final String bungeeImproperUsage = message.getString("improper-usage.bungee");
+    public static final String discordNotACommand = StreamLine.getConfig().getMessString("not-a-command.discord");
+    public static final String bungeeImproperUsage = StreamLine.getConfig().getMessString("improper-usage.bungee");
     // Command needs args.
-    public static final String discordNeedsMore = message.getString("command-needs-args.more.discord");
-    public static final String bungeeNeedsMore = message.getString("command-needs-args.more.bungee");
-    public static final String discordNeedsLess = message.getString("command-needs-args.less.discord");
-    public static final String bungeeNeedsLess = message.getString("command-needs-args.less.bungee");
+    public static final String discordNeedsMore = StreamLine.getConfig().getMessString("command-needs-args.more.discord");
+    public static final String bungeeNeedsMore = StreamLine.getConfig().getMessString("command-needs-args.more.bungee");
+    public static final String discordNeedsLess = StreamLine.getConfig().getMessString("command-needs-args.less.discord");
+    public static final String bungeeNeedsLess = StreamLine.getConfig().getMessString("command-needs-args.less.bungee");
     // Players.
-    public static final String offlineB = message.getString("players.bungee.offline");
-    public static final String onlineB = message.getString("players.bungee.online");
-    public static final String offlineD = message.getString("players.discord.offline");
-    public static final String onlineD = message.getString("players.discord.online");
+    public static final String offlineB = StreamLine.getConfig().getMessString("players.bungee.offline");
+    public static final String onlineB = StreamLine.getConfig().getMessString("players.bungee.online");
+    public static final String offlineD = StreamLine.getConfig().getMessString("players.discord.offline");
+    public static final String onlineD = StreamLine.getConfig().getMessString("players.discord.online");
     // Redirect.
-    public static final String vbBlocked = message.getString("redirect.by-version.blocked");
+    public static final String vbBlocked = StreamLine.getConfig().getMessString("redirect.by-version.blocked");
     // ... Punishments.
     // Mutes.
-    public static final String punMutedTemp = message.getString("punishments.muted.temp");
-    public static final String punMutedPerm = message.getString("punishments.muted.perm");
+    public static final String punMutedTemp = StreamLine.getConfig().getMessString("punishments.muted.temp");
+    public static final String punMutedPerm = StreamLine.getConfig().getMessString("punishments.muted.perm");
     // Bans.
-    public static final String punBannedTemp = message.getString("punishments.banned.temp");
-    public static final String punBannedPerm = message.getString("punishments.banned.perm");
+    public static final String punBannedTemp = StreamLine.getConfig().getMessString("punishments.banned.temp");
+    public static final String punBannedPerm = StreamLine.getConfig().getMessString("punishments.banned.perm");
     // Reports.
-    public static final String reportEmbedTitle = message.getString("report-message.embed-title");
-    public static final String dToDReportMessage = message.getString("report-message.from-discord.discord");
-    public static final String dToBReportMessage = message.getString("report-message.from-discord.bungee");
-    public static final String dConfirmReportMessage = message.getString("report-message.from-discord.confirmation");
-    public static final String bToDReportMessage = message.getString("report-message.from-bungee.discord");
-    public static final String bToBReportMessage = message.getString("report-message.from-bungee.bungee");
-    public static final String bConfirmReportMessage = message.getString("report-message.from-bungee.confirmation");
+    public static final String reportEmbedTitle = StreamLine.getConfig().getMessString("report-message.embed-title");
+    public static final String dToDReportMessage = StreamLine.getConfig().getMessString("report-message.from-discord.discord");
+    public static final String dToBReportMessage = StreamLine.getConfig().getMessString("report-message.from-discord.bungee");
+    public static final String dConfirmReportMessage = StreamLine.getConfig().getMessString("report-message.from-discord.confirmation");
+    public static final String bToDReportMessage = StreamLine.getConfig().getMessString("report-message.from-bungee.discord");
+    public static final String bToBReportMessage = StreamLine.getConfig().getMessString("report-message.from-bungee.bungee");
+    public static final String bConfirmReportMessage = StreamLine.getConfig().getMessString("report-message.from-bungee.confirmation");
     // StaffChat.
-    public static final String staffChatEmbedTitle = message.getString("staffchat.message.embed-title");
-    public static final String discordStaffChatMessage = message.getString("staffchat.message.discord");
-    public static final String bungeeStaffChatMessage = message.getString("staffchat.message.bungee");
-    public static final String discordStaffChatFrom = message.getString("staffchat.message.from.discord");
-    public static final String bungeeStaffChatFrom = message.getString("staffchat.message.from.bungee");
-    public static final String staffChatJustPrefix = message.getString("staffchat.just-prefix");
-    public static final String staffChatToggle = message.getString("staffchat.toggle.message");
-    public static final String staffChatOn = message.getString("staffchat.toggle.on");
-    public static final String staffChatOff = message.getString("staffchat.toggle.off");
+    public static final String staffChatEmbedTitle = StreamLine.getConfig().getMessString("staffchat.message.embed-title");
+    public static final String discordStaffChatMessage = StreamLine.getConfig().getMessString("staffchat.message.discord");
+    public static final String bungeeStaffChatMessage = StreamLine.getConfig().getMessString("staffchat.message.bungee");
+    public static final String discordStaffChatFrom = StreamLine.getConfig().getMessString("staffchat.message.from.discord");
+    public static final String bungeeStaffChatFrom = StreamLine.getConfig().getMessString("staffchat.message.from.bungee");
+    public static final String staffChatJustPrefix = StreamLine.getConfig().getMessString("staffchat.just-prefix");
+    public static final String staffChatToggle = StreamLine.getConfig().getMessString("staffchat.toggle.message");
+    public static final String staffChatOn = StreamLine.getConfig().getMessString("staffchat.toggle.on");
+    public static final String staffChatOff = StreamLine.getConfig().getMessString("staffchat.toggle.off");
     // Online.
-    public static final String onlineMessageNoPlayers = message.getString("online.message.no-players");
-    public static final String onlineMessageNoGroups = message.getString("online.message.no-groups");
-    public static final String onlineMessageEmbedTitle = message.getString("online.message.embed-title");
-    public static final String onlineMessageDiscord = message.getString("online.message.discord");
-    public static final String onlineMessageBMain = message.getString("online.message.bungee.main");
-    public static final String onlineMessageBServers = message.getString("online.message.bungee.servers");
-    public static final String onlineMessageBPlayersMain = message.getString("online.message.bungee.players.main");
-    public static final String onlineMessageBPlayersBulkNotLast = message.getString("online.message.bungee.players.playerbulk.if-not-last");
-    public static final String onlineMessageBPlayersBulkLast = message.getString("online.message.bungee.players.playerbulk.if-last");
+    public static final String onlineMessageNoPlayers = StreamLine.getConfig().getMessString("online.message.no-players");
+    public static final String onlineMessageNoGroups = StreamLine.getConfig().getMessString("online.message.no-groups");
+    public static final String onlineMessageEmbedTitle = StreamLine.getConfig().getMessString("online.message.embed-title");
+    public static final String onlineMessageDiscord = StreamLine.getConfig().getMessString("online.message.discord");
+    public static final String onlineMessageBMain = StreamLine.getConfig().getMessString("online.message.bungee.main");
+    public static final String onlineMessageBServers = StreamLine.getConfig().getMessString("online.message.bungee.servers");
+    public static final String onlineMessageBPlayersMain = StreamLine.getConfig().getMessString("online.message.bungee.players.main");
+    public static final String onlineMessageBPlayersBulkNotLast = StreamLine.getConfig().getMessString("online.message.bungee.players.playerbulk.if-not-last");
+    public static final String onlineMessageBPlayersBulkLast = StreamLine.getConfig().getMessString("online.message.bungee.players.playerbulk.if-last");
     // ... Join Leaves.
     // Discord.
-    public static final String discordOnline = message.getString("join-leave.discord.online.text");
-    public static final String discordOnlineEmbed = message.getString("join-leave.discord.online.embed");
-    public static final String discordOffline = message.getString("join-leave.discord.offline.text");
-    public static final String discordOfflineEmbed = message.getString("join-leave.discord.offline.embed");
+    public static final String discordOnline = StreamLine.getConfig().getMessString("join-leave.discord.online.text");
+    public static final String discordOnlineEmbed = StreamLine.getConfig().getMessString("join-leave.discord.online.embed");
+    public static final String discordOffline = StreamLine.getConfig().getMessString("join-leave.discord.offline.text");
+    public static final String discordOfflineEmbed = StreamLine.getConfig().getMessString("join-leave.discord.offline.embed");
     // Bungee.
-    public static final String bungeeOnline = message.getString("join-leave.bungee.online");
-    public static final String bungeeOffline = message.getString("join-leave.bungee.offline");
+    public static final String bungeeOnline = StreamLine.getConfig().getMessString("join-leave.bungee.online");
+    public static final String bungeeOffline = StreamLine.getConfig().getMessString("join-leave.bungee.offline");
     // ... StaffOnline.
     // Discord.
-    public static final String sOnlineMessageEmbedTitle = message.getString("staffonline.message.embed-title");
-    public static final String sOnlineDiscordOnline = message.getString("staffonline.message.discord.online");
-    public static final String sOnlineDiscordOffline = message.getString("staffonline.message.discord.offline");
-    public static final String sOnlineDiscordMain = message.getString("staffonline.message.discord.main");
-    public static final String sOnlineDiscordBulkNotLast = message.getString("staffonline.message.discord.staffbulk.if-not-last");
-    public static final String sOnlineDiscordBulkLast = message.getString("staffonline.message.discord.staffbulk.if-last");
+    public static final String sOnlineMessageEmbedTitle = StreamLine.getConfig().getMessString("staffonline.message.embed-title");
+    public static final String sOnlineDiscordOnline = StreamLine.getConfig().getMessString("staffonline.message.discord.online");
+    public static final String sOnlineDiscordOffline = StreamLine.getConfig().getMessString("staffonline.message.discord.offline");
+    public static final String sOnlineDiscordMain = StreamLine.getConfig().getMessString("staffonline.message.discord.main");
+    public static final String sOnlineDiscordBulkNotLast = StreamLine.getConfig().getMessString("staffonline.message.discord.staffbulk.if-not-last");
+    public static final String sOnlineDiscordBulkLast = StreamLine.getConfig().getMessString("staffonline.message.discord.staffbulk.if-last");
     // Bungee.
-    public static final String sOnlineBungeeMain = message.getString("staffonline.message.bungee.main");
-    public static final String sOnlineBungeeBulkNotLast = message.getString("staffonline.message.bungee.staffbulk.if-not-last");
-    public static final String sOnlineBungeeBulkLast = message.getString("staffonline.message.bungee.staffbulk.if-last");
+    public static final String sOnlineBungeeMain = StreamLine.getConfig().getMessString("staffonline.message.bungee.main");
+    public static final String sOnlineBungeeBulkNotLast = StreamLine.getConfig().getMessString("staffonline.message.bungee.staffbulk.if-not-last");
+    public static final String sOnlineBungeeBulkLast = StreamLine.getConfig().getMessString("staffonline.message.bungee.staffbulk.if-last");
     // Stream.
-    public static final String streamNeedLink = message.getString("stream.need-link");
-    public static final String streamNotLink = message.getString("stream.not-link");
-    public static final String streamMessage = message.getString("stream.message");
-    public static final String streamHoverPrefix = message.getString("stream.hover-prefix");
+    public static final String streamNeedLink = StreamLine.getConfig().getMessString("stream.need-link");
+    public static final String streamNotLink = StreamLine.getConfig().getMessString("stream.not-link");
+    public static final String streamMessage = StreamLine.getConfig().getMessString("stream.message");
+    public static final String streamHoverPrefix = StreamLine.getConfig().getMessString("stream.hover-prefix");
     // Party.
-    public static final String partyConnect = message.getString("party.connect");
-    public static final String partyDisconnect = message.getString("party.disconnect");
+    public static final String partyConnect = StreamLine.getConfig().getMessString("party.connect");
+    public static final String partyDisconnect = StreamLine.getConfig().getMessString("party.disconnect");
     // Guild.
-    public static final String guildConnect = message.getString("guild.connect");
-    public static final String guildDisconnect = message.getString("guild.disconnect");
+    public static final String guildConnect = StreamLine.getConfig().getMessString("guild.connect");
+    public static final String guildDisconnect = StreamLine.getConfig().getMessString("guild.disconnect");
     // Parties.
-    public static final String partiesNone = message.getString("parties.no-parties");
-    public static final String partiesMessage = message.getString("parties.parties");
-    public static final String partiesModsNLast = message.getString("parties.mods.not-last");
-    public static final String partiesModsLast = message.getString("parties.mods.last");
-    public static final String partiesMemsNLast = message.getString("parties.members.not-last");
-    public static final String partiesMemsLast = message.getString("parties.members.last");
-    public static final String partiesTMemsNLast = message.getString("parties.totalmembers.not-last");
-    public static final String partiesTMemsLast = message.getString("parties.totalmembers.last");
-    public static final String partiesInvsNLast = message.getString("parties.invites.not-last");
-    public static final String partiesInvsLast = message.getString("parties.invites.last");
-    public static final String partiesIsPublicTrue = message.getString("parties.ispublic.true");
-    public static final String partiesIsPublicFalse = message.getString("parties.ispublic.false");
-    public static final String partiesIsMutedTrue = message.getString("parties.ismuted.true");
-    public static final String partiesIsMutedFalse = message.getString("parties.ismuted.false");
+    public static final String partiesNone = StreamLine.getConfig().getMessString("parties.no-parties");
+    public static final String partiesMessage = StreamLine.getConfig().getMessString("parties.parties");
+    public static final String partiesModsNLast = StreamLine.getConfig().getMessString("parties.mods.not-last");
+    public static final String partiesModsLast = StreamLine.getConfig().getMessString("parties.mods.last");
+    public static final String partiesMemsNLast = StreamLine.getConfig().getMessString("parties.members.not-last");
+    public static final String partiesMemsLast = StreamLine.getConfig().getMessString("parties.members.last");
+    public static final String partiesTMemsNLast = StreamLine.getConfig().getMessString("parties.totalmembers.not-last");
+    public static final String partiesTMemsLast = StreamLine.getConfig().getMessString("parties.totalmembers.last");
+    public static final String partiesInvsNLast = StreamLine.getConfig().getMessString("parties.invites.not-last");
+    public static final String partiesInvsLast = StreamLine.getConfig().getMessString("parties.invites.last");
+    public static final String partiesIsPublicTrue = StreamLine.getConfig().getMessString("parties.ispublic.true");
+    public static final String partiesIsPublicFalse = StreamLine.getConfig().getMessString("parties.ispublic.false");
+    public static final String partiesIsMutedTrue = StreamLine.getConfig().getMessString("parties.ismuted.true");
+    public static final String partiesIsMutedFalse = StreamLine.getConfig().getMessString("parties.ismuted.false");
     // Guilds.
-    public static final String guildsNone = message.getString("guilds.no-guilds");
-    public static final String guildsMessage = message.getString("guilds.guilds");
-    public static final String guildsModsNLast = message.getString("guilds.mods.not-last");
-    public static final String guildsModsLast = message.getString("guilds.mods.last");
-    public static final String guildsMemsNLast = message.getString("guilds.members.not-last");
-    public static final String guildsMemsLast = message.getString("guilds.members.last");
-    public static final String guildsTMemsNLast = message.getString("guilds.totalmembers.not-last");
-    public static final String guildsTMemsLast = message.getString("guilds.totalmembers.last");
-    public static final String guildsInvsNLast = message.getString("guilds.invites.not-last");
-    public static final String guildsInvsLast = message.getString("guilds.invites.last");
-    public static final String guildsIsPublicTrue = message.getString("guilds.ispublic.true");
-    public static final String guildsIsPublicFalse = message.getString("guilds.ispublic.false");
-    public static final String guildsIsMutedTrue = message.getString("guilds.ismuted.true");
-    public static final String guildsIsMutedFalse = message.getString("guilds.ismuted.false");
+    public static final String guildsNone = StreamLine.getConfig().getMessString("guilds.no-guilds");
+    public static final String guildsMessage = StreamLine.getConfig().getMessString("guilds.guilds");
+    public static final String guildsModsNLast = StreamLine.getConfig().getMessString("guilds.mods.not-last");
+    public static final String guildsModsLast = StreamLine.getConfig().getMessString("guilds.mods.last");
+    public static final String guildsMemsNLast = StreamLine.getConfig().getMessString("guilds.members.not-last");
+    public static final String guildsMemsLast = StreamLine.getConfig().getMessString("guilds.members.last");
+    public static final String guildsTMemsNLast = StreamLine.getConfig().getMessString("guilds.totalmembers.not-last");
+    public static final String guildsTMemsLast = StreamLine.getConfig().getMessString("guilds.totalmembers.last");
+    public static final String guildsInvsNLast = StreamLine.getConfig().getMessString("guilds.invites.not-last");
+    public static final String guildsInvsLast = StreamLine.getConfig().getMessString("guilds.invites.last");
+    public static final String guildsIsPublicTrue = StreamLine.getConfig().getMessString("guilds.ispublic.true");
+    public static final String guildsIsPublicFalse = StreamLine.getConfig().getMessString("guilds.ispublic.false");
+    public static final String guildsIsMutedTrue = StreamLine.getConfig().getMessString("guilds.ismuted.true");
+    public static final String guildsIsMutedFalse = StreamLine.getConfig().getMessString("guilds.ismuted.false");
     // Sudo.
-    public static final String sudoWorked = message.getString("sudo.worked");
-    public static final String sudoNoWork = message.getString("sudo.no-work");
-    public static final String sudoNoSudo = message.getString("sudo.no-sudo");
+    public static final String sudoWorked = StreamLine.getConfig().getMessString("sudo.worked");
+    public static final String sudoNoWork = StreamLine.getConfig().getMessString("sudo.no-work");
+    public static final String sudoNoSudo = StreamLine.getConfig().getMessString("sudo.no-sudo");
     // SSPY.
-    public static final String sspyToggle = message.getString("sspy.toggle.message");
-    public static final String sspyOn = message.getString("sspy.toggle.on");
-    public static final String sspyOff = message.getString("sspy.toggle.off");
+    public static final String sspyToggle = StreamLine.getConfig().getMessString("sspy.toggle.message");
+    public static final String sspyOn = StreamLine.getConfig().getMessString("sspy.toggle.on");
+    public static final String sspyOff = StreamLine.getConfig().getMessString("sspy.toggle.off");
     // GSPY.
-    public static final String gspyToggle = message.getString("gspy.toggle.message");
-    public static final String gspyOn = message.getString("gspy.toggle.on");
-    public static final String gspyOff = message.getString("gspy.toggle.off");
+    public static final String gspyToggle = StreamLine.getConfig().getMessString("gspy.toggle.message");
+    public static final String gspyOn = StreamLine.getConfig().getMessString("gspy.toggle.on");
+    public static final String gspyOff = StreamLine.getConfig().getMessString("gspy.toggle.off");
     // PSPY.
-    public static final String pspyToggle = message.getString("pspy.toggle.message");
-    public static final String pspyOn = message.getString("pspy.toggle.on");
-    public static final String pspyOff = message.getString("pspy.toggle.off");
+    public static final String pspyToggle = StreamLine.getConfig().getMessString("pspy.toggle.message");
+    public static final String pspyOn = StreamLine.getConfig().getMessString("pspy.toggle.on");
+    public static final String pspyOff = StreamLine.getConfig().getMessString("pspy.toggle.off");
     // EVReload.
-    public static final String evReload = message.getString("evreload.message");
+    public static final String evReload = StreamLine.getConfig().getMessString("evreload.message");
     // Points.
-    public static final String pointsViewS = message.getString("points.view.self");
-    public static final String pointsViewO = message.getString("points.view.other");
-    public static final String pointsAddS = message.getString("points.add.self");
-    public static final String pointsAddO = message.getString("points.add.other");
-    public static final String pointsRemoveS = message.getString("points.remove.self");
-    public static final String pointsRemoveO = message.getString("points.remove.other");
-    public static final String pointsSetS = message.getString("points.set.self");
-    public static final String pointsSetO = message.getString("points.set.other");
+    public static final String pointsViewS = StreamLine.getConfig().getMessString("points.view.self");
+    public static final String pointsViewO = StreamLine.getConfig().getMessString("points.view.other");
+    public static final String pointsAddS = StreamLine.getConfig().getMessString("points.add.self");
+    public static final String pointsAddO = StreamLine.getConfig().getMessString("points.add.other");
+    public static final String pointsRemoveS = StreamLine.getConfig().getMessString("points.remove.self");
+    public static final String pointsRemoveO = StreamLine.getConfig().getMessString("points.remove.other");
+    public static final String pointsSetS = StreamLine.getConfig().getMessString("points.set.self");
+    public static final String pointsSetO = StreamLine.getConfig().getMessString("points.set.other");
     // Ignore.
-    public static final String ignoreAddSelf = message.getString("ignore.add.self");
-    public static final String ignoreAddIgnored = message.getString("ignore.add.ignored");
-    public static final String ignoreAddAlready = message.getString("ignore.add.already");
-    public static final String ignoreAddNSelf = message.getString("ignore.add.not-self");
-    public static final String ignoreRemSelf = message.getString("ignore.remove.self");
-    public static final String ignoreRemIgnored = message.getString("ignore.remove.ignored");
-    public static final String ignoreRemAlready = message.getString("ignore.remove.already");
-    public static final String ignoreRemNSelf = message.getString("ignore.remove.not-self");
-    public static final String ignoreListMain = message.getString("ignore.list.main");
-    public static final String ignoreListNLast = message.getString("ignore.list.ignores.not-last");
-    public static final String ignoreListLast = message.getString("ignore.list.ignores.last");
+    public static final String ignoreAddSelf = StreamLine.getConfig().getMessString("ignore.add.self");
+    public static final String ignoreAddIgnored = StreamLine.getConfig().getMessString("ignore.add.ignored");
+    public static final String ignoreAddAlready = StreamLine.getConfig().getMessString("ignore.add.already");
+    public static final String ignoreAddNSelf = StreamLine.getConfig().getMessString("ignore.add.not-self");
+    public static final String ignoreRemSelf = StreamLine.getConfig().getMessString("ignore.remove.self");
+    public static final String ignoreRemIgnored = StreamLine.getConfig().getMessString("ignore.remove.ignored");
+    public static final String ignoreRemAlready = StreamLine.getConfig().getMessString("ignore.remove.already");
+    public static final String ignoreRemNSelf = StreamLine.getConfig().getMessString("ignore.remove.not-self");
+    public static final String ignoreListMain = StreamLine.getConfig().getMessString("ignore.list.main");
+    public static final String ignoreListNLast = StreamLine.getConfig().getMessString("ignore.list.ignores.not-last");
+    public static final String ignoreListLast = StreamLine.getConfig().getMessString("ignore.list.ignores.last");
     // Message.
-    public static final String messageSender = message.getString("message.sender");
-    public static final String messageTo = message.getString("message.to");
-    public static final String messageIgnored = message.getString("message.ignored");
-    public static final String messageSSPY = message.getString("message.sspy");
+    public static final String messageSender = StreamLine.getConfig().getMessString("message.sender");
+    public static final String messageTo = StreamLine.getConfig().getMessString("message.to");
+    public static final String messageIgnored = StreamLine.getConfig().getMessString("message.ignored");
+    public static final String messageSSPY = StreamLine.getConfig().getMessString("message.sspy");
     // Reply.
-    public static final String replySender = message.getString("message.sender");
-    public static final String replyTo = message.getString("message.to");
-    public static final String replyIgnored = message.getString("message.ignored");
-    public static final String replySSPY = message.getString("message.sspy");
+    public static final String replySender = StreamLine.getConfig().getMessString("message.sender");
+    public static final String replyTo = StreamLine.getConfig().getMessString("message.to");
+    public static final String replyIgnored = StreamLine.getConfig().getMessString("message.ignored");
+    public static final String replySSPY = StreamLine.getConfig().getMessString("message.sspy");
     // Mute.
-    public static final String muteMTempSender = message.getString("mute.mute.temp.sender");
-    public static final String muteMTempMuted = message.getString("mute.mute.temp.muted");
-    public static final String muteMTempAlready = message.getString("mute.mute.temp.already");
-    public static final String muteMPermSender = message.getString("mute.mute.perm.sender");
-    public static final String muteMPermMuted = message.getString("mute.mute.perm.muted");
-    public static final String muteMPermAlready = message.getString("mute.mute.perm.already");
-    public static final String muteUnSender = message.getString("mute.unmute.sender");
-    public static final String muteUnMuted = message.getString("mute.unmute.muted");
-    public static final String muteUnAlready = message.getString("mute.unmute.already");
-    public static final String muteCheckMain = message.getString("mute.check.main");
-    public static final String muteCheckMuted = message.getString("mute.check.muted");
-    public static final String muteCheckUnMuted = message.getString("mute.check.unmuted");
+    public static final String muteMTempSender = StreamLine.getConfig().getMessString("mute.mute.temp.sender");
+    public static final String muteMTempMuted = StreamLine.getConfig().getMessString("mute.mute.temp.muted");
+    public static final String muteMTempAlready = StreamLine.getConfig().getMessString("mute.mute.temp.already");
+    public static final String muteMPermSender = StreamLine.getConfig().getMessString("mute.mute.perm.sender");
+    public static final String muteMPermMuted = StreamLine.getConfig().getMessString("mute.mute.perm.muted");
+    public static final String muteMPermAlready = StreamLine.getConfig().getMessString("mute.mute.perm.already");
+    public static final String muteUnSender = StreamLine.getConfig().getMessString("mute.unmute.sender");
+    public static final String muteUnMuted = StreamLine.getConfig().getMessString("mute.unmute.muted");
+    public static final String muteUnAlready = StreamLine.getConfig().getMessString("mute.unmute.already");
+    public static final String muteCheckMain = StreamLine.getConfig().getMessString("mute.check.main");
+    public static final String muteCheckMuted = StreamLine.getConfig().getMessString("mute.check.muted");
+    public static final String muteCheckUnMuted = StreamLine.getConfig().getMessString("mute.check.unmuted");
     // Ban.
-    public static final String banBTempSender = message.getString("ban.ban.temp.sender");
-    public static final String banBTempAlready = message.getString("ban.ban.temp.already");
-    public static final String banBPermSender = message.getString("ban.ban.perm.sender");
-    public static final String banBPermAlready = message.getString("ban.ban.perm.already");
-    public static final String banUnSender = message.getString("ban.unban.sender");
-    public static final String banUnAlready = message.getString("ban.unban.already");
-    public static final String banCheckMain = message.getString("ban.check.main");
-    public static final String banCheckBanned = message.getString("ban.check.banned");
-    public static final String banCheckUnBanned = message.getString("ban.check.unbanned");
+    public static final String banBTempSender = StreamLine.getConfig().getMessString("ban.ban.temp.sender");
+    public static final String banBTempAlready = StreamLine.getConfig().getMessString("ban.ban.temp.already");
+    public static final String banBPermSender = StreamLine.getConfig().getMessString("ban.ban.perm.sender");
+    public static final String banBPermAlready = StreamLine.getConfig().getMessString("ban.ban.perm.already");
+    public static final String banUnSender = StreamLine.getConfig().getMessString("ban.unban.sender");
+    public static final String banUnAlready = StreamLine.getConfig().getMessString("ban.unban.already");
+    public static final String banCheckMain = StreamLine.getConfig().getMessString("ban.check.main");
+    public static final String banCheckBanned = StreamLine.getConfig().getMessString("ban.check.banned");
+    public static final String banCheckUnBanned = StreamLine.getConfig().getMessString("ban.check.unbanned");
     // Ignore.
-    public static final String friendReqSelf = message.getString("friend.request.self");
-    public static final String friendReqOther = message.getString("friend.request.other");
-    public static final String friendReqAlready = message.getString("friend.request.already");
-    public static final String friendReqNSelf = message.getString("friend.request.not-self");
-    public static final String friendReqIgnored = message.getString("friend.request.ignored");
-    public static final String friendAcceptSelf = message.getString("friend.accept.self");
-    public static final String friendAcceptOther = message.getString("friend.accept.other");
-    public static final String friendAcceptNone = message.getString("friend.accept.none");
-    public static final String friendDenySelf = message.getString("friend.deny.self");
-    public static final String friendDenyOther = message.getString("friend.deny.other");
-    public static final String friendDenyNone = message.getString("friend.deny.none");
-    public static final String friendRemSelf = message.getString("friend.remove.self");
-    public static final String friendRemOther = message.getString("friend.remove.other");
-    public static final String friendRemAlready = message.getString("friend.remove.already");
-    public static final String friendRemNSelf = message.getString("friend.remove.not-self");
-    public static final String friendListMain = message.getString("friend.list.main");
-    public static final String friendListFNLast = message.getString("friend.list.friends.not-last");
-    public static final String friendListFLast = message.getString("friend.list.friends.last");
-    public static final String friendListPTNLast = message.getString("friend.list.pending-to.not-last");
-    public static final String friendListPTLast = message.getString("friend.list.pending-to.last");
-    public static final String friendListPFNLast = message.getString("friend.list.pending-from.not-last");
-    public static final String friendListPFLast = message.getString("friend.list.pending-from.last");
-    public static final String friendConnect = message.getString("friend.connect");
-    public static final String friendDisconnect = message.getString("friend.disconnect");
+    public static final String friendReqSelf = StreamLine.getConfig().getMessString("friend.request.self");
+    public static final String friendReqOther = StreamLine.getConfig().getMessString("friend.request.other");
+    public static final String friendReqAlready = StreamLine.getConfig().getMessString("friend.request.already");
+    public static final String friendReqNSelf = StreamLine.getConfig().getMessString("friend.request.not-self");
+    public static final String friendReqIgnored = StreamLine.getConfig().getMessString("friend.request.ignored");
+    public static final String friendAcceptSelf = StreamLine.getConfig().getMessString("friend.accept.self");
+    public static final String friendAcceptOther = StreamLine.getConfig().getMessString("friend.accept.other");
+    public static final String friendAcceptNone = StreamLine.getConfig().getMessString("friend.accept.none");
+    public static final String friendDenySelf = StreamLine.getConfig().getMessString("friend.deny.self");
+    public static final String friendDenyOther = StreamLine.getConfig().getMessString("friend.deny.other");
+    public static final String friendDenyNone = StreamLine.getConfig().getMessString("friend.deny.none");
+    public static final String friendRemSelf = StreamLine.getConfig().getMessString("friend.remove.self");
+    public static final String friendRemOther = StreamLine.getConfig().getMessString("friend.remove.other");
+    public static final String friendRemAlready = StreamLine.getConfig().getMessString("friend.remove.already");
+    public static final String friendRemNSelf = StreamLine.getConfig().getMessString("friend.remove.not-self");
+    public static final String friendListMain = StreamLine.getConfig().getMessString("friend.list.main");
+    public static final String friendListFNLast = StreamLine.getConfig().getMessString("friend.list.friends.not-last");
+    public static final String friendListFLast = StreamLine.getConfig().getMessString("friend.list.friends.last");
+    public static final String friendListPTNLast = StreamLine.getConfig().getMessString("friend.list.pending-to.not-last");
+    public static final String friendListPTLast = StreamLine.getConfig().getMessString("friend.list.pending-to.last");
+    public static final String friendListPFNLast = StreamLine.getConfig().getMessString("friend.list.pending-from.not-last");
+    public static final String friendListPFLast = StreamLine.getConfig().getMessString("friend.list.pending-from.last");
+    public static final String friendConnect = StreamLine.getConfig().getMessString("friend.connect");
+    public static final String friendDisconnect = StreamLine.getConfig().getMessString("friend.disconnect");
     // GetStats.
-    public static final String getStatsNone = message.getString("getstats.no-stats");
-    public static final String getStatsMessage = message.getString("getstats.message.main");
-    public static final String getStatsNLast = message.getString("getstats.message.not-last");
-    public static final String getStatsLast = message.getString("getstats.message.last");
+    public static final String getStatsNone = StreamLine.getConfig().getMessString("getstats.no-stats");
+    public static final String getStatsMessage = StreamLine.getConfig().getMessString("getstats.message.main");
+    public static final String getStatsNLast = StreamLine.getConfig().getMessString("getstats.message.not-last");
+    public static final String getStatsLast = StreamLine.getConfig().getMessString("getstats.message.last");
     // Kick.
-    public static final String kickSender = message.getString("kick.sender");
-    public static final String kickKicked = message.getString("kick.kicked");
+    public static final String kickSender = StreamLine.getConfig().getMessString("kick.sender");
+    public static final String kickKicked = StreamLine.getConfig().getMessString("kick.kicked");
     // // Settings.
     // Set.
-    public static final String settingsSetMOTD = message.getString("settings.set.motd");
-    public static final String settingsSetMOTDTime = message.getString("settings.set.motd-time");
-    public static final String settingsSetVersion = message.getString("settings.set.version");
-    public static final String settingsSetSample = message.getString("settings.set.sample");
-    public static final String settingsSetMaxP = message.getString("settings.set.max-players");
-    public static final String settingsSetOnlineP = message.getString("settings.set.online-players");
+    public static final String settingsSetMOTD = StreamLine.getConfig().getMessString("settings.set.motd");
+    public static final String settingsSetMOTDTime = StreamLine.getConfig().getMessString("settings.set.motd-time");
+    public static final String settingsSetVersion = StreamLine.getConfig().getMessString("settings.set.version");
+    public static final String settingsSetSample = StreamLine.getConfig().getMessString("settings.set.sample");
+    public static final String settingsSetMaxP = StreamLine.getConfig().getMessString("settings.set.max-players");
+    public static final String settingsSetOnlineP = StreamLine.getConfig().getMessString("settings.set.online-players");
     // Get.
-    public static final String settingsGetMOTD = message.getString("settings.get.motd");
-    public static final String settingsGetMOTDTime = message.getString("settings.get.motd-time");
-    public static final String settingsGetVersion = message.getString("settings.get.version");
-    public static final String settingsGetSample = message.getString("settings.get.sample");
-    public static final String settingsGetMaxP = message.getString("settings.get.max-players");
-    public static final String settingsGetOnlineP = message.getString("settings.get.online-players");
+    public static final String settingsGetMOTD = StreamLine.getConfig().getMessString("settings.get.motd");
+    public static final String settingsGetMOTDTime = StreamLine.getConfig().getMessString("settings.get.motd-time");
+    public static final String settingsGetVersion = StreamLine.getConfig().getMessString("settings.get.version");
+    public static final String settingsGetSample = StreamLine.getConfig().getMessString("settings.get.sample");
+    public static final String settingsGetMaxP = StreamLine.getConfig().getMessString("settings.get.max-players");
+    public static final String settingsGetOnlineP = StreamLine.getConfig().getMessString("settings.get.online-players");
 }

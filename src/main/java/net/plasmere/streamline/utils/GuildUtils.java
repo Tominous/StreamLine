@@ -16,7 +16,6 @@ import java.util.*;
 
 public class GuildUtils {
     private static final List<Guild> guilds = new ArrayList<>();
-    private static final Configuration message = Config.getMess();
 
     public static List<Guild> getGuilds() {
         List<Guild> rem = new ArrayList<>();
@@ -1543,141 +1542,141 @@ public class GuildUtils {
 
     // MESSAGES...
     // Text.
-    public static final String textLeader = message.getString("guild.text.leader");
-    public static final String textModerator = message.getString("guild.text.moderator");
-    public static final String textMember = message.getString("guild.text.member");
+    public static final String textLeader = StreamLine.getConfig().getMessString("guild.text.leader");
+    public static final String textModerator = StreamLine.getConfig().getMessString("guild.text.moderator");
+    public static final String textMember = StreamLine.getConfig().getMessString("guild.text.member");
     // Discord.
-    public static final String discordTitle = message.getString("guild.discord.title");
+    public static final String discordTitle = StreamLine.getConfig().getMessString("guild.discord.title");
     // Spy.
-    public static final String spy = message.getString("guild.spy");
+    public static final String spy = StreamLine.getConfig().getMessString("guild.spy");
     // No guild.
-    public static final String noGuildFound = message.getString("guild.no-guild");
+    public static final String noGuildFound = StreamLine.getConfig().getMessString("guild.no-guild");
     // Already made.
-    public static final String already = message.getString("guild.already-made");
+    public static final String already = StreamLine.getConfig().getMessString("guild.already-made");
     // Already in one.
-    public static final String alreadyHasOne = message.getString("guild.already-has");
+    public static final String alreadyHasOne = StreamLine.getConfig().getMessString("guild.already-has");
     // Not high enough permissions.
-    public static final String noPermission = message.getString("guild.no-permission");
+    public static final String noPermission = StreamLine.getConfig().getMessString("guild.no-permission");
     // Not in a guild.
-    public static final String notInGuild = message.getString("guild.not-in-a-guild");
-    public static final String otherNotInGuild = message.getString("guild.other-not-in-guild");
+    public static final String notInGuild = StreamLine.getConfig().getMessString("guild.not-in-a-guild");
+    public static final String otherNotInGuild = StreamLine.getConfig().getMessString("guild.other-not-in-guild");
     // Not enough space in guild.
-    public static final String notEnoughSpace = message.getString("guild.not-enough-space");
+    public static final String notEnoughSpace = StreamLine.getConfig().getMessString("guild.not-enough-space");
     // Chat.
-    public static final String chat = message.getString("guild.chat.message");
-    public static final String chatMuted = message.getString("guild.chat.muted");
-    public static final String chatConsole = message.getString("guild.chat.console");;
-    public static final String chatTitle = message.getString("guild.chat.title");
+    public static final String chat = StreamLine.getConfig().getMessString("guild.chat.message");
+    public static final String chatMuted = StreamLine.getConfig().getMessString("guild.chat.muted");
+    public static final String chatConsole = StreamLine.getConfig().getMessString("guild.chat.console");;
+    public static final String chatTitle = StreamLine.getConfig().getMessString("guild.chat.title");
     // Create.
-    public static final String create = message.getString("guild.create.sender");
-    public static final String createConsole = message.getString("guild.create.console");
-    public static final String createTitle = message.getString("guild.create.title");
+    public static final String create = StreamLine.getConfig().getMessString("guild.create.sender");
+    public static final String createConsole = StreamLine.getConfig().getMessString("guild.create.console");
+    public static final String createTitle = StreamLine.getConfig().getMessString("guild.create.title");
     // Join.
-    public static final String joinMembers = message.getString("guild.join.members");
-    public static final String joinUser = message.getString("guild.join.user");
-    public static final String joinFailure = message.getString("guild.join.failure");
-    public static final String joinsConsole = message.getString("guild.join.console");
-    public static final String joinsTitle = message.getString("guild.join.title");
+    public static final String joinMembers = StreamLine.getConfig().getMessString("guild.join.members");
+    public static final String joinUser = StreamLine.getConfig().getMessString("guild.join.user");
+    public static final String joinFailure = StreamLine.getConfig().getMessString("guild.join.failure");
+    public static final String joinsConsole = StreamLine.getConfig().getMessString("guild.join.console");
+    public static final String joinsTitle = StreamLine.getConfig().getMessString("guild.join.title");
     // Leave.
-    public static final String leaveMembers = message.getString("guild.leave.members");
-    public static final String leaveUser = message.getString("guild.leave.user");
-    public static final String leaveFailure = message.getString("guild.leave.failure");
-    public static final String leaveConsole = message.getString("guild.leave.console");
-    public static final String leaveTitle = message.getString("guild.leave.title");
+    public static final String leaveMembers = StreamLine.getConfig().getMessString("guild.leave.members");
+    public static final String leaveUser = StreamLine.getConfig().getMessString("guild.leave.user");
+    public static final String leaveFailure = StreamLine.getConfig().getMessString("guild.leave.failure");
+    public static final String leaveConsole = StreamLine.getConfig().getMessString("guild.leave.console");
+    public static final String leaveTitle = StreamLine.getConfig().getMessString("guild.leave.title");
     // Promote.
-    public static final String promoteMembers = message.getString("guild.promote.members");
-    public static final String promoteUser = message.getString("guild.promote.user");
-    public static final String promoteLeader = message.getString("guild.promote.leader");
-    public static final String promoteFailure = message.getString("guild.promote.failure");
-    public static final String promoteConsole = message.getString("guild.promote.console");
-    public static final String promoteTitle = message.getString("guild.promote.title");
+    public static final String promoteMembers = StreamLine.getConfig().getMessString("guild.promote.members");
+    public static final String promoteUser = StreamLine.getConfig().getMessString("guild.promote.user");
+    public static final String promoteLeader = StreamLine.getConfig().getMessString("guild.promote.leader");
+    public static final String promoteFailure = StreamLine.getConfig().getMessString("guild.promote.failure");
+    public static final String promoteConsole = StreamLine.getConfig().getMessString("guild.promote.console");
+    public static final String promoteTitle = StreamLine.getConfig().getMessString("guild.promote.title");
     // Demote.
-    public static final String demoteMembers = message.getString("guild.demote.members");
-    public static final String demoteUser = message.getString("guild.demote.user");
-    public static final String demoteLeader = message.getString("guild.demote.leader");
-    public static final String demoteFailure = message.getString("guild.demote.failure");
-    public static final String demoteIsLeader = message.getString("guild.demote.is-leader");
-    public static final String demoteConsole = message.getString("guild.demote.console");
-    public static final String demoteTitle = message.getString("guild.demote.title");
+    public static final String demoteMembers = StreamLine.getConfig().getMessString("guild.demote.members");
+    public static final String demoteUser = StreamLine.getConfig().getMessString("guild.demote.user");
+    public static final String demoteLeader = StreamLine.getConfig().getMessString("guild.demote.leader");
+    public static final String demoteFailure = StreamLine.getConfig().getMessString("guild.demote.failure");
+    public static final String demoteIsLeader = StreamLine.getConfig().getMessString("guild.demote.is-leader");
+    public static final String demoteConsole = StreamLine.getConfig().getMessString("guild.demote.console");
+    public static final String demoteTitle = StreamLine.getConfig().getMessString("guild.demote.title");
     // List.
-    public static final String listMain = message.getString("guild.list.main");
-    public static final String listLeaderBulk = message.getString("guild.list.leaderbulk");
-    public static final String listModBulkMain = message.getString("guild.list.moderatorbulk.main");
-    public static final String listModBulkNotLast = message.getString("guild.list.moderatorbulk.moderators.not-last");
-    public static final String listModBulkLast = message.getString("guild.list.moderatorbulk.moderators.last");
-    public static final String listModBulkNone = message.getString("guild.list.moderatorbulk.moderators.if-none");
-    public static final String listMemberBulkMain = message.getString("guild.list.memberbulk.main");
-    public static final String listMemberBulkNotLast = message.getString("guild.list.memberbulk.members.not-last");
-    public static final String listMemberBulkLast = message.getString("guild.list.memberbulk.members.last");
-    public static final String listMemberBulkNone = message.getString("guild.list.memberbulk.members.if-none");
+    public static final String listMain = StreamLine.getConfig().getMessString("guild.list.main");
+    public static final String listLeaderBulk = StreamLine.getConfig().getMessString("guild.list.leaderbulk");
+    public static final String listModBulkMain = StreamLine.getConfig().getMessString("guild.list.moderatorbulk.main");
+    public static final String listModBulkNotLast = StreamLine.getConfig().getMessString("guild.list.moderatorbulk.moderators.not-last");
+    public static final String listModBulkLast = StreamLine.getConfig().getMessString("guild.list.moderatorbulk.moderators.last");
+    public static final String listModBulkNone = StreamLine.getConfig().getMessString("guild.list.moderatorbulk.moderators.if-none");
+    public static final String listMemberBulkMain = StreamLine.getConfig().getMessString("guild.list.memberbulk.main");
+    public static final String listMemberBulkNotLast = StreamLine.getConfig().getMessString("guild.list.memberbulk.members.not-last");
+    public static final String listMemberBulkLast = StreamLine.getConfig().getMessString("guild.list.memberbulk.members.last");
+    public static final String listMemberBulkNone = StreamLine.getConfig().getMessString("guild.list.memberbulk.members.if-none");
     // Open.
-    public static final String openMembers = message.getString("guild.open.members");
-    public static final String openLeader = message.getString("guild.open.leader");
-    public static final String openFailure = message.getString("guild.open.failure");
-    public static final String openConsole = message.getString("guild.open.console");
-    public static final String openTitle = message.getString("guild.open.title");
+    public static final String openMembers = StreamLine.getConfig().getMessString("guild.open.members");
+    public static final String openLeader = StreamLine.getConfig().getMessString("guild.open.leader");
+    public static final String openFailure = StreamLine.getConfig().getMessString("guild.open.failure");
+    public static final String openConsole = StreamLine.getConfig().getMessString("guild.open.console");
+    public static final String openTitle = StreamLine.getConfig().getMessString("guild.open.title");
     // Close.
-    public static final String closeMembers = message.getString("guild.close.members");
-    public static final String closeSender = message.getString("guild.close.sender");
-    public static final String closeFailure = message.getString("guild.close.failure");
-    public static final String closeConsole = message.getString("guild.close.console");
-    public static final String closeTitle = message.getString("guild.close.title");
+    public static final String closeMembers = StreamLine.getConfig().getMessString("guild.close.members");
+    public static final String closeSender = StreamLine.getConfig().getMessString("guild.close.sender");
+    public static final String closeFailure = StreamLine.getConfig().getMessString("guild.close.failure");
+    public static final String closeConsole = StreamLine.getConfig().getMessString("guild.close.console");
+    public static final String closeTitle = StreamLine.getConfig().getMessString("guild.close.title");
     // Disband.
-    public static final String disbandMembers = message.getString("guild.disband.members");
-    public static final String disbandLeader = message.getString("guild.disband.leader");
-    public static final String disbandConsole = message.getString("guild.disband.console");
-    public static final String disbandTitle = message.getString("guild.disband.title");
+    public static final String disbandMembers = StreamLine.getConfig().getMessString("guild.disband.members");
+    public static final String disbandLeader = StreamLine.getConfig().getMessString("guild.disband.leader");
+    public static final String disbandConsole = StreamLine.getConfig().getMessString("guild.disband.console");
+    public static final String disbandTitle = StreamLine.getConfig().getMessString("guild.disband.title");
     // Accept.
-    public static final String acceptUser = message.getString("guild.accept.user");
-    public static final String acceptLeader = message.getString("guild.accept.leader");
-    public static final String acceptMembers = message.getString("guild.accept.members");
-    public static final String acceptFailure = message.getString("guild.accept.failure");
-    public static final String acceptConsole = message.getString("guild.accept.console");
-    public static final String acceptTitle = message.getString("guild.accept.title");
+    public static final String acceptUser = StreamLine.getConfig().getMessString("guild.accept.user");
+    public static final String acceptLeader = StreamLine.getConfig().getMessString("guild.accept.leader");
+    public static final String acceptMembers = StreamLine.getConfig().getMessString("guild.accept.members");
+    public static final String acceptFailure = StreamLine.getConfig().getMessString("guild.accept.failure");
+    public static final String acceptConsole = StreamLine.getConfig().getMessString("guild.accept.console");
+    public static final String acceptTitle = StreamLine.getConfig().getMessString("guild.accept.title");
     // Deny.
-    public static final String denyUser = message.getString("guild.deny.user");
-    public static final String denyLeader = message.getString("guild.deny.leader");
-    public static final String denyMembers = message.getString("guild.deny.members");
-    public static final String denyFailure = message.getString("guild.deny.failure");
-    public static final String denyConsole = message.getString("guild.deny.console");
-    public static final String denyTitle = message.getString("guild.deny.title");
+    public static final String denyUser = StreamLine.getConfig().getMessString("guild.deny.user");
+    public static final String denyLeader = StreamLine.getConfig().getMessString("guild.deny.leader");
+    public static final String denyMembers = StreamLine.getConfig().getMessString("guild.deny.members");
+    public static final String denyFailure = StreamLine.getConfig().getMessString("guild.deny.failure");
+    public static final String denyConsole = StreamLine.getConfig().getMessString("guild.deny.console");
+    public static final String denyTitle = StreamLine.getConfig().getMessString("guild.deny.title");
     // Invite.
-    public static final String inviteUser = message.getString("guild.invite.user");
-    public static final String inviteLeader = message.getString("guild.invite.leader");
-    public static final String inviteMembers = message.getString("guild.invite.members");
-    public static final String inviteFailure = message.getString("guild.invite.failure");
-    public static final String inviteNonSelf = message.getString("guild.invite.non-self");
-    public static final String inviteConsole = message.getString("guild.invite.console");
-    public static final String inviteTitle = message.getString("guild.invite.title");
+    public static final String inviteUser = StreamLine.getConfig().getMessString("guild.invite.user");
+    public static final String inviteLeader = StreamLine.getConfig().getMessString("guild.invite.leader");
+    public static final String inviteMembers = StreamLine.getConfig().getMessString("guild.invite.members");
+    public static final String inviteFailure = StreamLine.getConfig().getMessString("guild.invite.failure");
+    public static final String inviteNonSelf = StreamLine.getConfig().getMessString("guild.invite.non-self");
+    public static final String inviteConsole = StreamLine.getConfig().getMessString("guild.invite.console");
+    public static final String inviteTitle = StreamLine.getConfig().getMessString("guild.invite.title");
     // Kick.
-    public static final String kickUser = message.getString("guild.kick.user");
-    public static final String kickSender = message.getString("guild.kick.sender");
-    public static final String kickMembers = message.getString("guild.kick.members");
-    public static final String kickFailure = message.getString("guild.kick.failure");
-    public static final String kickMod = message.getString("guild.kick.mod");
-    public static final String kickSelf = message.getString("guild.kick.self");
-    public static final String kickConsole = message.getString("guild.kick.console");
-    public static final String kickTitle = message.getString("guild.kick.title");
+    public static final String kickUser = StreamLine.getConfig().getMessString("guild.kick.user");
+    public static final String kickSender = StreamLine.getConfig().getMessString("guild.kick.sender");
+    public static final String kickMembers = StreamLine.getConfig().getMessString("guild.kick.members");
+    public static final String kickFailure = StreamLine.getConfig().getMessString("guild.kick.failure");
+    public static final String kickMod = StreamLine.getConfig().getMessString("guild.kick.mod");
+    public static final String kickSelf = StreamLine.getConfig().getMessString("guild.kick.self");
+    public static final String kickConsole = StreamLine.getConfig().getMessString("guild.kick.console");
+    public static final String kickTitle = StreamLine.getConfig().getMessString("guild.kick.title");
     // Mute.
-    public static final String muteUser = message.getString("guild.mute.mute.user");
-    public static final String muteMembers = message.getString("guild.mute.mute.members");
-    public static final String unmuteUser = message.getString("guild.mute.unmute.user");
-    public static final String unmuteMembers = message.getString("guild.mute.unmute.members");
-    public static final String muteConsole = message.getString("guild.mute.console");
-    public static final String muteTitle = message.getString("guild.mute.title");
-    public static final String muteToggleMuted = message.getString("guild.mute.toggle.muted");
-    public static final String muteToggleUnMuted = message.getString("guild.mute.toggle.unmuted");
+    public static final String muteUser = StreamLine.getConfig().getMessString("guild.mute.mute.user");
+    public static final String muteMembers = StreamLine.getConfig().getMessString("guild.mute.mute.members");
+    public static final String unmuteUser = StreamLine.getConfig().getMessString("guild.mute.unmute.user");
+    public static final String unmuteMembers = StreamLine.getConfig().getMessString("guild.mute.unmute.members");
+    public static final String muteConsole = StreamLine.getConfig().getMessString("guild.mute.console");
+    public static final String muteTitle = StreamLine.getConfig().getMessString("guild.mute.title");
+    public static final String muteToggleMuted = StreamLine.getConfig().getMessString("guild.mute.toggle.muted");
+    public static final String muteToggleUnMuted = StreamLine.getConfig().getMessString("guild.mute.toggle.unmuted");
     // Warp.
-    public static final String warpSender = message.getString("guild.warp.sender");
-    public static final String warpMembers = message.getString("guild.warp.members");
-    public static final String warpConsole = message.getString("guild.warp.console");
-    public static final String warpTitle = message.getString("guild.warp.title");
+    public static final String warpSender = StreamLine.getConfig().getMessString("guild.warp.sender");
+    public static final String warpMembers = StreamLine.getConfig().getMessString("guild.warp.members");
+    public static final String warpConsole = StreamLine.getConfig().getMessString("guild.warp.console");
+    public static final String warpTitle = StreamLine.getConfig().getMessString("guild.warp.title");
     // Info.
-    public static final String info = message.getString("guild.info");
+    public static final String info = StreamLine.getConfig().getMessString("guild.info");
     // Rename.
-    public static final String renameSender = message.getString("guild.rename.sender");
-    public static final String renameMembers = message.getString("guild.rename.members");
-    public static final String renameNonEmpty = message.getString("guild.rename.non-empty");
-    public static final String renameConsole = message.getString("guild.rename.console");
-    public static final String renameTitle = message.getString("guild.rename.title");
+    public static final String renameSender = StreamLine.getConfig().getMessString("guild.rename.sender");
+    public static final String renameMembers = StreamLine.getConfig().getMessString("guild.rename.members");
+    public static final String renameNonEmpty = StreamLine.getConfig().getMessString("guild.rename.non-empty");
+    public static final String renameConsole = StreamLine.getConfig().getMessString("guild.rename.console");
+    public static final String renameTitle = StreamLine.getConfig().getMessString("guild.rename.title");
 }
