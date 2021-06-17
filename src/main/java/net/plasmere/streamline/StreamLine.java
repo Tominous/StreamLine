@@ -67,6 +67,7 @@ public class StreamLine extends Plugin {
 	private ScheduledTask cachedPlayers;
 	private ScheduledTask playtime;
 	private ScheduledTask oneSecTimer;
+	private ScheduledTask motdUpdater;
 
 	private String currentMOTD;
 	private int motdPage;
@@ -179,6 +180,7 @@ public class StreamLine extends Plugin {
 			cachedPlayers = getProxy().getScheduler().schedule(this, new PlayerClearTimer(ConfigUtils.cachedPClear), 1, 1, TimeUnit.SECONDS);
 			playtime = getProxy().getScheduler().schedule(this, new PlaytimeTimer(1), 1, 1, TimeUnit.SECONDS);
 			oneSecTimer = getProxy().getScheduler().schedule(this, new OneSecondTimer(), 1, 1, TimeUnit.SECONDS);
+			motdUpdater = StreamLine.getInstance().getProxy().getScheduler().schedule(StreamLine.getInstance(), new MOTDUpdaterTimer(serverConfig.getMOTDTime()), 0, 1, TimeUnit.SECONDS);
 
 			// DO NOT FORGET TO UPDATE AMOUNT BELOW! :/
 			getLogger().info("Loaded 5 timers (Runnables) into memory...!");
@@ -280,6 +282,7 @@ public class StreamLine extends Plugin {
 		playtime.cancel();
 		cachedPlayers.cancel();
 		oneSecTimer.cancel();
+		motdUpdater.cancel();
 
 		try {
 			if (jda != null) {

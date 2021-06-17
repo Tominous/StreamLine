@@ -24,8 +24,6 @@ public class ServerConfig {
     private Configuration serverConfig;
     private final File scfile = new File(StreamLine.getInstance().getConfDir(), "settings.yml");
 
-    public ScheduledTask motdUpdater;
-
     public ServerConfig(){
         if (! StreamLine.getInstance().getConfDir().exists()) {
             if (! ConfigUtils.scMakeDefault) return;
@@ -57,7 +55,7 @@ public class ServerConfig {
             }
         }
 
-        Configuration thing = null;
+        Configuration thing = new Configuration();
 
         try {
             thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(scfile); // ???
@@ -65,12 +63,6 @@ public class ServerConfig {
             e.printStackTrace();
         }
         StreamLine.getInstance().getLogger().info("Loaded serverConfig!");
-
-        if (motdUpdater != null) {
-            motdUpdater.cancel();
-        }
-
-        motdUpdater = StreamLine.getInstance().getProxy().getScheduler().schedule(StreamLine.getInstance(), new MOTDUpdaterTimer(thing.getInt("motd-timer")), 0, 1, TimeUnit.SECONDS);
 
         return thing;
     }
