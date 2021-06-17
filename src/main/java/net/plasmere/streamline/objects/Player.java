@@ -365,7 +365,7 @@ public class Player implements ProxiedPlayer {
         defaults.add("total-xp=0");
         defaults.add("currentXP=0");
         defaults.add("playtime=0");
-        defaults.add("display-name=" + (PlayerUtils.getDisplayName(this.latestName) != null ? PlayerUtils.getDisplayName(this.latestName) : latestName));
+        defaults.add("display-name=" + (this.latestName != null ? PlayerUtils.getDisplayName(this.latestName) : ""));
         defaults.add("guild=");
         defaults.add("sspy=true");
         defaults.add("gspy=true");

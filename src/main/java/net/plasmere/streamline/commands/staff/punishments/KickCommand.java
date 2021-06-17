@@ -27,13 +27,13 @@ public class KickCommand extends Command implements TabExecutor {
         if (args.length <= 0) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else {
-            Player other = PlayerUtils.getStat(args[1]);
+            Player other = PlayerUtils.getStat(args[0]);
 
             if (other == null) {
-                PlayerUtils.addStat(new Player(UUIDFetcher.getCachedUUID(args[1])));
-                other = PlayerUtils.getStat(args[1]);
+                PlayerUtils.addStat(new Player(UUIDFetcher.getCachedUUID(args[0])));
+                other = PlayerUtils.getStat(args[0]);
                 if (other == null) {
-                    StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[1]);
+                    StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     return;
                 }

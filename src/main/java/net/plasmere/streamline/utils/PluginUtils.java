@@ -12,6 +12,7 @@ import net.plasmere.streamline.commands.staff.*;
 import net.plasmere.streamline.commands.staff.events.BTagCommand;
 import net.plasmere.streamline.commands.staff.events.EventReloadCommand;
 import net.plasmere.streamline.commands.staff.punishments.BanCommand;
+import net.plasmere.streamline.commands.staff.punishments.KickCommand;
 import net.plasmere.streamline.commands.staff.punishments.MuteCommand;
 import net.plasmere.streamline.commands.staff.spy.GSPYCommand;
 import net.plasmere.streamline.commands.staff.spy.PSPYCommand;
@@ -86,6 +87,9 @@ public class PluginUtils {
         }
         if (ConfigUtils.comBBan) {
             registerCommand(plugin, new BanCommand(ConfigUtils.comBBanBase, ConfigUtils.comBBanPerm, getAliases(ConfigUtils.comBBanAliases)));
+        }
+        if (ConfigUtils.comBKick) {
+            registerCommand(plugin, new KickCommand(ConfigUtils.comBKickBase, ConfigUtils.comBKickPerm, getAliases(ConfigUtils.comBKickAliases)));
         }
 
         // Utils.
