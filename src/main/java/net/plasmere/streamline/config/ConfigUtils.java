@@ -18,7 +18,7 @@ public class ConfigUtils {
     public static final boolean debug = config.getBoolean("debug");
     // ... Basics.
     // Links.
-//    public static final String linkPre = config.getString("link.prefix");
+    public static final String linkPre = config.getString("link-prefix");
 //    public static final String linkSuff = config.getString("link.suffix");
     // Bot Stuff.
     public static final String botPrefix = config.getString("bot.prefix");
@@ -274,6 +274,11 @@ public class ConfigUtils {
     public static final String comBBanBase = config.getString("commands.bungee.staff.ban.base");
     public static final List<String> comBBanAliases = config.getStringList("commands.bungee.staff.ban.aliases");
     public static final String comBBanPerm = config.getString("commands.bungee.staff.ban.permission");
+    // Settings.
+    public static final boolean comBSettings = config.getBoolean("commands.bungee.staff.settings.enabled");
+    public static final String comBSettingsBase = config.getString("commands.bungee.staff.settings.base");
+    public static final List<String> comBSettingsAliases = config.getStringList("commands.bungee.staff.settings.aliases");
+    public static final String comBSettingsPerm = config.getString("commands.bungee.staff.settings.permission");
     // ... Messaging.
     // Ignore.
     public static final boolean comBIgnore = config.getBoolean("commands.bungee.messaging.ignore.enabled");
@@ -428,4 +433,10 @@ public class ConfigUtils {
     // Messaging.
     public static final String messViewPerm = config.getString("modules.bungee.messaging.view-permission");
     public static final String messReplyTo = config.getString("modules.bungee.messaging.reply-to");
+    // ... Server Config.
+    public static final boolean sc = config.getBoolean("modules.bungee.server-config.enabled");
+    public static final boolean scMakeDefault = config.getBoolean("modules.bungee.server-config.make-if-not-exist");
+    public static final boolean scMOTD = config.getBoolean("modules.bungee.server-config.motd");
+    public static final boolean scVersion = config.getBoolean("modules.bungee.server-config.version");
+    public static final boolean scSample = config.getBoolean("modules.bungee.server-config.sample");
 }

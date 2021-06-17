@@ -1,0 +1,32 @@
+# MOTD.
+motd:
+  1: "&eThis &5BungeeCord &7server &eruns the &dStreamLine &cplugin&e!%newline%&4JOIN NOW!"
+  2: "&eIt allows for &ctimed &eMOTDs!"
+  3: "&eIt is very cool! &a%online%&8/&a%max%"
+# Time in seconds.
+motd-time: 1
+# Server version.
+version: "Minecraft 1.8 to 1.17"
+# Sample.
+sample:
+  1: "&7======================================="
+  2: "&eWelcome to &dmy.server.net"
+  3: "&eStore: &dhttps://store.server.net"
+  4: "&eWebsite: &dhttps://www.server.net"
+  5: "&7======================================="
+# Max players.
+# Options:
+# "exact" = exact number of online players.
+# "exact+<number>" = exact number of online players + the number you input.
+# "exact-<number>" = exact number of online players - the number you input.
+# "+<number>" = what bungee config.yml says + the number you input.
+# "-<number>" = what bungee config.yml says - the number you input.
+# "<number>" = the number you input.
+max-players: "1000"
+# Online players
+# Options:
+# "exact" = exact number of online players.
+# "+<number>" = exact number of online players + the number you input.
+# "-<number>" = exact number of online players - the number you input.
+# "<number>" = the number you input.
+online-players: "exact"

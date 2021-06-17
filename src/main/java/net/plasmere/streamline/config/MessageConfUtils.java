@@ -246,4 +246,19 @@ public class MessageConfUtils {
     // Kick.
     public static final String kickSender = message.getString("kick.sender");
     public static final String kickKicked = message.getString("kick.kicked");
+    // // Settings.
+    // Set.
+    public static final String settingsSetMOTD = message.getString("settings.set.motd");
+    public static final String settingsSetMOTDTime = message.getString("settings.set.motd-time");
+    public static final String settingsSetVersion = message.getString("settings.set.version");
+    public static final String settingsSetSample = message.getString("settings.set.sample");
+    public static final String settingsSetMaxP = message.getString("settings.set.max-players");
+    public static final String settingsSetOnlineP = message.getString("settings.set.online-players");
+    // Get.
+    public static final String settingsGetMOTD = message.getString("settings.get.motd");
+    public static final String settingsGetMOTDTime = message.getString("settings.get.motd-time");
+    public static final String settingsGetVersion = message.getString("settings.get.version");
+    public static final String settingsGetSample = message.getString("settings.get.sample");
+    public static final String settingsGetMaxP = message.getString("settings.get.max-players");
+    public static final String settingsGetOnlineP = message.getString("settings.get.online-players");
 }

@@ -131,32 +131,51 @@ public class IgnoreCommand extends Command implements TabExecutor {
 
     @Override
     public Iterable<String> onTabComplete(final CommandSender sender, final String[] args) {
-        Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
-        List<String> strPlayers = new ArrayList<>();
+        if (sender instanceof ProxiedPlayer) {
+            Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
+            List<String> strPlayers = new ArrayList<>();
+            List<String> ignored = new ArrayList<>();
 
-        for (ProxiedPlayer player : players){
-            if (sender instanceof ProxiedPlayer) if (player.equals(sender)) continue;
-            strPlayers.add(player.getName());
-        }
+            ProxiedPlayer p = (ProxiedPlayer) sender;
 
-        List<String> options = new ArrayList<>();
+            Player player = PlayerUtils.getOrCreate(p.getUniqueId().toString());
 
-        options.add("add");
-        options.add("remove");
-        options.add("list");
+            for (String uuid : player.ignoredList) {
+                ignored.add(UUIDFetcher.getName(uuid));
+            }
 
-        if (args.length == 1) {
-            final String param1 = args[0];
+            for (ProxiedPlayer pl : players) {
+                if (pl.equals(sender)) continue;
+                strPlayers.add(pl.getName());
+            }
 
-            return options.stream()
-                    .filter(completion -> completion.startsWith(param1))
-                    .collect(Collectors.toList());
-        } else if (args.length == 2){
-            final String param2 = args[1];
+            List<String> options = new ArrayList<>();
 
-            return strPlayers.stream()
-                    .filter(completion -> completion.startsWith(param2))
-                    .collect(Collectors.toList());
+            options.add("add");
+            options.add("remove");
+            options.add("list");
+
+            if (args.length == 1) {
+                final String param1 = args[0];
+
+                return options.stream()
+                        .filter(completion -> completion.startsWith(param1))
+                        .collect(Collectors.toList());
+            } else if (args.length == 2) {
+                final String param2 = args[1];
+
+                if (args[0].equals("remove")) {
+                    return ignored.stream()
+                            .filter(completion -> completion.startsWith(param2))
+                            .collect(Collectors.toList());
+                } else {
+                    return strPlayers.stream()
+                            .filter(completion -> completion.startsWith(param2))
+                            .collect(Collectors.toList());
+                }
+            }
+
+            return new ArrayList<>();
         }
 
         return new ArrayList<>();

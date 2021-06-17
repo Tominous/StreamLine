@@ -6,10 +6,8 @@ version: "1.0.10.8"
 debug: false
 
 #### BASICS ####
-# For links in chat. This is so the API can know when there is a link and when not.
-link:
-  prefix: "&b&o&n"
-  suffix: "..."
+# What do you want to be before links found when they are put into hoverable text.
+link-prefix: "&b&o&n"
 
 #### DISCORD BOT ####
 bot:
@@ -629,6 +627,19 @@ commands:
         # All aliases for the command. Listed in yml list format.
         aliases:
           - "hammer"
+      # The ban command.
+      settings:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "settings"
+        # Custom permission.
+        permission: "streamline.command.settings"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "setedit"
+          - "se"
+          - "settingsedit"
       # For messaging commands...
     messaging:
       # The ignore command.
@@ -987,3 +998,16 @@ modules:
       # "sent-from" = Who sent to the person last.
       # "very-last" (or anything else) = Whichever of the previous two is most recent.
       reply-to: "very-last"
+    # Settings for server config.
+    # This is for MOTD, etc.
+    server-config:
+      # Allows the use of the server configs.
+      enabled: true
+      # Make the file if file does not exist?
+      make-if-not-exist: true
+      # Allows the use of the MOTD in the server list.
+      motd: true
+      # Allows the use of the Version in the server list.
+      version: true
+      # Allows the use of the Sample in the server list.
+      sample: true

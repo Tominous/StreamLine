@@ -191,34 +191,62 @@ public class FriendCommand extends Command implements TabExecutor {
 
     @Override
     public Iterable<String> onTabComplete(final CommandSender sender, final String[] args) {
-        Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
-        List<String> strPlayers = new ArrayList<>();
+        if (sender instanceof ProxiedPlayer) {
+            Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
+            List<String> strPlayers = new ArrayList<>();
+            List<String> friends = new ArrayList<>();
+            List<String> pending = new ArrayList<>();
 
-        for (ProxiedPlayer player : players){
-            if (sender instanceof ProxiedPlayer) if (player.equals(sender)) continue;
-            strPlayers.add(player.getName());
-        }
+            ProxiedPlayer p = (ProxiedPlayer) sender;
 
-        List<String> options = new ArrayList<>();
+            Player player = PlayerUtils.getOrCreate(p.getUniqueId().toString());
 
-        options.add("request");
-        options.add("accept");
-        options.add("deny");
-        options.add("remove");
-        options.add("list");
+            for (String uuid : player.friendList) {
+                friends.add(UUIDFetcher.getName(uuid));
+            }
 
-        if (args.length == 1) {
-            final String param1 = args[0];
+            for (String uuid : player.pendingFromFriendList) {
+                pending.add(UUIDFetcher.getName(uuid));
+            }
 
-            return options.stream()
-                    .filter(completion -> completion.startsWith(param1))
-                    .collect(Collectors.toList());
-        } else if (args.length == 2){
-            final String param2 = args[1];
+            for (ProxiedPlayer pl : players) {
+                if (pl.equals(sender)) continue;
+                strPlayers.add(pl.getName());
+            }
 
-            return strPlayers.stream()
-                    .filter(completion -> completion.startsWith(param2))
-                    .collect(Collectors.toList());
+            List<String> options = new ArrayList<>();
+
+            options.add("request");
+            options.add("accept");
+            options.add("deny");
+            options.add("remove");
+            options.add("list");
+
+            if (args.length == 1) {
+                final String param1 = args[0];
+
+                return options.stream()
+                        .filter(completion -> completion.startsWith(param1))
+                        .collect(Collectors.toList());
+            } else if (args.length == 2) {
+                final String param2 = args[1];
+
+                if (args[0].equals("accept") || args[0].equals("deny")) {
+                    return pending.stream()
+                            .filter(completion -> completion.startsWith(param2))
+                            .collect(Collectors.toList());
+                } else if (args[0].equals("remove")) {
+                    return friends.stream()
+                            .filter(completion -> completion.startsWith(param2))
+                            .collect(Collectors.toList());
+                } else {
+                    return strPlayers.stream()
+                            .filter(completion -> completion.startsWith(param2))
+                            .collect(Collectors.toList());
+                }
+            }
+
+            return new ArrayList<>();
         }
 
         return new ArrayList<>();

@@ -11,6 +11,7 @@ import net.plasmere.streamline.events.EventsReader;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.configs.Bans;
 import net.plasmere.streamline.objects.configs.Lobbies;
+import net.plasmere.streamline.objects.configs.ServerConfig;
 import net.plasmere.streamline.objects.configs.ServerPermissions;
 import net.plasmere.streamline.objects.timers.*;
 import net.plasmere.streamline.utils.*;
@@ -49,6 +50,7 @@ public class StreamLine extends Plugin {
 	public static ViaHolder viaHolder;
 	public static GeyserHolder geyserHolder;
 	public static LPHolder lpHolder;
+	public static ServerConfig serverConfig;
 
 	private static JDA jda = null;
 	private static boolean isReady = false;
@@ -66,18 +68,26 @@ public class StreamLine extends Plugin {
 	private ScheduledTask playtime;
 	private ScheduledTask oneSecTimer;
 
+	private String currentMOTD;
+	private int motdPage;
+
 	public StreamLine(){
 		instance = this;
 	}
 
-	public final File getPlDir() {
+	public File getPlDir() {
 		return plDir;
 	}
-	public final File getGDir() {
+	public File getGDir() {
 		return gDir;
 	}
-	public final File getEDir() { return eventsDir; }
-	public final File getConfDir() { return confDir; }
+	public File getEDir() { return eventsDir; }
+	public File getConfDir() { return confDir; }
+
+	public String getCurrentMOTD() { return currentMOTD; }
+	public int getMotdPage() { return motdPage; }
+	public void setCurrentMOTD(String motd) { this.currentMOTD = motd; }
+	public void setMotdPage(int page) { this.motdPage = page; }
 
     private void init(){
 		if (jda != null) try { jda.shutdownNow(); jda = null; } catch (Exception e) { e.printStackTrace();}
@@ -185,10 +195,22 @@ public class StreamLine extends Plugin {
 				e.printStackTrace();
 			}
 		}
+		// Server Permissions.
 		serverPermissions = new ServerPermissions(false);
 
+		// Lobbies.
 		if (ConfigUtils.lobbies) {
 			lobbies = new Lobbies(false);
+		}
+
+		// Bans.
+		if (ConfigUtils.punBans) {
+			bans = new Bans();
+		}
+
+		// Server Config.
+		if (ConfigUtils.sc) {
+			serverConfig = new ServerConfig();
 		}
 	}
 
@@ -214,11 +236,6 @@ public class StreamLine extends Plugin {
 
 		// Config.
 		config = new Config();
-
-		// Bans.
-		if (ConfigUtils.punBans) {
-			bans = new Bans();
-		}
 
 		// Commands.
 		PluginUtils.loadCommands(this);

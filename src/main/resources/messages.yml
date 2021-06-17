@@ -1619,15 +1619,81 @@ friend:
   # On player disconnect.
   disconnect: "&aFRIEND &9> &d%player% &c-"
 
+# GetStats command...
 getstats:
+  # If there are no stats to display.
   no-stats: "&cSorry, but there are no loaded stats..."
+  # For the message...
   message:
+    # Main message.
     main: "&eLoaded stats: %stats%"
+    # If not the last stat.
     not-last: "&d%player%&8, "
+    # If the last stat.
     last: "&d%player%&8."
 
+# Kick command...
 kick:
   # For sender.
   sender: "&eYou have &ckicked &d%player% &efor reason &a\"&b%reason%&a\"&e!"
   # For kicked.
   kicked: "&cYou have been &ckicked&c! Reason: &b%reason%"
+
+# Settings command...
+settings:
+  # For setting...
+  set:
+    # MOTD.
+    # Fillers:
+    # %number% = the number of the MOTD page.
+    # %set% = what you set it to.
+    motd: "&eJust set &cMOTD &a#%number% &eto &b\"%set%&b\"&e!"
+    # MOTD Time.
+    # Fillers:
+    # %set% = what you set it to.
+    motd-time: "&eJust set &cMOTD Time &eto &b\"%set%&b\"&e!"
+    # Version.
+    # Fillers:
+    # %set% = what you set it to.
+    version: "&eJust set &cVersion &eto &b\"%set%&b\"&e!"
+    # Sample.
+    # Fillers:
+    # %number% = the number of the MOTD page.
+    # %set% = what you set it to.
+    sample: "&eJust set &cSample &a#%number% &eto &b\"%set%&b\"&e!"
+    # Max Players.
+    # Fillers:
+    # %set% = what you set it to.
+    max-players: "&eJust set &cMax Players &eto &b\"%set%&b\"&e!"
+    # Online Players.
+    # Fillers:
+    # %set% = what you set it to.
+    online-players: "&eJust set &cOnline Players &eto &b\"%set%&b\"&e!"
+  # For getting...
+  get:
+    # MOTD.
+    # Fillers:
+    # %number% = the number of the MOTD page.
+    # %set% = what you set it to.
+    motd: "&cMOTD &a#%number% &eis &b\"%set%&b\"&e!"
+    # MOTD Time.
+    # Fillers:
+    # %set% = what you set it to.
+    motd-time: "&cMOTD Time &eis &b\"%set%&b\"&e!"
+    # Version.
+    # Fillers:
+    # %set% = what you set it to.
+    version: "&cVersion &eis &b\"%set%&b\"&e!"
+    # Sample.
+    # Fillers:
+    # %number% = the number of the MOTD page.
+    # %set% = what you set it to.
+    sample: "&cSample &a#%number% &eis &b\"%set%&b\"&e!"
+    # Max Players.
+    # Fillers:
+    # %set% = what you set it to.
+    max-players: "&cMax Players &eis &b\"%set%&b\"&e!"
+    # Online Players.
+    # Fillers:
+    # %set% = what you set it to.
+    online-players: "&cOnline Players &eis &b\"%set%&b\"&e!"

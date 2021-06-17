@@ -4,6 +4,7 @@ import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
+import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 
@@ -113,6 +114,23 @@ public class TextUtils {
             e.printStackTrace();
             return new TextComponent(text);
         }
+    }
+
+    public static TreeMap<Integer, String> comparedConfiguration(Configuration configuration){
+        TreeMap<Integer, String> thing = new TreeMap<>();
+
+        for (String key : configuration.getKeys()) {
+            int it = 0;
+            try {
+                it = Integer.parseInt(key);
+            } catch (Exception e) {
+                continue; // Do nothing.
+            }
+
+            thing.put(it, TextUtils.codedString(configuration.getString(key)));
+        }
+
+        return thing;
     }
 
 //    public static TextComponent hexedText(String text){

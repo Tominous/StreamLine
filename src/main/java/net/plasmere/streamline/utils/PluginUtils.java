@@ -14,6 +14,7 @@ import net.plasmere.streamline.commands.staff.events.EventReloadCommand;
 import net.plasmere.streamline.commands.staff.punishments.BanCommand;
 import net.plasmere.streamline.commands.staff.punishments.KickCommand;
 import net.plasmere.streamline.commands.staff.punishments.MuteCommand;
+import net.plasmere.streamline.commands.staff.settings.SettingsEditCommand;
 import net.plasmere.streamline.commands.staff.spy.GSPYCommand;
 import net.plasmere.streamline.commands.staff.spy.PSPYCommand;
 import net.plasmere.streamline.commands.staff.spy.SSPYCommand;
@@ -70,6 +71,9 @@ public class PluginUtils {
         }
         if (ConfigUtils.comBGlobalOnline && StreamLine.lpHolder.enabled) {
             registerCommand(plugin, new GlobalOnlineCommand(ConfigUtils.comBGlobalOnlineBase, ConfigUtils.comBGlobalOnlinePerm, getAliases(ConfigUtils.comBGlobalOnlineAliases)));
+        }
+        if (ConfigUtils.comBSettings) {
+            registerCommand(plugin, new SettingsEditCommand(ConfigUtils.comBSettingsBase, ConfigUtils.comBSettingsPerm, getAliases(ConfigUtils.comBSettingsAliases)));
         }
         // // Spying.
         if (ConfigUtils.comBSSPY) {
