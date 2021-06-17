@@ -14,7 +14,7 @@ public class GuildXPTimer implements Runnable {
     public int reset;
 
     public GuildXPTimer(int seconds) {
-        this.countdown = seconds;
+        this.countdown = 0;
         this.reset = seconds;
     }
 

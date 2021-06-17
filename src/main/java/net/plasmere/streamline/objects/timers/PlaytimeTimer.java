@@ -13,7 +13,7 @@ public class PlaytimeTimer implements Runnable {
     public int reset;
 
     public PlaytimeTimer(int seconds) {
-        this.countdown = seconds;
+        this.countdown = 0;
         this.reset = seconds;
     }
 

@@ -1,16 +1,13 @@
 package net.plasmere.streamline.objects.timers;
 
 import net.plasmere.streamline.StreamLine;
-import net.plasmere.streamline.config.ConfigUtils;
-import net.plasmere.streamline.objects.configs.ServerConfig;
-import net.plasmere.streamline.utils.PlayerUtils;
 
 public class MOTDUpdaterTimer implements Runnable {
     public int countdown;
     public int reset;
 
     public MOTDUpdaterTimer(int seconds) {
-        this.countdown = seconds;
+        this.countdown = 0;
         this.reset = seconds;
     }
 

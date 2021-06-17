@@ -15,7 +15,7 @@ public class PlayerClearTimer implements Runnable {
     public int reset;
 
     public PlayerClearTimer(int seconds) {
-        this.countdown = seconds;
+        this.countdown = 0;
         this.reset = seconds;
     }
 

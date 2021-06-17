@@ -13,7 +13,7 @@ public class OneSecondTimer implements Runnable {
     public int reset;
 
     public OneSecondTimer() {
-        this.countdown = 1;
+        this.countdown = 0;
         this.reset = 1;
     }
 
