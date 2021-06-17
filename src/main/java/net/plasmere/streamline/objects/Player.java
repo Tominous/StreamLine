@@ -395,7 +395,7 @@ public class Player implements ProxiedPlayer {
         for (String tag : ConfigUtils.tagsDefaults) {
             if (tag == null) continue;
             if (tag.equals("")) continue;
-            if (i != tag.length()) {
+            if (i < tag.length()) {
                 stringBuilder.append(tag).append(",");
             } else {
                 stringBuilder.append(tag);
@@ -664,6 +664,9 @@ public class Player implements ProxiedPlayer {
             }
 
             for (String t : getFromKey(search).split(",")) {
+                if (t == null) continue;
+                if (t.equals("")) continue;
+
                 try {
                     thing.add(t);
                 } catch (Exception e) {
@@ -690,6 +693,9 @@ public class Player implements ProxiedPlayer {
             }
 
             for (String t : getFromKey(search).split(",")) {
+                if (t == null) continue;
+                if (t.equals("")) continue;
+
                 try {
                     thing.add(t);
                 } catch (Exception e) {
@@ -716,6 +722,9 @@ public class Player implements ProxiedPlayer {
             }
 
             for (String t : getFromKey(search).split(",")) {
+                if (t == null) continue;
+                if (t.equals("")) continue;
+
                 try {
                     thing.add(t);
                 } catch (Exception e) {
@@ -742,6 +751,9 @@ public class Player implements ProxiedPlayer {
             }
 
             for (String t : getFromKey(search).split(",")) {
+                if (t == null) continue;
+                if (t.equals("")) continue;
+
                 try {
                     thing.add(t);
                 } catch (Exception e) {
@@ -768,6 +780,9 @@ public class Player implements ProxiedPlayer {
             }
 
             for (String t : getFromKey(search).split(",")) {
+                if (t == null) continue;
+                if (t.equals("")) continue;
+
                 try {
                     thing.add(t);
                 } catch (Exception e) {
@@ -794,6 +809,9 @@ public class Player implements ProxiedPlayer {
             }
 
             for (String t : getFromKey(search).split(",")) {
+                if (t == null) continue;
+                if (t.equals("")) continue;
+
                 try {
                     thing.add(t);
                 } catch (Exception e) {
@@ -820,6 +838,9 @@ public class Player implements ProxiedPlayer {
             }
 
             for (String t : getFromKey(search).split(",")) {
+                if (t == null) continue;
+                if (t.equals("")) continue;
+
                 try {
                     thing.add(t);
                 } catch (Exception e) {
