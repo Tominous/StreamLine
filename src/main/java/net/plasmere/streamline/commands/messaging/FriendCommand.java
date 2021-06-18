@@ -202,11 +202,11 @@ public class FriendCommand extends Command implements TabExecutor {
             Player player = PlayerUtils.getOrCreate(p.getUniqueId().toString());
 
             for (String uuid : player.friendList) {
-                friends.add(UUIDFetcher.getName(uuid));
+                friends.add(UUIDFetcher.getCachedName(uuid));
             }
 
             for (String uuid : player.pendingFromFriendList) {
-                pending.add(UUIDFetcher.getName(uuid));
+                pending.add(UUIDFetcher.getCachedName(uuid));
             }
 
             for (ProxiedPlayer pl : players) {
