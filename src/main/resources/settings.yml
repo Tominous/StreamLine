@@ -3,9 +3,9 @@
 # %max% = max players online.
 # MOTD.
 motd:
-  1: "&eThis &5BungeeCord &7server &eruns the &dStreamLine &cplugin&e!%newline%&4JOIN NOW!"
+  1: "&eThis &5BungeeCord &7server &eruns the &dStreamLine &cplugin&e!%newline%&4JOIN NOW! &a%online%&8/&a%max%"
   2: "&eIt allows for &ctimed &eMOTDs!"
-  3: "&eIt is very cool! &a%online%&8/&a%max%"
+  3: "&eIt is very cool!"
 # Time in seconds.
 motd-time: 1
 # Server version.

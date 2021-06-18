@@ -219,79 +219,53 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
     @Override
     public Iterable<String> onTabComplete(final CommandSender sender, final String[] args) {
-        if (sender instanceof ProxiedPlayer) {
-            Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
-            List<String> strPlayers = new ArrayList<>();
-            List<String> friends = new ArrayList<>();
-            List<String> pending = new ArrayList<>();
+        List<String> options = new ArrayList<>();
 
-            ProxiedPlayer p = (ProxiedPlayer) sender;
+        options.add("set");
+        options.add("check");
+        options.add("get");
 
-            Player player = PlayerUtils.getOrCreate(p.getUniqueId().toString());
+        List<String> options2 = new ArrayList<>();
 
-            for (String uuid : player.friendList) {
-                friends.add(UUIDFetcher.getName(uuid));
-            }
+        options2.add("motd");
+        options2.add("motd-time");
+        options2.add("version");
+        options2.add("sample");
+        options2.add("max-players");
+        options2.add("online-players");
 
-            for (String uuid : player.pendingFromFriendList) {
-                pending.add(UUIDFetcher.getName(uuid));
-            }
+        if (args.length == 1) {
+            final String param1 = args[0];
 
-            for (ProxiedPlayer pl : players) {
-                if (pl.equals(sender)) continue;
-                strPlayers.add(pl.getName());
-            }
+            return options.stream()
+                    .filter(completion -> completion.startsWith(param1))
+                    .collect(Collectors.toList());
+        } else if (args.length == 2) {
+            final String param2 = args[1];
 
-            List<String> options = new ArrayList<>();
+            return options2.stream()
+                    .filter(completion -> completion.startsWith(param2))
+                    .collect(Collectors.toList());
+        } else if (args.length == 3) {
+            final String param3 = args[2];
 
-            options.add("set");
-            options.add("check");
-            options.add("get");
+            if (args[1].equals("motd") || args[1].equals("sample")) {
+                List<String> keys = new ArrayList<>();
 
-            List<String> options2 = new ArrayList<>();
-
-            options2.add("motd");
-            options2.add("motd-time");
-            options2.add("version");
-            options2.add("sample");
-            options2.add("max-players");
-            options2.add("online-players");
-
-            if (args.length == 1) {
-                final String param1 = args[0];
-
-                return options.stream()
-                        .filter(completion -> completion.startsWith(param1))
-                        .collect(Collectors.toList());
-            } else if (args.length == 2) {
-                final String param2 = args[1];
-
-                return options2.stream()
-                        .filter(completion -> completion.startsWith(param2))
-                        .collect(Collectors.toList());
-            } else if (args.length == 3) {
-                final String param3 = args[2];
-
-                if (args[1].equals("motd") || args[1].equals("sample")) {
-                    List<String> keys = new ArrayList<>();
-
-                    for (Integer key : StreamLine.serverConfig.getComparedMOTD().keySet()) {
-                        if (keys.contains(String.valueOf(key))) continue;
-                        keys.add(String.valueOf(key));
-                    }
-
-                    for (Integer key : StreamLine.serverConfig.getComparedSample().keySet()) {
-                        if (keys.contains(String.valueOf(key))) continue;
-                        keys.add(String.valueOf(key));
-                    }
-
-                    return keys.stream()
-                            .filter(completion -> completion.startsWith(param3))
-                            .collect(Collectors.toList());
+                for (Integer key : StreamLine.serverConfig.getComparedMOTD().keySet()) {
+                    if (keys.contains(String.valueOf(key))) continue;
+                    keys.add(String.valueOf(key));
                 }
-            }
 
-            return new ArrayList<>();
+                for (Integer key : StreamLine.serverConfig.getComparedSample().keySet()) {
+                    if (keys.contains(String.valueOf(key))) continue;
+                    keys.add(String.valueOf(key));
+                }
+
+                return keys.stream()
+                        .filter(completion -> completion.startsWith(param3))
+                        .collect(Collectors.toList());
+            }
         }
 
         return new ArrayList<>();

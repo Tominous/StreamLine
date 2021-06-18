@@ -34,6 +34,8 @@ public class ServerConfig {
         }
 
         serverConfig = loadConfig();
+
+        StreamLine.getInstance().getLogger().info("Loaded serverConfig!");
     }
 
     public Configuration getServerConfig() { return serverConfig; }
@@ -62,7 +64,6 @@ public class ServerConfig {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        StreamLine.getInstance().getLogger().info("Loaded serverConfig!");
 
         return thing;
     }
