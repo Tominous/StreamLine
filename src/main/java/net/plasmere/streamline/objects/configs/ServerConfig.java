@@ -38,7 +38,10 @@ public class ServerConfig {
         StreamLine.getInstance().getLogger().info("Loaded serverConfig!");
     }
 
-    public Configuration getServerConfig() { return serverConfig; }
+    public Configuration getServerConfig() {
+        reloadConfig();
+        return serverConfig;
+    }
 
     public void reloadConfig(){
         try {
