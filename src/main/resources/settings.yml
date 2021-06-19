@@ -26,7 +26,7 @@ sample:
 # "-<number>" = what bungee config.yml says - the number you input.
 # "<number>" = the number you input.
 max-players: "1000"
-# Online players
+# Online players.
 # Options:
 # "exact" = exact number of online players.
 # "+<number>" = exact number of online players + the number you input.

@@ -112,6 +112,7 @@ public class ServerConfig {
     }
 
     public String getMOTDat(int at) {
+        reloadConfig();
         return serverConfig.getString("motd." + at);
     }
 
@@ -122,6 +123,7 @@ public class ServerConfig {
     }
 
     public int getMOTDTime() {
+        reloadConfig();
         return serverConfig.getInt("motd-time");
     }
 
@@ -131,7 +133,10 @@ public class ServerConfig {
         reloadConfig();
     }
 
-    public String getVersion() { return serverConfig.getString("version"); }
+    public String getVersion() {
+        reloadConfig();
+        return serverConfig.getString("version");
+    }
 
     public void setSample(String integer, String sample) {
         serverConfig.set("sample." + integer, sample);
@@ -140,6 +145,7 @@ public class ServerConfig {
     }
 
     public String getSampleAt(int at) {
+        reloadConfig();
         return serverConfig.getString("sample." + at);
     }
 
@@ -149,7 +155,10 @@ public class ServerConfig {
         reloadConfig();
     }
 
-    public String getMaxPlayers() { return serverConfig.getString("max-players"); }
+    public String getMaxPlayers() {
+        reloadConfig();
+        return serverConfig.getString("max-players");
+    }
 
     public int maxPlayers() {
         String thing = getMaxPlayers();
@@ -206,7 +215,10 @@ public class ServerConfig {
         reloadConfig();
     }
 
-    public String getOnlinePlayers() { return serverConfig.getString("online-players"); }
+    public String getOnlinePlayers() {
+        reloadConfig();
+        return serverConfig.getString("online-players");
+    }
 
     public int onlinePlayers() {
         String thing = getOnlinePlayers();

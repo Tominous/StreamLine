@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "1.0.10.8"
+version: "1.0.11.0"
 
 #### DEBUG ####
 # Enables debug mode.
