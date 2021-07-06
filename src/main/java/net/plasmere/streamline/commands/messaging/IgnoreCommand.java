@@ -156,22 +156,12 @@ public class IgnoreCommand extends Command implements TabExecutor {
             options.add("list");
 
             if (args.length == 1) {
-                final String param1 = args[0];
-
-                return options.stream()
-                        .filter(completion -> completion.startsWith(param1))
-                        .collect(Collectors.toList());
+                return TextUtils.getCompletion(options, args[0]);
             } else if (args.length == 2) {
-                final String param2 = args[1];
-
                 if (args[0].equals("remove")) {
-                    return ignored.stream()
-                            .filter(completion -> completion.startsWith(param2))
-                            .collect(Collectors.toList());
+                    return TextUtils.getCompletion(ignored, args[1]);
                 } else {
-                    return strPlayers.stream()
-                            .filter(completion -> completion.startsWith(param2))
-                            .collect(Collectors.toList());
+                    return TextUtils.getCompletion(strPlayers, args[1]);
                 }
             }
 

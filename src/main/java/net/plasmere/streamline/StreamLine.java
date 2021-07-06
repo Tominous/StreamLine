@@ -223,9 +223,6 @@ public class StreamLine extends Plugin {
 		// Via Support.
 		viaHolder = new ViaHolder();
 
-		// Geyser Support.
-		geyserHolder = new GeyserHolder();
-
 		// Config.
 		config = new Config();
 

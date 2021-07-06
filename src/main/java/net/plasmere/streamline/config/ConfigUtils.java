@@ -234,6 +234,11 @@ public class ConfigUtils {
     public static final String comBPSPYBase = StreamLine.getConfig().getConfString("commands.bungee.staff.pspy.base");
     public static final List<String> comBPSPYAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.pspy.aliases");
     public static final String comBPSPYPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.pspy.permission");
+    // SCView.
+    public static final boolean comBSCView = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.scview.enabled");
+    public static final String comBSCViewBase = StreamLine.getConfig().getConfString("commands.bungee.staff.scview.base");
+    public static final List<String> comBSCViewAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.scview.aliases");
+    public static final String comBSCViewPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.scview.permission");
     // BTag.
     public static final boolean comBBTag = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.btag.enabled");
     public static final String comBBTagBase = StreamLine.getConfig().getConfString("commands.bungee.staff.btag.base");

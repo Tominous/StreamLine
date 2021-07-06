@@ -33,7 +33,8 @@ public class GSPYCommand extends Command {
             player.toggleGSPY();
 
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.gspyToggle
-                    .replace("%toggle%", (player.gspy ? "true" : "false"))
+//                    .replace("%toggle%", (player.gspy ? "&aON" : "&cOFF"))
+                    .replace("%toggle%", (player.gspy ? MessageConfUtils.gspyOn : MessageConfUtils.gspyOff))
             );
         } else {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);

@@ -10,10 +10,12 @@ import net.plasmere.streamline.config.ConfigUtils;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Locale;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class TextUtils {
     public static String removeExtraDot(String string){
@@ -131,6 +133,12 @@ public class TextUtils {
         }
 
         return thing;
+    }
+
+    public static TreeSet<String> getCompletion(List<String> of, String param){
+        return of.stream()
+                .filter(completion -> completion.toLowerCase(Locale.ROOT).startsWith(param.toLowerCase(Locale.ROOT)))
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
 //    public static TextComponent hexedText(String text){

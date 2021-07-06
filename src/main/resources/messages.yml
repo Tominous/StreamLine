@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "1.0.11.0"
+version: "12"
 
 # All bungee messages accept all color and formatting codes.
 # For new lines, use %newline%.
@@ -131,6 +131,8 @@ report-message:
 staffchat:
   # Message shown when someone chats in staff chat.
   message:
+    # When toggling...
+    toggle: "&eToggled &bstaffchat %toggle%&e!"
     # Title of the embeded staff chat message (on Discord).
     embed-title: "STAFF"
     # Fillers:
@@ -151,8 +153,6 @@ staffchat:
   just-prefix: "&cSorry, but you need to supply more than just the prefix!"
   # If you toggle staff chat.
   toggle:
-    # Message.
-    message: "&eToggled &bstaffchat %toggle%&e!"
     # If on.
     on: "&aON"
     # If off.
@@ -1344,36 +1344,47 @@ stats:
 
 # SSPY command.
 sspy:
+  # Message.
+  message: "&eToggled &bSSPY %toggle%&e!"
   # When toggling.
   toggle:
-    # Message.
-    message: "&eToggled &bSSPY %toggle%&e!"
     # If toggled on.
-    on: "&aON"
+    true: "&aTRUE"
     # If toggled off.
-    off: "&cOFF"
+    false: "&cFALSE"
 
 # GSPY command.
 gspy:
+  # Message.
+  message: "&eToggled &bGSPY %toggle%&e!"
   # When toggling.
   toggle:
-    # Message.
-    message: "&eToggled &bGSPY %toggle%&e!"
     # If toggled on.
-    on: "&aON"
+    true: "&aTRUE"
     # If toggled off.
-    off: "&cOFF"
+    false: "&cFALSE"
 
 # PSPY command.
 pspy:
+  # Message.
+  message: "&eToggled &bPSPY %toggle%&e!"
   # When toggling.
   toggle:
-    # Message.
-    message: "&eToggled &bPSPY %toggle%&e!"
     # If toggled on.
-    on: "&aON"
+    true: "&aTRUE"
     # If toggled off.
-    off: "&cOFF"
+    false: "&cFALSE"
+
+# SCView command.
+sc-view:
+  # Message.
+  message: "&eToggled &bSCView %toggle%&e!"
+  # When toggling.
+  toggle:
+    # If toggled on.
+    true: "&aTRUE"
+    # If toggled off.
+    false: "&cFALSE"
 
 # Messages for bungee tag.
 btag:
@@ -1461,6 +1472,14 @@ ignore:
       not-last: "&c%player%&e, "
       # If last ignored.
       last: "&c%player%&e."
+
+# Fillers for both message and reply:
+# %from% = sender's display name.
+# %to_normal% = receiver's display name.
+# %from_normal% = sender's name.
+# %to_normal% = receiver's name.
+# %from_server% = sender's server.
+# %to_server% = receiver's server.
 
 # For message command.
 message:

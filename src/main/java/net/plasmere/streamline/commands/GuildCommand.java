@@ -301,19 +301,19 @@ public class GuildCommand extends Command implements TabExecutor {
             tabArgs1.add("warp");
             tabArgs1.add("rename");
 
-            return tabArgs1;
+            return TextUtils.getCompletion(tabArgs1, args[0]);
         }
         if (args.length == 2) {
             if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildJoinAliases)) {
-                return strPlayers;
+                return TextUtils.getCompletion(strPlayers, args[1]);
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildLeaveAliases)) {
                 return new ArrayList<>();
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildCreateAliases)) {
                 return new ArrayList<>();
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildPromoteAliases)) {
-                return strPlayers;
+                return TextUtils.getCompletion(strPlayers, args[1]);
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildDemoteAliases)) {
-                return strPlayers;
+                return TextUtils.getCompletion(strPlayers, args[1]);
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildChatAliases)) {
                 return new ArrayList<>();
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildListAliases)) {
@@ -325,13 +325,13 @@ public class GuildCommand extends Command implements TabExecutor {
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildDisbandAliases)) {
                 return new ArrayList<>();
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildAcceptAliases)) {
-                return strPlayers;
+                return TextUtils.getCompletion(strPlayers, args[1]);
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildDenyAliases)) {
-                return strPlayers;
+                return TextUtils.getCompletion(strPlayers, args[1]);
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildInvAliases)) {
-                return strPlayers;
+                return TextUtils.getCompletion(strPlayers, args[1]);
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildKickAliases)) {
-                return strPlayers;
+                return TextUtils.getCompletion(strPlayers, args[0]);
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildMuteAliases)) {
                 return new ArrayList<>();
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildWarpAliases)) {
@@ -339,7 +339,7 @@ public class GuildCommand extends Command implements TabExecutor {
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildRenameAliases)) {
                 return new ArrayList<>();
             } else {
-                return strPlayers;
+                return TextUtils.getCompletion(strPlayers, args[1]);
             }
         }
         return new ArrayList<>();

@@ -695,17 +695,21 @@ public class PlayerUtils {
 
         if (reply) {
             MessagingUtils.sendBUserMessage(from, MessageConfUtils.replySender
-                    .replace("%from%", getOffOnDisplayBungee(from))
+                    .replace("%from%", from.displayName)
+                    .replace("%from_normal%", from.latestName)
                     .replace("%from_server%", from.getServer().getInfo().getName())
-                    .replace("%to%", getOffOnDisplayBungee(to))
+                    .replace("%to%", to.displayName)
+                    .replace("%to_normal%", to.latestName)
                     .replace("%to_server%", to.getServer().getInfo().getName())
                     .replace("%message%", message)
             );
 
             MessagingUtils.sendBUserMessage(to, MessageConfUtils.replyTo
-                    .replace("%from%", getOffOnDisplayBungee(from))
+                    .replace("%from%", from.displayName)
+                    .replace("%from_normal%", from.latestName)
                     .replace("%from_server%", from.getServer().getInfo().getName())
-                    .replace("%to%", getOffOnDisplayBungee(to))
+                    .replace("%to%", to.displayName)
+                    .replace("%to_normal%", to.latestName)
                     .replace("%to_server%", to.getServer().getInfo().getName())
                     .replace("%message%", message)
             );
@@ -729,26 +733,32 @@ public class PlayerUtils {
                 if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
 
                 MessagingUtils.sendBUserMessage(player, MessageConfUtils.replySSPY
-                        .replace("%from%", getOffOnDisplayBungee(from))
+                        .replace("%from%", from.displayName)
+                        .replace("%from_normal%", from.latestName)
                         .replace("%from_server%", from.getServer().getInfo().getName())
-                        .replace("%to%", getOffOnDisplayBungee(to))
+                        .replace("%to%", to.displayName)
+                        .replace("%to_normal%", to.latestName)
                         .replace("%to_server%", to.getServer().getInfo().getName())
                         .replace("%message%", message)
                 );
             }
         } else {
             MessagingUtils.sendBUserMessage(from, MessageConfUtils.messageSender
-                    .replace("%from%", getOffOnDisplayBungee(from))
+                    .replace("%from%", from.displayName)
+                    .replace("%from_normal%", from.latestName)
                     .replace("%from_server%", from.getServer().getInfo().getName())
-                    .replace("%to%", getOffOnDisplayBungee(to))
+                    .replace("%to%", to.displayName)
+                    .replace("%to_normal%", to.latestName)
                     .replace("%to_server%", to.getServer().getInfo().getName())
                     .replace("%message%", message)
             );
 
             MessagingUtils.sendBUserMessage(to, MessageConfUtils.messageTo
-                    .replace("%from%", getOffOnDisplayBungee(from))
+                    .replace("%from%", from.displayName)
+                    .replace("%from_normal%", from.latestName)
                     .replace("%from_server%", from.getServer().getInfo().getName())
-                    .replace("%to%", getOffOnDisplayBungee(to))
+                    .replace("%to%", to.displayName)
+                    .replace("%to_normal%", to.latestName)
                     .replace("%to_server%", to.getServer().getInfo().getName())
                     .replace("%message%", message)
             );
@@ -772,9 +782,11 @@ public class PlayerUtils {
                 if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
 
                 MessagingUtils.sendBUserMessage(player, MessageConfUtils.messageSSPY
-                        .replace("%from%", getOffOnDisplayBungee(from))
+                        .replace("%from%", from.displayName)
+                        .replace("%from_normal%", from.latestName)
                         .replace("%from_server%", from.getServer().getInfo().getName())
-                        .replace("%to%", getOffOnDisplayBungee(to))
+                        .replace("%to%", to.displayName)
+                        .replace("%to_normal%", to.latestName)
                         .replace("%to_server%", to.getServer().getInfo().getName())
                         .replace("%message%", message)
                 );

@@ -8,8 +8,9 @@ import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 
-public class SSPYCommand extends Command {
-    public SSPYCommand(String base, String perm, String[] aliases){
+public class SCViewCommand extends Command {
+
+    public SCViewCommand(String base, String perm, String[] aliases){
         super(base, perm, aliases);
     }
 
@@ -20,11 +21,11 @@ public class SSPYCommand extends Command {
 
             if (player == null) return;
 
-            player.toggleSSPY();
+            player.toggleSCView();
 
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sspyToggle
-//                    .replace("%toggle%", (player.sspy ? "&aON" : "&cOFF"))
-                    .replace("%toggle%", (player.sspy ? MessageConfUtils.sspyOn : MessageConfUtils.sspyOff))
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.scViewToggle
+//                    .replace("%toggle%", (player.viewsc ? "&aON" : "&cOFF"))
+                    .replace("%toggle%", (player.viewsc ? MessageConfUtils.scViewOn : MessageConfUtils.scViewOff))
             );
         } else {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);

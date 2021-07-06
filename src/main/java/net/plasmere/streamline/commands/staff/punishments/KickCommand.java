@@ -77,11 +77,7 @@ public class KickCommand extends Command implements TabExecutor {
         }
 
         if (args.length == 1) {
-            final String param1 = args[0];
-
-            return strPlayers.stream()
-                    .filter(completion -> completion.startsWith(param1))
-                    .collect(Collectors.toList());
+            return TextUtils.getCompletion(strPlayers, args[0]);
         }
 
         return new ArrayList<>();

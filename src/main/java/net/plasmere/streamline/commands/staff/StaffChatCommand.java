@@ -32,7 +32,8 @@ public class StaffChatCommand extends Command {
                         player.toggleSC();
 
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.staffChatToggle
-                                .replace("%toggle%", (player.sc ? "true" : "false"))
+                                .replace("%toggle%", (player.sc ? "&aON" : "&cOFF"))
+//                                .replace("%toggle%", (player.sc ? MessageConfUtils.staffChatOn : MessageConfUtils.staffChatOff))
                         );
                         return;
                     }

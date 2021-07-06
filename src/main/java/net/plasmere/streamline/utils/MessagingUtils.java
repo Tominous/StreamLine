@@ -69,7 +69,7 @@ public class MessagingUtils {
 
                     if (p == null) continue;
 
-                    if (! p.sc) {
+                    if (! p.viewsc) {
                         staffs.remove(player);
                     }
                 } catch (Exception e) {

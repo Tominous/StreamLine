@@ -62,6 +62,7 @@ public class Player implements ProxiedPlayer {
     public List<String> pendingToFriendList;
     public String pendingFromFriends;
     public List<String> pendingFromFriendList;
+    public boolean viewsc;
 
     public List<String> savedKeys = new ArrayList<>();
 
@@ -384,6 +385,7 @@ public class Player implements ProxiedPlayer {
         defaults.add("friends=");
         defaults.add("pending-to-friends=");
         defaults.add("pending-from-friends=");
+        defaults.add("view-sc=true");
         //defaults.add("");
         return defaults;
     }
@@ -444,6 +446,7 @@ public class Player implements ProxiedPlayer {
         this.friendList = loadFriends();
         this.pendingToFriendList = loadPendingToFriends();
         this.pendingFromFriendList = loadPendingFromFriends();
+        this.viewsc = Boolean.parseBoolean(getFromKey("view-sc"));
     }
 
     public TreeMap<String, String> updatableKeys() {
@@ -939,6 +942,13 @@ public class Player implements ProxiedPlayer {
     }
 
     public void toggleSC() { setSC(! sc); }
+
+    public void setSCView(boolean value) {
+        viewsc = value;
+        updateKey("sc-view", value);
+    }
+
+    public void toggleSCView() { setSCView(! viewsc); }
 
     public void setMuted(boolean value) {
         muted = value;

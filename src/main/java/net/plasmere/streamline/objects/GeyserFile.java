@@ -22,7 +22,8 @@ public class GeyserFile {
 
         if (createNew || ! file.exists()) {
             try {
-                this.file.delete();
+                if (! StreamLine.getInstance().getPlDir().exists()) if (! StreamLine.getInstance().getPlDir().mkdirs()) StreamLine.getInstance().getLogger().severe("Could not create players folder...");
+                if (file.exists()) if (! this.file.delete()) StreamLine.getInstance().getLogger().severe("Could not delete Geyser file!");
                 if (! this.file.createNewFile()) StreamLine.getInstance().getLogger().severe("Could not create Geyser file!");
             } catch (Exception e) {
                 e.printStackTrace();

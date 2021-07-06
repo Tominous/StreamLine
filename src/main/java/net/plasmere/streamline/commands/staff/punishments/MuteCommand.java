@@ -9,10 +9,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Player;
-import net.plasmere.streamline.utils.MessagingUtils;
-import net.plasmere.streamline.utils.PlayerUtils;
-import net.plasmere.streamline.utils.TimeUtil;
-import net.plasmere.streamline.utils.UUIDFetcher;
+import net.plasmere.streamline.utils.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -165,23 +162,10 @@ public class MuteCommand extends Command implements TabExecutor {
         options.add("check");
 
         if (args.length == 1) {
-            final String param1 = args[0];
-
-            return options.stream()
-                    .filter(completion -> completion.startsWith(param1))
-                    .collect(Collectors.toList());
+            return TextUtils.getCompletion(options, args[0]);
         } else if (args.length == 2) {
-            final String param2 = args[1];
-
-            return strPlayers.stream()
-                    .filter(completion -> completion.startsWith(param2))
-                    .collect(Collectors.toList());
+            return TextUtils.getCompletion(strPlayers, args[1]);
         }
-//        else if (args.length == 3) {
-//            final String param3 = args[2];
-//
-//
-//        }
 
         return new ArrayList<>();
     }

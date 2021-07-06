@@ -23,7 +23,8 @@ public class PSPYCommand extends Command {
             player.togglePSPY();
 
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pspyToggle
-                    .replace("%toggle%", (player.pspy ? "true" : "false"))
+//                    .replace("%toggle%", (player.pspy ? "&aON" : "&cOFF"))
+                    .replace("%toggle%", (player.pspy ? MessageConfUtils.pspyOn : MessageConfUtils.pspyOff))
             );
         } else {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);

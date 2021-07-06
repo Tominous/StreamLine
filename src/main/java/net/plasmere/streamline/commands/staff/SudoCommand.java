@@ -61,9 +61,9 @@ public class SudoCommand extends Command implements TabExecutor {
         }
 
         if (args.length == 1) {
-            return strPlayers;
+            return TextUtils.getCompletion(strPlayers, args[0]);
         } else if (args.length == 2){
-            return strCommands;
+            return TextUtils.getCompletion(strCommands, args[1]);
         }
 
         return new ArrayList<>();

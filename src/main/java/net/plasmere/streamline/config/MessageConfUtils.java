@@ -65,7 +65,7 @@ public class MessageConfUtils {
     public static final String discordStaffChatFrom = StreamLine.getConfig().getMessString("staffchat.message.from.discord");
     public static final String bungeeStaffChatFrom = StreamLine.getConfig().getMessString("staffchat.message.from.bungee");
     public static final String staffChatJustPrefix = StreamLine.getConfig().getMessString("staffchat.just-prefix");
-    public static final String staffChatToggle = StreamLine.getConfig().getMessString("staffchat.toggle.message");
+    public static final String staffChatToggle = StreamLine.getConfig().getMessString("staffchat.message.toggle");
     public static final String staffChatOn = StreamLine.getConfig().getMessString("staffchat.toggle.on");
     public static final String staffChatOff = StreamLine.getConfig().getMessString("staffchat.toggle.off");
     // Online.
@@ -145,17 +145,21 @@ public class MessageConfUtils {
     public static final String sudoNoWork = StreamLine.getConfig().getMessString("sudo.no-work");
     public static final String sudoNoSudo = StreamLine.getConfig().getMessString("sudo.no-sudo");
     // SSPY.
-    public static final String sspyToggle = StreamLine.getConfig().getMessString("sspy.toggle.message");
-    public static final String sspyOn = StreamLine.getConfig().getMessString("sspy.toggle.on");
-    public static final String sspyOff = StreamLine.getConfig().getMessString("sspy.toggle.off");
+    public static final String sspyToggle = StreamLine.getConfig().getMessString("sspy.message");
+    public static final String sspyOn = StreamLine.getConfig().getMessString("sspy.toggle.true");
+    public static final String sspyOff = StreamLine.getConfig().getMessString("sspy.toggle.false");
     // GSPY.
-    public static final String gspyToggle = StreamLine.getConfig().getMessString("gspy.toggle.message");
-    public static final String gspyOn = StreamLine.getConfig().getMessString("gspy.toggle.on");
-    public static final String gspyOff = StreamLine.getConfig().getMessString("gspy.toggle.off");
+    public static final String gspyToggle = StreamLine.getConfig().getMessString("gspy.message");
+    public static final String gspyOn = StreamLine.getConfig().getMessString("gspy.toggle.true");
+    public static final String gspyOff = StreamLine.getConfig().getMessString("gspy.toggle.false");
     // PSPY.
-    public static final String pspyToggle = StreamLine.getConfig().getMessString("pspy.toggle.message");
-    public static final String pspyOn = StreamLine.getConfig().getMessString("pspy.toggle.on");
-    public static final String pspyOff = StreamLine.getConfig().getMessString("pspy.toggle.off");
+    public static final String pspyToggle = StreamLine.getConfig().getMessString("pspy.message");
+    public static final String pspyOn = StreamLine.getConfig().getMessString("pspy.toggle.true");
+    public static final String pspyOff = StreamLine.getConfig().getMessString("pspy.toggle.false");
+    // PSPY.
+    public static final String scViewToggle = StreamLine.getConfig().getMessString("sc-view.message");
+    public static final String scViewOn = StreamLine.getConfig().getMessString("sc-view.toggle.true");
+    public static final String scViewOff = StreamLine.getConfig().getMessString("sc-view.toggle.false");
     // EVReload.
     public static final String evReload = StreamLine.getConfig().getMessString("evreload.message");
     // Points.

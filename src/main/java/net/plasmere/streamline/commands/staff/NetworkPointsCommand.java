@@ -10,6 +10,7 @@ import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
+import net.plasmere.streamline.utils.TextUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.ArrayList;
@@ -172,9 +173,9 @@ public class NetworkPointsCommand extends Command implements TabExecutor {
                 strPlayers.add(player.getName());
             }
 
-            return strPlayers;
+            return TextUtils.getCompletion(strPlayers, args[0]);
         } else if (args.length == 2) {
-            return secondTab;
+            return TextUtils.getCompletion(secondTab, args[1]);
         } else {
             return new ArrayList<>();
         }

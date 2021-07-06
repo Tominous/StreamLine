@@ -40,12 +40,7 @@ public class ReplyCommand extends Command {
             if (args.length <= 0) {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
             } else {
-                if (player.hasPermission(ConfigUtils.comBMessagePerm)){
-                    if (! PlayerUtils.exists(args[0])) {
-                        MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
-                        return;
-                    }
-
+                if (player.hasPermission(ConfigUtils.comBReplyPerm)){
                     Player stat = PlayerUtils.getStat(sender);
 
                     if (stat == null) {

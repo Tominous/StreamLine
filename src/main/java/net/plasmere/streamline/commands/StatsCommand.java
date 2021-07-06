@@ -10,6 +10,7 @@ import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
+import net.plasmere.streamline.utils.TextUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -97,7 +98,7 @@ public class StatsCommand extends Command implements TabExecutor {
         }
 
         if (sender.hasPermission(ConfigUtils.comBStatsPermOthers)) {
-            return strPlayers;
+            return TextUtils.getCompletion(strPlayers, args[0]);
         }
 
         else return new ArrayList<>();

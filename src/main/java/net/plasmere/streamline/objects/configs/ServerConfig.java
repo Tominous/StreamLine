@@ -127,6 +127,13 @@ public class ServerConfig {
 
     public int getMOTDTime() {
         reloadConfig();
+
+        String string = serverConfig.getString("motd-time");
+
+        if (string.contains("'") || string.contains("\"")) {
+            return Integer.parseInt(string);
+        }
+
         return serverConfig.getInt("motd-time");
     }
 
@@ -160,7 +167,16 @@ public class ServerConfig {
 
     public String getMaxPlayers() {
         reloadConfig();
-        return serverConfig.getString("max-players");
+        String string = serverConfig.getString("max-players");
+
+        string = string.replace("'", "");
+
+        try {
+            return (string.equals("") ? Integer.toString(serverConfig.getInt("max-players")) : string);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     public int maxPlayers() {
@@ -171,16 +187,17 @@ public class ServerConfig {
         }
 
         if (thing.startsWith("exact")) {
+            int i = Integer.parseInt(thing.substring("exact+".length()));
             if (thing.startsWith("exact+")){
                 try {
-                    return StreamLine.getInstance().getProxy().getPlayers().size() + Integer.parseInt(thing.substring(1));
+                    return StreamLine.getInstance().getProxy().getPlayers().size() + i;
                 } catch (Exception e) {
                     e.printStackTrace();
                     return StreamLine.getInstance().getProxy().getConfig().getPlayerLimit();
                 }
             } else if (thing.startsWith("exact-")) {
                 try {
-                    return StreamLine.getInstance().getProxy().getPlayers().size() - Integer.parseInt(thing.substring(1));
+                    return StreamLine.getInstance().getProxy().getPlayers().size() - i;
                 } catch (Exception e) {
                     e.printStackTrace();
                     return StreamLine.getInstance().getProxy().getConfig().getPlayerLimit();
@@ -220,7 +237,16 @@ public class ServerConfig {
 
     public String getOnlinePlayers() {
         reloadConfig();
-        return serverConfig.getString("online-players");
+        String string = serverConfig.getString("online-players");
+
+        string = string.replace("'", "");
+
+        try {
+            return (string.equals("") ? Integer.toString(serverConfig.getInt("online-players")) : string);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     public int onlinePlayers() {
@@ -229,6 +255,26 @@ public class ServerConfig {
         if (thing.equals("exact")) {
             return StreamLine.getInstance().getProxy().getPlayers().size();
         }
+
+        if (thing.startsWith("exact")) {
+            int i = Integer.parseInt(thing.substring("exactx".length()));
+            if (thing.startsWith("exact+")){
+                try {
+                    return StreamLine.getInstance().getProxy().getPlayers().size() + i;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return StreamLine.getInstance().getProxy().getConfig().getPlayerLimit();
+                }
+            } else if (thing.startsWith("exact-")) {
+                try {
+                    return StreamLine.getInstance().getProxy().getPlayers().size() - i;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return StreamLine.getInstance().getProxy().getConfig().getPlayerLimit();
+                }
+            }
+        }
+
 
         if (thing.startsWith("+")) {
             try {

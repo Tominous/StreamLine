@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "1.0.11.0"
+version: "12"
 
 #### DEBUG ####
 # Enables debug mode.
@@ -537,6 +537,18 @@ commands:
         # All aliases for the command. Listed in yml list format.
         aliases:
           - "partyspy"
+      # The staff chat view command.
+      scview:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "scview"
+        # Custom permission.
+        permission: "streamline.command.scview"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "sctoggle"
+          - "stafftoggle"
       # The bungee tag command.
       btag:
         # Enables / disables the use of the command.

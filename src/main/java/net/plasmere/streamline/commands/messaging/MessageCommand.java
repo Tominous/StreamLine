@@ -11,14 +11,16 @@ import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
+import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class MessageCommand extends Command implements TabExecutor {
-    public MessageCommand(String base, String perm, String[] aliases){
+    public MessageCommand(String base, String perm, String[] aliases) {
         super(base, perm, aliases);
     }
 
@@ -40,8 +42,8 @@ public class MessageCommand extends Command implements TabExecutor {
             if (args.length <= 0) {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
             } else {
-                if (player.hasPermission(ConfigUtils.comBMessagePerm)){
-                    if (! PlayerUtils.exists(args[0])) {
+                if (player.hasPermission(ConfigUtils.comBMessagePerm)) {
+                    if (!PlayerUtils.exists(args[0])) {
                         MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
                         return;
                     }
@@ -79,7 +81,7 @@ public class MessageCommand extends Command implements TabExecutor {
             if (args.length <= 0) {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
             } else {
-                if (! PlayerUtils.exists(args[0])) {
+                if (!PlayerUtils.exists(args[0])) {
                     MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
                     return;
                 }
@@ -105,15 +107,29 @@ public class MessageCommand extends Command implements TabExecutor {
     public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
         Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
         List<String> strPlayers = new ArrayList<>();
+        List<String> ignored = new ArrayList<>();
 
-        for (ProxiedPlayer player : players){
-            strPlayers.add(player.getName());
+
+        if (sender instanceof ProxiedPlayer) {
+            ProxiedPlayer p = (ProxiedPlayer) sender;
+            Player player = PlayerUtils.getOrCreate(p.getUniqueId().toString());
+            for (String uuid : player.ignoredList) {
+                ignored.add(UUIDFetcher.getName(uuid));
+            }
         }
 
-        if (sender.hasPermission(ConfigUtils.comBStatsPermOthers)) {
-            return strPlayers;
+        for (ProxiedPlayer pl : players) {
+            if (sender instanceof ProxiedPlayer) {
+                if (pl.equals(sender)) continue;
+                if (ignored.contains(pl.getName())) continue;
+            }
+            strPlayers.add(pl.getName());
         }
 
-        else return new ArrayList<>();
+        if (args.length == 1) {
+            return TextUtils.getCompletion(strPlayers, args[0]);
+        }
+
+        return new ArrayList<>();
     }
 }

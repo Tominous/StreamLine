@@ -17,6 +17,7 @@ import net.plasmere.streamline.commands.staff.punishments.MuteCommand;
 import net.plasmere.streamline.commands.staff.settings.SettingsEditCommand;
 import net.plasmere.streamline.commands.staff.spy.GSPYCommand;
 import net.plasmere.streamline.commands.staff.spy.PSPYCommand;
+import net.plasmere.streamline.commands.staff.spy.SCViewCommand;
 import net.plasmere.streamline.commands.staff.spy.SSPYCommand;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.listeners.JoinLeaveListener;
@@ -89,6 +90,9 @@ public class PluginUtils {
         }
         if (ConfigUtils.comBPSPY) {
             registerCommand(plugin, new PSPYCommand(ConfigUtils.comBPSPYBase, ConfigUtils.comBPSPYPerm, getAliases(ConfigUtils.comBPSPYAliases)));
+        }
+        if (ConfigUtils.comBSCView) {
+            registerCommand(plugin, new SCViewCommand(ConfigUtils.comBSCViewBase, ConfigUtils.comBSCViewPerm, getAliases(ConfigUtils.comBSCViewAliases)));
         }
         // // Punishments.
         if (ConfigUtils.comBMute) {

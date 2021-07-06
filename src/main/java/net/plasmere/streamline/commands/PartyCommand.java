@@ -270,43 +270,45 @@ public class PartyCommand extends Command implements TabExecutor {
             tabArgs1.add("mute");
             tabArgs1.add("warp");
 
-            return tabArgs1;
+            return TextUtils.getCompletion(tabArgs1, args[0]);
         }
-        if (args.length == 2){
-            if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParJoinAliases)) {
-                return strPlayers;
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParLeaveAliases)) {
+        if (args.length == 2) {
+            if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildJoinAliases)) {
+                return TextUtils.getCompletion(strPlayers, args[1]);
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildLeaveAliases)) {
                 return new ArrayList<>();
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParCreateAliases)) {
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildCreateAliases)) {
                 return new ArrayList<>();
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParPromoteAliases)) {
-                return strPlayers;
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParDemoteAliases)) {
-                return strPlayers;
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParChatAliases)) {
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildPromoteAliases)) {
+                return TextUtils.getCompletion(strPlayers, args[1]);
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildDemoteAliases)) {
+                return TextUtils.getCompletion(strPlayers, args[1]);
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildChatAliases)) {
                 return new ArrayList<>();
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParListAliases)) {
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildListAliases)) {
                 return new ArrayList<>();
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParOpenAliases)) {
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildOpenAliases)) {
                 return new ArrayList<>();
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParCloseAliases)) {
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildCloseAliases)) {
                 return new ArrayList<>();
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParDisbandAliases)) {
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildDisbandAliases)) {
                 return new ArrayList<>();
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParAcceptAliases)) {
-                return strPlayers;
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParDenyAliases)) {
-                return strPlayers;
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParInvAliases)) {
-                return strPlayers;
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParKickAliases)) {
-                return strPlayers;
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParMuteAliases)) {
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildAcceptAliases)) {
+                return TextUtils.getCompletion(strPlayers, args[1]);
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildDenyAliases)) {
+                return TextUtils.getCompletion(strPlayers, args[1]);
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildInvAliases)) {
+                return TextUtils.getCompletion(strPlayers, args[1]);
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildKickAliases)) {
+                return TextUtils.getCompletion(strPlayers, args[0]);
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildMuteAliases)) {
                 return new ArrayList<>();
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParWarpAliases)) {
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildWarpAliases)) {
+                return new ArrayList<>();
+            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildRenameAliases)) {
                 return new ArrayList<>();
             } else {
-                return strPlayers;
+                return TextUtils.getCompletion(strPlayers, args[1]);
             }
         }
         return new ArrayList<>();
