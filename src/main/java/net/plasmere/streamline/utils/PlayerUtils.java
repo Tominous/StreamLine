@@ -14,6 +14,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.ConsolePlayer;
 import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.objects.lists.SingleSet;
 
@@ -27,6 +28,20 @@ public class PlayerUtils {
     private static final List<Player> stats = new ArrayList<>();
 
     private static HashMap<Player, SingleSet<Integer, Integer>> connections = new HashMap<>();
+
+    private static ConsolePlayer consolePlayer;
+
+    public static ConsolePlayer getConsolePlayer(){
+        return consolePlayer;
+    }
+
+    public static void applyConsole(){
+        applyConsole(new ConsolePlayer(false));
+    }
+
+    public static void applyConsole(ConsolePlayer console){
+        consolePlayer = console;
+    }
 
     public static List<Player> getStats() {
         return stats;

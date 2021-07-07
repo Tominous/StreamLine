@@ -479,6 +479,15 @@ public class MessagingUtils {
         }
     }
 
+    public static void sendBUserMessage(Player sender, String msg){
+        if (sender instanceof ProxiedPlayer) {
+            sender.sendMessage(TextUtils.codedText(msg
+                    .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(sender))
+                    .replace("%version%", Objects.requireNonNull(sender).latestVersion)
+            ));
+        }
+    }
+
     public static void sendBUserAsMessage(CommandSender as, String msg){
         ServerInfo serverInfo = StreamLine.getInstance().getProxy().getPlayer(as.getName()).getServer().getInfo();
 
@@ -540,16 +549,16 @@ public class MessagingUtils {
         StringBuilder msg = new StringBuilder();
 
         int i = 1;
-        for (ProxiedPlayer m : party.moderators){
+        for (Player m : party.moderators){
             if (i < party.moderators.size()){
                 msg.append(MessageConfUtils.partiesModsNLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
+                        .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.partiesModsLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
+                        .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             }
 
@@ -563,16 +572,16 @@ public class MessagingUtils {
         StringBuilder msg = new StringBuilder();
 
         int i = 1;
-        for (ProxiedPlayer m : party.members){
+        for (Player m : party.members){
             if (i < party.members.size()){
                 msg.append(MessageConfUtils.partiesMemsNLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
+                        .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.partiesMemsLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
+                        .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             }
 
@@ -586,16 +595,16 @@ public class MessagingUtils {
         StringBuilder msg = new StringBuilder();
 
         int i = 1;
-        for (ProxiedPlayer m : party.totalMembers){
+        for (Player m : party.totalMembers){
             if (i != party.totalMembers.size()){
                 msg.append(MessageConfUtils.partiesTMemsNLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
+                        .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.partiesTMemsLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
+                        .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             }
 
@@ -609,16 +618,16 @@ public class MessagingUtils {
         StringBuilder msg = new StringBuilder();
 
         int i = 1;
-        for (ProxiedPlayer m : party.invites){
+        for (Player m : party.invites){
             if (i < party.invites.size()){
                 msg.append(MessageConfUtils.partiesInvsNLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
+                        .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.partiesInvsLast
-                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(m))))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(m)).latestVersion)
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
+                        .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             }
 

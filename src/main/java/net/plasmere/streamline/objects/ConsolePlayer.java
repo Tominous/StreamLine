@@ -20,9 +20,11 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.*;
 
-public class ConsolePlayer implements CommandSender {
+public class ConsolePlayer {
     private TreeMap<String, String> info = new TreeMap<>();
     private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "players" + File.separator;
+
+    public String uuid = "%";
 
     public File file;
     public String latestName;
@@ -673,59 +675,57 @@ public class ConsolePlayer implements CommandSender {
         updateKey("last-to", to.uuid);
     }
 
-    @Override
+    
     public String getName() {
         return latestName;
     }
 
     @Deprecated
-    @Override
     public void sendMessage(String message) {
         user.sendMessage(message);
     }
 
     @Deprecated
-    @Override
     public void sendMessages(String... messages) {
         user.sendMessages(messages);
     }
 
-    @Override
+    
     public void sendMessage(BaseComponent... message) {
         user.sendMessage(message);
     }
 
-    @Override
+    
     public void sendMessage(BaseComponent message) {
         user.sendMessage(message);
     }
 
-    @Override
+    
     public Collection<String> getGroups() {
         return user.getGroups();
     }
 
-    @Override
+    
     public void addGroups(String... groups) {
         user.addGroups(groups);
     }
 
-    @Override
+    
     public void removeGroups(String... groups) {
         user.removeGroups(groups);
     }
 
-    @Override
+    
     public boolean hasPermission(String permission) {
         return user.hasPermission(permission);
     }
 
-    @Override
+    
     public void setPermission(String permission, boolean value) {
         user.setPermission(permission, value);
     }
 
-    @Override
+    
     public Collection<String> getPermissions() {
         return user.getPermissions();
     }

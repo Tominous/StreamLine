@@ -269,6 +269,9 @@ public class StreamLine extends Plugin {
 			getLogger().severe("Streamline server custom configs have been disabled due to no ViaVersion being detected.");
 		}
 
+		// Set up ConsolePlayer.
+
+
 		//getLogger().
 	}
 
