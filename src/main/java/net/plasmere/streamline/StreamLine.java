@@ -226,6 +226,9 @@ public class StreamLine extends Plugin {
 		// Config.
 		config = new Config();
 
+		// Geyser Support.
+		geyserHolder = new GeyserHolder();
+
 		// Bans.
 		if (ConfigUtils.punBans) {
 			bans = new Bans();
@@ -270,7 +273,7 @@ public class StreamLine extends Plugin {
 		}
 
 		// Set up ConsolePlayer.
-
+		PlayerUtils.applyConsole();
 
 		//getLogger().
 	}

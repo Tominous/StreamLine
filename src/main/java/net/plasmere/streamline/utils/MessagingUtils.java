@@ -210,15 +210,20 @@ public class MessagingUtils {
     public static void sendDiscordJoinLeaveMessageIcon(boolean isJoin, Player player){
         try {
             if (isJoin) {
-                Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBJoins))
-                        .sendMessage(
-                                eb
-                                        .setDescription(MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
-                                                .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
-                                        .setAuthor(MessageConfUtils.discordOnlineEmbed, jda.getSelfUser().getAvatarUrl(), FaceFetcher.getFaceAvatarURL(player))
-                                        .build()
-                        ).queue();
+                try {
+                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBJoins))
+                            .sendMessage(
+                                    eb
+                                            .setDescription(MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
+                                                    .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
+                                            .setAuthor(MessageConfUtils.discordOnlineEmbed, jda.getSelfUser().getAvatarUrl(), FaceFetcher.getFaceAvatarURL(player))
+                                            .build()
+                            ).queue();
+                } catch (NullPointerException e) {
+                    StreamLine.getInstance().getLogger().severe("Discord bot is either not in the Discord server, or the bot cannot find " + ConfigUtils.textChannelBJoins);
+                }
             } else {
+                try {
                 Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBLeaves))
                         .sendMessage(
                                 eb
@@ -227,6 +232,10 @@ public class MessagingUtils {
                                         .setAuthor(MessageConfUtils.discordOfflineEmbed, jda.getSelfUser().getAvatarUrl(), FaceFetcher.getFaceAvatarURL(player))
                                         .build()
                         ).queue();
+
+                } catch (NullPointerException e) {
+                    StreamLine.getInstance().getLogger().severe("Discord bot is either not in the Discord server, or the bot cannot find " + ConfigUtils.textChannelBJoins);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

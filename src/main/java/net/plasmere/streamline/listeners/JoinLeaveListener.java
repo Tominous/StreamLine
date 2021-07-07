@@ -3,6 +3,7 @@ package net.plasmere.streamline.listeners;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.node.Node;
 import net.md_5.bungee.api.config.ServerInfo;
+import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.event.*;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
@@ -31,6 +32,8 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void preJoin(PreLoginEvent ev) {
+        if (ev.isCancelled()) return;
+
         String uuid = UUIDFetcher.fetch(ev.getConnection().getName());
 
         if (ConfigUtils.punBans) {
@@ -50,40 +53,14 @@ public class JoinLeaveListener implements Listener {
             file.updateKey(holder.getGeyserUUID(player.getName()), player.getName());
         }
 
-        Player stat = PlayerUtils.getPlayerStat(player);
-
-        if (stat == null) {
-            if (PlayerUtils.exists(player.getName())) {
-                PlayerUtils.addStat(new Player(player, false));
-            } else {
-                PlayerUtils.createStat(player);
-            }
-            stat = PlayerUtils.getPlayerStat(player);
-            if (stat == null) {
-                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
-                return;
-            }
-        }
+        Player stat = PlayerUtils.getOrCreate(player);
 
         stat.tryAddNewName(player.getName());
         stat.tryAddNewIP(player);
 
         try {
             for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getPlayerStat(pl);
-
-                if (p == null) {
-                    if (PlayerUtils.exists(pl.getName())) {
-                        PlayerUtils.addStat(new Player(pl, false));
-                    } else {
-                        PlayerUtils.createStat(pl);
-                    }
-                    p = PlayerUtils.getPlayerStat(pl);
-                    if (p == null) {
-                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + pl.getName());
-                        continue;
-                    }
-                }
+                Player p = PlayerUtils.getOrCreate(pl);
 
                 if (stat.guild == null) continue;
                 if (stat.guild.equals("")) continue;
@@ -130,16 +107,7 @@ public class JoinLeaveListener implements Listener {
             for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()) {
                 if (!p.hasPermission(ConfigUtils.moduleBPlayerJoinsPerm)) continue;
 
-                Player other = PlayerUtils.getPlayerStat(p);
-
-                if (other == null) {
-                    PlayerUtils.addStat(new Player(UUIDFetcher.getCachedUUID(p.getName())));
-                    other = PlayerUtils.getPlayerStat(p);
-                    if (other == null) {
-                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + p.getName());
-                        break;
-                    }
-                }
+                Player other = PlayerUtils.getOrCreate(p);
 
                 label:
                 for (String s : order) {
@@ -254,20 +222,7 @@ public class JoinLeaveListener implements Listener {
         boolean hasServer = false;
         ServerInfo server = ev.getTarget();
 
-        Player stat = PlayerUtils.getPlayerStat(player);
-
-        if (stat == null) {
-            if (PlayerUtils.exists(player.getName())) {
-                PlayerUtils.addStat(new Player(player, false));
-            } else {
-                PlayerUtils.createStat(player);
-            }
-            stat = PlayerUtils.getPlayerStat(player);
-            if (stat == null) {
-                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
-                return;
-            }
-        }
+        Player stat = PlayerUtils.getOrCreate(player);
 
         if (ev.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY) && ConfigUtils.redirectEnabled && StreamLine.lpHolder.enabled) {
             for (ServerInfo s : StreamLine.getInstance().getProxy().getServers().values()) {
@@ -365,22 +320,9 @@ public class JoinLeaveListener implements Listener {
 
         ServerInfo server = ev.getTarget();
 
-        Player stat = PlayerUtils.getPlayerStat(player);
+        Player stat = PlayerUtils.getOrCreate(player);
 
         try {
-            if (stat == null) {
-                if (PlayerUtils.exists(player.getName())) {
-                    PlayerUtils.addStat(new Player(player, false));
-                } else {
-                    PlayerUtils.createStat(player);
-                }
-                stat = PlayerUtils.getPlayerStat(player);
-                if (stat == null) {
-                    StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
-                    return;
-                }
-            }
-
             if (ConfigUtils.events) {
                 for (Event event : EventsHandler.getEvents()) {
                     if (!EventsHandler.checkTags(event, stat)) continue;
@@ -399,20 +341,7 @@ public class JoinLeaveListener implements Listener {
     public void onLeave(PlayerDisconnectEvent ev) {
         ProxiedPlayer player = ev.getPlayer();
 
-        Player stat = PlayerUtils.getPlayerStat(player);
-
-        if (stat == null) {
-            if (PlayerUtils.exists(player.getName())) {
-                PlayerUtils.addStat(new Player(player, false));
-            } else {
-                PlayerUtils.createStat(player);
-            }
-            stat = PlayerUtils.getPlayerStat(player);
-            if (stat == null) {
-                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
-                return;
-            }
-        }
+        Player stat = PlayerUtils.getOrCreate(player);
 
 //        switch (ConfigUtils.moduleBPlayerLeaves) {
 //            case "yes":
@@ -441,16 +370,7 @@ public class JoinLeaveListener implements Listener {
             for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()) {
                 if (! p.hasPermission(ConfigUtils.moduleBPlayerLeavesPerm)) continue;
 
-                Player other = PlayerUtils.getPlayerStat(p);
-
-                if (other == null) {
-                    PlayerUtils.addStat(new Player(UUIDFetcher.getCachedUUID(p.getName())));
-                    other = PlayerUtils.getPlayerStat(p);
-                    if (other == null) {
-                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + p.getName());
-                        break;
-                    }
-                }
+                Player other = PlayerUtils.getOrCreate(p);
 
                 label:
                 for (String s : order) {
@@ -548,20 +468,7 @@ public class JoinLeaveListener implements Listener {
 
         try {
             for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
-                Player p = PlayerUtils.getPlayerStat(pl);
-
-                if (p == null) {
-                    if (PlayerUtils.exists(pl.getName())) {
-                        PlayerUtils.addStat(new Player(pl, false));
-                    } else {
-                        PlayerUtils.createStat(pl);
-                    }
-                    p = PlayerUtils.getPlayerStat(pl);
-                    if (p == null) {
-                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + pl.getName());
-                        continue;
-                    }
-                }
+                Player p = PlayerUtils.getOrCreate(pl);
 
                 if (GuildUtils.pHasGuild(stat)) {
                     Guild guild = GuildUtils.getGuild(stat);
@@ -596,6 +503,8 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onKick(ServerKickEvent ev){
+        if (ev.isCancelled()) return;
+
         try {
             if (StreamLine.getInstance().getProxy().getPlayer(ev.getPlayer().getUniqueId()) == null) return;
         } catch (Exception e) {
@@ -604,23 +513,17 @@ public class JoinLeaveListener implements Listener {
 
         ProxiedPlayer player = ev.getPlayer();
 
-        Player stat = PlayerUtils.getPlayerStat(player);
-
-        if (stat == null) {
-            if (PlayerUtils.exists(player.getName())) {
-                PlayerUtils.addStat(new Player(player, false));
-            } else {
-                PlayerUtils.createStat(player);
-            }
-            stat = PlayerUtils.getPlayerStat(player);
-            if (stat == null) {
-                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
-                return;
-            }
-        }
+        Player stat = PlayerUtils.getOrCreate(player);
 
         if (StreamLine.viaHolder.enabled) {
             if (ConfigUtils.lobbies) {
+                Server server = PlayerUtils.getPlayer(stat.uuid).getServer();
+
+                if (server == null) {
+                    StreamLine.getInstance().getLogger().severe("Server for " + player.getName() + " returned null during kick!");
+                    return;
+                }
+
                 TreeMap<Integer, SingleSet<String, String>> servers = StreamLine.lobbies.getInfo();
 
                 String[] lobbies = new String[servers.size()];
@@ -638,7 +541,7 @@ public class JoinLeaveListener implements Listener {
 
                 String kickTo = lobbies[conn.value];
 
-                while (StreamLine.getInstance().getProxy().getPlayer(stat.latestName).getServer().getInfo().getName().equals(kickTo)) {
+                while (server.getInfo().getName().equals(kickTo)) {
                     PlayerUtils.addOneToConn(stat);
                     conn = PlayerUtils.getConnection(stat);
                     if (conn == null) return;

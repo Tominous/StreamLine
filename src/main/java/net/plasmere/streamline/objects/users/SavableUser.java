@@ -72,7 +72,7 @@ public abstract class SavableUser {
     }
 
     public CommandSender findSender(String fileName) {
-        if (fileName.equals("%")) {
+        if (fileName.equals("console") || fileName.equals("%")) {
             return StreamLine.getInstance().getProxy().getConsole();
         } else {
             return UUIDFetcher.getPPlayerByUUID(fileName);

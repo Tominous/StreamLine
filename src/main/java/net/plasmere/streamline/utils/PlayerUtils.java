@@ -169,6 +169,10 @@ public class PlayerUtils {
         return player;
     }
 
+    public static Player getOrCreate(ProxiedPlayer player){
+        return getOrCreate(player.getUniqueId().toString());
+    }
+
     public static SavableUser getOrCreateStat(String name){
         SavableUser player = getStat(name);
 
@@ -207,6 +211,18 @@ public class PlayerUtils {
 
     public static Collection<ProxiedPlayer> getPlayers(){
         return StreamLine.getInstance().getProxy().getPlayers();
+    }
+
+    public static ProxiedPlayer getPlayer(UUID uuid) {
+        return getPlayer(uuid.toString());
+    }
+
+    public static ProxiedPlayer getPlayer(String string){
+        if (string.contains("-")) {
+            return StreamLine.getInstance().getProxy().getPlayer(UUID.fromString(string));
+        }
+
+        return StreamLine.getInstance().getProxy().getPlayer(string);
     }
 
     public static boolean isNameEqual(SavableUser player, String name){
@@ -864,20 +880,7 @@ public class PlayerUtils {
             MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.replyTo);
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getPlayerStat(player);
-
-                if (p == null) {
-                    if (PlayerUtils.exists(player.getName())) {
-                        PlayerUtils.addStat(new Player(player, false));
-                    } else {
-                        PlayerUtils.createStat(player);
-                    }
-                    p = PlayerUtils.getPlayerStat(player);
-                    if (p == null) {
-                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
-                        continue;
-                    }
-                }
+                Player p = PlayerUtils.getOrCreate(player);
 
                 if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
 
@@ -889,20 +892,7 @@ public class PlayerUtils {
             MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.messageTo);
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getPlayerStat(player);
-
-                if (p == null) {
-                    if (PlayerUtils.exists(player.getName())) {
-                        PlayerUtils.addStat(new Player(player, false));
-                    } else {
-                        PlayerUtils.createStat(player);
-                    }
-                    p = PlayerUtils.getPlayerStat(player);
-                    if (p == null) {
-                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
-                        continue;
-                    }
-                }
+                Player p = PlayerUtils.getOrCreate(player);
 
                 if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
 
@@ -945,20 +935,7 @@ public class PlayerUtils {
             MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.replyTo);
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getPlayerStat(player);
-
-                if (p == null) {
-                    if (PlayerUtils.exists(player.getName())) {
-                        PlayerUtils.addStat(new Player(player, false));
-                    } else {
-                        PlayerUtils.createStat(player);
-                    }
-                    p = PlayerUtils.getPlayerStat(player);
-                    if (p == null) {
-                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
-                        continue;
-                    }
-                }
+                Player p = PlayerUtils.getOrCreate(player);
 
                 if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
 
@@ -970,20 +947,7 @@ public class PlayerUtils {
             MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.messageTo);
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getPlayerStat(player);
-
-                if (p == null) {
-                    if (PlayerUtils.exists(player.getName())) {
-                        PlayerUtils.addStat(new Player(player, false));
-                    } else {
-                        PlayerUtils.createStat(player);
-                    }
-                    p = PlayerUtils.getPlayerStat(player);
-                    if (p == null) {
-                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
-                        continue;
-                    }
-                }
+                Player p = PlayerUtils.getOrCreate(player);
 
                 if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
 
