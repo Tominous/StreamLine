@@ -8,7 +8,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Guild;
-import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.utils.*;
 
 import java.util.*;

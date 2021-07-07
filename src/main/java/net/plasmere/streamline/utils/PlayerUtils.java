@@ -6,15 +6,14 @@ import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.PrefixNode;
 import net.luckperms.api.node.types.SuffixNode;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.ConsolePlayer;
-import net.plasmere.streamline.objects.Player;
-import net.plasmere.streamline.objects.SavableUser;
+import net.plasmere.streamline.objects.users.ConsolePlayer;
+import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.objects.lists.SingleSet;
 
 import java.io.File;
@@ -28,18 +27,12 @@ public class PlayerUtils {
 
     private static HashMap<Player, SingleSet<Integer, Integer>> connections = new HashMap<>();
 
-    private static ConsolePlayer consolePlayer;
-
-    public static ConsolePlayer getConsolePlayer(){
-        return consolePlayer;
-    }
-
     public static void applyConsole(){
         applyConsole(new ConsolePlayer(false));
     }
 
     public static void applyConsole(ConsolePlayer console){
-        consolePlayer = console;
+        addStat(console);
     }
 
     public static List<SavableUser> getStats() {
@@ -289,6 +282,18 @@ public class PlayerUtils {
                 if (isNameEqual(stat, name)) {
                     return stat;
                 }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ConsolePlayer getConsoleStat(CommandSender sender) {
+        try {
+            for (ConsolePlayer stat : getJustProxies()) {
+                if (sender.equals(stat.sender)) return stat;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -800,14 +805,16 @@ public class PlayerUtils {
         }
     }
 
-    public static void doMessageWithIgnoreCheck(Player from, Player to, String message, boolean reply){
-        if (! to.online) {
-            MessagingUtils.sendBUserMessage(from, MessageConfUtils.noPlayer);
-            return;
+    public static void doMessageWithIgnoreCheck(SavableUser from, SavableUser to, String message, boolean reply){
+        if (to instanceof Player) {
+            if (! ((Player) to).online) {
+                MessagingUtils.sendBUserMessage(from.sender, MessageConfUtils.noPlayer);
+                return;
+            }
         }
 
         if (to.ignoredList.contains(from.uuid)) {
-            MessagingUtils.sendBUserMessage(from, MessageConfUtils.messageIgnored);
+            MessagingUtils.sendBUserMessage(from.sender, MessageConfUtils.messageIgnored);
             return;
         }
 
@@ -827,25 +834,9 @@ public class PlayerUtils {
         from.updateLastToMessage(message);
 
         if (reply) {
-            MessagingUtils.sendBUserMessage(from, MessageConfUtils.replySender
-                    .replace("%from%", from.displayName)
-                    .replace("%from_normal%", from.latestName)
-                    .replace("%from_server%", from.getServer().getInfo().getName())
-                    .replace("%to%", to.displayName)
-                    .replace("%to_normal%", to.latestName)
-                    .replace("%to_server%", to.getServer().getInfo().getName())
-                    .replace("%message%", message)
-            );
+            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.replySender);
 
-            MessagingUtils.sendBUserMessage(to, MessageConfUtils.replyTo
-                    .replace("%from%", from.displayName)
-                    .replace("%from_normal%", from.latestName)
-                    .replace("%from_server%", from.getServer().getInfo().getName())
-                    .replace("%to%", to.displayName)
-                    .replace("%to_normal%", to.latestName)
-                    .replace("%to_server%", to.getServer().getInfo().getName())
-                    .replace("%message%", message)
-            );
+            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.replyTo);
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
                 Player p = PlayerUtils.getPlayerStat(player);
@@ -865,36 +856,12 @@ public class PlayerUtils {
 
                 if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
 
-                MessagingUtils.sendBUserMessage(player, MessageConfUtils.replySSPY
-                        .replace("%from%", from.displayName)
-                        .replace("%from_normal%", from.latestName)
-                        .replace("%from_server%", from.getServer().getInfo().getName())
-                        .replace("%to%", to.displayName)
-                        .replace("%to_normal%", to.latestName)
-                        .replace("%to_server%", to.getServer().getInfo().getName())
-                        .replace("%message%", message)
-                );
+                MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.replySSPY);
             }
         } else {
-            MessagingUtils.sendBUserMessage(from, MessageConfUtils.messageSender
-                    .replace("%from%", from.displayName)
-                    .replace("%from_normal%", from.latestName)
-                    .replace("%from_server%", from.getServer().getInfo().getName())
-                    .replace("%to%", to.displayName)
-                    .replace("%to_normal%", to.latestName)
-                    .replace("%to_server%", to.getServer().getInfo().getName())
-                    .replace("%message%", message)
-            );
+            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.messageSender);
 
-            MessagingUtils.sendBUserMessage(to, MessageConfUtils.messageTo
-                    .replace("%from%", from.displayName)
-                    .replace("%from_normal%", from.latestName)
-                    .replace("%from_server%", from.getServer().getInfo().getName())
-                    .replace("%to%", to.displayName)
-                    .replace("%to_normal%", to.latestName)
-                    .replace("%to_server%", to.getServer().getInfo().getName())
-                    .replace("%message%", message)
-            );
+            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.messageTo);
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
                 Player p = PlayerUtils.getPlayerStat(player);
@@ -914,15 +881,7 @@ public class PlayerUtils {
 
                 if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
 
-                MessagingUtils.sendBUserMessage(player, MessageConfUtils.messageSSPY
-                        .replace("%from%", from.displayName)
-                        .replace("%from_normal%", from.latestName)
-                        .replace("%from_server%", from.getServer().getInfo().getName())
-                        .replace("%to%", to.displayName)
-                        .replace("%to_normal%", to.latestName)
-                        .replace("%to_server%", to.getServer().getInfo().getName())
-                        .replace("%message%", message)
-                );
+                MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.messageSSPY);
             }
         }
     }

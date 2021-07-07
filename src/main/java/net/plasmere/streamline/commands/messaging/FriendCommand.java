@@ -7,7 +7,7 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
@@ -16,7 +16,6 @@ import net.plasmere.streamline.utils.UUIDFetcher;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FriendCommand extends Command implements TabExecutor {
     public FriendCommand(String base, String perm, String[] aliases){

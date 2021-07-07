@@ -1,18 +1,15 @@
 package net.plasmere.streamline.commands.staff;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.plasmere.streamline.StreamLine;
-import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
-import net.md_5.bungee.config.Configuration;
 
 public class StaffChatCommand extends Command {
     public StaffChatCommand(String base, String perm, String[] aliases){

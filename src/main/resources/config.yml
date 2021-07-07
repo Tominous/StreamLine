@@ -1036,3 +1036,4 @@ modules:
       default-tags:
         - "staff"
       default-points: 0
+      server: "SPACE"

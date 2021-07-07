@@ -1,13 +1,11 @@
 package net.plasmere.streamline.utils;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
-import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Guild;
-import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 
 import java.io.File;
@@ -280,7 +278,7 @@ public class GuildUtils {
             }
 
             if (to.online) {
-                MessagingUtils.sendBGUserMessage(guild, player, to, inviteUser
+                MessagingUtils.sendBGUserMessage(guild, player, to.player, inviteUser
                         .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(from))
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
                         .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(guild.leaderUUID, true))))
@@ -689,7 +687,7 @@ public class GuildUtils {
                         , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {
-            MessagingUtils.sendBGUserMessage(guild, sender, sender, MessageConfUtils.bungeeCommandErrorUnd);
+            MessagingUtils.sendBGUserMessage(guild, sender.player, sender.player, MessageConfUtils.bungeeCommandErrorUnd);
             e.printStackTrace();
         }
     }

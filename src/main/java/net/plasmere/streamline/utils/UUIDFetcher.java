@@ -6,8 +6,7 @@ import com.google.gson.*;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
-import net.plasmere.streamline.objects.Player;
-import net.plasmere.streamline.utils.holders.GeyserHolder;
+import net.plasmere.streamline.objects.users.Player;
 
 import java.io.*;
 import java.net.HttpURLConnection;

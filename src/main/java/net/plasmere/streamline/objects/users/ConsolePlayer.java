@@ -1,16 +1,14 @@
-package net.plasmere.streamline.objects;
+package net.plasmere.streamline.objects.users;
 
 import net.md_5.bungee.api.*;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 
-import java.io.File;
 import java.util.*;
 
 public class ConsolePlayer extends SavableUser {
     public ProxyServer server;
-    public CommandSender user;
 
     public List<String> savedKeys = new ArrayList<>();
 
@@ -30,7 +28,6 @@ public class ConsolePlayer extends SavableUser {
         this.tagList = ConfigUtils.consoleDefaultTags;
 
         this.server = StreamLine.getInstance().getProxy();
-        this.user = this.server.getConsole();
     }
 
     @Override
@@ -60,51 +57,51 @@ public class ConsolePlayer extends SavableUser {
 
     @Deprecated
     public void sendMessage(String message) {
-        user.sendMessage(message);
+        sender.sendMessage(message);
     }
 
     @Deprecated
     public void sendMessages(String... messages) {
-        user.sendMessages(messages);
+        sender.sendMessages(messages);
     }
 
     
     public void sendMessage(BaseComponent... message) {
-        user.sendMessage(message);
+        sender.sendMessage(message);
     }
 
     
     public void sendMessage(BaseComponent message) {
-        user.sendMessage(message);
+        sender.sendMessage(message);
     }
 
     
     public Collection<String> getGroups() {
-        return user.getGroups();
+        return sender.getGroups();
     }
 
     
     public void addGroups(String... groups) {
-        user.addGroups(groups);
+        sender.addGroups(groups);
     }
 
     
     public void removeGroups(String... groups) {
-        user.removeGroups(groups);
+        sender.removeGroups(groups);
     }
 
     
     public boolean hasPermission(String permission) {
-        return user.hasPermission(permission);
+        return sender.hasPermission(permission);
     }
 
     
     public void setPermission(String permission, boolean value) {
-        user.setPermission(permission, value);
+        sender.setPermission(permission, value);
     }
 
     
     public Collection<String> getPermissions() {
-        return user.getPermissions();
+        return sender.getPermissions();
     }
 }

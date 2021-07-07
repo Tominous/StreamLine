@@ -1,10 +1,9 @@
-package net.plasmere.streamline.objects;
+package net.plasmere.streamline.objects.users;
 
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -36,6 +35,7 @@ public abstract class SavableUser {
     public List<String> pendingToFriendList;
     public String pendingFromFriends;
     public List<String> pendingFromFriendList;
+    public CommandSender sender;
 
     public List<String> savedKeys = new ArrayList<>();
 
@@ -45,6 +45,7 @@ public abstract class SavableUser {
 
     public SavableUser(String fileName, boolean createNew){
         this.savableUser = this;
+        this.sender = findSender(fileName);
 
         preConstruct(fileName);
 
@@ -67,6 +68,14 @@ public abstract class SavableUser {
 
     public SavableUser getSavableUser() {
         return savableUser;
+    }
+
+    public CommandSender findSender(String fileName) {
+        if (fileName.equals("%")) {
+            return StreamLine.getInstance().getProxy().getConsole();
+        } else {
+            return UUIDFetcher.getPPlayerByUUID(fileName);
+        }
     }
 
     abstract public void preConstruct(String string);
@@ -662,11 +671,11 @@ public abstract class SavableUser {
         updateKey("last-to-message", message);
     }
 
-    public void updateLastMessenger(Player messenger){
+    public void updateLastMessenger(SavableUser messenger){
         updateKey("last-messenger", messenger.uuid);
     }
 
-    public void updateLastTo(Player to){
+    public void updateLastTo(SavableUser to){
         updateKey("last-to", to.uuid);
     }
 

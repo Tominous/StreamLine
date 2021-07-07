@@ -7,7 +7,7 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
@@ -37,7 +37,7 @@ public class StatsCommand extends Command implements TabExecutor {
             }
 
             if (args.length <= 0 || ! ConfigUtils.comBStatsOthers) {
-                PlayerUtils.info(player, player);
+                PlayerUtils.info(player.player, player);
             } else {
                 if (player.hasPermission(ConfigUtils.comBStatsPermOthers)){
                     if (! PlayerUtils.exists(args[0])) {
@@ -57,7 +57,7 @@ public class StatsCommand extends Command implements TabExecutor {
                         }
                     }
 
-                    PlayerUtils.info(player, stat);
+                    PlayerUtils.info(player.player, stat);
                 } else {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
                 }

@@ -1,4 +1,4 @@
-package net.plasmere.streamline.objects;
+package net.plasmere.streamline.objects.users;
 
 import net.md_5.bungee.api.*;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -11,6 +11,7 @@ import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.score.Scoreboard;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 

@@ -2,8 +2,7 @@ package net.plasmere.streamline.objects.timers;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
-import net.plasmere.streamline.config.ConfigUtils;
-import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.utils.PlayerUtils;
 
 import java.util.*;
@@ -45,7 +44,7 @@ public class PlaytimeTimer implements Runnable {
 
         try {
             int count = 0;
-            List<Player> players = PlayerUtils.getStats();
+            List<Player> players = PlayerUtils.getJustPlayers();
             List<Player> toRemove = new ArrayList<>();
 
             for (Player player : players) {

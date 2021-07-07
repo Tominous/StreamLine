@@ -1,8 +1,6 @@
 package net.plasmere.streamline.utils;
 
-import net.plasmere.streamline.objects.Player;
-
-import java.util.Objects;
+import net.plasmere.streamline.objects.users.Player;
 
 public class FaceFetcher {
     public static String getFaceAvatarURL(Player player){

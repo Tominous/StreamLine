@@ -14,6 +14,8 @@ import net.dv8tion.jda.api.JDA;
 import net.plasmere.streamline.objects.messaging.BungeeMassMessage;
 import net.plasmere.streamline.objects.messaging.BungeeMessage;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
+import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.users.SavableUser;
 
 import java.util.*;
 
@@ -486,6 +488,18 @@ public class MessagingUtils {
                     .replace("%version%", Objects.requireNonNull(sender).latestVersion)
             ));
         }
+    }
+
+    public static void sendBMessagenging(CommandSender sendTo, SavableUser from, SavableUser to, String playerMessage, String msg) {
+        sendTo.sendMessage(TextUtils.codedText(msg
+                .replace("%from%", from.displayName)
+                .replace("%from_normal%", from.latestName)
+                .replace("%from_server%", (from instanceof Player ? ((Player) from).player.getServer().getInfo().getName() : ConfigUtils.consoleServer))
+                .replace("%to%", to.displayName)
+                .replace("%to_normal%", to.latestName)
+                .replace("%to_server%", (to instanceof Player ? ((Player) to).player.getServer().getInfo().getName() : ConfigUtils.consoleServer))
+                .replace("%message%", playerMessage)
+        ));
     }
 
     public static void sendBUserAsMessage(CommandSender as, String msg){

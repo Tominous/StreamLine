@@ -3,10 +3,8 @@ package net.plasmere.streamline.commands.staff;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.Party;
-import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
-import net.plasmere.streamline.utils.PartyUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 
 public class GetStatsCommand extends Command {
@@ -16,7 +14,7 @@ public class GetStatsCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (PlayerUtils.getStats().size() <= 0) {
+        if (PlayerUtils.getJustPlayers().size() <= 0) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.getStatsNone);
             return;
         }
@@ -30,8 +28,8 @@ public class GetStatsCommand extends Command {
         StringBuilder stringBuilder = new StringBuilder();
 
         int i = 1;
-        for (Player stat : PlayerUtils.getStats()) {
-            if (i >= PlayerUtils.getStats().size()) {
+        for (Player stat : PlayerUtils.getJustPlayers()) {
+            if (i >= PlayerUtils.getJustPlayers().size()) {
                 stringBuilder.append(MessageConfUtils.getStatsLast.replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat)));
             } else {
                 stringBuilder.append(MessageConfUtils.getStatsNLast.replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat)));

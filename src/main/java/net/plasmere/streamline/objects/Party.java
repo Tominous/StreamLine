@@ -6,7 +6,7 @@ import net.luckperms.api.node.types.PermissionNode;
 import net.luckperms.api.query.QueryOptions;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
-import net.plasmere.streamline.utils.GuildUtils;
+import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.utils.PartyUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
