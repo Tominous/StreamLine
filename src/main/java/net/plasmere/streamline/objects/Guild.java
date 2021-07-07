@@ -3,6 +3,7 @@ package net.plasmere.streamline.objects;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
@@ -20,13 +21,13 @@ public class Guild {
     public File file;
     public String name;
     public String leaderUUID;
-    public List<Player> moderators = new ArrayList<>();
+    public List<SavableUser> moderators = new ArrayList<>();
     public List<String> modsByUUID= new ArrayList<>();
-    public List<Player> members = new ArrayList<>();
+    public List<SavableUser> members = new ArrayList<>();
     public List<String> membersByUUID = new ArrayList<>();
-    public List<Player> totalMembers = new ArrayList<>();
+    public List<SavableUser> totalMembers = new ArrayList<>();
     public List<String> totalMembersByUUID = new ArrayList<>();
-    public List<Player> invites = new ArrayList<>();
+    public List<SavableUser> invites = new ArrayList<>();
     public List<String> invitesByUUID = new ArrayList<>();
     public boolean isMuted;
     public boolean isPublic;
@@ -900,7 +901,7 @@ public class Guild {
             } else {
                 if (moderators.size() > 0) {
                     int r = RNG.nextInt(moderators.size());
-                    Player newLeader = moderators.get(r);
+                    SavableUser newLeader = moderators.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
                     leaderUUID = newLeader.uuid;
@@ -908,7 +909,7 @@ public class Guild {
                 }
                 if (members.size() > 0) {
                     int r = RNG.nextInt(members.size());
-                    Player newLeader = members.get(r);
+                    SavableUser newLeader = members.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
                     leaderUUID = newLeader.uuid;
@@ -965,7 +966,7 @@ public class Guild {
             } else {
                 if (moderators.size() > 0) {
                     int r = RNG.nextInt(moderators.size());
-                    Player newLeader = moderators.get(r);
+                    SavableUser newLeader = moderators.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
                     leaderUUID = newLeader.uuid;
@@ -973,7 +974,7 @@ public class Guild {
                 }
                 if (members.size() > 0) {
                     int r = RNG.nextInt(members.size());
-                    Player newLeader = members.get(r);
+                    SavableUser newLeader = members.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
                     leaderUUID = newLeader.uuid;
@@ -1014,7 +1015,7 @@ public class Guild {
             } else {
                 if (moderators.size() > 0) {
                     int r = RNG.nextInt(moderators.size());
-                    Player newLeader = moderators.get(r);
+                    SavableUser newLeader = moderators.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
                     leaderUUID = newLeader.uuid;
@@ -1022,7 +1023,7 @@ public class Guild {
                 }
                 if (members.size() > 0) {
                     int r = RNG.nextInt(members.size());
-                    Player newLeader = members.get(r);
+                    SavableUser newLeader = members.get(r);
 
                     totalMembersByUUID.remove(leaderUUID);
                     leaderUUID = newLeader.uuid;
@@ -1086,7 +1087,7 @@ public class Guild {
         file = new File(filePrePath + leaderUUID.toString() + ".properties");
 
         try {
-            for (Player p : totalMembers) {
+            for (SavableUser p : totalMembers) {
                 p.updateKey("guild", leaderUUID.toString());
             }
         } catch (Exception e) {

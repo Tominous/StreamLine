@@ -159,6 +159,8 @@ public class PlayerUtils {
     }
 
     public static Player getOrCreate(String uuid){
+        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info(forStats(stats));
+
         Player player = getPlayerByUUID(uuid);
 
         if (player == null) {
@@ -231,11 +233,11 @@ public class PlayerUtils {
         return player.latestName.equals(name);
     }
 
-    public static String forStats(List<Player> players){
+    public static String forStats(List<SavableUser> players){
         StringBuilder builder = new StringBuilder("[");
 
         int i = 1;
-        for (Player p : players){
+        for (SavableUser p : players){
             if (i != players.size()) {
                 builder.append(p.toString()).append(", ");
             } else {

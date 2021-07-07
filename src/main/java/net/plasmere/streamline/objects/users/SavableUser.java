@@ -47,10 +47,11 @@ public abstract class SavableUser {
     public SavableUser(String fileName, boolean createNew){
         this.savableUser = this;
         this.sender = findSender(fileName);
+        this.uuid = fileName;
 
         preConstruct(fileName);
 
-        this.file = new File(filePrePath + fileName + ".properties");
+        this.file = new File(StreamLine.getInstance().getPlDir(), fileName + ".properties");
 
         if (createNew) {
             try {

@@ -54,15 +54,15 @@ public class IgnoreCommand extends Command implements TabExecutor {
         } else {
             SavableUser other;
 
-            if (args[0].equals("%")) {
+            if (args[1].equals("%")) {
                 other = PlayerUtils.getOrCreateStatByUUID("%");
             } else {
-                if (! PlayerUtils.exists(args[0])) {
+                if (! PlayerUtils.exists(args[1])) {
                     MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
                     return;
                 }
 
-                other = PlayerUtils.getOrCreateStat(args[0]);
+                other = PlayerUtils.getOrCreateStat(args[1]);
             }
 
             if (other.uuid == null) {

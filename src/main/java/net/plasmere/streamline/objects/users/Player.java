@@ -387,7 +387,7 @@ public class Player extends SavableUser {
 
     public void setSCView(boolean value) {
         viewsc = value;
-        updateKey("sc-view", value);
+        updateKey("view-sc", value);
     }
 
     public void toggleSCView() { setSCView(! viewsc); }
