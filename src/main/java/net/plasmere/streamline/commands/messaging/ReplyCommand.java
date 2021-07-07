@@ -3,7 +3,6 @@ package net.plasmere.streamline.commands.messaging;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
-import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
@@ -11,11 +10,6 @@ import net.plasmere.streamline.objects.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.TreeSet;
 
 public class ReplyCommand extends Command {
     public ReplyCommand(String base, String perm, String[] aliases){
@@ -53,11 +47,11 @@ public class ReplyCommand extends Command {
                         }
                     }
 
-                    Player statTo = PlayerUtils.getStatByUUID(stat.lastToUUID);
+                    Player statTo = PlayerUtils.getPlayerByUUID(stat.lastToUUID);
 
                     if (statTo == null) {
                         PlayerUtils.addStat(new Player(stat.lastToUUID));
-                        statTo = PlayerUtils.getStatByUUID(stat.lastToUUID);
+                        statTo = PlayerUtils.getPlayerByUUID(stat.lastToUUID);
                         if (statTo == null) {
                             StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
                             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);

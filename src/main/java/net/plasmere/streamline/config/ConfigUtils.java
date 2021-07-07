@@ -448,4 +448,5 @@ public class ConfigUtils {
     // Console.
     public static String consoleName = StreamLine.getConfig().getConfString("modules.bungee.console.name");
     public static List<String> consoleDefaultTags = StreamLine.getConfig().getConfStringList("modules.bungee.console.default-tags");
+    public static int consoleDefaultPoints = StreamLine.getConfig().getConfInteger("modules.bungee.console.default-points");
 }

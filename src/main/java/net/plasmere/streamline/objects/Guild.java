@@ -1,6 +1,5 @@
 package net.plasmere.streamline.objects;
 
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.GuildUtils;
@@ -47,7 +46,7 @@ public class Guild {
         this.leaderUUID = creatorUUID;
         this.name = name;
         this.totalMembersByUUID.add(creatorUUID);
-        this.totalMembers.add(PlayerUtils.getStatByUUID(creatorUUID));
+        this.totalMembers.add(PlayerUtils.getPlayerByUUID(creatorUUID));
         try {
             Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(creatorUUID, true)).updateKey("guild", creatorUUID.toString());
         } catch (Exception e){

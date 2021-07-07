@@ -6,16 +6,15 @@ import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.PrefixNode;
 import net.luckperms.api.node.types.SuffixNode;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.PostLoginEvent;
-import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
-import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.ConsolePlayer;
 import net.plasmere.streamline.objects.Player;
+import net.plasmere.streamline.objects.SavableUser;
 import net.plasmere.streamline.objects.lists.SingleSet;
 
 import java.io.File;
@@ -25,7 +24,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class PlayerUtils {
-    private static final List<Player> stats = new ArrayList<>();
+    private static final List<SavableUser> stats = new ArrayList<>();
 
     private static HashMap<Player, SingleSet<Integer, Integer>> connections = new HashMap<>();
 
@@ -43,8 +42,32 @@ public class PlayerUtils {
         consolePlayer = console;
     }
 
-    public static List<Player> getStats() {
+    public static List<SavableUser> getStats() {
         return stats;
+    }
+
+    public static List<Player> getJustPlayers(){
+        List<Player> players = new ArrayList<>();
+
+        for (SavableUser user : stats) {
+            if (user instanceof Player) {
+                players.add((Player) user);
+            }
+        }
+
+        return players;
+    }
+
+    public static List<ConsolePlayer> getJustProxies(){
+        List<ConsolePlayer> proxies = new ArrayList<>();
+
+        for (SavableUser user : stats) {
+            if (user instanceof ConsolePlayer) {
+                proxies.add((ConsolePlayer) user);
+            }
+        }
+
+        return proxies;
     }
 
     public static ProxiedPlayer getProxiedPlayer(String latestName){
@@ -59,8 +82,8 @@ public class PlayerUtils {
         return getStat(latestName) != null;
     }
 
-    public static Player getOffOnStat(String name){
-        Player p = getStat(name);
+    public static Player getOffOnPlayer(String name){
+        Player p = getPlayerStat(name);
 
         if (p == null) {
             if (exists(name)) {
@@ -75,7 +98,23 @@ public class PlayerUtils {
         return p;
     }
 
-    public static void removePlayerIf(Predicate<Player> predicate){
+    public static ConsolePlayer getOffOnConsolePlayer(String name){
+        ConsolePlayer p = getConsoleStat(name);
+
+        if (p == null) {
+            if (exists(name)) {
+                p = new ConsolePlayer();
+                addStat(p);
+                return p;
+            } else {
+                return null;
+            }
+        }
+
+        return p;
+    }
+
+    public static void removePlayerIf(Predicate<SavableUser> predicate){
         stats.removeIf(predicate);
     }
 
@@ -127,7 +166,7 @@ public class PlayerUtils {
     }
 
     public static Player getOrCreate(String uuid){
-        Player player = getStatByUUID(uuid);
+        Player player = getPlayerByUUID(uuid);
 
         if (player == null) {
             player = new Player(uuid);
@@ -137,7 +176,7 @@ public class PlayerUtils {
         return player;
     }
 
-    public static boolean isNameEqual(Player player, String name){
+    public static boolean isNameEqual(SavableUser player, String name){
         if (player.latestName == null) return false;
 
         return player.latestName.equals(name);
@@ -161,12 +200,8 @@ public class PlayerUtils {
     }
 
     public static Player getStat(ProxiedPlayer player) {
-        if (player instanceof Player) {
-            return getStat(player.getName());
-        }
-
         try {
-            for (Player stat : stats) {
+            for (Player stat : getJustPlayers()) {
                 if (isNameEqual(stat, player.getName())) {
                     return stat;
                 }
@@ -178,13 +213,23 @@ public class PlayerUtils {
         return null;
     }
 
-    public static Player getStat(CommandSender player) {
-        if (player instanceof Player) {
-            return getStat(player.getName());
+    public static ConsolePlayer getStat() {
+        try {
+            for (ConsolePlayer stat : getJustProxies()) {
+                if (isNameEqual(stat, ConfigUtils.consoleName)) {
+                    return stat;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
+        return null;
+    }
+
+    public static SavableUser getStat(CommandSender player) {
         try {
-            for (Player stat : stats) {
+            for (SavableUser stat : stats) {
                 if (isNameEqual(stat, player.getName())) {
                     return stat;
                 }
@@ -196,9 +241,23 @@ public class PlayerUtils {
         return null;
     }
 
-    public static Player getStat(String name) {
+    public static Player getPlayerStat(CommandSender player) {
         try {
-            for (Player stat : stats) {
+            for (Player stat : getJustPlayers()) {
+                if (isNameEqual(stat, player.getName())) {
+                    return stat;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static SavableUser getStat(String name) {
+        try {
+            for (SavableUser stat : stats) {
                 if (isNameEqual(stat, name)) {
                     return stat;
                 }
@@ -210,9 +269,45 @@ public class PlayerUtils {
         return null;
     }
 
-    public static Player getStatByUUID(String uuid) {
+    public static Player getPlayerStat(String name) {
         try {
-            for (Player stat : stats) {
+            for (Player stat : getJustPlayers()) {
+                if (isNameEqual(stat, name)) {
+                    return stat;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ConsolePlayer getConsoleStat(String name) {
+        try {
+            for (ConsolePlayer stat : getJustProxies()) {
+                if (isNameEqual(stat, name)) {
+                    return stat;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Player getPlayerByUUID(String uuid) {
+        try {
+            return (Player) getStatByUUID(uuid);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static SavableUser getStatByUUID(String uuid) {
+        try {
+            for (SavableUser stat : stats) {
                 if (stat.uuid.equals(uuid)) {
                     return stat;
                 }
@@ -282,6 +377,14 @@ public class PlayerUtils {
         if (suffix == null) suffix = "";
 
         return TextUtils.codedString(prefix + username + suffix);
+    }
+
+    public static String createCheck(String thing){
+        if (thing.contains("-")){
+            return thing;
+        } else {
+            return Objects.requireNonNull(UUIDFetcher.getCachedUUID(thing));
+        }
     }
 
     public static int getCeilingInt(Set<Integer> ints){
@@ -369,12 +472,27 @@ public class PlayerUtils {
         stats.add(stat);
     }
 
+    public static void addStat(ConsolePlayer stat){
+        if (isInStatsList(stat)) return;
+
+        stats.add(stat);
+    }
+
     public static boolean isInStatsList(Player stat) {
-            return isInStatsList(stat.latestName);
+        return isInStatsList(stat.latestName);
+    }
+
+    public static boolean isInStatsList(ConsolePlayer stat) {
+        for (ConsolePlayer player : getJustProxies()) {
+            if (stat.equals(player)) return true;
+            if (player.latestName.equals(stat.latestName)) return true;
+        }
+
+        return false;
     }
 
     public static boolean isInStatsList(String username) {
-        for (Player player : getStats()) {
+        for (SavableUser player : getStats()) {
             if (player.latestName == null) continue;
             if (player.latestName.equals(username)) return true;
         }
@@ -384,7 +502,7 @@ public class PlayerUtils {
 
     public static boolean isOnline(String username){
         if (isInStatsList(username)) {
-            Player player = getStat(username);
+            Player player = getPlayerStat(username);
             if (player != null) {
                 return player.online;
             }
@@ -397,10 +515,10 @@ public class PlayerUtils {
         return false;
     }
 
-    public static void removeStat(Player stat){
-        List<Player> toRemove = new ArrayList<>();
+    public static void removeStat(SavableUser stat){
+        List<SavableUser> toRemove = new ArrayList<>();
 
-        for (Player player : getStats()) {
+        for (SavableUser player : getStats()) {
             if (player.latestName == null) {
                 toRemove.add(player);
                 continue;
@@ -411,7 +529,7 @@ public class PlayerUtils {
             }
         }
 
-        for (Player player : toRemove) {
+        for (SavableUser player : toRemove) {
             stats.remove(player);
             try {
                 stat.saveInfo();
@@ -422,7 +540,7 @@ public class PlayerUtils {
     }
 
     public static void saveAll(){
-        for (Player player : getStats()) {
+        for (SavableUser player : getStats()) {
             try {
                 player.saveInfo();
             } catch (Exception e) {
@@ -433,7 +551,7 @@ public class PlayerUtils {
 
     public static int removeOfflineStats(){
         int count = 0;
-        List<Player> players = PlayerUtils.getStats();
+        List<Player> players = PlayerUtils.getJustPlayers();
         List<Player> toRemove = new ArrayList<>();
 
         for (Player player : players) {
