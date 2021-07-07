@@ -9,6 +9,7 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.*;
 
 import java.util.*;
@@ -20,249 +21,255 @@ public class GuildCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (sender instanceof ProxiedPlayer) {
-            // Usage: /guild <join !|leave !|create !|promote !|demote !|chat !|list !|open !|close !|disband !|accept !|deny !|invite !|kick|mute|warp>
-            if (args.length <= 0 || args[0].length() <= 0) {
-                try {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                    e.printStackTrace();
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildJoinAliases)) {
-                if (args.length <= 1) {
-                    try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        GuildUtils.joinGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), UUIDFetcher.getPlayer(args[1]));
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildLeaveAliases)) {
-                try {
-                    GuildUtils.leaveGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
-                } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), MessageConfUtils.bungeeCommandErrorUnd);
-                    e.printStackTrace();
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildCreateAliases)) {
-                if (args.length <= 1) {
-                    try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        GuildUtils.createGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.argsToStringMinus(args, 0));
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildPromoteAliases)) {
-                if (args.length <= 1) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                } else {
-                    try {
+        SavableUser stat = PlayerUtils.getStat(sender);
 
-                        GuildUtils.promotePlayer(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), UUIDFetcher.getPlayer(args[1]));
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildDemoteAliases)) {
-                if (args.length <= 1) {
-                    try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        GuildUtils.demotePlayer(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), UUIDFetcher.getPlayer(args[1]));
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildChatAliases)) {
-                if (args.length <= 1) {
-                    try {
-                        MessagingUtils.sendBUserMessage(UUIDFetcher.getPlayer(sender), MessageConfUtils.bungeeNeedsMore);
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        GuildUtils.sendChat(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.argsToStringMinus(args, 0));
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildListAliases)) {
+        if (stat == null) {
+            stat = PlayerUtils.getOrCreateStat(sender);
+            if (stat == null) {
+                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                return;
+            }
+        }
+
+        // Usage: /guild <join !|leave !|create !|promote !|demote !|chat !|list !|open !|close !|disband !|accept !|deny !|invite !|kick|mute|warp>
+        if (args.length <= 0 || args[0].length() <= 0) {
+            try {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            } catch (Exception e) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                e.printStackTrace();
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildJoinAliases)) {
+            if (args.length <= 1) {
                 try {
-                    GuildUtils.listGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildOpenAliases)) {
-                try {
-                    GuildUtils.openGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
-                } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                    e.printStackTrace();
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildCloseAliases)) {
-                try {
-                    GuildUtils.closeGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
-                } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                    e.printStackTrace();
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildDisbandAliases)) {
-                try {
-                    GuildUtils.disband(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
-                } catch (Throwable e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                    e.printStackTrace();
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildAcceptAliases)) {
-                if (args.length <= 1) {
-                    try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        GuildUtils.acceptInvite(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), UUIDFetcher.getPlayer(args[1]));
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildDenyAliases)) {
-                if (args.length <= 1) {
-                    try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        GuildUtils.denyInvite(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), UUIDFetcher.getPlayer(args[1]));
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildInvAliases)) {
-                if (args.length <= 1) {
-                    try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        GuildUtils.sendInvite(UUIDFetcher.getPlayer(args[1]), Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildKickAliases)) {
-                if (args.length <= 1) {
-                    try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        GuildUtils.kickMember(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), UUIDFetcher.getPlayer(args[1]));
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildMuteAliases)) {
-                try {
-                    GuildUtils.muteGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
-                } catch (Throwable e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                    e.printStackTrace();
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildWarpAliases)) {
-                try {
-                    GuildUtils.warpGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
-                } catch (Throwable e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                    e.printStackTrace();
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildInfoAliases)) {
-                try {
-                    GuildUtils.info(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
-                } catch (Throwable e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                    e.printStackTrace();
-                }
-            } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildRenameAliases)) {
-                if (args.length <= 1) {
-                    try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        GuildUtils.rename(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.argsToStringMinus(args, 0));
-                    } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        e.printStackTrace();
-                    }
                 }
             } else {
                 try {
-                    Player p = UUIDFetcher.getPlayer(args[0]);
+                    GuildUtils.joinGuild(stat, PlayerUtils.getOrCreateStat(args[1]));
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildLeaveAliases)) {
+            try {
+                GuildUtils.leaveGuild(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
+            } catch (Exception e) {
+                MessagingUtils.sendBUserMessage(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), MessageConfUtils.bungeeCommandErrorUnd);
+                e.printStackTrace();
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildCreateAliases)) {
+            if (args.length <= 1) {
+                try {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    GuildUtils.createGuild(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), TextUtils.argsToStringMinus(args, 0));
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildPromoteAliases)) {
+            if (args.length <= 1) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            } else {
+                try {
 
-                    if (p == null) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        return;
-                    }
-
-                    GuildUtils.sendInvite(p, Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                    GuildUtils.promotePlayer(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), PlayerUtils.getOrCreate(args[1]));
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildDemoteAliases)) {
+            if (args.length <= 1) {
+                try {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    GuildUtils.demotePlayer(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), PlayerUtils.getOrCreate(args[1]));
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildChatAliases)) {
+            if (args.length <= 1) {
+                try {
+                    MessagingUtils.sendBUserMessage(PlayerUtils.getOrCreate(sender), MessageConfUtils.bungeeNeedsMore);
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    GuildUtils.sendChat(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), TextUtils.argsToStringMinus(args, 0));
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildListAliases)) {
+            try {
+                GuildUtils.listGuild(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
+            } catch (Exception e) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                e.printStackTrace();
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildOpenAliases)) {
+            try {
+                GuildUtils.openGuild(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
+            } catch (Exception e) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                e.printStackTrace();
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildCloseAliases)) {
+            try {
+                GuildUtils.closeGuild(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
+            } catch (Exception e) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                e.printStackTrace();
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildDisbandAliases)) {
+            try {
+                GuildUtils.disband(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
+            } catch (Throwable e) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                e.printStackTrace();
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildAcceptAliases)) {
+            if (args.length <= 1) {
+                try {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    GuildUtils.acceptInvite(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), PlayerUtils.getOrCreate(args[1]));
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildDenyAliases)) {
+            if (args.length <= 1) {
+                try {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    GuildUtils.denyInvite(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), PlayerUtils.getOrCreate(args[1]));
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildInvAliases)) {
+            if (args.length <= 1) {
+                try {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    GuildUtils.sendInvite(PlayerUtils.getOrCreate(args[1]), Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildKickAliases)) {
+            if (args.length <= 1) {
+                try {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    GuildUtils.kickMember(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), PlayerUtils.getOrCreate(args[1]));
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildMuteAliases)) {
+            try {
+                GuildUtils.muteGuild(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
+            } catch (Throwable e) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                e.printStackTrace();
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildWarpAliases)) {
+            try {
+                GuildUtils.warpGuild(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
+            } catch (Throwable e) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                e.printStackTrace();
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildInfoAliases)) {
+            try {
+                GuildUtils.info(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
+            } catch (Throwable e) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                e.printStackTrace();
+            }
+        } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildRenameAliases)) {
+            if (args.length <= 1) {
+                try {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                } catch (Exception e) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    GuildUtils.rename(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), TextUtils.argsToStringMinus(args, 0));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
                 }
             }
         } else {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
+            try {
+                Player p = PlayerUtils.getOrCreate(args[0]);
+
+                if (p == null) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    return;
+                }
+
+                GuildUtils.sendInvite(p, Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
+            } catch (Exception e) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                e.printStackTrace();
+            }
         }
 
         try {
-            assert sender instanceof ProxiedPlayer;
-            Guild guild = GuildUtils.getGuild(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+            Guild guild = GuildUtils.getGuild(stat);
             if (guild == null) return;
             guild.saveInfo();
         } catch (Exception e) {

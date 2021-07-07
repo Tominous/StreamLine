@@ -158,7 +158,7 @@ public class PlayerUtils {
         connections.put(player, new SingleSet<>(ConfigUtils.lobbyTimeOut, 0));
     }
 
-    public static Player getOrCreate(String uuid){
+    public static Player getOrCreateByUUID(String uuid){
 //        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info(forStats(stats));
 
         Player player = getPlayerByUUID(uuid);
@@ -171,8 +171,23 @@ public class PlayerUtils {
         return player;
     }
 
+    public static Player getOrCreate(String name){
+        Player player = getPlayerStat(name);
+
+        if (player == null) {
+            player = new Player(UUIDFetcher.getCachedUUID(name));
+            addStat(player);
+        }
+
+        return player;
+    }
+
     public static Player getOrCreate(ProxiedPlayer player){
-        return getOrCreate(player.getUniqueId().toString());
+        return getOrCreateByUUID(player.getUniqueId().toString());
+    }
+
+    public static Player getOrCreate(CommandSender sender){
+        return getOrCreate(sender.getName());
     }
 
     public static SavableUser getOrCreateStat(String name){
@@ -190,6 +205,10 @@ public class PlayerUtils {
     }
 
     public static SavableUser getOrCreateStat(CommandSender sender){
+        return getOrCreateStat(sender.getName());
+    }
+
+    public static SavableUser getOrCreateStat(ProxiedPlayer sender){
         return getOrCreateStat(sender.getName());
     }
 
@@ -385,7 +404,7 @@ public class PlayerUtils {
     public static List<Player> transposeList(List<ProxiedPlayer> players){
         List<Player> ps = new ArrayList<>();
         for (ProxiedPlayer player : players){
-            ps.add(UUIDFetcher.getPlayer(player));
+            ps.add(PlayerUtils.getOrCreate(player));
         }
 
         return ps;
@@ -773,11 +792,11 @@ public class PlayerUtils {
         for (String uuid : stat.ignoredList) {
             if (i < stat.ignoredList.size()) {
                 ignored.append(MessageConfUtils.ignoreListNLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(uuid)))
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
                 );
             } else {
                 ignored.append(MessageConfUtils.ignoreListLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(uuid)))
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
                 );
             }
 
@@ -795,11 +814,11 @@ public class PlayerUtils {
         for (String uuid : stat.friendList) {
             if (i < stat.friendList.size()) {
                 thing.append(MessageConfUtils.friendListFNLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(uuid)))
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
                 );
             } else {
                 thing.append(MessageConfUtils.friendListFLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(uuid)))
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
                 );
             }
 
@@ -817,11 +836,11 @@ public class PlayerUtils {
         for (String uuid : stat.pendingToFriendList) {
             if (i < stat.pendingToFriendList.size()) {
                 thing.append(MessageConfUtils.friendListPTNLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(uuid)))
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
                 );
             } else {
                 thing.append(MessageConfUtils.friendListPTLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(uuid)))
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
                 );
             }
 
@@ -839,11 +858,11 @@ public class PlayerUtils {
         for (String uuid : stat.pendingFromFriendList) {
             if (i < stat.pendingFromFriendList.size()) {
                 thing.append(MessageConfUtils.friendListPFNLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(uuid)))
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
                 );
             } else {
                 thing.append(MessageConfUtils.friendListPFLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(uuid)))
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
                 );
             }
 
@@ -1027,6 +1046,21 @@ public class PlayerUtils {
         }
     }
 
+    public static ProxiedPlayer getPPlayerByUUID(String uuid){
+        try {
+            if (StreamLine.geyserHolder.enabled) {
+                if (StreamLine.geyserHolder.file.hasProperty(uuid)) {
+                    return StreamLine.geyserHolder.getPPlayerByUUID(uuid);
+                }
+            }
+
+            return getPlayer(UUID.fromString(uuid));
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static void kick(ProxiedPlayer player) {
         if (player != null) player.disconnect();
     }
@@ -1037,7 +1071,7 @@ public class PlayerUtils {
 
     public static void kick(Player player, String message) {
         if (! player.online) return;
-        ProxiedPlayer pp = UUIDFetcher.getPPlayerByUUID(player.uuid);
+        ProxiedPlayer pp = PlayerUtils.getPPlayerByUUID(player.uuid);
         if (pp != null) pp.disconnect(TextUtils.codedText(message));
     }
 

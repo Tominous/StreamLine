@@ -39,7 +39,7 @@ public class EventsHandler {
     }
 
     public static void runEvent(Event event, Player player){
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(player.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(player.uuid);
 
         if (p == null) return;
 
@@ -82,7 +82,7 @@ public class EventsHandler {
     }
 
     public static void runEvent(Event event, Player player, String context){
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(player.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(player.uuid);
 
         if (p == null) return;
 
@@ -223,7 +223,7 @@ public class EventsHandler {
     }
 
     public static boolean checkEventConditions(Event event, Player triggerer){
-        ProxiedPlayer player = UUIDFetcher.getPPlayerByUUID(triggerer.uuid);
+        ProxiedPlayer player = PlayerUtils.getPPlayerByUUID(triggerer.uuid);
 
         for (SingleSet<Condition, String> thing : event.conditions.values()) {
             switch (thing.key) {
@@ -280,7 +280,7 @@ public class EventsHandler {
     public static boolean checkEventConditions(Event event, Player triggerer, Condition hardCondition, String hardString){
         if (! eventHasSoftCondition(event)) return checkIfHasConditionWithContext(event, hardCondition, hardString);
 
-        ProxiedPlayer player = UUIDFetcher.getPPlayerByUUID(triggerer.uuid);
+        ProxiedPlayer player = PlayerUtils.getPPlayerByUUID(triggerer.uuid);
 
         for (SingleSet<Condition, String> thing : event.conditions.values()) {
             switch (thing.key) {
@@ -337,7 +337,7 @@ public class EventsHandler {
     public static boolean checkEventConditions(Event event, Player triggerer, Condition hardCondition, Iterable<String> hardString){
         if (! eventHasSoftCondition(event)) return checkIfHasConditionWithContext(event, hardCondition, hardString);
 
-        ProxiedPlayer player = UUIDFetcher.getPPlayerByUUID(triggerer.uuid);
+        ProxiedPlayer player = PlayerUtils.getPPlayerByUUID(triggerer.uuid);
 
         for (SingleSet<Condition, String> thing : event.conditions.values()) {
             if (ConfigUtils.debug) {

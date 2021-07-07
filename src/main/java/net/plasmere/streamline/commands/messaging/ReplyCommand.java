@@ -20,16 +20,11 @@ public class ReplyCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        SavableUser player = PlayerUtils.getStat(sender);
+        SavableUser stat = PlayerUtils.getStat(sender);
 
-        if (player == null) {
-            if (sender instanceof ProxiedPlayer) {
-                PlayerUtils.addStat(new Player((ProxiedPlayer) sender));
-            } else {
-                PlayerUtils.addStat(new ConsolePlayer());
-            }
-            player = PlayerUtils.getPlayerStat(sender);
-            if (player == null) {
+        if (stat == null) {
+            stat = PlayerUtils.getOrCreateStat(sender);
+            if (stat == null) {
                 StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                 return;
@@ -39,12 +34,12 @@ public class ReplyCommand extends Command {
         if (args.length <= 0) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else {
-            if (player.hasPermission(ConfigUtils.comBReplyPerm)) {
-                SavableUser statTo = PlayerUtils.getStatByUUID(player.lastToUUID);
+            if (stat.hasPermission(ConfigUtils.comBReplyPerm)) {
+                SavableUser statTo = PlayerUtils.getStatByUUID(stat.lastToUUID);
 
                 if (statTo == null) {
-                    PlayerUtils.addStat(player.lastToUUID);
-                    statTo = PlayerUtils.getStatByUUID(player.lastToUUID);
+                    PlayerUtils.addStat(stat.lastToUUID);
+                    statTo = PlayerUtils.getStatByUUID(stat.lastToUUID);
                     if (statTo == null) {
                         StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
@@ -52,7 +47,7 @@ public class ReplyCommand extends Command {
                     }
                 }
 
-                PlayerUtils.doMessageWithIgnoreCheck(player, statTo, TextUtils.normalize(args), true);
+                PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.normalize(args), true);
             } else {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
             }

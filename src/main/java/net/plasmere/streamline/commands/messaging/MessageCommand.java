@@ -7,7 +7,6 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.users.ConsolePlayer;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
@@ -26,16 +25,11 @@ public class MessageCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        SavableUser player = PlayerUtils.getStat(sender);
+        SavableUser stat = PlayerUtils.getStat(sender);
 
-        if (player == null) {
-            if (sender instanceof ProxiedPlayer) {
-                PlayerUtils.addStat(new Player((ProxiedPlayer) sender));
-            } else {
-                PlayerUtils.addStat(new ConsolePlayer());
-            }
-            player = PlayerUtils.getPlayerStat(sender);
-            if (player == null) {
+        if (stat == null) {
+            stat = PlayerUtils.getOrCreateStat(sender);
+            if (stat == null) {
                 StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                 return;
@@ -45,7 +39,7 @@ public class MessageCommand extends Command implements TabExecutor {
         if (args.length <= 0) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else {
-            if (player.hasPermission(ConfigUtils.comBMessagePerm)) {
+            if (stat.hasPermission(ConfigUtils.comBMessagePerm)) {
                 SavableUser statTo;
 
                 if (args[0].equals("%")) {
@@ -60,8 +54,8 @@ public class MessageCommand extends Command implements TabExecutor {
                 }
 
                 if (statTo == null) {
-                    PlayerUtils.addStat(player.lastToUUID);
-                    statTo = PlayerUtils.getStatByUUID(player.lastToUUID);
+                    PlayerUtils.addStat(stat.lastToUUID);
+                    statTo = PlayerUtils.getStatByUUID(stat.lastToUUID);
                     if (statTo == null) {
                         StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
@@ -69,7 +63,7 @@ public class MessageCommand extends Command implements TabExecutor {
                     }
                 }
 
-                PlayerUtils.doMessageWithIgnoreCheck(player, statTo, TextUtils.argsToStringMinus(args, 0), false);
+                PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.argsToStringMinus(args, 0), false);
             } else {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
             }
@@ -85,7 +79,7 @@ public class MessageCommand extends Command implements TabExecutor {
 
         if (sender instanceof ProxiedPlayer) {
             ProxiedPlayer p = (ProxiedPlayer) sender;
-            Player player = PlayerUtils.getOrCreate(p.getUniqueId().toString());
+            Player player = PlayerUtils.getOrCreateByUUID(p.getUniqueId().toString());
             for (String uuid : player.ignoredList) {
                 ignored.add(UUIDFetcher.getName(uuid));
             }

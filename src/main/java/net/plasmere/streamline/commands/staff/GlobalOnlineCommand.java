@@ -138,12 +138,12 @@ public class GlobalOnlineCommand extends Command {
             Server server = playerServers.get(player);
             if (! (i == players.size() - 1))
                 text.append(MessageConfUtils.onlineMessageBPlayersBulkNotLast
-                        .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player))))
+                        .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreate(player)))
                         .replace("%server%", server.getInfo().getName())
                 );
             else
                 text.append(MessageConfUtils.onlineMessageBPlayersBulkLast
-                        .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player))))
+                        .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreate(player)))
                         .replace("%server%", server.getInfo().getName())
                 );
             i++;

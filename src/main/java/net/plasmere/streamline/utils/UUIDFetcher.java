@@ -4,7 +4,6 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.gson.*;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.objects.users.Player;
 
@@ -131,102 +130,32 @@ public class UUIDFetcher {
         return formatted.toString();
     }
 
-    public static ProxiedPlayer getPPlayerByUUID(String uuid){
-        try {
-            if (StreamLine.geyserHolder.enabled) {
-                if (StreamLine.geyserHolder.file.hasProperty(uuid)) {
-                    return StreamLine.geyserHolder.getPPlayerByUUID(uuid);
-                }
-            }
-
-            return StreamLine.getInstance().getProxy().getPlayer(UUID.fromString(uuid));
-        } catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static Player getPlayer(ProxiedPlayer player) {
-        try {
-            String name = getCachedName(player.getUniqueId().toString());
-
-            if (PlayerUtils.exists(name)) {
-                if (PlayerUtils.hasStat(name)) {
-                    return getPlayer(name);
-                } else {
-                    return new Player(name);
-                }
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static Player getPlayer(CommandSender player) {
-        try {
-            String name = player.getName();
-
-            if (PlayerUtils.exists(name)) {
-                if (PlayerUtils.hasStat(name)) {
-                    return getPlayer(name);
-                } else {
-                    return new Player(name);
-                }
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static Player getPlayerByUUID(String uuid, boolean createIfNull){
-        try {
-            String name = getCachedName(uuid);
-
-            try {
-                if (uuid == null || name.equals("error")) {
-                    createIfNull = false;
-                    throw new Exception("UUID is null!");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (createIfNull /*&& uuid != null*/) {
-                return PlayerUtils.getOrCreate(uuid);
-            } else {
-                if (PlayerUtils.exists(name)) {
-                    return PlayerUtils.getOrCreate(uuid);
-                } else {
-                    return null;
-                }
-            }
-        } catch (Exception e){
-            return null;
-        }
-    }
-
-    public static Player getPlayer(String name){
-        try {
-            if (PlayerUtils.exists(name)) {
-                if (PlayerUtils.hasStat(name)) {
-                    return PlayerUtils.getPlayerStat(name);
-                } else {
-                    return new Player(name);
-                }
-            }
-
-            return null;
-        } catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    public static Player getPlayerByUUID(String uuid, boolean createIfNull){
+//        try {
+//            String name = getCachedName(uuid);
+//
+//            try {
+//                if (uuid == null || name.equals("error")) {
+//                    createIfNull = false;
+//                    throw new Exception("UUID is null!");
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (createIfNull /*&& uuid != null*/) {
+//                return PlayerUtils.getOrCreateByUUID(uuid);
+//            } else {
+//                if (PlayerUtils.exists(name)) {
+//                    return PlayerUtils.getOrCreateByUUID(uuid);
+//                } else {
+//                    return null;
+//                }
+//            }
+//        } catch (Exception e){
+//            return null;
+//        }
+//    }
 
     public static String swapUUID(String uuid){
         if (uuid.contains("-")){

@@ -13,6 +13,7 @@ import net.plasmere.streamline.objects.configs.Bans;
 import net.plasmere.streamline.objects.configs.Lobbies;
 import net.plasmere.streamline.objects.configs.ServerConfig;
 import net.plasmere.streamline.objects.configs.ServerPermissions;
+import net.plasmere.streamline.objects.enums.NetworkState;
 import net.plasmere.streamline.objects.timers.*;
 import net.plasmere.streamline.utils.*;
 import net.plasmere.streamline.utils.holders.GeyserHolder;
@@ -212,6 +213,8 @@ public class StreamLine extends Plugin {
 
 	@Override
 	public void onEnable(){
+		PluginUtils.state = NetworkState.STARTING;
+
 		instance = this;
 
 		// Teller.
@@ -276,10 +279,14 @@ public class StreamLine extends Plugin {
 		PlayerUtils.applyConsole();
 
 		//getLogger().
+
+		PluginUtils.state = NetworkState.RUNNING;
 	}
 
 	@Override
 	public void onDisable() {
+		PluginUtils.state = NetworkState.STOPPING;
+
 		if (ConfigUtils.onCloseSafeKick) {
 			PlayerUtils.kickAll(ConfigUtils.onCloseKickMessage);
 		}
@@ -335,6 +342,8 @@ public class StreamLine extends Plugin {
 		saveGuilds();
 
 		PlayerUtils.removeOfflineStats();
+
+		PluginUtils.state = NetworkState.STOPPED;
 	}
 
 	public void saveGuilds(){

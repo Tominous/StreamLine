@@ -2,9 +2,10 @@ package net.plasmere.streamline.objects;
 
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
-import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.GuildUtils;
+import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
@@ -50,7 +51,7 @@ public class Guild {
         this.totalMembersByUUID.add(creatorUUID);
         this.totalMembers.add(PlayerUtils.getPlayerByUUID(creatorUUID));
         try {
-            Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(creatorUUID, true)).updateKey("guild", creatorUUID.toString());
+            PlayerUtils.getOrCreateByUUID(creatorUUID).updateKey("guild", creatorUUID.toString());
         } catch (Exception e){
             // do nothing
         }
@@ -363,15 +364,15 @@ public class Guild {
         return tryUpdateFormat(fromSplit[0]) + "=" + fromSplit[1];
     }
 
-    public Player getMember(String uuid) {
-        Player player = UUIDFetcher.getPlayerByUUID(uuid, true);
+    public SavableUser getMember(String uuid) {
+        SavableUser stat = PlayerUtils.getOrCreateStatByUUID(uuid);
 
-        if (player == null) {
+        if (stat == null) {
             removeUUID(uuid);
             return null;
         }
 
-        return player;
+        return stat;
     }
 
     public void removeUUID(String uuid) {
@@ -386,11 +387,11 @@ public class Guild {
             moderators.clear();
             for (String uuid : modsByUUID) {
                 try {
-                    Player player = getMember(uuid);
+                    SavableUser stat = getMember(uuid);
 
-                    if (player == null) continue;
+                    if (stat == null) continue;
 
-                    moderators.add(player);
+                    moderators.add(stat);
                 } catch (Exception e) {
                     // do nothing
                 }
@@ -405,11 +406,11 @@ public class Guild {
             members.clear();
             for (String uuid : membersByUUID) {
                 try {
-                    Player player = getMember(uuid);
+                    SavableUser stat = getMember(uuid);
 
-                    if (player == null) continue;
+                    if (stat == null) continue;
 
-                    members.add(player);
+                    members.add(stat);
                 } catch (Exception e) {
                     // do nothing
                 }
@@ -425,11 +426,11 @@ public class Guild {
             for (String uuid : totalMembersByUUID) {
                 try {
                     //StreamLine.getInstance().getLogger().info("UUID : " + uuid.toString());
-                    Player player = getMember(uuid);
+                    SavableUser stat = getMember(uuid);
 
-                    if (player == null) continue;
+                    if (stat == null) continue;
 
-                    totalMembers.add(player);
+                    totalMembers.add(stat);
                 } catch (Exception e) {
                     // do nothing
                 }
@@ -444,11 +445,11 @@ public class Guild {
             invites.clear();
             for (String uuid : invitesByUUID) {
                 try {
-                    Player player = getMember(uuid);
+                    SavableUser stat = getMember(uuid);
 
-                    if (player == null) continue;
+                    if (stat == null) continue;
 
-                    invites.add(player);
+                    invites.add(stat);
                 } catch (Exception e) {
                     // do nothing
                 }
@@ -671,26 +672,26 @@ public class Guild {
         return totalMembersByUUID.contains(uuid);
     }
 
-    public boolean hasMember(Player player){
+    public boolean hasMember(SavableUser stat){
         loadMods();
         loadMems();
         loadTMems();
         loadInvs();
 
-        return hasPMember(player) || hasUUIDMember(player);
+        return hasPMember(stat) || hasUUIDMember(stat);
     }
 
-    public boolean hasPMember(Player player){
+    public boolean hasPMember(SavableUser stat){
         try {
-            return totalMembers.contains(player);
+            return totalMembers.contains(stat);
         } catch (Exception e) {
             return false;
         }
     }
 
-    public boolean hasUUIDMember(Player player){
+    public boolean hasUUIDMember(SavableUser stat){
         try {
-          return hasMember(player.uuid);
+          return hasMember(stat.uuid);
         } catch (Exception e){
             return false;
         }
@@ -704,9 +705,9 @@ public class Guild {
         }
     }
 
-    public boolean hasModPerms(Player player) {
+    public boolean hasModPerms(SavableUser stat) {
         try {
-            return moderators.contains(player) || leaderUUID.equals(player.uuid);
+            return moderators.contains(stat) || leaderUUID.equals(stat.uuid);
         } catch (Exception e) {
             return false;
         }
@@ -716,9 +717,9 @@ public class Guild {
         return totalMembersByUUID.size();
     }
 
-    public String removeFromModerators(Player player){
-        modsByUUID.remove(player.uuid);
-        moderators.remove(player);
+    public String removeFromModerators(SavableUser stat){
+        modsByUUID.remove(stat.uuid);
+        moderators.remove(stat);
 
         StringBuilder builder = new StringBuilder();
 
@@ -735,9 +736,9 @@ public class Guild {
         return builder.toString();
     }
 
-    public String remFromMembers(Player player){
-        membersByUUID.remove(player.uuid);
-        members.remove(player);
+    public String remFromMembers(SavableUser stat){
+        membersByUUID.remove(stat.uuid);
+        members.remove(stat);
 
         StringBuilder builder = new StringBuilder();
 
@@ -754,9 +755,9 @@ public class Guild {
         return builder.toString();
     }
 
-    public String remFromTMembers(Player player){
-        totalMembersByUUID.remove(player.uuid);
-        totalMembers.remove(player);
+    public String remFromTMembers(SavableUser stat){
+        totalMembersByUUID.remove(stat.uuid);
+        totalMembers.remove(stat);
 
         StringBuilder builder = new StringBuilder();
 
@@ -773,9 +774,9 @@ public class Guild {
         return builder.toString();
     }
 
-    public String remFromInvites(Player from, Player player){
-        invitesByUUID.remove(player.uuid);
-        invites.remove(player);
+    public String remFromInvites(SavableUser from, SavableUser stat){
+        invitesByUUID.remove(stat.uuid);
+        invites.remove(stat);
 
         StringBuilder builder = new StringBuilder();
 
@@ -789,16 +790,16 @@ public class Guild {
             }
         }
 
-        GuildUtils.removeInvite(GuildUtils.getGuild(from), player);
+        GuildUtils.removeInvite(GuildUtils.getGuild(from), stat);
 
         updateKey("invites", builder.toString());
 
         return builder.toString();
     }
 
-    public String addToModerators(Player player){
-        modsByUUID.add(player.uuid);
-        moderators.add(player);
+    public String addToModerators(SavableUser stat){
+        modsByUUID.add(stat.uuid);
+        moderators.add(stat);
 
         StringBuilder builder = new StringBuilder();
 
@@ -815,9 +816,9 @@ public class Guild {
         return builder.toString();
     }
 
-    public String addToMembers(Player player){
-        membersByUUID.add(player.uuid);
-        members.add(player);
+    public String addToMembers(SavableUser stat){
+        membersByUUID.add(stat.uuid);
+        members.add(stat);
 
         StringBuilder builder = new StringBuilder();
 
@@ -834,9 +835,9 @@ public class Guild {
         return builder.toString();
     }
 
-    public String addToTMembers(Player player){
-        totalMembersByUUID.add(player.uuid);
-        totalMembers.add(player);
+    public String addToTMembers(SavableUser stat){
+        totalMembersByUUID.add(stat.uuid);
+        totalMembers.add(stat);
 
         StringBuilder builder = new StringBuilder();
 
@@ -853,9 +854,9 @@ public class Guild {
         return builder.toString();
     }
 
-    public String addToInvites(Player player){
-        invitesByUUID.add(player.uuid);
-        invites.add(player);
+    public String addToInvites(SavableUser stat){
+        invitesByUUID.add(stat.uuid);
+        invites.add(stat);
 
         StringBuilder builder = new StringBuilder();
 
@@ -872,11 +873,11 @@ public class Guild {
         return builder.toString();
     }
 
-    public void addMember(Player player){
-        updateKey("total-members", addToTMembers(player));
-        updateKey("members", addToMembers(player));
+    public void addMember(SavableUser stat){
+        updateKey("total-members", addToTMembers(stat));
+        updateKey("members", addToMembers(stat));
 
-        player.updateKey("guild", leaderUUID.toString());
+        stat.updateKey("guild", leaderUUID.toString());
 
         try {
             saveInfo();
@@ -885,15 +886,15 @@ public class Guild {
         }
     }
 
-    public void removeMemberFromGuild(Player player){
+    public void removeMemberFromGuild(SavableUser stat){
         Random RNG = new Random();
 
-        if (leaderUUID.equals(player.uuid)){
+        if (leaderUUID.equals(stat.uuid)){
             if (totalMembers.size() <= 1) {
                 try {
-                    updateKey("total-members", remFromTMembers(player));
-                    updateKey("members", remFromMembers(player));
-                    updateKey("mods", removeFromModerators(player));
+                    updateKey("total-members", remFromTMembers(stat));
+                    updateKey("members", remFromMembers(stat));
+                    updateKey("mods", removeFromModerators(stat));
                     disband();
                 } catch (Throwable e) {
                     e.printStackTrace();
@@ -918,13 +919,13 @@ public class Guild {
             }
         }
 
-        updateKey("total-members", remFromTMembers(player));
+        updateKey("total-members", remFromTMembers(stat));
         updateKey("leader", leaderUUID);
-        updateKey("members", remFromMembers(player));
-        updateKey("mods", removeFromModerators(player));
+        updateKey("members", remFromMembers(stat));
+        updateKey("mods", removeFromModerators(stat));
     }
 
-    public void addInvite(Player to) {
+    public void addInvite(SavableUser to) {
         updateKey("invites", addToInvites(to));
         loadVars();
     }
@@ -937,7 +938,7 @@ public class Guild {
         updateKey("public", bool);
     }
 
-    public Level getLevel(Player member){
+    public Level getLevel(SavableUser member){
         if (this.membersByUUID.contains(member.uuid))
             return Level.MEMBER;
         else if (this.modsByUUID.contains(member.uuid))
@@ -948,17 +949,17 @@ public class Guild {
             return Level.MEMBER;
     }
 
-    public void setModerator(Player player){
+    public void setModerator(SavableUser stat){
         Random RNG = new Random();
 
-        forModeratorRemove(player);
+        forModeratorRemove(stat);
 
-        if (leaderUUID.equals(player.uuid)){
+        if (leaderUUID.equals(stat.uuid)){
             if (totalMembers.size() <= 1) {
                 try {
-                    updateKey("total-members", remFromTMembers(player));
-                    updateKey("members", remFromMembers(player));
-                    updateKey("mods", removeFromModerators(player));
+                    updateKey("total-members", remFromTMembers(stat));
+                    updateKey("members", remFromMembers(stat));
+                    updateKey("mods", removeFromModerators(stat));
                     disband();
                 } catch (Throwable e) {
                     e.printStackTrace();
@@ -987,8 +988,8 @@ public class Guild {
         loadMems();
 
         updateKey("leader", leaderUUID);
-        updateKey("members", remFromMembers(player));
-        updateKey("mods", addToModerators(player));
+        updateKey("members", remFromMembers(stat));
+        updateKey("mods", addToModerators(stat));
 
         try {
             saveInfo();
@@ -997,17 +998,17 @@ public class Guild {
         }
     }
 
-    public void setMember(Player player){
+    public void setMember(SavableUser stat){
         Random RNG = new Random();
 
-        forMemberRemove(player);
+        forMemberRemove(stat);
 
-        if (leaderUUID.equals(player.uuid)){
+        if (leaderUUID.equals(stat.uuid)){
             if (totalMembers.size() <= 1) {
                 try {
-                    updateKey("total-members", remFromTMembers(player));
-                    updateKey("members", remFromMembers(player));
-                    updateKey("mods", removeFromModerators(player));
+                    updateKey("total-members", remFromTMembers(stat));
+                    updateKey("members", remFromMembers(stat));
+                    updateKey("mods", removeFromModerators(stat));
                     disband();
                 } catch (Throwable e) {
                     e.printStackTrace();
@@ -1036,8 +1037,8 @@ public class Guild {
         loadMems();
 
         updateKey("leader", leaderUUID);
-        updateKey("members", addToMembers(player));
-        updateKey("mods", removeFromModerators(player));
+        updateKey("members", addToMembers(stat));
+        updateKey("mods", removeFromModerators(stat));
 
         try {
             saveInfo();
@@ -1046,25 +1047,25 @@ public class Guild {
         }
     }
 
-    public void forModeratorRemove(Player player){
-        this.modsByUUID.removeIf(m -> m.equals(player.uuid));
+    public void forModeratorRemove(SavableUser stat){
+        this.modsByUUID.removeIf(m -> m.equals(stat.uuid));
         updateKey("mods", getModeratorsAsStringed());
     }
 
-    public void forMemberRemove(Player player){
-        this.membersByUUID.removeIf(m -> m.equals(player.uuid));
+    public void forMemberRemove(SavableUser stat){
+        this.membersByUUID.removeIf(m -> m.equals(stat.uuid));
         updateKey("members", getMembersAsStringed());
     }
 
-    public void forTotalMembersRemove(Player player){
-        this.totalMembersByUUID.removeIf(m -> m.equals(player.uuid));
+    public void forTotalMembersRemove(SavableUser stat){
+        this.totalMembersByUUID.removeIf(m -> m.equals(stat.uuid));
         updateKey("total-members", getTotalMembersAsStringed());
     }
 
-    public void replaceLeader(Player player){
+    public void replaceLeader(SavableUser stat){
         updateKey("mods", getModeratorsAsStringed() + "." + leaderUUID.toString());
         modsByUUID = loadModerators();
-        updateKey("leader", player.uuid);
+        updateKey("leader", stat.uuid);
         updateKey("mods", getModeratorsAsStringed()
                 .replace("." + leaderUUID.toString(), "")
                 .replace(leaderUUID.toString() + ".", "")
@@ -1075,7 +1076,7 @@ public class Guild {
 
         loadMods();
 
-        GuildUtils.removeGuild(Objects.requireNonNull(GuildUtils.getGuild(player)));
+        GuildUtils.removeGuild(Objects.requireNonNull(GuildUtils.getGuild(stat)));
 
         file.delete();
 
@@ -1110,11 +1111,11 @@ public class Guild {
 
     public void disband(){
         for (String uuid : totalMembersByUUID){
-            Player player = UUIDFetcher.getPlayerByUUID(uuid, true);
+            SavableUser stat = PlayerUtils.getOrCreateByUUID(uuid);
 
-            if (player == null) continue;
+            if (stat == null) continue;
 
-            player.updateKey("guild", "");
+            stat.updateKey("guild", "");
         }
 
         GuildUtils.removeGuild(this);
@@ -1148,6 +1149,6 @@ public class Guild {
         }
         writer.close();
 
-        //StreamLine.getInstance().getLogger().info("Just saved Player info for player: " + PlayerUtils.getOffOnReg(player));
+        //StreamLine.getInstance().getLogger().info("Just saved SavableUser info for stat: " + PlayerUtils.getOffOnReg(stat));
     }
 }

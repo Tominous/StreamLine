@@ -38,7 +38,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.joinParty(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), UUIDFetcher.getPlayer(args[1]));
+                        PartyUtils.joinParty(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), PlayerUtils.getOrCreate(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();
@@ -46,14 +46,14 @@ public class PartyCommand extends Command implements TabExecutor {
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParLeaveAliases)) {
                 try {
-                    PartyUtils.leaveParty(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                    PartyUtils.leaveParty(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParCreateAliases)) {
                 try {
-                    PartyUtils.createParty(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                    PartyUtils.createParty(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
@@ -63,7 +63,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                 } else {
                     try {
-                        PartyUtils.promotePlayer(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), UUIDFetcher.getPlayer(args[1]));
+                        PartyUtils.promotePlayer(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), PlayerUtils.getOrCreate(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();
@@ -79,7 +79,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.demotePlayer(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), UUIDFetcher.getPlayer(args[1]));
+                        PartyUtils.demotePlayer(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), PlayerUtils.getOrCreate(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();
@@ -95,7 +95,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.sendChat(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), TextUtils.argsToStringMinus(args, 0));
+                        PartyUtils.sendChat(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), TextUtils.argsToStringMinus(args, 0));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();
@@ -103,7 +103,7 @@ public class PartyCommand extends Command implements TabExecutor {
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParListAliases)) {
                 try {
-                    PartyUtils.listParty(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                    PartyUtils.listParty(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
@@ -111,7 +111,7 @@ public class PartyCommand extends Command implements TabExecutor {
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParOpenAliases)) {
                 if (args.length <= 1) {
                     try {
-                        PartyUtils.openParty(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                        PartyUtils.openParty(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
                     }  catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();
@@ -119,9 +119,9 @@ public class PartyCommand extends Command implements TabExecutor {
                 } else {
                     try {
                         if (PartyUtils.getParty(PlayerUtils.getPlayerStat(sender)) != null) {
-                            PartyUtils.openPartySized(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), Integer.parseInt(args[1]));
+                            PartyUtils.openPartySized(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), Integer.parseInt(args[1]));
                         } else {
-                            PartyUtils.createPartySized(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), Integer.parseInt(args[1]));
+                            PartyUtils.createPartySized(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), Integer.parseInt(args[1]));
                         }
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
@@ -130,14 +130,14 @@ public class PartyCommand extends Command implements TabExecutor {
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParCloseAliases)) {
                 try {
-                    PartyUtils.closeParty(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                    PartyUtils.closeParty(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParDisbandAliases)) {
                 try {
-                    PartyUtils.disband(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                    PartyUtils.disband(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
                 } catch (Throwable e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
@@ -152,7 +152,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.acceptInvite(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), UUIDFetcher.getPlayer(args[1]));
+                        PartyUtils.acceptInvite(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), PlayerUtils.getOrCreate(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();
@@ -168,7 +168,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.denyInvite(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), UUIDFetcher.getPlayer(args[1]));
+                        PartyUtils.denyInvite(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), PlayerUtils.getOrCreate(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();
@@ -184,7 +184,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.sendInvite(UUIDFetcher.getPlayer(args[1]), Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                        PartyUtils.sendInvite(PlayerUtils.getOrCreate(args[1]), Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();
@@ -200,7 +200,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        PartyUtils.kickMember(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), UUIDFetcher.getPlayer(args[1]));
+                        PartyUtils.kickMember(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)), PlayerUtils.getOrCreate(args[1]));
                     } catch (Exception e) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         e.printStackTrace();
@@ -208,28 +208,28 @@ public class PartyCommand extends Command implements TabExecutor {
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParMuteAliases)) {
                 try {
-                    PartyUtils.muteParty(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                    PartyUtils.muteParty(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
                 } catch (Throwable e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBParWarpAliases)) {
                 try {
-                    PartyUtils.warpParty(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                    PartyUtils.warpParty(Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
                 } catch (Throwable e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
                 }
             } else {
                 try {
-                    Player p = UUIDFetcher.getPlayer(args[0]);
+                    Player p = PlayerUtils.getOrCreate(args[0]);
 
                     if (p == null) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         return;
                     }
 
-                    PartyUtils.sendInvite(p, Objects.requireNonNull(UUIDFetcher.getPlayer(sender)));
+                    PartyUtils.sendInvite(p, Objects.requireNonNull(PlayerUtils.getOrCreate(sender)));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();

@@ -67,7 +67,7 @@ public class BanCommand extends Command implements TabExecutor {
                     StreamLine.bans.saveConfig();
 
                     if (PlayerUtils.isOnline(otherName)) {
-                        ProxiedPlayer pp = UUIDFetcher.getPPlayerByUUID(otherUUID);
+                        ProxiedPlayer pp = PlayerUtils.getPPlayerByUUID(otherUUID);
 
                         if (pp != null) {
                             pp.disconnect(TextUtils.codedText(MessageConfUtils.punBannedTemp
@@ -104,7 +104,7 @@ public class BanCommand extends Command implements TabExecutor {
                 StreamLine.bans.saveConfig();
 
                 if (PlayerUtils.isOnline(otherName)) {
-                    ProxiedPlayer pp = UUIDFetcher.getPPlayerByUUID(otherUUID);
+                    ProxiedPlayer pp = PlayerUtils.getPPlayerByUUID(otherUUID);
 
                     if (pp != null) {
                         pp.disconnect(TextUtils.codedText(MessageConfUtils.punBannedPerm
@@ -152,7 +152,7 @@ public class BanCommand extends Command implements TabExecutor {
                     StreamLine.bans.saveConfig();
 
                     if (PlayerUtils.isOnline(otherName)) {
-                        ProxiedPlayer pp = UUIDFetcher.getPPlayerByUUID(otherUUID);
+                        ProxiedPlayer pp = PlayerUtils.getPPlayerByUUID(otherUUID);
 
                         if (pp != null) {
                             pp.disconnect(TextUtils.codedText(MessageConfUtils.punBannedTemp

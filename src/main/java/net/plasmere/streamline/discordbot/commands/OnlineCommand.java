@@ -45,9 +45,9 @@ public class OnlineCommand {
         for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()){
             if (!player.hasPermission("streamline.staff.vanish")){
                 if (i < StreamLine.getInstance().getProxy().getPlayers().size())
-                    text.append(PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))).append(", ");
+                    text.append(PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(player))).append(", ");
                 else
-                    text.append(PlayerUtils.getOffOnRegDiscord(Objects.requireNonNull(UUIDFetcher.getPlayer(player)))).append(".");
+                    text.append(PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(player))).append(".");
             } else {
                 if (i < StreamLine.getInstance().getProxy().getPlayers().size())
                     text.append("HIDDEN").append(", ");

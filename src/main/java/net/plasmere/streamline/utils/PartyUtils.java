@@ -38,7 +38,7 @@ public class PartyUtils {
     public static Party getParty(String uuid) {
         try {
             for (Party party : parties) {
-                if (party.hasMember(UUIDFetcher.getPlayerByUUID(uuid, true)))
+                if (party.hasMember(PlayerUtils.getOrCreateByUUID(uuid)))
                     return party;
             }
             return null;
@@ -83,7 +83,7 @@ public class PartyUtils {
     }
 
     public static void createParty(Player player) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(player.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(player.uuid);
 
         if (p == null) return;
 
@@ -105,9 +105,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, createTitle,
                         createConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(player))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -117,7 +117,7 @@ public class PartyUtils {
     }
 
     public static void createPartySized(Player player, int size) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(player.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(player.uuid);
 
         if (p == null) return;
 
@@ -146,9 +146,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, createTitle,
                         createConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(player))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -157,9 +157,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, openTitle,
                         openConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(player))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -179,7 +179,7 @@ public class PartyUtils {
     public static void removeParty(Party party){ parties.remove(party); }
 
     public static void sendInvite(Player to, Player from) {
-        ProxiedPlayer player = UUIDFetcher.getPPlayerByUUID(from.uuid);
+        ProxiedPlayer player = PlayerUtils.getPPlayerByUUID(from.uuid);
 
         if (player == null) return;
 
@@ -223,8 +223,8 @@ public class PartyUtils {
                 MessagingUtils.sendBPUserMessage(party, player, to.player, inviteUser
                         .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(from))
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
-                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
-                        .replace("%leaderdefault%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
+                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
+                        .replace("%leader_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                 );
             }
 
@@ -235,7 +235,7 @@ public class PartyUtils {
             for (Player pl : party.totalMembers) {
                 if (! pl.online) continue;
 
-                ProxiedPlayer member = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                ProxiedPlayer member = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                 if (member == null) {
                     if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("member == null");
@@ -246,15 +246,15 @@ public class PartyUtils {
                     MessagingUtils.sendBPUserMessage(party, player, member, inviteLeader
                             .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(from))
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
-                            .replace("%leaderdefault%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                     );
                 } else {
                     MessagingUtils.sendBPUserMessage(party, player, member, inviteMembers
                             .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(from))
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
-                            .replace("%leaderdefault%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayerByUUID(party.leaderUUID, true))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                     );
                 }
             }
@@ -267,9 +267,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player, inviteTitle,
                         inviteConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(from))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(from))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(to))
                                 .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
                                 .replace("%size%", String.valueOf(party.maxSize))
@@ -281,7 +281,7 @@ public class PartyUtils {
     }
 
     public static void acceptInvite(Player accepter, Player from) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(accepter.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(accepter.uuid);
 
         if (p == null) return;
 
@@ -317,7 +317,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers){
                     if (! pl.online) continue;
 
-                    ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                    ProxiedPlayer m = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                     if (m == null) continue;
 
@@ -341,9 +341,9 @@ public class PartyUtils {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, joinsTitle,
                             joinsConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(accepter))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                     .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
-                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                     .replace("%size%", String.valueOf(party.maxSize))
                             , ConfigUtils.textChannelParties));
                 }
@@ -352,9 +352,9 @@ public class PartyUtils {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, acceptTitle,
                             acceptConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(accepter))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                     .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
-                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                     .replace("%size%", String.valueOf(party.maxSize))
                             , ConfigUtils.textChannelParties));
                 }
@@ -365,7 +365,7 @@ public class PartyUtils {
     }
 
     public static void denyInvite(Player denier, Player from) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(denier.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(denier.uuid);
 
         if (p == null) return;
 
@@ -397,7 +397,7 @@ public class PartyUtils {
             for (Player pl : party.totalMembers){
                 if (! pl.online) continue;
 
-                ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                ProxiedPlayer m = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                 if (m == null) continue;
 
@@ -418,9 +418,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, denyTitle,
                         denyConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(denier))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(denier))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -430,7 +430,7 @@ public class PartyUtils {
     }
 
     public static void warpParty(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
 
@@ -454,7 +454,7 @@ public class PartyUtils {
         for (Player player : party.totalMembers){
             if (! player.online) continue;
 
-            ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(player.uuid);
+            ProxiedPlayer m = PlayerUtils.getPPlayerByUUID(player.uuid);
 
             if (m == null) continue;
 
@@ -471,16 +471,16 @@ public class PartyUtils {
             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, warpTitle,
                     warpConsole
                             .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                             .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                             .replace("%size%", String.valueOf(party.maxSize))
                     , ConfigUtils.textChannelParties));
         }
     }
 
     public static void muteParty(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
 
@@ -505,7 +505,7 @@ public class PartyUtils {
             for (Player player : party.totalMembers) {
                 if (! player.online) continue;
 
-                ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(player.uuid);
+                ProxiedPlayer m = PlayerUtils.getPPlayerByUUID(player.uuid);
 
                 if (m == null) continue;
 
@@ -520,7 +520,7 @@ public class PartyUtils {
             for (Player player : party.totalMembers) {
                 if (! player.online) continue;
 
-                ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(player.uuid);
+                ProxiedPlayer m = PlayerUtils.getPPlayerByUUID(player.uuid);
 
                 if (m == null) continue;
 
@@ -538,9 +538,9 @@ public class PartyUtils {
             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, muteTitle,
                     muteConsole
                             .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                             .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                             .replace("%size%", String.valueOf(party.maxSize))
                             .replace("%toggle%", party.isMuted ? muteToggleMuted : muteToggleUnMuted)
                     , ConfigUtils.textChannelParties));
@@ -548,7 +548,7 @@ public class PartyUtils {
     }
 
     public static void kickMember(Player sender, Player player) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
 
@@ -589,7 +589,7 @@ public class PartyUtils {
             for (Player pl : party.totalMembers) {
                 if (! pl.online) continue;
 
-                ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                ProxiedPlayer m = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                 if (m == null) continue;
 
@@ -616,9 +616,9 @@ public class PartyUtils {
             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(player.player, kickTitle,
                     kickConsole
                             .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                             .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                             .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
                             .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
                             .replace("%size%", String.valueOf(party.maxSize))
@@ -627,7 +627,7 @@ public class PartyUtils {
     }
 
     public static void disband(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
 
@@ -652,7 +652,7 @@ public class PartyUtils {
             for (Player pl : party.totalMembers) {
                 if (! pl.online) continue;
 
-                ProxiedPlayer member = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                ProxiedPlayer member = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                 if (member == null) continue;
 
@@ -672,9 +672,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, disbandTitle,
                         disbandConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -688,7 +688,7 @@ public class PartyUtils {
     }
 
     public static void openParty(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
 
@@ -721,7 +721,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers) {
                     if (! pl.online) continue;
 
-                    ProxiedPlayer member = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                    ProxiedPlayer member = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                     if (member == null) continue;
 
@@ -743,9 +743,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, openTitle,
                         openConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -755,7 +755,7 @@ public class PartyUtils {
     }
 
     public static void openPartySized(Player sender, int size) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
 
@@ -789,7 +789,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers) {
                     if (! pl.online) continue;
 
-                    ProxiedPlayer member = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                    ProxiedPlayer member = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                     if (member == null) continue;
 
@@ -811,9 +811,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, openTitle,
                         openConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -823,7 +823,7 @@ public class PartyUtils {
     }
 
     public static void closeParty(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -855,7 +855,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers) {
                     if (! pl.online) continue;
 
-                    ProxiedPlayer member = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                    ProxiedPlayer member = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                     if (member == null) continue;
 
@@ -877,9 +877,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, closeTitle,
                         closeConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }
@@ -889,7 +889,7 @@ public class PartyUtils {
     }
 
     public static void listParty(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -1002,7 +1002,7 @@ public class PartyUtils {
     }
 
     public static void promotePlayer(Player sender, Player member) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -1045,7 +1045,7 @@ public class PartyUtils {
                     for (Player pl : party.totalMembers) {
                         if (! pl.online) continue;
 
-                        ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                        ProxiedPlayer m = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                         if (m == null) continue;
 
@@ -1086,7 +1086,7 @@ public class PartyUtils {
                     for (Player pl : party.totalMembers) {
                         if (! pl.online) continue;
 
-                        ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                        ProxiedPlayer m = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                         if (m == null) continue;
 
@@ -1126,9 +1126,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, promoteTitle,
                         promoteConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
                                 .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(member))
                                 .replace("%size%", String.valueOf(party.maxSize))
@@ -1140,7 +1140,7 @@ public class PartyUtils {
     }
 
     public static void demotePlayer(Player sender, Player member) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -1180,7 +1180,7 @@ public class PartyUtils {
                     for (Player pl : party.totalMembers) {
                         if (! pl.online) continue;
 
-                        ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                        ProxiedPlayer m = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                         if (m == null) continue;
 
@@ -1219,9 +1219,9 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, demoteTitle,
                         demoteConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
                                 .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(member))
                                 .replace("%size%", String.valueOf(party.maxSize))
@@ -1233,7 +1233,7 @@ public class PartyUtils {
     }
 
     public static void joinParty(Player sender, Player from) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -1260,7 +1260,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers) {
                     if (! pl.online) continue;
 
-                    ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                    ProxiedPlayer m = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                     if (m == null) continue;
 
@@ -1281,9 +1281,9 @@ public class PartyUtils {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, joinsTitle,
                             joinsConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                     .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                     .replace("%size%", String.valueOf(party.maxSize))
                             , ConfigUtils.textChannelParties));
                 }
@@ -1341,7 +1341,7 @@ public class PartyUtils {
     }
 
     public static void leaveParty(Player sender) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -1361,7 +1361,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers) {
                     if (! pl.online) continue;
 
-                    ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                    ProxiedPlayer m = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                     if (m == null) continue;
 
@@ -1383,7 +1383,7 @@ public class PartyUtils {
                 for (Player pl : party.totalMembers) {
                     if (! pl.online) continue;
 
-                    ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                    ProxiedPlayer m = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                     if (m == null) continue;
 
@@ -1406,9 +1406,9 @@ public class PartyUtils {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(p, leaveTitle,
                             leaveConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                     .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                     .replace("%size%", String.valueOf(party.maxSize))
                             , ConfigUtils.textChannelParties));
                 }
@@ -1421,7 +1421,7 @@ public class PartyUtils {
     }
 
     public static void sendChat(Player sender, String msg) {
-        ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(sender.uuid);
+        ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(sender.uuid);
 
         if (p == null) return;
         try {
@@ -1455,7 +1455,7 @@ public class PartyUtils {
             for (Player pl : party.totalMembers) {
                 if (! pl.online) continue;
 
-                ProxiedPlayer m = UUIDFetcher.getPPlayerByUUID(pl.uuid);
+                ProxiedPlayer m = PlayerUtils.getPPlayerByUUID(pl.uuid);
 
                 if (m == null) continue;
 
@@ -1470,9 +1470,9 @@ public class PartyUtils {
                         chatConsole
                                 .replace("%message%", msg)
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(party.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateByUUID(party.leaderUUID)))
                                 .replace("%size%", String.valueOf(party.maxSize))
                         , ConfigUtils.textChannelParties));
             }

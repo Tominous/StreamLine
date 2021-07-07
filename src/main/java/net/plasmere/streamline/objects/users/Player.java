@@ -66,7 +66,7 @@ public class Player extends SavableUser {
 
     @Override
     public void preConstruct(String string) {
-        this.player = UUIDFetcher.getPPlayerByUUID(string);
+        this.player = PlayerUtils.getPPlayerByUUID(string);
 
         String ipSt = player.getSocketAddress().toString().replace("/", "");
         String[] ipSplit = ipSt.split(":");

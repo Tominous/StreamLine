@@ -11,7 +11,7 @@ no-permission: "&cSorry, but you do not have permission to do this..."
 # Message shown when reloading.
 reload-message: "&aConfiguration reloaded!"
 # For things that only players can do.
-only-players: "&cSorry, but this can only be used by a player!"
+only-players: "&cSorry, but only real players can use this command...!"
 # Player not found...
 no-player: "&cSorry, but that player either does not exist or is not online..."
 # Discord error title.
@@ -581,9 +581,9 @@ party:
     # %sender% = person sending the request.
     # %user% = the accepter.
     # %leader% = the party leader.
-    # %leaderdefault% = the party leader formatted without their display name.
+    # %leader_normal% = the party leader formatted without their display name.
     # User who is being invited.
-    user: "&b%sender% &einvited you to &b%leader%&e's party!%newline%&eType &a/party accept %leaderdefault% &eto join!"
+    user: "&b%sender% &einvited you to &b%leader%&e's party!%newline%&eType &a/party accept %leader_normal% &eto join!"
     # Members of party.
     members: "&b%sender% &einvited &b%user% &eto your party!"
     # Leader of party.
@@ -687,7 +687,7 @@ stream:
   # If what they supplied wasn't a link.
   not-link: "&cSorry, but you need to specify a link beginning with \"https://\"..."
   # Message: (Do not put anything directly after the link. You need a space!
-  message: "&a%user% &dis streaming at &b&o&n%link%... &dCome and check it out!"
+  message: "&a%user% &dis streaming at &b&n%link%&8... &dCome and check it out!"
   # Hover formatted prefix.
   hover-prefix: "&b&o&n"
 
@@ -1099,9 +1099,9 @@ guild:
     # %sender% = person sending the request.
     # %user% = the accepter.
     # %leader% = the guild leader.
-    # %leaderdefault% = the guild leader formatted without their display name.
+    # %leader_normal% = the guild leader formatted without their display name.
     # For user who was invited.
-    user: "&b%sender% &einvited you to &b%leader%&e's guild!%newline%&eType &a/guild accept %leaderdefault% &eto join!"
+    user: "&b%sender% &einvited you to &b%leader%&e's guild!%newline%&eType &a/guild accept %leader_normal% &eto join!"
     # For members.
     members: "&b%sender% &einvited &b%user% &eto your guild!"
     # For leader.
@@ -1599,7 +1599,7 @@ friend:
     # What you see.
     self: "&eYou just requested &d%player%&e to be your &afriend&e!"
     # What they see.
-    other: "&d%sender% &ejust requested you to be their &afriend&e!%newline%&eType &b/f accept %sender_name% &eto accept!"
+    other: "&d%sender% &ejust requested you to be their &afriend&e!%newline%&eType &b/f accept %sender% &eto accept!"
     # Already added.
     already: "&cYou already friended &d%player%&e!"
     # Not self.
@@ -1747,4 +1747,4 @@ settings:
 # %num_listeners% = the number of listeners loaded.
 # %num_events% = the number of events loaded.
 # %discord% = the plugin's discord server.
-info: "&eYou are currently running &b%name% &7[&av%version%&7] &eby &d%author%%newline%&eLoaded commands&8: &a%num_commands%%newline%&eLoaded listeners&8: &a%num_listeners%%newline%&eLoaded custom events&8: &a%num_events%%newline%&eWant to get more out of the plugin&8? &5&lDiscord&8: &b&o%discord%"
+info: "&eYou are currently running &b%name% &7[&av%version%&7] &eby &d%author%%newline%&eLoaded commands&8: &a%num_commands%%newline%&eLoaded listeners&8: &a%num_listeners%%newline%&eLoaded custom events&8: &a%num_events%%newline%&eWant to get more out of the plugin&8? &5&lDiscord&8: &b&n%discord%"

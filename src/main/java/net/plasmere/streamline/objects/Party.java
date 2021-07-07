@@ -239,7 +239,7 @@ public class Party {
     public void loadLists(){
         totalMembers.clear();
         for (String u : totalMembersByUUID) {
-            Player p = UUIDFetcher.getPlayerByUUID(u, true);
+            Player p = PlayerUtils.getOrCreateByUUID(u, true);
             if (p == null) continue;
 
             totalMembers.add(p);
@@ -247,7 +247,7 @@ public class Party {
 
         members.clear();
         for (String u : membersByUUID) {
-            Player p = UUIDFetcher.getPlayerByUUID(u, true);
+            Player p = PlayerUtils.getOrCreateByUUID(u, true);
             if (p == null) continue;
 
             members.add(p);
@@ -255,7 +255,7 @@ public class Party {
 
         moderators.clear();
         for (String u : modsByUUID) {
-            Player p = UUIDFetcher.getPlayerByUUID(u, true);
+            Player p = PlayerUtils.getOrCreateByUUID(u, true);
             if (p == null) continue;
 
             moderators.add(p);
@@ -263,13 +263,13 @@ public class Party {
 
         invites.clear();
         for (String u : invitesByUUID) {
-            Player p = UUIDFetcher.getPlayerByUUID(u, true);
+            Player p = PlayerUtils.getOrCreateByUUID(u, true);
             if (p == null) continue;
 
             invites.add(p);
         }
 
-        Player pl = UUIDFetcher.getPlayerByUUID(leaderUUID, true);
+        Player pl = PlayerUtils.getOrCreateByUUID(leaderUUID, true);
         if (pl == null) return;
 
         this.leader = pl;

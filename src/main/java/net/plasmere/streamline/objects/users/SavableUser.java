@@ -76,7 +76,7 @@ public abstract class SavableUser {
         if (fileName.equals("console") || fileName.equals("%")) {
             return StreamLine.getInstance().getProxy().getConsole();
         } else {
-            return UUIDFetcher.getPPlayerByUUID(fileName);
+            return PlayerUtils.getPPlayerByUUID(fileName);
         }
     }
 

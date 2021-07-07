@@ -36,7 +36,7 @@ public class NetworkPointsCommand extends Command implements TabExecutor {
 
             if (stat == null) {
                 PlayerUtils.addStat(new Player(args[0]));
-                stat = PlayerUtils.getOrCreate(UUIDFetcher.getCachedUUID(args[0]));
+                stat = PlayerUtils.getOrCreateByUUID(UUIDFetcher.getCachedUUID(args[0]));
                 if (stat == null) {
                     StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);

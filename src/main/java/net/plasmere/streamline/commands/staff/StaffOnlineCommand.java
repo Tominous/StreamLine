@@ -46,12 +46,12 @@ public class StaffOnlineCommand extends Command {
         for (ProxiedPlayer player : lstaffs){
             if (i < lstaffs.size())
                 staff.append(MessageConfUtils.sOnlineBungeeBulkNotLast
-                        .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player))))
+                        .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreate(player)))
                         .replace("%server%", player.getServer().getInfo().getName().toLowerCase())
                 );
             else
                 staff.append(MessageConfUtils.sOnlineBungeeBulkLast
-                        .replace("%player%", PlayerUtils.getOffOnRegBungee(Objects.requireNonNull(UUIDFetcher.getPlayer(player))))
+                        .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreate(player)))
                         .replace("%server%", player.getServer().getInfo().getName().toLowerCase())
                 );
             i++;

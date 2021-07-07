@@ -27,12 +27,7 @@ public class IgnoreCommand extends Command implements TabExecutor {
         SavableUser stat = PlayerUtils.getStat(sender);
 
         if (stat == null) {
-            if (sender instanceof ProxiedPlayer) {
-                PlayerUtils.addStat(new Player((ProxiedPlayer) sender));
-            } else {
-                PlayerUtils.addStat(new ConsolePlayer());
-            }
-            stat = PlayerUtils.getPlayerStat(sender);
+            stat = PlayerUtils.getOrCreateStat(sender);
             if (stat == null) {
                 StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);

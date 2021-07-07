@@ -25,6 +25,7 @@ import net.plasmere.streamline.listeners.ChatListener;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Listener;
 import net.plasmere.streamline.listeners.ProxyPingListener;
+import net.plasmere.streamline.objects.enums.NetworkState;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +34,11 @@ import java.util.List;
 public class PluginUtils {
     public static int commandsAmount = 0;
     public static int listenerAmount = 0;
+    public static NetworkState state = NetworkState.NULL;
+
+    public static boolean isLocked(){
+        return state.equals(NetworkState.STOPPING) || state.equals(NetworkState.STOPPED);
+    }
 
     public static void unregisterCommand(StreamLine plugin, Command command){
         commandsAmount --;
