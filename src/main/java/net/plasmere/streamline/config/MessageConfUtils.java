@@ -39,8 +39,10 @@ public class MessageConfUtils {
     // Players.
     public static String offlineB = StreamLine.getConfig().getMessString("players.bungee.offline");
     public static String onlineB = StreamLine.getConfig().getMessString("players.bungee.online");
+    public static String nullB = StreamLine.getConfig().getMessString("players.bungee.null");
     public static String offlineD = StreamLine.getConfig().getMessString("players.discord.offline");
     public static String onlineD = StreamLine.getConfig().getMessString("players.discord.online");
+    public static String nullD = StreamLine.getConfig().getMessString("players.discord.null");
     // Redirect.
     public static String vbBlocked = StreamLine.getConfig().getMessString("redirect.by-version.blocked");
     // ... Punishments.

@@ -7,7 +7,9 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.users.ConsolePlayer;
 import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
@@ -22,20 +24,17 @@ public class IgnoreCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (sender instanceof ProxyServer) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
-            return;
-        }
-
-        ProxiedPlayer player = (ProxiedPlayer) sender;
-
-        Player stat = PlayerUtils.getPlayerStat(player);
+        SavableUser stat = PlayerUtils.getStat(sender);
 
         if (stat == null) {
-            PlayerUtils.addStat(new Player(player));
+            if (sender instanceof ProxiedPlayer) {
+                PlayerUtils.addStat(new Player((ProxiedPlayer) sender));
+            } else {
+                PlayerUtils.addStat(new ConsolePlayer());
+            }
             stat = PlayerUtils.getPlayerStat(sender);
             if (stat == null) {
-                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
+                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                 return;
             }
@@ -53,16 +52,17 @@ public class IgnoreCommand extends Command implements TabExecutor {
         } else if (args.length > 2) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess);
         } else {
-            Player other = PlayerUtils.getPlayerStat(args[1]);
+            SavableUser other;
 
-            if (other == null) {
-                PlayerUtils.addStat(new Player(UUIDFetcher.getCachedUUID(args[1])));
-                other = PlayerUtils.getPlayerStat(args[1]);
-                if (other == null) {
-                    StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[1]);
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+            if (args[0].equals("%")) {
+                other = PlayerUtils.getOrCreateStatByUUID("%");
+            } else {
+                if (! PlayerUtils.exists(args[0])) {
+                    MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
                     return;
                 }
+
+                other = PlayerUtils.getOrCreateStat(args[0]);
             }
 
             if (other.uuid == null) {
@@ -88,8 +88,8 @@ public class IgnoreCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreAddSelf
                             .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
                     );
-                    if (other.online) {
-                        MessagingUtils.sendBUserMessage(UUIDFetcher.getPPlayerByUUID(other.uuid), MessageConfUtils.ignoreAddIgnored
+                    if ((other instanceof Player && ((Player) other).online) || other instanceof ConsolePlayer) {
+                        MessagingUtils.sendBUserMessage(other.sender, MessageConfUtils.ignoreAddIgnored
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(stat))
                         );
                     }
@@ -111,8 +111,8 @@ public class IgnoreCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreRemSelf
                             .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
                     );
-                    if (other.online) {
-                        MessagingUtils.sendBUserMessage(UUIDFetcher.getPPlayerByUUID(other.uuid), MessageConfUtils.ignoreRemIgnored
+                    if ((other instanceof Player && ((Player) other).online) || other instanceof ConsolePlayer) {
+                        MessagingUtils.sendBUserMessage(other.sender, MessageConfUtils.ignoreRemIgnored
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(stat))
                         );
                     }
@@ -129,41 +129,39 @@ public class IgnoreCommand extends Command implements TabExecutor {
 
     @Override
     public Iterable<String> onTabComplete(final CommandSender sender, final String[] args) {
-        if (sender instanceof ProxiedPlayer) {
-            Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
-            List<String> strPlayers = new ArrayList<>();
-            List<String> ignored = new ArrayList<>();
+        Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
+        List<String> strPlayers = new ArrayList<>();
+        List<String> ignored = new ArrayList<>();
 
-            ProxiedPlayer p = (ProxiedPlayer) sender;
+        SavableUser player = PlayerUtils.getStat(sender);
 
-            Player player = PlayerUtils.getOrCreate(p.getUniqueId().toString());
+        if (player == null) return new ArrayList<>();
 
-            for (String uuid : player.ignoredList) {
-                ignored.add(UUIDFetcher.getName(uuid));
+        for (String uuid : player.ignoredList) {
+            ignored.add(UUIDFetcher.getName(uuid));
+        }
+
+        for (ProxiedPlayer pl : players) {
+            if (pl.equals(sender)) continue;
+            strPlayers.add(pl.getName());
+        }
+
+        strPlayers.add("%");
+
+        List<String> options = new ArrayList<>();
+
+        options.add("add");
+        options.add("remove");
+        options.add("list");
+
+        if (args.length == 1) {
+            return TextUtils.getCompletion(options, args[0]);
+        } else if (args.length == 2) {
+            if (args[0].equals("remove")) {
+                return TextUtils.getCompletion(ignored, args[1]);
+            } else {
+                return TextUtils.getCompletion(strPlayers, args[1]);
             }
-
-            for (ProxiedPlayer pl : players) {
-                if (pl.equals(sender)) continue;
-                strPlayers.add(pl.getName());
-            }
-
-            List<String> options = new ArrayList<>();
-
-            options.add("add");
-            options.add("remove");
-            options.add("list");
-
-            if (args.length == 1) {
-                return TextUtils.getCompletion(options, args[0]);
-            } else if (args.length == 2) {
-                if (args[0].equals("remove")) {
-                    return TextUtils.getCompletion(ignored, args[1]);
-                } else {
-                    return TextUtils.getCompletion(strPlayers, args[1]);
-                }
-            }
-
-            return new ArrayList<>();
         }
 
         return new ArrayList<>();

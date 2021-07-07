@@ -7,7 +7,9 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.users.ConsolePlayer;
 import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
@@ -24,20 +26,12 @@ public class FriendCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (sender instanceof ProxyServer) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
-            return;
-        }
-
-        ProxiedPlayer player = (ProxiedPlayer) sender;
-
-        Player stat = PlayerUtils.getPlayerStat(player);
+        SavableUser stat = PlayerUtils.getStat(sender);
 
         if (stat == null) {
-            PlayerUtils.addStat(new Player(player));
-            stat = PlayerUtils.getPlayerStat(sender);
+            stat = PlayerUtils.getOrCreateStat(sender);
             if (stat == null) {
-                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
+                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                 return;
             }
@@ -57,16 +51,17 @@ public class FriendCommand extends Command implements TabExecutor {
         } else if (args.length > 2) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess);
         } else {
-            Player other = PlayerUtils.getPlayerStat(args[1]);
+            SavableUser other;
 
-            if (other == null) {
-                PlayerUtils.addStat(new Player(UUIDFetcher.getCachedUUID(args[1])));
-                other = PlayerUtils.getPlayerStat(args[1]);
-                if (other == null) {
-                    StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[1]);
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+            if (args[0].equals("%")) {
+                other = PlayerUtils.getOrCreateStatByUUID("%");
+            } else {
+                if (! PlayerUtils.exists(args[0])) {
+                    MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
                     return;
                 }
+
+                other = PlayerUtils.getOrCreateStat(args[0]);
             }
 
             if (other.uuid == null) {
@@ -100,10 +95,9 @@ public class FriendCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendReqSelf
                             .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
                     );
-                    if (other.online) {
-                        MessagingUtils.sendBUserMessage(UUIDFetcher.getPPlayerByUUID(other.uuid), MessageConfUtils.friendReqOther
+                    if ((other instanceof Player && ((Player) other).online) || other instanceof ConsolePlayer) {
+                        MessagingUtils.sendBUserMessage(other.sender, MessageConfUtils.friendReqOther
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(stat))
-                                .replace("%sender_name%", stat.latestName)
                         );
                     }
                     break;
@@ -123,8 +117,9 @@ public class FriendCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendAcceptSelf
                             .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
                     );
-                    if (other.online) {
-                        MessagingUtils.sendBUserMessage(UUIDFetcher.getPPlayerByUUID(other.uuid), MessageConfUtils.friendAcceptOther
+
+                    if ((other instanceof Player && ((Player) other).online) || other instanceof ConsolePlayer) {
+                        MessagingUtils.sendBUserMessage(other.sender, MessageConfUtils.friendAcceptOther
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(stat))
                         );
                     }
@@ -143,8 +138,8 @@ public class FriendCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendDenySelf
                             .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
                     );
-                    if (other.online) {
-                        MessagingUtils.sendBUserMessage(UUIDFetcher.getPPlayerByUUID(other.uuid), MessageConfUtils.friendDenyOther
+                    if ((other instanceof Player && ((Player) other).online) || other instanceof ConsolePlayer) {
+                        MessagingUtils.sendBUserMessage(other.sender, MessageConfUtils.friendDenyOther
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(stat))
                         );
                     }
@@ -171,8 +166,8 @@ public class FriendCommand extends Command implements TabExecutor {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendRemSelf
                             .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
                     );
-                    if (other.online) {
-                        MessagingUtils.sendBUserMessage(UUIDFetcher.getPPlayerByUUID(other.uuid), MessageConfUtils.friendRemOther
+                    if ((other instanceof Player && ((Player) other).online) || other instanceof ConsolePlayer) {
+                        MessagingUtils.sendBUserMessage(other.sender, MessageConfUtils.friendRemOther
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(stat))
                         );
                     }
@@ -197,9 +192,9 @@ public class FriendCommand extends Command implements TabExecutor {
             List<String> friends = new ArrayList<>();
             List<String> pending = new ArrayList<>();
 
-            ProxiedPlayer p = (ProxiedPlayer) sender;
+            SavableUser player = PlayerUtils.getStat(sender);
 
-            Player player = PlayerUtils.getOrCreate(p.getUniqueId().toString());
+            if (player == null) return new ArrayList<>();
 
             for (String uuid : player.friendList) {
                 friends.add(UUIDFetcher.getCachedName(uuid));
@@ -213,6 +208,8 @@ public class FriendCommand extends Command implements TabExecutor {
                 if (pl.equals(sender)) continue;
                 strPlayers.add(pl.getName());
             }
+
+            strPlayers.add("%");
 
             List<String> options = new ArrayList<>();
 

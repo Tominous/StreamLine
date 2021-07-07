@@ -6,7 +6,9 @@ import net.md_5.bungee.api.plugin.Command;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.users.ConsolePlayer;
 import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
@@ -18,74 +20,41 @@ public class ReplyCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (sender instanceof ProxiedPlayer) {
-            Player player = PlayerUtils.getPlayerStat(sender);
+        SavableUser player = PlayerUtils.getStat(sender);
 
-            if (player == null) {
+        if (player == null) {
+            if (sender instanceof ProxiedPlayer) {
                 PlayerUtils.addStat(new Player((ProxiedPlayer) sender));
-                player = PlayerUtils.getPlayerStat(sender);
-                if (player == null) {
-                    StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                    return;
-                }
-            }
-
-            if (args.length <= 0) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
             } else {
-                if (player.hasPermission(ConfigUtils.comBReplyPerm)){
-                    Player stat = PlayerUtils.getPlayerStat(sender);
-
-                    if (stat == null) {
-                        PlayerUtils.addStat(new Player(((ProxiedPlayer) sender).getUniqueId()));
-                        stat = PlayerUtils.getPlayerStat(sender);
-                        if (stat == null) {
-                            StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                            return;
-                        }
-                    }
-
-                    Player statTo = PlayerUtils.getPlayerByUUID(stat.lastToUUID);
-
-                    if (statTo == null) {
-                        PlayerUtils.addStat(new Player(stat.lastToUUID));
-                        statTo = PlayerUtils.getPlayerByUUID(stat.lastToUUID);
-                        if (statTo == null) {
-                            StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                            return;
-                        }
-                    }
-
-                    PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.normalize(args), true);
-                } else {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
-                }
+                PlayerUtils.addStat(new ConsolePlayer());
             }
+            player = PlayerUtils.getPlayerStat(sender);
+            if (player == null) {
+                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                return;
+            }
+        }
+
+        if (args.length <= 0) {
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else {
-            if (args.length <= 0) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
-            } else {
-                if (! PlayerUtils.exists(args[0])) {
-                    MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
-                    return;
-                }
+            if (player.hasPermission(ConfigUtils.comBReplyPerm)) {
+                SavableUser statTo = PlayerUtils.getStatByUUID(player.lastToUUID);
 
-                Player stat = PlayerUtils.getPlayerStat(args[0]);
-
-                if (stat == null) {
-                    PlayerUtils.addStat(new Player(args[0]));
-                    stat = PlayerUtils.getPlayerStat(args[0]);
-                    if (stat == null) {
+                if (statTo == null) {
+                    PlayerUtils.addStat(player.lastToUUID);
+                    statTo = PlayerUtils.getStatByUUID(player.lastToUUID);
+                    if (statTo == null) {
                         StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                         return;
                     }
                 }
 
-                PlayerUtils.info(sender, stat);
+                PlayerUtils.doMessageWithIgnoreCheck(player, statTo, TextUtils.normalize(args), true);
+            } else {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
             }
         }
     }

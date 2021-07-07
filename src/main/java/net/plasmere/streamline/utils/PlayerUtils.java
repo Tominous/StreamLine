@@ -169,6 +169,46 @@ public class PlayerUtils {
         return player;
     }
 
+    public static SavableUser getOrCreateStat(String name){
+        SavableUser player = getStat(name);
+
+        if (player == null) {
+            if (isInOnlineList(name)) {
+                addStat(new Player(UUIDFetcher.getCachedUUID(name)));
+            } else {
+                applyConsole();
+            }
+        }
+
+        return player;
+    }
+
+    public static SavableUser getOrCreateStat(CommandSender sender){
+        return getOrCreateStat(sender.getName());
+    }
+
+    public static SavableUser getOrCreateStatByUUID(String uuid){
+        SavableUser player = getStatByUUID(uuid);
+
+        if (player == null) {
+            addStat(uuid);
+        }
+
+        return player;
+    }
+
+    public static boolean isInOnlineList(String name){
+        for (ProxiedPlayer player : getPlayers()) {
+            if (player.getName().equals(name)) return true;
+        }
+
+        return false;
+    }
+
+    public static Collection<ProxiedPlayer> getPlayers(){
+        return StreamLine.getInstance().getProxy().getPlayers();
+    }
+
     public static boolean isNameEqual(SavableUser player, String name){
         if (player.latestName == null) return false;
 
@@ -402,44 +442,84 @@ public class PlayerUtils {
         return value;
     }
 
-    public static String getOffOnDisplayBungee(Player player){
-        if (player == null) {
-            return "&c&lNULL";
+    public static String getOffOnDisplayBungee(SavableUser stat){
+        if (stat == null) {
+            return MessageConfUtils.nullB;
         }
 
-        if (player.online) {
-            return MessageConfUtils.onlineB.replace("%player%", player.displayName);
-        } else {
-            return MessageConfUtils.offlineB.replace("%player%", player.displayName);
+        if (stat instanceof ConsolePlayer) {
+            return ConfigUtils.consoleDisplayName;
         }
+
+        if (stat instanceof Player) {
+            if (((Player) stat).online) {
+                return MessageConfUtils.onlineB.replace("%player%", stat.displayName);
+            } else {
+                return MessageConfUtils.offlineB.replace("%player%", stat.displayName);
+            }
+        }
+
+        return MessageConfUtils.nullB;
     }
 
-    public static String getOffOnRegBungee(Player player){
-        if (player == null) {
-            return "&c&lNULL";
+    public static String getOffOnRegBungee(SavableUser stat){
+        if (stat == null) {
+            return MessageConfUtils.nullB;
         }
 
-        if (player.online) {
-            return MessageConfUtils.onlineB.replace("%player%", player.latestName);
-        } else {
-            return MessageConfUtils.offlineB.replace("%player%", player.latestName);
+        if (stat instanceof ConsolePlayer) {
+            return ConfigUtils.consoleName;
         }
+
+        if (stat instanceof Player) {
+            if (((Player) stat).online) {
+                return MessageConfUtils.onlineB.replace("%player%", stat.latestName);
+            } else {
+                return MessageConfUtils.offlineB.replace("%player%", stat.latestName);
+            }
+        }
+
+        return MessageConfUtils.nullB;
     }
 
-    public static String getOffOnDisplayDiscord(Player player){
-        if (player.online) {
-            return MessageConfUtils.onlineD.replace("%player%", player.displayName);
-        } else {
-            return MessageConfUtils.offlineD.replace("%player%", player.displayName);
+    public static String getOffOnDisplayDiscord(SavableUser stat){
+        if (stat == null) {
+            return MessageConfUtils.nullD;
         }
+
+        if (stat instanceof ConsolePlayer) {
+            return ConfigUtils.consoleDisplayName;
+        }
+
+        if (stat instanceof Player) {
+            if (((Player) stat).online) {
+                return MessageConfUtils.onlineD.replace("%player%", stat.displayName);
+            } else {
+                return MessageConfUtils.offlineD.replace("%player%", stat.displayName);
+            }
+        }
+
+        return MessageConfUtils.nullD;
     }
 
-    public static String getOffOnRegDiscord(Player player){
-        if (player.online) {
-            return MessageConfUtils.onlineD.replace("%player%", player.latestName);
-        } else {
-            return MessageConfUtils.offlineD.replace("%player%", player.latestName);
+    public static String getOffOnRegDiscord(SavableUser stat){
+        if (stat == null) {
+            return MessageConfUtils.nullD;
         }
+
+        if (stat instanceof ConsolePlayer) {
+            return ConfigUtils.consoleName;
+        }
+
+        if (stat instanceof Player) {
+            if (((Player) stat).online) {
+                return MessageConfUtils.onlineD.replace("%player%", stat.latestName);
+            } else {
+                return MessageConfUtils.offlineD.replace("%player%", stat.latestName);
+            }
+        }
+
+        return MessageConfUtils.nullD;
     }
 
     public static boolean exists(String username){
@@ -471,6 +551,16 @@ public class PlayerUtils {
         }
     }
 
+    public static void addStat(String uuid){
+        if (isInStatsListByUUID(uuid)) return;
+
+        if (uuid.equals("%")) {
+            applyConsole();
+        } else {
+            stats.add(new Player(uuid));
+        }
+    }
+
     public static void addStat(Player stat){
         if (isInStatsList(stat)) return;
 
@@ -481,6 +571,14 @@ public class PlayerUtils {
         if (isInStatsList(stat)) return;
 
         stats.add(stat);
+    }
+
+    public static boolean isInStatsListByUUID(String uuid) {
+        for (SavableUser user : getStats()) {
+            if (user.uuid.equals(uuid)) return true;
+        }
+
+        return false;
     }
 
     public static boolean isInStatsList(Player stat) {
@@ -587,7 +685,7 @@ public class PlayerUtils {
         MessagingUtils.sendStatUserMessage(of, sender, info);
     }
 
-    public static void remTag(CommandSender sender, Player of, String tag){
+    public static void remTag(CommandSender sender, SavableUser of, String tag){
         if (! sender.hasPermission(ConfigUtils.comBBTagPerm)) {
             MessagingUtils.sendBUserMessage(sender, noPermission);
             return;
@@ -601,7 +699,7 @@ public class PlayerUtils {
         );
     }
 
-    public static void addTag(CommandSender sender, Player of, String tag){
+    public static void addTag(CommandSender sender, SavableUser of, String tag){
         if (! sender.hasPermission(ConfigUtils.comBBTagPerm)) {
             MessagingUtils.sendBUserMessage(sender, noPermission);
             return;
@@ -615,7 +713,7 @@ public class PlayerUtils {
         );
     }
 
-    public static void listTags(CommandSender sender, Player of){
+    public static void listTags(CommandSender sender, SavableUser of){
         if (! sender.hasPermission(ConfigUtils.comBBTagPerm)) {
             MessagingUtils.sendBUserMessage(sender, noPermission);
             return;
@@ -627,7 +725,7 @@ public class PlayerUtils {
         );
     }
 
-    public static String compileTagList(Player of) {
+    public static String compileTagList(SavableUser of) {
         StringBuilder stringBuilder = new StringBuilder();
 
         int i = 1;
@@ -649,7 +747,7 @@ public class PlayerUtils {
         return stringBuilder.toString();
     }
 
-    public static String getIgnored(Player stat){
+    public static String getIgnored(SavableUser stat){
         StringBuilder ignored = new StringBuilder();
 
         int i = 1;
@@ -671,7 +769,7 @@ public class PlayerUtils {
         return ignored.toString();
     }
 
-    public static String getFriended(Player stat){
+    public static String getFriended(SavableUser stat){
         StringBuilder thing = new StringBuilder();
 
         int i = 1;
@@ -693,7 +791,7 @@ public class PlayerUtils {
         return thing.toString();
     }
 
-    public static String getPTFriended(Player stat){
+    public static String getPTFriended(SavableUser stat){
         StringBuilder thing = new StringBuilder();
 
         int i = 1;
@@ -715,7 +813,7 @@ public class PlayerUtils {
         return thing.toString();
     }
 
-    public static String getPFFriended(Player stat){
+    public static String getPFFriended(SavableUser stat){
         StringBuilder thing = new StringBuilder();
 
         int i = 1;
@@ -737,10 +835,12 @@ public class PlayerUtils {
         return thing.toString();
     }
 
-    public static void doMessage(Player from, Player to, String message, boolean reply){
-        if (! to.online) {
-            MessagingUtils.sendBUserMessage(from, MessageConfUtils.noPlayer);
-            return;
+    public static void doMessage(SavableUser from, SavableUser to, String message, boolean reply){
+        if (to instanceof Player) {
+            if (! ((Player) to).online) {
+                MessagingUtils.sendBUserMessage(from.sender, MessageConfUtils.noPlayer);
+                return;
+            }
         }
 
         switch (ConfigUtils.messReplyTo) {
@@ -759,48 +859,54 @@ public class PlayerUtils {
         from.updateLastToMessage(message);
 
         if (reply) {
-            MessagingUtils.sendBUserMessage(from, MessageConfUtils.replySender
-                    .replace("%from%", getOffOnDisplayBungee(from))
-                    .replace("%to%", getOffOnDisplayBungee(to))
-                    .replace("%message%", message)
-            );
+            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.replySender);
 
-            MessagingUtils.sendBUserMessage(to, MessageConfUtils.replyTo
-                    .replace("%from%", getOffOnDisplayBungee(from))
-                    .replace("%to%", getOffOnDisplayBungee(to))
-                    .replace("%message%", message)
-            );
+            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.replyTo);
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                if (! player.hasPermission(ConfigUtils.messViewPerm)) continue;
+                Player p = PlayerUtils.getPlayerStat(player);
 
-                MessagingUtils.sendBUserMessage(player, MessageConfUtils.replySSPY
-                        .replace("%from%", getOffOnDisplayBungee(from))
-                        .replace("%to%", getOffOnDisplayBungee(to))
-                        .replace("%message%", message)
-                );
+                if (p == null) {
+                    if (PlayerUtils.exists(player.getName())) {
+                        PlayerUtils.addStat(new Player(player, false));
+                    } else {
+                        PlayerUtils.createStat(player);
+                    }
+                    p = PlayerUtils.getPlayerStat(player);
+                    if (p == null) {
+                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
+                        continue;
+                    }
+                }
+
+                if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
+
+                MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.replySSPY);
             }
         } else {
-            MessagingUtils.sendBUserMessage(from, MessageConfUtils.messageSender
-                    .replace("%from%", getOffOnDisplayBungee(from))
-                    .replace("%to%", getOffOnDisplayBungee(to))
-                    .replace("%message%", message)
-            );
+            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.messageSender);
 
-            MessagingUtils.sendBUserMessage(to, MessageConfUtils.messageTo
-                    .replace("%from%", getOffOnDisplayBungee(from))
-                    .replace("%to%", getOffOnDisplayBungee(to))
-                    .replace("%message%", message)
-            );
+            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.messageTo);
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                if (! player.hasPermission(ConfigUtils.messViewPerm)) continue;
+                Player p = PlayerUtils.getPlayerStat(player);
 
-                MessagingUtils.sendBUserMessage(player, MessageConfUtils.messageSSPY
-                        .replace("%from%", getOffOnDisplayBungee(from))
-                        .replace("%to%", getOffOnDisplayBungee(to))
-                        .replace("%message%", message)
-                );
+                if (p == null) {
+                    if (PlayerUtils.exists(player.getName())) {
+                        PlayerUtils.addStat(new Player(player, false));
+                    } else {
+                        PlayerUtils.createStat(player);
+                    }
+                    p = PlayerUtils.getPlayerStat(player);
+                    if (p == null) {
+                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
+                        continue;
+                    }
+                }
+
+                if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
+
+                MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.messageSSPY);
             }
         }
     }

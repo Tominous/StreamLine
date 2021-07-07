@@ -1,6 +1,7 @@
 package net.plasmere.streamline.objects.users;
 
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
@@ -678,9 +679,50 @@ public abstract class SavableUser {
     public void updateLastTo(SavableUser to){
         updateKey("last-to", to.uuid);
     }
-
     
     public String getName() {
         return latestName;
+    }
+
+    @Deprecated
+    public void sendMessage(String message) {
+        sender.sendMessage(message);
+    }
+
+    @Deprecated
+    public void sendMessages(String... messages) {
+        sender.sendMessages(messages);
+    }
+
+    public void sendMessage(BaseComponent... message) {
+        sender.sendMessage(message);
+    }
+
+    public void sendMessage(BaseComponent message) {
+        sender.sendMessage(message);
+    }
+
+    public Collection<String> getGroups() {
+        return sender.getGroups();
+    }
+
+    public void addGroups(String... groups) {
+        sender.addGroups(groups);
+    }
+
+    public void removeGroups(String... groups) {
+        sender.removeGroups(groups);
+    }
+
+    public boolean hasPermission(String permission) {
+        return sender.hasPermission(permission);
+    }
+
+    public void setPermission(String permission, boolean value) {
+        sender.setPermission(permission, value);
+    }
+
+    public Collection<String> getPermissions() {
+        return sender.getPermissions();
     }
 }

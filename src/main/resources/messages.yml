@@ -72,15 +72,19 @@ players:
   # For discord.
   discord:
     # If offline on network.
-    offline: "%player% (OFF)"
+    offline: "%player% -"
     # If online.
-    online: "%player% (ON)"
+    online: "%player% +"
+    # If NULL
+    null: "NULL"
   # For bungee.
   bungee:
     # If offline on network.
-    offline: "&d%player% &e(&cOFF&e)"
+    offline: "&d%player% &c•"
     # If online.
-    online: "&d%player% &e(&aON&e)"
+    online: "&d%player% &a•"
+    # If NULL
+    null: "&4&lNULL"
 # For the redirect module.
 redirect:
   # Per version module.

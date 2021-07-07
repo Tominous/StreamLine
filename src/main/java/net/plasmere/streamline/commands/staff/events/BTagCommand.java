@@ -8,6 +8,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
@@ -31,13 +32,12 @@ public class BTagCommand extends Command implements TabExecutor {
                 return;
             }
 
-            Player stat = PlayerUtils.getPlayerStat(args[0]);
+            SavableUser stat = PlayerUtils.getStat(sender);
 
             if (stat == null) {
-                PlayerUtils.addStat(new Player(args[0]));
-                stat = PlayerUtils.getPlayerStat(args[0]);
+                stat = PlayerUtils.getOrCreateStat(sender);
                 if (stat == null) {
-                    StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
+                    StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     return;
                 }

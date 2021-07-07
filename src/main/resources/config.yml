@@ -1033,7 +1033,12 @@ modules:
     console:
       # Name of the console. For use when using commands as the console.
       name: "CONSOLE"
+      # Display name of the console. For use when using commands as the console.
+      display-name: "&4&lCONSOLE"
+      # Default tags of the console. For use when using commands as the console.
       default-tags:
         - "staff"
+      # Default amount of points of the console. For use when using commands as the console.
       default-points: 0
+      # What to show when getting the Console's server. For use when using commands as the console.
       server: "SPACE"

@@ -447,6 +447,7 @@ public class ConfigUtils {
     public static boolean scOnlinePlayers = StreamLine.getConfig().getConfBoolean("modules.bungee.server-config.online-players");
     // Console.
     public static String consoleName = StreamLine.getConfig().getConfString("modules.bungee.console.name");
+    public static String consoleDisplayName = StreamLine.getConfig().getConfString("modules.bungee.console.display-name");
     public static List<String> consoleDefaultTags = StreamLine.getConfig().getConfStringList("modules.bungee.console.default-tags");
     public static int consoleDefaultPoints = StreamLine.getConfig().getConfInteger("modules.bungee.console.default-points");
     public static String consoleServer = StreamLine.getConfig().getConfString("modules.bungee.console.server");
