@@ -45,6 +45,8 @@ public class MessageConfUtils {
     public static String nullD = StreamLine.getConfig().getMessString("players.discord.null");
     // Redirect.
     public static String vbBlocked = StreamLine.getConfig().getMessString("redirect.by-version.blocked");
+    // Kicks.
+    public static String kicksStopping = StreamLine.getConfig().getMessString("kicks.stopping");
     // ... Punishments.
     // Mutes.
     public static String punMutedTemp = StreamLine.getConfig().getMessString("punishments.muted.temp");
@@ -266,4 +268,6 @@ public class MessageConfUtils {
     public static String settingsGetSample = StreamLine.getConfig().getMessString("settings.get.sample");
     public static String settingsGetMaxP = StreamLine.getConfig().getMessString("settings.get.max-players");
     public static String settingsGetOnlineP = StreamLine.getConfig().getMessString("settings.get.online-players");
+    // // Info.
+    public static String info = StreamLine.getConfig().getMessString("info");
 }

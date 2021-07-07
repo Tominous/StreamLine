@@ -4,6 +4,7 @@ import net.md_5.bungee.api.config.ServerInfo;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.events.EventsHandler;
 import net.plasmere.streamline.objects.*;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -781,5 +782,17 @@ public class MessagingUtils {
 
     public static String getIsMutedGuild(Guild guild){
         return guild.isMuted ? MessageConfUtils.guildsIsMutedTrue : MessageConfUtils.guildsIsMutedFalse;
+    }
+
+    public static void sendInfo(CommandSender sender) {
+        sender.sendMessage(TextUtils.codedText(MessageConfUtils.info
+                .replace("%name%", StreamLine.getInstance().getDescription().getName())
+                .replace("%name%", StreamLine.getInstance().getDescription().getVersion())
+                .replace("%author%", StreamLine.getInstance().getDescription().getAuthor())
+                .replace("%num_commands%", String.valueOf(PluginUtils.commandsAmount))
+                .replace("%num_listeners%", String.valueOf(PluginUtils.listenerAmount))
+                .replace("%num_events%", String.valueOf(EventsHandler.getEvents().size()))
+                .replace("%num_commands%", "https://discord.gg/tny494zXfn")
+        ));
     }
 }

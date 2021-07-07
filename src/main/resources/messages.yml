@@ -85,12 +85,18 @@ players:
     online: "&d%player% &a•"
     # If NULL
     null: "&4&lNULL"
+
 # For the redirect module.
 redirect:
   # Per version module.
   by-version:
     # If you are blocked.
     blocked: "&cYou were blocked from joining that server in version &3%version%"
+
+# When handling kicks.
+kicks:
+  # When stopping the entire network.
+  stopping: "&cSorry, but the server stopped...! We are starting back up momentarily! Join back when you can!"
 
 # For punishment messages.
 punishments:
@@ -1311,7 +1317,7 @@ stats:
   # Points name.
   points-name: "&6Network Gold"
   # Info bulk message.
-  info: "&9----- &d%player% &7Network Info &9-----%newline%&eUUID&8: &b%uuid%%newline%&eMinecraft Version&8: &c%version%%newline%&eEXP&8: &6%total_xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel% &0(&6%xpneeded% &etotal needed&0)%newline%&ePlaytime&8: &6%playtime% &ehours%newline%&e%points_name%&8: &6%points%%newline%&eTags&8: &c%tags%%newline%&eDisplay Name&8: &d%display%%newline%&eAll names&8: &c%names%%newline%&2Guild&8: &r%guild%%newline%&2Guild Members&8: &6%guild_members%%newline%&2Guild EXP&7/&2LVL&8: &6%guild_xp_total%&7/&6%guild_lvl%%newline%&2Guild Leader&8: &d%guild_leader% &0(&b%guild_uuid%&0)%newline%&eSocial SPY &0(%sspy%&0) &eGuild SPY &0(%gspy%&0) &eParty SPY &0(%pspy%&0) &eOnline &0(&%online%&0)"
+  info: "&9----- &d%player% &7Network Info &9-----%newline%&eUUID&8: &b%uuid%%newline%&eMinecraft Version&8: &c%version%%newline%&eEXP&8: &6%total_xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel% &0(&6%xpneeded% &etotal needed&0)%newline%&ePlaytime&8: &6%playtime% &ehours%newline%&e%points_name%&8: &6%points%%newline%&eTags&8: &c%tags%%newline%&eDisplay Name&8: &d%display%%newline%&eAll names&8: &c%names%%newline%&2Guild&8: &r%guild%%newline%&2Guild Members&8: &6%guild_members%%newline%&2Guild EXP&7/&2LVL&8: &6%guild_xp_total%&7/&6%guild_lvl%%newline%&2Guild Leader&8: &d%guild_leader% &0(&b%guild_uuid%&0)%newline%&eSocial SPY &0(%sspy%&0) &eGuild SPY &0(%gspy%&0) &eParty SPY &0(%pspy%&0) &eOnline &0(%online%&0)"
   # Tags.
   tags:
     # If not last in list.
@@ -1731,3 +1737,14 @@ settings:
     # Fillers:
     # %set% = what you set it to.
     online-players: "&cOnline Players &eis &b\"%set%&b\"&e!"
+
+# For the info command.
+# Fillers:
+# %name% = the plugin's name.
+# %version% = the plugin's version.
+# %author% = the plugin's author.
+# %num_commands% = the number of commands loaded.
+# %num_listeners% = the number of listeners loaded.
+# %num_events% = the number of events loaded.
+# %discord% = the plugin's discord server.
+info: "&eYou are currently running &b%name% &7[&av%version%&7] &eby &d%author%%newline%&eLoaded commands&8: &a%num_commands%%newline%&eLoaded listeners&8: &a%num_listeners%%newline%&eLoaded custom events&8: &a%num_events%%newline%&eWant to get more out of the plugin&8? &5&lDiscord&8: &b&o%discord%"

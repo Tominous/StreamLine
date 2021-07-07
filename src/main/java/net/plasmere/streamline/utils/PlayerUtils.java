@@ -159,7 +159,7 @@ public class PlayerUtils {
     }
 
     public static Player getOrCreate(String uuid){
-        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info(forStats(stats));
+//        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info(forStats(stats));
 
         Player player = getPlayerByUUID(uuid);
 
@@ -1013,6 +1013,32 @@ public class PlayerUtils {
                 stat.removeMutedTill();
             }
         }
+    }
+
+    public static void kickAll(boolean withMessage) {
+        if (withMessage) {
+            for (ProxiedPlayer player : getPlayers()) {
+                kick(player, MessageConfUtils.kicksStopping);
+            }
+        } else {
+            for (ProxiedPlayer player : getPlayers()) {
+                kick(player);
+            }
+        }
+    }
+
+    public static void kick(ProxiedPlayer player) {
+        if (player != null) player.disconnect();
+    }
+
+    public static void kick(ProxiedPlayer player, String message) {
+        if (player != null) player.disconnect(TextUtils.codedText(message));
+    }
+
+    public static void kick(Player player, String message) {
+        if (! player.online) return;
+        ProxiedPlayer pp = UUIDFetcher.getPPlayerByUUID(player.uuid);
+        if (pp != null) pp.disconnect(TextUtils.codedText(message));
     }
 
     // No stats.

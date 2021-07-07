@@ -54,7 +54,6 @@ public class Config {
 
     public void reloadConfig(){
         try {
-            saveConf();
             conf = loadConf();
         } catch (Exception e){
             e.printStackTrace();
@@ -63,7 +62,6 @@ public class Config {
 
     public void reloadMessages(){
         try {
-            saveMess();
             mess = loadMess();
         } catch (Exception e){
             e.printStackTrace();

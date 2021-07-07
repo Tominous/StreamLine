@@ -280,6 +280,19 @@ public class StreamLine extends Plugin {
 
 	@Override
 	public void onDisable() {
+		if (ConfigUtils.onCloseSafeKick) {
+			PlayerUtils.kickAll(ConfigUtils.onCloseKickMessage);
+		}
+
+		if (ConfigUtils.onCloseMain) {
+			config.saveConf();
+			config.saveMess();
+		}
+
+		if (ConfigUtils.onCloseSettings) {
+			serverConfig.saveConfig();
+		}
+
 		guilds.cancel();
 		players.cancel();
 		playtime.cancel();

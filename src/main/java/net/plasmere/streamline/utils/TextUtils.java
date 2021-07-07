@@ -61,7 +61,7 @@ public class TextUtils {
             //String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
 
             Pattern pattern = Pattern.compile("([<][#][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][>])+", Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(text);
+            Matcher matcher = pattern.matcher(stripColor(text));
             String found = "";
 
             String textLeft = text;
@@ -152,7 +152,7 @@ public class TextUtils {
 //            //String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
 //
 //            Pattern pattern = Pattern.compile("([<][#][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][>])+", Pattern.CASE_INSENSITIVE);
-//            Matcher matcher = pattern.matcher(text);
+//            Matcher matcher = pattern.matcher(stripColor(text));
 //            String found = "";
 //
 //            String textLeft = text;
@@ -209,7 +209,7 @@ public class TextUtils {
             //String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
 
             Pattern pattern = Pattern.compile("(http|ftp|https)://([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?", Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(text);
+            Matcher matcher = pattern.matcher(stripColor(text));
             String foundUrl = "";
 
             while (matcher.find()) {
@@ -230,7 +230,7 @@ public class TextUtils {
             //String ntext = text.replace(ConfigUtils.linkPre, "").replace(ConfigUtils.linkSuff, "");
 
             Pattern pattern = Pattern.compile("(http|ftp|https)://([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?", Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(text);
+            Matcher matcher = pattern.matcher(stripColor(text));
             String foundUrl = "";
 
             while (matcher.find()) {

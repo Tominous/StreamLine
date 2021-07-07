@@ -117,6 +117,9 @@ public class PluginUtils {
         if (ConfigUtils.comBSPing) {
             registerCommand(plugin, new JDAPingerCommand(ConfigUtils.comBSPingBase, ConfigUtils.comBSPingPerm, getAliases(ConfigUtils.comBSPingAliases)));
         }
+        if (ConfigUtils.comBInfo) {
+            registerCommand(plugin, new InfoCommand(ConfigUtils.comBInfoBase, ConfigUtils.comBInfoPerm, getAliases(ConfigUtils.comBInfoAliases)));
+        }
         // // Events.
         if (ConfigUtils.comBEReload) {
             registerCommand(plugin, new EventReloadCommand(ConfigUtils.comBReloadBase, ConfigUtils.comBEReloadPerm, getAliases(ConfigUtils.comBEReloadAliases)));

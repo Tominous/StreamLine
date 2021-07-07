@@ -47,13 +47,9 @@ public class KickCommand extends Command implements TabExecutor {
 
             String reason = TextUtils.argsToStringMinus(args, 0);
 
-            ProxiedPlayer pp = UUIDFetcher.getPPlayerByUUID(other.uuid);
-
-            if (pp != null) {
-                pp.disconnect(TextUtils.codedText(MessageConfUtils.kickKicked
-                        .replace("%reason%", reason)
-                ));
-            }
+            PlayerUtils.kick(other, MessageConfUtils.kickKicked
+                    .replace("%reason%", reason)
+            );
 
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.kickSender
                     .replace("%reason%", reason)

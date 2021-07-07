@@ -278,6 +278,11 @@ public class ConfigUtils {
     public static String comBBanBase = StreamLine.getConfig().getConfString("commands.bungee.staff.ban.base");
     public static List<String> comBBanAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.ban.aliases");
     public static String comBBanPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.ban.permission");
+    // Info.
+    public static boolean comBInfo = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.info.enabled");
+    public static String comBInfoBase = StreamLine.getConfig().getConfString("commands.bungee.staff.info.base");
+    public static List<String> comBInfoAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.info.aliases");
+    public static String comBInfoPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.info.permission");
     // Settings.
     public static boolean comBSettings = StreamLine.getConfig().getConfBoolean("commands.bungee.configs.settings.enabled");
     public static String comBSettingsBase = StreamLine.getConfig().getConfString("commands.bungee.configs.settings.base");
@@ -451,4 +456,9 @@ public class ConfigUtils {
     public static List<String> consoleDefaultTags = StreamLine.getConfig().getConfStringList("modules.bungee.console.default-tags");
     public static int consoleDefaultPoints = StreamLine.getConfig().getConfInteger("modules.bungee.console.default-points");
     public static String consoleServer = StreamLine.getConfig().getConfString("modules.bungee.console.server");
+    // On Close.
+    public static boolean onCloseSettings = StreamLine.getConfig().getConfBoolean("modules.bungee.on-close.save-settings");
+    public static boolean onCloseMain = StreamLine.getConfig().getConfBoolean("modules.bungee.on-close.save-main");
+    public static boolean onCloseSafeKick = StreamLine.getConfig().getConfBoolean("modules.bungee.on-close.safe-kick");
+    public static boolean onCloseKickMessage = StreamLine.getConfig().getConfBoolean("modules.bungee.on-close.kick-message");
 }
