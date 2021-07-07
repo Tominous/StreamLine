@@ -781,6 +781,17 @@ guild:
   spy: "&d%leader%&a's GUILD &9>> &d%sender% &8: &e%message%"
   # When it finds no guild.
   no-guild: "&cNo guild found!"
+  # Message shown when the name is too long.
+  # Fillers:
+  # %length% = amount of characters allowed.
+  # %codes% = if or if not codes are count towards length.
+  name-too-long: "&cThat name is too long (%length%)! The max length is %max_length% %codes% including color codes!"
+  # For %codes% above.
+  codes:
+    # If it is true in config.
+    if-true: "with"
+    # If it is false in config.
+    if-false: "without"
   # Already made.
   already-made: "&cThis guild has already been made!"
   # In different one.

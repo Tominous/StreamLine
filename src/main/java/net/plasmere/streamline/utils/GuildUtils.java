@@ -122,7 +122,7 @@ public class GuildUtils {
     }
 
     public static void createGuild(Player player, String name) {
-        StreamLine.getInstance().getLogger().info("createGuild Player.latestName > " + player.latestName);
+        //StreamLine.getInstance().getLogger().info("createGuild Player.latestName > " + player.latestName);
 
         ProxiedPlayer p = UUIDFetcher.getPPlayerByUUID(player.uuid);
 
@@ -135,8 +135,28 @@ public class GuildUtils {
             return;
         }
 
+        if (ConfigUtils.guildIncludeColors) {
+            if (name.length() > ConfigUtils.guildMaxLength) {
+                MessagingUtils.sendBUserMessage(p, nameTooLong
+                        .replace("%length%", String.valueOf(name.length()))
+                        .replace("%max_length%", String.valueOf(ConfigUtils.guildMaxLength))
+                        .replace("%codes%", withCodes)
+                );
+                return;
+            }
+        } else {
+            if (TextUtils.stripColor(name).length() > ConfigUtils.guildMaxLength) {
+                MessagingUtils.sendBUserMessage(p, nameTooLong
+                        .replace("%length%", String.valueOf(TextUtils.stripColor(name).length()))
+                        .replace("%max_length%", String.valueOf(ConfigUtils.guildMaxLength))
+                        .replace("%codes%", withoutCodes)
+                );
+                return;
+            }
+        }
+
         try {
-            StreamLine.getInstance().getLogger().info("createGuild Player.uuid > " + player.uuid);
+            //StreamLine.getInstance().getLogger().info("createGuild Player.uuid > " + player.uuid);
             Guild guild = new Guild(player.uuid, name);
 
             addGuild(guild);
@@ -1551,6 +1571,10 @@ public class GuildUtils {
     public static final String spy = StreamLine.getConfig().getMessString("guild.spy");
     // No guild.
     public static final String noGuildFound = StreamLine.getConfig().getMessString("guild.no-guild");
+    // Name too long.
+    public static final String nameTooLong = StreamLine.getConfig().getMessString("guild.name-too-long");
+    public static final String withCodes = StreamLine.getConfig().getMessString("guild.codes.if-true");
+    public static final String withoutCodes = StreamLine.getConfig().getMessString("guild.codes.if-false");
     // Already made.
     public static final String already = StreamLine.getConfig().getMessString("guild.already-made");
     // Already in one.

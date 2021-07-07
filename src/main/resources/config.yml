@@ -1029,3 +1029,9 @@ modules:
       max-players: true
       # Allows the use of the Online Players in the server list.
       online-players: true
+    # Settings for console.
+    console:
+      # Name of the console. For use when using commands as the console.
+      name: "CONSOLE"
+      default-tags:
+        - "staff"

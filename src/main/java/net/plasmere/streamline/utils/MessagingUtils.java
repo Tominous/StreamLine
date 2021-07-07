@@ -380,6 +380,9 @@ public class MessagingUtils {
                 .replace("%xplevel%", Integer.toString(guild.xpUntilNextLevel()))
                 .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
                 .replace("%name%", guild.name)
+                .replace("%length%", String.valueOf(guild.name.length()))
+                .replace("%max_length%", String.valueOf(ConfigUtils.guildMaxLength))
+                .replace("%codes%", (ConfigUtils.guildIncludeColors ? GuildUtils.withCodes : GuildUtils.withoutCodes))
         ));
     }
 

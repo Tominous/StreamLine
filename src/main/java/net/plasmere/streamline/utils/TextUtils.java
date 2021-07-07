@@ -141,6 +141,10 @@ public class TextUtils {
                 .collect(Collectors.toCollection(TreeSet::new));
     }
 
+    public static String stripColor(String string){
+        return ChatColor.stripColor(string).replaceAll("([<][#][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][1-9a-f][>])+", "");
+    }
+
 //    public static TextComponent hexedText(String text){
 //        text = codedString(text);
 //
