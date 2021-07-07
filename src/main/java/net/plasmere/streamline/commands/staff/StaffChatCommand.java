@@ -24,7 +24,7 @@ public class StaffChatCommand extends Command {
         if (sender instanceof ProxiedPlayer) {
             if (ConfigUtils.moduleStaffChat) {
                 if (sender.hasPermission(ConfigUtils.staffPerm)) {
-                    Player player = PlayerUtils.getStat(sender);
+                    Player player = PlayerUtils.getPlayerStat(sender);
 
                     if (player == null) return;
 

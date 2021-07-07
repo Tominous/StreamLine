@@ -31,11 +31,11 @@ public class BTagCommand extends Command implements TabExecutor {
                 return;
             }
 
-            Player stat = PlayerUtils.getStat(args[0]);
+            Player stat = PlayerUtils.getPlayerStat(args[0]);
 
             if (stat == null) {
                 PlayerUtils.addStat(new Player(args[0]));
-                stat = PlayerUtils.getStat(args[0]);
+                stat = PlayerUtils.getPlayerStat(args[0]);
                 if (stat == null) {
                     StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);

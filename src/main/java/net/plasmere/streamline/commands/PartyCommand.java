@@ -118,7 +118,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     }
                 } else {
                     try {
-                        if (PartyUtils.getParty(PlayerUtils.getStat(sender)) != null) {
+                        if (PartyUtils.getParty(PlayerUtils.getPlayerStat(sender)) != null) {
                             PartyUtils.openPartySized(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), Integer.parseInt(args[1]));
                         } else {
                             PartyUtils.createPartySized(Objects.requireNonNull(UUIDFetcher.getPlayer(sender)), Integer.parseInt(args[1]));

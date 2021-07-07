@@ -34,12 +34,12 @@ public class ChatListener implements Listener {
 
         ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
 
-        Player stat = PlayerUtils.getStat(sender);
+        Player stat = PlayerUtils.getPlayerStat(sender);
         String msg = e.getMessage();
 
         if (stat == null) {
             PlayerUtils.createStat(sender);
-            stat = PlayerUtils.getStat(sender);
+            stat = PlayerUtils.getPlayerStat(sender);
             if (stat == null) {
                 StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
                 return;
@@ -50,7 +50,7 @@ public class ChatListener implements Listener {
 
         try {
             for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
-                Player p = PlayerUtils.getStat(pl);
+                Player p = PlayerUtils.getPlayerStat(pl);
 
                 if (p == null) {
                     if (PlayerUtils.exists(pl.getName())) {
@@ -58,7 +58,7 @@ public class ChatListener implements Listener {
                     } else {
                         PlayerUtils.createStat(pl);
                     }
-                    p = PlayerUtils.getStat(pl);
+                    p = PlayerUtils.getPlayerStat(pl);
                     if (p == null) {
                         StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + pl.getName());
                         continue;

@@ -31,7 +31,7 @@ public class MessagingUtils {
                     staffs.remove(player);
                 }
 
-                Player stat = PlayerUtils.getStat(player);
+                Player stat = PlayerUtils.getPlayerStat(player);
 
                 if (stat == null) continue;
                 if (! stat.sc) {
@@ -47,7 +47,7 @@ public class MessagingUtils {
                             .replace("%user%", sender.getName())
                             .replace("%from%", from)
                             .replace("%message%", msg)
-                            .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
+                            .replace("%version%", Objects.requireNonNull(PlayerUtils.getPlayerStat(sender)).latestVersion)
                     )
             );
         }
@@ -65,7 +65,7 @@ public class MessagingUtils {
                 }
 
                 try {
-                    Player p = PlayerUtils.getStat(player);
+                    Player p = PlayerUtils.getPlayerStat(player);
 
                     if (p == null) continue;
 
@@ -85,7 +85,7 @@ public class MessagingUtils {
                             .replace("%user%", sender.getName())
                             .replace("%from%", from)
                             .replace("%message%", msg)
-                            .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
+                            .replace("%version%", Objects.requireNonNull(PlayerUtils.getPlayerStat(sender)).latestVersion)
                     )
             );
         }
@@ -167,7 +167,7 @@ public class MessagingUtils {
                 player.sendMessage(TextUtils.codedText(MessageConfUtils.bToBReportMessage
                                 .replace("%reporter%", sender)
                                 .replace("%report%", report)
-                                .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
+                                .replace("%version%", Objects.requireNonNull(PlayerUtils.getPlayerStat(sender)).latestVersion)
                         )
                 );
             else
@@ -239,7 +239,7 @@ public class MessagingUtils {
                             .sendMessage(
                                     eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
                                             .setDescription(message.message.replace("%sender%", message.sender.getName()))
-                                            .setAuthor(message.sender.getName(), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getStat(message.sender)).latestName), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getStat(message.sender)).latestName))
+                                            .setAuthor(message.sender.getName(), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName))
                                             .build()
                             ).queue();
                 } else {
@@ -339,7 +339,7 @@ public class MessagingUtils {
                 .replace("%invites%", invites(party))
                 .replace("%ispublic%", getIsPublic(party))
                 .replace("%ismuted%", getIsMuted(party))
-                .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
+                .replace("%version%", Objects.requireNonNull(PlayerUtils.getPlayerStat(sender)).latestVersion)
         ));
     }
 
@@ -378,7 +378,7 @@ public class MessagingUtils {
                 .replace("%name%", guild.name)
                 .replace("%xpneeded%", Integer.toString(guild.getNeededXp(guild.lvl + 1)))
                 .replace("%xplevel%", Integer.toString(guild.xpUntilNextLevel()))
-                .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
+                .replace("%version%", Objects.requireNonNull(PlayerUtils.getPlayerStat(sender)).latestVersion)
                 .replace("%name%", guild.name)
                 .replace("%length%", String.valueOf(guild.name.length()))
                 .replace("%max_length%", String.valueOf(ConfigUtils.guildMaxLength))
@@ -470,7 +470,7 @@ public class MessagingUtils {
         if (sender instanceof ProxiedPlayer) {
             sender.sendMessage(TextUtils.codedText(msg
                     .replace("%sender%", PlayerUtils.getOffOnDisplayBungee((UUIDFetcher.getPlayer(sender))))
-                    .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(sender)).latestVersion)
+                    .replace("%version%", Objects.requireNonNull(PlayerUtils.getPlayerStat(sender)).latestVersion)
             ));
         } else {
             sender.sendMessage(TextUtils.codedText(msg
@@ -497,7 +497,7 @@ public class MessagingUtils {
             for (ProxiedPlayer player : players) {
             player.sendMessage(TextUtils.codedText(msg
                         .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(UUIDFetcher.getPlayer(as)))
-                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getStat(as)).latestVersion)
+                        .replace("%version%", Objects.requireNonNull(PlayerUtils.getPlayerStat(as)).latestVersion)
                 ));
             }
         } else {

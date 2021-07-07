@@ -32,11 +32,11 @@ public class FriendCommand extends Command implements TabExecutor {
 
         ProxiedPlayer player = (ProxiedPlayer) sender;
 
-        Player stat = PlayerUtils.getStat(player);
+        Player stat = PlayerUtils.getPlayerStat(player);
 
         if (stat == null) {
             PlayerUtils.addStat(new Player(player));
-            stat = PlayerUtils.getStat(sender);
+            stat = PlayerUtils.getPlayerStat(sender);
             if (stat == null) {
                 StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
@@ -58,11 +58,11 @@ public class FriendCommand extends Command implements TabExecutor {
         } else if (args.length > 2) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess);
         } else {
-            Player other = PlayerUtils.getStat(args[1]);
+            Player other = PlayerUtils.getPlayerStat(args[1]);
 
             if (other == null) {
                 PlayerUtils.addStat(new Player(UUIDFetcher.getCachedUUID(args[1])));
-                other = PlayerUtils.getStat(args[1]);
+                other = PlayerUtils.getPlayerStat(args[1]);
                 if (other == null) {
                     StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[1]);
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);

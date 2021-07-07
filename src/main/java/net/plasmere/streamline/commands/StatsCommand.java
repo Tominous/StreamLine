@@ -24,11 +24,11 @@ public class StatsCommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof ProxiedPlayer) {
-            Player player = PlayerUtils.getStat(sender);
+            Player player = PlayerUtils.getPlayerStat(sender);
 
             if (player == null) {
                 PlayerUtils.addStat(new Player((ProxiedPlayer) sender));
-                player = PlayerUtils.getStat(sender);
+                player = PlayerUtils.getPlayerStat(sender);
                 if (player == null) {
                     StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
@@ -45,11 +45,11 @@ public class StatsCommand extends Command implements TabExecutor {
                         return;
                     }
 
-                    Player stat = PlayerUtils.getStat(args[0]);
+                    Player stat = PlayerUtils.getPlayerStat(args[0]);
 
                     if (stat == null) {
                         PlayerUtils.addStat(new Player(args[0]));
-                        stat = PlayerUtils.getStat(args[0]);
+                        stat = PlayerUtils.getPlayerStat(args[0]);
                         if (stat == null) {
                             StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
                             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
@@ -71,11 +71,11 @@ public class StatsCommand extends Command implements TabExecutor {
                     return;
                 }
 
-                Player stat = PlayerUtils.getStat(args[0]);
+                Player stat = PlayerUtils.getPlayerStat(args[0]);
 
                 if (stat == null) {
                     PlayerUtils.addStat(new Player(args[0]));
-                    stat = PlayerUtils.getStat(args[0]);
+                    stat = PlayerUtils.getPlayerStat(args[0]);
                     if (stat == null) {
                         StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);

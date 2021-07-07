@@ -848,7 +848,7 @@ public class PlayerUtils {
             );
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getStat(player);
+                Player p = PlayerUtils.getPlayerStat(player);
 
                 if (p == null) {
                     if (PlayerUtils.exists(player.getName())) {
@@ -856,7 +856,7 @@ public class PlayerUtils {
                     } else {
                         PlayerUtils.createStat(player);
                     }
-                    p = PlayerUtils.getStat(player);
+                    p = PlayerUtils.getPlayerStat(player);
                     if (p == null) {
                         StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
                         continue;
@@ -897,7 +897,7 @@ public class PlayerUtils {
             );
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getStat(player);
+                Player p = PlayerUtils.getPlayerStat(player);
 
                 if (p == null) {
                     if (PlayerUtils.exists(player.getName())) {
@@ -905,7 +905,7 @@ public class PlayerUtils {
                     } else {
                         PlayerUtils.createStat(player);
                     }
-                    p = PlayerUtils.getStat(player);
+                    p = PlayerUtils.getPlayerStat(player);
                     if (p == null) {
                         StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + player.getName());
                         continue;

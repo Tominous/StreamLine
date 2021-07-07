@@ -30,7 +30,7 @@ public class PlaytimeTimer implements Runnable {
         countdown = reset;
         try {
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getStat(player);
+                Player p = PlayerUtils.getPlayerStat(player);
 
                 if (p == null) continue;
                 if (! p.online) continue;

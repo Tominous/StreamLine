@@ -288,7 +288,7 @@ public class PartyUtils {
         if (p == null) return;
 
         try {
-            Party party = getParty(PlayerUtils.getStat(from));
+            Party party = getParty(PlayerUtils.getPlayerStat(from));
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(p, acceptFailure);
@@ -372,7 +372,7 @@ public class PartyUtils {
         if (p == null) return;
 
         try {
-            Party party = getParty(PlayerUtils.getStat(from));
+            Party party = getParty(PlayerUtils.getPlayerStat(from));
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(p, denyFailure);
@@ -436,7 +436,7 @@ public class PartyUtils {
 
         if (p == null) return;
 
-        Party party = getParty(PlayerUtils.getStat(sender));
+        Party party = getParty(PlayerUtils.getPlayerStat(sender));
 
         if (!isParty(party) || party == null) {
             MessagingUtils.sendBUserMessage(p, noPartyFound);
@@ -486,7 +486,7 @@ public class PartyUtils {
 
         if (p == null) return;
 
-        Party party = getParty(PlayerUtils.getStat(sender));
+        Party party = getParty(PlayerUtils.getPlayerStat(sender));
 
         if (!isParty(party) || party == null) {
             MessagingUtils.sendBUserMessage(p, noPartyFound);
@@ -554,7 +554,7 @@ public class PartyUtils {
 
         if (p == null) return;
 
-        Party party = getParty(PlayerUtils.getStat(sender));
+        Party party = getParty(PlayerUtils.getPlayerStat(sender));
 
         if (!isParty(party) || party == null) {
             MessagingUtils.sendBUserMessage(p, kickFailure);
@@ -634,7 +634,7 @@ public class PartyUtils {
         if (p == null) return;
 
         try {
-            Party party = getParty(PlayerUtils.getStat(sender));
+            Party party = getParty(PlayerUtils.getPlayerStat(sender));
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(p, noPartyFound);
@@ -660,11 +660,11 @@ public class PartyUtils {
 
                 if (!member.equals(party.leader)) {
                     MessagingUtils.sendBPUserMessage(party, p, member, disbandMembers
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                     );
                 } else {
                     MessagingUtils.sendBPUserMessage(party, p, member, disbandLeader
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                     );
                 }
 
@@ -695,7 +695,7 @@ public class PartyUtils {
         if (p == null) return;
 
         try {
-            Party party = getParty(PlayerUtils.getStat(sender));
+            Party party = getParty(PlayerUtils.getPlayerStat(sender));
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(p, noPartyFound);
@@ -714,7 +714,7 @@ public class PartyUtils {
 
             if (party.isPublic) {
                 MessagingUtils.sendBPUserMessage(party, p, p, openFailure
-                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                         .replace("%size%", Integer.toString(party.getSize()))
                 );
             } else {
@@ -729,12 +729,12 @@ public class PartyUtils {
 
                     if (member.equals(party.leader)) {
                         MessagingUtils.sendBPUserMessage(party, p, member, openLeader
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                 .replace("%size%", Integer.toString(party.getSize()))
                         );
                     } else {
                         MessagingUtils.sendBPUserMessage(party, p, member, openMembers
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                 .replace("%size%", Integer.toString(party.getSize()))
                         );
                     }
@@ -762,7 +762,7 @@ public class PartyUtils {
         if (p == null) return;
 
         try {
-            Party party = getParty(PlayerUtils.getStat(sender));
+            Party party = getParty(PlayerUtils.getPlayerStat(sender));
 
             if (! isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(p, noPartyFound);
@@ -781,7 +781,7 @@ public class PartyUtils {
 
             if (party.isPublic) {
                 MessagingUtils.sendBPUserMessage(party, p, p, openFailure
-                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                         .replace("%max%", Integer.toString(party.getMaxSize()))
                 );
             } else {
@@ -797,12 +797,12 @@ public class PartyUtils {
 
                     if (member.equals(party.leader)) {
                         MessagingUtils.sendBPUserMessage(party, p, member, openLeader
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                 .replace("%max%", Integer.toString(party.getMaxSize()))
                         );
                     } else {
                         MessagingUtils.sendBPUserMessage(party, p, member, openMembers
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                 .replace("%max%", Integer.toString(party.getMaxSize()))
                         );
                     }
@@ -829,7 +829,7 @@ public class PartyUtils {
 
         if (p == null) return;
         try {
-            Party party = getParty(PlayerUtils.getStat(sender));
+            Party party = getParty(PlayerUtils.getPlayerStat(sender));
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(p, noPartyFound);
@@ -848,7 +848,7 @@ public class PartyUtils {
 
             if (!party.isPublic) {
                 MessagingUtils.sendBPUserMessage(party, p, p, closeFailure
-                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                         .replace("%size%", Integer.toString(party.getSize()))
                 );
             } else {
@@ -863,12 +863,12 @@ public class PartyUtils {
 
                     if (member.equals(pl)) {
                         MessagingUtils.sendBPUserMessage(party, p, member, closeSender
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                 .replace("%size%", Integer.toString(party.getSize()))
                         );
                     } else {
                         MessagingUtils.sendBPUserMessage(party, p, member, closeMembers
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                 .replace("%size%", Integer.toString(party.getSize()))
                         );
                     }
@@ -895,7 +895,7 @@ public class PartyUtils {
 
         if (p == null) return;
         try {
-            Party party = getParty(PlayerUtils.getStat(sender));
+            Party party = getParty(PlayerUtils.getPlayerStat(sender));
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(p, noPartyFound);
@@ -908,18 +908,18 @@ public class PartyUtils {
             }
 
             String leaderBulk = listLeaderBulk
-                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
                     .replace("%size%", Integer.toString(party.getSize()));
             String moderatorBulk = listModBulkMain
                     .replace("%moderators%", moderators(party))
                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                     .replace("%size%", Integer.toString(party.getSize()));
             String memberBulk = listMemberBulkMain
                     .replace("%members%", members(party))
                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                     .replace("%size%", Integer.toString(party.getSize()));
 
             MessagingUtils.sendBPUserMessage(party, p, p, listMain
@@ -927,7 +927,7 @@ public class PartyUtils {
                     .replace("%moderatorbulk%", moderatorBulk)
                     .replace("%memberbulk%", memberBulk)
                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                     .replace("%size%", Integer.toString(party.getSize()))
             );
         } catch (Exception e) {
@@ -949,13 +949,13 @@ public class PartyUtils {
                 if (i < party.moderators.size()) {
                     mods.append(listModBulkNotLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                             .replace("%size%", Integer.toString(party.getSize()))
                     );
                 } else {
                     mods.append(listModBulkLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                             .replace("%size%", Integer.toString(party.getSize()))
                     );
                 }
@@ -983,13 +983,13 @@ public class PartyUtils {
                 if (i < party.moderators.size()) {
                     mems.append(listMemberBulkNotLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                             .replace("%size%", Integer.toString(party.getSize()))
                     );
                 } else {
                     mems.append(listMemberBulkLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                             .replace("%size%", Integer.toString(party.getSize()))
                     );
                 }
@@ -1008,7 +1008,7 @@ public class PartyUtils {
 
         if (p == null) return;
         try {
-            Party party = getParty(PlayerUtils.getStat(sender));
+            Party party = getParty(PlayerUtils.getPlayerStat(sender));
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(p, noPartyFound);
@@ -1034,9 +1034,9 @@ public class PartyUtils {
                 case LEADER:
                     MessagingUtils.sendBPUserMessage(party, p, p, promoteFailure
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                             .replace("%level%", textLeader
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                     .replace("%size%", Integer.toString(party.getSize()))
                             )
                     );
@@ -1054,27 +1054,27 @@ public class PartyUtils {
                         if (m.equals(party.leader)) {
                             MessagingUtils.sendBPUserMessage(party, p, m, promoteLeader
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                     .replace("%level%", textLeader
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                             .replace("%size%", Integer.toString(party.getSize()))
                                     )
                             );
                         } else if (m.equals(member)) {
                             MessagingUtils.sendBPUserMessage(party, p, m, promoteUser
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                     .replace("%level%", textLeader
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                             .replace("%size%", Integer.toString(party.getSize()))
                                     )
                             );
                         } else {
                             MessagingUtils.sendBPUserMessage(party, p, m, promoteMembers
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                     .replace("%level%", textLeader
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                             .replace("%size%", Integer.toString(party.getSize()))
                                     )
                             );
@@ -1095,27 +1095,27 @@ public class PartyUtils {
                         if (m.equals(party.leader)) {
                             MessagingUtils.sendBPUserMessage(party, p, m, promoteLeader
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                     .replace("%level%", textModerator
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                             .replace("%size%", Integer.toString(party.getSize()))
                                     )
                             );
                         } else if (m.equals(member)) {
                             MessagingUtils.sendBPUserMessage(party, p, m, promoteUser
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                     .replace("%level%", textModerator
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                             .replace("%size%", Integer.toString(party.getSize()))
                                     )
                             );
                         } else {
                             MessagingUtils.sendBPUserMessage(party, p, m, promoteMembers
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                     .replace("%level%", textModerator
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                             .replace("%size%", Integer.toString(party.getSize()))
                                     )
                             );
@@ -1146,7 +1146,7 @@ public class PartyUtils {
 
         if (p == null) return;
         try {
-            Party party = getParty(PlayerUtils.getStat(sender));
+            Party party = getParty(PlayerUtils.getPlayerStat(sender));
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(p, noPartyFound);
@@ -1172,7 +1172,7 @@ public class PartyUtils {
                 case LEADER:
                     MessagingUtils.sendBPUserMessage(party, p, p, demoteIsLeader
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                             .replace("%level%", textLeader)
                     );
                     return;
@@ -1189,19 +1189,19 @@ public class PartyUtils {
                         if (m.equals(party.leader)) {
                             MessagingUtils.sendBPUserMessage(party, p, m, demoteLeader
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                     .replace("%level%", textMember)
                             );
                         } else if (m.equals(member)) {
                             MessagingUtils.sendBPUserMessage(party, p, m, demoteUser
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                     .replace("%level%", textMember)
                             );
                         } else {
                             MessagingUtils.sendBPUserMessage(party, p, m, demoteMembers
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                                     .replace("%level%", textMember)
                             );
                         }
@@ -1211,7 +1211,7 @@ public class PartyUtils {
                 default:
                     MessagingUtils.sendBPUserMessage(party, p, p, demoteFailure
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                             .replace("%level%", textMember)
                     );
                     break;
@@ -1239,7 +1239,7 @@ public class PartyUtils {
 
         if (p == null) return;
         try {
-            Party party = getParty(PlayerUtils.getStat(from));
+            Party party = getParty(PlayerUtils.getPlayerStat(from));
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(p, noPartyFound);
@@ -1269,12 +1269,12 @@ public class PartyUtils {
                     if (pl.equals(sender)) {
                         MessagingUtils.sendBPUserMessage(party, p, m, joinUser
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                         );
                     } else {
                         MessagingUtils.sendBPUserMessage(party, p, m, joinMembers
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                         );
                     }
                 }
@@ -1347,7 +1347,7 @@ public class PartyUtils {
 
         if (p == null) return;
         try {
-            Party party = getParty(PlayerUtils.getStat(sender));
+            Party party = getParty(PlayerUtils.getPlayerStat(sender));
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(p, noPartyFound);
@@ -1392,12 +1392,12 @@ public class PartyUtils {
                     if (pl.equals(sender)) {
                         MessagingUtils.sendBPUserMessage(party, p, m, leaveUser
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                         );
                     } else {
                         MessagingUtils.sendBPUserMessage(party, p, m, leaveMembers
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getStat(party.leader))))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader))))
                         );
                     }
                 }
@@ -1427,7 +1427,7 @@ public class PartyUtils {
 
         if (p == null) return;
         try {
-            Party party = getParty(PlayerUtils.getStat(sender));
+            Party party = getParty(PlayerUtils.getPlayerStat(sender));
 
             if (!isParty(party) || party == null) {
                 MessagingUtils.sendBUserMessage(p, noPartyFound);
@@ -1482,7 +1482,7 @@ public class PartyUtils {
             for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
                 if (! pp.hasPermission(ConfigUtils.partyView)) continue;
 
-                Player them = PlayerUtils.getStat(pp);
+                Player them = PlayerUtils.getPlayerStat(pp);
 
                 if (them == null) continue;
 

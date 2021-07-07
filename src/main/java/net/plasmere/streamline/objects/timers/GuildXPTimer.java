@@ -31,7 +31,7 @@ public class GuildXPTimer implements Runnable {
         countdown = reset;
         try {
             for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
-                Player player = PlayerUtils.getStat(pl);
+                Player player = PlayerUtils.getPlayerStat(pl);
                 if (GuildUtils.getGuild(player) == null) continue;
 
                 Guild guild = GuildUtils.getGuild(player);

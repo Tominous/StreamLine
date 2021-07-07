@@ -1485,7 +1485,7 @@ public class GuildUtils {
             for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
                 if (! pp.hasPermission(ConfigUtils.guildView)) continue;
 
-                Player them = PlayerUtils.getStat(pp);
+                Player them = PlayerUtils.getPlayerStat(pp);
 
                 if (them == null) continue;
 

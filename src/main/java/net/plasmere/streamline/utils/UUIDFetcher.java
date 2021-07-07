@@ -216,7 +216,7 @@ public class UUIDFetcher {
         try {
             if (PlayerUtils.exists(name)) {
                 if (PlayerUtils.hasStat(name)) {
-                    return PlayerUtils.getStat(name);
+                    return PlayerUtils.getPlayerStat(name);
                 } else {
                     return new Player(name);
                 }

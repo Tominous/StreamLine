@@ -17,7 +17,7 @@ public class SCViewCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof ProxiedPlayer) {
-            Player player = PlayerUtils.getStat(sender);
+            Player player = PlayerUtils.getPlayerStat(sender);
 
             if (player == null) return;
 

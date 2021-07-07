@@ -31,11 +31,11 @@ public class MuteCommand extends Command implements TabExecutor {
         } else if (args.length > 3) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess);
         } else {
-            Player other = PlayerUtils.getStat(args[1]);
+            Player other = PlayerUtils.getPlayerStat(args[1]);
 
             if (other == null) {
                 PlayerUtils.addStat(new Player(UUIDFetcher.getCachedUUID(args[1])));
-                other = PlayerUtils.getStat(args[1]);
+                other = PlayerUtils.getPlayerStat(args[1]);
                 if (other == null) {
                     StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[1]);
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
