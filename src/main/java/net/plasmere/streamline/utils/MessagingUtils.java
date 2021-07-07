@@ -355,7 +355,7 @@ public class MessagingUtils {
     public static void sendBGUserMessage(Guild guild, CommandSender sender, CommandSender to, String msg){
         to.sendMessage(TextUtils.codedText(msg
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(sender)))
-                .replace("%leader%", PlayerUtils.getOrCreateByUUID(guild.leaderUUID)).getName())
+                .replace("%leader%", PlayerUtils.getOrCreateByUUID(guild.leaderUUID).getName())
                 .replace("%size%", Integer.toString(guild.getSize()))
                 .replace("%max%", Integer.toString(guild.maxSize))
                 .replace("%mods_count%", Integer.toString(guild.modsByUUID.size()))
@@ -408,7 +408,7 @@ public class MessagingUtils {
                 .replace("%guild_xp_total%", (guild != null ? Integer.toString(guild.totalXP) : PlayerUtils.notSet))
                 .replace("%guild_xp_current%", (guild != null ? Integer.toString(guild.currentXP) : PlayerUtils.notSet))
                 .replace("%guild_lvl%", (guild != null ? Integer.toString(guild.lvl) : PlayerUtils.notSet))
-                .replace("%guild_leader%", (guild != null ? PlayerUtils.getOrCreateByUUID(guild.leaderUUID)).displayName : PlayerUtils.notSet))
+                .replace("%guild_leader%", (guild != null ? PlayerUtils.getOrCreateByUUID(guild.leaderUUID).displayName : PlayerUtils.notSet))
                 .replace("%guild_uuid%", (guild != null ? player.guild : PlayerUtils.notSet))
                 .replace("%sspy%", (player.sspy ? PlayerUtils.sspyT : PlayerUtils.sspyF))
                 .replace("%gspy%", (player.gspy ? PlayerUtils.gspyT : PlayerUtils.gspyF))
@@ -660,7 +660,7 @@ public class MessagingUtils {
         for (String m : guild.modsByUUID){
             Player player;
             try {
-                player = PlayerUtils.getOrCreateByUUID(m));
+                player = PlayerUtils.getOrCreateByUUID(m);
             } catch (Exception e) {
                 continue;
             }
@@ -690,7 +690,7 @@ public class MessagingUtils {
         for (String m : guild.membersByUUID){
             Player player;
             try {
-                player = PlayerUtils.getOrCreateByUUID(m));
+                player = PlayerUtils.getOrCreateByUUID(m);
             } catch (Exception e) {
                 continue;
             }
@@ -720,7 +720,7 @@ public class MessagingUtils {
         for (String m : guild.totalMembersByUUID){
             Player player;
             try {
-                player = PlayerUtils.getOrCreateByUUID(m));
+                player = PlayerUtils.getOrCreateByUUID(m);
             } catch (Exception e) {
                 continue;
             }
@@ -750,7 +750,7 @@ public class MessagingUtils {
         for (String m : guild.invitesByUUID){
             Player player;
             try {
-                player = PlayerUtils.getOrCreateByUUID(m));
+                player = PlayerUtils.getOrCreateByUUID(m);
             } catch (Exception e) {
                 continue;
             }

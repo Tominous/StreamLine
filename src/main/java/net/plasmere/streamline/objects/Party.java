@@ -8,6 +8,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.utils.PartyUtils;
+import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.*;
@@ -239,40 +240,33 @@ public class Party {
     public void loadLists(){
         totalMembers.clear();
         for (String u : totalMembersByUUID) {
-            Player p = PlayerUtils.getOrCreateByUUID(u, true);
-            if (p == null) continue;
+            Player p = PlayerUtils.getOrCreateByUUID(u);
 
             totalMembers.add(p);
         }
 
         members.clear();
         for (String u : membersByUUID) {
-            Player p = PlayerUtils.getOrCreateByUUID(u, true);
-            if (p == null) continue;
+            Player p = PlayerUtils.getOrCreateByUUID(u);
 
             members.add(p);
         }
 
         moderators.clear();
         for (String u : modsByUUID) {
-            Player p = PlayerUtils.getOrCreateByUUID(u, true);
-            if (p == null) continue;
+            Player p = PlayerUtils.getOrCreateByUUID(u);
 
             moderators.add(p);
         }
 
         invites.clear();
         for (String u : invitesByUUID) {
-            Player p = PlayerUtils.getOrCreateByUUID(u, true);
-            if (p == null) continue;
+            Player p = PlayerUtils.getOrCreateByUUID(u);
 
             invites.add(p);
         }
 
-        Player pl = PlayerUtils.getOrCreateByUUID(leaderUUID, true);
-        if (pl == null) return;
-
-        this.leader = pl;
+        this.leader = PlayerUtils.getOrCreateByUUID(leaderUUID);
     }
 
     public boolean isModerator(Player member) {
