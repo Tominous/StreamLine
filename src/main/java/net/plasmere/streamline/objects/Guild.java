@@ -49,9 +49,9 @@ public class Guild {
         this.leaderUUID = creatorUUID;
         this.name = name;
         this.totalMembersByUUID.add(creatorUUID);
-        this.totalMembers.add(PlayerUtils.getPlayerByUUID(creatorUUID));
+        this.totalMembers.add(PlayerUtils.getOrCreateStatByUUID(creatorUUID));
         try {
-            PlayerUtils.getOrCreateByUUID(creatorUUID).updateKey("guild", creatorUUID.toString());
+            PlayerUtils.getOrCreateStatByUUID(creatorUUID).updateKey("guild", creatorUUID);
         } catch (Exception e){
             // do nothing
         }
@@ -1111,9 +1111,7 @@ public class Guild {
 
     public void disband(){
         for (String uuid : totalMembersByUUID){
-            SavableUser stat = PlayerUtils.getOrCreateByUUID(uuid);
-
-            if (stat == null) continue;
+            SavableUser stat = PlayerUtils.getOrCreateStatByUUID(uuid);
 
             stat.updateKey("guild", "");
         }

@@ -13,7 +13,6 @@ import net.plasmere.streamline.events.EventsHandler;
 import net.plasmere.streamline.events.enums.Condition;
 import net.plasmere.streamline.objects.GeyserFile;
 import net.plasmere.streamline.objects.Party;
-import net.plasmere.streamline.objects.enums.NetworkState;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;

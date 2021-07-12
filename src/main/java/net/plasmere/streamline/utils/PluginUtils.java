@@ -92,7 +92,7 @@ public class PluginUtils {
             registerCommand(plugin, new SSPYCommand(ConfigUtils.comBSSPYBase, ConfigUtils.comBSSPYPerm, getAliases(ConfigUtils.comBSSPYAliases)));
         }
         if (ConfigUtils.comBGSPY) {
-            registerCommand(plugin, new GSPYCommand(ConfigUtils.comBGSPYPerm, ConfigUtils.comBGSPYPerm, getAliases(ConfigUtils.comBGSPYAliases)));
+            registerCommand(plugin, new GSPYCommand(ConfigUtils.comBGSPYBase, ConfigUtils.comBGSPYPerm, getAliases(ConfigUtils.comBGSPYAliases)));
         }
         if (ConfigUtils.comBPSPY) {
             registerCommand(plugin, new PSPYCommand(ConfigUtils.comBPSPYBase, ConfigUtils.comBPSPYPerm, getAliases(ConfigUtils.comBPSPYAliases)));

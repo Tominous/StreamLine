@@ -5,6 +5,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
+import net.plasmere.streamline.utils.PluginUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.io.File;
@@ -38,6 +39,7 @@ public abstract class SavableUser {
     public String pendingFromFriends;
     public List<String> pendingFromFriendList;
     public CommandSender sender;
+    public String latestVersion;
 
     public List<String> savedKeys = new ArrayList<>();
 
@@ -46,9 +48,12 @@ public abstract class SavableUser {
     }
 
     public SavableUser(String fileName, boolean createNew){
+        if (PluginUtils.isLocked()) return;
+
         this.savableUser = this;
         this.sender = findSender(fileName);
         this.uuid = fileName;
+        this.latestVersion = "UNKNOWN";
 
         preConstruct(fileName);
 
@@ -274,7 +279,8 @@ public abstract class SavableUser {
         TreeSet<String> defaults = new TreeSet<>();
         defaults.add("uuid=" + uuid);
         defaults.add("latest-name=" + latestName);
-        defaults.add("display-name=" + latestName);
+        defaults.add("display-name=" + ((displayName == null) ? latestName : displayName));
+        defaults.add("latest-version=" + latestVersion);
         defaults.add("guild=");
         defaults.add("tags=" + defaultTags());
         defaults.add("points=" + ConfigUtils.pointsDefault);

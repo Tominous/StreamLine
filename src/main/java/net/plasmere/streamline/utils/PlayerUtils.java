@@ -27,12 +27,14 @@ public class PlayerUtils {
 
     private static HashMap<Player, SingleSet<Integer, Integer>> connections = new HashMap<>();
 
-    public static void applyConsole(){
-        applyConsole(new ConsolePlayer(false));
+    public static ConsolePlayer applyConsole(){
+        return applyConsole(new ConsolePlayer(false));
     }
 
-    public static void applyConsole(ConsolePlayer console){
+    public static ConsolePlayer applyConsole(ConsolePlayer console){
         addStat(console);
+
+        return console;
     }
 
     public static List<SavableUser> getStats() {
@@ -191,6 +193,10 @@ public class PlayerUtils {
     }
 
     public static SavableUser getOrCreateStat(String name){
+        if (name.equals("%")) {
+            return getOrCreateStatByUUID(name);
+        }
+
         SavableUser player = getStat(name);
 
         if (player == null) {

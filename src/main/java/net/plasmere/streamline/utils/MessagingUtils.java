@@ -15,6 +15,7 @@ import net.dv8tion.jda.api.JDA;
 import net.plasmere.streamline.objects.messaging.BungeeMassMessage;
 import net.plasmere.streamline.objects.messaging.BungeeMessage;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
+import net.plasmere.streamline.objects.users.ConsolePlayer;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.users.SavableUser;
 
@@ -115,7 +116,7 @@ public class MessagingUtils {
     }
 
     public static void sendBungeeMessage(BungeeMessage message){
-        Player player = PlayerUtils.getOrCreate(message.sender);
+        SavableUser player = PlayerUtils.getOrCreateStat(message.sender);
 
         message.to.sendMessage(TextUtils.codedText((message.title + message.transition + message.message)
                         .replace("%sender%", message.sender.getName())
@@ -354,8 +355,8 @@ public class MessagingUtils {
 
     public static void sendBGUserMessage(Guild guild, CommandSender sender, CommandSender to, String msg){
         to.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(sender)))
-                .replace("%leader%", PlayerUtils.getOrCreateByUUID(guild.leaderUUID).getName())
+                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStat(sender)))
+                .replace("%leader%", PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID).getName())
                 .replace("%size%", Integer.toString(guild.getSize()))
                 .replace("%max%", Integer.toString(guild.maxSize))
                 .replace("%mods_count%", Integer.toString(guild.modsByUUID.size()))
@@ -374,7 +375,7 @@ public class MessagingUtils {
                 .replace("%name%", guild.name)
                 .replace("%xpneeded%", Integer.toString(guild.getNeededXp(guild.lvl + 1)))
                 .replace("%xplevel%", Integer.toString(guild.xpUntilNextLevel()))
-                .replace("%version%", PlayerUtils.getOrCreate((ProxiedPlayer) sender).latestVersion)
+                .replace("%version%", PlayerUtils.getOrCreateStat(sender).latestVersion)
                 .replace("%name%", guild.name)
                 .replace("%length%", String.valueOf(guild.name.length()))
                 .replace("%max_length%", String.valueOf(ConfigUtils.guildMaxLength))
@@ -382,39 +383,66 @@ public class MessagingUtils {
         ));
     }
 
-    public static void sendStatUserMessage(Player player, CommandSender sender, String msg){
-        Guild guild = GuildUtils.getGuild(player);
+    public static void sendStatUserMessage(SavableUser user, CommandSender sender, String msg){
+        Guild guild = GuildUtils.getGuild(user);
 
-        sender.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(sender)))
-                .replace("%player%", PlayerUtils.getOffOnRegBungee(player))
-                .replace("%total_xp%", Integer.toString(player.totalXP))
-                .replace("%xp%", Integer.toString(player.getCurrentXP()))
-                .replace("%level%", Integer.toString(player.lvl))
-                .replace("%xpneeded%", Integer.toString(player.getNeededXp(player.lvl + 1)))
-                .replace("%xplevel%", Integer.toString(player.xpUntilNextLevel()))
-                .replace("%playtime%", TextUtils.truncate(Double.toString(player.getPlayHours()), 3))
-                .replace("%version%", player.latestVersion)
-                .replace("%points%", Integer.toString(player.points))
-                .replace("%points_name%", PlayerUtils.pointsName)
-                .replace("%uuid%", player.uuid)
-                .replace("%tags%", statTags(player))
-                .replace("%ip%", player.latestIP)
-                .replace("%ips%", statIPs(player))
-                .replace("%display%", player.displayName)
-                .replace("%names%", statNames(player))
-                .replace("%guild%", (guild != null ? guild.name : PlayerUtils.notSet))
-                .replace("%guild_members%", (guild != null ? Integer.toString(guild.totalMembers.size()) : PlayerUtils.notSet))
-                .replace("%guild_xp_total%", (guild != null ? Integer.toString(guild.totalXP) : PlayerUtils.notSet))
-                .replace("%guild_xp_current%", (guild != null ? Integer.toString(guild.currentXP) : PlayerUtils.notSet))
-                .replace("%guild_lvl%", (guild != null ? Integer.toString(guild.lvl) : PlayerUtils.notSet))
-                .replace("%guild_leader%", (guild != null ? PlayerUtils.getOrCreateByUUID(guild.leaderUUID).displayName : PlayerUtils.notSet))
-                .replace("%guild_uuid%", (guild != null ? player.guild : PlayerUtils.notSet))
-                .replace("%sspy%", (player.sspy ? PlayerUtils.sspyT : PlayerUtils.sspyF))
-                .replace("%gspy%", (player.gspy ? PlayerUtils.gspyT : PlayerUtils.gspyF))
-                .replace("%pspy%", (player.pspy ? PlayerUtils.pspyT : PlayerUtils.pspyF))
-                .replace("%online%", (player.online ? PlayerUtils.onlineT : PlayerUtils.onlineF))
-        ));
+        if (user instanceof ConsolePlayer) {
+            ConsolePlayer player = (ConsolePlayer) user;
+
+            sender.sendMessage(TextUtils.codedText(msg
+                    .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(sender)))
+                    .replace("%player%", PlayerUtils.getOffOnRegBungee(player))
+                    .replace("%version%", player.latestVersion)
+                    .replace("%points%", Integer.toString(player.points))
+                    .replace("%points_name%", PlayerUtils.pointsName)
+                    .replace("%uuid%", player.uuid)
+                    .replace("%display%", player.displayName)
+                    .replace("%guild%", (guild != null ? guild.name : PlayerUtils.notSet))
+                    .replace("%guild_members%", (guild != null ? Integer.toString(guild.totalMembers.size()) : PlayerUtils.notSet))
+                    .replace("%guild_xp_total%", (guild != null ? Integer.toString(guild.totalXP) : PlayerUtils.notSet))
+                    .replace("%guild_xp_current%", (guild != null ? Integer.toString(guild.currentXP) : PlayerUtils.notSet))
+                    .replace("%guild_lvl%", (guild != null ? Integer.toString(guild.lvl) : PlayerUtils.notSet))
+                    .replace("%guild_leader%", (guild != null ? PlayerUtils.getOrCreateByUUID(guild.leaderUUID).displayName : PlayerUtils.notSet))
+                    .replace("%guild_uuid%", (guild != null ? player.guild : PlayerUtils.notSet))
+            ));
+
+            return;
+        }
+
+        if (user instanceof Player) {
+            Player player = (Player) user;
+
+            sender.sendMessage(TextUtils.codedText(msg
+                    .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(sender)))
+                    .replace("%player%", PlayerUtils.getOffOnRegBungee(player))
+                    .replace("%total_xp%", Integer.toString(player.totalXP))
+                    .replace("%xp%", Integer.toString(player.getCurrentXP()))
+                    .replace("%level%", Integer.toString(player.lvl))
+                    .replace("%xpneeded%", Integer.toString(player.getNeededXp(player.lvl + 1)))
+                    .replace("%xplevel%", Integer.toString(player.xpUntilNextLevel()))
+                    .replace("%playtime%", TextUtils.truncate(Double.toString(player.getPlayHours()), 3))
+                    .replace("%version%", player.latestVersion)
+                    .replace("%points%", Integer.toString(player.points))
+                    .replace("%points_name%", PlayerUtils.pointsName)
+                    .replace("%uuid%", player.uuid)
+                    .replace("%tags%", statTags(player))
+                    .replace("%ip%", player.latestIP)
+                    .replace("%ips%", statIPs(player))
+                    .replace("%display%", player.displayName)
+                    .replace("%names%", statNames(player))
+                    .replace("%guild%", (guild != null ? guild.name : PlayerUtils.notSet))
+                    .replace("%guild_members%", (guild != null ? Integer.toString(guild.totalMembers.size()) : PlayerUtils.notSet))
+                    .replace("%guild_xp_total%", (guild != null ? Integer.toString(guild.totalXP) : PlayerUtils.notSet))
+                    .replace("%guild_xp_current%", (guild != null ? Integer.toString(guild.currentXP) : PlayerUtils.notSet))
+                    .replace("%guild_lvl%", (guild != null ? Integer.toString(guild.lvl) : PlayerUtils.notSet))
+                    .replace("%guild_leader%", (guild != null ? PlayerUtils.getOrCreateByUUID(guild.leaderUUID).displayName : PlayerUtils.notSet))
+                    .replace("%guild_uuid%", (guild != null ? player.guild : PlayerUtils.notSet))
+                    .replace("%sspy%", (player.sspy ? PlayerUtils.sspyT : PlayerUtils.sspyF))
+                    .replace("%gspy%", (player.gspy ? PlayerUtils.gspyT : PlayerUtils.gspyF))
+                    .replace("%pspy%", (player.pspy ? PlayerUtils.pspyT : PlayerUtils.pspyF))
+                    .replace("%online%", (player.online ? PlayerUtils.onlineT : PlayerUtils.onlineF))
+            ));
+        }
     }
 
     public static String statTags(Player player){
@@ -658,9 +686,9 @@ public class MessagingUtils {
 
         int i = 1;
         for (String m : guild.modsByUUID){
-            Player player;
+            SavableUser player;
             try {
-                player = PlayerUtils.getOrCreateByUUID(m);
+                player = PlayerUtils.getOrCreateStatByUUID(m);
             } catch (Exception e) {
                 continue;
             }
@@ -688,9 +716,9 @@ public class MessagingUtils {
 
         int i = 1;
         for (String m : guild.membersByUUID){
-            Player player;
+            SavableUser player;
             try {
-                player = PlayerUtils.getOrCreateByUUID(m);
+                player = PlayerUtils.getOrCreateStatByUUID(m);
             } catch (Exception e) {
                 continue;
             }
@@ -718,9 +746,9 @@ public class MessagingUtils {
 
         int i = 1;
         for (String m : guild.totalMembersByUUID){
-            Player player;
+            SavableUser player;
             try {
-                player = PlayerUtils.getOrCreateByUUID(m);
+                player = PlayerUtils.getOrCreateStatByUUID(m);
             } catch (Exception e) {
                 continue;
             }
@@ -748,9 +776,9 @@ public class MessagingUtils {
 
         int i = 1;
         for (String m : guild.invitesByUUID){
-            Player player;
+            SavableUser player;
             try {
-                player = PlayerUtils.getOrCreateByUUID(m);
+                player = PlayerUtils.getOrCreateStatByUUID(m);
             } catch (Exception e) {
                 continue;
             }
@@ -763,7 +791,7 @@ public class MessagingUtils {
             } else {
                 msg.append(MessageConfUtils.guildsInvsLast
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
-                        .replace("%version%", player.latestVersion)
+                        .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
             }
 

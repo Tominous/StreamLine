@@ -15,6 +15,7 @@ import net.plasmere.streamline.objects.configs.ServerConfig;
 import net.plasmere.streamline.objects.configs.ServerPermissions;
 import net.plasmere.streamline.objects.enums.NetworkState;
 import net.plasmere.streamline.objects.timers.*;
+import net.plasmere.streamline.objects.users.ConsolePlayer;
 import net.plasmere.streamline.utils.*;
 import net.plasmere.streamline.utils.holders.GeyserHolder;
 import net.plasmere.streamline.utils.holders.LPHolder;
@@ -276,7 +277,10 @@ public class StreamLine extends Plugin {
 		}
 
 		// Set up ConsolePlayer.
-		PlayerUtils.applyConsole();
+		ConsolePlayer console = PlayerUtils.applyConsole();
+		if (GuildUtils.existsByUUID(console.guild)) {
+			GuildUtils.addGuild(new Guild(console.guild, false));
+		}
 
 		//getLogger().
 

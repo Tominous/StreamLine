@@ -25,6 +25,7 @@ public class ConsolePlayer extends SavableUser {
         this.uuid = "%";
 
         this.latestName = ConfigUtils.consoleName;
+        this.displayName = ConfigUtils.consoleDisplayName;
         this.tagList = ConfigUtils.consoleDefaultTags;
 
         this.server = StreamLine.getInstance().getProxy();

@@ -1599,7 +1599,7 @@ friend:
     # What you see.
     self: "&eYou just requested &d%player%&e to be your &afriend&e!"
     # What they see.
-    other: "&d%sender% &ejust requested you to be their &afriend&e!%newline%&eType &b/f accept %sender% &eto accept!"
+    other: "&d%sender% &ejust requested you to be their &afriend&e!%newline%&eType &b/f accept %sender_normal% &eto accept!"
     # Already added.
     already: "&cYou already friended &d%player%&e!"
     # Not self.

@@ -98,6 +98,7 @@ public class FriendCommand extends Command implements TabExecutor {
                     if ((other instanceof Player && ((Player) other).online) || other instanceof ConsolePlayer) {
                         MessagingUtils.sendBUserMessage(other.sender, MessageConfUtils.friendReqOther
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnDisplayBungee(stat))
                         );
                     }
                     break;

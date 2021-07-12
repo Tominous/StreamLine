@@ -42,10 +42,12 @@ public class Player extends SavableUser {
 
     public Player(ProxiedPlayer player) {
         super(player.getUniqueId().toString());
+        this.player = player;
     }
 
     public Player(ProxiedPlayer player, boolean create){
         super(player.getUniqueId().toString(), create);
+        this.player = player;
     }
 
     public Player(String thing){
@@ -67,6 +69,11 @@ public class Player extends SavableUser {
     @Override
     public void preConstruct(String string) {
         this.player = PlayerUtils.getPPlayerByUUID(string);
+
+        if (this.player == null) {
+            this.uuid = string;
+            return;
+        }
 
         String ipSt = player.getSocketAddress().toString().replace("/", "");
         String[] ipSplit = ipSt.split(":");
@@ -112,7 +119,6 @@ public class Player extends SavableUser {
         defaults.add("gspy=true");
         defaults.add("pspy=true");
         defaults.add("sc=false");
-        defaults.add("latest-version=" + latestVersion);
         defaults.add("muted=false");
         defaults.add("muted-till=");
         defaults.add("view-sc=true");
