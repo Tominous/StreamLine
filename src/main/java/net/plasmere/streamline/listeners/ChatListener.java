@@ -103,7 +103,7 @@ public class ChatListener implements Listener {
                 }
 
                 e.setCancelled(true);
-                MessagingUtils.sendStaffChatMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg);
+                MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg);
                 if (ConfigUtils.moduleStaffChatMToDiscord) {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                             MessageConfUtils.staffChatEmbedTitle,
@@ -125,7 +125,7 @@ public class ChatListener implements Listener {
                     }
 
                     e.setCancelled(true);
-                    MessagingUtils.sendStaffChatMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg.substring(prefix.length()));
+                    MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg.substring(prefix.length()));
                     if (ConfigUtils.moduleStaffChatMToDiscord) {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                                 MessageConfUtils.staffChatEmbedTitle,

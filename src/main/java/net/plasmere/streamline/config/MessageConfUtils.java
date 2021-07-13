@@ -54,6 +54,9 @@ public class MessageConfUtils {
     // Bans.
     public static String punBannedTemp = StreamLine.getConfig().getMessString("punishments.banned.temp");
     public static String punBannedPerm = StreamLine.getConfig().getMessString("punishments.banned.perm");
+    // IPBans.
+    public static String punIPBannedTemp = StreamLine.getConfig().getMessString("punishments.ip-banned.temp");
+    public static String punIPBannedPerm = StreamLine.getConfig().getMessString("punishments.ip-banned.perm");
     // Reports.
     public static String reportEmbedTitle = StreamLine.getConfig().getMessString("report-message.embed-title");
     public static String dToDReportMessage = StreamLine.getConfig().getMessString("report-message.from-discord.discord");
@@ -94,8 +97,6 @@ public class MessageConfUtils {
     // ... StaffOnline.
     // Discord.
     public static String sOnlineMessageEmbedTitle = StreamLine.getConfig().getMessString("staffonline.message.embed-title");
-    public static String sOnlineDiscordOnline = StreamLine.getConfig().getMessString("staffonline.message.discord.online");
-    public static String sOnlineDiscordOffline = StreamLine.getConfig().getMessString("staffonline.message.discord.offline");
     public static String sOnlineDiscordMain = StreamLine.getConfig().getMessString("staffonline.message.discord.main");
     public static String sOnlineDiscordBulkNotLast = StreamLine.getConfig().getMessString("staffonline.message.discord.staffbulk.if-not-last");
     public static String sOnlineDiscordBulkLast = StreamLine.getConfig().getMessString("staffonline.message.discord.staffbulk.if-last");
@@ -198,28 +199,72 @@ public class MessageConfUtils {
     public static String replyIgnored = StreamLine.getConfig().getMessString("message.ignored");
     public static String replySSPY = StreamLine.getConfig().getMessString("message.sspy");
     // Mute.
+    public static String muteEmbed = StreamLine.getConfig().getMessString("mute.discord-embed-title");
+    public static String muteCannot = StreamLine.getConfig().getMessString("mute.cannot");
     public static String muteMTempSender = StreamLine.getConfig().getMessString("mute.mute.temp.sender");
     public static String muteMTempMuted = StreamLine.getConfig().getMessString("mute.mute.temp.muted");
     public static String muteMTempAlready = StreamLine.getConfig().getMessString("mute.mute.temp.already");
+    public static String muteMTempStaff = StreamLine.getConfig().getMessString("mute.mute.temp.staff");
+    public static String muteMTempDiscord = StreamLine.getConfig().getMessString("mute.mute.temp.discord");
     public static String muteMPermSender = StreamLine.getConfig().getMessString("mute.mute.perm.sender");
     public static String muteMPermMuted = StreamLine.getConfig().getMessString("mute.mute.perm.muted");
     public static String muteMPermAlready = StreamLine.getConfig().getMessString("mute.mute.perm.already");
+    public static String muteMPermStaff = StreamLine.getConfig().getMessString("mute.mute.perm.staff");
+    public static String muteMPermDiscord = StreamLine.getConfig().getMessString("mute.mute.perm.discord");
     public static String muteUnSender = StreamLine.getConfig().getMessString("mute.unmute.sender");
     public static String muteUnMuted = StreamLine.getConfig().getMessString("mute.unmute.muted");
     public static String muteUnAlready = StreamLine.getConfig().getMessString("mute.unmute.already");
+    public static String muteUnStaff = StreamLine.getConfig().getMessString("mute.unmute.staff");
+    public static String muteUnDiscord = StreamLine.getConfig().getMessString("mute.unmute.discord");
     public static String muteCheckMain = StreamLine.getConfig().getMessString("mute.check.main");
     public static String muteCheckMuted = StreamLine.getConfig().getMessString("mute.check.muted");
     public static String muteCheckUnMuted = StreamLine.getConfig().getMessString("mute.check.unmuted");
+    public static String muteCheckNoDate = StreamLine.getConfig().getMessString("mute.check.no-date");
+    // Kick.
+    public static String kickEmbed = StreamLine.getConfig().getMessString("kick.discord-embed-title");
+    public static String kickCannot = StreamLine.getConfig().getMessString("kick.cannot");
+    public static String kickSender = StreamLine.getConfig().getMessString("kick.sender");
+    public static String kickKicked = StreamLine.getConfig().getMessString("kick.kicked");
+    public static String kickStaff = StreamLine.getConfig().getMessString("kick.staff");
+    public static String kickDiscord = StreamLine.getConfig().getMessString("kick.discord");
     // Ban.
+    public static String banEmbed = StreamLine.getConfig().getMessString("ban.discord-embed-title");
+    public static String banCannot = StreamLine.getConfig().getMessString("ban.cannot");
     public static String banBTempSender = StreamLine.getConfig().getMessString("ban.ban.temp.sender");
     public static String banBTempAlready = StreamLine.getConfig().getMessString("ban.ban.temp.already");
+    public static String banBTempStaff = StreamLine.getConfig().getMessString("ban.ban.temp.staff");
+    public static String banBTempDiscord = StreamLine.getConfig().getMessString("ban.ban.temp.discord");
     public static String banBPermSender = StreamLine.getConfig().getMessString("ban.ban.perm.sender");
     public static String banBPermAlready = StreamLine.getConfig().getMessString("ban.ban.perm.already");
+    public static String banBPermStaff = StreamLine.getConfig().getMessString("ban.ban.perm.staff");
+    public static String banBPermDiscord = StreamLine.getConfig().getMessString("ban.ban.perm.discord");
     public static String banUnSender = StreamLine.getConfig().getMessString("ban.unban.sender");
     public static String banUnAlready = StreamLine.getConfig().getMessString("ban.unban.already");
+    public static String banUnStaff = StreamLine.getConfig().getMessString("ban.unban.staff");
+    public static String banUnDiscord = StreamLine.getConfig().getMessString("ban.unban.discord");
     public static String banCheckMain = StreamLine.getConfig().getMessString("ban.check.main");
     public static String banCheckBanned = StreamLine.getConfig().getMessString("ban.check.banned");
     public static String banCheckUnBanned = StreamLine.getConfig().getMessString("ban.check.unbanned");
+    public static String banCheckNoDate = StreamLine.getConfig().getMessString("ban.check.no-date");
+    // IPBan.
+    public static String ipBanEmbed = StreamLine.getConfig().getMessString("ipban.discord-embed-title");
+    public static String ipBanCannot = StreamLine.getConfig().getMessString("ipban.cannot");
+    public static String ipBanBTempSender = StreamLine.getConfig().getMessString("ipban.ban.temp.sender");
+    public static String ipBanBTempAlready = StreamLine.getConfig().getMessString("ipban.ban.temp.already");
+    public static String ipBanBTempStaff = StreamLine.getConfig().getMessString("ipban.ban.temp.staff");
+    public static String ipBanBTempDiscord = StreamLine.getConfig().getMessString("ipban.ban.temp.discord");
+    public static String ipBanBPermSender = StreamLine.getConfig().getMessString("ipban.ban.perm.sender");
+    public static String ipBanBPermAlready = StreamLine.getConfig().getMessString("ipban.ban.perm.already");
+    public static String ipBanBPermStaff = StreamLine.getConfig().getMessString("ipban.ban.perm.staff");
+    public static String ipBanBPermDiscord = StreamLine.getConfig().getMessString("ipban.ban.perm.discord");
+    public static String ipBanUnSender = StreamLine.getConfig().getMessString("ipban.unban.sender");
+    public static String ipBanUnAlready = StreamLine.getConfig().getMessString("ipban.unban.already");
+    public static String ipBanUnStaff = StreamLine.getConfig().getMessString("ipban.unban.staff");
+    public static String ipBanUnDiscord = StreamLine.getConfig().getMessString("ipban.unban.discord");
+    public static String ipBanCheckMain = StreamLine.getConfig().getMessString("ipban.check.main");
+    public static String ipBanCheckBanned = StreamLine.getConfig().getMessString("ipban.check.banned");
+    public static String ipBanCheckUnBanned = StreamLine.getConfig().getMessString("ipban.check.unbanned");
+    public static String ipBanCheckNoDate = StreamLine.getConfig().getMessString("ipban.check.no-date");
     // Ignore.
     public static String friendReqSelf = StreamLine.getConfig().getMessString("friend.request.self");
     public static String friendReqOther = StreamLine.getConfig().getMessString("friend.request.other");
@@ -250,9 +295,6 @@ public class MessageConfUtils {
     public static String getStatsMessage = StreamLine.getConfig().getMessString("getstats.message.main");
     public static String getStatsNLast = StreamLine.getConfig().getMessString("getstats.message.not-last");
     public static String getStatsLast = StreamLine.getConfig().getMessString("getstats.message.last");
-    // Kick.
-    public static String kickSender = StreamLine.getConfig().getMessString("kick.sender");
-    public static String kickKicked = StreamLine.getConfig().getMessString("kick.kicked");
     // // Settings.
     // Set.
     public static String settingsSetMOTD = StreamLine.getConfig().getMessString("settings.set.motd");

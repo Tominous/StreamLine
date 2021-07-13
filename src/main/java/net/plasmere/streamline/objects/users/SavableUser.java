@@ -41,6 +41,7 @@ public abstract class SavableUser {
     public List<String> pendingFromFriendList;
     public CommandSender sender;
     public String latestVersion;
+    public String latestServer;
 
     public List<String> savedKeys = new ArrayList<>();
 
@@ -55,6 +56,7 @@ public abstract class SavableUser {
         this.sender = findSender(fileName);
         this.uuid = fileName;
         this.latestVersion = "UNKNOWN";
+        this.latestServer = "SPACE";
 
         preConstruct(fileName);
 
@@ -295,6 +297,7 @@ public abstract class SavableUser {
         defaults.add("friends=");
         defaults.add("pending-to-friends=");
         defaults.add("pending-from-friends=");
+        defaults.add("latest-server=" + latestServer);
         //defaults.add("");
         defaults.addAll(addedProperties());
         return defaults;
@@ -341,6 +344,7 @@ public abstract class SavableUser {
         this.friendList = loadFriends();
         this.pendingToFriendList = loadPendingToFriends();
         this.pendingFromFriendList = loadPendingFromFriends();
+        this.latestServer = getFromKey("latest-server");
 
         loadMoreVars();
     }
@@ -662,6 +666,11 @@ public abstract class SavableUser {
 
     public void remPoints(int amount) {
         setPoints(points - amount);
+    }
+
+    public void setLatestServer(String server) {
+        this.latestServer = server;
+        updateKey("latest-server", server);
     }
 
     public void saveInfo() throws IOException {

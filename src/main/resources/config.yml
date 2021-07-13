@@ -23,28 +23,36 @@ discord:
   ## Text Channels ##
   text-channels:
     # Report channel ID. "report-to-channel" must be set "true".
-    reports: "put id here"
+    reports: "put-id-here"
     # Staff channel ID. "staffchat-to-minecraft" must be set "true".
-    staffchat: "put id here"
+    staffchat: "put-id-here"
     # Bot offline and online message output channel ID. Either "startup-message" or "shutdown-message" should be "true".
-    offline-online: "put id here"
+    offline-online: "put-id-here"
     # Bungee player joins channel ID. "player-joins" must be set to "yes" or "staff".
-    bungee-joins: "put id here"
+    bungee-joins: "put-id-here"
     # Bungee player leaves channel ID. "player-leaves" must be set to "yes" or "staff".
-    bungee-leaves: "put id here"
+    bungee-leaves: "put-id-here"
     # Bungee main console channel ID.
-    console: "put id here"
+    console: "put-id-here"
     # Bungee guilds console channel ID.
-    guilds: "put id here"
+    guilds: "put-id-here"
     # Bungee parties console channel ID.
-    parties: "put id here"
+    parties: "put-id-here"
+    # Bungee mutes channel ID.
+    mutes: "put-id-here"
+    # Bungee kicks channel ID.
+    kicks: "put-id-here"
+    # Bungee bans channel ID.
+    bans: "put-id-here"
+    # Bungee ipbans channel ID.
+    ipbans: "put-id-here"
 
   ## Roles ##
   roles:
     # Role you want to be pinged when someone does a report. "report-channel-pings" must be set "true".
-    reports: "put id here"
+    reports: "put-id-here"
     # Role you want to be designated as the "Staff" role. All staff should have this role.
-    staff: "put id here"
+    staff: "put-id-here"
 
 ### COMMAND SETTINGS ###
 commands:
@@ -60,7 +68,7 @@ commands:
         - "commands"
         - "help"
       # Put the ID of the Discord role here:
-      permission: "put id here"
+      permission: "put-id-here"
     # The online command.
     online:
       # Enables / disables the use of the "online" bot command.
@@ -71,7 +79,7 @@ commands:
         - "on"
         - "online"
       # Put the ID of the Discord role here:
-      permission: "put id here"
+      permission: "put-id-here"
     # The report command.
     report:
       # Enables / disables the use of the "report" bot command.
@@ -82,7 +90,7 @@ commands:
         - "rep"
         - "report"
       # Put the ID of the Discord role here:
-      permission: "put id here"
+      permission: "put-id-here"
     # The staffchat command.
     staffchat:
       # Enables / disables being able to use a command in Discord to talk to staff on the bungee server.
@@ -94,7 +102,7 @@ commands:
         - "#"
         - "staffchat"
       # Put the ID of the Discord role here:
-      permission: "put id here"
+      permission: "put-id-here"
     # The staffonline command.
     staffonline:
       # Enables / disables the use of the "staffonline" bot command.
@@ -105,7 +113,7 @@ commands:
         - "staff"
         - "staffonline"
       # Put the ID of the Discord role here:
-      permission: "put id here"
+      permission: "put-id-here"
   # Bungee commands...
   bungee:
     # The ping command.
@@ -371,6 +379,7 @@ commands:
         - "st"
         - "myinfo"
         - "mi"
+        - "lookup"
       # For viewing others.
       view-others:
         # Enables / disables viewing other stats.
@@ -639,6 +648,18 @@ commands:
         # All aliases for the command. Listed in yml list format.
         aliases:
           - "hammer"
+      # The ipban command.
+      ipban:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "ipban"
+        # Custom permission.
+        permission: "streamline.command.ipban"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "ipb"
+          - "iphammer"
       # The info command.
       info:
         # Enables / disables the use of the command.
@@ -1007,12 +1028,36 @@ modules:
         hard-mutes: false
         # Makes it so that you can write over previous mutes so that you do not have to unban then reban to change a message.
         replaceable: true
+        # Make it get put in the specified mutes channel?
+        discord: true
+        # Permission to bypass.
+        by-pass: "streamline.bypass.mutes"
+      # For kicks...
+      kicks:
+        # Make it get put in the specified mutes channel?
+        discord: true
+        # Permission to bypass.
+        by-pass: "streamline.bypass.kicks"
       # For bans.
       bans:
         # Enables / disables bans.
         enabled: true
         # Makes it so that you can write over previous bans so that you do not have to unban then reban to change a message.
         replaceable: true
+        # Make it get put in the specified bans channel?
+        discord: true
+        # Permission to bypass.
+        by-pass: "streamline.bypass.bans"
+      # For ipbans.
+      ipbans:
+        # Enables / disables bans.
+        enabled: true
+        # Makes it so that you can write over previous ipbans so that you do not have to unban then reban to change a message.
+        replaceable: true
+        # Make it get put in the specified ipbans channel?
+        discord: true
+        # Permission to bypass.
+        by-pass: "streamline.bypass.ipbans"
     # For all private messaging.
     messaging:
       # Permission for viewing private messages.

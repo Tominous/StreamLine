@@ -5,12 +5,15 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.utils.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public class KickCommand extends Command implements TabExecutor {
@@ -45,6 +48,11 @@ public class KickCommand extends Command implements TabExecutor {
                 return;
             }
 
+            if (PlayerUtils.hasOfflinePermission(ConfigUtils.punKicksBypass, other.uuid)) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banCannot);
+                return;
+            }
+
             String reason = TextUtils.argsToStringMinus(args, 0);
 
             PlayerUtils.kick(other, MessageConfUtils.kickKicked
@@ -54,6 +62,28 @@ public class KickCommand extends Command implements TabExecutor {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.kickSender
                     .replace("%reason%", reason)
                     .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                    .replace("%reason%", reason)
+            );
+
+            if (ConfigUtils.punKicksDiscord) {
+                MessagingUtils.sendDiscordEBMessage(
+                        new DiscordMessage(
+                                sender,
+                                MessageConfUtils.kickEmbed,
+                                MessageConfUtils.kickDiscord
+                                        .replace("%punisher%", sender.getName())
+                                        .replace("%player%", other.latestName)
+                                        .replace("%reason%", reason)
+                                ,
+                                ConfigUtils.textChannelKicks
+                        )
+                );
+            }
+
+            MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.kickStaff
+                    .replace("%punisher%", sender.getName())
+                    .replace("%player%", other.latestName)
+                    .replace("%reason%", reason)
             );
         }
     }

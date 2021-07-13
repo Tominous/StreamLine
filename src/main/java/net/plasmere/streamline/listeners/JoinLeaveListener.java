@@ -303,6 +303,8 @@ public class JoinLeaveListener implements Listener {
 
         ev.setTarget(server);
 
+        stat.setLatestServer(server.getName());
+
         if (ConfigUtils.events) {
             for (Event event : EventsHandler.getEvents()) {
                 if (!EventsHandler.checkTags(event, stat)) continue;

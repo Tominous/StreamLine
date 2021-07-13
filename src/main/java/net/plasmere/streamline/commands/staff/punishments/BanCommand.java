@@ -8,6 +8,7 @@ import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.utils.*;
 
 import java.time.Instant;
@@ -34,11 +35,16 @@ public class BanCommand extends Command implements TabExecutor {
             String otherUUID = UUIDFetcher.getCachedUUID(otherName);
 
             if (args[0].equals("add")) {
+                if (PlayerUtils.hasOfflinePermission(ConfigUtils.punBansBypass, otherUUID)) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banCannot);
+                    return;
+                }
+
                 if (args.length == 4 && ( args[2].endsWith("y") || args[2].endsWith("mo") || args[2].endsWith("w") || args[2].endsWith("d") || args[2].endsWith("h") || args[2].endsWith("m") || args[2].endsWith("s"))) {
                     if (! ConfigUtils.punBansReplaceable) {
                         if (bans.contains(otherUUID)) {
                             if (bans.getBoolean(otherUUID + ".banned")) {
-                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMTempAlready
+                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banBTempAlready
                                         .replace("%player%", otherName)
                                 );
                                 return;
@@ -79,15 +85,40 @@ public class BanCommand extends Command implements TabExecutor {
 
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banBTempSender
                             .replace("%player%", otherName)
+                            .replace("%reason%", reason)
                             .replace("%date%", new Date(Long.parseLong(till)).toString())
                     );
+
+                    if (ConfigUtils.punBansDiscord) {
+                        MessagingUtils.sendDiscordEBMessage(
+                                new DiscordMessage(
+                                        sender,
+                                        MessageConfUtils.banEmbed,
+                                        MessageConfUtils.banBTempDiscord
+                                                .replace("%punisher%", sender.getName())
+                                                .replace("%player%", otherName)
+                                                .replace("%reason%", reason)
+                                                .replace("%date%", new Date(Long.parseLong(till)).toString())
+                                        ,
+                                        ConfigUtils.textChannelBans
+                                )
+                        );
+                    }
+
+                    MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.banBTempStaff
+                            .replace("%punisher%", sender.getName())
+                            .replace("%player%", otherName)
+                            .replace("%reason%", reason)
+                            .replace("%date%", new Date(Long.parseLong(till)).toString())
+                    );
+
                     return;
                 }
 
                 if (! ConfigUtils.punBansReplaceable) {
                     if (bans.contains(otherUUID)) {
                         if (bans.getBoolean(otherUUID + ".banned")) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMPermAlready
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banBPermAlready
                                     .replace("%player%", otherName)
                             );
                             return;
@@ -115,8 +146,35 @@ public class BanCommand extends Command implements TabExecutor {
 
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banBPermSender
                         .replace("%player%", otherName)
+                        .replace("%reason%", reason)
+                );
+
+                if (ConfigUtils.punBansDiscord) {
+                    MessagingUtils.sendDiscordEBMessage(
+                            new DiscordMessage(
+                                    sender,
+                                    MessageConfUtils.banEmbed,
+                                    MessageConfUtils.banBPermDiscord
+                                            .replace("%punisher%", sender.getName())
+                                            .replace("%player%", otherName)
+                                            .replace("%reason%", reason)
+                                    ,
+                                    ConfigUtils.textChannelBans
+                            )
+                    );
+                }
+
+                MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.banBPermStaff
+                        .replace("%punisher%", sender.getName())
+                        .replace("%player%", otherName)
+                        .replace("%reason%", reason)
                 );
             } else if (args[0].equals("temp")) {
+                if (PlayerUtils.hasOfflinePermission(ConfigUtils.punBansBypass, otherUUID)) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banCannot);
+                    return;
+                }
+
                 if (args.length < 4) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                 } else {
@@ -164,6 +222,30 @@ public class BanCommand extends Command implements TabExecutor {
 
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banBTempSender
                             .replace("%player%", otherName)
+                            .replace("%reason%", reason)
+                            .replace("%date%", new Date(Long.parseLong(till)).toString())
+                    );
+
+                    if (ConfigUtils.punBansDiscord) {
+                        MessagingUtils.sendDiscordEBMessage(
+                                new DiscordMessage(
+                                        sender,
+                                        MessageConfUtils.banEmbed,
+                                        MessageConfUtils.banBTempDiscord
+                                                .replace("%punisher%", sender.getName())
+                                                .replace("%player%", otherName)
+                                                .replace("%reason%", reason)
+                                                .replace("%date%", new Date(Long.parseLong(till)).toString())
+                                        ,
+                                        ConfigUtils.textChannelBans
+                                )
+                        );
+                    }
+
+                    MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.banBTempStaff
+                            .replace("%punisher%", sender.getName())
+                            .replace("%player%", otherName)
+                            .replace("%reason%", reason)
                             .replace("%date%", new Date(Long.parseLong(till)).toString())
                     );
                 }
@@ -181,6 +263,25 @@ public class BanCommand extends Command implements TabExecutor {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banUnSender
                         .replace("%player%", otherName)
                 );
+
+                if (ConfigUtils.punBansDiscord) {
+                    MessagingUtils.sendDiscordEBMessage(
+                            new DiscordMessage(
+                                    sender,
+                                    MessageConfUtils.banEmbed,
+                                    MessageConfUtils.banUnDiscord
+                                            .replace("%punisher%", sender.getName())
+                                            .replace("%player%", otherName)
+                                    ,
+                                    ConfigUtils.textChannelBans
+                            )
+                    );
+                }
+
+                MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.banUnStaff
+                        .replace("%punisher%", sender.getName())
+                        .replace("%player%", otherName)
+                );
             } else if (args[0].equals("check")) {
                 String reason = bans.getString(otherUUID + ".reason");
                 String bannedMillis = bans.getString(otherUUID + ".till");
@@ -188,7 +289,10 @@ public class BanCommand extends Command implements TabExecutor {
 
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banCheckMain
                         .replace("%player%", otherName)
-                        .replace("%check%", bans.getBoolean(otherUUID + ".banned") ? MessageConfUtils.banCheckBanned : MessageConfUtils.banCheckUnBanned)
+                        .replace("%check%", bans.getBoolean(otherUUID + ".banned") ? MessageConfUtils.banCheckBanned
+                                .replace("%date%", (! bannedMillis.equals("") ? new Date(Long.parseLong(bannedMillis)).toString() : MessageConfUtils.banCheckNoDate))
+                                .replace("%reason%", reason)
+                                : MessageConfUtils.banCheckUnBanned)
                 );
             }
         }

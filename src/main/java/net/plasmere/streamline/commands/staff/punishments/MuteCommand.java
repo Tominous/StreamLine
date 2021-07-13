@@ -8,6 +8,7 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.utils.*;
 
@@ -48,6 +49,11 @@ public class MuteCommand extends Command implements TabExecutor {
             }
 
             if (args[0].equals("add")) {
+                if (PlayerUtils.hasOfflinePermission(ConfigUtils.punMutesBypass, other.uuid)) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banCannot);
+                    return;
+                }
+
                 if (args.length == 3) {
                     if (! ConfigUtils.punMutesReplaceable) {
                         if (other.muted) {
@@ -70,6 +76,28 @@ public class MuteCommand extends Command implements TabExecutor {
                                 .replace("%date%", other.mutedTill.toString())
                         );
                     }
+
+                    if (ConfigUtils.punMutesDiscord) {
+                        MessagingUtils.sendDiscordEBMessage(
+                                new DiscordMessage(
+                                        sender,
+                                        MessageConfUtils.muteEmbed,
+                                        MessageConfUtils.muteMTempDiscord
+                                                .replace("%punisher%", sender.getName())
+                                                .replace("%player%", other.latestName)
+                                                .replace("%date%", other.mutedTill.toString())
+                                        ,
+                                        ConfigUtils.textChannelMutes
+                                )
+                        );
+                    }
+
+                    MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.muteMTempStaff
+                            .replace("%punisher%", sender.getName())
+                            .replace("%player%", other.latestName)
+                            .replace("%date%", other.mutedTill.toString())
+                    );
+
                     return;
                 }
 
@@ -91,7 +119,31 @@ public class MuteCommand extends Command implements TabExecutor {
                             .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(((ProxiedPlayer) sender).getUniqueId().toString())))
                     );
                 }
+
+                if (ConfigUtils.punMutesDiscord) {
+                    MessagingUtils.sendDiscordEBMessage(
+                            new DiscordMessage(
+                                    sender,
+                                    MessageConfUtils.muteEmbed,
+                                    MessageConfUtils.muteMPermMuted
+                                            .replace("%punisher%", sender.getName())
+                                            .replace("%player%", other.latestName)
+                                    ,
+                                    ConfigUtils.textChannelMutes
+                            )
+                    );
+                }
+
+                MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.muteMPermStaff
+                        .replace("%punisher%", sender.getName())
+                        .replace("%player%", other.latestName)
+                );
             } else if (args[0].equals("temp")) {
+                if (PlayerUtils.hasOfflinePermission(ConfigUtils.punMutesBypass, other.uuid)) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banCannot);
+                    return;
+                }
+
                 if (args.length < 3) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                 } else {
@@ -116,6 +168,27 @@ public class MuteCommand extends Command implements TabExecutor {
                                 .replace("%date%", other.mutedTill.toString())
                         );
                     }
+
+                    if (ConfigUtils.punMutesDiscord) {
+                        MessagingUtils.sendDiscordEBMessage(
+                                new DiscordMessage(
+                                        sender,
+                                        MessageConfUtils.muteEmbed,
+                                        MessageConfUtils.muteMTempDiscord
+                                                .replace("%punisher%", sender.getName())
+                                                .replace("%player%", other.latestName)
+                                                .replace("%date%", other.mutedTill.toString())
+                                        ,
+                                        ConfigUtils.textChannelMutes
+                                )
+                        );
+                    }
+
+                    MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.muteMTempStaff
+                            .replace("%punisher%", sender.getName())
+                            .replace("%player%", other.latestName)
+                            .replace("%date%", other.mutedTill.toString())
+                    );
                 }
             } else if (args[0].equals("remove")) {
                 if (! other.muted) {
@@ -134,10 +207,33 @@ public class MuteCommand extends Command implements TabExecutor {
                             .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(((ProxiedPlayer) sender).getUniqueId().toString())))
                     );
                 }
+
+                if (ConfigUtils.punMutesDiscord) {
+                    MessagingUtils.sendDiscordEBMessage(
+                            new DiscordMessage(
+                                    sender,
+                                    MessageConfUtils.muteEmbed,
+                                    MessageConfUtils.muteUnDiscord
+                                            .replace("%punisher%", sender.getName())
+                                            .replace("%player%", other.latestName)
+                                    ,
+                                    ConfigUtils.textChannelMutes
+                            )
+                    );
+                }
+
+                MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.muteUnStaff
+                        .replace("%punisher%", sender.getName())
+                        .replace("%player%", other.latestName)
+                );
             } else if (args[0].equals("check")) {
+                Date checked = other.mutedTill;
+
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteCheckMain
                         .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
-                        .replace("%check%", other.muted ? MessageConfUtils.muteCheckMuted : MessageConfUtils.muteCheckUnMuted)
+                        .replace("%check%", other.muted ? MessageConfUtils.muteCheckMuted
+                                .replace("%date%", (! (checked == null) ? checked.toString() : MessageConfUtils.ipBanCheckNoDate))
+                                : MessageConfUtils.muteCheckUnMuted)
                 );
             }
         }

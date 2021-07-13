@@ -11,9 +11,7 @@ import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.score.Scoreboard;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
-import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.PlayerUtils;
-import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -82,6 +80,7 @@ public class Player extends SavableUser {
         this.uuid = player.getUniqueId().toString();
         this.latestIP = ipSt;
         this.latestName = player.getName();
+        this.latestServer = player.getServer().getInfo().getName();
 
         this.ips = ipSt;
         this.names = player.getName();

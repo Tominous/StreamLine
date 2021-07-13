@@ -33,6 +33,10 @@ public class ConfigUtils {
     public static String textChannelBConsole = StreamLine.getConfig().getConfString("discord.text-channels.console");
     public static String textChannelGuilds = StreamLine.getConfig().getConfString("discord.text-channels.guilds");
     public static String textChannelParties = StreamLine.getConfig().getConfString("discord.text-channels.parties");
+    public static String textChannelMutes = StreamLine.getConfig().getConfString("discord.text-channels.mutes");
+    public static String textChannelKicks = StreamLine.getConfig().getConfString("discord.text-channels.kicks");
+    public static String textChannelBans = StreamLine.getConfig().getConfString("discord.text-channels.bans");
+    public static String textChannelIPBans = StreamLine.getConfig().getConfString("discord.text-channels.ipbans");
     // Roles.
     public static String roleReports = StreamLine.getConfig().getConfString("discord.roles.reports");
     public static String roleStaff = StreamLine.getConfig().getConfString("discord.roles.staff");
@@ -278,6 +282,11 @@ public class ConfigUtils {
     public static String comBBanBase = StreamLine.getConfig().getConfString("commands.bungee.staff.ban.base");
     public static List<String> comBBanAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.ban.aliases");
     public static String comBBanPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.ban.permission");
+    // Ban.
+    public static boolean comBIPBan = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.ban.enabled");
+    public static String comBIPBanBase = StreamLine.getConfig().getConfString("commands.bungee.staff.ban.base");
+    public static List<String> comBIPBanAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.ban.aliases");
+    public static String comBIPBanPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.ban.permission");
     // Info.
     public static boolean comBInfo = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.info.enabled");
     public static String comBInfoBase = StreamLine.getConfig().getConfString("commands.bungee.staff.info.base");
@@ -436,9 +445,21 @@ public class ConfigUtils {
     public static boolean punMutes = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.mutes.enabled");
     public static boolean punMutesHard = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.mutes.hard-mutes");
     public static boolean punMutesReplaceable = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.mutes.replaceable");
+    public static boolean punMutesDiscord = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.mutes.discord");
+    public static String punMutesBypass = StreamLine.getConfig().getConfString("modules.bungee.punishments.mutes.bypass");
+    // Kicks
+    public static boolean punKicksDiscord = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.kicks.discord");
+    public static String punKicksBypass = StreamLine.getConfig().getConfString("modules.bungee.punishments.kicks.bypass");
     // Bans.
     public static boolean punBans = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.bans.enabled");
     public static boolean punBansReplaceable = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.bans.replaceable");
+    public static boolean punBansDiscord = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.bans.discord");
+    public static String punBansBypass = StreamLine.getConfig().getConfString("modules.bungee.punishments.bans.bypass");
+    // IPBans.
+    public static boolean punIPBans = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.ipbans.enabled");
+    public static boolean punIPBansReplaceable = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.ipbans.replaceable");
+    public static boolean punIPBansDiscord = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.ipbans.discord");
+    public static String punIPBansBypass = StreamLine.getConfig().getConfString("modules.bungee.punishments.ipbans.bypass");
     // Messaging.
     public static String messViewPerm = StreamLine.getConfig().getConfString("modules.bungee.messaging.view-permission");
     public static String messReplyTo = StreamLine.getConfig().getConfString("modules.bungee.messaging.reply-to");

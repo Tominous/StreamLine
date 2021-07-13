@@ -26,72 +26,37 @@ public class MessagingUtils {
     private static final EmbedBuilder eb = new EmbedBuilder();
 
     public static void sendStaffMessage(CommandSender sender, String from, String msg){
-        Collection<ProxiedPlayer> staff = StreamLine.getInstance().getProxy().getPlayers();
-        Set<ProxiedPlayer> staffs = new HashSet<>(staff);
+        sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage
+                .replace("%user%", sender.getName())
+                .replace("%from%", from)
+                .replace("%message%", msg)
+                .replace("%server%", PlayerUtils.getOrCreateStat(sender).latestServer)
+                .replace("%version%", PlayerUtils.getOrCreateStat(sender).latestVersion)
+        );
+    }
 
-        for (ProxiedPlayer player : staff){
-            try {
-                if (! player.hasPermission(ConfigUtils.staffPerm)) {
-                    staffs.remove(player);
-                }
+    public static void sendPermissionedMessage(String toPermission, String message){
+        Set<ProxiedPlayer> toPlayers = new HashSet<>();
 
-                Player stat = PlayerUtils.getPlayerStat(player);
-
-                if (stat == null) continue;
-                if (! stat.sc) {
-                    staffs.remove(player);
-                }
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+        for (ProxiedPlayer player : PlayerUtils.getPlayers()) {
+            if (player.hasPermission(toPermission)) toPlayers.add(player);
         }
 
-        for (ProxiedPlayer player : staffs) {
-            player.sendMessage(TextUtils.codedText(MessageConfUtils.bungeeStaffChatMessage
-                            .replace("%user%", sender.getName())
-                            .replace("%from%", from)
-                            .replace("%message%", msg)
-                            .replace("%version%", PlayerUtils.getOrCreate((ProxiedPlayer) sender).latestVersion)
-                    )
-            );
+        for (ProxiedPlayer player : toPlayers) {
+            player.sendMessage(TextUtils.codedText(message));
         }
     }
 
-    public static void sendStaffChatMessage(CommandSender sender, String from, String msg){
-        Collection<ProxiedPlayer> staff = StreamLine.getInstance().getProxy().getPlayers();
-        Set<ProxiedPlayer> staffs = new HashSet<>(staff);
+    public static void sendPermissionedMessageNonSelf(CommandSender sender, String toPermission, String message){
+        Set<ProxiedPlayer> toPlayers = new HashSet<>();
 
-        for (ProxiedPlayer player : staff){
-            try {
-                if (! player.hasPermission(ConfigUtils.staffPerm)) {
-                    staffs.remove(player);
-                    continue;
-                }
-
-                try {
-                    Player p = PlayerUtils.getPlayerStat(player);
-
-                    if (p == null) continue;
-
-                    if (! p.viewsc) {
-                        staffs.remove(player);
-                    }
-                } catch (Exception e) {
-                    // Console, so continue...
-                }
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+        for (ProxiedPlayer player : PlayerUtils.getPlayers()) {
+            if (player.getName().equals(sender.getName())) continue;
+            if (player.hasPermission(toPermission)) toPlayers.add(player);
         }
 
-        for (ProxiedPlayer player : staffs) {
-            player.sendMessage(TextUtils.codedText(MessageConfUtils.bungeeStaffChatMessage
-                            .replace("%user%", sender.getName())
-                            .replace("%from%", from)
-                            .replace("%message%", msg)
-                            .replace("%version%", PlayerUtils.getOrCreate((ProxiedPlayer) sender).latestVersion)
-                    )
-            );
+        for (ProxiedPlayer player : toPlayers) {
+            player.sendMessage(TextUtils.codedText(message));
         }
     }
 

@@ -1,8 +1,10 @@
 package net.plasmere.streamline.utils;
 
+import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.NodeType;
+import net.luckperms.api.node.types.PermissionNode;
 import net.luckperms.api.node.types.PrefixNode;
 import net.luckperms.api.node.types.SuffixNode;
 import net.md_5.bungee.api.CommandSender;
@@ -345,6 +347,18 @@ public class PlayerUtils {
         return null;
     }
 
+    public static List<Player> getPlayerStatsByIP(String ip) {
+        List<Player> players = new ArrayList<>();
+
+        for (Player player : getJustPlayers()) {
+            for (String IP : player.ipList) {
+                if (IP.equals(ip)) players.add(player);
+            }
+        }
+
+        return players;
+    }
+
     public static Player getPlayerStat(String name) {
         try {
             for (Player stat : getJustPlayers()) {
@@ -626,6 +640,16 @@ public class PlayerUtils {
 
     public static boolean isInStatsList(Player stat) {
         return isInStatsList(stat.latestName);
+    }
+
+    public static boolean isInStatsListByIP(String ip) {
+        for (Player player : getJustPlayers()) {
+            for (String IP : player.ipList) {
+                if (IP.equals(ip)) return true;
+            }
+        }
+
+        return false;
     }
 
     public static boolean isInStatsList(ConsolePlayer stat) {
@@ -1048,6 +1072,25 @@ public class PlayerUtils {
                 stat.removeMutedTill();
             }
         }
+    }
+
+    public static boolean hasOfflinePermission(String permission, String uuid){
+        if (! StreamLine.lpHolder.enabled) {
+            StreamLine.getInstance().getLogger().info("Tried to do an offline permissions check, but failed due to not having LuckPerms installed!");
+            return false;
+        }
+
+        LuckPerms api = StreamLine.lpHolder.api;
+
+        User user = api.getUserManager().getUser(UUID.fromString(uuid));
+
+        if (user == null) return false;
+
+        for (PermissionNode node : user.getNodes(NodeType.PERMISSION)) {
+            if (node.getPermission().equals(permission)) return true;
+        }
+
+        return false;
     }
 
     public static void kickAll(boolean withMessage) {

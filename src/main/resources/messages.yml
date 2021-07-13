@@ -112,6 +112,12 @@ punishments:
     temp: "&cYou are banned until &b%date%&c!%newline%&cReason: &e%reason%"
     # If permanent.
     perm: "&cYou are &4PERMANENTLY &cbanned!%newline%&cReason: &e%reason%"
+  # When trying to join...
+  ip-banned:
+    # If only temp.
+    temp: "&cYou are banned until &b%date%&c!%newline%&cReason: &e%reason%"
+    # If permanent.
+    perm: "&cYou are &4PERMANENTLY &cbanned!%newline%&cReason: &e%reason%"
 
 # When reporting...
 # Fillers:
@@ -152,7 +158,7 @@ staffchat:
     # Message on Discord.
     discord: "%message%"
     # Message on bungee.
-    bungee: "&2&lSTAFF &7&l>> &a%user% &e(%from%&e) &8: &e%message%"
+    bungee: "&2&lSTAFF &7&l>> &a%user% &7[%from%&7] &e(&4%server%&e) &8: &e%message%"
     # Text to use when using "%from%" in your messages.
     from:
       # If message originated from Discord.
@@ -1526,71 +1532,171 @@ reply:
 
 # For the mute command.
 mute:
+  # Embed title for when muting people.
+  discord-embed-title: "MUTE"
+  # If you cannot do this punishment on the specified player.
+  cannot: "&cSorry, but you cannot mute this player!"
   # If being muted.
   mute:
     # If only temp.
     temp:
       # For sender.
       sender: "&eYou have &cmuted &d%player% &euntil &b%date%&e!"
+      # For other staff.
+      staff: "&d%punisher% &ejust &cmuted &d%player%&e &euntil &b%date%&e!"
       # For person being muted.
       muted: "&eYou have been &cmuted &euntil &b%date%&e!"
       # If already.
       already: "&cThis player is already muted!"
+      # Discord message.
+      discord: "*%punisher%* just muted *%player%* until **%date%**!"
     # If perm.
     perm:
       # For sender.
       sender: "&eYou have &cmuted &d%player%&e!"
+      # For other staff.
+      staff: "&d%punisher% &ejust &cmuted &d%player%&e!"
       # For person being muted.
       muted: "&eYou have been &4PERMANENTLY &cmuted&e!"
       # If already.
       already: "&cThis player is already muted!"
+      # Discord message.
+      discord: "*%punisher%* just muted *%player%* **PERMANENTLY**!"
   # If being unmuted.
   unmute:
     # For sender.
     sender: "&eYou have &aunmuted &d%player%&e!"
+    # For other staff.
+    staff: "&d%punisher% &ejust &aunmuted &d%player%&e!"
     # For person being unmuted.
     muted: "&eYou have been &aunmuted&e!"
     # If already.
     already: "&cThis player is already unmuted!"
+    # Discord message.
+    discord: "*%punisher%* just unmuted *%player%*!"
   # For checking if muted.
   check:
     # Main.
     main: "&d%player% &eis %check%&e!"
-    # If muted.
-    muted: "&cmuted"
-    # If unmuted.
-    unmuted: "&aunmuted"
+    # If banned.
+    banned: "&cbanned &euntil &b%date%"
+    # If unbanned.
+    unbanned: "&aunbanned"
+    # If date not present.
+    no-date: "&c&lFOREVER"
 
-# For the mute command.
+# Kick command...
+kick:
+  # Embed title for when kick people.
+  discord-embed-title: "KICK"
+  # If you cannot do this punishment on the specified player.
+  cannot: "&cSorry, but you cannot kick this player!"
+  # For sender.
+  sender: "&eYou have &ckicked &d%player% &efor reason &a\"&b%reason%&a\"&e!"
+  # For other staff.
+  staff: "&d%punisher% &ejust &ckicked &d%player% &efor reason &a\"&b%reason%&a\"&e!"
+  # For kicked.
+  kicked: "&cYou have been &ckicked&c! Reason: &b%reason%"
+  # Discord message.
+  discord: "*%punisher%* just kicked *%player%* for reason \"**%reason%**\"!"
+
+# For the ban command.
 ban:
+  # Embed title for when kick people.
+  discord-embed-title: "BAN"
+  # If you cannot do this punishment on the specified player.
+  cannot: "&cSorry, but you cannot ban this player!"
   # If being banned.
   ban:
     # If temp.
     temp:
       # For sender.
-      sender: "&eYou have &cbanned &d%player% &euntil &b%date%&e!"
+      sender: "&eYou have &cbanned &d%player% &efor &a\"&b%reason%&a\" &euntil &b%date%&e!"
+      # For other staff.
+      staff: "&d%punisher% &ejust &cbanned &d%player% &efor &a\"&b%reason%&a\" &euntil &b%date%&e!"
       # If already banned.
       already: "&d%player% &cis already banned!"
+      # Discord message.
+      discord: "*%punisher%* just banned *%player%* for reason \"**%reason%**\" until %date%!"
     # If perm.
     perm:
       # For sender.
-      sender: "&eYou have &cbanned &d%player%&e!"
+      sender: "&eYou have &cbanned &d%player% &efor &a\"&b%reason%&b\" &cPERMANENTLY&e!"
+      # For other staff.
+      staff: "&d%punisher% &ejust &cbanned &d%player% &efor &a\"&b%reason%&a\" &cPERMANENTLY&e!"
       # If already banned.
       already: "&d%player% &cis already banned!"
+      # Discord message.
+      discord: "*%punisher%* just banned *%player%* for reason \"**%reason%**\" PERMANENTLY!"
   # If being unbanned.
   unban:
     # For sender.
     sender: "&eYou have &aunbanned &d%player%&e!"
+    # For other staff.
+    staff: "&d%punisher% &ejust &aunbanned &d%player%&e!"
     # If already unbanned.
     already: "&cThis player is already unbanned!"
+    # Discord message.
+    discord: "*%punisher%* just unbanned *%player%*!"
   # If checking if banned.
   check:
     # Main.
     main: "&d%player% &eis %check%!"
     # If banned.
-    banned: "&cbanned"
+    banned: "&cbanned &euntil &b%date% &efor reason &a\"&b%reason%&a\""
     # If unbanned.
     unbanned: "&aunbanned"
+    # If date not present.
+    no-date: "&c&lFOREVER"
+
+# For the ipban command.
+ipban:
+  # Embed title for when kick people.
+  discord-embed-title: "IPBAN"
+  # If you cannot do this punishment on the specified player.
+  cannot: "&cSorry, but you cannot ipban this player!"
+  # If being banned.
+  ban:
+    # If temp.
+    temp:
+      # For sender.
+      sender: "&eYou have &cbanned &d%ip% &efor &a\"&b%reason%&a\" &euntil &b%date%&e!"
+      # For other staff.
+      staff: "&d%punisher% &ejust &cbanned &d%ip% &efor &a\"&b%reason%&a\" &euntil &b%date%&e!"
+      # If already banned.
+      already: "&d%ip% &cis already banned!"
+      # Discord message.
+      discord: "*%punisher%* just banned *%ip%* for reason \"**%reason%**\" until %date%!"
+    # If perm.
+    perm:
+      # For sender.
+      sender: "&eYou have &cbanned &d%ip% &efor &a\"&b%reason%&b\" &cPERMANENTLY&e!"
+      # For other staff.
+      staff: "&d%punisher% &ejust &cbanned &d%ip% &efor &a\"&b%reason%&a\" &cPERMANENTLY&e!"
+      # If already banned.
+      already: "&d%ip% &cis already banned!"
+      # Discord message.
+      discord: "*%punisher%* just banned *%ip%* for reason \"**%reason%**\" PERMANENTLY!"
+  # If being unbanned.
+  unban:
+    # For sender.
+    sender: "&eYou have &aunbanned &d%ip%&e!"
+    # For other staff.
+    staff: "&d%punisher% &ejust &aunbanned &d%ip%&e!"
+    # If already unbanned.
+    already: "&cThis player is already unbanned!"
+    # Discord message.
+    discord: "*%punisher%* just unbanned *%ip%*!"
+  # If checking if banned.
+  check:
+    # Main.
+    main: "&d%ip% &eis %check%!"
+    # If banned.
+    banned: "&cbanned &euntil &b%date% &efor reason &a\"&b%reason%&a\""
+    # If unbanned.
+    unbanned: "&aunbanned"
+    # If date not present.
+    no-date: "&c&lFOREVER"
 
 # Friend command...
 friend:
@@ -1671,13 +1777,6 @@ getstats:
     not-last: "&d%player%&8, "
     # If the last stat.
     last: "&d%player%&8."
-
-# Kick command...
-kick:
-  # For sender.
-  sender: "&eYou have &ckicked &d%player% &efor reason &a\"&b%reason%&a\"&e!"
-  # For kicked.
-  kicked: "&cYou have been &ckicked&c! Reason: &b%reason%"
 
 # Settings command...
 settings:
