@@ -157,7 +157,7 @@ public class Player extends SavableUser {
     }
 
     @Override
-    public TreeMap<String, String> updatableKeys() {
+    TreeMap<String, String> addedUpdatableKeys() {
         TreeMap<String, String> thing = new TreeMap<>();
 
         thing.put("latestip", "latest-ip");

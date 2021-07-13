@@ -52,7 +52,7 @@ public class ConsolePlayer extends SavableUser {
     }
 
     @Override
-    public TreeMap<String, String> updatableKeys() {
+    TreeMap<String, String> addedUpdatableKeys() {
         return new TreeMap<>();
     }
 }

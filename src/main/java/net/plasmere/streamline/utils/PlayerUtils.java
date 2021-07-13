@@ -886,20 +886,25 @@ public class PlayerUtils {
             }
         }
 
+        from.updateLastTo(to);
+        to.updateLastFrom(from);
+
         switch (ConfigUtils.messReplyTo) {
             case "sent-to":
-                from.updateLastTo(to);
+                from.updateReplyTo(to);
                 break;
             case "sent-from":
-                to.updateLastMessenger(from);
+                to.updateReplyTo(from);
                 break;
+            case "very-last":
             default:
-                from.updateLastTo(to);
-                to.updateLastMessenger(from);
+                from.updateReplyTo(to);
+                to.updateReplyTo(from);
                 break;
         }
 
         from.updateLastToMessage(message);
+        to.updateLastFromMessage(message);
 
         if (reply) {
             MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.replySender);
@@ -941,20 +946,25 @@ public class PlayerUtils {
             return;
         }
 
+        from.updateLastTo(to);
+        to.updateLastFrom(from);
+
         switch (ConfigUtils.messReplyTo) {
             case "sent-to":
-                from.updateLastTo(to);
+                from.updateReplyTo(to);
                 break;
             case "sent-from":
-                to.updateLastMessenger(from);
+                to.updateReplyTo(from);
                 break;
+            case "very-last":
             default:
-                from.updateLastTo(to);
-                to.updateLastMessenger(from);
+                from.updateReplyTo(to);
+                to.updateReplyTo(from);
                 break;
         }
 
         from.updateLastToMessage(message);
+        to.updateLastFromMessage(message);
 
         if (reply) {
             MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.replySender);

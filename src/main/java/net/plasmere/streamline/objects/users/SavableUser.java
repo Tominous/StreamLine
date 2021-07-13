@@ -6,7 +6,6 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.PluginUtils;
-import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -26,10 +25,12 @@ public abstract class SavableUser {
     public String tags;
     public List<String> tagList;
     public int points;
-    public String lastMessengerUUID;
+    public String lastFromUUID;
     public String lastToUUID;
+    public String replyToUUID;
     public String lastMessage;
     public String lastToMessage;
+    public String lastFromMessage;
     public String ignoreds;
     public List<String> ignoredList;
     public String friends;
@@ -284,10 +285,12 @@ public abstract class SavableUser {
         defaults.add("guild=");
         defaults.add("tags=" + defaultTags());
         defaults.add("points=" + ConfigUtils.pointsDefault);
-        defaults.add("last-messenger=");
+        defaults.add("last-from=");
         defaults.add("last-to=");
         defaults.add("last-message=");
         defaults.add("last-to-message=");
+        defaults.add("last-from-message=");
+        defaults.add("reply-to=");
         defaults.add("ignored=");
         defaults.add("friends=");
         defaults.add("pending-to-friends=");
@@ -328,10 +331,12 @@ public abstract class SavableUser {
         this.guild = getFromKey("guild");
         this.tagList = loadTags();
         this.points = Integer.parseInt(getFromKey("points"));
-        this.lastMessengerUUID = getFromKey("last-messenger");
+        this.lastFromUUID = getFromKey("last-from");
         this.lastToUUID = getFromKey("last-to");
         this.lastMessage = getFromKey("last-message");
         this.lastToMessage = getFromKey("last-to-message");
+        this.lastFromMessage = getFromKey("last-from-message");
+        this.replyToUUID = getFromKey("reply-to");
         this.ignoredList = loadIgnored();
         this.friendList = loadFriends();
         this.pendingToFriendList = loadPendingToFriends();
@@ -342,7 +347,17 @@ public abstract class SavableUser {
 
     abstract public void loadMoreVars();
 
-    abstract public TreeMap<String, String> updatableKeys();
+    public TreeMap<String, String> updatableKeys() {
+        TreeMap<String, String> keys = new TreeMap<>();
+
+        keys.putAll(addedUpdatableKeys());
+
+        keys.put("last-messenger", "last-from");
+
+        return keys;
+    }
+
+    abstract TreeMap<String, String> addedUpdatableKeys();
 
     public String tryUpdateFormat(String from){
         for (String key : updatableKeys().keySet()) {
@@ -680,12 +695,20 @@ public abstract class SavableUser {
         updateKey("last-to-message", message);
     }
 
-    public void updateLastMessenger(SavableUser messenger){
-        updateKey("last-messenger", messenger.uuid);
+    public void updateLastFromMessage(String message){
+        updateKey("last-from-message", message);
+    }
+
+    public void updateLastFrom(SavableUser messenger){
+        updateKey("last-from", messenger.uuid);
     }
 
     public void updateLastTo(SavableUser to){
         updateKey("last-to", to.uuid);
+    }
+
+    public void updateReplyTo(SavableUser to){
+        updateKey("reply-to", to.uuid);
     }
     
     public String getName() {

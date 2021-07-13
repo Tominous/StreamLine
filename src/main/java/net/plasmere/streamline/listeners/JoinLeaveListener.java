@@ -320,6 +320,8 @@ public class JoinLeaveListener implements Listener {
 
         ServerInfo server = ev.getTarget();
 
+        if (player.getServer() == null) return;
+
         if (PluginUtils.isLocked()) return;
 
         Player stat = PlayerUtils.getOrCreate(player);
