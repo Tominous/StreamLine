@@ -38,10 +38,10 @@ public class IPBanCommand extends Command implements TabExecutor {
             if (args[1].contains(".")) {
                 ipsToBan.add(args[1]);
             } else {
-                Player other = PlayerUtils.getPlayerStat(args[1]);
+                Player other = PlayerUtils.getOrGetPlayerStat(args[1]);
 
                 if (other == null) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                     return;
                 }
 
