@@ -102,16 +102,16 @@ public class PluginUtils {
             registerCommand(plugin, new SCViewCommand(ConfigUtils.comBSCViewBase, ConfigUtils.comBSCViewPerm, getAliases(ConfigUtils.comBSCViewAliases)));
         }
         // // Punishments.
-        if (ConfigUtils.comBMute) {
+        if (ConfigUtils.comBMute && ConfigUtils.punMutes) {
             registerCommand(plugin, new MuteCommand(ConfigUtils.comBMuteBase, ConfigUtils.comBMutePerm, getAliases(ConfigUtils.comBMuteAliases)));
         }
         if (ConfigUtils.comBKick) {
             registerCommand(plugin, new KickCommand(ConfigUtils.comBKickBase, ConfigUtils.comBKickPerm, getAliases(ConfigUtils.comBKickAliases)));
         }
-        if (ConfigUtils.comBBan) {
+        if (ConfigUtils.comBBan && ConfigUtils.punBans) {
             registerCommand(plugin, new BanCommand(ConfigUtils.comBBanBase, ConfigUtils.comBBanPerm, getAliases(ConfigUtils.comBBanAliases)));
         }
-        if (ConfigUtils.comBIPBan) {
+        if (ConfigUtils.comBIPBan && ConfigUtils.punIPBans) {
             registerCommand(plugin, new IPBanCommand(ConfigUtils.comBIPBanBase, ConfigUtils.comBIPBanPerm, getAliases(ConfigUtils.comBIPBanAliases)));
         }
 

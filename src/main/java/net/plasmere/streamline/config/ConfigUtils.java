@@ -283,10 +283,10 @@ public class ConfigUtils {
     public static List<String> comBBanAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.ban.aliases");
     public static String comBBanPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.ban.permission");
     // Ban.
-    public static boolean comBIPBan = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.ban.enabled");
-    public static String comBIPBanBase = StreamLine.getConfig().getConfString("commands.bungee.staff.ban.base");
-    public static List<String> comBIPBanAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.ban.aliases");
-    public static String comBIPBanPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.ban.permission");
+    public static boolean comBIPBan = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.ipban.enabled");
+    public static String comBIPBanBase = StreamLine.getConfig().getConfString("commands.bungee.staff.ipban.base");
+    public static List<String> comBIPBanAliases = StreamLine.getConfig().getConfStringList("commands.bungee.staff.ipban.aliases");
+    public static String comBIPBanPerm = StreamLine.getConfig().getConfString("commands.bungee.staff.ipban.permission");
     // Info.
     public static boolean comBInfo = StreamLine.getConfig().getConfBoolean("commands.bungee.staff.info.enabled");
     public static String comBInfoBase = StreamLine.getConfig().getConfString("commands.bungee.staff.info.base");

@@ -165,7 +165,7 @@ public class PlayerUtils {
     public static Player getOrCreateByUUID(String uuid){
 //        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info(forStats(stats));
 
-        Player player = getPlayerByUUID(uuid);
+        Player player = getPlayerStatByUUID(uuid);
 
         if (player == null) {
             player = new Player(uuid);
@@ -347,6 +347,34 @@ public class PlayerUtils {
         return null;
     }
 
+    public static SavableUser getOrGetStat(String thing) {
+        try {
+            if (thing.equals("%")) return getConsoleStat().getSavableUser();
+
+            if (thing.contains("-")) {
+                if (existsByUUID(thing)){
+                    if (isInStatsListByUUID(thing)) {
+                        return getPlayerStatByUUID(thing);
+                    } else {
+                        return new Player(thing);
+                    }
+                } else return null;
+            } else {
+                if (exists(thing)){
+                    if (isInStatsList(thing)) {
+                        return getPlayerStat(thing);
+                    } else {
+                        return new Player(UUIDFetcher.getCachedUUID(thing));
+                    }
+                } else return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static List<Player> getPlayerStatsByIP(String ip) {
         List<Player> players = new ArrayList<>();
 
@@ -373,6 +401,56 @@ public class PlayerUtils {
         return null;
     }
 
+    public static Player getPlayerStatByUUID(String uuid) {
+        try {
+            for (Player stat : getJustPlayers()) {
+                if (stat.uuid.equals(uuid)) {
+                    return stat;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Player getOrGetPlayerStat(String name) {
+        try {
+            if (exists(name)){
+                if (isInStatsList(name)) {
+                    return getPlayerStat(name);
+                } else {
+                    return new Player(UUIDFetcher.getCachedUUID(name));
+                }
+            } else return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Player getOrGetPlayerStatByUUID(String uuid) {
+        try {
+            if (existsByUUID(uuid)){
+                if (isInStatsListByUUID(uuid)) {
+                    return getPlayerStatByUUID(uuid);
+                } else {
+                    return new Player(uuid);
+                }
+            } else return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ConsolePlayer getConsoleStat() {
+        return PlayerUtils.getConsoleStat(StreamLine.getInstance().getProxy().getConsole());
+    }
+
     public static ConsolePlayer getConsoleStat(String name) {
         try {
             for (ConsolePlayer stat : getJustProxies()) {
@@ -397,14 +475,6 @@ public class PlayerUtils {
         }
 
         return null;
-    }
-
-    public static Player getPlayerByUUID(String uuid) {
-        try {
-            return (Player) getStatByUUID(uuid);
-        } catch (Exception e) {
-            return null;
-        }
     }
 
     public static SavableUser getStatByUUID(String uuid) {
@@ -580,9 +650,15 @@ public class PlayerUtils {
     }
 
     public static boolean exists(String username){
-        File file = new File(StreamLine.getInstance().getPlDir(), UUIDFetcher.getCachedUUID(username) + ".properties");
+        if (username.equals("%")) return existsByUUID(username);
 
-        return file.exists();
+        return existsByUUID(UUIDFetcher.getCachedUUID(username));
+    }
+
+    public static boolean existsByUUID(String uuid){
+        if (uuid.equals("%")) return getConsoleStat().file.exists();
+
+        return new File(StreamLine.getInstance().getPlDir(), uuid + ".properties").exists();
     }
 
     public static boolean isStats(Player stat){
@@ -744,12 +820,37 @@ public class PlayerUtils {
         return count;
     }
 
-    public static void info(CommandSender sender, Player of){
+    public static String getNameFromString(String thing) {
+        if (thing.equals("%")) return getOrCreateStat(StreamLine.getInstance().getProxy().getConsole()).latestName;
+
+        if (thing.contains("-")) return UUIDFetcher.getName(thing);
+        else return thing;
+    }
+
+    public static SavableUser getStatFromNameOrUUID(String string) {
+        if (string.equals("%")) return getConsoleStat(StreamLine.getInstance().getProxy().getConsole());
+
+        if (string.contains("-")) return getStatByUUID(string);
+        else return getStat(string);
+    }
+
+    public static SavableUser getOrCreateStatFromNameOrUUID(String string) {
+        if (string.equals("%")) return getConsoleStat(StreamLine.getInstance().getProxy().getConsole());
+
+        if (string.contains("-")) return getOrCreateStatByUUID(string);
+        else return getOrCreateStat(string);
+    }
+
+    public static void info(CommandSender sender, SavableUser of){
         if (! sender.hasPermission(ConfigUtils.comBStatsPerm)) {
             MessagingUtils.sendBUserMessage(sender, noPermission);
         }
 
-        MessagingUtils.sendStatUserMessage(of, sender, info);
+        if (of instanceof ConsolePlayer) {
+            MessagingUtils.sendStatUserMessage(of, sender, consolePlayerInfo);
+        } else if (of instanceof Player) {
+            MessagingUtils.sendStatUserMessage(of, sender, info);
+        }
     }
 
     public static void remTag(CommandSender sender, SavableUser of, String tag){
@@ -1141,7 +1242,8 @@ public class PlayerUtils {
     // Create.
     public static final String create = StreamLine.getConfig().getMessString("stats.create");
     // Info.
-    public static final String info = StreamLine.getConfig().getMessString("stats.info");
+    public static final String info = StreamLine.getConfig().getMessString("stats.player");
+    public static final String consolePlayerInfo = StreamLine.getConfig().getMessString("stats.console-player");
     public static final String tagsLast = StreamLine.getConfig().getMessString("stats.tags.last");
     public static final String tagsNLast = StreamLine.getConfig().getMessString("stats.tags.not-last");
     public static final String ipsLast = StreamLine.getConfig().getMessString("stats.ips.last");

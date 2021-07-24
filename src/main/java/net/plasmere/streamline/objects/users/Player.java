@@ -80,7 +80,7 @@ public class Player extends SavableUser {
         this.uuid = player.getUniqueId().toString();
         this.latestIP = ipSt;
         this.latestName = player.getName();
-        this.latestServer = player.getServer().getInfo().getName();
+        if (player.getServer() != null) this.latestServer = player.getServer().getInfo().getName();
 
         this.ips = ipSt;
         this.names = player.getName();

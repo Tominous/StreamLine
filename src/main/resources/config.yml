@@ -556,6 +556,7 @@ commands:
         permission: "streamline.command.scview"
         # All aliases for the command. Listed in yml list format.
         aliases:
+          - "scv"
           - "sctoggle"
           - "stafftoggle"
       # The bungee tag command.

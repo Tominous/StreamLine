@@ -50,17 +50,12 @@ public class MessageCommand extends Command implements TabExecutor {
                         return;
                     }
 
-                    statTo = PlayerUtils.getStat(args[0]);
+                    statTo = PlayerUtils.getOrGetPlayerStat(args[0]);
                 }
 
                 if (statTo == null) {
-                    PlayerUtils.addStat(stat.lastToUUID);
-                    statTo = PlayerUtils.getStatByUUID(stat.lastToUUID);
-                    if (statTo == null) {
-                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        return;
-                    }
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                    return;
                 }
 
                 PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.argsToStringMinus(args, 0), false);

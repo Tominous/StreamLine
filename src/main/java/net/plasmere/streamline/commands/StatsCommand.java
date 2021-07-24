@@ -8,6 +8,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
@@ -24,66 +25,30 @@ public class StatsCommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof ProxiedPlayer) {
-            Player player = PlayerUtils.getPlayerStat(sender);
-
-            if (player == null) {
-                PlayerUtils.addStat(new Player((ProxiedPlayer) sender));
-                player = PlayerUtils.getPlayerStat(sender);
-                if (player == null) {
-                    StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                    return;
-                }
-            }
-
             if (args.length <= 0 || ! ConfigUtils.comBStatsOthers) {
-                PlayerUtils.info(player.player, player);
+                PlayerUtils.info(sender, PlayerUtils.getOrGetPlayerStat(sender.getName()));
             } else {
-                if (player.hasPermission(ConfigUtils.comBStatsPermOthers)){
-                    if (! PlayerUtils.exists(args[0])) {
-                        MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
-                        return;
-                    }
+                SavableUser person = PlayerUtils.getOrGetStat(args[0]);
 
-                    Player stat = PlayerUtils.getPlayerStat(args[0]);
-
-                    if (stat == null) {
-                        PlayerUtils.addStat(new Player(args[0]));
-                        stat = PlayerUtils.getPlayerStat(args[0]);
-                        if (stat == null) {
-                            StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                            return;
-                        }
-                    }
-
-                    PlayerUtils.info(player.player, stat);
-                } else {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
-                }
-            }
-        } else {
-            if (args.length <= 0) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
-            } else {
-                if (! PlayerUtils.exists(args[0])) {
+                if (person == null) {
                     MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
                     return;
                 }
 
-                Player stat = PlayerUtils.getPlayerStat(args[0]);
+                PlayerUtils.info(sender, person);
+            }
+        } else {
+            if (args.length <= 0) {
+                PlayerUtils.info(sender, PlayerUtils.getConsoleStat());
+            } else {
+                SavableUser person = PlayerUtils.getOrGetStat(args[0]);
 
-                if (stat == null) {
-                    PlayerUtils.addStat(new Player(args[0]));
-                    stat = PlayerUtils.getPlayerStat(args[0]);
-                    if (stat == null) {
-                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        return;
-                    }
+                if (person == null) {
+                    MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
+                    return;
                 }
 
-                PlayerUtils.info(sender, stat);
+                PlayerUtils.info(sender, person);
             }
         }
     }
@@ -97,10 +62,12 @@ public class StatsCommand extends Command implements TabExecutor {
             strPlayers.add(player.getName());
         }
 
+        strPlayers.add("%");
+
         if (sender.hasPermission(ConfigUtils.comBStatsPermOthers)) {
             return TextUtils.getCompletion(strPlayers, args[0]);
         }
 
-        else return new ArrayList<>();
+        return new ArrayList<>();
     }
 }

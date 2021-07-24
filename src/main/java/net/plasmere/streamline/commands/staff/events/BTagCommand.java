@@ -32,15 +32,11 @@ public class BTagCommand extends Command implements TabExecutor {
                 return;
             }
 
-            SavableUser stat = PlayerUtils.getStat(sender);
+            SavableUser stat = PlayerUtils.getOrGetStat(args[0]);
 
             if (stat == null) {
-                stat = PlayerUtils.getOrCreateStat(sender);
-                if (stat == null) {
-                    StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                    return;
-                }
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                return;
             }
 
             if (! stat.latestName.equals(sender.getName())) {

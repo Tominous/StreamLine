@@ -11,6 +11,7 @@ import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.utils.*;
+import org.apache.commons.collections4.list.TreeList;
 
 import java.text.DateFormat;
 import java.time.Instant;
@@ -332,15 +333,27 @@ public class IPBanCommand extends Command implements TabExecutor {
                     );
                 }
             } else if (args[0].equals("check")) {
+                if (args[1].equals("all") || args[1].equals("*")) {
+                    Collection<String> banned = bans.getKeys();
+                    TreeList<String> bannedIPs = new TreeList<>();
+
+                    for (String ban : banned) {
+                        if (ban.contains(".")) bannedIPs.add(ban);
+                    }
+
+                    ipsToBan.clear();
+                    ipsToBan.addAll(bannedIPs);
+                }
+
                 for (String ip : ipsToBan) {
                     String reason = bans.getString(ip + ".reason");
                     String bannedMillis = bans.getString(ip + ".till");
                     if (bannedMillis == null) bannedMillis = "";
 
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanCheckMain
-                            .replace("%player%", ip)
+                            .replace("%ip%", ip)
                             .replace("%check%", bans.getBoolean(ip + ".banned") ? MessageConfUtils.ipBanCheckBanned
-                                    .replace("%date%", (! bannedMillis.equals("") ? new Date(Long.parseLong(bannedMillis)).toString() : MessageConfUtils.ipBanCheckNoDate))
+                                    .replace("%date%", (!bannedMillis.equals("") ? new Date(Long.parseLong(bannedMillis)).toString() : MessageConfUtils.ipBanCheckNoDate))
                                     .replace("%reason%", reason)
                                     : MessageConfUtils.ipBanCheckUnBanned)
                     );
@@ -360,8 +373,9 @@ public class IPBanCommand extends Command implements TabExecutor {
             strPlayers.add(player.getName());
         }
 
-        for (String uuid : bans.getKeys()) {
-            if (bans.getBoolean(uuid + ".banned")) banned.add(UUIDFetcher.getName(uuid));
+        for (String ip : bans.getKeys()) {
+            if (ip.contains("-")) continue;
+            if (bans.getBoolean(ip + ".banned")) banned.add(ip);
         }
 
         List<String> options = new ArrayList<>();
@@ -371,11 +385,18 @@ public class IPBanCommand extends Command implements TabExecutor {
         options.add("remove");
         options.add("check");
 
+        List<String> check = new ArrayList<>();
+
+        check.add("*");
+        check.add("all");
+
         if (args.length == 1) {
             return TextUtils.getCompletion(options, args[0]);
         } else if (args.length == 2) {
             if (args[0].equals("remove")) {
                 return TextUtils.getCompletion(banned, args[1]);
+            } else if (args[0].equals("check")) {
+                return TextUtils.getCompletion(check, args[1]);
             } else {
                 return TextUtils.getCompletion(strPlayers, args[1]);
             }

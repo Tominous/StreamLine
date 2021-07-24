@@ -32,16 +32,11 @@ public class ReplyCommand extends Command {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else {
             if (stat.hasPermission(ConfigUtils.comBReplyPerm)) {
-                SavableUser statTo = PlayerUtils.getStatByUUID(stat.replyToUUID);
+                SavableUser statTo = PlayerUtils.getOrGetPlayerStatByUUID(stat.replyToUUID);
 
                 if (statTo == null) {
-                    PlayerUtils.addStat(stat.lastToUUID);
-                    statTo = PlayerUtils.getStatByUUID(stat.lastToUUID);
-                    if (statTo == null) {
-                        StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                        return;
-                    }
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                    return;
                 }
 
                 PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.normalize(args), true);

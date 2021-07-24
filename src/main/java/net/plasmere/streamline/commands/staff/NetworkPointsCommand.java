@@ -8,6 +8,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
@@ -32,16 +33,11 @@ public class NetworkPointsCommand extends Command implements TabExecutor {
                 return;
             }
 
-            Player stat = PlayerUtils.getPlayerStat(args[0]);
+            SavableUser stat = PlayerUtils.getOrGetStat(args[0]);
 
             if (stat == null) {
-                PlayerUtils.addStat(new Player(args[0]));
-                stat = PlayerUtils.getOrCreateByUUID(UUIDFetcher.getCachedUUID(args[0]));
-                if (stat == null) {
-                    StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + args[0]);
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                    return;
-                }
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                return;
             }
 
             if (! stat.latestName.equals(sender.getName())) {

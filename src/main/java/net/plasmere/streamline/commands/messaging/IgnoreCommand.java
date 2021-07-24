@@ -57,10 +57,10 @@ public class IgnoreCommand extends Command implements TabExecutor {
                     return;
                 }
 
-                other = PlayerUtils.getOrCreateStat(args[1]);
+                other = PlayerUtils.getOrGetPlayerStat(args[1]);
             }
 
-            if (other.uuid == null) {
+            if (other == null) {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                 return;
             }

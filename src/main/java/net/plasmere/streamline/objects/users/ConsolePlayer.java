@@ -48,7 +48,6 @@ public class ConsolePlayer extends SavableUser {
 
     @Override
     public void loadMoreVars() {
-
     }
 
     @Override
