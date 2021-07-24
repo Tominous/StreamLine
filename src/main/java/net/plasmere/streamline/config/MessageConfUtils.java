@@ -65,6 +65,12 @@ public class MessageConfUtils {
     public static String bToDReportMessage = StreamLine.getConfig().getMessString("report-message.from-bungee.discord");
     public static String bToBReportMessage = StreamLine.getConfig().getMessString("report-message.from-bungee.bungee");
     public static String bConfirmReportMessage = StreamLine.getConfig().getMessString("report-message.from-bungee.confirmation");
+    // Start.
+    public static String startTitle = StreamLine.getConfig().getMessString("start.embed-title");
+    public static String startMessage = StreamLine.getConfig().getMessString("start.message");
+    // Stop.
+    public static String shutdownTitle = StreamLine.getConfig().getMessString("shutdown.embed-title");
+    public static String shutdownMessage = StreamLine.getConfig().getMessString("shutdown.message");
     // StaffChat.
     public static String staffChatEmbedTitle = StreamLine.getConfig().getMessString("staffchat.message.embed-title");
     public static String discordStaffChatMessage = StreamLine.getConfig().getMessString("staffchat.message.discord");

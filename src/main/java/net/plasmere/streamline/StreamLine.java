@@ -3,6 +3,7 @@ package net.plasmere.streamline;
 import net.md_5.bungee.api.scheduler.ScheduledTask;
 import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.discordbot.MessageListener;
 import net.plasmere.streamline.discordbot.ReadyListener;
 import net.plasmere.streamline.events.Event;
@@ -14,6 +15,7 @@ import net.plasmere.streamline.objects.configs.Lobbies;
 import net.plasmere.streamline.objects.configs.ServerConfig;
 import net.plasmere.streamline.objects.configs.ServerPermissions;
 import net.plasmere.streamline.objects.enums.NetworkState;
+import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.timers.*;
 import net.plasmere.streamline.objects.users.ConsolePlayer;
 import net.plasmere.streamline.utils.*;
@@ -284,6 +286,10 @@ public class StreamLine extends Plugin {
 
 		//getLogger().
 
+		if (ConfigUtils.moduleStartups) {
+			MessagingUtils.sendDiscordEBMessage(new DiscordMessage(getProxy().getConsole(), MessageConfUtils.startTitle, MessageConfUtils.startMessage, ConfigUtils.textChannelOfflineOnline));
+		}
+
 		PluginUtils.state = NetworkState.RUNNING;
 	}
 
@@ -346,6 +352,10 @@ public class StreamLine extends Plugin {
 		saveGuilds();
 
 		PlayerUtils.removeOfflineStats();
+
+		if (ConfigUtils.moduleShutdowns) {
+			MessagingUtils.sendDiscordEBMessage(new DiscordMessage(getProxy().getConsole(), MessageConfUtils.shutdownTitle, MessageConfUtils.shutdownMessage, ConfigUtils.textChannelOfflineOnline));
+		}
 
 		PluginUtils.state = NetworkState.STOPPED;
 	}

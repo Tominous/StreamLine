@@ -119,6 +119,20 @@ punishments:
     # If permanent.
     perm: "&cYou are &4PERMANENTLY &cbanned!%newline%&cReason: &e%reason%"
 
+# (Discord) When starting up...
+start:
+  # The title of the embed.
+  embed-title: "STARTING"
+  # The message...
+  message: "Network is starting up!"
+
+# (Discord) When shutting down...
+shutdown:
+  # The title of the embed.
+  embed-title: "STOPPING"
+  # The message...
+  message: "Network is shutting down!"
+
 # When reporting...
 # Fillers:
 # "%reporter%" = the one reporting.
