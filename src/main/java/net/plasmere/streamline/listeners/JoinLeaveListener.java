@@ -34,7 +34,7 @@ public class JoinLeaveListener implements Listener {
     public void preJoin(PreLoginEvent ev) {
         if (ev.isCancelled()) return;
 
-        String ip = ev.getConnection().getSocketAddress().toString().replace("/", "");
+        String ip = ev.getConnection().getSocketAddress().toString().replace("/", "").split(":")[0];
 
         String uuid = UUIDFetcher.fetch(ev.getConnection().getName());
 

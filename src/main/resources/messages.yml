@@ -1700,7 +1700,7 @@ ipban:
     # For other staff.
     staff: "&d%punisher% &ejust &aunbanned &d%ip%&e!"
     # If already unbanned.
-    already: "&cThis player is already unbanned!"
+    already: "&d%ip% &eis already &aunbanned&e!"
     # Discord message.
     discord: "*%punisher%* just unbanned *%ip%*!"
   # If checking if banned.

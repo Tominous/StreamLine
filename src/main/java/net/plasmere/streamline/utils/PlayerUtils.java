@@ -1160,13 +1160,13 @@ public class PlayerUtils {
     public static String checkIfIPBanned(String ip) {
         Configuration bans = StreamLine.bans.getBans();
 
-        ip = ip.replace(".", "_");
+        String bannedIP = ip.replace(".", "_");
 
-        if (bans.contains(ip)) {
-            if (! bans.getBoolean(ip + ".banned")) return null;
+        if (bans.contains(bannedIP)) {
+            if (! bans.getBoolean(bannedIP + ".banned")) return null;
 
-            String reason = bans.getString(ip + ".reason");
-            String bannedMillis = bans.getString(ip + ".till");
+            String reason = bans.getString(bannedIP + ".reason");
+            String bannedMillis = bans.getString(bannedIP + ".till");
             if (bannedMillis == null) bannedMillis = "";
             Date date = new Date();
 
@@ -1174,7 +1174,7 @@ public class PlayerUtils {
                 date = new Date(Long.parseLong(bannedMillis));
 
                 if (date.before(new Date())) {
-                    bans.set(ip + ".banned", false);
+                    bans.set(bannedIP + ".banned", false);
                     StreamLine.bans.saveConfig();
                     return null;
                 }

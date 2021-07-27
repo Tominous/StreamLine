@@ -38,14 +38,16 @@ public class IPBanCommand extends Command implements TabExecutor {
             if (args[1].contains(".")) {
                 ipsToBan.add(args[1]);
             } else {
-                Player other = PlayerUtils.getOrGetPlayerStat(args[1]);
+                if (! (args[0].equals("check") && (args[1].equals("*") || args[1].equals("all")))) {
+                    Player other = PlayerUtils.getOrGetPlayerStat(args[1]);
 
-                if (other == null) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
-                    return;
+                    if (other == null) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        return;
+                    }
+
+                    ipsToBan.addAll(other.ipList);
                 }
-
-                ipsToBan.addAll(other.ipList);
             }
 
             if (args[0].equals("add")) {
@@ -53,7 +55,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                     Player other = PlayerUtils.getPlayerStat(args[1]);
 
                     if (other == null) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
                         return;
                     }
 
@@ -158,7 +160,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                         }
                     }
 
-                    String reason = TextUtils.argsToStringMinus(args, 0, 1, 2);
+                    String reason = TextUtils.argsToStringMinus(args, 0, 1);
 
                     bans.set(ipToBan + ".banned", true);
                     bans.set(ipToBan + ".reason", reason);
@@ -350,9 +352,9 @@ public class IPBanCommand extends Command implements TabExecutor {
                 }
 
                 for (String ip : ipsToBan) {
-                    ip = ip.replace(".", "_");
-                    String reason = bans.getString(ip + ".reason");
-                    String bannedMillis = bans.getString(ip + ".till");
+                    String bannedIP = ip.replace(".", "_");
+                    String reason = bans.getString(bannedIP + ".reason");
+                    String bannedMillis = bans.getString(bannedIP + ".till");
                     if (bannedMillis == null) bannedMillis = "";
 
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanCheckMain
@@ -407,11 +409,6 @@ public class IPBanCommand extends Command implements TabExecutor {
                 return TextUtils.getCompletion(strPlayers, args[1]);
             }
         }
-//        else if (args.length == 3) {
-//            final String param3 = args[2];
-//
-//
-//        }
 
         return new ArrayList<>();
     }
