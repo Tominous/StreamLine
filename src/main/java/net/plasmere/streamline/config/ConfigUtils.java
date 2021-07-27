@@ -335,8 +335,8 @@ public class ConfigUtils {
     public static boolean moduleStaffChatToMinecraft = StreamLine.getConfig().getConfBoolean("modules.discord.staffchat-to-minecraft");
     public static boolean moduleSCOnlyStaffRole = StreamLine.getConfig().getConfBoolean("modules.discord.staffchat-to-minecraft-only-staff-role");
     // Startup / Shutdowns.
-    public static boolean moduleStartups = StreamLine.getConfig().getConfBoolean("modules.discord.startup-messages");
-    public static boolean moduleShutdowns = StreamLine.getConfig().getConfBoolean("modules.discord.shutdown-messages");
+    public static boolean moduleStartups = StreamLine.getConfig().getConfBoolean("modules.discord.startup-message");
+    public static boolean moduleShutdowns = StreamLine.getConfig().getConfBoolean("modules.discord.shutdown-message");
     // Say if...
     public static String moduleSayNotACommand = StreamLine.getConfig().getConfString("modules.discord.say-if-not-a-command");
     public static String moduleSayCommandDisabled = StreamLine.getConfig().getConfString("modules.discord.say-if-command-disabled");
@@ -446,20 +446,20 @@ public class ConfigUtils {
     public static boolean punMutesHard = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.mutes.hard-mutes");
     public static boolean punMutesReplaceable = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.mutes.replaceable");
     public static boolean punMutesDiscord = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.mutes.discord");
-    public static String punMutesBypass = StreamLine.getConfig().getConfString("modules.bungee.punishments.mutes.bypass");
+    public static String punMutesBypass = StreamLine.getConfig().getConfString("modules.bungee.punishments.mutes.by-pass");
     // Kicks
     public static boolean punKicksDiscord = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.kicks.discord");
-    public static String punKicksBypass = StreamLine.getConfig().getConfString("modules.bungee.punishments.kicks.bypass");
+    public static String punKicksBypass = StreamLine.getConfig().getConfString("modules.bungee.punishments.kicks.by-pass");
     // Bans.
     public static boolean punBans = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.bans.enabled");
     public static boolean punBansReplaceable = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.bans.replaceable");
     public static boolean punBansDiscord = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.bans.discord");
-    public static String punBansBypass = StreamLine.getConfig().getConfString("modules.bungee.punishments.bans.bypass");
+    public static String punBansBypass = StreamLine.getConfig().getConfString("modules.bungee.punishments.bans.by-pass");
     // IPBans.
     public static boolean punIPBans = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.ipbans.enabled");
     public static boolean punIPBansReplaceable = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.ipbans.replaceable");
     public static boolean punIPBansDiscord = StreamLine.getConfig().getConfBoolean("modules.bungee.punishments.ipbans.discord");
-    public static String punIPBansBypass = StreamLine.getConfig().getConfString("modules.bungee.punishments.ipbans.bypass");
+    public static String punIPBansBypass = StreamLine.getConfig().getConfString("modules.bungee.punishments.ipbans.by-pass");
     // Messaging.
     public static String messViewPerm = StreamLine.getConfig().getConfString("modules.bungee.messaging.view-permission");
     public static String messReplyTo = StreamLine.getConfig().getConfString("modules.bungee.messaging.reply-to");

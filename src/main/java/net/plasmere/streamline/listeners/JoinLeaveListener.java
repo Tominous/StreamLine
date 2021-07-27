@@ -34,10 +34,20 @@ public class JoinLeaveListener implements Listener {
     public void preJoin(PreLoginEvent ev) {
         if (ev.isCancelled()) return;
 
+        String ip = ev.getConnection().getSocketAddress().toString().replace("/", "");
+
         String uuid = UUIDFetcher.fetch(ev.getConnection().getName());
 
         if (ConfigUtils.punBans) {
             String reason = PlayerUtils.checkIfBanned(uuid);
+            if (reason != null) {
+                ev.setCancelReason(TextUtils.codedText(reason));
+                ev.setCancelled(true);
+            }
+        }
+
+        if (ConfigUtils.punIPBans) {
+            String reason = PlayerUtils.checkIfIPBanned(ip);
             if (reason != null) {
                 ev.setCancelReason(TextUtils.codedText(reason));
                 ev.setCancelled(true);

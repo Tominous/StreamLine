@@ -23,7 +23,6 @@ import java.util.*;
 
 public class MessagingUtils {
     private static final JDA jda = StreamLine.getJda();
-    private static final EmbedBuilder eb = new EmbedBuilder();
 
     public static void sendStaffMessage(CommandSender sender, String from, String msg){
         sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage
@@ -146,6 +145,8 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordJoinLeaveMessagePlain(boolean isJoin, Player player){
+        EmbedBuilder eb = new EmbedBuilder();
+
         try {
             if (isJoin) {
                 Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBJoins))
@@ -172,6 +173,8 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordJoinLeaveMessageIcon(boolean isJoin, Player player){
+        EmbedBuilder eb = new EmbedBuilder();
+
         try {
             if (isJoin) {
                 try {
@@ -207,6 +210,8 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordEBMessage(DiscordMessage message){
+        EmbedBuilder eb = new EmbedBuilder();
+
         try {
             if (ConfigUtils.moduleUseMCAvatar) {
                 if (message.sender instanceof ProxiedPlayer) {
@@ -240,6 +245,8 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordReportMessage(String sender, boolean fromBungee, String report){
+        EmbedBuilder eb = new EmbedBuilder();
+
         try {
             String replace = MessageConfUtils.dToDReportMessage
                     .replace("%reporter%", sender)
@@ -290,6 +297,8 @@ public class MessagingUtils {
     }
 
     public static void sendDSelfMessage(MessageReceivedEvent context, String title, String description) {
+        EmbedBuilder eb = new EmbedBuilder();
+
         context.getChannel().sendMessage(
                 eb.setTitle(title)
                 .setDescription(TextUtils.newLined(description))
@@ -352,7 +361,12 @@ public class MessagingUtils {
         Guild guild = GuildUtils.getGuild(user);
 
         if (user instanceof ConsolePlayer) {
-            ConsolePlayer player = (ConsolePlayer) user;
+            ConsolePlayer player = PlayerUtils.getConsoleStat();
+
+            if (player == null) {
+                sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                return;
+            }
 
             sender.sendMessage(TextUtils.codedText(msg
                     .replace("%sender%", sender.getName())
@@ -377,7 +391,12 @@ public class MessagingUtils {
         }
 
         if (user instanceof Player) {
-            Player player = (Player) user;
+            Player player = PlayerUtils.getOrGetPlayerStatByUUID(user.uuid);
+
+            if (player == null) {
+                sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                return;
+            }
 
             sender.sendMessage(TextUtils.codedText(msg
                     .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(sender)))

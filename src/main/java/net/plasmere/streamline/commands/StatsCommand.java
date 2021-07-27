@@ -7,6 +7,7 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.users.ConsolePlayer;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
@@ -71,3 +72,23 @@ public class StatsCommand extends Command implements TabExecutor {
         return new ArrayList<>();
     }
 }
+
+//                if (args[0].equals("%")) {
+//                    ConsolePlayer person = PlayerUtils.getConsoleStat();
+//
+//                    if (person == null) {
+//                        MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
+//                        return;
+//                    }
+//
+//                    PlayerUtils.info(sender, person);
+//                } else {
+//                    Player person = PlayerUtils.getOrGetPlayerStat(args[0]);
+//
+//                    if (person == null) {
+//                        MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
+//                        return;
+//                    }
+//
+//                    PlayerUtils.info(sender, person);
+//                }

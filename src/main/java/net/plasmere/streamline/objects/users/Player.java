@@ -52,8 +52,12 @@ public class Player extends SavableUser {
         super(PlayerUtils.createCheck(thing), false);
     }
 
+    public Player(String thing, boolean createNew){
+        super(PlayerUtils.createCheck(thing), createNew);
+    }
+
     public Player(UUID uuid) {
-        super(PlayerUtils.createCheck(uuid.toString()), false);
+        super(uuid.toString(), false);
     }
 
     public boolean onlineCheck(){
@@ -70,6 +74,7 @@ public class Player extends SavableUser {
 
         if (this.player == null) {
             this.uuid = string;
+            this.online = false;
             return;
         }
 
@@ -153,6 +158,8 @@ public class Player extends SavableUser {
             this.mutedTill = null;
         }
         this.viewsc = Boolean.parseBoolean(getFromKey("view-sc"));
+        if (! this.online) this.latestVersion = getFromKey("latest-version");
+        if (! this.online) this.latestServer = getFromKey("latest-server");
     }
 
     @Override

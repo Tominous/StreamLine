@@ -40,7 +40,7 @@ public class MuteCommand extends Command implements TabExecutor {
 
             if (args[0].equals("add")) {
                 if (PlayerUtils.hasOfflinePermission(ConfigUtils.punMutesBypass, other.uuid)) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banCannot);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteCannot);
                     return;
                 }
 
@@ -130,7 +130,7 @@ public class MuteCommand extends Command implements TabExecutor {
                 );
             } else if (args[0].equals("temp")) {
                 if (PlayerUtils.hasOfflinePermission(ConfigUtils.punMutesBypass, other.uuid)) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banCannot);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteCannot);
                     return;
                 }
 

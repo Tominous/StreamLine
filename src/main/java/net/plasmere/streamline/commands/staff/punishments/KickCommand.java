@@ -39,7 +39,7 @@ public class KickCommand extends Command implements TabExecutor {
             }
 
             if (PlayerUtils.hasOfflinePermission(ConfigUtils.punKicksBypass, other.uuid)) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banCannot);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.kickCannot);
                 return;
             }
 

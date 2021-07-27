@@ -7,6 +7,8 @@ import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.PermissionNode;
 import net.luckperms.api.node.types.PrefixNode;
 import net.luckperms.api.node.types.SuffixNode;
+import net.luckperms.api.query.QueryMode;
+import net.luckperms.api.query.QueryOptions;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
@@ -84,7 +86,7 @@ public class PlayerUtils {
 
         if (p == null) {
             if (exists(name)) {
-                p = new Player(name);
+                p = new Player(name, true);
                 addStat(p);
                 return p;
             } else {
@@ -168,7 +170,7 @@ public class PlayerUtils {
         Player player = getPlayerStatByUUID(uuid);
 
         if (player == null) {
-            player = new Player(uuid);
+            player = new Player(uuid, true);
             addStat(player);
         }
 
@@ -179,7 +181,7 @@ public class PlayerUtils {
         Player player = getPlayerStat(name);
 
         if (player == null) {
-            player = new Player(UUIDFetcher.getCachedUUID(name));
+            player = new Player(UUIDFetcher.getCachedUUID(name), true);
             addStat(player);
         }
 
@@ -203,7 +205,7 @@ public class PlayerUtils {
 
         if (player == null) {
             if (isInOnlineList(name)) {
-                addStat(new Player(UUIDFetcher.getCachedUUID(name)));
+                addStat(new Player(UUIDFetcher.getCachedUUID(name), true));
             } else {
                 applyConsole();
             }
@@ -356,7 +358,7 @@ public class PlayerUtils {
                     if (isInStatsListByUUID(thing)) {
                         return getPlayerStatByUUID(thing);
                     } else {
-                        return new Player(thing);
+                        return new Player(thing, true);
                     }
                 } else return null;
             } else {
@@ -364,7 +366,7 @@ public class PlayerUtils {
                     if (isInStatsList(thing)) {
                         return getPlayerStat(thing);
                     } else {
-                        return new Player(UUIDFetcher.getCachedUUID(thing));
+                        return new Player(thing, true);
                     }
                 } else return null;
             }
@@ -421,7 +423,7 @@ public class PlayerUtils {
                 if (isInStatsList(name)) {
                     return getPlayerStat(name);
                 } else {
-                    return new Player(UUIDFetcher.getCachedUUID(name));
+                    return new Player(UUIDFetcher.getCachedUUID(name), true);
                 }
             } else return null;
         } catch (Exception e) {
@@ -437,7 +439,7 @@ public class PlayerUtils {
                 if (isInStatsListByUUID(uuid)) {
                     return getPlayerStatByUUID(uuid);
                 } else {
-                    return new Player(uuid);
+                    return new Player(uuid, true);
                 }
             } else return null;
         } catch (Exception e) {
@@ -672,7 +674,7 @@ public class PlayerUtils {
 
     public static void createStat(ProxiedPlayer player) {
         try {
-            Player stat = new Player(player);
+            Player stat = new Player(player, true);
 
             addStat(stat);
 
@@ -690,7 +692,7 @@ public class PlayerUtils {
         if (uuid.equals("%")) {
             applyConsole();
         } else {
-            stats.add(new Player(uuid));
+            stats.add(new Player(uuid, true));
         }
     }
 
@@ -1155,6 +1157,45 @@ public class PlayerUtils {
         return null;
     }
 
+    public static String checkIfIPBanned(String ip) {
+        Configuration bans = StreamLine.bans.getBans();
+
+        ip = ip.replace(".", "_");
+
+        if (bans.contains(ip)) {
+            if (! bans.getBoolean(ip + ".banned")) return null;
+
+            String reason = bans.getString(ip + ".reason");
+            String bannedMillis = bans.getString(ip + ".till");
+            if (bannedMillis == null) bannedMillis = "";
+            Date date = new Date();
+
+            if (! bannedMillis.equals("")) {
+                date = new Date(Long.parseLong(bannedMillis));
+
+                if (date.before(new Date())) {
+                    bans.set(ip + ".banned", false);
+                    StreamLine.bans.saveConfig();
+                    return null;
+                }
+            }
+
+
+            if (bannedMillis.equals("")) {
+                return TextUtils.codedString(MessageConfUtils.punIPBannedPerm
+                        .replace("%reason%", reason)
+                );
+            } else {
+                return TextUtils.codedString(MessageConfUtils.punIPBannedTemp
+                        .replace("%reason%", reason)
+                        .replace("%date%", date.toString())
+                );
+            }
+        }
+
+        return null;
+    }
+
     public static boolean checkIfMuted(ProxiedPlayer sender, Player stat){
         checkAndUpdateIfMuted(stat);
 
@@ -1187,7 +1228,19 @@ public class PlayerUtils {
 
         if (user == null) return false;
 
+        for (PermissionNode node : user.resolveInheritedNodes(NodeType.PERMISSION, QueryOptions.builder(QueryMode.NON_CONTEXTUAL).build())) {
+            if (node.getPermission().equals(permission)) return true;
+        }
+
         for (PermissionNode node : user.getNodes(NodeType.PERMISSION)) {
+            if (node.getPermission().equals(permission)) return true;
+        }
+
+        Group group = api.getGroupManager().getGroup(user.getPrimaryGroup());
+
+        if (group == null) return false;
+
+        for (PermissionNode node : group.getNodes(NodeType.PERMISSION)) {
             if (node.getPermission().equals(permission)) return true;
         }
 
