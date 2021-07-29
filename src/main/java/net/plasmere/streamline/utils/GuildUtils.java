@@ -115,7 +115,7 @@ public class GuildUtils {
         }
 
         if (hasGuild(player)) {
-            MessagingUtils.sendBUserMessage(sender.sender, alreadyHasOne);
+            MessagingUtils.sendBUserMessage(sender.sender, alreadyHasOneOthers);
             return false;
         }
 
@@ -126,7 +126,12 @@ public class GuildUtils {
         Guild g = getGuild(sender);
 
         if (g != null) {
-            MessagingUtils.sendBUserMessage(sender.sender, already);
+            MessagingUtils.sendBUserMessage(sender.sender, alreadyMade);
+            return;
+        }
+
+        if (name.equals("")) {
+            MessagingUtils.sendBUserMessage(sender.sender, createNonEmpty);
             return;
         }
 
@@ -265,6 +270,11 @@ public class GuildUtils {
                 return;
             }
 
+            if (isGuild(getGuild(to))) {
+                MessagingUtils.sendBUserMessage(from.sender, alreadyHasOneOthers);
+                return;
+            }
+
             if (guild.invites.contains(to)) {
                 MessagingUtils.sendBUserMessage(from.sender, inviteFailure);
                 return;
@@ -280,8 +290,6 @@ public class GuildUtils {
             }
 
             for (SavableUser pl : guild.totalMembers) {
-                
-
                 CommandSender member = pl.sender;
 
                 if (member == null) continue;
@@ -336,6 +344,11 @@ public class GuildUtils {
 
             if (! guild.hasMember(from)) {
                 MessagingUtils.sendBUserMessage(accepter.sender, otherNotInGuild);
+                return;
+            }
+
+            if (isGuild(getGuild(accepter))) {
+                MessagingUtils.sendBUserMessage(accepter.sender, alreadyHasOneSelf);
                 return;
             }
 
@@ -587,10 +600,6 @@ public class GuildUtils {
     }
 
     public static void kickMember(SavableUser sender, SavableUser player) {
-        
-
-        
-
         Guild guild = getGuild(sender);
 
         if (!isGuild(guild) || guild == null) {
@@ -669,10 +678,6 @@ public class GuildUtils {
     }
 
     public static void info(SavableUser sender){
-        
-
-        
-
         Guild guild = getGuild(sender);
 
         if (!isGuild(guild) || guild == null) {
@@ -689,10 +694,6 @@ public class GuildUtils {
     }
 
     public static void disband(SavableUser sender) {
-        
-
-        
-
         try {
             Guild guild = getGuild(sender);
 
@@ -812,10 +813,6 @@ public class GuildUtils {
     }
 
     public static void closeGuild(SavableUser sender) {
-        
-
-        
-
         try {
             Guild guild = getGuild(sender);
 
@@ -880,10 +877,6 @@ public class GuildUtils {
     }
 
     public static void listGuild(SavableUser sender) {
-        
-
-        
-
         try {
             Guild guild = getGuild(sender);
 
@@ -1244,7 +1237,12 @@ public class GuildUtils {
                 return;
             }
 
-            if (guild.getSize() >= guild.maxSize) {
+            if (isGuild(getGuild(sender))) {
+                MessagingUtils.sendBUserMessage(sender.sender, alreadyHasOneSelf);
+                return;
+            }
+
+            if (guild.getSize() + 1 > guild.maxSize) {
                 MessagingUtils.sendBGUserMessage(guild, sender.sender, sender.sender,  notEnoughSpace);
                 return;
             }
@@ -1446,12 +1444,32 @@ public class GuildUtils {
                 return;
             }
 
-            if (! newName.equals("")) {
+            if (newName.equals("")) {
                 MessagingUtils.sendBUserMessage(sender.sender, renameNonEmpty);
                 return;
             }
 
             String oldName = guild.name;
+
+            if (ConfigUtils.guildIncludeColors) {
+                if (newName.length() > ConfigUtils.guildMaxLength) {
+                    MessagingUtils.sendBUserMessage(sender.sender, nameTooLong
+                            .replace("%length%", String.valueOf(newName.length()))
+                            .replace("%max_length%", String.valueOf(ConfigUtils.guildMaxLength))
+                            .replace("%codes%", withCodes)
+                    );
+                    return;
+                }
+            } else {
+                if (TextUtils.stripColor(newName).length() > ConfigUtils.guildMaxLength) {
+                    MessagingUtils.sendBUserMessage(sender.sender, nameTooLong
+                            .replace("%length%", String.valueOf(TextUtils.stripColor(newName).length()))
+                            .replace("%max_length%", String.valueOf(ConfigUtils.guildMaxLength))
+                            .replace("%codes%", withoutCodes)
+                    );
+                    return;
+                }
+            }
 
             guild.updateKey("name", newName);
 
@@ -1506,9 +1524,11 @@ public class GuildUtils {
     public static final String withCodes = StreamLine.getConfig().getMessString("guild.codes.if-true");
     public static final String withoutCodes = StreamLine.getConfig().getMessString("guild.codes.if-false");
     // Already made.
-    public static final String already = StreamLine.getConfig().getMessString("guild.already-made");
-    // Already in one.
-    public static final String alreadyHasOne = StreamLine.getConfig().getMessString("guild.already-has");
+    public static final String alreadyMade = StreamLine.getConfig().getMessString("guild.already-made");
+    // Already in one, others.
+    public static final String alreadyHasOneOthers = StreamLine.getConfig().getMessString("guild.already-has-others");
+    // Already in one self.
+    public static final String alreadyHasOneSelf = StreamLine.getConfig().getMessString("guild.already-has-self");
     // Not high enough permissions.
     public static final String noPermission = StreamLine.getConfig().getMessString("guild.no-permission");
     // Not in a guild.
@@ -1523,6 +1543,7 @@ public class GuildUtils {
     public static final String chatTitle = StreamLine.getConfig().getMessString("guild.chat.title");
     // Create.
     public static final String create = StreamLine.getConfig().getMessString("guild.create.sender");
+    public static final String createNonEmpty = StreamLine.getConfig().getMessString("guild.create.non-empty");
     public static final String createConsole = StreamLine.getConfig().getMessString("guild.create.console");
     public static final String createTitle = StreamLine.getConfig().getMessString("guild.create.title");
     // Join.

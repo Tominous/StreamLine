@@ -25,7 +25,7 @@ public class FriendCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        SavableUser stat = PlayerUtils.getSavableUser(sender);
+        SavableUser stat = PlayerUtils.getOrCreateSavableUser(sender);
 
         if (stat == null) {
             stat = PlayerUtils.getOrCreateSavableUser(sender);
@@ -192,7 +192,7 @@ public class FriendCommand extends Command implements TabExecutor {
             List<String> friends = new ArrayList<>();
             List<String> pending = new ArrayList<>();
 
-            SavableUser player = PlayerUtils.getSavableUser(sender);
+            SavableUser player = PlayerUtils.getOrCreateSavableUser(sender);
 
             if (player == null) return new ArrayList<>();
 

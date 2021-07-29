@@ -308,7 +308,7 @@ public class MessagingUtils {
 
     public static void sendBPUserMessage(Party party, CommandSender sender, CommandSender to, String msg){
         to.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(sender)))
+                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%leader%", party.leader.getName())
                 .replace("%size%", Integer.toString(party.getSize()))
                 .replace("%max%", Integer.toString(party.maxSize))
@@ -399,7 +399,7 @@ public class MessagingUtils {
             }
 
             sender.sendMessage(TextUtils.codedText(msg
-                    .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(sender)))
+                    .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                     .replace("%player%", PlayerUtils.getOffOnRegBungee(player))
                     .replace("%total_xp%", Integer.toString(player.totalXP))
                     .replace("%xp%", Integer.toString(player.getCurrentXP()))
@@ -479,7 +479,7 @@ public class MessagingUtils {
     public static void sendBUserMessage(CommandSender sender, String msg){
         if (sender instanceof ProxiedPlayer) {
             sender.sendMessage(TextUtils.codedText(msg
-                    .replace("%sender%", PlayerUtils.getOffOnDisplayBungee((PlayerUtils.getOrCreate(sender))))
+                    .replace("%sender%", PlayerUtils.getOffOnDisplayBungee((PlayerUtils.getOrCreateSavableUser(sender))))
                     .replace("%version%", PlayerUtils.getOrCreatePlayerStat((ProxiedPlayer) sender).latestVersion)
             ));
         } else {
@@ -518,7 +518,7 @@ public class MessagingUtils {
         if (as instanceof ProxiedPlayer) {
             for (ProxiedPlayer player : players) {
                 player.sendMessage(TextUtils.codedText(msg
-                        .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(as)))
+                        .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreatePlayerStat(as)))
                         .replace("%version%", PlayerUtils.getOrCreatePlayerStat((ProxiedPlayer) as).latestVersion)
                 ));
             }

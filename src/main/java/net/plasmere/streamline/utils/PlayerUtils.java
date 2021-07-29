@@ -434,20 +434,52 @@ public class PlayerUtils {
 
     ---------------------------- */
 
+    // SavableUsers.
+
+    public static SavableUser createSavableUser(String thing){
+        if (thing.equals("%")) return getConsoleStat();
+
+        if (thing.contains("-")) {
+            return createPlayerStatByUUID(thing);
+        } else {
+            return createPlayerStat(thing);
+        }
+    }
+
     // Player Stats.
 
-    public static void createPlayerStat(ProxiedPlayer player) {
-        try {
-            Player stat = new Player(player, true);
+    public static Player createPlayerStat(ProxiedPlayer player) {
+        Player stat = addStat(new Player(player, true));
 
-            addStat(stat);
-
-            if (ConfigUtils.statsTell) {
-                MessagingUtils.sendStatUserMessage(stat, player, create);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (ConfigUtils.statsTell) {
+            MessagingUtils.sendStatUserMessage(stat, player, create);
         }
+
+        return stat;
+    }
+
+    public static Player createPlayerStat(CommandSender sender) {
+        return createPlayerStat(sender.getName());
+    }
+
+    public static Player createPlayerStat(String name) {
+        Player stat = addStat(new Player(UUIDFetcher.getCachedUUID(name), true));
+
+        if (ConfigUtils.statsTell && stat.online) {
+            MessagingUtils.sendStatUserMessage(stat, stat.player, create);
+        }
+
+        return stat;
+    }
+
+    public static Player createPlayerStatByUUID(String uuid) {
+        Player stat = addStat(new Player(uuid, true));
+
+        if (ConfigUtils.statsTell && stat.online) {
+            MessagingUtils.sendStatUserMessage(stat, stat.player, create);
+        }
+
+        return stat;
     }
 
     /* ----------------------------
@@ -570,9 +602,9 @@ public class PlayerUtils {
 
         if (user == null) {
             if (isInOnlineList(name)) {
-                user = addStat(new Player(getPPlayer(name)));
+                user = createPlayerStat(getPPlayer(name));
             } else {
-                user = addStat(new Player(UUIDFetcher.getCachedUUID(name), true));
+                user = createPlayerStat(name);
             }
         }
 
@@ -591,7 +623,7 @@ public class PlayerUtils {
         SavableUser player = getSavableUserByUUID(uuid);
 
         if (player == null) {
-            addStat(uuid);
+            player = createSavableUser(uuid);
         }
 
         return player;
@@ -610,7 +642,17 @@ public class PlayerUtils {
         Player player = getOrGetPlayerStat(pp.getName());
 
         if (player == null) {
-            player = addStat(new Player(pp));
+            player = createPlayerStat(pp);
+        }
+
+        return player;
+    }
+
+    public static Player getOrCreatePlayerStat(CommandSender sender){
+        Player player = getOrGetPlayerStat(sender.getName());
+
+        if (player == null) {
+            player = createPlayerStat(sender);
         }
 
         return player;
@@ -620,7 +662,7 @@ public class PlayerUtils {
         Player player = getOrGetPlayerStat(name);
 
         if (player == null) {
-            player = addStat(new Player(UUIDFetcher.getCachedUUID(name), true));
+            player = createPlayerStat(name);
         }
 
         return  player;
@@ -630,7 +672,7 @@ public class PlayerUtils {
         Player player = getOrGetPlayerStatByUUID(uuid);
 
         if (player == null) {
-            player = addStat(new Player(uuid, true));
+            player = createPlayerStatByUUID(uuid);
         }
 
         return player;

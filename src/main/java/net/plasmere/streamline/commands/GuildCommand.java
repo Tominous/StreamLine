@@ -20,7 +20,7 @@ public class GuildCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        SavableUser stat = PlayerUtils.getSavableUser(sender);
+        SavableUser stat = PlayerUtils.getOrCreateSavableUser(sender);
 
         if (stat == null) {
             stat = PlayerUtils.getOrCreateSavableUser(sender);
@@ -108,7 +108,7 @@ public class GuildCommand extends Command implements TabExecutor {
         } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comBGuildChatAliases)) {
             if (args.length <= 1) {
                 try {
-                    MessagingUtils.sendBUserMessage(PlayerUtils.getOrCreate(sender), MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();

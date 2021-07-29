@@ -17,7 +17,7 @@ public class ReplyCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        SavableUser stat = PlayerUtils.getSavableUser(sender);
+        SavableUser stat = PlayerUtils.getOrCreateSavableUser(sender);
 
         if (stat == null) {
             stat = PlayerUtils.getOrCreateSavableUser(sender);

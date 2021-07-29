@@ -1503,9 +1503,9 @@ public class PartyUtils {
     // No party.
     public static final String noPartyFound = StreamLine.getConfig().getMessString("party.no-party");
     // Already made.
-    public static final String already = StreamLine.getConfig().getMessString("party.already-made");
+    public static final String already = StreamLine.getConfig().getMessString("party.alreadyMade-made");
     // Already in one.
-    public static final String alreadyHasOne = StreamLine.getConfig().getMessString("party.already-has");
+    public static final String alreadyHasOne = StreamLine.getConfig().getMessString("party.alreadyMade-has");
     // Too big.
     public static final String tooBig = StreamLine.getConfig().getMessString("party.too-big");
     // Not high enough permissions.

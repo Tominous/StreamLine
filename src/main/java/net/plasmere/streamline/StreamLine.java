@@ -154,7 +154,7 @@ public class StreamLine extends Plugin {
 			try	(InputStream in = getResourceAsStream("default.yml")) {
 				Files.copy(in, Path.of(eventsDir.toPath() + File.separator + "default.yml"));
 			} catch (FileAlreadyExistsException e){
-				getLogger().info("Default event file already here, skipping...");
+				getLogger().info("Default event file alreadyMade here, skipping...");
 			} catch (IOException e){
 				e.printStackTrace();
 			}

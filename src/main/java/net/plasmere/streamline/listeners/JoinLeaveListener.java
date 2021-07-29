@@ -94,14 +94,14 @@ public class JoinLeaveListener implements Listener {
 //            case "yes":
 //                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(StreamLine.getInstance().getProxy().getConsole(),
 //                        MessageConfUtils.bungeeOnline.replace("%player_default%", player.getName())
-//                                .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreate(player))),
+//                                .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player))),
 //                        ConfigUtils.moduleBPlayerJoinsPerm));
 //                break;
 //            case "staff":
 //                if (player.hasPermission(ConfigUtils.staffPerm)) {
 //                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(StreamLine.getInstance().getProxy().getConsole(),
 //                            MessageConfUtils.bungeeOnline.replace("%player_default%", player.getName())
-//                                    .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreate(player))),
+//                                    .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player))),
 //                            ConfigUtils.moduleBPlayerJoinsPerm));
 //                }
 //                break;
@@ -363,14 +363,14 @@ public class JoinLeaveListener implements Listener {
 //            case "yes":
 //                MessagingUtils.sendBungeeMessage(new BungeeMassMessage(StreamLine.getInstance().getProxy().getConsole(),
 //                        MessageConfUtils.bungeeOffline.replace("%player_default%", player.getName())
-//                                .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreate(player))),
+//                                .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player))),
 //                        ConfigUtils.moduleBPlayerLeavesPerm));
 //                break;
 //            case "staff":
 //                if (player.hasPermission(ConfigUtils.staffPerm)) {
 //                    MessagingUtils.sendBungeeMessage(new BungeeMassMessage(StreamLine.getInstance().getProxy().getConsole(),
 //                            MessageConfUtils.bungeeOffline.replace("%player_default%", player.getName())
-//                                    .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreate(player))),
+//                                    .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player))),
 //                            ConfigUtils.moduleBPlayerLeavesPerm));
 //                }
 //                break;
