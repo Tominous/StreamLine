@@ -31,6 +31,7 @@ import net.plasmere.streamline.objects.enums.NetworkState;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class PluginUtils {
     public static int commandsAmount = 0;
@@ -220,5 +221,15 @@ public class PluginUtils {
         registerListener(plugin, new ProxyPingListener());
 
         plugin.getLogger().info("Loaded " + listenerAmount + " listener(s) into memory...!");
+    }
+
+    public static int getCeilingInt(Set<Integer> ints){
+        int value = 0;
+
+        for (Integer i : ints) {
+            if (i >= value) value = i;
+        }
+
+        return value;
     }
 }

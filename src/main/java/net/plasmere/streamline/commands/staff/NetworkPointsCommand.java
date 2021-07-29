@@ -7,12 +7,10 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
-import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +31,7 @@ public class NetworkPointsCommand extends Command implements TabExecutor {
                 return;
             }
 
-            SavableUser stat = PlayerUtils.getOrGetStat(args[0]);
+            SavableUser stat = PlayerUtils.getOrGetSavableUser(args[0]);
 
             if (stat == null) {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);

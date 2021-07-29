@@ -27,6 +27,12 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class PlayerUtils {
+    /* ----------------------------
+
+    PlayerUtils <-- Setup.
+
+    ---------------------------- */
+
     private static final List<SavableUser> stats = new ArrayList<>();
 
     private static HashMap<Player, SingleSet<Integer, Integer>> connections = new HashMap<>();
@@ -45,512 +51,24 @@ public class PlayerUtils {
         return stats;
     }
 
-    public static List<Player> getJustPlayers(){
-        List<Player> players = new ArrayList<>();
+    /* ----------------------------
 
-        for (SavableUser user : stats) {
-            if (user instanceof Player) {
-                players.add((Player) user);
-            }
-        }
+    PlayerUtils <-- Utils.
 
-        return players;
-    }
+    ---------------------------- */
 
-    public static List<ConsolePlayer> getJustProxies(){
-        List<ConsolePlayer> proxies = new ArrayList<>();
+    public static boolean isNameEqual(SavableUser user, String name){
+        if (user.latestName == null) return false;
 
-        for (SavableUser user : stats) {
-            if (user instanceof ConsolePlayer) {
-                proxies.add((ConsolePlayer) user);
-            }
-        }
-
-        return proxies;
-    }
-
-    public static ProxiedPlayer getProxiedPlayer(String latestName){
-        for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()){
-            if (p.getName().equals(latestName)) return p;
-        }
-
-        return null;
+        return user.latestName.equals(name);
     }
 
     public static boolean hasStat(String latestName){
-        return getStat(latestName) != null;
-    }
-
-    public static Player getOffOnPlayer(String name){
-        Player p = getPlayerStat(name);
-
-        if (p == null) {
-            if (exists(name)) {
-                p = new Player(name, true);
-                addStat(p);
-                return p;
-            } else {
-                return null;
-            }
-        }
-
-        return p;
-    }
-
-    public static ConsolePlayer getOffOnConsolePlayer(String name){
-        ConsolePlayer p = getConsoleStat(name);
-
-        if (p == null) {
-            if (exists(name)) {
-                p = new ConsolePlayer();
-                addStat(p);
-                return p;
-            } else {
-                return null;
-            }
-        }
-
-        return p;
+        return getSavableUser(latestName) != null;
     }
 
     public static void removePlayerIf(Predicate<SavableUser> predicate){
         stats.removeIf(predicate);
-    }
-
-    public static HashMap<Player, SingleSet<Integer, Integer>> getConnections(){
-        return connections;
-    }
-
-    public static void addOneToConn(Player player) {
-        SingleSet<Integer, Integer> conn = connections.get(player);
-
-        if (conn == null) {
-            connections.remove(player);
-            return;
-        }
-
-        int timer = conn.key;
-        int num = conn.value;
-
-        num++;
-
-        connections.remove(player);
-        connections.put(player, new SingleSet<>(timer, num));
-    }
-
-    public static void removeSecondFromConn(Player player, SingleSet<Integer, Integer> conn){
-        int timer = conn.key;
-        int num = conn.value;
-
-        timer--;
-
-        connections.remove(player);
-        connections.put(player, new SingleSet<>(timer, num));
-    }
-
-    public static SingleSet<Integer, Integer> getConnection(Player player){
-        try {
-            return connections.get(player);
-        } catch (Exception e){
-            return null;
-        }
-    }
-
-    public static void removeConn(Player player){
-        connections.remove(player);
-    }
-
-    public static void addConn(Player player){
-        connections.put(player, new SingleSet<>(ConfigUtils.lobbyTimeOut, 0));
-    }
-
-    public static Player getOrCreateByUUID(String uuid){
-//        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info(forStats(stats));
-
-        Player player = getPlayerStatByUUID(uuid);
-
-        if (player == null) {
-            player = new Player(uuid, true);
-            addStat(player);
-        }
-
-        return player;
-    }
-
-    public static Player getOrCreate(String name){
-        Player player = getPlayerStat(name);
-
-        if (player == null) {
-            player = new Player(UUIDFetcher.getCachedUUID(name), true);
-            addStat(player);
-        }
-
-        return player;
-    }
-
-    public static Player getOrCreate(ProxiedPlayer player){
-        return getOrCreateByUUID(player.getUniqueId().toString());
-    }
-
-    public static Player getOrCreate(CommandSender sender){
-        return getOrCreate(sender.getName());
-    }
-
-    public static SavableUser getOrCreateStat(String name){
-        if (name.equals("%")) {
-            return getOrCreateStatByUUID(name);
-        }
-
-        SavableUser player = getStat(name);
-
-        if (player == null) {
-            if (isInOnlineList(name)) {
-                addStat(new Player(UUIDFetcher.getCachedUUID(name), true));
-            } else {
-                applyConsole();
-            }
-        }
-
-        return player;
-    }
-
-    public static SavableUser getOrCreateStat(CommandSender sender){
-        return getOrCreateStat(sender.getName());
-    }
-
-    public static SavableUser getOrCreateStat(ProxiedPlayer sender){
-        return getOrCreateStat(sender.getName());
-    }
-
-    public static SavableUser getOrCreateStatByUUID(String uuid){
-        SavableUser player = getStatByUUID(uuid);
-
-        if (player == null) {
-            addStat(uuid);
-        }
-
-        return player;
-    }
-
-    public static boolean isInOnlineList(String name){
-        for (ProxiedPlayer player : getPlayers()) {
-            if (player.getName().equals(name)) return true;
-        }
-
-        return false;
-    }
-
-    public static Collection<ProxiedPlayer> getPlayers(){
-        return StreamLine.getInstance().getProxy().getPlayers();
-    }
-
-    public static ProxiedPlayer getPlayer(UUID uuid) {
-        return getPlayer(uuid.toString());
-    }
-
-    public static ProxiedPlayer getPlayer(String string){
-        if (string.contains("-")) {
-            return StreamLine.getInstance().getProxy().getPlayer(UUID.fromString(string));
-        }
-
-        return StreamLine.getInstance().getProxy().getPlayer(string);
-    }
-
-    public static boolean isNameEqual(SavableUser player, String name){
-        if (player.latestName == null) return false;
-
-        return player.latestName.equals(name);
-    }
-
-    public static String forStats(List<SavableUser> players){
-        StringBuilder builder = new StringBuilder("[");
-
-        int i = 1;
-        for (SavableUser p : players){
-            if (i != players.size()) {
-                builder.append(p.toString()).append(", ");
-            } else {
-                builder.append(p.toString()).append("]");
-            }
-
-            i++;
-        }
-
-        return builder.toString();
-    }
-
-    public static Player getStat(ProxiedPlayer player) {
-        try {
-            for (Player stat : getJustPlayers()) {
-                if (isNameEqual(stat, player.getName())) {
-                    return stat;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static ConsolePlayer getStat() {
-        try {
-            for (ConsolePlayer stat : getJustProxies()) {
-                if (isNameEqual(stat, ConfigUtils.consoleName)) {
-                    return stat;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static SavableUser getStat(CommandSender player) {
-        try {
-            for (SavableUser stat : stats) {
-                if (isNameEqual(stat, player.getName())) {
-                    return stat;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static Player getPlayerStat(CommandSender player) {
-        try {
-            for (Player stat : getJustPlayers()) {
-                if (isNameEqual(stat, player.getName())) {
-                    return stat;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static SavableUser getStat(String name) {
-        try {
-            for (SavableUser stat : stats) {
-                if (isNameEqual(stat, name)) {
-                    return stat;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static SavableUser getOrGetStat(String thing) {
-        try {
-            if (thing.equals("%")) return getConsoleStat().getSavableUser();
-
-            if (thing.contains("-")) {
-                if (existsByUUID(thing)){
-                    if (isInStatsListByUUID(thing)) {
-                        return getPlayerStatByUUID(thing);
-                    } else {
-                        return new Player(thing, true);
-                    }
-                } else return null;
-            } else {
-                if (exists(thing)){
-                    if (isInStatsList(thing)) {
-                        return getPlayerStat(thing);
-                    } else {
-                        return new Player(thing, true);
-                    }
-                } else return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static List<Player> getPlayerStatsByIP(String ip) {
-        List<Player> players = new ArrayList<>();
-
-        for (Player player : getJustPlayers()) {
-            for (String IP : player.ipList) {
-                if (IP.equals(ip)) players.add(player);
-            }
-        }
-
-        return players;
-    }
-
-    public static Player getPlayerStat(String name) {
-        try {
-            for (Player stat : getJustPlayers()) {
-                if (isNameEqual(stat, name)) {
-                    return stat;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static Player getPlayerStatByUUID(String uuid) {
-        try {
-            for (Player stat : getJustPlayers()) {
-                if (stat.uuid.equals(uuid)) {
-                    return stat;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static Player getOrGetPlayerStat(String name) {
-        try {
-            if (exists(name)){
-                if (isInStatsList(name)) {
-                    return getPlayerStat(name);
-                } else {
-                    return new Player(UUIDFetcher.getCachedUUID(name), true);
-                }
-            } else return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static Player getOrGetPlayerStatByUUID(String uuid) {
-        try {
-            if (existsByUUID(uuid)){
-                if (isInStatsListByUUID(uuid)) {
-                    return getPlayerStatByUUID(uuid);
-                } else {
-                    return new Player(uuid, true);
-                }
-            } else return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static ConsolePlayer getConsoleStat() {
-        return PlayerUtils.getConsoleStat(StreamLine.getInstance().getProxy().getConsole());
-    }
-
-    public static ConsolePlayer getConsoleStat(String name) {
-        try {
-            for (ConsolePlayer stat : getJustProxies()) {
-                if (isNameEqual(stat, name)) {
-                    return stat;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static ConsolePlayer getConsoleStat(CommandSender sender) {
-        try {
-            for (ConsolePlayer stat : getJustProxies()) {
-                if (sender.equals(stat.sender)) return stat;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static SavableUser getStatByUUID(String uuid) {
-        try {
-            for (SavableUser stat : stats) {
-                if (stat.uuid.equals(uuid)) {
-                    return stat;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static List<Player> transposeList(List<ProxiedPlayer> players){
-        List<Player> ps = new ArrayList<>();
-        for (ProxiedPlayer player : players){
-            ps.add(PlayerUtils.getOrCreate(player));
-        }
-
-        return ps;
-    }
-
-    public static void updateDisplayName(Player player){
-        if (! ConfigUtils.updateDisplayNames) return;
-        if (! StreamLine.lpHolder.enabled) return;
-
-        player.setDisplayName(getDisplayName(player));
-    }
-
-    public static String getDisplayName(Player player) {
-        return getDisplayName(player.latestName);
-    }
-
-    public static String getDisplayName(String username) {
-        if (! StreamLine.lpHolder.enabled) return username;
-
-        User user = StreamLine.lpHolder.api.getUserManager().getUser(username);
-        if (user == null) return username;
-
-        Group group = StreamLine.lpHolder.api.getGroupManager().getGroup(user.getPrimaryGroup());
-        if (group == null) return username;
-
-        String prefix = "";
-        String suffix = "";
-
-        TreeMap<Integer, String> preWeight = new TreeMap<>();
-        TreeMap<Integer, String> sufWeight = new TreeMap<>();
-
-        for (PrefixNode node : group.getNodes(NodeType.PREFIX)) {
-            preWeight.put(node.getPriority(), node.getMetaValue());
-        }
-
-        for (PrefixNode node : user.getNodes(NodeType.PREFIX)) {
-            preWeight.put(node.getPriority(), node.getMetaValue());
-        }
-
-        for (SuffixNode node : group.getNodes(NodeType.SUFFIX)) {
-            sufWeight.put(node.getPriority(), node.getMetaValue());
-        }
-
-        for (SuffixNode node : user.getNodes(NodeType.SUFFIX)) {
-            sufWeight.put(node.getPriority(), node.getMetaValue());
-        }
-
-        prefix = preWeight.get(getCeilingInt(preWeight.keySet()));
-        suffix = sufWeight.get(getCeilingInt(sufWeight.keySet()));
-
-        if (prefix == null) prefix = "";
-        if (suffix == null) suffix = "";
-
-        return TextUtils.codedString(prefix + username + suffix);
     }
 
     public static String createCheck(String thing){
@@ -559,96 +77,6 @@ public class PlayerUtils {
         } else {
             return Objects.requireNonNull(UUIDFetcher.getCachedUUID(thing));
         }
-    }
-
-    public static int getCeilingInt(Set<Integer> ints){
-        int value = 0;
-
-        for (Integer i : ints) {
-            if (i >= value) value = i;
-        }
-
-        return value;
-    }
-
-    public static String getOffOnDisplayBungee(SavableUser stat){
-        if (stat == null) {
-            return MessageConfUtils.nullB;
-        }
-
-        if (stat instanceof ConsolePlayer) {
-            return ConfigUtils.consoleDisplayName;
-        }
-
-        if (stat instanceof Player) {
-            if (((Player) stat).online) {
-                return MessageConfUtils.onlineB.replace("%player%", stat.displayName);
-            } else {
-                return MessageConfUtils.offlineB.replace("%player%", stat.displayName);
-            }
-        }
-
-        return MessageConfUtils.nullB;
-    }
-
-    public static String getOffOnRegBungee(SavableUser stat){
-        if (stat == null) {
-            return MessageConfUtils.nullB;
-        }
-
-        if (stat instanceof ConsolePlayer) {
-            return ConfigUtils.consoleName;
-        }
-
-        if (stat instanceof Player) {
-            if (((Player) stat).online) {
-                return MessageConfUtils.onlineB.replace("%player%", stat.latestName);
-            } else {
-                return MessageConfUtils.offlineB.replace("%player%", stat.latestName);
-            }
-        }
-
-        return MessageConfUtils.nullB;
-    }
-
-    public static String getOffOnDisplayDiscord(SavableUser stat){
-        if (stat == null) {
-            return MessageConfUtils.nullD;
-        }
-
-        if (stat instanceof ConsolePlayer) {
-            return ConfigUtils.consoleDisplayName;
-        }
-
-        if (stat instanceof Player) {
-            if (((Player) stat).online) {
-                return MessageConfUtils.onlineD.replace("%player%", stat.displayName);
-            } else {
-                return MessageConfUtils.offlineD.replace("%player%", stat.displayName);
-            }
-        }
-
-        return MessageConfUtils.nullD;
-    }
-
-    public static String getOffOnRegDiscord(SavableUser stat){
-        if (stat == null) {
-            return MessageConfUtils.nullD;
-        }
-
-        if (stat instanceof ConsolePlayer) {
-            return ConfigUtils.consoleName;
-        }
-
-        if (stat instanceof Player) {
-            if (((Player) stat).online) {
-                return MessageConfUtils.onlineD.replace("%player%", stat.latestName);
-            } else {
-                return MessageConfUtils.offlineD.replace("%player%", stat.latestName);
-            }
-        }
-
-        return MessageConfUtils.nullD;
     }
 
     public static boolean exists(String username){
@@ -668,22 +96,8 @@ public class PlayerUtils {
     }
 
     public static void reloadStats(Player stat) {
-        stats.remove(getStat(stat.latestName));
+        stats.remove(getSavableUser(stat.latestName));
         stats.add(stat);
-    }
-
-    public static void createStat(ProxiedPlayer player) {
-        try {
-            Player stat = new Player(player, true);
-
-            addStat(stat);
-
-            if (ConfigUtils.statsTell) {
-                MessagingUtils.sendStatUserMessage(stat, player, create);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public static void addStat(String uuid){
@@ -696,10 +110,20 @@ public class PlayerUtils {
         }
     }
 
-    public static void addStat(Player stat){
-        if (isInStatsList(stat)) return;
+    public static SavableUser addStat(SavableUser stat){
+        if (isInStatsList(stat)) return getSavableUser(stat.latestName);
 
         stats.add(stat);
+
+        return stat;
+    }
+
+    public static Player addStat(Player stat){
+        if (isInStatsList(stat)) return getPlayerStat(stat.latestName);
+
+        stats.add(stat);
+
+        return stat;
     }
 
     public static void addStat(ConsolePlayer stat){
@@ -716,7 +140,7 @@ public class PlayerUtils {
         return false;
     }
 
-    public static boolean isInStatsList(Player stat) {
+    public static boolean isInStatsList(SavableUser stat) {
         return isInStatsList(stat.latestName);
     }
 
@@ -823,301 +247,16 @@ public class PlayerUtils {
     }
 
     public static String getNameFromString(String thing) {
-        if (thing.equals("%")) return getOrCreateStat(StreamLine.getInstance().getProxy().getConsole()).latestName;
+        if (thing.equals("%")) return getConsoleStat().latestName;
 
-        if (thing.contains("-")) return UUIDFetcher.getName(thing);
+        if (thing.contains("-")) return UUIDFetcher.getCachedName(thing);
         else return thing;
     }
 
-    public static SavableUser getStatFromNameOrUUID(String string) {
-        if (string.equals("%")) return getConsoleStat(StreamLine.getInstance().getProxy().getConsole());
+    public static String getUUIDFromString(String thing) {
+        if (thing.equals("%")) return thing;
 
-        if (string.contains("-")) return getStatByUUID(string);
-        else return getStat(string);
-    }
-
-    public static SavableUser getOrCreateStatFromNameOrUUID(String string) {
-        if (string.equals("%")) return getConsoleStat(StreamLine.getInstance().getProxy().getConsole());
-
-        if (string.contains("-")) return getOrCreateStatByUUID(string);
-        else return getOrCreateStat(string);
-    }
-
-    public static void info(CommandSender sender, SavableUser of){
-        if (! sender.hasPermission(ConfigUtils.comBStatsPerm)) {
-            MessagingUtils.sendBUserMessage(sender, noPermission);
-        }
-
-        if (of instanceof ConsolePlayer) {
-            MessagingUtils.sendStatUserMessage(of, sender, consolePlayerInfo);
-        } else if (of instanceof Player) {
-            MessagingUtils.sendStatUserMessage(of, sender, info);
-        }
-    }
-
-    public static void remTag(CommandSender sender, SavableUser of, String tag){
-        if (! sender.hasPermission(ConfigUtils.comBBTagPerm)) {
-            MessagingUtils.sendBUserMessage(sender, noPermission);
-            return;
-        }
-
-        of.tryRemTag(tag);
-
-        MessagingUtils.sendBUserMessage(sender, tagRem
-                .replace("%player%", getOffOnDisplayBungee(of))
-                .replace("%tag%", tag)
-        );
-    }
-
-    public static void addTag(CommandSender sender, SavableUser of, String tag){
-        if (! sender.hasPermission(ConfigUtils.comBBTagPerm)) {
-            MessagingUtils.sendBUserMessage(sender, noPermission);
-            return;
-        }
-
-        of.tryAddNewTag(tag);
-
-        MessagingUtils.sendBUserMessage(sender, tagAdd
-                .replace("%player%", getOffOnDisplayBungee(of))
-                .replace("%tag%", tag)
-        );
-    }
-
-    public static void listTags(CommandSender sender, SavableUser of){
-        if (! sender.hasPermission(ConfigUtils.comBBTagPerm)) {
-            MessagingUtils.sendBUserMessage(sender, noPermission);
-            return;
-        }
-
-        MessagingUtils.sendBUserMessage(sender, tagListMain
-                .replace("%player%", getOffOnDisplayBungee(of))
-                .replace("%tags%", compileTagList(of))
-        );
-    }
-
-    public static String compileTagList(SavableUser of) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        int i = 1;
-        for (String tag : of.tagList){
-            if (i < of.tagList.size()) {
-                stringBuilder.append(tagListNotLast
-                        .replace("%player%", getOffOnDisplayBungee(of))
-                        .replace("%tag%", tag)
-                );
-            } else {
-                stringBuilder.append(tagListLast
-                        .replace("%player%", getOffOnDisplayBungee(of))
-                        .replace("%tag%", tag)
-                );
-            }
-            i++;
-        }
-
-        return stringBuilder.toString();
-    }
-
-    public static String getIgnored(SavableUser stat){
-        StringBuilder ignored = new StringBuilder();
-
-        int i = 1;
-
-        for (String uuid : stat.ignoredList) {
-            if (i < stat.ignoredList.size()) {
-                ignored.append(MessageConfUtils.ignoreListNLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
-                );
-            } else {
-                ignored.append(MessageConfUtils.ignoreListLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
-                );
-            }
-
-            i ++;
-        }
-
-        return ignored.toString();
-    }
-
-    public static String getFriended(SavableUser stat){
-        StringBuilder thing = new StringBuilder();
-
-        int i = 1;
-
-        for (String uuid : stat.friendList) {
-            if (i < stat.friendList.size()) {
-                thing.append(MessageConfUtils.friendListFNLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
-                );
-            } else {
-                thing.append(MessageConfUtils.friendListFLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
-                );
-            }
-
-            i ++;
-        }
-
-        return thing.toString();
-    }
-
-    public static String getPTFriended(SavableUser stat){
-        StringBuilder thing = new StringBuilder();
-
-        int i = 1;
-
-        for (String uuid : stat.pendingToFriendList) {
-            if (i < stat.pendingToFriendList.size()) {
-                thing.append(MessageConfUtils.friendListPTNLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
-                );
-            } else {
-                thing.append(MessageConfUtils.friendListPTLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
-                );
-            }
-
-            i ++;
-        }
-
-        return thing.toString();
-    }
-
-    public static String getPFFriended(SavableUser stat){
-        StringBuilder thing = new StringBuilder();
-
-        int i = 1;
-
-        for (String uuid : stat.pendingFromFriendList) {
-            if (i < stat.pendingFromFriendList.size()) {
-                thing.append(MessageConfUtils.friendListPFNLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
-                );
-            } else {
-                thing.append(MessageConfUtils.friendListPFLast
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(uuid)))
-                );
-            }
-
-            i ++;
-        }
-
-        return thing.toString();
-    }
-
-    public static void doMessage(SavableUser from, SavableUser to, String message, boolean reply){
-        if (to instanceof Player) {
-            if (! ((Player) to).online) {
-                MessagingUtils.sendBUserMessage(from.sender, MessageConfUtils.noPlayer);
-                return;
-            }
-        }
-
-        from.updateLastTo(to);
-        to.updateLastFrom(from);
-
-        switch (ConfigUtils.messReplyTo) {
-            case "sent-to":
-                from.updateReplyTo(to);
-                break;
-            case "sent-from":
-                to.updateReplyTo(from);
-                break;
-            case "very-last":
-            default:
-                from.updateReplyTo(to);
-                to.updateReplyTo(from);
-                break;
-        }
-
-        from.updateLastToMessage(message);
-        to.updateLastFromMessage(message);
-
-        if (reply) {
-            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.replySender);
-
-            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.replyTo);
-
-            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getOrCreate(player);
-
-                if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
-
-                MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.replySSPY);
-            }
-        } else {
-            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.messageSender);
-
-            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.messageTo);
-
-            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getOrCreate(player);
-
-                if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
-
-                MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.messageSSPY);
-            }
-        }
-    }
-
-    public static void doMessageWithIgnoreCheck(SavableUser from, SavableUser to, String message, boolean reply){
-        if (to instanceof Player) {
-            if (! ((Player) to).online) {
-                MessagingUtils.sendBUserMessage(from.sender, MessageConfUtils.noPlayer);
-                return;
-            }
-        }
-
-        if (to.ignoredList.contains(from.uuid)) {
-            MessagingUtils.sendBUserMessage(from.sender, MessageConfUtils.messageIgnored);
-            return;
-        }
-
-        from.updateLastTo(to);
-        to.updateLastFrom(from);
-
-        switch (ConfigUtils.messReplyTo) {
-            case "sent-to":
-                from.updateReplyTo(to);
-                break;
-            case "sent-from":
-                to.updateReplyTo(from);
-                break;
-            case "very-last":
-            default:
-                from.updateReplyTo(to);
-                to.updateReplyTo(from);
-                break;
-        }
-
-        from.updateLastToMessage(message);
-        to.updateLastFromMessage(message);
-
-        if (reply) {
-            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.replySender);
-
-            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.replyTo);
-
-            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getOrCreate(player);
-
-                if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
-
-                MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.replySSPY);
-            }
-        } else {
-            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.messageSender);
-
-            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.messageTo);
-
-            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getOrCreate(player);
-
-                if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
-
-                MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.messageSSPY);
-            }
-        }
+        return UUIDFetcher.getCachedUUID(thing);
     }
 
     public static String checkIfBanned(String uuid) {
@@ -1247,16 +386,819 @@ public class PlayerUtils {
         return false;
     }
 
-    public static void kickAll(boolean withMessage) {
-        if (withMessage) {
-            for (ProxiedPlayer player : getPlayers()) {
-                kick(player, MessageConfUtils.kicksStopping);
-            }
-        } else {
-            for (ProxiedPlayer player : getPlayers()) {
-                kick(player);
+    /* ----------------------------
+
+    PlayerUtils <-- Lists.
+
+    ---------------------------- */
+
+    public static List<Player> getJustPlayers(){
+        List<Player> players = new ArrayList<>();
+
+        for (SavableUser user : stats) {
+            if (user instanceof Player) {
+                players.add((Player) user);
             }
         }
+
+        return players;
+    }
+
+    public static List<ConsolePlayer> getJustProxies(){
+        List<ConsolePlayer> proxies = new ArrayList<>();
+
+        for (SavableUser user : stats) {
+            if (user instanceof ConsolePlayer) {
+                proxies.add((ConsolePlayer) user);
+            }
+        }
+
+        return proxies;
+    }
+
+    public static List<Player> getPlayerStatsByIP(String ip) {
+        List<Player> players = new ArrayList<>();
+
+        for (Player player : getJustPlayers()) {
+            for (String IP : player.ipList) {
+                if (IP.equals(ip)) players.add(player);
+            }
+        }
+
+        return players;
+    }
+
+    /* ----------------------------
+
+    PlayerUtils <-- Creates.
+
+    ---------------------------- */
+
+    // Player Stats.
+
+    public static void createPlayerStat(ProxiedPlayer player) {
+        try {
+            Player stat = new Player(player, true);
+
+            addStat(stat);
+
+            if (ConfigUtils.statsTell) {
+                MessagingUtils.sendStatUserMessage(stat, player, create);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* ----------------------------
+
+    PlayerUtils <-- Single Gets.
+
+    ---------------------------- */
+
+    // SavableUsers.
+
+    public static SavableUser getSavableUser(String name) {
+        try {
+            for (SavableUser stat : stats) {
+                if (isNameEqual(stat, name)) {
+                    return stat;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static SavableUser getSavableUserByUUID(String uuid) {
+        try {
+            for (SavableUser stat : stats) {
+                if (stat.uuid.equals(uuid)) {
+                    return stat;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static SavableUser getSUFromNameOrUUID(String string) {
+        if (string.equals("%")) return getConsoleStat(StreamLine.getInstance().getProxy().getConsole());
+
+        if (string.contains("-")) return getSavableUserByUUID(string);
+        else return getSavableUser(string);
+    }
+
+    // ConsolePlayers.
+
+    public static ConsolePlayer getConsoleStat() {
+        return PlayerUtils.getConsoleStat(StreamLine.getInstance().getProxy().getConsole());
+    }
+
+    public static ConsolePlayer getConsoleStat(CommandSender sender) {
+        try {
+            for (ConsolePlayer stat : getJustProxies()) {
+                if (sender.equals(stat.sender)) return stat;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    // Player Stats.
+
+    public static Player getPlayerStat(CommandSender sender) {
+        try {
+            for (Player stat : getJustPlayers()) {
+                if (sender.equals(stat.sender)) {
+                    return stat;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Player getPlayerStat(String name) {
+        try {
+            for (Player stat : getJustPlayers()) {
+                if (isNameEqual(stat, name)) {
+                    return stat;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Player getPlayerStatByUUID(String uuid) {
+        try {
+            for (Player stat : getJustPlayers()) {
+                if (stat.uuid.equals(uuid)) {
+                    return stat;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    // ----------------------
+    // Get or create!
+    // ----------------------
+
+    // SavableUsers.
+
+    public static SavableUser getOrCreateSavableUser(String name){
+        if (name.equals("%")) {
+            return getOrCreateSUByUUID(name);
+        }
+
+        SavableUser user = getOrGetSavableUser(name);
+
+        if (user == null) {
+            if (isInOnlineList(name)) {
+                user = addStat(new Player(getPPlayer(name)));
+            } else {
+                user = addStat(new Player(UUIDFetcher.getCachedUUID(name), true));
+            }
+        }
+
+        return user;
+    }
+
+    public static SavableUser getOrCreateSavableUser(CommandSender sender){
+        return getOrCreateSavableUser(sender.getName());
+    }
+
+    public static SavableUser getOrCreateSavableUser(ProxiedPlayer sender){
+        return getOrCreateSavableUser(sender.getName());
+    }
+
+    public static SavableUser getOrCreateSUByUUID(String uuid){
+        SavableUser player = getSavableUserByUUID(uuid);
+
+        if (player == null) {
+            addStat(uuid);
+        }
+
+        return player;
+    }
+
+    public static SavableUser getOrCreateSUFromNameOrUUID(String string) {
+        if (string.equals("%")) return getConsoleStat(StreamLine.getInstance().getProxy().getConsole());
+
+        if (string.contains("-")) return getOrCreateSUByUUID(string);
+        else return getOrCreateSavableUser(string);
+    }
+
+    // Players.
+
+    public static Player getOrCreatePlayerStat(ProxiedPlayer pp){
+        Player player = getOrGetPlayerStat(pp.getName());
+
+        if (player == null) {
+            player = addStat(new Player(pp));
+        }
+
+        return player;
+    }
+
+    public static Player getOrCreatePlayerStat(String name){
+        Player player = getOrGetPlayerStat(name);
+
+        if (player == null) {
+            player = addStat(new Player(UUIDFetcher.getCachedUUID(name), true));
+        }
+
+        return  player;
+    }
+
+    public static Player getOrCreatePlayerStatByUUID(String uuid) {
+        Player player = getOrGetPlayerStatByUUID(uuid);
+
+        if (player == null) {
+            player = addStat(new Player(uuid, true));
+        }
+
+        return player;
+    }
+
+    // ----------------------
+    // Get or get!
+    // ----------------------
+
+    public static SavableUser getOrGetSavableUser(String thing) {
+        try {
+            if (thing.equals("%")) return getConsoleStat().getSavableUser();
+
+            if (thing.contains("-")) {
+                if (existsByUUID(thing)){
+                    if (isInStatsListByUUID(thing)) {
+                        return getPlayerStatByUUID(thing);
+                    } else {
+                        return new Player(thing, false);
+                    }
+                } else return null;
+            } else {
+                if (exists(thing)){
+                    if (isInStatsList(thing)) {
+                        return getPlayerStat(thing);
+                    } else {
+                        return new Player(thing, false);
+                    }
+                } else return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Player getOrGetPlayerStat(String name) {
+        try {
+            if (exists(name)){
+                if (isInStatsList(name)) {
+                    return getPlayerStat(name);
+                } else {
+                    return new Player(UUIDFetcher.getCachedUUID(name), false);
+                }
+            } else return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Player getOrGetPlayerStatByUUID(String uuid) {
+        try {
+            if (existsByUUID(uuid)){
+                if (isInStatsListByUUID(uuid)) {
+                    return getPlayerStatByUUID(uuid);
+                } else {
+                    return new Player(uuid, false);
+                }
+            } else return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /* ----------------------------
+
+    PlayerUtils <-- S Functions.
+
+    ---------------------------- */
+
+    public static void info(CommandSender sender, SavableUser of){
+        if (! sender.hasPermission(ConfigUtils.comBStatsPerm)) {
+            MessagingUtils.sendBUserMessage(sender, noPermission);
+        }
+
+        if (of instanceof ConsolePlayer) {
+            MessagingUtils.sendStatUserMessage(of, sender, consolePlayerInfo);
+        } else if (of instanceof Player) {
+            MessagingUtils.sendStatUserMessage(of, sender, info);
+        }
+    }
+
+    public static void remTag(CommandSender sender, SavableUser of, String tag){
+        if (! sender.hasPermission(ConfigUtils.comBBTagPerm)) {
+            MessagingUtils.sendBUserMessage(sender, noPermission);
+            return;
+        }
+
+        of.tryRemTag(tag);
+
+        MessagingUtils.sendBUserMessage(sender, tagRem
+                .replace("%player%", getOffOnDisplayBungee(of))
+                .replace("%tag%", tag)
+        );
+    }
+
+    public static void addTag(CommandSender sender, SavableUser of, String tag){
+        if (! sender.hasPermission(ConfigUtils.comBBTagPerm)) {
+            MessagingUtils.sendBUserMessage(sender, noPermission);
+            return;
+        }
+
+        of.tryAddNewTag(tag);
+
+        MessagingUtils.sendBUserMessage(sender, tagAdd
+                .replace("%player%", getOffOnDisplayBungee(of))
+                .replace("%tag%", tag)
+        );
+    }
+
+    public static void listTags(CommandSender sender, SavableUser of){
+        if (! sender.hasPermission(ConfigUtils.comBBTagPerm)) {
+            MessagingUtils.sendBUserMessage(sender, noPermission);
+            return;
+        }
+
+        MessagingUtils.sendBUserMessage(sender, tagListMain
+                .replace("%player%", getOffOnDisplayBungee(of))
+                .replace("%tags%", compileTagList(of))
+        );
+    }
+
+    public static String compileTagList(SavableUser of) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int i = 1;
+        for (String tag : of.tagList){
+            if (i < of.tagList.size()) {
+                stringBuilder.append(tagListNotLast
+                        .replace("%player%", getOffOnDisplayBungee(of))
+                        .replace("%tag%", tag)
+                );
+            } else {
+                stringBuilder.append(tagListLast
+                        .replace("%player%", getOffOnDisplayBungee(of))
+                        .replace("%tag%", tag)
+                );
+            }
+            i++;
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public static String getIgnored(SavableUser stat){
+        StringBuilder ignored = new StringBuilder();
+
+        int i = 1;
+
+        for (String uuid : stat.ignoredList) {
+            if (i < stat.ignoredList.size()) {
+                ignored.append(MessageConfUtils.ignoreListNLast
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                );
+            } else {
+                ignored.append(MessageConfUtils.ignoreListLast
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                );
+            }
+
+            i ++;
+        }
+
+        return ignored.toString();
+    }
+
+    public static String getFriended(SavableUser stat){
+        StringBuilder thing = new StringBuilder();
+
+        int i = 1;
+
+        for (String uuid : stat.friendList) {
+            if (i < stat.friendList.size()) {
+                thing.append(MessageConfUtils.friendListFNLast
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                );
+            } else {
+                thing.append(MessageConfUtils.friendListFLast
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                );
+            }
+
+            i ++;
+        }
+
+        return thing.toString();
+    }
+
+    public static String getPTFriended(SavableUser stat){
+        StringBuilder thing = new StringBuilder();
+
+        int i = 1;
+
+        for (String uuid : stat.pendingToFriendList) {
+            if (i < stat.pendingToFriendList.size()) {
+                thing.append(MessageConfUtils.friendListPTNLast
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                );
+            } else {
+                thing.append(MessageConfUtils.friendListPTLast
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                );
+            }
+
+            i ++;
+        }
+
+        return thing.toString();
+    }
+
+    public static String getPFFriended(SavableUser stat){
+        StringBuilder thing = new StringBuilder();
+
+        int i = 1;
+
+        for (String uuid : stat.pendingFromFriendList) {
+            if (i < stat.pendingFromFriendList.size()) {
+                thing.append(MessageConfUtils.friendListPFNLast
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                );
+            } else {
+                thing.append(MessageConfUtils.friendListPFLast
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                );
+            }
+
+            i ++;
+        }
+
+        return thing.toString();
+    }
+
+    public static void doMessage(SavableUser from, SavableUser to, String message, boolean reply){
+        if (to instanceof Player) {
+            if (! ((Player) to).online) {
+                MessagingUtils.sendBUserMessage(from.sender, MessageConfUtils.noPlayer);
+                return;
+            }
+        }
+
+        from.updateLastTo(to);
+        to.updateLastFrom(from);
+
+        switch (ConfigUtils.messReplyTo) {
+            case "sent-to":
+                from.updateReplyTo(to);
+                break;
+            case "sent-from":
+                to.updateReplyTo(from);
+                break;
+            case "very-last":
+            default:
+                from.updateReplyTo(to);
+                to.updateReplyTo(from);
+                break;
+        }
+
+        from.updateLastToMessage(message);
+        to.updateLastFromMessage(message);
+
+        if (reply) {
+            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.replySender);
+
+            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.replyTo);
+
+            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
+                Player p = PlayerUtils.getOrCreatePlayerStat(player);
+
+                if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
+
+                MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.replySSPY);
+            }
+        } else {
+            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.messageSender);
+
+            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.messageTo);
+
+            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
+                Player p = PlayerUtils.getOrCreatePlayerStat(player);
+
+                if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
+
+                MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.messageSSPY);
+            }
+        }
+    }
+
+    public static void doMessageWithIgnoreCheck(SavableUser from, SavableUser to, String message, boolean reply){
+        if (to instanceof Player) {
+            if (! ((Player) to).online) {
+                MessagingUtils.sendBUserMessage(from.sender, MessageConfUtils.noPlayer);
+                return;
+            }
+        }
+
+        if (to.ignoredList.contains(from.uuid)) {
+            MessagingUtils.sendBUserMessage(from.sender, MessageConfUtils.messageIgnored);
+            return;
+        }
+
+        from.updateLastTo(to);
+        to.updateLastFrom(from);
+
+        switch (ConfigUtils.messReplyTo) {
+            case "sent-to":
+                from.updateReplyTo(to);
+                break;
+            case "sent-from":
+                to.updateReplyTo(from);
+                break;
+            case "very-last":
+            default:
+                from.updateReplyTo(to);
+                to.updateReplyTo(from);
+                break;
+        }
+
+        from.updateLastToMessage(message);
+        to.updateLastFromMessage(message);
+
+        if (reply) {
+            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.replySender);
+
+            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.replyTo);
+
+            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
+                Player p = PlayerUtils.getOrCreatePlayerStat(player);
+
+                if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
+
+                MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.replySSPY);
+            }
+        } else {
+            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.messageSender);
+
+            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.messageTo);
+
+            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
+                Player p = PlayerUtils.getOrCreatePlayerStat(player);
+
+                if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
+
+                MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.messageSSPY);
+            }
+        }
+    }
+
+    /* ----------------------------
+
+    PlayerUtils <-- Connections.
+
+    ---------------------------- */
+
+    public static HashMap<Player, SingleSet<Integer, Integer>> getConnections(){
+        return connections;
+    }
+
+    public static void addOneToConn(Player player) {
+        SingleSet<Integer, Integer> conn = connections.get(player);
+
+        if (conn == null) {
+            connections.remove(player);
+            return;
+        }
+
+        int timer = conn.key;
+        int num = conn.value;
+
+        num++;
+
+        connections.remove(player);
+        connections.put(player, new SingleSet<>(timer, num));
+    }
+
+    public static void removeSecondFromConn(Player player, SingleSet<Integer, Integer> conn){
+        int timer = conn.key;
+        int num = conn.value;
+
+        timer--;
+
+        connections.remove(player);
+        connections.put(player, new SingleSet<>(timer, num));
+    }
+
+    public static SingleSet<Integer, Integer> getConnection(Player player){
+        try {
+            return connections.get(player);
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    public static void removeConn(Player player){
+        connections.remove(player);
+    }
+
+    public static void addConn(Player player){
+        connections.put(player, new SingleSet<>(ConfigUtils.lobbyTimeOut, 0));
+    }
+
+    /* ----------------------------
+
+    PlayerUtils <-- DisplayNames.
+
+    ---------------------------- */
+
+    public static void updateDisplayName(Player player){
+        if (! ConfigUtils.updateDisplayNames) return;
+        if (! StreamLine.lpHolder.enabled) return;
+
+        player.setDisplayName(getDisplayName(player));
+    }
+
+    public static String getDisplayName(Player player) {
+        return getDisplayName(player.latestName);
+    }
+
+    public static String getDisplayName(String username) {
+        if (! StreamLine.lpHolder.enabled) return username;
+
+        User user = StreamLine.lpHolder.api.getUserManager().getUser(username);
+        if (user == null) return username;
+
+        Group group = StreamLine.lpHolder.api.getGroupManager().getGroup(user.getPrimaryGroup());
+        if (group == null) return username;
+
+        String prefix = "";
+        String suffix = "";
+
+        TreeMap<Integer, String> preWeight = new TreeMap<>();
+        TreeMap<Integer, String> sufWeight = new TreeMap<>();
+
+        for (PrefixNode node : group.getNodes(NodeType.PREFIX)) {
+            preWeight.put(node.getPriority(), node.getMetaValue());
+        }
+
+        for (PrefixNode node : user.getNodes(NodeType.PREFIX)) {
+            preWeight.put(node.getPriority(), node.getMetaValue());
+        }
+
+        for (SuffixNode node : group.getNodes(NodeType.SUFFIX)) {
+            sufWeight.put(node.getPriority(), node.getMetaValue());
+        }
+
+        for (SuffixNode node : user.getNodes(NodeType.SUFFIX)) {
+            sufWeight.put(node.getPriority(), node.getMetaValue());
+        }
+
+        prefix = preWeight.get(PluginUtils.getCeilingInt(preWeight.keySet()));
+        suffix = sufWeight.get(PluginUtils.getCeilingInt(sufWeight.keySet()));
+
+        if (prefix == null) prefix = "";
+        if (suffix == null) suffix = "";
+
+        return TextUtils.codedString(prefix + username + suffix);
+    }
+
+    /* ----------------------------
+
+    PlayerUtils <-- Get Off / On.
+
+    ---------------------------- */
+
+    public static String getOffOnDisplayBungee(SavableUser stat){
+        if (stat == null) {
+            return MessageConfUtils.nullB;
+        }
+
+        if (stat instanceof ConsolePlayer) {
+            return ConfigUtils.consoleDisplayName;
+        }
+
+        if (stat instanceof Player) {
+            if (((Player) stat).online) {
+                return MessageConfUtils.onlineB.replace("%player%", stat.displayName);
+            } else {
+                return MessageConfUtils.offlineB.replace("%player%", stat.displayName);
+            }
+        }
+
+        return MessageConfUtils.nullB;
+    }
+
+    public static String getOffOnRegBungee(SavableUser stat){
+        if (stat == null) {
+            return MessageConfUtils.nullB;
+        }
+
+        if (stat instanceof ConsolePlayer) {
+            return ConfigUtils.consoleName;
+        }
+
+        if (stat instanceof Player) {
+            if (((Player) stat).online) {
+                return MessageConfUtils.onlineB.replace("%player%", stat.latestName);
+            } else {
+                return MessageConfUtils.offlineB.replace("%player%", stat.latestName);
+            }
+        }
+
+        return MessageConfUtils.nullB;
+    }
+
+    public static String getOffOnDisplayDiscord(SavableUser stat){
+        if (stat == null) {
+            return MessageConfUtils.nullD;
+        }
+
+        if (stat instanceof ConsolePlayer) {
+            return ConfigUtils.consoleDisplayName;
+        }
+
+        if (stat instanceof Player) {
+            if (((Player) stat).online) {
+                return MessageConfUtils.onlineD.replace("%player%", stat.displayName);
+            } else {
+                return MessageConfUtils.offlineD.replace("%player%", stat.displayName);
+            }
+        }
+
+        return MessageConfUtils.nullD;
+    }
+
+    public static String getOffOnRegDiscord(SavableUser stat){
+        if (stat == null) {
+            return MessageConfUtils.nullD;
+        }
+
+        if (stat instanceof ConsolePlayer) {
+            return ConfigUtils.consoleName;
+        }
+
+        if (stat instanceof Player) {
+            if (((Player) stat).online) {
+                return MessageConfUtils.onlineD.replace("%player%", stat.latestName);
+            } else {
+                return MessageConfUtils.offlineD.replace("%player%", stat.latestName);
+            }
+        }
+
+        return MessageConfUtils.nullD;
+    }
+
+    /* ----------------------------
+
+    PlayerUtils <-- ProxiedPlayer.
+
+    ---------------------------- */
+
+    public static Collection<ProxiedPlayer> getOnlinePPlayers(){
+        return StreamLine.getInstance().getProxy().getPlayers();
+    }
+
+    public static ProxiedPlayer getPPlayer(UUID uuid) {
+        return getPPlayer(uuid.toString());
+    }
+
+    public static ProxiedPlayer getPPlayer(String string){
+        if (string.contains("-")) {
+            return StreamLine.getInstance().getProxy().getPlayer(UUID.fromString(string));
+        }
+
+        return StreamLine.getInstance().getProxy().getPlayer(string);
     }
 
     public static ProxiedPlayer getPPlayerByUUID(String uuid){
@@ -1267,10 +1209,51 @@ public class PlayerUtils {
                 }
             }
 
-            return getPlayer(UUID.fromString(uuid));
+            return getPPlayer(UUID.fromString(uuid));
         } catch (Exception e){
             e.printStackTrace();
             return null;
+        }
+    }
+
+    /* ----------------------------
+
+    PlayerUtils <-- ???.
+
+    ---------------------------- */
+
+    public static boolean isInOnlineList(String name){
+        for (ProxiedPlayer player : getOnlinePPlayers()) {
+            if (player.getName().equals(name)) return true;
+        }
+
+        return false;
+    }
+
+    public static List<Player> transposeList(List<ProxiedPlayer> players){
+        List<Player> ps = new ArrayList<>();
+        for (ProxiedPlayer player : players){
+            ps.add(PlayerUtils.getOrCreatePlayerStatByUUID(player.getUniqueId().toString()));
+        }
+
+        return ps;
+    }
+
+    /* ----------------------------
+
+    PlayerUtils <-- Functionals.
+
+    ---------------------------- */
+
+    public static void kickAll(boolean withMessage) {
+        if (withMessage) {
+            for (ProxiedPlayer player : getOnlinePPlayers()) {
+                kick(player, MessageConfUtils.kicksStopping);
+            }
+        } else {
+            for (ProxiedPlayer player : getOnlinePPlayers()) {
+                kick(player);
+            }
         }
     }
 
@@ -1320,4 +1303,21 @@ public class PlayerUtils {
     public static final String tagListNotLast = StreamLine.getConfig().getMessString("btag.list.tags.not-last");
     // Points.
     public static final String pointsName = StreamLine.getConfig().getMessString("stats.points-name");
+
+    public static String forStats(List<SavableUser> players){
+        StringBuilder builder = new StringBuilder("[");
+
+        int i = 1;
+        for (SavableUser p : players){
+            if (i != players.size()) {
+                builder.append(p.toString()).append(", ");
+            } else {
+                builder.append(p.toString()).append("]");
+            }
+
+            i++;
+        }
+
+        return builder.toString();
+    }
 }

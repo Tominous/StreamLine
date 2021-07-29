@@ -11,7 +11,6 @@ import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.plugin.Command;
-import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.*;
 
@@ -138,12 +137,12 @@ public class GlobalOnlineCommand extends Command {
             Server server = playerServers.get(player);
             if (! (i == players.size() - 1))
                 text.append(MessageConfUtils.onlineMessageBPlayersBulkNotLast
-                        .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreate(player)))
+                        .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", server.getInfo().getName())
                 );
             else
                 text.append(MessageConfUtils.onlineMessageBPlayersBulkLast
-                        .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreate(player)))
+                        .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", server.getInfo().getName())
                 );
             i++;

@@ -62,7 +62,7 @@ public class MuteCommand extends Command implements TabExecutor {
                     );
                     if (other.online) {
                         MessagingUtils.sendBUserMessage(PlayerUtils.getPPlayerByUUID(other.uuid), MessageConfUtils.muteMTempMuted
-                                .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(((ProxiedPlayer) sender).getUniqueId().toString())))
+                                .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreatePlayerStatByUUID(((ProxiedPlayer) sender).getUniqueId().toString())))
                                 .replace("%date%", other.mutedTill.toString())
                         );
                     }
@@ -106,7 +106,7 @@ public class MuteCommand extends Command implements TabExecutor {
                 );
                 if (other.online) {
                     MessagingUtils.sendBUserMessage(PlayerUtils.getPPlayerByUUID(other.uuid), MessageConfUtils.muteMPermMuted
-                            .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(((ProxiedPlayer) sender).getUniqueId().toString())))
+                            .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreatePlayerStatByUUID(((ProxiedPlayer) sender).getUniqueId().toString())))
                     );
                 }
 
@@ -154,7 +154,7 @@ public class MuteCommand extends Command implements TabExecutor {
                     );
                     if (other.online) {
                         MessagingUtils.sendBUserMessage(PlayerUtils.getPPlayerByUUID(other.uuid), MessageConfUtils.muteMTempMuted
-                                .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(((ProxiedPlayer) sender).getUniqueId().toString())))
+                                .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreatePlayerStatByUUID(((ProxiedPlayer) sender).getUniqueId().toString())))
                                 .replace("%date%", other.mutedTill.toString())
                         );
                     }
@@ -194,7 +194,7 @@ public class MuteCommand extends Command implements TabExecutor {
                 );
                 if (other.online) {
                     MessagingUtils.sendBUserMessage(PlayerUtils.getPPlayerByUUID(other.uuid), MessageConfUtils.muteUnMuted
-                            .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateByUUID(((ProxiedPlayer) sender).getUniqueId().toString())))
+                            .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreatePlayerStatByUUID(((ProxiedPlayer) sender).getUniqueId().toString())))
                     );
                 }
 

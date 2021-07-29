@@ -25,10 +25,10 @@ public class MessageCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        SavableUser stat = PlayerUtils.getStat(sender);
+        SavableUser stat = PlayerUtils.getOrGetSavableUser(sender.getName());
 
         if (stat == null) {
-            stat = PlayerUtils.getOrCreateStat(sender);
+            stat = PlayerUtils.getOrCreateSavableUser(sender);
             if (stat == null) {
                 StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
@@ -43,7 +43,7 @@ public class MessageCommand extends Command implements TabExecutor {
                 SavableUser statTo;
 
                 if (args[0].equals("%")) {
-                    statTo = PlayerUtils.getStatByUUID("%");
+                    statTo = PlayerUtils.getSavableUserByUUID("%");
                 } else {
                     if (! PlayerUtils.exists(args[0])) {
                         MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
@@ -74,9 +74,9 @@ public class MessageCommand extends Command implements TabExecutor {
 
         if (sender instanceof ProxiedPlayer) {
             ProxiedPlayer p = (ProxiedPlayer) sender;
-            Player player = PlayerUtils.getOrCreateByUUID(p.getUniqueId().toString());
+            Player player = PlayerUtils.getOrCreatePlayerStatByUUID(p.getUniqueId().toString());
             for (String uuid : player.ignoredList) {
-                ignored.add(UUIDFetcher.getName(uuid));
+                ignored.add(UUIDFetcher.getCachedName(uuid));
             }
         }
 

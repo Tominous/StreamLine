@@ -36,7 +36,7 @@ public class ChatListener implements Listener {
         String msg = e.getMessage();
 
         if (stat == null) {
-            PlayerUtils.createStat(sender);
+            PlayerUtils.createPlayerStat(sender);
             stat = PlayerUtils.getPlayerStat(sender);
             if (stat == null) {
                 StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
@@ -54,7 +54,7 @@ public class ChatListener implements Listener {
                     if (PlayerUtils.exists(pl.getName())) {
                         PlayerUtils.addStat(new Player(pl, false));
                     } else {
-                        PlayerUtils.createStat(pl);
+                        PlayerUtils.createPlayerStat(pl);
                     }
                     p = PlayerUtils.getPlayerStat(pl);
                     if (p == null) {

@@ -55,7 +55,7 @@ public class GuildUtils {
     public static Guild getGuild(String uuid) {
         try {
             for (Guild guild : guilds) {
-                if (guild.hasMember(PlayerUtils.getOrCreateStatByUUID(uuid))) {
+                if (guild.hasMember(PlayerUtils.getOrCreateSUByUUID(uuid))) {
                     return guild;
                 }
             }
@@ -80,7 +80,7 @@ public class GuildUtils {
     }
 
     public static boolean exists(String username){
-        File file = new File(StreamLine.getInstance().getGDir(), Objects.requireNonNull(PlayerUtils.getOrCreate(username)).guild + ".properties");
+        File file = new File(StreamLine.getInstance().getGDir(), Objects.requireNonNull(PlayerUtils.getOrCreatePlayerStat(username)).guild + ".properties");
 
         return file.exists();
     }
@@ -162,9 +162,9 @@ public class GuildUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, createTitle,
                         createConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", name)
                         , ConfigUtils.textChannelGuilds));
@@ -274,8 +274,8 @@ public class GuildUtils {
                 MessagingUtils.sendBGUserMessage(guild, from.sender, to.sender, inviteUser
                         .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(from))
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
-                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
-                        .replace("%leader_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                        .replace("%leader_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                 );
             }
 
@@ -290,15 +290,15 @@ public class GuildUtils {
                     MessagingUtils.sendBGUserMessage(guild, from.sender, member, inviteLeader
                             .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(from))
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
-                            .replace("%leader_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                     );
                 } else {
                     MessagingUtils.sendBGUserMessage(guild, from.sender, member, inviteMembers
                             .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(from))
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
-                            .replace("%leader_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                     );
                 }
             }
@@ -311,9 +311,9 @@ public class GuildUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(from.sender, inviteTitle,
                         inviteConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(from))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(from))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(to))
                                 .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
                                 .replace("%size%", String.valueOf(guild.maxSize))
@@ -360,7 +360,7 @@ public class GuildUtils {
 
                     if (m == null) continue;
 
-                    if (pl.equals(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID))){
+                    if (pl.equals(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID))){
                         MessagingUtils.sendBGUserMessage(guild, accepter.sender, m, acceptLeader
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(accepter))
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(from))
@@ -380,9 +380,9 @@ public class GuildUtils {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(accepter.sender, joinsTitle,
                             joinsConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(accepter))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
-                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
                             , ConfigUtils.textChannelGuilds));
@@ -392,9 +392,9 @@ public class GuildUtils {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(accepter.sender, acceptTitle,
                             acceptConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(accepter))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
-                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
                             , ConfigUtils.textChannelGuilds));
@@ -437,7 +437,7 @@ public class GuildUtils {
 
                     if (m == null) continue;
 
-                    if (pl.equals(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID))) {
+                    if (pl.equals(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID))) {
                         MessagingUtils.sendBGUserMessage(guild, denier.sender, m, denyLeader
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(denier))
                                 .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(from))
@@ -456,9 +456,9 @@ public class GuildUtils {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(denier.sender, denyTitle,
                             denyConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(denier))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(denier))
-                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
                             , ConfigUtils.textChannelGuilds));
@@ -516,9 +516,9 @@ public class GuildUtils {
             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, warpTitle,
                     warpConsole
                             .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                             .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                             .replace("%size%", String.valueOf(guild.maxSize))
                             .replace("%name%", guild.name)
                     , ConfigUtils.textChannelGuilds));
@@ -576,9 +576,9 @@ public class GuildUtils {
             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, muteTitle,
                     muteConsole
                             .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                             .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                             .replace("%size%", String.valueOf(guild.maxSize))
                             .replace("%name%", guild.name)
                             .replace("%toggle%", guild.isMuted ? muteToggleMuted : muteToggleUnMuted)
@@ -621,7 +621,7 @@ public class GuildUtils {
         try {
             if (sender.equals(player)) {
                 MessagingUtils.sendBGUserMessage(guild, sender.sender, sender.sender,  kickSelf);
-            } else if (player.equals(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID))) {
+            } else if (player.equals(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID))) {
                 MessagingUtils.sendBGUserMessage(guild, sender.sender, sender.sender,  noPermission);
             } else {
                 for (SavableUser pl : guild.totalMembers) {
@@ -653,9 +653,9 @@ public class GuildUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, kickTitle,
                         kickConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
                                 .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
                                 .replace("%size%", String.valueOf(guild.maxSize))
@@ -718,13 +718,13 @@ public class GuildUtils {
 
                 if (member == null) continue;
 
-                if (! member.equals(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID).sender)) {
+                if (! member.equals(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID).sender)) {
                     MessagingUtils.sendBGUserMessage(guild, sender.sender, member, disbandMembers
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                     );
                 } else {
                     MessagingUtils.sendBGUserMessage(guild, sender.sender, member, disbandLeader
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                     );
                 }
 
@@ -734,9 +734,9 @@ public class GuildUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, disbandTitle,
                         disbandConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                         , ConfigUtils.textChannelGuilds));
@@ -770,7 +770,7 @@ public class GuildUtils {
 
             if (guild.isPublic) {
                 MessagingUtils.sendBGUserMessage(guild, sender.sender, sender.sender,  openFailure
-                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                         .replace("%size%", Integer.toString(guild.getSize()))
                 );
             } else {
@@ -781,14 +781,14 @@ public class GuildUtils {
 
                     if (member == null) continue;
 
-                    if (member.equals(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID).sender)) {
+                    if (member.equals(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID).sender)) {
                         MessagingUtils.sendBGUserMessage(guild, sender.sender, member, openLeader
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%size%", Integer.toString(guild.getSize()))
                         );
                     } else {
                         MessagingUtils.sendBGUserMessage(guild, sender.sender, member, openMembers
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%size%", Integer.toString(guild.getSize()))
                         );
                     }
@@ -799,9 +799,9 @@ public class GuildUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, openTitle,
                         openConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                         , ConfigUtils.textChannelGuilds));
@@ -836,7 +836,7 @@ public class GuildUtils {
 
             if (!guild.isPublic) {
                 MessagingUtils.sendBGUserMessage(guild, sender.sender, sender.sender,  closeFailure
-                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                        .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                         .replace("%size%", Integer.toString(guild.getSize()))
                 );
             } else {
@@ -851,12 +851,12 @@ public class GuildUtils {
 
                     if (member.equals(pl)) {
                         MessagingUtils.sendBGUserMessage(guild, sender.sender, member, closeSender
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%size%", Integer.toString(guild.getSize()))
                         );
                     } else {
                         MessagingUtils.sendBGUserMessage(guild, sender.sender, member, closeMembers
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%size%", Integer.toString(guild.getSize()))
                         );
                     }
@@ -867,9 +867,9 @@ public class GuildUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, closeTitle,
                         closeConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                         , ConfigUtils.textChannelGuilds));
@@ -898,18 +898,18 @@ public class GuildUtils {
             }
 
             String leaderBulk = listLeaderBulk
-                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
                     .replace("%size%", Integer.toString(guild.getSize()));
             String moderatorBulk = listModBulkMain
                     .replace("%moderators%", Objects.requireNonNull(moderators(guild)))
                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                     .replace("%size%", Integer.toString(guild.getSize()));
             String memberBulk = listMemberBulkMain
                     .replace("%members%", Objects.requireNonNull(members(guild)))
                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                     .replace("%size%", Integer.toString(guild.getSize()));
 
             MessagingUtils.sendBGUserMessage(guild, sender.sender, sender.sender,  listMain
@@ -917,7 +917,7 @@ public class GuildUtils {
                     .replace("%moderatorbulk%", moderatorBulk)
                     .replace("%memberbulk%", memberBulk)
                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                     .replace("%size%", Integer.toString(guild.getSize()))
             );
         } catch (Exception e) {
@@ -939,13 +939,13 @@ public class GuildUtils {
                 if (i <= guild.moderators.size()) {
                     mods.append(listModBulkNotLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                             .replace("%size%", Integer.toString(guild.getSize()))
                     );
                 } else {
                     mods.append(listModBulkLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                             .replace("%size%", Integer.toString(guild.getSize()))
                     );
                 }
@@ -973,13 +973,13 @@ public class GuildUtils {
                 if (i <= guild.moderators.size()) {
                     mems.append(listMemberBulkNotLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                             .replace("%size%", Integer.toString(guild.getSize()))
                     );
                 } else {
                     mems.append(listMemberBulkLast
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                             .replace("%size%", Integer.toString(guild.getSize()))
                     );
                 }
@@ -1022,9 +1022,9 @@ public class GuildUtils {
                 case LEADER:
                     MessagingUtils.sendBGUserMessage(guild, sender.sender, sender.sender,  promoteFailure
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                             .replace("%level%", textLeader
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%size%", Integer.toString(guild.getSize()))
                             )
                     );
@@ -1037,30 +1037,30 @@ public class GuildUtils {
 
                         if (m == null) continue;
 
-                        if (pl.equals(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID))) {
+                        if (pl.equals(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID))) {
                             MessagingUtils.sendBGUserMessage(guild, sender.sender, m, promoteLeader
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%level%", textLeader
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
                         } else if (pl.equals(member)) {
                             MessagingUtils.sendBGUserMessage(guild, sender.sender, m, promoteUser
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%level%", textLeader
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
                         } else {
                             MessagingUtils.sendBGUserMessage(guild, sender.sender, m, promoteMembers
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%level%", textLeader
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
@@ -1076,30 +1076,30 @@ public class GuildUtils {
 
                         if (m == null) continue;
 
-                        if (pl.equals(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID))) {
+                        if (pl.equals(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID))) {
                             MessagingUtils.sendBGUserMessage(guild, sender.sender, m, promoteLeader
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%level%", textModerator
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
                         } else if (pl.equals(member)) {
                             MessagingUtils.sendBGUserMessage(guild, sender.sender, m, promoteUser
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%level%", textModerator
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
                         } else {
                             MessagingUtils.sendBGUserMessage(guild, sender.sender, m, promoteMembers
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%level%", textModerator
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
@@ -1112,9 +1112,9 @@ public class GuildUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, promoteTitle,
                         promoteConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
                                 .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(member))
                                 .replace("%size%", String.valueOf(guild.maxSize))
@@ -1154,9 +1154,9 @@ public class GuildUtils {
                 case LEADER:
                     MessagingUtils.sendBGUserMessage(guild, sender.sender, sender.sender,  demoteIsLeader
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                             .replace("%level%", textLeader
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%size%", Integer.toString(guild.getSize()))
                             )
                     );
@@ -1169,30 +1169,30 @@ public class GuildUtils {
 
                         if (m == null) continue;
 
-                        if (pl.equals(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID))) {
+                        if (pl.equals(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID))) {
                             MessagingUtils.sendBGUserMessage(guild, sender.sender, m, demoteLeader
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%level%", textMember
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
                         } else if (pl.equals(member)) {
                             MessagingUtils.sendBGUserMessage(guild, sender.sender, m, demoteUser
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%level%", textMember
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
                         } else {
                             MessagingUtils.sendBGUserMessage(guild, sender.sender, m, demoteMembers
                                     .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%level%", textMember
-                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                             .replace("%size%", Integer.toString(guild.getSize()))
                                     )
                             );
@@ -1203,9 +1203,9 @@ public class GuildUtils {
                 default:
                     MessagingUtils.sendBGUserMessage(guild, sender.sender, sender.sender,  demoteFailure
                             .replace("%user%", PlayerUtils.getOffOnDisplayBungee(member))
-                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                            .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                             .replace("%level%", textMember
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%size%", Integer.toString(guild.getSize()))
                             )
                     );
@@ -1216,9 +1216,9 @@ public class GuildUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, demoteTitle,
                         demoteConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(member))
                                 .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(member))
                                 .replace("%size%", String.valueOf(guild.maxSize))
@@ -1260,12 +1260,12 @@ public class GuildUtils {
                     if (pl.equals(sender)) {
                         MessagingUtils.sendBGUserMessage(guild, sender.sender, m, joinUser
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                         );
                     } else {
                         MessagingUtils.sendBGUserMessage(guild, sender.sender, m, joinMembers
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                         );
                     }
                 }
@@ -1274,9 +1274,9 @@ public class GuildUtils {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, joinsTitle,
                             joinsConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
                             , ConfigUtils.textChannelGuilds));
@@ -1303,7 +1303,7 @@ public class GuildUtils {
                 return;
             }
 
-            if (PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID).equals(sender)) {
+            if (PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID).equals(sender)) {
                 for (SavableUser pl : guild.totalMembers) {
                     
 
@@ -1334,12 +1334,12 @@ public class GuildUtils {
                     if (pl.equals(sender)) {
                         MessagingUtils.sendBGUserMessage(guild, sender.sender, m, leaveUser
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                         );
                     } else {
                         MessagingUtils.sendBGUserMessage(guild, sender.sender, m, leaveMembers
                                 .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                         );
                     }
                 }
@@ -1350,9 +1350,9 @@ public class GuildUtils {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, leaveTitle,
                             leaveConsole
                                     .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                     .replace("%size%", String.valueOf(guild.maxSize))
                                     .replace("%name%", guild.name)
                             , ConfigUtils.textChannelGuilds));
@@ -1410,9 +1410,9 @@ public class GuildUtils {
                         chatConsole
                                 .replace("%message%", msg)
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                         , ConfigUtils.textChannelGuilds));
@@ -1421,7 +1421,7 @@ public class GuildUtils {
             for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
                 if (! pp.hasPermission(ConfigUtils.guildView)) continue;
 
-                Player them = PlayerUtils.getOrCreate(pp);
+                Player them = PlayerUtils.getOrCreatePlayerStat(pp);
 
                 if (! them.gspy) continue;
 
@@ -1477,9 +1477,9 @@ public class GuildUtils {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, renameTitle,
                         renameConsole
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID)))
+                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                                 .replace("%size%", String.valueOf(guild.maxSize))
                                 .replace("%name%", guild.name)
                                 .replace("%old_name%", oldName)

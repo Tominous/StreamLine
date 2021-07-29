@@ -3,9 +3,7 @@ package net.plasmere.streamline.objects;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.users.SavableUser;
-import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.GuildUtils;
-import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
 import net.plasmere.streamline.utils.UUIDFetcher;
@@ -49,9 +47,9 @@ public class Guild {
         this.leaderUUID = creatorUUID;
         this.name = name;
         this.totalMembersByUUID.add(creatorUUID);
-        this.totalMembers.add(PlayerUtils.getOrCreateStatByUUID(creatorUUID));
+        this.totalMembers.add(PlayerUtils.getOrCreateSUByUUID(creatorUUID));
         try {
-            PlayerUtils.getOrCreateStatByUUID(creatorUUID).updateKey("guild", creatorUUID);
+            PlayerUtils.getOrCreateSUByUUID(creatorUUID).updateKey("guild", creatorUUID);
         } catch (Exception e){
             // do nothing
         }
@@ -365,7 +363,7 @@ public class Guild {
     }
 
     public SavableUser getMember(String uuid) {
-        SavableUser stat = PlayerUtils.getOrCreateStatByUUID(uuid);
+        SavableUser stat = PlayerUtils.getOrCreateSUByUUID(uuid);
 
         if (stat == null) {
             removeUUID(uuid);
@@ -1111,7 +1109,7 @@ public class Guild {
 
     public void disband(){
         for (String uuid : totalMembersByUUID){
-            SavableUser stat = PlayerUtils.getOrCreateStatByUUID(uuid);
+            SavableUser stat = PlayerUtils.getOrCreateSUByUUID(uuid);
 
             stat.updateKey("guild", "");
         }

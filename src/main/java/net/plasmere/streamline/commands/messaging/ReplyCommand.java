@@ -17,10 +17,10 @@ public class ReplyCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        SavableUser stat = PlayerUtils.getStat(sender);
+        SavableUser stat = PlayerUtils.getSavableUser(sender);
 
         if (stat == null) {
-            stat = PlayerUtils.getOrCreateStat(sender);
+            stat = PlayerUtils.getOrCreateSavableUser(sender);
             if (stat == null) {
                 StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);

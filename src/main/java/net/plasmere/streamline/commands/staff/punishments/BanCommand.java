@@ -311,7 +311,7 @@ public class BanCommand extends Command implements TabExecutor {
 
         for (String uuid : bans.getKeys()) {
             if (uuid.contains("_")) continue;
-            if (bans.getBoolean(uuid + ".banned")) banned.add(UUIDFetcher.getName(uuid));
+            if (bans.getBoolean(uuid + ".banned")) banned.add(UUIDFetcher.getCachedName(uuid));
         }
 
         List<String> options = new ArrayList<>();

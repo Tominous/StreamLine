@@ -29,15 +29,15 @@ public class MessagingUtils {
                 .replace("%user%", sender.getName())
                 .replace("%from%", from)
                 .replace("%message%", msg)
-                .replace("%server%", PlayerUtils.getOrCreateStat(sender).latestServer)
-                .replace("%version%", PlayerUtils.getOrCreateStat(sender).latestVersion)
+                .replace("%server%", PlayerUtils.getOrCreateSavableUser(sender).latestServer)
+                .replace("%version%", PlayerUtils.getOrCreateSavableUser(sender).latestVersion)
         );
     }
 
     public static void sendPermissionedMessage(String toPermission, String message){
         Set<ProxiedPlayer> toPlayers = new HashSet<>();
 
-        for (ProxiedPlayer player : PlayerUtils.getPlayers()) {
+        for (ProxiedPlayer player : PlayerUtils.getOnlinePPlayers()) {
             if (player.hasPermission(toPermission)) toPlayers.add(player);
         }
 
@@ -49,7 +49,7 @@ public class MessagingUtils {
     public static void sendPermissionedMessageNonSelf(CommandSender sender, String toPermission, String message){
         Set<ProxiedPlayer> toPlayers = new HashSet<>();
 
-        for (ProxiedPlayer player : PlayerUtils.getPlayers()) {
+        for (ProxiedPlayer player : PlayerUtils.getOnlinePPlayers()) {
             if (player.getName().equals(sender.getName())) continue;
             if (player.hasPermission(toPermission)) toPlayers.add(player);
         }
@@ -80,7 +80,7 @@ public class MessagingUtils {
     }
 
     public static void sendBungeeMessage(BungeeMessage message){
-        SavableUser player = PlayerUtils.getOrCreateStat(message.sender);
+        SavableUser player = PlayerUtils.getOrCreateSavableUser(message.sender);
 
         message.to.sendMessage(TextUtils.codedText((message.title + message.transition + message.message)
                         .replace("%sender%", message.sender.getName())
@@ -132,7 +132,7 @@ public class MessagingUtils {
                 player.sendMessage(TextUtils.codedText(MessageConfUtils.bToBReportMessage
                                 .replace("%reporter%", sender)
                                 .replace("%report%", report)
-                                .replace("%version%", PlayerUtils.getOrCreate(player).latestVersion)
+                                .replace("%version%", PlayerUtils.getOrCreatePlayerStat(player).latestVersion)
                         )
                 );
             else
@@ -323,14 +323,14 @@ public class MessagingUtils {
                 .replace("%invites%", invites(party))
                 .replace("%ispublic%", getIsPublic(party))
                 .replace("%ismuted%", getIsMuted(party))
-                .replace("%version%", PlayerUtils.getOrCreate((ProxiedPlayer) sender).latestVersion)
+                .replace("%version%", PlayerUtils.getOrCreatePlayerStat((ProxiedPlayer) sender).latestVersion)
         ));
     }
 
     public static void sendBGUserMessage(Guild guild, CommandSender sender, CommandSender to, String msg){
         to.sendMessage(TextUtils.codedText(msg
-                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateStat(sender)))
-                .replace("%leader%", PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID).getName())
+                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(sender)))
+                .replace("%leader%", PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID).getName())
                 .replace("%size%", Integer.toString(guild.getSize()))
                 .replace("%max%", Integer.toString(guild.maxSize))
                 .replace("%mods_count%", Integer.toString(guild.modsByUUID.size()))
@@ -349,7 +349,7 @@ public class MessagingUtils {
                 .replace("%name%", guild.name)
                 .replace("%xpneeded%", Integer.toString(guild.getNeededXp(guild.lvl + 1)))
                 .replace("%xplevel%", Integer.toString(guild.xpUntilNextLevel()))
-                .replace("%version%", PlayerUtils.getOrCreateStat(sender).latestVersion)
+                .replace("%version%", PlayerUtils.getOrCreateSavableUser(sender).latestVersion)
                 .replace("%name%", guild.name)
                 .replace("%length%", String.valueOf(guild.name.length()))
                 .replace("%max_length%", String.valueOf(ConfigUtils.guildMaxLength))
@@ -382,7 +382,7 @@ public class MessagingUtils {
                     .replace("%guild_xp_total%", (guild != null ? Integer.toString(guild.totalXP) : PlayerUtils.notSet))
                     .replace("%guild_xp_current%", (guild != null ? Integer.toString(guild.currentXP) : PlayerUtils.notSet))
                     .replace("%guild_lvl%", (guild != null ? Integer.toString(guild.lvl) : PlayerUtils.notSet))
-                    .replace("%guild_leader%", (guild != null ? PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID).displayName : PlayerUtils.notSet))
+                    .replace("%guild_leader%", (guild != null ? PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID).displayName : PlayerUtils.notSet))
                     .replace("%guild_uuid%", (guild != null ? player.guild : PlayerUtils.notSet))
                     .replace("%version%", player.latestVersion)
             ));
@@ -421,7 +421,7 @@ public class MessagingUtils {
                     .replace("%guild_xp_total%", (guild != null ? Integer.toString(guild.totalXP) : PlayerUtils.notSet))
                     .replace("%guild_xp_current%", (guild != null ? Integer.toString(guild.currentXP) : PlayerUtils.notSet))
                     .replace("%guild_lvl%", (guild != null ? Integer.toString(guild.lvl) : PlayerUtils.notSet))
-                    .replace("%guild_leader%", (guild != null ? PlayerUtils.getOrCreateStatByUUID(guild.leaderUUID).displayName : PlayerUtils.notSet))
+                    .replace("%guild_leader%", (guild != null ? PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID).displayName : PlayerUtils.notSet))
                     .replace("%guild_uuid%", (guild != null ? player.guild : PlayerUtils.notSet))
                     .replace("%sspy%", (player.sspy ? PlayerUtils.sspyT : PlayerUtils.sspyF))
                     .replace("%gspy%", (player.gspy ? PlayerUtils.gspyT : PlayerUtils.gspyF))
@@ -480,7 +480,7 @@ public class MessagingUtils {
         if (sender instanceof ProxiedPlayer) {
             sender.sendMessage(TextUtils.codedText(msg
                     .replace("%sender%", PlayerUtils.getOffOnDisplayBungee((PlayerUtils.getOrCreate(sender))))
-                    .replace("%version%", PlayerUtils.getOrCreate((ProxiedPlayer) sender).latestVersion)
+                    .replace("%version%", PlayerUtils.getOrCreatePlayerStat((ProxiedPlayer) sender).latestVersion)
             ));
         } else {
             sender.sendMessage(TextUtils.codedText(msg
@@ -519,7 +519,7 @@ public class MessagingUtils {
             for (ProxiedPlayer player : players) {
                 player.sendMessage(TextUtils.codedText(msg
                         .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreate(as)))
-                        .replace("%version%", PlayerUtils.getOrCreate((ProxiedPlayer) as).latestVersion)
+                        .replace("%version%", PlayerUtils.getOrCreatePlayerStat((ProxiedPlayer) as).latestVersion)
                 ));
             }
         } else {
@@ -674,7 +674,7 @@ public class MessagingUtils {
         for (String m : guild.modsByUUID){
             SavableUser player;
             try {
-                player = PlayerUtils.getOrCreateStatByUUID(m);
+                player = PlayerUtils.getOrCreateSUByUUID(m);
             } catch (Exception e) {
                 continue;
             }
@@ -704,7 +704,7 @@ public class MessagingUtils {
         for (String m : guild.membersByUUID){
             SavableUser player;
             try {
-                player = PlayerUtils.getOrCreateStatByUUID(m);
+                player = PlayerUtils.getOrCreateSUByUUID(m);
             } catch (Exception e) {
                 continue;
             }
@@ -734,7 +734,7 @@ public class MessagingUtils {
         for (String m : guild.totalMembersByUUID){
             SavableUser player;
             try {
-                player = PlayerUtils.getOrCreateStatByUUID(m);
+                player = PlayerUtils.getOrCreateSUByUUID(m);
             } catch (Exception e) {
                 continue;
             }
@@ -764,7 +764,7 @@ public class MessagingUtils {
         for (String m : guild.invitesByUUID){
             SavableUser player;
             try {
-                player = PlayerUtils.getOrCreateStatByUUID(m);
+                player = PlayerUtils.getOrCreateSUByUUID(m);
             } catch (Exception e) {
                 continue;
             }

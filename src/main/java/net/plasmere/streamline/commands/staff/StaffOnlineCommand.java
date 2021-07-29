@@ -8,7 +8,6 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.plasmere.streamline.utils.PlayerUtils;
-import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.*;
 
@@ -46,12 +45,12 @@ public class StaffOnlineCommand extends Command {
         for (ProxiedPlayer player : lstaffs){
             if (i < lstaffs.size())
                 staff.append(MessageConfUtils.sOnlineBungeeBulkNotLast
-                        .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreate(player)))
+                        .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", player.getServer().getInfo().getName().toLowerCase())
                 );
             else
                 staff.append(MessageConfUtils.sOnlineBungeeBulkLast
-                        .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreate(player)))
+                        .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", player.getServer().getInfo().getName().toLowerCase())
                 );
             i++;

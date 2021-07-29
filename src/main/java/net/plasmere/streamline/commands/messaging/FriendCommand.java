@@ -1,7 +1,6 @@
 package net.plasmere.streamline.commands.messaging;
 
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
@@ -26,10 +25,10 @@ public class FriendCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        SavableUser stat = PlayerUtils.getStat(sender);
+        SavableUser stat = PlayerUtils.getSavableUser(sender);
 
         if (stat == null) {
-            stat = PlayerUtils.getOrCreateStat(sender);
+            stat = PlayerUtils.getOrCreateSavableUser(sender);
             if (stat == null) {
                 StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
@@ -54,7 +53,7 @@ public class FriendCommand extends Command implements TabExecutor {
             SavableUser other;
 
             if (args[1].equals("%")) {
-                other = PlayerUtils.getOrCreateStatByUUID("%");
+                other = PlayerUtils.getOrCreateSUByUUID("%");
             } else {
                 if (! PlayerUtils.exists(args[1])) {
                     MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
@@ -193,7 +192,7 @@ public class FriendCommand extends Command implements TabExecutor {
             List<String> friends = new ArrayList<>();
             List<String> pending = new ArrayList<>();
 
-            SavableUser player = PlayerUtils.getStat(sender);
+            SavableUser player = PlayerUtils.getSavableUser(sender);
 
             if (player == null) return new ArrayList<>();
 

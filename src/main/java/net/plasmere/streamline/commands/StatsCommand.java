@@ -6,9 +6,6 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
-import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.users.ConsolePlayer;
-import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
@@ -29,7 +26,7 @@ public class StatsCommand extends Command implements TabExecutor {
             if (args.length <= 0 || ! ConfigUtils.comBStatsOthers) {
                 PlayerUtils.info(sender, PlayerUtils.getOrGetPlayerStat(sender.getName()));
             } else {
-                SavableUser person = PlayerUtils.getOrGetStat(args[0]);
+                SavableUser person = PlayerUtils.getOrGetSavableUser(args[0]);
 
                 if (person == null) {
                     MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
@@ -42,7 +39,7 @@ public class StatsCommand extends Command implements TabExecutor {
             if (args.length <= 0) {
                 PlayerUtils.info(sender, PlayerUtils.getConsoleStat());
             } else {
-                SavableUser person = PlayerUtils.getOrGetStat(args[0]);
+                SavableUser person = PlayerUtils.getOrGetSavableUser(args[0]);
 
                 if (person == null) {
                     MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);

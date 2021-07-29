@@ -63,14 +63,14 @@ public class JoinLeaveListener implements Listener {
             file.updateKey(holder.getGeyserUUID(player.getName()), player.getName());
         }
 
-        Player stat = PlayerUtils.getOrCreate(player);
+        Player stat = PlayerUtils.getOrCreatePlayerStat(player);
 
         stat.tryAddNewName(player.getName());
         stat.tryAddNewIP(player);
 
         try {
             for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getOrCreate(pl);
+                Player p = PlayerUtils.getOrCreatePlayerStat(pl);
 
                 if (stat.guild == null) continue;
                 if (stat.guild.equals("")) continue;
@@ -117,7 +117,7 @@ public class JoinLeaveListener implements Listener {
             for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()) {
                 if (!p.hasPermission(ConfigUtils.moduleBPlayerJoinsPerm)) continue;
 
-                Player other = PlayerUtils.getOrCreate(p);
+                Player other = PlayerUtils.getOrCreatePlayerStat(p);
 
                 label:
                 for (String s : order) {
@@ -182,7 +182,7 @@ public class JoinLeaveListener implements Listener {
                     MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
                             MessageConfUtils.discordOnlineEmbed,
                             MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
-                                    .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(player))),
+                                    .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
                             ConfigUtils.textChannelBJoins));
                 } else {
                     if (ConfigUtils.joinsLeavesIcon) {
@@ -198,7 +198,7 @@ public class JoinLeaveListener implements Listener {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
                                 MessageConfUtils.discordOnlineEmbed,
                                 MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
-                                        .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(player))),
+                                        .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
                                 ConfigUtils.textChannelBJoins));
                     } else {
                         if (ConfigUtils.joinsLeavesIcon) {
@@ -232,7 +232,7 @@ public class JoinLeaveListener implements Listener {
         boolean hasServer = false;
         ServerInfo server = ev.getTarget();
 
-        Player stat = PlayerUtils.getOrCreate(player);
+        Player stat = PlayerUtils.getOrCreatePlayerStat(player);
 
         if (ev.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY) && ConfigUtils.redirectEnabled && StreamLine.lpHolder.enabled) {
             for (ServerInfo s : StreamLine.getInstance().getProxy().getServers().values()) {
@@ -336,7 +336,7 @@ public class JoinLeaveListener implements Listener {
 
         if (PluginUtils.isLocked()) return;
 
-        Player stat = PlayerUtils.getOrCreate(player);
+        Player stat = PlayerUtils.getOrCreatePlayerStat(player);
 
         try {
             if (ConfigUtils.events) {
@@ -357,7 +357,7 @@ public class JoinLeaveListener implements Listener {
     public void onLeave(PlayerDisconnectEvent ev) {
         ProxiedPlayer player = ev.getPlayer();
 
-        Player stat = PlayerUtils.getOrCreate(player);
+        Player stat = PlayerUtils.getOrCreatePlayerStat(player);
 
 //        switch (ConfigUtils.moduleBPlayerLeaves) {
 //            case "yes":
@@ -386,7 +386,7 @@ public class JoinLeaveListener implements Listener {
             for (ProxiedPlayer p : StreamLine.getInstance().getProxy().getPlayers()) {
                 if (! p.hasPermission(ConfigUtils.moduleBPlayerLeavesPerm)) continue;
 
-                Player other = PlayerUtils.getOrCreate(p);
+                Player other = PlayerUtils.getOrCreatePlayerStat(p);
 
                 label:
                 for (String s : order) {
@@ -450,7 +450,7 @@ public class JoinLeaveListener implements Listener {
                 MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
                         MessageConfUtils.discordOfflineEmbed,
                         MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
-                                .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(player))),
+                                .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
                         ConfigUtils.textChannelBLeaves));
                 } else {
                     if (ConfigUtils.joinsLeavesIcon) {
@@ -466,7 +466,7 @@ public class JoinLeaveListener implements Listener {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
                                 MessageConfUtils.discordOfflineEmbed,
                                 MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
-                                        .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(player))),
+                                        .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
                                 ConfigUtils.textChannelBLeaves));
                     } else {
                         if (ConfigUtils.joinsLeavesIcon) {
@@ -484,7 +484,7 @@ public class JoinLeaveListener implements Listener {
 
         try {
             for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
-                Player p = PlayerUtils.getOrCreate(pl);
+                Player p = PlayerUtils.getOrCreatePlayerStat(pl);
 
                 if (GuildUtils.pHasGuild(stat)) {
                     Guild guild = GuildUtils.getGuild(stat);
@@ -529,11 +529,11 @@ public class JoinLeaveListener implements Listener {
 
         ProxiedPlayer player = ev.getPlayer();
 
-        Player stat = PlayerUtils.getOrCreate(player);
+        Player stat = PlayerUtils.getOrCreatePlayerStat(player);
 
         if (StreamLine.viaHolder.enabled) {
             if (ConfigUtils.lobbies) {
-                Server server = PlayerUtils.getPlayer(stat.uuid).getServer();
+                Server server = PlayerUtils.getPPlayer(stat.uuid).getServer();
 
                 if (server == null) {
                     StreamLine.getInstance().getLogger().severe("Server for " + player.getName() + " returned null during kick!");

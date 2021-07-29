@@ -437,70 +437,70 @@ public class Player extends SavableUser {
 
     public void sendMessage(ChatMessageType position, BaseComponent... message) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(position, message);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).sendMessage(position, message);
         }
     }
 
     
     public void sendMessage(ChatMessageType position, BaseComponent message) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(position, message);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).sendMessage(position, message);
         }
     }
 
     
     public void sendMessage(UUID sender, BaseComponent... message) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(sender, message);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).sendMessage(sender, message);
         }
     }
 
     
     public void sendMessage(UUID sender, BaseComponent message) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(sender, message);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).sendMessage(sender, message);
         }
     }
 
     
     public void connect(ServerInfo target) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).connect(target);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).connect(target);
         }
     }
 
     
     public void connect(ServerInfo target, ServerConnectEvent.Reason reason) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).connect(target, reason);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).connect(target, reason);
         }
     }
 
     
     public void connect(ServerInfo target, Callback<Boolean> callback) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).connect(target, callback);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).connect(target, callback);
         }
     }
 
     
     public void connect(ServerInfo target, Callback<Boolean> callback, ServerConnectEvent.Reason reason) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).connect(target, callback, reason);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).connect(target, callback, reason);
         }
     }
 
     
     public void connect(ServerConnectRequest request) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).connect(request);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).connect(request);
         }
     }
 
     
     public Server getServer() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getServer();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getServer();
         }
         return null;
     }
@@ -508,7 +508,7 @@ public class Player extends SavableUser {
     
     public int getPing() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getPing();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getPing();
         }
         return -1;
     }
@@ -516,14 +516,14 @@ public class Player extends SavableUser {
     
     public void sendData(String channel, byte[] data) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendData(channel, data);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).sendData(channel, data);
         }
     }
 
     
     public PendingConnection getPendingConnection() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getPendingConnection();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getPendingConnection();
         }
         return null;
     }
@@ -531,14 +531,14 @@ public class Player extends SavableUser {
     
     public void chat(String message) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).chat(message);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).chat(message);
         }
     }
 
     
     public ServerInfo getReconnectServer() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getReconnectServer();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getReconnectServer();
         }
         return null;
     }
@@ -546,7 +546,7 @@ public class Player extends SavableUser {
     
     public void setReconnectServer(ServerInfo server) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).setReconnectServer(server);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).setReconnectServer(server);
         }
     }
 
@@ -563,7 +563,7 @@ public class Player extends SavableUser {
     
     public Locale getLocale() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getLocale();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getLocale();
         }
         return null;
     }
@@ -571,7 +571,7 @@ public class Player extends SavableUser {
     
     public byte getViewDistance() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getViewDistance();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getViewDistance();
         }
         return -1;
     }
@@ -579,7 +579,7 @@ public class Player extends SavableUser {
     
     public ProxiedPlayer.ChatMode getChatMode() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getChatMode();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getChatMode();
         }
         return null;
     }
@@ -587,7 +587,7 @@ public class Player extends SavableUser {
     
     public boolean hasChatColors() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).hasChatColors();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).hasChatColors();
         }
         return false;
     }
@@ -595,7 +595,7 @@ public class Player extends SavableUser {
     
     public SkinConfiguration getSkinParts() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getSkinParts();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getSkinParts();
         }
         return null;
     }
@@ -603,7 +603,7 @@ public class Player extends SavableUser {
     
     public ProxiedPlayer.MainHand getMainHand() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getMainHand();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getMainHand();
         }
         return null;
     }
@@ -611,35 +611,35 @@ public class Player extends SavableUser {
     
     public void setTabHeader(BaseComponent header, BaseComponent footer) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).setTabHeader(header, footer);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).setTabHeader(header, footer);
         }
     }
 
     
     public void setTabHeader(BaseComponent[] header, BaseComponent[] footer) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).setTabHeader(header, footer);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).setTabHeader(header, footer);
         }
     }
 
     
     public void resetTabHeader() {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).resetTabHeader();
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).resetTabHeader();
         }
     }
 
     
     public void sendTitle(Title title) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendTitle(title);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).sendTitle(title);
         }
     }
 
     
     public boolean isForgeUser() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).isForgeUser();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).isForgeUser();
         }
         return false;
     }
@@ -647,7 +647,7 @@ public class Player extends SavableUser {
     
     public Map<String, String> getModList() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getModList();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getModList();
         }
         return null;
     }
@@ -655,7 +655,7 @@ public class Player extends SavableUser {
     
     public Scoreboard getScoreboard() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getScoreboard();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getScoreboard();
         }
         return null;
     }
@@ -669,7 +669,7 @@ public class Player extends SavableUser {
     
     public void sendMessage(String message) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(message);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).sendMessage(message);
         }
     }
 
@@ -677,28 +677,28 @@ public class Player extends SavableUser {
     
     public void sendMessages(String... messages) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessages(messages);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).sendMessages(messages);
         }
     }
 
     
     public void sendMessage(BaseComponent... message) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(message);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).sendMessage(message);
         }
     }
 
     
     public void sendMessage(BaseComponent message) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).sendMessage(message);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).sendMessage(message);
         }
     }
 
     
     public Collection<String> getGroups() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getGroups();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getGroups();
         }
         return null;
     }
@@ -706,21 +706,21 @@ public class Player extends SavableUser {
     
     public void addGroups(String... groups) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).addGroups(groups);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).addGroups(groups);
         }
     }
 
     
     public void removeGroups(String... groups) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).removeGroups(groups);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).removeGroups(groups);
         }
     }
 
     
     public boolean hasPermission(String permission) {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).hasPermission(permission);
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).hasPermission(permission);
         }
         return false;
     }
@@ -728,14 +728,14 @@ public class Player extends SavableUser {
     
     public void setPermission(String permission, boolean value) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).setPermission(permission, value);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).setPermission(permission, value);
         }
     }
 
     
     public Collection<String> getPermissions() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getPermissions();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getPermissions();
         }
         return null;
     }
@@ -743,7 +743,7 @@ public class Player extends SavableUser {
     @Deprecated
     public InetSocketAddress getAddress() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getAddress();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getAddress();
         }
         return InetSocketAddress.createUnresolved(latestIP, new Random().nextInt(26666));
     }
@@ -751,7 +751,7 @@ public class Player extends SavableUser {
     
     public SocketAddress getSocketAddress() {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).getSocketAddress();
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).getSocketAddress();
         }
         return InetSocketAddress.createUnresolved(latestIP, new Random().nextInt(26666));
     }
@@ -759,21 +759,21 @@ public class Player extends SavableUser {
     @Deprecated
     public void disconnect(String reason) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).disconnect(reason);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).disconnect(reason);
         }
     }
 
     
     public void disconnect(BaseComponent... reason) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).disconnect(reason);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).disconnect(reason);
         }
     }
 
     
     public void disconnect(BaseComponent reason) {
         if (online) {
-            Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).disconnect(reason);
+            Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).disconnect(reason);
         }
     }
 
@@ -785,7 +785,7 @@ public class Player extends SavableUser {
     
     public Connection.Unsafe unsafe() {
         if (online) {
-            return Objects.requireNonNull(PlayerUtils.getProxiedPlayer(latestName)).unsafe();
+            return Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).unsafe();
         }
         return null;
     }

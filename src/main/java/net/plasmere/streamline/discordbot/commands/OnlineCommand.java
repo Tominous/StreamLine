@@ -9,9 +9,6 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.utils.PlayerUtils;
-import net.plasmere.streamline.utils.UUIDFetcher;
-
-import java.util.Objects;
 
 public class OnlineCommand {
     private static final EmbedBuilder eb = new EmbedBuilder();
@@ -45,9 +42,9 @@ public class OnlineCommand {
         for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()){
             if (!player.hasPermission("streamline.staff.vanish")){
                 if (i < StreamLine.getInstance().getProxy().getPlayers().size())
-                    text.append(PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(player))).append(", ");
+                    text.append(PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))).append(", ");
                 else
-                    text.append(PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreate(player))).append(".");
+                    text.append(PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))).append(".");
             } else {
                 if (i < StreamLine.getInstance().getProxy().getPlayers().size())
                     text.append("HIDDEN").append(", ");

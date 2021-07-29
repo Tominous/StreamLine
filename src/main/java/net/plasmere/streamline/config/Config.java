@@ -204,13 +204,13 @@ public class Config {
     }
 
     public Object getObjectConf(String path){
-        reloadMessages();
+        reloadConfig();
         return conf.get(path);
     }
 
     public void setObjectConf(String path, Object thing){
         conf.set(path, thing);
-        reloadMessages();
+        reloadConfig();
     }
 
     public Collection<String> getConfKeys() {

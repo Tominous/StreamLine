@@ -8,7 +8,6 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Guild;
-import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.*;
 
@@ -21,10 +20,10 @@ public class GuildCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        SavableUser stat = PlayerUtils.getStat(sender);
+        SavableUser stat = PlayerUtils.getSavableUser(sender);
 
         if (stat == null) {
-            stat = PlayerUtils.getOrCreateStat(sender);
+            stat = PlayerUtils.getOrCreateSavableUser(sender);
             if (stat == null) {
                 StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
@@ -50,7 +49,7 @@ public class GuildCommand extends Command implements TabExecutor {
                 }
             } else {
                 try {
-                    GuildUtils.joinGuild(stat, PlayerUtils.getOrCreateStat(args[1]));
+                    GuildUtils.joinGuild(stat, PlayerUtils.getOrCreateSavableUser(args[1]));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
@@ -84,7 +83,7 @@ public class GuildCommand extends Command implements TabExecutor {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
             } else {
                 try {
-                    GuildUtils.promotePlayer(stat, PlayerUtils.getOrCreateStat(args[1]));
+                    GuildUtils.promotePlayer(stat, PlayerUtils.getOrCreateSavableUser(args[1]));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(stat.sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
@@ -100,7 +99,7 @@ public class GuildCommand extends Command implements TabExecutor {
                 }
             } else {
                 try {
-                    GuildUtils.demotePlayer(stat, PlayerUtils.getOrCreateStat(args[1]));
+                    GuildUtils.demotePlayer(stat, PlayerUtils.getOrCreateSavableUser(args[1]));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
@@ -160,7 +159,7 @@ public class GuildCommand extends Command implements TabExecutor {
                 }
             } else {
                 try {
-                    GuildUtils.acceptInvite(stat, PlayerUtils.getOrCreateStat(args[1]));
+                    GuildUtils.acceptInvite(stat, PlayerUtils.getOrCreateSavableUser(args[1]));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
@@ -176,7 +175,7 @@ public class GuildCommand extends Command implements TabExecutor {
                 }
             } else {
                 try {
-                    GuildUtils.denyInvite(stat, PlayerUtils.getOrCreateStat(args[1]));
+                    GuildUtils.denyInvite(stat, PlayerUtils.getOrCreateSavableUser(args[1]));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
@@ -192,7 +191,7 @@ public class GuildCommand extends Command implements TabExecutor {
                 }
             } else {
                 try {
-                    GuildUtils.sendInvite(PlayerUtils.getOrCreateStat(args[1]), stat);
+                    GuildUtils.sendInvite(PlayerUtils.getOrCreateSavableUser(args[1]), stat);
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
@@ -208,7 +207,7 @@ public class GuildCommand extends Command implements TabExecutor {
                 }
             } else {
                 try {
-                    GuildUtils.kickMember(stat, PlayerUtils.getOrCreateStat(args[1]));
+                    GuildUtils.kickMember(stat, PlayerUtils.getOrCreateSavableUser(args[1]));
                 } catch (Exception e) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                     e.printStackTrace();
@@ -253,7 +252,7 @@ public class GuildCommand extends Command implements TabExecutor {
             }
         } else {
             try {
-                GuildUtils.sendInvite(PlayerUtils.getOrCreateStat(args[0]), stat);
+                GuildUtils.sendInvite(PlayerUtils.getOrCreateSavableUser(args[0]), stat);
             } catch (Exception e) {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                 e.printStackTrace();
