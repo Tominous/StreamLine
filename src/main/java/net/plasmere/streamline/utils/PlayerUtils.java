@@ -534,7 +534,7 @@ public class PlayerUtils {
     public static ConsolePlayer getConsoleStat(CommandSender sender) {
         try {
             for (ConsolePlayer stat : getJustProxies()) {
-                if (sender.equals(stat.sender)) return stat;
+                if (stat.uuid.equals("%")) return stat;
             }
         } catch (Exception e) {
             e.printStackTrace();

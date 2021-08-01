@@ -39,7 +39,6 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
@@ -284,10 +283,6 @@ public class StreamLine extends Plugin {
 
 		//getLogger().
 
-		if (ConfigUtils.moduleStartups) {
-			MessagingUtils.sendDiscordEBMessage(new DiscordMessage(getProxy().getConsole(), MessageConfUtils.startTitle, MessageConfUtils.startMessage, ConfigUtils.textChannelOfflineOnline));
-		}
-
 		PluginUtils.state = NetworkState.RUNNING;
 	}
 
@@ -315,20 +310,16 @@ public class StreamLine extends Plugin {
 		oneSecTimer.cancel();
 		motdUpdater.cancel();
 
-		if (ConfigUtils.moduleShutdowns) {
-			MessagingUtils.sendDiscordEBMessage(new DiscordMessage(getProxy().getConsole(), MessageConfUtils.shutdownTitle, MessageConfUtils.shutdownMessage, ConfigUtils.textChannelOfflineOnline));
-		}
-
 		try {
 			if (jda != null) {
-				if (ConfigUtils.moduleShutdowns)
+				if (ConfigUtils.moduleShutdowns) {
 					try {
-						EmbedBuilder eb = new EmbedBuilder();
-
-						Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelOfflineOnline)).sendMessageEmbeds(eb.setDescription("Bot shutting down...!").build()).queue();
-					} catch (Exception e){
+//						Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelOfflineOnline)).sendMessageEmbeds(eb.setDescription("Bot shutting down...!").build()).queue();
+						MessagingUtils.sendDiscordEBMessage(new DiscordMessage(getProxy().getConsole(), MessageConfUtils.shutdownTitle, MessageConfUtils.shutdownMessage, ConfigUtils.textChannelOfflineOnline));
+					} catch (Exception e) {
 						getLogger().warning("An unknown error occurred with sending online message: " + e.getMessage());
 					}
+				}
 
 				Thread.sleep(2000);
 

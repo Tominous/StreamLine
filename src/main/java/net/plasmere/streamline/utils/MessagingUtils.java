@@ -22,8 +22,6 @@ import net.plasmere.streamline.objects.users.SavableUser;
 import java.util.*;
 
 public class MessagingUtils {
-    private static final JDA jda = StreamLine.getJda();
-
     public static void sendStaffMessage(CommandSender sender, String from, String msg){
         sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage
                 .replace("%user%", sender.getName())
@@ -145,6 +143,7 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordJoinLeaveMessagePlain(boolean isJoin, Player player){
+        JDA jda = StreamLine.getJda();
         EmbedBuilder eb = new EmbedBuilder();
 
         try {
@@ -173,6 +172,7 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordJoinLeaveMessageIcon(boolean isJoin, Player player){
+        JDA jda = StreamLine.getJda();
         EmbedBuilder eb = new EmbedBuilder();
 
         try {
@@ -210,6 +210,42 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordEBMessage(DiscordMessage message){
+        JDA jda = StreamLine.getJda();
+        EmbedBuilder eb = new EmbedBuilder();
+
+        try {
+            if (ConfigUtils.moduleUseMCAvatar) {
+                if (message.sender instanceof ProxiedPlayer) {
+                    Objects.requireNonNull(jda.getTextChannelById(message.channel))
+                            .sendMessageEmbeds(
+                                    eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
+                                            .setDescription(message.message.replace("%sender%", message.sender.getName()))
+                                            .setAuthor(message.sender.getName(), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName))
+                                            .build()
+                            ).queue();
+                } else {
+                    Objects.requireNonNull(jda.getTextChannelById(message.channel))
+                            .sendMessageEmbeds(
+                                    eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
+                                            .setDescription(message.message.replace("%sender%", message.sender.getName()))
+                                            .setAuthor("CONSOLE", jda.getSelfUser().getAvatarUrl() , jda.getSelfUser().getAvatarUrl())
+                                            .build()
+                            ).queue();
+                }
+            } else {
+                Objects.requireNonNull(jda.getTextChannelById(message.channel))
+                        .sendMessageEmbeds(
+                                eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
+                                        .setDescription(message.message.replace("%sender%", message.sender.getName()))
+                                        .build()
+                        ).queue();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendDiscordEBMessage(JDA jda, DiscordMessage message){
         EmbedBuilder eb = new EmbedBuilder();
 
         try {
@@ -245,6 +281,7 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordReportMessage(String sender, boolean fromBungee, String report){
+        JDA jda = StreamLine.getJda();
         EmbedBuilder eb = new EmbedBuilder();
 
         try {
@@ -480,11 +517,13 @@ public class MessagingUtils {
         if (sender instanceof ProxiedPlayer) {
             sender.sendMessage(TextUtils.codedText(msg
                     .replace("%sender%", PlayerUtils.getOffOnDisplayBungee((PlayerUtils.getOrCreateSavableUser(sender))))
+                    .replace("%sender_normal%", sender.getName())
                     .replace("%version%", PlayerUtils.getOrCreatePlayerStat((ProxiedPlayer) sender).latestVersion)
             ));
         } else {
             sender.sendMessage(TextUtils.codedText(msg
-                    .replace("%sender%", sender.getName())
+                    .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getConsoleStat()))
+                    .replace("%sender_normal%", PlayerUtils.getConsoleStat().uuid)
             ));
         }
     }

@@ -39,7 +39,7 @@ public class MessageCommand extends Command implements TabExecutor {
         if (args.length <= 0) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else {
-            if (stat.hasPermission(ConfigUtils.comBMessagePerm)) {
+            if (stat instanceof Player && stat.hasPermission(ConfigUtils.comBMessagePerm)) {
                 SavableUser statTo;
 
                 if (args[0].equals("%")) {

@@ -6,10 +6,13 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
+import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.utils.MessagingUtils;
 
+import net.dv8tion.jda.api.JDA;
+
 import javax.annotation.Nonnull;
-import java.util.Objects;
 
 public class ReadyListener implements EventListener {
     private static final EmbedBuilder eb = new EmbedBuilder();
@@ -19,7 +22,11 @@ public class ReadyListener implements EventListener {
         if (ConfigUtils.moduleStartups) {
             if (event instanceof ReadyEvent) {
                 try {
-                    Objects.requireNonNull(event.getJDA().getTextChannelById(ConfigUtils.textChannelOfflineOnline)).sendMessage(eb.setDescription("Bot online!").build()).queue();
+                    JDA jda = event.getJDA();
+
+                    MessagingUtils.sendDiscordEBMessage(jda, new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(), MessageConfUtils.startTitle, MessageConfUtils.startMessage, ConfigUtils.textChannelOfflineOnline));
+
+//                    Objects.requireNonNull(event.getJDA().getTextChannelById(ConfigUtils.textChannelOfflineOnline)).sendMessageEmbeds(eb.setDescription("Bot online!").build()).queue();
                 } catch (NullPointerException n) {
                     n.printStackTrace();
                 } catch (Exception e) {
