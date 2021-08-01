@@ -33,12 +33,18 @@ public class PlayerUtils {
 
     ---------------------------- */
 
+    private static final String pathToPlayers = StreamLine.getInstance().getDataFolder() + File.separator + "players" + File.separator;
+
     private static final List<SavableUser> stats = new ArrayList<>();
 
     private static HashMap<Player, SingleSet<Integer, Integer>> connections = new HashMap<>();
 
     public static ConsolePlayer applyConsole(){
-        return applyConsole(new ConsolePlayer(false));
+        if (exists("%")) {
+            return applyConsole(new ConsolePlayer(false));
+        } else {
+            return applyConsole(new ConsolePlayer(true));
+        }
     }
 
     public static ConsolePlayer applyConsole(ConsolePlayer console){
@@ -86,7 +92,7 @@ public class PlayerUtils {
     }
 
     public static boolean existsByUUID(String uuid){
-        if (uuid.equals("%")) return getConsoleStat().file.exists();
+        if (uuid.equals("%")) return new File(pathToPlayers, "console" + ".properties").exists();
 
         return new File(StreamLine.getInstance().getPlDir(), uuid + ".properties").exists();
     }
@@ -100,13 +106,18 @@ public class PlayerUtils {
         stats.add(stat);
     }
 
-    public static void addStat(String uuid){
-        if (isInStatsListByUUID(uuid)) return;
+    public static SavableUser addStatByUUID(String uuid){
+        if (isInStatsListByUUID(uuid)) return getPlayerStatByUUID(uuid);
 
         if (uuid.equals("%")) {
-            applyConsole();
+            return getConsoleStat();
         } else {
-            stats.add(new Player(uuid, true));
+            if (existsByUUID(uuid)) {
+                Player player = getOrGetPlayerStatByUUID(uuid);
+                return addPlayerStat(player);
+            } else {
+                return addPlayerStat(new Player(uuid, true));
+            }
         }
     }
 
@@ -118,10 +129,14 @@ public class PlayerUtils {
         return stat;
     }
 
-    public static Player addStat(Player stat){
-        if (isInStatsList(stat)) return getPlayerStat(stat.latestName);
+    public static Player addPlayerStatByUUID(String uuid){
+        addStatByUUID(uuid);
 
-        stats.add(stat);
+        return getPlayerStatByUUID(uuid);
+    }
+
+    public static Player addPlayerStat(Player stat){
+        addStat(stat);
 
         return stat;
     }
@@ -212,9 +227,11 @@ public class PlayerUtils {
     }
 
     public static void saveAll(){
-        for (SavableUser player : getStats()) {
+        List<SavableUser> users = new ArrayList<>(getStats());
+
+        for (SavableUser user : users) {
             try {
-                player.saveInfo();
+                user.saveInfo();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -449,7 +466,7 @@ public class PlayerUtils {
     // Player Stats.
 
     public static Player createPlayerStat(ProxiedPlayer player) {
-        Player stat = addStat(new Player(player, true));
+        Player stat = addPlayerStat(new Player(player, true));
 
         if (ConfigUtils.statsTell) {
             MessagingUtils.sendStatUserMessage(stat, player, create);
@@ -463,7 +480,7 @@ public class PlayerUtils {
     }
 
     public static Player createPlayerStat(String name) {
-        Player stat = addStat(new Player(UUIDFetcher.getCachedUUID(name), true));
+        Player stat = addPlayerStat(new Player(UUIDFetcher.getCachedUUID(name), true));
 
         if (ConfigUtils.statsTell && stat.online) {
             MessagingUtils.sendStatUserMessage(stat, stat.player, create);
@@ -473,7 +490,7 @@ public class PlayerUtils {
     }
 
     public static Player createPlayerStatByUUID(String uuid) {
-        Player stat = addStat(new Player(uuid, true));
+        Player stat = addPlayerStat(new Player(uuid, true));
 
         if (ConfigUtils.statsTell && stat.online) {
             MessagingUtils.sendStatUserMessage(stat, stat.player, create);
@@ -528,7 +545,7 @@ public class PlayerUtils {
     // ConsolePlayers.
 
     public static ConsolePlayer getConsoleStat() {
-        return PlayerUtils.getConsoleStat(StreamLine.getInstance().getProxy().getConsole());
+        return getConsoleStat(StreamLine.getInstance().getProxy().getConsole());
     }
 
     public static ConsolePlayer getConsoleStat(CommandSender sender) {
@@ -540,7 +557,7 @@ public class PlayerUtils {
             e.printStackTrace();
         }
 
-        return null;
+        return applyConsole();
     }
 
     // Player Stats.
@@ -648,7 +665,7 @@ public class PlayerUtils {
         if (player == null) {
             player = createPlayerStat(pp);
         } else {
-            addStat(player);
+            addPlayerStat(player);
         }
 
         return player;
@@ -660,7 +677,7 @@ public class PlayerUtils {
         if (player == null) {
             player = createPlayerStat(sender);
         } else {
-            addStat(player);
+            addPlayerStat(player);
         }
 
         return player;
@@ -672,7 +689,7 @@ public class PlayerUtils {
         if (player == null) {
             player = createPlayerStat(name);
         } else {
-            addStat(player);
+            addPlayerStat(player);
         }
 
         return  player;
@@ -684,7 +701,7 @@ public class PlayerUtils {
         if (player == null) {
             player = createPlayerStatByUUID(uuid);
         } else {
-            addStat(player);
+            addPlayerStat(player);
         }
 
         return player;

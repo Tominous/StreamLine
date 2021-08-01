@@ -48,20 +48,7 @@ public class ChatListener implements Listener {
 
         try {
             for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
-                Player p = PlayerUtils.getPlayerStat(pl);
-
-                if (p == null) {
-                    if (PlayerUtils.exists(pl.getName())) {
-                        PlayerUtils.addStat(new Player(pl, false));
-                    } else {
-                        PlayerUtils.createPlayerStat(pl);
-                    }
-                    p = PlayerUtils.getPlayerStat(pl);
-                    if (p == null) {
-                        MessagingUtils.logSevere("CANNOT INSTANTIATE THE PLAYER: " + pl.getName());
-                        continue;
-                    }
-                }
+                Player p = PlayerUtils.getOrCreatePlayerStat(pl);
 
                 if (GuildUtils.getGuild(p) == null && ! p.equals(stat)) continue;
                 if (GuildUtils.getGuild(p) != null) {

@@ -63,7 +63,7 @@ public class JoinLeaveListener implements Listener {
             file.updateKey(holder.getGeyserUUID(player.getName()), player.getName());
         }
 
-        Player stat = PlayerUtils.addStat(PlayerUtils.getOrCreatePlayerStat(player));
+        Player stat = PlayerUtils.addPlayerStatByUUID(player.getUniqueId().toString());
 
         stat.tryAddNewName(player.getName());
         stat.tryAddNewIP(player);

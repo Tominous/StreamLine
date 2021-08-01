@@ -1101,7 +1101,7 @@ modules:
       server: "SPACE"
     # If on network shut down...
     on-close:
-      # Save these settings?
+      # Save the MOTD settings?
       save-settings: true
       # Save the main settings?
       save-main: false
