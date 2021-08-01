@@ -7,6 +7,7 @@ import net.md_5.bungee.config.YamlConfiguration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.timers.MOTDUpdaterTimer;
+import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.TextUtils;
 
 import java.io.File;
@@ -29,13 +30,13 @@ public class ServerConfig {
             if (! ConfigUtils.scMakeDefault) return;
 
             if (StreamLine.getInstance().getConfDir().mkdir()) {
-                StreamLine.getInstance().getLogger().info("Made folder: " + StreamLine.getInstance().getConfDir().getName());
+                MessagingUtils.logInfo("Made folder: " + StreamLine.getInstance().getConfDir().getName());
             }
         }
 
         serverConfig = loadConfig();
 
-        StreamLine.getInstance().getLogger().info("Loaded serverConfig!");
+        MessagingUtils.logInfo("Loaded serverConfig!");
     }
 
     public Configuration getServerConfig() {

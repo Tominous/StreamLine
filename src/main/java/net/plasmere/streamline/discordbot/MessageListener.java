@@ -1,7 +1,6 @@
 package net.plasmere.streamline.discordbot;
 
 import net.plasmere.streamline.StreamLine;
-import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.discordbot.commands.*;
@@ -9,7 +8,6 @@ import net.plasmere.streamline.utils.*;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.md_5.bungee.config.Configuration;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -38,19 +36,19 @@ public class MessageListener extends ListenerAdapter {
                 MessagingUtils.sendStaffMessageSC(event.getAuthor().getName(), MessageConfUtils.discordStaffChatFrom, em);
             }
 
-            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Someone talked in staffchat (discord)... sending to bungee...");
+            if (ConfigUtils.debug) MessagingUtils.logInfo("Someone talked in staffchat (discord)... sending to bungee...");
         }
 
         if (! event.getMessage().getContentRaw().toLowerCase().startsWith(prefix)) return;
 
         String[] args = event.getMessage().getContentRaw().toLowerCase().substring(ConfigUtils.botPrefix.length()).split(" ");
 
-        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("[ " + event.getAuthor().getName() + " ] " + event.getMessage().getContentRaw());
+        if (ConfigUtils.debug) MessagingUtils.logInfo("[ " + event.getAuthor().getName() + " ] " + event.getMessage().getContentRaw());
 
         // Commands.
         if (MessagingUtils.compareWithList(args[0], ConfigUtils.comDCommandsAliases)) {
             if (ConfigUtils.comDCommands && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDCommandsPerm)) {
-                if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("So... Switching on case \"commands\"...");
+                if (ConfigUtils.debug) MessagingUtils.logInfo("So... Switching on case \"commands\"...");
                 try {
                     CommandsCommand.sendMessage(args[0], event);
                 } catch (Exception e) {
@@ -68,7 +66,7 @@ public class MessageListener extends ListenerAdapter {
         // Online.
         } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comDOnlineAliases)) {
             if (ConfigUtils.comDOnline && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDOnlinePerm)) {
-                if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("So... Switching on case \"online\"...");
+                if (ConfigUtils.debug) MessagingUtils.logInfo("So... Switching on case \"online\"...");
                 try {
                     OnlineCommand.sendMessage(args[0], event);
                 } catch (Exception e) {
@@ -86,7 +84,7 @@ public class MessageListener extends ListenerAdapter {
         // Report.
         } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comDReportAliases)) {
             if (ConfigUtils.comDReport && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDReportPerm)) {
-                if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("So... Switching on case \"report\"...");
+                if (ConfigUtils.debug) MessagingUtils.logInfo("So... Switching on case \"report\"...");
                 try {
                     ReportCommand.sendMessage(args[0], event);
                 } catch (Exception e) {
@@ -104,7 +102,7 @@ public class MessageListener extends ListenerAdapter {
         // StaffChat.
         } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comDStaffChatAliases)) {
             if (ConfigUtils.comDStaffChat && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDStaffChatPerm)) {
-                if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("So... Switching on case \"staffchat\"...");
+                if (ConfigUtils.debug) MessagingUtils.logInfo("So... Switching on case \"staffchat\"...");
                 try {
                     StaffChatCommand.sendMessage(args[0], event);
                 } catch (Exception e) {
@@ -122,7 +120,7 @@ public class MessageListener extends ListenerAdapter {
         // StaffOnline.
         } else if (MessagingUtils.compareWithList(args[0], ConfigUtils.comDStaffOnlineAliases)) {
             if (ConfigUtils.comDStaffOnline && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDStaffOnlinePerm)) {
-                if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("So... Switching on case \"staffonline\"...");
+                if (ConfigUtils.debug) MessagingUtils.logInfo("So... Switching on case \"staffonline\"...");
                 try {
                     StaffOnlineCommand.sendMessage(args[0], event);
                 } catch (Exception e) {
@@ -139,7 +137,7 @@ public class MessageListener extends ListenerAdapter {
             }
         // IF NOT.
         } else {
-            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("So... Switching on case default...");
+            if (ConfigUtils.debug) MessagingUtils.logInfo("So... Switching on case default...");
             if (ConfigUtils.moduleSayNotACommand.equals("yes")) {
                 event.getChannel().sendMessage(eb.setDescription(MessageConfUtils.discordNotACommand.replace("%newline%","\n")).build()).queue();
             } else if (ConfigUtils.moduleSayNotACommand.equals("staff")) {

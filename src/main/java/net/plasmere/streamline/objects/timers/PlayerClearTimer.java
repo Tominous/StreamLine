@@ -25,6 +25,6 @@ public class PlayerClearTimer implements Runnable {
 
         int count = PlayerUtils.removeOfflineStats();
 
-        //StreamLine.getInstance().getLogger().info("Just removed " + count + " cached players... Now at " + PlayerUtils.getJustPlayers().size() + " cached players!");
+        //MessagingUtils.logInfo("Just removed " + count + " cached players... Now at " + PlayerUtils.getJustPlayers().size() + " cached players!");
     }
 }

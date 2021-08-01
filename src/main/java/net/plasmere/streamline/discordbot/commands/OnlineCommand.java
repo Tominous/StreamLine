@@ -21,7 +21,7 @@ public class OnlineCommand {
                         .replace("%servers%", compileServers())
                         .replace("%online%", getOnline())
         );
-        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Sent message for \"" + command + "\"!");
+        if (ConfigUtils.debug) MessagingUtils.logInfo("Sent message for \"" + command + "\"!");
     }
 
     private static String compileServers(){

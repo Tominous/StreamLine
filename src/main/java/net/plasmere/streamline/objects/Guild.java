@@ -423,7 +423,7 @@ public class Guild {
             totalMembers.clear();
             for (String uuid : totalMembersByUUID) {
                 try {
-                    //StreamLine.getInstance().getLogger().info("UUID : " + uuid.toString());
+                    //MessagingUtils.logInfo("UUID : " + uuid.toString());
                     SavableUser stat = getMember(uuid);
 
                     if (stat == null) continue;
@@ -1079,7 +1079,7 @@ public class Guild {
         file.delete();
 
 //        if (! file.renameTo(new File(filePrePath + leaderUUID.toString() + ".properties"))){
-//            StreamLine.getInstance().getLogger().info("Could not rename a guild file for " + leaderUUID + "...");
+//            MessagingUtils.logInfo("Could not rename a guild file for " + leaderUUID + "...");
 //        }
 
         file = null;
@@ -1145,6 +1145,6 @@ public class Guild {
         }
         writer.close();
 
-        //StreamLine.getInstance().getLogger().info("Just saved SavableUser info for stat: " + PlayerUtils.getOffOnReg(stat));
+        //MessagingUtils.logInfo("Just saved SavableUser info for stat: " + PlayerUtils.getOffOnReg(stat));
     }
 }

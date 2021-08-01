@@ -63,7 +63,7 @@ public class JoinLeaveListener implements Listener {
             file.updateKey(holder.getGeyserUUID(player.getName()), player.getName());
         }
 
-        Player stat = PlayerUtils.getOrCreatePlayerStat(player);
+        Player stat = PlayerUtils.addStat(PlayerUtils.getOrCreatePlayerStat(player));
 
         stat.tryAddNewName(player.getName());
         stat.tryAddNewIP(player);
@@ -536,7 +536,7 @@ public class JoinLeaveListener implements Listener {
                 Server server = PlayerUtils.getPPlayer(stat.uuid).getServer();
 
                 if (server == null) {
-                    StreamLine.getInstance().getLogger().severe("Server for " + player.getName() + " returned null during kick!");
+                    MessagingUtils.logSevere("Server for " + player.getName() + " returned null during kick!");
                     return;
                 }
 

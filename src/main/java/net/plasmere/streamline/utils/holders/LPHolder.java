@@ -4,6 +4,7 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.md_5.bungee.api.ProxyServer;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.utils.MessagingUtils;
 
 public class LPHolder {
     public LuckPerms api;
@@ -22,7 +23,7 @@ public class LPHolder {
             api = LuckPermsProvider.get();
             return true;
         } catch (Exception e) {
-            StreamLine.getInstance().getLogger().severe("LuckPerms not loaded... Disabling LuckPerms support...");
+            MessagingUtils.logSevere("LuckPerms not loaded... Disabling LuckPerms support...");
         }
         return false;
     }

@@ -8,6 +8,7 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.events.enums.Action;
 import net.plasmere.streamline.events.enums.Condition;
 import net.plasmere.streamline.objects.lists.SingleSet;
+import net.plasmere.streamline.utils.MessagingUtils;
 
 import java.io.File;
 import java.util.List;
@@ -41,7 +42,7 @@ public class Event {
         int i = 1;
 
         if (ConfigUtils.debug) {
-            StreamLine.getInstance().getLogger().info("Amount of conditions --> " + conditionsConf.getKeys().size());
+            MessagingUtils.logInfo("Amount of conditions --> " + conditionsConf.getKeys().size());
         }
 
         for (String string : conditionsConf.getKeys()) {
@@ -62,9 +63,9 @@ public class Event {
         }
 
         if (ConfigUtils.debug) {
-            StreamLine.getInstance().getLogger().info("Event#compileCond():");
+            MessagingUtils.logInfo("Event#compileCond():");
             for (Integer it : c.keySet()) {
-                StreamLine.getInstance().getLogger().info("   > " + it + " : ( ( " +
+                MessagingUtils.logInfo("   > " + it + " : ( ( " +
                         c.get(it).key + " , " +
                         c.get(it).value + " ) )"
                 );

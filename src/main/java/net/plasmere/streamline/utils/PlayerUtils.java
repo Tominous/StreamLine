@@ -164,9 +164,9 @@ public class PlayerUtils {
     }
 
     public static boolean isInStatsList(String username) {
-        for (SavableUser player : getStats()) {
-            if (player.latestName == null) continue;
-            if (player.latestName.equals(username)) return true;
+        for (SavableUser user : getStats()) {
+            if (user.latestName == null) continue;
+            if (user.latestName.equals(username)) return true;
         }
 
         return false;
@@ -357,7 +357,7 @@ public class PlayerUtils {
 
     public static boolean hasOfflinePermission(String permission, String uuid){
         if (! StreamLine.lpHolder.enabled) {
-            StreamLine.getInstance().getLogger().info("Tried to do an offline permissions check, but failed due to not having LuckPerms installed!");
+            MessagingUtils.logInfo("Tried to do an offline permissions check, but failed due to not having LuckPerms installed!");
             return false;
         }
 
@@ -606,6 +606,8 @@ public class PlayerUtils {
             } else {
                 user = createPlayerStat(name);
             }
+        } else {
+            addStat(user);
         }
 
         return user;
@@ -620,13 +622,15 @@ public class PlayerUtils {
     }
 
     public static SavableUser getOrCreateSUByUUID(String uuid){
-        SavableUser player = getSavableUserByUUID(uuid);
+        SavableUser user = getSavableUserByUUID(uuid);
 
-        if (player == null) {
-            player = createSavableUser(uuid);
+        if (user == null) {
+            user = createSavableUser(uuid);
+        } else {
+            addStat(user);
         }
 
-        return player;
+        return user;
     }
 
     public static SavableUser getOrCreateSUFromNameOrUUID(String string) {
@@ -643,6 +647,8 @@ public class PlayerUtils {
 
         if (player == null) {
             player = createPlayerStat(pp);
+        } else {
+            addStat(player);
         }
 
         return player;
@@ -653,6 +659,8 @@ public class PlayerUtils {
 
         if (player == null) {
             player = createPlayerStat(sender);
+        } else {
+            addStat(player);
         }
 
         return player;
@@ -663,6 +671,8 @@ public class PlayerUtils {
 
         if (player == null) {
             player = createPlayerStat(name);
+        } else {
+            addStat(player);
         }
 
         return  player;
@@ -673,6 +683,8 @@ public class PlayerUtils {
 
         if (player == null) {
             player = createPlayerStatByUUID(uuid);
+        } else {
+            addStat(player);
         }
 
         return player;
@@ -1314,37 +1326,37 @@ public class PlayerUtils {
     }
 
     // No stats.
-    public static final String noStatsFound = StreamLine.getConfig().getMessString("stats.no-stats");
+    public static final String noStatsFound = StreamLine.config.getMessString("stats.no-stats");
     // Not high enough permissions.
-    public static final String noPermission = StreamLine.getConfig().getMessString("stats.no-permission");
+    public static final String noPermission = StreamLine.config.getMessString("stats.no-permission");
     // Create.
-    public static final String create = StreamLine.getConfig().getMessString("stats.create");
+    public static final String create = StreamLine.config.getMessString("stats.create");
     // Info.
-    public static final String info = StreamLine.getConfig().getMessString("stats.player");
-    public static final String consolePlayerInfo = StreamLine.getConfig().getMessString("stats.console-player");
-    public static final String tagsLast = StreamLine.getConfig().getMessString("stats.tags.last");
-    public static final String tagsNLast = StreamLine.getConfig().getMessString("stats.tags.not-last");
-    public static final String ipsLast = StreamLine.getConfig().getMessString("stats.ips.last");
-    public static final String ipsNLast = StreamLine.getConfig().getMessString("stats.ips.not-last");
-    public static final String namesLast = StreamLine.getConfig().getMessString("stats.names.last");
-    public static final String namesNLast = StreamLine.getConfig().getMessString("stats.names.not-last");
-    public static final String sspyT = StreamLine.getConfig().getMessString("stats.sspy.true");
-    public static final String sspyF = StreamLine.getConfig().getMessString("stats.sspy.false");
-    public static final String gspyT = StreamLine.getConfig().getMessString("stats.gspy.true");
-    public static final String gspyF = StreamLine.getConfig().getMessString("stats.gspy.false");
-    public static final String pspyT = StreamLine.getConfig().getMessString("stats.pspy.true");
-    public static final String pspyF = StreamLine.getConfig().getMessString("stats.pspy.false");
-    public static final String onlineT = StreamLine.getConfig().getMessString("stats.online.true");
-    public static final String onlineF = StreamLine.getConfig().getMessString("stats.online.false");
-    public static final String notSet = StreamLine.getConfig().getMessString("stats.not-set");
+    public static final String info = StreamLine.config.getMessString("stats.player");
+    public static final String consolePlayerInfo = StreamLine.config.getMessString("stats.console-player");
+    public static final String tagsLast = StreamLine.config.getMessString("stats.tags.last");
+    public static final String tagsNLast = StreamLine.config.getMessString("stats.tags.not-last");
+    public static final String ipsLast = StreamLine.config.getMessString("stats.ips.last");
+    public static final String ipsNLast = StreamLine.config.getMessString("stats.ips.not-last");
+    public static final String namesLast = StreamLine.config.getMessString("stats.names.last");
+    public static final String namesNLast = StreamLine.config.getMessString("stats.names.not-last");
+    public static final String sspyT = StreamLine.config.getMessString("stats.sspy.true");
+    public static final String sspyF = StreamLine.config.getMessString("stats.sspy.false");
+    public static final String gspyT = StreamLine.config.getMessString("stats.gspy.true");
+    public static final String gspyF = StreamLine.config.getMessString("stats.gspy.false");
+    public static final String pspyT = StreamLine.config.getMessString("stats.pspy.true");
+    public static final String pspyF = StreamLine.config.getMessString("stats.pspy.false");
+    public static final String onlineT = StreamLine.config.getMessString("stats.online.true");
+    public static final String onlineF = StreamLine.config.getMessString("stats.online.false");
+    public static final String notSet = StreamLine.config.getMessString("stats.not-set");
     // Tags.
-    public static final String tagRem = StreamLine.getConfig().getMessString("btag.remove");
-    public static final String tagAdd = StreamLine.getConfig().getMessString("btag.add");
-    public static final String tagListMain = StreamLine.getConfig().getMessString("btag.list.main");
-    public static final String tagListLast = StreamLine.getConfig().getMessString("btag.list.tags.last");
-    public static final String tagListNotLast = StreamLine.getConfig().getMessString("btag.list.tags.not-last");
+    public static final String tagRem = StreamLine.config.getMessString("btag.remove");
+    public static final String tagAdd = StreamLine.config.getMessString("btag.add");
+    public static final String tagListMain = StreamLine.config.getMessString("btag.list.main");
+    public static final String tagListLast = StreamLine.config.getMessString("btag.list.tags.last");
+    public static final String tagListNotLast = StreamLine.config.getMessString("btag.list.tags.not-last");
     // Points.
-    public static final String pointsName = StreamLine.getConfig().getMessString("stats.points-name");
+    public static final String pointsName = StreamLine.config.getMessString("stats.points-name");
 
     public static String forStats(List<SavableUser> players){
         StringBuilder builder = new StringBuilder("[");

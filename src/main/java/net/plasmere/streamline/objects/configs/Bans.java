@@ -4,6 +4,7 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.utils.MessagingUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class Bans {
     public Bans(){
         if (! StreamLine.getInstance().getConfDir().exists()) {
             if (StreamLine.getInstance().getConfDir().mkdir()) {
-                StreamLine.getInstance().getLogger().info("Made folder: " + StreamLine.getInstance().getConfDir().getName());
+                MessagingUtils.logInfo("Made folder: " + StreamLine.getInstance().getConfDir().getName());
             }
         }
 
@@ -48,7 +49,7 @@ public class Bans {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        StreamLine.getInstance().getLogger().info("Loaded bans!");
+        MessagingUtils.logInfo("Loaded bans!");
 
         return bans;
     }

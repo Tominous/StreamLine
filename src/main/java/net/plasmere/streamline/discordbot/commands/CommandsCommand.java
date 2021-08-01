@@ -2,6 +2,7 @@ package net.plasmere.streamline.discordbot.commands;
 
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PermissionHelper;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -11,7 +12,7 @@ public class CommandsCommand {
 
     public static void sendMessage(String command, MessageReceivedEvent event){
         event.getChannel().sendMessage(eb.setDescription(compileCommands(event)).build()).queue();
-        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Sent message for \"" + command + "\"!");
+        if (ConfigUtils.debug) MessagingUtils.logInfo("Sent message for \"" + command + "\"!");
     }
 
     private static String compileCommands(MessageReceivedEvent event){

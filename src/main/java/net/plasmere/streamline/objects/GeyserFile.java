@@ -1,6 +1,7 @@
 package net.plasmere.streamline.objects;
 
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.utils.MessagingUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -22,9 +23,9 @@ public class GeyserFile {
 
         if (createNew || ! file.exists()) {
             try {
-                if (! StreamLine.getInstance().getPlDir().exists()) if (! StreamLine.getInstance().getPlDir().mkdirs()) StreamLine.getInstance().getLogger().severe("Could not create players folder...");
-                if (file.exists()) if (! this.file.delete()) StreamLine.getInstance().getLogger().severe("Could not delete Geyser file!");
-                if (! this.file.createNewFile()) StreamLine.getInstance().getLogger().severe("Could not create Geyser file!");
+                if (! StreamLine.getInstance().getPlDir().exists()) if (! StreamLine.getInstance().getPlDir().mkdirs()) MessagingUtils.logSevere("Could not create players folder...");
+                if (file.exists()) if (! this.file.delete()) MessagingUtils.logSevere("Could not delete Geyser file!");
+                if (! this.file.createNewFile()) MessagingUtils.logSevere("Could not create Geyser file!");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -119,7 +120,7 @@ public class GeyserFile {
 
             reader.close();
         } else {
-            if (! file.createNewFile()) StreamLine.getInstance().getLogger().severe("Couldn't create Geyser file!");
+            if (! file.createNewFile()) MessagingUtils.logSevere("Couldn't create Geyser file!");
         }
     }
 
@@ -133,7 +134,7 @@ public class GeyserFile {
         }
         writer.close();
 
-        //StreamLine.getInstance().getLogger().info("Just saved Guild info for leader (String): " + leaderString);
+        //MessagingUtils.logInfo("Just saved Guild info for leader (String): " + leaderString);
     }
 
     public String toString(){

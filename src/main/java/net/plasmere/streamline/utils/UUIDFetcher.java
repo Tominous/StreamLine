@@ -74,7 +74,7 @@ public class UUIDFetcher {
             return uuid;
             //return UUID.fromString(id);
         } catch (Exception e){
-            StreamLine.getInstance().getLogger().info("Error on Username of: " + username);
+            MessagingUtils.logInfo("Error on Username of: " + username);
             e.printStackTrace();
         }
         return UUID.randomUUID().toString();
@@ -111,7 +111,7 @@ public class UUIDFetcher {
 
             return njo.get("name").toString();
         } catch (Exception e){
-            StreamLine.getInstance().getLogger().info("Error on UUID of: " + uuid);
+            MessagingUtils.logInfo("Error on UUID of: " + uuid);
             e.printStackTrace();
         }
         return "error";

@@ -37,7 +37,7 @@ public class PlaytimeTimer implements Runnable {
                 p.addPlaySecond(1);
             }
 
-            //if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Just gave out PlayTime to " + StreamLine.getInstance().getProxy().getPlayers().size() + " online players!");
+            //if (ConfigUtils.debug) MessagingUtils.logInfo("Just gave out PlayTime to " + StreamLine.getInstance().getProxy().getPlayers().size() + " online players!");
         } catch (Exception e){
             e.printStackTrace();
         }

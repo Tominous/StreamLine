@@ -1,13 +1,11 @@
 package net.plasmere.streamline.discordbot.commands;
 
 import net.plasmere.streamline.StreamLine;
-import net.plasmere.streamline.config.Config;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.md_5.bungee.config.Configuration;
 
 public class ReportCommand {
     private final static EmbedBuilder eb = new EmbedBuilder();
@@ -37,6 +35,6 @@ public class ReportCommand {
             MessagingUtils.sendDiscordReportMessage(event.getAuthor().getName(), false, msg);
         }
 
-        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Sent message for \"" + command + "\"!");
+        if (ConfigUtils.debug) MessagingUtils.logInfo("Sent message for \"" + command + "\"!");
     }
 }

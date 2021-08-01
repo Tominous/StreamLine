@@ -47,7 +47,7 @@ public class GuildXPTimer implements Runnable {
             e.printStackTrace();
         }
 
-        //StreamLine.getInstance().getLogger().info("Just gave " + ConfigUtils.xpPerGiveG + " GEXP to " + GuildUtils.getGuilds().size() + " guilds!");
+        //MessagingUtils.logInfo("Just gave " + ConfigUtils.xpPerGiveG + " GEXP to " + GuildUtils.getGuilds().size() + " guilds!");
 
         //StreamLine.getInstance().getProxy().getScheduler().schedule(StreamLine.getInstance(), new GuildXPTimer(ConfigUtils.timePerGiveG), 1, 1, TimeUnit.SECONDS);
     }

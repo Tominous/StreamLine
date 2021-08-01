@@ -25,13 +25,13 @@ public class MOTDUpdaterTimer implements Runnable {
 
         Integer next = StreamLine.serverConfig.getComparedMOTD().higherKey(StreamLine.getInstance().getMotdPage());
         if (next == null){
-            //if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("next is null...");
+            //if (ConfigUtils.debug) MessagingUtils.logInfo("next is null...");
             next = StreamLine.serverConfig.getComparedMOTD().firstKey();
         }
 
         StreamLine.getInstance().setCurrentMOTD(StreamLine.serverConfig.getMOTDat(next));
         StreamLine.getInstance().setMotdPage(next);
 
-        //if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("MOTD Updated!");
+        //if (ConfigUtils.debug) MessagingUtils.logInfo("MOTD Updated!");
     }
 }

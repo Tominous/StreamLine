@@ -150,7 +150,7 @@ public class MessagingUtils {
         try {
             if (isJoin) {
                 Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBJoins))
-                        .sendMessage(
+                        .sendMessageEmbeds(
                                 eb
                                         .setDescription(MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
                                                 .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
@@ -159,7 +159,7 @@ public class MessagingUtils {
                         ).queue();
             } else {
                 Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBLeaves))
-                        .sendMessage(
+                        .sendMessageEmbeds(
                                 eb
                                         .setDescription(MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
                                                 .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
@@ -179,7 +179,7 @@ public class MessagingUtils {
             if (isJoin) {
                 try {
                     Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBJoins))
-                            .sendMessage(
+                            .sendMessageEmbeds(
                                     eb
                                             .setDescription(MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
                                                     .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
@@ -187,12 +187,12 @@ public class MessagingUtils {
                                             .build()
                             ).queue();
                 } catch (NullPointerException e) {
-                    StreamLine.getInstance().getLogger().severe("Discord bot is either not in the Discord server, or the bot cannot find " + ConfigUtils.textChannelBJoins);
+                    MessagingUtils.logSevere("Discord bot is either not in the Discord server, or the bot cannot find " + ConfigUtils.textChannelBJoins);
                 }
             } else {
                 try {
                 Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBLeaves))
-                        .sendMessage(
+                        .sendMessageEmbeds(
                                 eb
                                         .setDescription(MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
                                                 .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
@@ -201,7 +201,7 @@ public class MessagingUtils {
                         ).queue();
 
                 } catch (NullPointerException e) {
-                    StreamLine.getInstance().getLogger().severe("Discord bot is either not in the Discord server, or the bot cannot find " + ConfigUtils.textChannelBJoins);
+                    MessagingUtils.logSevere("Discord bot is either not in the Discord server, or the bot cannot find " + ConfigUtils.textChannelBJoins);
                 }
             }
         } catch (Exception e) {
@@ -216,7 +216,7 @@ public class MessagingUtils {
             if (ConfigUtils.moduleUseMCAvatar) {
                 if (message.sender instanceof ProxiedPlayer) {
                     Objects.requireNonNull(jda.getTextChannelById(message.channel))
-                            .sendMessage(
+                            .sendMessageEmbeds(
                                     eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
                                             .setDescription(message.message.replace("%sender%", message.sender.getName()))
                                             .setAuthor(message.sender.getName(), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName))
@@ -224,7 +224,7 @@ public class MessagingUtils {
                             ).queue();
                 } else {
                     Objects.requireNonNull(jda.getTextChannelById(message.channel))
-                            .sendMessage(
+                            .sendMessageEmbeds(
                                     eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
                                             .setDescription(message.message.replace("%sender%", message.sender.getName()))
                                             .setAuthor("CONSOLE", jda.getSelfUser().getAvatarUrl() , jda.getSelfUser().getAvatarUrl())
@@ -233,7 +233,7 @@ public class MessagingUtils {
                 }
             } else {
                 Objects.requireNonNull(jda.getTextChannelById(message.channel))
-                        .sendMessage(
+                        .sendMessageEmbeds(
                                 eb.setTitle(message.title.replace("%sender%", message.sender.getName()))
                                         .setDescription(message.message.replace("%sender%", message.sender.getName()))
                                         .build()
@@ -258,7 +258,7 @@ public class MessagingUtils {
 
             if (ConfigUtils.moduleUseMCAvatar) {
                 if (fromBungee)
-                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessage(
+                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessageEmbeds(
                             eb.setTitle(MessageConfUtils.reportEmbedTitle)
                                     .setDescription(TextUtils.newLined(
                                             replace1
@@ -266,7 +266,7 @@ public class MessagingUtils {
                                     ).setAuthor(sender, FaceFetcher.getFaceAvatarURL(sender), FaceFetcher.getFaceAvatarURL(sender)).build()
                     ).queue();
                 else
-                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessage(
+                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessageEmbeds(
                             eb.setTitle(MessageConfUtils.reportEmbedTitle)
                                     .setDescription(TextUtils.newLined(
                                             replace
@@ -275,7 +275,7 @@ public class MessagingUtils {
                     ).queue();
             } else {
                 if (fromBungee)
-                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessage(
+                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessageEmbeds(
                             eb.setTitle(MessageConfUtils.reportEmbedTitle)
                                     .setDescription(TextUtils.newLined(
                                             replace1
@@ -283,7 +283,7 @@ public class MessagingUtils {
                                     ).build()
                     ).queue();
                 else
-                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessage(
+                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessageEmbeds(
                             eb.setTitle(MessageConfUtils.reportEmbedTitle)
                                     .setDescription(TextUtils.newLined(
                                             replace
@@ -299,7 +299,7 @@ public class MessagingUtils {
     public static void sendDSelfMessage(MessageReceivedEvent context, String title, String description) {
         EmbedBuilder eb = new EmbedBuilder();
 
-        context.getChannel().sendMessage(
+        context.getChannel().sendMessageEmbeds(
                 eb.setTitle(title)
                 .setDescription(TextUtils.newLined(description))
                         .build()

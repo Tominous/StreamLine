@@ -1,7 +1,7 @@
 package net.plasmere.streamline;
 
 import net.md_5.bungee.api.scheduler.ScheduledTask;
-import net.plasmere.streamline.config.Config;
+import net.plasmere.streamline.config.ConfigHandler;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.discordbot.MessageListener;
@@ -47,7 +47,7 @@ public class StreamLine extends Plugin {
 
 	private static StreamLine instance = null;
 
-	public static Config config;
+	public static ConfigHandler config;
 	public static Bans bans;
 	public static ServerPermissions serverPermissions;
 	public static Lobbies lobbies;
@@ -58,8 +58,6 @@ public class StreamLine extends Plugin {
 
 	private static JDA jda = null;
 	private static boolean isReady = false;
-
-	private static final EmbedBuilder eb = new EmbedBuilder();
 
 	private final File plDir = new File(getDataFolder() + File.separator + "players" + File.separator);
 	private final File gDir = new File(getDataFolder() + File.separator + "guilds" + File.separator);
@@ -154,7 +152,7 @@ public class StreamLine extends Plugin {
 			try	(InputStream in = getResourceAsStream("default.yml")) {
 				Files.copy(in, Path.of(eventsDir.toPath() + File.separator + "default.yml"));
 			} catch (FileAlreadyExistsException e){
-				getLogger().info("Default event file alreadyMade here, skipping...");
+				getLogger().info("Default event file already here, skipping...");
 			} catch (IOException e){
 				e.printStackTrace();
 			}
@@ -229,8 +227,8 @@ public class StreamLine extends Plugin {
 		// Via Support.
 		viaHolder = new ViaHolder();
 
-		// Config.
-		config = new Config();
+		// ConfigHandler.
+		config = new ConfigHandler();
 
 		// Geyser Support.
 		geyserHolder = new GeyserHolder();
@@ -240,7 +238,7 @@ public class StreamLine extends Plugin {
 			bans = new Bans();
 		}
 
-		// Server Config.
+		// Server ConfigHandler.
 		if (ConfigUtils.sc) {
 			serverConfig = new ServerConfig();
 		}
@@ -317,11 +315,17 @@ public class StreamLine extends Plugin {
 		oneSecTimer.cancel();
 		motdUpdater.cancel();
 
+		if (ConfigUtils.moduleShutdowns) {
+			MessagingUtils.sendDiscordEBMessage(new DiscordMessage(getProxy().getConsole(), MessageConfUtils.shutdownTitle, MessageConfUtils.shutdownMessage, ConfigUtils.textChannelOfflineOnline));
+		}
+
 		try {
 			if (jda != null) {
 				if (ConfigUtils.moduleShutdowns)
 					try {
-						Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelOfflineOnline)).sendMessage(eb.setDescription("Bot shutting down...!").build()).queue();
+						EmbedBuilder eb = new EmbedBuilder();
+
+						Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelOfflineOnline)).sendMessageEmbeds(eb.setDescription("Bot shutting down...!").build()).queue();
 					} catch (Exception e){
 						getLogger().warning("An unknown error occurred with sending online message: " + e.getMessage());
 					}
@@ -353,10 +357,6 @@ public class StreamLine extends Plugin {
 
 		PlayerUtils.removeOfflineStats();
 
-		if (ConfigUtils.moduleShutdowns) {
-			MessagingUtils.sendDiscordEBMessage(new DiscordMessage(getProxy().getConsole(), MessageConfUtils.shutdownTitle, MessageConfUtils.shutdownMessage, ConfigUtils.textChannelOfflineOnline));
-		}
-
 		PluginUtils.state = NetworkState.STOPPED;
 	}
 
@@ -372,7 +372,6 @@ public class StreamLine extends Plugin {
 		getLogger().info("Saved " + GuildUtils.getGuilds().size() + " Guilds!");
 	}
 
-    public static Config getConfig() { return config; }
 	public static StreamLine getInstance() { return instance; }
 	public static JDA getJda() { return jda; }
 	public static boolean getIsReady() { return isReady; }

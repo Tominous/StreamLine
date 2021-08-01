@@ -37,7 +37,7 @@ public class StaffOnlineCommand {
                         .replace("%staffbulk%", getStaffList(lstaffs))
         );
 
-        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Sent message for \"" + command + "\"!");
+        if (ConfigUtils.debug) MessagingUtils.logInfo("Sent message for \"" + command + "\"!");
     }
 
     private static String getStaffList(Set<ProxiedPlayer> lstaffs){

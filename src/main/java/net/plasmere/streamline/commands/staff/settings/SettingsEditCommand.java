@@ -18,9 +18,9 @@ public class SettingsEditCommand extends Command implements TabExecutor {
     public SettingsEditCommand(String base, String perm, String[] aliases){
         super(base, perm, aliases);
 
-        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Settings make base: " + base);
-        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Settings make perm: " + perm);
-        if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Settings make aliases: " + Arrays.toString(aliases));
+        if (ConfigUtils.debug) MessagingUtils.logInfo("Settings make base: " + base);
+        if (ConfigUtils.debug) MessagingUtils.logInfo("Settings make perm: " + perm);
+        if (ConfigUtils.debug) MessagingUtils.logInfo("Settings make aliases: " + Arrays.toString(aliases));
     }
 
     @Override

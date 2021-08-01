@@ -226,7 +226,7 @@ public class ServerPermissions {
         }
         writer.close();
 
-        //StreamLine.getInstance().getLogger().info("Just saved Guild info for leader (UUID): " + leaderUUID);
+        //MessagingUtils.logInfo("Just saved Guild info for leader (UUID): " + leaderUUID);
     }
 
     public String toString(){
@@ -274,12 +274,12 @@ public class ServerPermissions {
         for (String v : servers.get(server)){
             String ver = getVersionString(version);
             if (ver.equals("")) {
-                //StreamLine.getInstance().getLogger().severe("A player's version couldn't be determined so we let them join...");
+                //MessagingUtils.logSevere("A player's version couldn't be determined so we let them join...");
                 return true;
             }
 
             if (v.equals(ver)) {
-                //StreamLine.getInstance().getLogger().info("Letting a player join " + server + " with version: " + ver);
+                //MessagingUtils.logInfo("Letting a player join " + server + " with version: " + ver);
                 return true;
             }
         }

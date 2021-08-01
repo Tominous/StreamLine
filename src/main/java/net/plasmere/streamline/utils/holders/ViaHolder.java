@@ -5,6 +5,7 @@ import com.viaversion.viaversion.api.ViaAPI;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.md_5.bungee.api.ProxyServer;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.utils.MessagingUtils;
 
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class ViaHolder {
             via = Via.getAPI();
             return true;
         } catch (Exception e) {
-            StreamLine.getInstance().getLogger().severe("ViaVersion not loaded... Disabling ViaVersion support...");
+            MessagingUtils.logSevere("ViaVersion not loaded... Disabling ViaVersion support...");
         }
         return false;
     }

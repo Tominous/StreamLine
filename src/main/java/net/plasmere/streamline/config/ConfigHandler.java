@@ -4,6 +4,7 @@ import net.plasmere.streamline.StreamLine;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
+import net.plasmere.streamline.utils.MessagingUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.nio.file.Files;
 import java.util.Collection;
 import java.util.List;
 
-public class Config {
+public class ConfigHandler {
     private Configuration conf;
     private Configuration oConf;
     private Configuration mess;
@@ -22,15 +23,15 @@ public class Config {
     private final String messagesVer = "12";
 
     //    private static final StreamLine inst = StreamLine.getInstance();
-    private static final String cstring = "config.yml";
-    private static final File cfile = new File(StreamLine.getInstance().getDataFolder(), cstring);
-    private static final String mstring = "messages.yml";
-    private static final File mfile = new File(StreamLine.getInstance().getDataFolder(), mstring);
+    private final String cstring = "config.yml";
+    private final File cfile = new File(StreamLine.getInstance().getDataFolder(), cstring);
+    private final String mstring = "messages.yml";
+    private final File mfile = new File(StreamLine.getInstance().getDataFolder(), mstring);
 
-    public Config(){
+    public ConfigHandler(){
         if (! StreamLine.getInstance().getDataFolder().exists()) {
             if (StreamLine.getInstance().getDataFolder().mkdir()) {
-                StreamLine.getInstance().getLogger().info("Made folder: " + StreamLine.getInstance().getDataFolder().getName());
+                MessagingUtils.logInfo("Made folder: " + StreamLine.getInstance().getDataFolder().getName());
             }
         }
 
@@ -40,9 +41,9 @@ public class Config {
 //        System.out.println("config load - start");
 
         conf = loadConf();
-        StreamLine.getInstance().getLogger().info("Loaded configuration!");
+        MessagingUtils.logInfo("Loaded configuration!");
         mess = loadMess();
-        StreamLine.getInstance().getLogger().info("Loaded messages!");
+        MessagingUtils.logInfo("Loaded messages!");
 
 //        System.out.println("config load - end");
     }
@@ -77,21 +78,23 @@ public class Config {
             }
         }
 
+        Configuration thing = new Configuration();
+
         try {
-            Configuration thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(StreamLine.getInstance().getDataFolder(), cstring));
+            thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(cfile);
             if (! this.configVer.equals(thing.getString("version"))){
                 thing = iterateConfigs("oldconfig.yml");
 
-                StreamLine.getInstance().getLogger().severe("----------------------------------------------------------");
-                StreamLine.getInstance().getLogger().severe("YOU NEED TO UPDATE THE VALUES IN YOUR NEW CONFIG FILE AS");
-                StreamLine.getInstance().getLogger().severe("YOUR OLD ONE WAS OUTDATED. I IMPORTED THE NEW ONE FOR YOU.");
-                StreamLine.getInstance().getLogger().severe("----------------------------------------------------------");
+                MessagingUtils.logSevere("----------------------------------------------------------");
+                MessagingUtils.logSevere("YOU NEED TO UPDATE THE VALUES IN YOUR NEW CONFIG FILE AS");
+                MessagingUtils.logSevere("YOUR OLD ONE WAS OUTDATED. I IMPORTED THE NEW ONE FOR YOU.");
+                MessagingUtils.logSevere("----------------------------------------------------------");
             }
-            return thing;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+
+        return thing;
     }
 
     public Configuration loadMess(){
@@ -103,24 +106,22 @@ public class Config {
             }
         }
 
+        Configuration thing = new Configuration();
+
         try {
-            Configuration thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(StreamLine.getInstance().getDataFolder(), mstring));
+            thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(mfile);
             if (! this.messagesVer.equals(thing.getString("version"))){
                 thing = iterateMessagesConf("oldmessages.yml");
 
-                StreamLine.getInstance().getLogger().severe("----------------------------------------------------------");
-                StreamLine.getInstance().getLogger().severe("YOU NEED TO UPDATE THE VALUES IN YOUR NEW MESSAGES FILE AS");
-                StreamLine.getInstance().getLogger().severe("YOUR OLD ONE WAS OUTDATED. I IMPORTED THE NEW ONE FOR YOU.");
-                StreamLine.getInstance().getLogger().severe("----------------------------------------------------------");
+                MessagingUtils.logSevere("----------------------------------------------------------");
+                MessagingUtils.logSevere("YOU NEED TO UPDATE THE VALUES IN YOUR NEW MESSAGES FILE AS");
+                MessagingUtils.logSevere("YOUR OLD ONE WAS OUTDATED. I IMPORTED THE NEW ONE FOR YOU.");
+                MessagingUtils.logSevere("----------------------------------------------------------");
             }
-            
-            return thing;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-        //StreamLine.getInstance().getLogger().info("Loaded messages!");
-
+        return thing;
     }
 
     private Configuration iterateConfigs(String old) throws IOException {

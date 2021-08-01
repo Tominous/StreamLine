@@ -4,6 +4,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class PlayerXPTimer implements Runnable {
 
             }
 
-            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("Just gave out XP to " + StreamLine.getInstance().getProxy().getPlayers().size() + " online players!");
+            if (ConfigUtils.debug) MessagingUtils.logInfo("Just gave out XP to " + StreamLine.getInstance().getProxy().getPlayers().size() + " online players!");
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -69,7 +70,7 @@ public class PlayerXPTimer implements Runnable {
             e.printStackTrace();
         }
 
-        //StreamLine.getInstance().getLogger().info("Just gave " + ConfigUtils.xpPerGiveP + " Network EXP to " + PlayerUtils.getJustPlayers().size() + " players!");
+        //MessagingUtils.logInfo("Just gave " + ConfigUtils.xpPerGiveP + " Network EXP to " + PlayerUtils.getJustPlayers().size() + " players!");
 
         //StreamLine.getInstance().getProxy().getScheduler().schedule(StreamLine.getInstance(), new PlayerXPTimer(ConfigUtils.timePerGiveP), 1, 1, TimeUnit.SECONDS);
     }

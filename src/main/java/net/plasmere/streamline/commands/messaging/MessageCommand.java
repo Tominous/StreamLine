@@ -30,7 +30,7 @@ public class MessageCommand extends Command implements TabExecutor {
         if (stat == null) {
             stat = PlayerUtils.getOrCreateSavableUser(sender);
             if (stat == null) {
-                StreamLine.getInstance().getLogger().severe("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
+                MessagingUtils.logSevere("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
                 return;
             }

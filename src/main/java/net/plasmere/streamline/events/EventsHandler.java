@@ -24,7 +24,7 @@ public class EventsHandler {
         return events;
     }
     public static void addEvent(Event event){
-        //StreamLine.getInstance().getLogger().info("Added Event: " + event.toString());
+        //MessagingUtils.logInfo("Added Event: " + event.toString());
 
         if (! ConfigUtils.events) return;
 
@@ -75,7 +75,7 @@ public class EventsHandler {
                     player.setPoints(Integer.parseInt(event.actions.get(i).value));
                     continue;
                 default:
-                    StreamLine.getInstance().getLogger().severe("An event wasn't handled correctly...");
+                    MessagingUtils.logSevere("An event wasn't handled correctly...");
                     break;
             }
         }
@@ -87,7 +87,7 @@ public class EventsHandler {
         if (p == null) return;
 
         for (Integer i : event.actions.keySet()) {
-            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("EventsHandler#runEvent() --> i = " + i);
+            if (ConfigUtils.debug) MessagingUtils.logInfo("EventsHandler#runEvent() --> i = " + i);
 
             switch (event.actions.get(i).key) {
                 case SEND_MESSAGE_TO:
@@ -120,7 +120,7 @@ public class EventsHandler {
                     player.setPoints(Integer.parseInt(event.actions.get(i).value));
                     continue;
                 default:
-                    StreamLine.getInstance().getLogger().severe("An event wasn't handled correctly...");
+                    MessagingUtils.logSevere("An event wasn't handled correctly...");
                     break;
             }
         }
@@ -230,12 +230,12 @@ public class EventsHandler {
                 case IN_SERVER:
                     try {
                         if (player == null) {
-                            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("EventsHandler#checkEventConditions$1 : case IN_SERVER : player == null");
+                            if (ConfigUtils.debug) MessagingUtils.logInfo("EventsHandler#checkEventConditions$1 : case IN_SERVER : player == null");
                             return false;
                         }
                         ServerInfo server = player.getServer().getInfo();
                         if (server == null) {
-                            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("EventsHandler#checkEventConditions$1 : case IN_SERVER : server == null");
+                            if (ConfigUtils.debug) MessagingUtils.logInfo("EventsHandler#checkEventConditions$1 : case IN_SERVER : server == null");
                             return false;
                         }
 
@@ -287,12 +287,12 @@ public class EventsHandler {
                 case IN_SERVER:
                     try {
                         if (player == null) {
-                            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("EventsHandler#checkEventConditions$2 : case IN_SERVER : player == null");
+                            if (ConfigUtils.debug) MessagingUtils.logInfo("EventsHandler#checkEventConditions$2 : case IN_SERVER : player == null");
                             return false;
                         }
                         ServerInfo server = player.getServer().getInfo();
                         if (server == null) {
-                            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("EventsHandler#checkEventConditions$2 : case IN_SERVER : server == null");
+                            if (ConfigUtils.debug) MessagingUtils.logInfo("EventsHandler#checkEventConditions$2 : case IN_SERVER : server == null");
                             return false;
                         }
 
@@ -341,20 +341,20 @@ public class EventsHandler {
 
         for (SingleSet<Condition, String> thing : event.conditions.values()) {
             if (ConfigUtils.debug) {
-                StreamLine.getInstance().getLogger().info("Condition == " + thing.key);
-                StreamLine.getInstance().getLogger().info("Cond.val == " + thing.value);
+                MessagingUtils.logInfo("Condition == " + thing.key);
+                MessagingUtils.logInfo("Cond.val == " + thing.value);
             }
 
             switch (thing.key) {
                 case IN_SERVER:
                     try {
                         if (player == null) {
-                            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("EventsHandler#checkEventConditions$3 : case IN_SERVER : player == null");
+                            if (ConfigUtils.debug) MessagingUtils.logInfo("EventsHandler#checkEventConditions$3 : case IN_SERVER : player == null");
                             return false;
                         }
                         ServerInfo server = player.getServer().getInfo();
                         if (server == null) {
-                            if (ConfigUtils.debug) StreamLine.getInstance().getLogger().info("EventsHandler#checkEventConditions$3 : case IN_SERVER : server == null");
+                            if (ConfigUtils.debug) MessagingUtils.logInfo("EventsHandler#checkEventConditions$3 : case IN_SERVER : server == null");
                             return false;
                         }
 

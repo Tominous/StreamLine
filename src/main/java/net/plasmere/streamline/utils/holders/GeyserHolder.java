@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.objects.GeyserFile;
+import net.plasmere.streamline.utils.MessagingUtils;
 import org.geysermc.connector.GeyserConnector;
 import org.geysermc.connector.network.session.GeyserSession;
 
@@ -32,7 +33,7 @@ public class GeyserHolder {
 
         try {
             this.connector = GeyserConnector.getInstance();
-            StreamLine.getInstance().getLogger().info("Geyser is installed... Using Geyser support...");
+            MessagingUtils.logInfo("Geyser is installed... Using Geyser support...");
             return true;
         } catch (Exception e) {
             return false;
@@ -42,7 +43,7 @@ public class GeyserHolder {
     public void setUpPath(){
         if (! playerPath.exists()) {
             if (! playerPath.mkdir()) {
-                StreamLine.getInstance().getLogger().severe("Error setting up the Geyser player path...");
+                MessagingUtils.logSevere("Error setting up the Geyser player path...");
             }
         }
     }

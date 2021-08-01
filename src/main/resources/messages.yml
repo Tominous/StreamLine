@@ -183,10 +183,10 @@ staffchat:
   just-prefix: "&cSorry, but you need to supply more than just the prefix!"
   # If you toggle staff chat.
   toggle:
-    # If on.
-    on: "&aON"
-    # If off.
-    off: "&cOFF"
+    # If true.
+    true: "&aTRUE"
+    # If false.
+    false: "&cFALSE"
 
 # When using online list...
 online:
@@ -316,11 +316,11 @@ party:
   # When it finds no party.
   no-party: "&cNo party found!"
   # Already made.
-  already-made: "&cThis guild has alreadyMade been made!"
+  already-made: "&cThis guild has already been made!"
   # In different one.
   # Fillers:
   # %player% = player who the sender is trying to invite.
-  already-has: "&cSorry, but &d%player% &cis alreadyMade in a party..."
+  already-has: "&cSorry, but &d%player% &cis already in a party..."
   # When the the size of /par open <size> is to big.
   too-big: "&cSorry, but you can't create a party that big."
   # Not high enough party permissions.
@@ -823,13 +823,13 @@ guild:
     # If it is false in config.
     if-false: "without"
   # Already made.
-  already-made: "&cThis guild has alreadyMade been made!"
+  already-made: "&cThis guild has already been made!"
   # In different one.
   # Fillers:
   # %player% = player who the sender is trying to invite.
-  already-has-others: "&cSorry, but &d%player% &cis alreadyMade in a guild..."
-  # If you are alreadyMade in one.
-  already-has-self: "&cSorry, but you are alreadyMade in a guild!"
+  already-has-others: "&cSorry, but &d%player% &cis already in a guild..."
+  # If you are already in one.
+  already-has-self: "&cSorry, but you are already in a guild!"
   # Not high enough guild permissions.
   no-permission: "&cYou do not have high enough guild permissions to do this!"
   # Not in a guild...
@@ -1497,7 +1497,7 @@ ignore:
     # What they see.
     ignored: "&d%sender% &ejust &cignored &eyou!"
     # Already added.
-    already: "&cYou alreadyMade ignored this person!"
+    already: "&cYou already ignored this person!"
     # Not self.
     not-self: "&cCannot ignore yourself..."
   # Removing someone from ignore.
@@ -1567,8 +1567,8 @@ mute:
       staff: "&d%punisher% &ejust &cmuted &d%player%&e &euntil &b%date%&e!"
       # For person being muted.
       muted: "&eYou have been &cmuted &euntil &b%date%&e!"
-      # If alreadyMade.
-      already: "&cThis player is alreadyMade muted!"
+      # If already.
+      already: "&cThis player is already muted!"
       # Discord message.
       discord: "*%punisher%* just muted *%player%* until **%date%**!"
     # If perm.
@@ -1579,8 +1579,8 @@ mute:
       staff: "&d%punisher% &ejust &cmuted &d%player%&e!"
       # For person being muted.
       muted: "&eYou have been &4PERMANENTLY &cmuted&e!"
-      # If alreadyMade.
-      already: "&cThis player is alreadyMade muted!"
+      # If already.
+      already: "&cThis player is already muted!"
       # Discord message.
       discord: "*%punisher%* just muted *%player%* **PERMANENTLY**!"
   # If being unmuted.
@@ -1591,8 +1591,8 @@ mute:
     staff: "&d%punisher% &ejust &aunmuted &d%player%&e!"
     # For person being unmuted.
     muted: "&eYou have been &aunmuted&e!"
-    # If alreadyMade.
-    already: "&cThis player is alreadyMade unmuted!"
+    # If already.
+    already: "&cThis player is already unmuted!"
     # Discord message.
     discord: "*%punisher%* just unmuted *%player%*!"
   # For checking if muted.
@@ -1635,8 +1635,8 @@ ban:
       sender: "&eYou have &cbanned &d%player% &efor &a\"&b%reason%&a\" &euntil &b%date%&e!"
       # For other staff.
       staff: "&d%punisher% &ejust &cbanned &d%player% &efor &a\"&b%reason%&a\" &euntil &b%date%&e!"
-      # If alreadyMade banned.
-      already: "&d%player% &cis alreadyMade banned!"
+      # If already banned.
+      already: "&d%player% &cis already banned!"
       # Discord message.
       discord: "*%punisher%* just banned *%player%* for reason \"**%reason%**\" until %date%!"
     # If perm.
@@ -1645,8 +1645,8 @@ ban:
       sender: "&eYou have &cbanned &d%player% &efor &a\"&b%reason%&b\" &cPERMANENTLY&e!"
       # For other staff.
       staff: "&d%punisher% &ejust &cbanned &d%player% &efor &a\"&b%reason%&a\" &cPERMANENTLY&e!"
-      # If alreadyMade banned.
-      already: "&d%player% &cis alreadyMade banned!"
+      # If already banned.
+      already: "&d%player% &cis already banned!"
       # Discord message.
       discord: "*%punisher%* just banned *%player%* for reason \"**%reason%**\" PERMANENTLY!"
   # If being unbanned.
@@ -1655,8 +1655,8 @@ ban:
     sender: "&eYou have &aunbanned &d%player%&e!"
     # For other staff.
     staff: "&d%punisher% &ejust &aunbanned &d%player%&e!"
-    # If alreadyMade unbanned.
-    already: "&cThis player is alreadyMade unbanned!"
+    # If already unbanned.
+    already: "&cThis player is already unbanned!"
     # Discord message.
     discord: "*%punisher%* just unbanned *%player%*!"
   # If checking if banned.
@@ -1684,8 +1684,8 @@ ipban:
       sender: "&eYou have &cbanned &d%ip% &efor &a\"&b%reason%&a\" &euntil &b%date%&e!"
       # For other staff.
       staff: "&d%punisher% &ejust &cbanned &d%ip% &efor &a\"&b%reason%&a\" &euntil &b%date%&e!"
-      # If alreadyMade banned.
-      already: "&d%ip% &cis alreadyMade banned!"
+      # If already banned.
+      already: "&d%ip% &cis already banned!"
       # Discord message.
       discord: "*%punisher%* just banned *%ip%* for reason \"**%reason%**\" until %date%!"
     # If perm.
@@ -1694,8 +1694,8 @@ ipban:
       sender: "&eYou have &cbanned &d%ip% &efor &a\"&b%reason%&b\" &cPERMANENTLY&e!"
       # For other staff.
       staff: "&d%punisher% &ejust &cbanned &d%ip% &efor &a\"&b%reason%&a\" &cPERMANENTLY&e!"
-      # If alreadyMade banned.
-      already: "&d%ip% &cis alreadyMade banned!"
+      # If already banned.
+      already: "&d%ip% &cis already banned!"
       # Discord message.
       discord: "*%punisher%* just banned *%ip%* for reason \"**%reason%**\" PERMANENTLY!"
   # If being unbanned.
@@ -1704,8 +1704,8 @@ ipban:
     sender: "&eYou have &aunbanned &d%ip%&e!"
     # For other staff.
     staff: "&d%punisher% &ejust &aunbanned &d%ip%&e!"
-    # If alreadyMade unbanned.
-    already: "&d%ip% &eis alreadyMade &aunbanned&e!"
+    # If already unbanned.
+    already: "&d%ip% &eis already &aunbanned&e!"
     # Discord message.
     discord: "*%punisher%* just unbanned *%ip%*!"
   # If checking if banned.
@@ -1728,7 +1728,7 @@ friend:
     # What they see.
     other: "&d%sender% &ejust requested you to be their &afriend&e!%newline%&eType &b/f accept %sender_normal% &eto accept!"
     # Already added.
-    already: "&cYou alreadyMade friended &d%player%&e!"
+    already: "&cYou already friended &d%player%&e!"
     # Not self.
     not-self: "&cCannot ignore yourself..."
     # Ignored...

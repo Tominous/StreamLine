@@ -4,6 +4,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.PluginUtils;
 
@@ -265,7 +266,7 @@ public abstract class SavableUser {
             }
 
             if (! data.contains("=")) if (ConfigUtils.debug) {
-                StreamLine.getInstance().getLogger().info("PLAYER DATA (" + this.latestName + ") ERROR : data has no split for --> " + data);
+                MessagingUtils.logInfo("PLAYER DATA (" + this.latestName + ") ERROR : data has no split for --> " + data);
                 continue;
             }
 
@@ -689,7 +690,7 @@ public abstract class SavableUser {
         }
         writer.close();
 
-        //StreamLine.getInstance().getLogger().info("Just saved Player info for player: " + PlayerUtils.getOffOnReg(player));
+        //MessagingUtils.logInfo("Just saved Player info for player: " + PlayerUtils.getOffOnReg(player));
     }
 
     public String toString(){
