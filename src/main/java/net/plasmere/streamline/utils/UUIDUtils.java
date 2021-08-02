@@ -149,7 +149,7 @@ public class UUIDUtils {
     public static String swapToUUID(String thingThatMightBeAName){
         String uuid = thingThatMightBeAName;
 
-        if (! thingThatMightBeAName.contains("-") && ! thingThatMightBeAName.equals("%")) {
+        if (! thingThatMightBeAName.contains("-") && ! (thingThatMightBeAName.equals("%"))) {
             uuid = getCachedUUID(thingThatMightBeAName);
         }
 
@@ -204,6 +204,9 @@ public class UUIDUtils {
 
     public static File getCachedFile(File path, String thing) {
         if (! path.isDirectory()) return null;
+
+        if (thing == null) return null;
+        if (thing.equals("")) return null;
 
         try {
             if (path.equals(StreamLine.getInstance().getPlDir())) {

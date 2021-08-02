@@ -13,11 +13,11 @@ public class ConsolePlayer extends SavableUser {
     public List<String> savedKeys = new ArrayList<>();
 
     public ConsolePlayer() {
-        super("console");
+        super("%");
     }
 
     public ConsolePlayer(boolean create){
-        super("console", create);
+        super("%", create);
     }
 
     @Override

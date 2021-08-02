@@ -91,6 +91,8 @@ public class GuildUtils {
 
     public static boolean pHasGuild(SavableUser player){
         try {
+            if (! existsByUUID(player.uuid)) return false;
+
             Guild guild = new Guild(player.guild, false);
 
             if (guild.leaderUUID == null) {
