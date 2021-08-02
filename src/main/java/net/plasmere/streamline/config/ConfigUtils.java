@@ -288,6 +288,12 @@ public class ConfigUtils {
     public static String comBInfoBase = StreamLine.config.getConfString("commands.bungee.staff.info.base");
     public static List<String> comBInfoAliases = StreamLine.config.getConfStringList("commands.bungee.staff.info.aliases");
     public static String comBInfoPerm = StreamLine.config.getConfString("commands.bungee.staff.info.permission");
+    // End.
+    public static boolean comBEnd = StreamLine.config.getConfBoolean("commands.bungee.staff.end.enabled");
+    public static String comBEndBase = StreamLine.config.getConfString("commands.bungee.staff.end.base");
+    public static List<String> comBEndAliases = StreamLine.config.getConfStringList("commands.bungee.staff.end.aliases");
+    public static String comBEndPerm = StreamLine.config.getConfString("commands.bungee.staff.end.permission");
+    // // Configs.
     // Settings.
     public static boolean comBSettings = StreamLine.config.getConfBoolean("commands.bungee.configs.settings.enabled");
     public static String comBSettingsBase = StreamLine.config.getConfString("commands.bungee.configs.settings.base");
@@ -478,4 +484,5 @@ public class ConfigUtils {
     public static boolean onCloseMain = StreamLine.config.getConfBoolean("modules.bungee.on-close.save-main");
     public static boolean onCloseSafeKick = StreamLine.config.getConfBoolean("modules.bungee.on-close.safe-kick");
     public static boolean onCloseKickMessage = StreamLine.config.getConfBoolean("modules.bungee.on-close.kick-message");
+    public static boolean onCloseHackEnd = StreamLine.config.getConfBoolean("modules.bungee.on-close.hack-end-command");
 }

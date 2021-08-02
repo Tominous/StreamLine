@@ -22,15 +22,6 @@ public class GuildCommand extends Command implements TabExecutor {
     public void execute(CommandSender sender, String[] args) {
         SavableUser stat = PlayerUtils.getOrCreateSavableUser(sender);
 
-        if (stat == null) {
-            stat = PlayerUtils.getOrCreateSavableUser(sender);
-            if (stat == null) {
-                MessagingUtils.logSevere("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                return;
-            }
-        }
-
         // Usage: /guild <join !|leave !|create !|promote !|demote !|chat !|list !|open !|close !|disband !|accept !|deny !|invite !|kick|mute|warp>
         if (args.length <= 0 || args[0].length() <= 0) {
             try {

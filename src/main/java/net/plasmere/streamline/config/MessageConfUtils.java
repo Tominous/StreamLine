@@ -316,4 +316,7 @@ public class MessageConfUtils {
     public static String settingsGetOnlineP = StreamLine.config.getMessString("settings.get.online-players");
     // // Info.
     public static String info = StreamLine.config.getMessString("info");
+    // // Graceful End.
+    public static String gracefulEndSender = StreamLine.config.getMessString("graceful-end.sender");
+    public static String gracefulEndKickMessage = StreamLine.config.getMessString("graceful-end.kick-message");
 }

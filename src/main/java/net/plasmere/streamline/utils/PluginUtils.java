@@ -1,5 +1,6 @@
 package net.plasmere.streamline.utils;
 
+import net.md_5.bungee.api.plugin.PluginManager;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.commands.*;
 import net.plasmere.streamline.commands.messaging.FriendCommand;
@@ -28,10 +29,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.plasmere.streamline.listeners.ProxyPingListener;
 import net.plasmere.streamline.objects.enums.NetworkState;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class PluginUtils {
     public static int commandsAmount = 0;
@@ -130,6 +128,28 @@ public class PluginUtils {
         }
         if (ConfigUtils.comBInfo) {
             registerCommand(plugin, new InfoCommand(ConfigUtils.comBInfoBase, ConfigUtils.comBInfoPerm, getAliases(ConfigUtils.comBInfoAliases)));
+        }
+        if (ConfigUtils.onCloseHackEnd) {
+            try {
+                PluginManager pm = StreamLine.getInstance().getProxy().getPluginManager();
+
+                List<Map.Entry<String, Command>> commands = new ArrayList<>(pm.getCommands());
+
+                List<Command> unregCommands = new ArrayList<>();
+
+                for (Map.Entry<String, Command> commandEntry : commands) {
+                    if (commandEntry.getValue().getName().equals("end")) unregCommands.add(commandEntry.getValue());
+                }
+
+                for (Command command : unregCommands) {
+                    pm.unregisterCommand(command);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (ConfigUtils.comBEnd) {
+            registerCommand(plugin, new EndCommand(ConfigUtils.comBEndBase, ConfigUtils.comBEndPerm, getAliases(ConfigUtils.comBEndAliases)));
         }
         // // Events.
         if (ConfigUtils.comBEReload) {

@@ -1868,3 +1868,10 @@ settings:
 # %num_events% = the number of events loaded.
 # %discord% = the plugin's discord server.
 info: "&eYou are currently running &b%name% &7[&av%version%&7] &eby &d%author%%newline%&eLoaded commands&8: &a%num_commands%%newline%&eLoaded listeners&8: &a%num_listeners%%newline%&eLoaded custom events&8: &a%num_events%%newline%&eWant to get more out of the plugin&8? &5&lDiscord&8: &b&n%discord%"
+
+# For the end command hack.
+graceful-end:
+  # For the sender.
+  sender: "&eShutting down the server gracefully!"
+  # For all who are kicked.
+  kick-message: "&cSorry, but the server stopped...! We are starting back up momentarily! Join back when you can!"

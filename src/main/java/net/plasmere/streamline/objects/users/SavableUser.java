@@ -54,9 +54,9 @@ public abstract class SavableUser {
     public SavableUser(String fileName, boolean createNew){
         if (PluginUtils.isLocked()) return;
 
-        this.savableUser = this;
-        this.sender = findSender(fileName);
         this.uuid = fileName;
+        this.savableUser = this;
+        this.sender = findSender();
         this.latestVersion = "UNKNOWN";
         this.latestServer = "SPACE";
 
@@ -83,11 +83,11 @@ public abstract class SavableUser {
         return savableUser;
     }
 
-    public CommandSender findSender(String fileName) {
-        if (fileName.equals("console") || fileName.equals("%")) {
+    public CommandSender findSender() {
+        if (this.uuid.equals("%")) {
             return StreamLine.getInstance().getProxy().getConsole();
         } else {
-            return PlayerUtils.getPPlayerByUUID(fileName);
+            return PlayerUtils.getPPlayerByUUID(this.uuid);
         }
     }
 

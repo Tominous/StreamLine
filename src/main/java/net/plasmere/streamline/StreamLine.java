@@ -289,8 +289,8 @@ public class StreamLine extends Plugin {
 	public void onDisable() {
 		PluginUtils.state = NetworkState.STOPPING;
 
-		if (ConfigUtils.onCloseSafeKick) {
-			PlayerUtils.kickAll(ConfigUtils.onCloseKickMessage);
+		if (ConfigUtils.onCloseSafeKick && ConfigUtils.onCloseKickMessage) {
+			PlayerUtils.kickAll(MessageConfUtils.kicksStopping);
 		}
 
 		if (ConfigUtils.onCloseMain) {

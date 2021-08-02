@@ -1510,6 +1510,18 @@ public class GuildUtils {
         }
     }
 
+    public static void saveAll(){
+        List<Guild> gs = new ArrayList<>(getGuilds());
+
+        for (Guild guild : gs) {
+            try {
+                guild.saveInfo();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     // MESSAGES...
     // Text.
     public static final String textLeader = StreamLine.config.getMessString("guild.text.leader");

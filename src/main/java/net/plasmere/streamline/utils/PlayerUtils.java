@@ -631,6 +631,10 @@ public class PlayerUtils {
     }
 
     public static SavableUser getOrCreateSavableUser(CommandSender sender){
+        if (sender.equals(StreamLine.getInstance().getProxy().getConsole())) {
+            return getConsoleStat();
+        }
+
         return getOrCreateSavableUser(sender.getName());
     }
 
@@ -1316,15 +1320,23 @@ public class PlayerUtils {
 
     ---------------------------- */
 
-    public static void kickAll(boolean withMessage) {
-        if (withMessage) {
-            for (ProxiedPlayer player : getOnlinePPlayers()) {
-                kick(player, MessageConfUtils.kicksStopping);
-            }
-        } else {
+    public static void kickAll(String message) {
+        if (message == null) {
             for (ProxiedPlayer player : getOnlinePPlayers()) {
                 kick(player);
             }
+            return;
+        }
+
+        if (message.equals("")) {
+            for (ProxiedPlayer player : getOnlinePPlayers()) {
+                kick(player);
+            }
+            return;
+        }
+
+        for (ProxiedPlayer player : getOnlinePPlayers()) {
+            kick(player, message);
         }
     }
 
