@@ -32,7 +32,7 @@ public class BanCommand extends Command implements TabExecutor {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess);
         } else {
             String otherName = args[1];
-            String otherUUID = UUIDFetcher.getCachedUUID(otherName);
+            String otherUUID = UUIDUtils.getCachedUUID(otherName);
 
             if (args[0].equals("add")) {
                 if (PlayerUtils.hasOfflinePermission(ConfigUtils.punBansBypass, otherUUID)) {
@@ -311,7 +311,7 @@ public class BanCommand extends Command implements TabExecutor {
 
         for (String uuid : bans.getKeys()) {
             if (uuid.contains("_")) continue;
-            if (bans.getBoolean(uuid + ".banned")) banned.add(UUIDFetcher.getCachedName(uuid));
+            if (bans.getBoolean(uuid + ".banned")) banned.add(UUIDUtils.getCachedName(uuid));
         }
 
         List<String> options = new ArrayList<>();

@@ -1,6 +1,6 @@
 package net.plasmere.streamline.objects;
 
-import net.plasmere.streamline.utils.UUIDFetcher;
+import net.plasmere.streamline.utils.UUIDUtils;
 
 import java.util.Date;
 import java.util.UUID;
@@ -19,26 +19,26 @@ public class Punishment {
     }
 
     public Punishment(String username, String reason){
-        this(username, UUIDFetcher.getCachedUUID(username), reason, null);
+        this(username, UUIDUtils.getCachedUUID(username), reason, null);
     }
 
     public Punishment(String username, Date until){
-        this(username, UUIDFetcher.getCachedUUID(username), "", until);
+        this(username, UUIDUtils.getCachedUUID(username), "", until);
     }
 
     public Punishment(String username){
-        this(username, UUIDFetcher.getCachedUUID(username), "", null);
+        this(username, UUIDUtils.getCachedUUID(username), "", null);
     }
 
     public Punishment(UUID uuid, String reason){
-        this(UUIDFetcher.getCachedName(uuid.toString()), uuid.toString(), reason, null);
+        this(UUIDUtils.getCachedName(uuid.toString()), uuid.toString(), reason, null);
     }
 
     public Punishment(UUID uuid, Date until){
-        this(UUIDFetcher.getCachedName(uuid.toString()), uuid.toString(), "", until);
+        this(UUIDUtils.getCachedName(uuid.toString()), uuid.toString(), "", until);
     }
 
     public Punishment(UUID uuid){
-        this(UUIDFetcher.getCachedName(uuid.toString()), uuid.toString(), "", null);
+        this(UUIDUtils.getCachedName(uuid.toString()), uuid.toString(), "", null);
     }
 }

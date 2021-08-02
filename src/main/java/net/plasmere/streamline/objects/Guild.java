@@ -6,7 +6,7 @@ import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
-import net.plasmere.streamline.utils.UUIDFetcher;
+import net.plasmere.streamline.utils.UUIDUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -64,14 +64,14 @@ public class Guild {
         if (thing.contains("-")){
             construct(thing, false);
         } else {
-            construct(Objects.requireNonNull(UUIDFetcher.getCachedUUID(thing)), false);
+            construct(Objects.requireNonNull(UUIDUtils.getCachedUUID(thing)), false);
         }
     }
 
     private void construct(String uuid, boolean createNew){
         if (uuid == null) return;
 
-        this.file = new File(filePrePath + uuid + ".properties");
+        this.file = UUIDUtils.getCachedFile(StreamLine.getInstance().getGDir(), uuid + ".properties");
 
         if (createNew) {
             try {

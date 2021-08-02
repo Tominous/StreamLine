@@ -22,7 +22,6 @@ import net.plasmere.streamline.utils.*;
 import net.plasmere.streamline.utils.holders.GeyserHolder;
 import net.plasmere.streamline.utils.holders.LPHolder;
 import net.plasmere.streamline.utils.holders.ViaHolder;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.ShutdownEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -91,8 +90,8 @@ public class StreamLine extends Plugin {
 	public void setCurrentMOTD(String motd) { this.currentMOTD = motd; }
 	public void setMotdPage(int page) { this.motdPage = page; }
 
-    private void init(){
-		if (jda != null) try { jda.shutdownNow(); jda = null; } catch (Exception e) { e.printStackTrace();}
+    private void initJDA(){
+		if (jda != null) try { jda.shutdownNow(); jda = null; } catch (Exception e) { e.printStackTrace(); }
 
 		try {
 			JDABuilder jdaBuilder = JDABuilder.createDefault(ConfigUtils.botToken)
@@ -249,7 +248,7 @@ public class StreamLine extends Plugin {
 		PluginUtils.loadListeners(this);
 
 		// JDA init.
-        Thread initThread = new Thread(this::init, "Streamline - Initialization");
+        Thread initThread = new Thread(this::initJDA, "Streamline - Initialization");
         initThread.setUncaughtExceptionHandler((t, e) -> {
             e.printStackTrace();
             getLogger().severe("Streamline failed to load properly: " + e.getMessage() + ".");

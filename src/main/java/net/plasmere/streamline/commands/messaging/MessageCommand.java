@@ -12,7 +12,7 @@ import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
-import net.plasmere.streamline.utils.UUIDFetcher;
+import net.plasmere.streamline.utils.UUIDUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -76,7 +76,7 @@ public class MessageCommand extends Command implements TabExecutor {
             ProxiedPlayer p = (ProxiedPlayer) sender;
             Player player = PlayerUtils.getOrCreatePlayerStatByUUID(p.getUniqueId().toString());
             for (String uuid : player.ignoredList) {
-                ignored.add(UUIDFetcher.getCachedName(uuid));
+                ignored.add(UUIDUtils.getCachedName(uuid));
             }
         }
 

@@ -7,6 +7,7 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.PluginUtils;
+import net.plasmere.streamline.utils.UUIDUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -61,7 +62,7 @@ public abstract class SavableUser {
 
         preConstruct(fileName);
 
-        this.file = new File(StreamLine.getInstance().getPlDir(), fileName + ".properties");
+        this.file = UUIDUtils.getCachedFile(StreamLine.getInstance().getPlDir(), fileName);
 
         if (createNew) {
             try {

@@ -36,7 +36,7 @@ public class JoinLeaveListener implements Listener {
 
         String ip = ev.getConnection().getSocketAddress().toString().replace("/", "").split(":")[0];
 
-        String uuid = UUIDFetcher.fetch(ev.getConnection().getName());
+        String uuid = UUIDUtils.fetch(ev.getConnection().getName());
 
         if (ConfigUtils.punBans) {
             String reason = PlayerUtils.checkIfBanned(uuid);

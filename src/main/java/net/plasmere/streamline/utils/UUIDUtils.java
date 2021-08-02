@@ -5,6 +5,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.gson.*;
 import net.md_5.bungee.api.CommandSender;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.users.Player;
 
 import java.io.*;
@@ -14,9 +15,12 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
-public class UUIDFetcher {
+public class UUIDUtils {
     public static Cache<String, String> cachedUUIDs = Caffeine.newBuilder().build();
     public static Cache<String, String> cachedNames = Caffeine.newBuilder().build();
+    public static Cache<String, File> cachedPlayerFiles = Caffeine.newBuilder().build();
+    public static Cache<String, File> cachedGuildFiles = Caffeine.newBuilder().build();
+    public static Cache<String, File> cachedOtherFiles = Caffeine.newBuilder().build();
 
     public static String getCachedUUID(String username) {
         try {
@@ -24,8 +28,9 @@ public class UUIDFetcher {
             return cachedUUIDs.get(username, (u) -> fetch(finalUsername));
         } catch (Exception e) {
             e.printStackTrace();
-            return UUID.randomUUID().toString();
         }
+
+        return null;
     }
 
     public static String getCachedName(String uuid) {
@@ -33,8 +38,9 @@ public class UUIDFetcher {
             return Objects.requireNonNull(cachedNames.get(uuid, (u) -> getName(uuid))).replace("\"", "");
         } catch (Exception e) {
             e.printStackTrace();
-            return "error";
         }
+
+        return null;
     }
 
     static public String fetch(String username) {
@@ -132,38 +138,86 @@ public class UUIDFetcher {
         return formatted.toString();
     }
 
-//    public static Player getPlayerByUUID(String uuid, boolean createIfNull){
-//        try {
-//            String name = getCachedName(uuid);
-//
-//            try {
-//                if (uuid == null || name.equals("error")) {
-//                    createIfNull = false;
-//                    throw new Exception("UUID is null!");
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//            if (createIfNull /*&& uuid != null*/) {
-//                return PlayerUtils.getOrCreateByUUID(uuid);
-//            } else {
-//                if (PlayerUtils.exists(name)) {
-//                    return PlayerUtils.getOrCreateByUUID(uuid);
-//                } else {
-//                    return null;
-//                }
-//            }
-//        } catch (Exception e){
-//            return null;
-//        }
-//    }
-
     public static String swapUUID(String uuid){
         if (uuid.contains("-")){
             return uuid.replace("-", "");
         } else {
             return formatToUUID(uuid);
         }
+    }
+
+    public static String swapToUUID(String thingThatMightBeAName){
+        String uuid = thingThatMightBeAName;
+
+        if (! thingThatMightBeAName.contains("-") && ! thingThatMightBeAName.equals("%")) {
+            uuid = getCachedUUID(thingThatMightBeAName);
+        }
+
+        return uuid;
+    }
+
+    public static String swapToName(String thingThatMightBeAUUID){
+        String name = thingThatMightBeAUUID;
+
+        if (thingThatMightBeAUUID.equals("%")) {
+            return ConfigUtils.consoleName;
+        }
+
+        if (thingThatMightBeAUUID.contains("-")) {
+            name = getCachedName(thingThatMightBeAUUID);
+        }
+
+        return name;
+    }
+
+    public static File getCachedPlayerFile(String thing) {
+        try {
+            return cachedPlayerFiles.get(swapToUUID(thing), (u) -> getPlayerFile(swapToUUID(thing)));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static File getPlayerFile(String uuid){
+        return new File(StreamLine.getInstance().getPlDir(), uuid + ".properties");
+    }
+
+    public static File getCachedGuildFile(String thing) {
+        try {
+            return cachedGuildFiles.get(swapToUUID(thing), (u) -> getGuildFile(swapToUUID(thing)));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static File getGuildFile(String uuid){
+        return new File(StreamLine.getInstance().getGDir(), uuid + ".properties");
+    }
+
+    public static File getCachedFile(String pathTo, String thing) {
+        return getCachedFile(new File(pathTo), thing);
+    }
+
+    public static File getCachedFile(File path, String thing) {
+        if (! path.isDirectory()) return null;
+
+        try {
+            if (path.equals(StreamLine.getInstance().getPlDir())) {
+                return cachedPlayerFiles.get(swapToUUID(thing), (u) -> getPlayerFile(swapToUUID(thing)));
+            }
+            if (path.equals(StreamLine.getInstance().getGDir())) {
+                return cachedGuildFiles.get(swapToUUID(thing), (u) -> getGuildFile(swapToUUID(thing)));
+            } else {
+                return cachedOtherFiles.get(thing, (u) -> new File(path, thing));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

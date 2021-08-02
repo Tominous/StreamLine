@@ -81,14 +81,14 @@ public class PlayerUtils {
         if (thing.contains("-")){
             return thing;
         } else {
-            return Objects.requireNonNull(UUIDFetcher.getCachedUUID(thing));
+            return Objects.requireNonNull(UUIDUtils.getCachedUUID(thing));
         }
     }
 
     public static boolean exists(String username){
         if (username.equals("%")) return existsByUUID(username);
 
-        return existsByUUID(UUIDFetcher.getCachedUUID(username));
+        return existsByUUID(UUIDUtils.getCachedUUID(username));
     }
 
     public static boolean existsByUUID(String uuid){
@@ -266,14 +266,14 @@ public class PlayerUtils {
     public static String getNameFromString(String thing) {
         if (thing.equals("%")) return getConsoleStat().latestName;
 
-        if (thing.contains("-")) return UUIDFetcher.getCachedName(thing);
+        if (thing.contains("-")) return UUIDUtils.getCachedName(thing);
         else return thing;
     }
 
     public static String getUUIDFromString(String thing) {
         if (thing.equals("%")) return thing;
 
-        return UUIDFetcher.getCachedUUID(thing);
+        return UUIDUtils.getCachedUUID(thing);
     }
 
     public static String checkIfBanned(String uuid) {
@@ -480,7 +480,7 @@ public class PlayerUtils {
     }
 
     public static Player createPlayerStat(String name) {
-        Player stat = addPlayerStat(new Player(UUIDFetcher.getCachedUUID(name), true));
+        Player stat = addPlayerStat(new Player(UUIDUtils.getCachedUUID(name), true));
 
         if (ConfigUtils.statsTell && stat.online) {
             MessagingUtils.sendStatUserMessage(stat, stat.player, create);
@@ -745,7 +745,7 @@ public class PlayerUtils {
                 if (isInStatsList(name)) {
                     return getPlayerStat(name);
                 } else {
-                    return new Player(UUIDFetcher.getCachedUUID(name), false);
+                    return new Player(UUIDUtils.getCachedUUID(name), false);
                 }
             } else return null;
         } catch (Exception e) {

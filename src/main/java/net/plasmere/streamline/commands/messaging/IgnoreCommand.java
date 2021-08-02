@@ -12,7 +12,7 @@ import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
-import net.plasmere.streamline.utils.UUIDFetcher;
+import net.plasmere.streamline.utils.UUIDUtils;
 
 import java.util.*;
 
@@ -132,7 +132,7 @@ public class IgnoreCommand extends Command implements TabExecutor {
         if (player == null) return new ArrayList<>();
 
         for (String uuid : player.ignoredList) {
-            ignored.add(UUIDFetcher.getCachedName(uuid));
+            ignored.add(UUIDUtils.getCachedName(uuid));
         }
 
         for (ProxiedPlayer pl : players) {

@@ -11,7 +11,6 @@ import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.TextUtils;
-import net.plasmere.streamline.utils.UUIDFetcher;
 
 import java.util.ArrayList;
 import java.util.Date;
