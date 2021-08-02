@@ -325,13 +325,7 @@ public class Guild {
         this.lvl = Integer.parseInt(getFromKey("lvl"));
 
         try {
-            loadMods();
-
-            loadMems();
-
-            loadTMems();
-
-            loadInvs();
+            loadAllMembers();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -373,80 +367,41 @@ public class Guild {
         updateKey("uuid", TextUtils.removeExtraDot(getFromKey("uuid").replace(uuid, "")));
     }
 
+    public void loadAllMembers(){
+        loadMods();
+        loadMems();
+        loadTMems();
+        loadInvs();
+    }
+
     public void loadMods(){
-        if (modsByUUID != null && moderators != null) {
-            moderators.clear();
-            for (String uuid : modsByUUID) {
-                try {
-                    SavableUser stat = getMember(uuid);
-
-                    if (stat == null) continue;
-
-                    moderators.add(stat);
-                } catch (Exception e) {
-                    // do nothing
-                }
-            }
-        } else {
-            moderators = new ArrayList<>();
-        }
+        loadPlayerList(modsByUUID, moderators);
     }
 
     public void loadMems(){
-        if (membersByUUID != null && members != null) {
-            members.clear();
-            for (String uuid : membersByUUID) {
-                try {
-                    SavableUser stat = getMember(uuid);
-
-                    if (stat == null) continue;
-
-                    members.add(stat);
-                } catch (Exception e) {
-                    // do nothing
-                }
-            }
-        } else {
-            members = new ArrayList<>();
-        }
+        loadPlayerList(membersByUUID, members);
     }
 
     public void loadTMems(){
-        if (totalMembersByUUID != null && totalMembers != null) {
-            totalMembers.clear();
-            for (String uuid : totalMembersByUUID) {
-                try {
-                    //MessagingUtils.logInfo("UUID : " + uuid.toString());
-                    SavableUser stat = getMember(uuid);
-
-                    if (stat == null) continue;
-
-                    totalMembers.add(stat);
-                } catch (Exception e) {
-                    // do nothing
-                }
-            }
-        } else {
-            totalMembers = new ArrayList<>();
-        }
+        loadPlayerList(totalMembersByUUID, totalMembers);
     }
 
     public void loadInvs(){
-        if (invitesByUUID != null && invites != null) {
-            invites.clear();
-            for (String uuid : invitesByUUID) {
-                try {
-                    SavableUser stat = getMember(uuid);
+        loadPlayerList(invitesByUUID, invites);
+    }
 
-                    if (stat == null) continue;
+    public void loadPlayerList(List<String> uuidList, List<SavableUser> userList){
+        if (uuidList == null) uuidList = new ArrayList<>();
+        if (userList == null) userList = new ArrayList<>();
 
-                    invites.add(stat);
-                } catch (Exception e) {
-                    // do nothing
-                }
-            }
-        } else {
-            invites = new ArrayList<>();
+        userList.clear();
+
+        for (String uuid : uuidList) {
+            SavableUser user = PlayerUtils.addStatByUUID(uuid);
+
+            if (user == null) continue;
+
+            userList.add(user);
         }
     }
 

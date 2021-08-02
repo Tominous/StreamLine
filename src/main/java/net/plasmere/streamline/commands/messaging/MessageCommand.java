@@ -7,6 +7,7 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.users.ConsolePlayer;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
@@ -39,7 +40,7 @@ public class MessageCommand extends Command implements TabExecutor {
         if (args.length <= 0) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else {
-            if (stat instanceof Player && stat.hasPermission(ConfigUtils.comBMessagePerm)) {
+            if (stat instanceof ConsolePlayer || stat.hasPermission(ConfigUtils.comBMessagePerm)) {
                 SavableUser statTo;
 
                 if (args[0].equals("%")) {

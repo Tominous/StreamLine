@@ -5,6 +5,7 @@ import net.md_5.bungee.api.plugin.Command;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.users.ConsolePlayer;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
@@ -32,8 +33,8 @@ public class ReplyCommand extends Command {
         if (args.length <= 0) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else {
-            if (stat instanceof Player && stat.hasPermission(ConfigUtils.comBReplyPerm)) {
-                SavableUser statTo = PlayerUtils.getOrGetPlayerStatByUUID(stat.replyToUUID);
+            if (stat instanceof ConsolePlayer || stat.hasPermission(ConfigUtils.comBReplyPerm)) {
+                SavableUser statTo = PlayerUtils.getOrGetSavableUser(stat.replyToUUID);
 
                 if (statTo == null) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);

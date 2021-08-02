@@ -155,6 +155,24 @@ public class PlayerUtils {
         return stat;
     }
 
+    public static Player addPlayerStat(ProxiedPlayer pp){
+        if (isInStatsListByUUID(pp.getUniqueId().toString())) return getPlayerStat(pp);
+
+        Player player = getOrGetPlayerStatByUUID(pp.getUniqueId().toString());
+
+        if (player == null) {
+            if (existsByUUID(pp.getUniqueId().toString())) {
+                player = new Player(pp, false);
+            } else {
+                player = new Player(pp, true);
+            }
+        }
+
+        addStat(player);
+
+        return player;
+    }
+
     public static void addStat(ConsolePlayer stat){
         if (isInStatsList(stat)) return;
 

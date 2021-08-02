@@ -288,7 +288,7 @@ public abstract class SavableUser {
         defaults.add("latest-version=" + latestVersion);
         defaults.add("guild=");
         defaults.add("tags=" + defaultTags());
-        defaults.add("points=" + ConfigUtils.pointsDefault);
+        defaults.add("points=" + (this.uuid.equals("%") ? ConfigUtils.consoleDefaultPoints : ConfigUtils.pointsDefault));
         defaults.add("last-from=");
         defaults.add("last-to=");
         defaults.add("last-message=");
@@ -510,7 +510,9 @@ public abstract class SavableUser {
         String search = "tags";
 
         try {
-            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (getFromKey(search) == null) return thing;
+            if (getFromKey(search).equals("")) return thing;
+
             if (! getFromKey(search).contains(",")) {
                 thing.add(getFromKey(search));
                 return thing;
@@ -539,7 +541,9 @@ public abstract class SavableUser {
         String search = "ignored";
 
         try {
-            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (getFromKey(search) == null) return thing;
+            if (getFromKey(search).equals("")) return thing;
+
             if (! getFromKey(search).contains(",")) {
                 thing.add(getFromKey(search));
                 return thing;
@@ -568,7 +572,9 @@ public abstract class SavableUser {
         String search = "friends";
 
         try {
-            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (getFromKey(search) == null) return thing;
+            if (getFromKey(search).equals("")) return thing;
+
             if (! getFromKey(search).contains(",")) {
                 thing.add(getFromKey(search));
                 return thing;
@@ -597,7 +603,9 @@ public abstract class SavableUser {
         String search = "pending-to-friends";
 
         try {
-            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (getFromKey(search) == null) return thing;
+            if (getFromKey(search).equals("")) return thing;
+
             if (! getFromKey(search).contains(",")) {
                 thing.add(getFromKey(search));
                 return thing;
@@ -626,7 +634,9 @@ public abstract class SavableUser {
         String search = "pending-from-friends";
 
         try {
-            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (getFromKey(search) == null) return thing;
+            if (getFromKey(search).equals("")) return thing;
+
             if (! getFromKey(search).contains(",")) {
                 thing.add(getFromKey(search));
                 return thing;
