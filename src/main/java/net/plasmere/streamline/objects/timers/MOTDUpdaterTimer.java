@@ -13,6 +13,10 @@ public class MOTDUpdaterTimer implements Runnable {
 
     @Override
     public void run() {
+        if (countdown == reset && countdown <= -1) {
+            return;
+        }
+
         if (countdown == 0) {
             done();
         }

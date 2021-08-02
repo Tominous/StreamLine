@@ -117,7 +117,7 @@ public class StreamLine extends Plugin {
 	public void loadGuilds(){
 		if (! gDir.exists()) {
 			try {
-				gDir.mkdir();
+				gDir.mkdirs();
 			} catch (Exception e){
 				e.printStackTrace();
 			}
@@ -127,7 +127,7 @@ public class StreamLine extends Plugin {
 	public void loadPlayers(){
 		if (! plDir.exists()) {
 			try {
-				plDir.mkdir();
+				plDir.mkdirs();
 			} catch (Exception e){
 				e.printStackTrace();
 			}
@@ -141,7 +141,7 @@ public class StreamLine extends Plugin {
 
 		if (! eventsDir.exists()) {
 			try {
-				eventsDir.mkdir();
+				eventsDir.mkdirs();
 			} catch (Exception e){
 				e.printStackTrace();
 			}
@@ -193,7 +193,7 @@ public class StreamLine extends Plugin {
 	public void loadServers(){
 		if (! confDir.exists()) {
 			try {
-				confDir.mkdir();
+				confDir.mkdirs();
 			} catch (Exception e){
 				e.printStackTrace();
 			}

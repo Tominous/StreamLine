@@ -42,7 +42,7 @@ public class GeyserHolder {
 
     public void setUpPath(){
         if (! playerPath.exists()) {
-            if (! playerPath.mkdir()) {
+            if (! playerPath.mkdirs()) {
                 MessagingUtils.logSevere("Error setting up the Geyser player path...");
             }
         }

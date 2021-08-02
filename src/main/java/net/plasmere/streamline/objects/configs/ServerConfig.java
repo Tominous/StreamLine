@@ -29,7 +29,7 @@ public class ServerConfig {
         if (! StreamLine.getInstance().getConfDir().exists()) {
             if (! ConfigUtils.scMakeDefault) return;
 
-            if (StreamLine.getInstance().getConfDir().mkdir()) {
+            if (StreamLine.getInstance().getConfDir().mkdirs()) {
                 MessagingUtils.logInfo("Made folder: " + StreamLine.getInstance().getConfDir().getName());
             }
         }

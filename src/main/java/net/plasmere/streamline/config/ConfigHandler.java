@@ -30,7 +30,7 @@ public class ConfigHandler {
 
     public ConfigHandler(){
         if (! StreamLine.getInstance().getDataFolder().exists()) {
-            if (StreamLine.getInstance().getDataFolder().mkdir()) {
+            if (StreamLine.getInstance().getDataFolder().mkdirs()) {
                 MessagingUtils.logInfo("Made folder: " + StreamLine.getInstance().getDataFolder().getName());
             }
         }
