@@ -69,6 +69,7 @@ public class FriendCommand extends Command implements TabExecutor {
             }
 
             switch (args[0]) {
+                case "add":
                 case "request":
                     if (stat.equals(other)) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.friendReqNSelf);
@@ -218,6 +219,7 @@ public class FriendCommand extends Command implements TabExecutor {
             options.add("deny");
             options.add("remove");
             options.add("list");
+            options.add("add");
 
             if (args.length == 1) {
                 return TextUtils.getCompletion(options, args[0]);

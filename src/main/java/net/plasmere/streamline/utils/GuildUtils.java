@@ -260,7 +260,7 @@ public class GuildUtils {
         try {
             Guild guild = getGuild(from);
 
-            if (!checkPlayer(guild, to, from)) return;
+            if (! checkPlayer(guild, to, from)) return;
 
             if (to.equals(from)) {
                 MessagingUtils.sendBUserMessage(from.sender, inviteNonSelf);
@@ -796,18 +796,18 @@ public class GuildUtils {
                         );
                     }
                 }
-            }
 
-            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleOpens) {
-                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, openTitle,
-                        openConsole
-                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
-                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
-                                .replace("%size%", String.valueOf(guild.maxSize))
-                                .replace("%name%", guild.name)
-                        , ConfigUtils.textChannelGuilds));
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleOpens) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, openTitle,
+                            openConsole
+                                    .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                                    .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                                    .replace("%size%", String.valueOf(guild.maxSize))
+                                    .replace("%name%", guild.name)
+                            , ConfigUtils.textChannelGuilds));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -860,18 +860,18 @@ public class GuildUtils {
                         );
                     }
                 }
-            }
 
-            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleCloses) {
-                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, closeTitle,
-                        closeConsole
-                                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
-                                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
-                                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
-                                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
-                                .replace("%size%", String.valueOf(guild.maxSize))
-                                .replace("%name%", guild.name)
-                        , ConfigUtils.textChannelGuilds));
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleCloses) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender.sender, closeTitle,
+                            closeConsole
+                                    .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(sender))
+                                    .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                                    .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(sender))
+                                    .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                                    .replace("%size%", String.valueOf(guild.maxSize))
+                                    .replace("%name%", guild.name)
+                            , ConfigUtils.textChannelGuilds));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
