@@ -462,7 +462,7 @@ party:
     # %moderatorbulk% = moderatorbulk section.
     # %memberbulk% = memberbulk section.
     # %user% = (only in context of "not-last" and "last") the specific member in the list of members
-    # %user% = (in everything else ^) the one running the command.
+    # %sender% = the one running the command.
     # Main message used to determine the other of parts of the message...
     main: "&7--< &5Party &6%size%&8/&6%max% &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
     # Bulk leader message.

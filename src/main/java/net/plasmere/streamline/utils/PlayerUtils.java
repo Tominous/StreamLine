@@ -630,6 +630,26 @@ public class PlayerUtils {
         return user;
     }
 
+    public static SavableUser getOrCreateSavableUserByUUID(String uuid){
+        if (uuid.equals("%")) {
+            return getOrCreateSUByUUID(uuid);
+        }
+
+        SavableUser user = getOrGetSavableUser(uuid);
+
+        if (user == null) {
+            if (isInOnlineList(uuid)) {
+                user = createPlayerStat(getPPlayerByUUID(uuid));
+            } else {
+                user = createPlayerStatByUUID(uuid);
+            }
+        } else {
+            addStat(user);
+        }
+
+        return user;
+    }
+
     public static SavableUser getOrCreateSavableUser(CommandSender sender){
         if (sender.equals(StreamLine.getInstance().getProxy().getConsole())) {
             return getConsoleStat();
@@ -1209,6 +1229,22 @@ public class PlayerUtils {
             } else {
                 return MessageConfUtils.offlineB.replace("%player%", stat.latestName);
             }
+        }
+
+        return MessageConfUtils.nullB;
+    }
+
+    public static String getOffOnAbsoluteBungee(SavableUser stat){
+        if (stat == null) {
+            return MessageConfUtils.nullB;
+        }
+
+        if (stat instanceof ConsolePlayer) {
+            return "%";
+        }
+
+        if (stat instanceof Player) {
+            return stat.latestName;
         }
 
         return MessageConfUtils.nullB;
