@@ -52,6 +52,18 @@ public class GuildUtils {
         }
     }
 
+    public static Guild getOrGetGuild(String uuid){
+        Guild guild = getGuild(uuid);
+
+        if (guild == null) {
+            if (existsByUUID(uuid)) {
+                guild = new Guild(uuid, false);
+            }
+        }
+
+        return guild;
+    }
+
     public static Guild getGuild(String uuid) {
         try {
             for (Guild guild : guilds) {
@@ -278,9 +290,9 @@ public class GuildUtils {
 
             if (to instanceof Player && ((Player) to).online) {
                 MessagingUtils.sendBGUserMessage(guild, from.sender, to.sender, inviteUser
-                        .replace("%to%", PlayerUtils.getOffOnDisplayBungee(to))
-                        .replace("%to_normal%", PlayerUtils.getOffOnRegDiscord(to))
-                        .replace("%to_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
+                        .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
+                        .replace("%user_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
                 );
             }
 
@@ -291,15 +303,15 @@ public class GuildUtils {
 
                 if (pl.equals(from)) {
                     MessagingUtils.sendBGUserMessage(guild, from.sender, member, inviteLeader
-                            .replace("%to%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%to_normal%", PlayerUtils.getOffOnRegDiscord(to))
-                            .replace("%to_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
+                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
+                            .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
+                            .replace("%user_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
                     );
                 } else {
                     MessagingUtils.sendBGUserMessage(guild, from.sender, member, inviteMembers
-                            .replace("%to%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%to_normal%", PlayerUtils.getOffOnRegDiscord(to))
-                            .replace("%to_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
+                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
+                            .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
+                            .replace("%user_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
                     );
                 }
             }
@@ -311,9 +323,9 @@ public class GuildUtils {
             if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleInvites) {
                 MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(from.sender, inviteTitle,
                         inviteConsole
-                                .replace("%to%", PlayerUtils.getOffOnDisplayBungee(to))
-                                .replace("%to_normal%", PlayerUtils.getOffOnRegDiscord(to))
-                                .replace("%to_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
+                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
+                                .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
+                                .replace("%user_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
                         , ConfigUtils.textChannelGuilds));
             }
         } catch (Exception e) {

@@ -23,6 +23,9 @@ public class UUIDUtils {
     public static Cache<String, File> cachedOtherFiles = Caffeine.newBuilder().build();
 
     public static String getCachedUUID(String username) {
+        if (username.equals("%")) return username;
+        if (username.contains("-")) return username;
+
         try {
             String finalUsername = username.replace("\"", "").toLowerCase(Locale.ROOT);
             return cachedUUIDs.get(username, (u) -> fetch(finalUsername));
@@ -34,6 +37,9 @@ public class UUIDUtils {
     }
 
     public static String getCachedName(String uuid) {
+        if (uuid.equals("%")) return uuid;
+        if (! uuid.contains("-")) return uuid;
+
         try {
             return Objects.requireNonNull(cachedNames.get(uuid, (u) -> getName(uuid))).replace("\"", "");
         } catch (Exception e) {

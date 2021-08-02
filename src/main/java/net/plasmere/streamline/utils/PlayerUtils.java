@@ -130,9 +130,23 @@ public class PlayerUtils {
     }
 
     public static Player addPlayerStatByUUID(String uuid){
-        addStatByUUID(uuid);
+        Player player = getOrGetPlayerStatByUUID(uuid);
 
-        return getPlayerStatByUUID(uuid);
+        if (player == null) {
+            if (isInStatsListByUUID(uuid)) {
+                player = getPlayerStatByUUID(uuid);
+            } else {
+                if (existsByUUID(uuid)) {
+                    player = new Player(uuid, false);
+                } else {
+                    player = new Player(uuid, true);
+                }
+            }
+        }
+
+        addPlayerStat(player);
+
+        return player;
     }
 
     public static Player addPlayerStat(Player stat){

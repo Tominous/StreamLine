@@ -206,9 +206,9 @@ public class PartyUtils {
 
             if (to.online) {
                 MessagingUtils.sendBPUserMessage(party, player, to.player, inviteUser
-                        .replace("%to%", PlayerUtils.getOffOnDisplayBungee(to))
-                        .replace("%to_normal%", PlayerUtils.getOffOnRegDiscord(to))
-                        .replace("%to_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
+                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
+                        .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
+                        .replace("%user_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
                 );
             }
 
@@ -228,15 +228,15 @@ public class PartyUtils {
 
                 if (pl.equals(from)) {
                     MessagingUtils.sendBPUserMessage(party, player, member, inviteLeader
-                            .replace("%to%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%to_normal%", PlayerUtils.getOffOnRegDiscord(to))
-                            .replace("%to_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
+                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
+                            .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
+                            .replace("%user_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
                     );
                 } else {
                     MessagingUtils.sendBPUserMessage(party, player, member, inviteMembers
-                            .replace("%to%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%to_normal%", PlayerUtils.getOffOnRegDiscord(to))
-                            .replace("%to_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
+                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
+                            .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
+                            .replace("%user_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
                     );
                 }
             }
@@ -248,9 +248,9 @@ public class PartyUtils {
             if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleInvites) {
                 MessagingUtils.sendDiscordPEBMessage(party, new DiscordMessage(player, inviteTitle,
                         inviteConsole
-                                .replace("%to%", PlayerUtils.getOffOnDisplayBungee(to))
-                                .replace("%to_normal%", PlayerUtils.getOffOnRegDiscord(to))
-                                .replace("%to_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
+                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
+                                .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
+                                .replace("%user_absolute%", PlayerUtils.getOffOnAbsoluteBungee(to))
                         , ConfigUtils.textChannelParties));
             }
         } catch (Exception e) {

@@ -363,14 +363,7 @@ public class Guild {
     }
 
     public SavableUser getMember(String uuid) {
-        SavableUser stat = PlayerUtils.getOrCreateSUByUUID(uuid);
-
-        if (stat == null) {
-            removeUUID(uuid);
-            return null;
-        }
-
-        return stat;
+        return PlayerUtils.getOrGetPlayerStatByUUID(uuid);
     }
 
     public void removeUUID(String uuid) {

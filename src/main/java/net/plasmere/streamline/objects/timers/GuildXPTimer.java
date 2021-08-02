@@ -5,8 +5,12 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuildXPTimer implements Runnable {
     public int countdown;
@@ -29,19 +33,15 @@ public class GuildXPTimer implements Runnable {
     public void done(){
         countdown = reset;
         try {
-            for (ProxiedPlayer pl : StreamLine.getInstance().getProxy().getPlayers()){
-                Player player = PlayerUtils.getPlayerStat(pl);
-                if (GuildUtils.getGuild(player) == null) continue;
+            List<SavableUser> users = new ArrayList<>(PlayerUtils.getStats());
 
-                Guild guild = GuildUtils.getGuild(player);
+            for (SavableUser user : users) {
+                if (user.guild == null) user.updateKey("guild", "");
+                if (user.guild.equals("")) continue;
 
-                if (guild == null) continue;
+                Guild guild = GuildUtils.getOrGetGuild(user.guild);
 
                 guild.addTotalXP(ConfigUtils.xpPerGiveG);
-
-                guild.saveInfo();
-
-                //MessagingUtils.sendBGUserMessage(guild, StreamLine.getInstance().getProxy().getConsole(), pl, "&eJust gave you &6" + ConfigUtils.xpPerGiveG + " &2GEXP&e!");
             }
         } catch (Exception e){
             e.printStackTrace();

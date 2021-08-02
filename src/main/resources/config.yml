@@ -946,7 +946,7 @@ modules:
       xp:
         # Amount to give each guild per player online every "time-per" seconds.
         amount-per: 1
-        # Amount of seconds per totalXP handout.
+        # Amount of seconds per xp handout.
         time-per: 20
       # (Staff) permission to see guild messages.
       view-permission: "streamline.view.guild"
@@ -969,7 +969,7 @@ modules:
       xp:
         # Amount to give each guild per player online every "time-per" seconds.
         amount-per: 1
-        # Amount of seconds per totalXP handout.
+        # Amount of seconds per xp handout.
         time-per: 20
       # Time in seconds to wait before trying to clear the cached stats.
       cache-clear: 300

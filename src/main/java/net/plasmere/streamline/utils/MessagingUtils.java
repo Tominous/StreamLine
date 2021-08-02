@@ -360,11 +360,11 @@ public class MessagingUtils {
                 .replace("%ismuted%", getIsMuted(party))
                 .replace("%version%", PlayerUtils.getOrCreateSavableUser(sender).latestVersion)
                 .replace("%version%", PlayerUtils.getOrCreatePlayerStat((ProxiedPlayer) sender).latestVersion)
-                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader.player))))
+                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(party.leaderUUID)))
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(sender)))
-                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStatByUUID(party.leaderUUID)))
+                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(party.leaderUUID)))
                 .replace("%leader_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(party.leaderUUID)))
                 .replace("%size%", Integer.toString(party.getSize()))
         ));
@@ -390,11 +390,11 @@ public class MessagingUtils {
                 .replace("%ismuted%", getIsMuted(party))
                 .replace("%version%", PlayerUtils.getOrCreateSavableUser(message.sender).latestVersion)
                 .replace("%version%", PlayerUtils.getOrCreatePlayerStat((ProxiedPlayer) message.sender).latestVersion)
-                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(PlayerUtils.getPlayerStat(party.leader.player))))
+                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(party.leaderUUID)))
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(message.sender)))
                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSavableUser(message.sender)))
                 .replace("%sender_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(message.sender)))
-                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStatByUUID(party.leaderUUID)))
+                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(party.leaderUUID)))
                 .replace("%leader_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(party.leaderUUID)))
                 .replace("%size%", Integer.toString(party.getSize()));
 
@@ -458,8 +458,8 @@ public class MessagingUtils {
                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(sender)))
-                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreatePlayerStatByUUID(guild.leaderUUID)))
-                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStatByUUID(guild.leaderUUID)))
+                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                 .replace("%leader_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(guild.leaderUUID)))
         ));
     }
@@ -495,8 +495,8 @@ public class MessagingUtils {
                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSavableUser(message.sender)))
                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSavableUser(message.sender)))
                 .replace("%sender_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(message.sender)))
-                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreatePlayerStatByUUID(guild.leaderUUID)))
-                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStatByUUID(guild.leaderUUID)))
+                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                 .replace("%leader_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(guild.leaderUUID)));
 
         try {

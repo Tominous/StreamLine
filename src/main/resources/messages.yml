@@ -338,7 +338,7 @@ party:
     # %sender% = the player's display name.
     # %sender_normal% = the player's regular name.
     # %size% = the size of the party.
-    console: "%sender_normal% created a party with size %size%!"
+    console: "%sender_absolute% created a party with size %size%!"
     # Discord embed title.
     title: "PARTY CREATE"
   # Message for when someone joins a party...
@@ -347,7 +347,7 @@ party:
     # %user% = the person joining.
     # %leader% = the party leader.
     # Members of the party.
-    members: "&b%user% &ejust joined the party!"
+    members: "&b%sender% &ejust joined the party!"
     # Command sender.
     user: "&eYou just joined &b%leader%&e's party!"
     # If failed.
@@ -359,7 +359,7 @@ party:
     # %leader% = the leader-of-the-group's display name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
-    console: "%sender_normal% joined %leader_normal%'s party!"
+    console: "%sender_absolute% joined %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY JOIN"
   # Message for when someone leaves a party...
@@ -368,7 +368,7 @@ party:
     # %user% = the person joining.
     # %leader% = the party leader.
     # Members of the party.
-    members: "&b%user% &ejust left the party."
+    members: "&b%sender% &ejust left the party."
     # Command sender.
     user: "&eYou just left &b%leader%&e's party."
     # If failed.
@@ -378,7 +378,7 @@ party:
     # %sender% = the player's display name.
     # %leader% = the leader-of-the-group's display name.
     # %size% = the size of the party.
-    console: "%sender_normal% left %leader_normal%'s party!"
+    console: "%sender_absolute% left %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY LEAVE"
   # Message for when promoting someone...
@@ -404,7 +404,7 @@ party:
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
-    console: "%sender_normal% promoted %user_normal% in %leader_normal%'s party!"
+    console: "%sender_absolute% promoted %user_normal% in %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY PROMOTE"
   # Message for demoting someone...
@@ -432,7 +432,7 @@ party:
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
-    console: "%sender_normal% demoted %user_normal% in %leader_normal%'s party!"
+    console: "%sender_absolute% demoted %user_normal% in %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY DEMOTE"
   # Message when someone chats...
@@ -507,7 +507,7 @@ party:
     # %sender% = the player's display name.
     # %sender_normal% = the player's regular name.
     # %size% = the size of the party.
-    console: "%sender_normal% just opened %leader_normal%'s party to a size of %size%!"
+    console: "%sender_absolute% just opened %leader_normal%'s party to a size of %size%!"
     # Discord embed title.
     title: "PARTY OPEN"
   # Message for closing the party...
@@ -528,7 +528,7 @@ party:
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
-    console: "%sender_normal% closed %leader_normal%'s party!"
+    console: "%sender_absolute% closed %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY CLOSE"
   # Message for disbanding the party...
@@ -546,7 +546,7 @@ party:
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
-    console: "%sender_normal% disbanded %leader_normal%'s party!"
+    console: "%sender_absolute% disbanded %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY DISBAND"
   # Message for accepting an invite to a party...
@@ -569,7 +569,7 @@ party:
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
-    console: "%sender_normal% accepted invite to %leader_normal%'s party!"
+    console: "%sender_absolute% accepted invite to %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY ACCEPT"
   # Message for denying an invite to a party...
@@ -592,7 +592,7 @@ party:
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
-    console: "%sender_normal% denied the invite to %leader_normal%'s party!"
+    console: "%sender_absolute% denied the invite to %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY DENY"
   # Message for sending an invite of a party...
@@ -621,7 +621,7 @@ party:
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
-    console: "%sender_normal% invited %user_normal% to %leader_normal%'s party!"
+    console: "%sender_absolute% invited %user_normal% to %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY INVITE"
   # Messages for kicking...
@@ -649,7 +649,7 @@ party:
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
-    console: "%sender_normal% kicked %user_normal% from %leader_normal%'s party!"
+    console: "%sender_absolute% kicked %user_normal% from %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY KICK"
   # Messages for muting...
@@ -676,7 +676,7 @@ party:
     # %leader_normal% = the leader-of-the-group's regular name.
     # %toggle% = the message below for guild.mute.toggle
     # %size% = the size of the party.
-    console: "%sender_normal% set %leader_normal%'s party's to %toggle%!"
+    console: "%sender_absolute% set %leader_normal%'s party's to %toggle%!"
     # Toggle for message above.
     toggle:
       muted: "muted"
@@ -696,7 +696,7 @@ party:
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the guild.
-    console: "%sender_normal% warped %leader_normal%'s party's to their server!"
+    console: "%sender_absolute% warped %leader_normal%'s party's to their server!"
     # Discord embed title.
     title: "PARTY WARP"
 
@@ -850,7 +850,7 @@ guild:
     # %sender_normal% = the player's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_normal% created a guild with size %size% named %name%!"
+    console: "%sender_absolute% created a guild with size %size% named %name%!"
     # Discord embed title.
     title: "PARTY CREATE"
   # Message for when someone joins a guild...
@@ -859,7 +859,7 @@ guild:
     # %user% = the person joining.
     # %leader% = the guild leader.
     # For members.
-    members: "&b%user% &ejust joined the guild!"
+    members: "&b%sender% &ejust joined the guild!"
     # For joining player.
     user: "&eYou just joined &b%leader%&e's guild!"
     # If failed.
@@ -872,7 +872,7 @@ guild:
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_normal% joined %leader_normal%'s guild!"
+    console: "%sender_absolute% joined %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD JOIN"
   # Message for when someone leaves a guild...
@@ -881,7 +881,7 @@ guild:
     # %user% = the person joining.
     # %leader% = the guild leader.
     # For members.
-    members: "&b%user% &ejust left the guild."
+    members: "&b%sender% &ejust left the guild."
     # For user who left.
     user: "&eYou just left &b%leader%&e's guild."
     failure: "&cThere is no guild to leave."
@@ -893,7 +893,7 @@ guild:
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_normal% left %leader_normal%'s guild!"
+    console: "%sender_absolute% left %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD LEAVE"
   # Message for when promoting someone...
@@ -916,11 +916,11 @@ guild:
     # %sender% = the player's display name.
     # %leader% = the leader-of-the-group's display name.
     # %user_normal% = the user-the-action-is-being-used-on's regular name.
-    # %sender_normal% = the player's regular name.
+    # %sender_absolute% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_normal% promoted %user_normal% in %leader_normal%'s guild!"
+    console: "%sender_absolute% promoted %user_normal% in %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD PROMOTE"
   # Message for demoting someone...
@@ -949,7 +949,7 @@ guild:
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_normal% demoted %user_normal% in %leader_normal%'s guild!"
+    console: "%sender_absolute% demoted %user_normal% in %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD DEMOTE"
   # Message when someone chats...
@@ -1028,7 +1028,7 @@ guild:
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_normal% just opened %leader_normal%'s guild to a size of %size%!"
+    console: "%sender_absolute% just opened %leader_normal%'s guild to a size of %size%!"
     # Discord embed title.
     title: "GUILD OPEN"
   # Message for closing the guild...
@@ -1050,7 +1050,7 @@ guild:
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_normal% closed %leader_normal%'s guild!"
+    console: "%sender_absolute% closed %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD CLOSE"
   # Message for disbanding the guild...
@@ -1069,7 +1069,7 @@ guild:
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_normal% disbanded %leader_normal%'s guild!"
+    console: "%sender_absolute% disbanded %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD DISBAND"
   # Message for accepting an invite to a guild...
@@ -1092,7 +1092,7 @@ guild:
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the guild.
-    console: "%sender_normal% accepted invite to %leader_normal%'s guild!"
+    console: "%sender_absolute% accepted invite to %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD ACCEPT"
   # Message for denying an invite to a guild...
@@ -1115,7 +1115,7 @@ guild:
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the guild.
-    console: "%sender_normal% denied invite to %leader_normal%'s guild!"
+    console: "%sender_absolute% denied invite to %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD DENY"
   # Message for sending an invite of a guild...
@@ -1145,7 +1145,7 @@ guild:
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_normal% invited %user_normal% to %leader_normal%'s guild!"
+    console: "%sender_absolute% invited %user_normal% to %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD INVITE"
   # Kick messages...
@@ -1174,7 +1174,7 @@ guild:
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_normal% kicked %user_normal% from %leader_normal%'s guild!"
+    console: "%sender_absolute% kicked %user_normal% from %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD KICK"
   # Mute messages.
@@ -1201,7 +1201,7 @@ guild:
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_normal% set %leader_normal%'s guild's to %toggle%!"
+    console: "%sender_absolute% set %leader_normal%'s guild's to %toggle%!"
     # Toggle for message above.
     toggle:
       muted: "muted"
@@ -1222,7 +1222,7 @@ guild:
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_normal% warped %leader_normal%'s guild to their server!"
+    console: "%sender_absolute% warped %leader_normal%'s guild to their server!"
     # Discord embed title.
     title: "GUILD WARP"
   # Info message.
@@ -1241,7 +1241,7 @@ guild:
     # %name% = the name of the guild.
     # %old_name% = the old name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_normal% renamed %leader_normal%'s guild to %name% from %old_name%!"
+    console: "%sender_absolute% renamed %leader_normal%'s guild to %name% from %old_name%!"
     # Discord embed title.
     title: "GUILD RENAME"
 
@@ -1726,7 +1726,7 @@ friend:
     # What you see.
     self: "&eYou just requested &d%player%&e to be your &afriend&e!"
     # What they see.
-    other: "&d%sender% &ejust requested you to be their &afriend&e!%newline%&eType &b/f accept %sender_normal% &eto accept!"
+    other: "&d%sender% &ejust requested you to be their &afriend&e!%newline%&eType &b/f accept %sender_absolute% &eto accept!"
     # Already added.
     already: "&cYou already friended &d%player%&e!"
     # Not self.

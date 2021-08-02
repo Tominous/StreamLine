@@ -405,8 +405,8 @@ public class ConfigUtils {
     public static boolean guildConsoleMutes = StreamLine.config.getConfBoolean("modules.bungee.guilds.console.mutes");
     public static boolean guildConsoleWarps = StreamLine.config.getConfBoolean("modules.bungee.guilds.console.warps");
     public static boolean guildConsoleRenames = StreamLine.config.getConfBoolean("modules.bungee.guilds.console.renames");
-    public static int xpPerGiveG = StreamLine.config.getConfInteger("modules.bungee.guilds.totalXP.amount-per");
-    public static int timePerGiveG = StreamLine.config.getConfInteger("modules.bungee.guilds.totalXP.time-per");
+    public static int xpPerGiveG = StreamLine.config.getConfInteger("modules.bungee.guilds.xp.amount-per");
+    public static int timePerGiveG = StreamLine.config.getConfInteger("modules.bungee.guilds.xp.time-per");
     public static String guildView = StreamLine.config.getConfString("modules.bungee.guilds.view-permission");
     public static int guildMaxLength = StreamLine.config.getConfInteger("modules.bungee.guilds.name.max-length");
     public static boolean guildIncludeColors = StreamLine.config.getConfBoolean("modules.bungee.guilds.name.max-includes-colors");
@@ -416,8 +416,8 @@ public class ConfigUtils {
     public static String noSudoPerm = StreamLine.config.getConfString("modules.bungee.sudo.no-sudo-permission");
     // ... Stats.
     public static boolean statsTell = StreamLine.config.getConfBoolean("modules.bungee.stats.tell-when-create");
-    public static int xpPerGiveP = StreamLine.config.getConfInteger("modules.bungee.stats.totalXP.amount-per");
-    public static int timePerGiveP = StreamLine.config.getConfInteger("modules.bungee.stats.totalXP.time-per");
+    public static int xpPerGiveP = StreamLine.config.getConfInteger("modules.bungee.stats.xp.amount-per");
+    public static int timePerGiveP = StreamLine.config.getConfInteger("modules.bungee.stats.xp.time-per");
     public static int cachedPClear = StreamLine.config.getConfInteger("modules.bungee.stats.cache-clear");
     public static boolean updateDisplayNames = StreamLine.config.getConfBoolean("modules.bungee.stats.update-display-names");
     // ... Redirect.

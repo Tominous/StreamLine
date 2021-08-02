@@ -31,14 +31,8 @@ public class PlayerXPTimer implements Runnable {
     public void done(){
         countdown = reset;
         try {
-            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getPlayerStat(player);
-
-                if (p == null) continue;
-                if (! p.online) continue;
-
-                p.addTotalXP(ConfigUtils.xpPerGiveP);
-
+            for (Player player : PlayerUtils.getJustPlayers()) {
+                player.addTotalXP(ConfigUtils.xpPerGiveP);
             }
 
             if (ConfigUtils.debug) MessagingUtils.logInfo("Just gave out XP to " + StreamLine.getInstance().getProxy().getPlayers().size() + " online players!");
@@ -46,32 +40,6 @@ public class PlayerXPTimer implements Runnable {
             e.printStackTrace();
         }
 
-        try {
-            int count = 0;
-            List<Player> players = PlayerUtils.getJustPlayers();
-            List<Player> toRemove = new ArrayList<>();
-
-            for (Player player : players) {
-                if (! player.online) {
-                    toRemove.add(player);
-                }
-            }
-
-            for (Player player : toRemove) {
-                try {
-                    player.saveInfo();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                PlayerUtils.removeStat(player);
-                count ++;
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //MessagingUtils.logInfo("Just gave " + ConfigUtils.xpPerGiveP + " Network EXP to " + PlayerUtils.getJustPlayers().size() + " players!");
-
-        //StreamLine.getInstance().getProxy().getScheduler().schedule(StreamLine.getInstance(), new PlayerXPTimer(ConfigUtils.timePerGiveP), 1, 1, TimeUnit.SECONDS);
+        PlayerUtils.removeOfflineStats();
     }
 }
