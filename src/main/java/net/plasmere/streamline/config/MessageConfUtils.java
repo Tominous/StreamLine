@@ -20,6 +20,7 @@ public class MessageConfUtils {
     public static String bungeeCommandErrorUnd = StreamLine.config.getMessString("command-error.bungee.undefined");
     public static String bungeeCommandErrorInt = StreamLine.config.getMessString("command-error.bungee.needs-int");
     public static String bungeeCommandErrorSTime = StreamLine.config.getMessString("command-error.bungee.needs-stringed-time");
+    public static String bungeeCommandErrorNoYou = StreamLine.config.getMessString("command-error.bungee.cant-find-you");
     // Command Disabled.
     public static String discordCommandDisabled = StreamLine.config.getMessString("command-disabled.discord");
     public static String bungeeCommandDisabled = StreamLine.config.getMessString("command-disabled.bungee");

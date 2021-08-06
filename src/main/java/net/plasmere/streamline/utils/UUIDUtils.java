@@ -33,7 +33,7 @@ public class UUIDUtils {
             e.printStackTrace();
         }
 
-        return null;
+        return "error";
     }
 
     public static String getCachedName(String uuid) {
@@ -46,7 +46,7 @@ public class UUIDUtils {
             e.printStackTrace();
         }
 
-        return null;
+        return "error";
     }
 
     static public String fetch(String username) {

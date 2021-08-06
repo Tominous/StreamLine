@@ -2,8 +2,10 @@ package net.plasmere.streamline.objects.users;
 
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.PluginUtils;
@@ -41,9 +43,8 @@ public abstract class SavableUser {
     public List<String> pendingToFriendList;
     public String pendingFromFriends;
     public List<String> pendingFromFriendList;
-    public CommandSender sender;
     public String latestVersion;
-    public String latestServer;
+//    public String latestServer;
 
     public List<String> savedKeys = new ArrayList<>();
 
@@ -56,9 +57,7 @@ public abstract class SavableUser {
 
         this.uuid = fileName;
         this.savableUser = this;
-        this.sender = findSender();
         this.latestVersion = "UNKNOWN";
-        this.latestServer = "SPACE";
 
         preConstruct(fileName);
 
@@ -83,11 +82,33 @@ public abstract class SavableUser {
         return savableUser;
     }
 
+//    public void updateSender() {
+//        this.sender = findSender();
+//    }
+
+//    public void updateServer() {
+//        this.latestServer = findServer();
+//    }
+
     public CommandSender findSender() {
         if (this.uuid.equals("%")) {
             return StreamLine.getInstance().getProxy().getConsole();
         } else {
             return PlayerUtils.getPPlayerByUUID(this.uuid);
+        }
+    }
+
+    public String findServer() {
+        if (this.uuid.equals("%")) {
+            return ConfigUtils.consoleServer;
+        } else {
+            ProxiedPlayer player = PlayerUtils.getPPlayerByUUID(this.uuid);
+
+            if (player == null) return MessageConfUtils.nullB;
+
+            if (player.getServer() == null) return ConfigUtils.consoleServer;
+
+            return player.getServer().getInfo().getName();
         }
     }
 
@@ -299,7 +320,7 @@ public abstract class SavableUser {
         defaults.add("friends=");
         defaults.add("pending-to-friends=");
         defaults.add("pending-from-friends=");
-        defaults.add("latest-server=" + latestServer);
+        defaults.add("latest-server=" + findServer());
         //defaults.add("");
         defaults.addAll(addedProperties());
         return defaults;
@@ -335,7 +356,7 @@ public abstract class SavableUser {
         this.displayName = getFromKey("display-name");
         this.guild = getFromKey("guild");
         this.tagList = loadTags();
-        this.points = Integer.parseInt(getFromKey("points"));
+        this.points = Integer.parseInt(getFromKey("points") == null ? "0" : getFromKey("points"));
         this.lastFromUUID = getFromKey("last-from");
         this.lastToUUID = getFromKey("last-to");
         this.lastMessage = getFromKey("last-message");
@@ -346,9 +367,25 @@ public abstract class SavableUser {
         this.friendList = loadFriends();
         this.pendingToFriendList = loadPendingToFriends();
         this.pendingFromFriendList = loadPendingFromFriends();
-        this.latestServer = getFromKey("latest-server");
+//        this.latestServer = getFromKey("latest-server");
 
         loadMoreVars();
+
+        if (this.latestName == null) {
+            try {
+                throw new Exception("Bad User Data for user: " + this.uuid + "!");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (this.latestName.equals("null")) {
+            try {
+                throw new Exception("Bad User Data for user: " + this.uuid + "!");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     abstract public void loadMoreVars();
@@ -681,7 +718,7 @@ public abstract class SavableUser {
     }
 
     public void setLatestServer(String server) {
-        this.latestServer = server;
+        //this.latestServer = server;
         updateKey("latest-server", server);
     }
 
@@ -738,43 +775,43 @@ public abstract class SavableUser {
 
     @Deprecated
     public void sendMessage(String message) {
-        sender.sendMessage(message);
+        findSender().sendMessage(message);
     }
 
     @Deprecated
     public void sendMessages(String... messages) {
-        sender.sendMessages(messages);
+        findSender().sendMessages(messages);
     }
 
     public void sendMessage(BaseComponent... message) {
-        sender.sendMessage(message);
+        findSender().sendMessage(message);
     }
 
     public void sendMessage(BaseComponent message) {
-        sender.sendMessage(message);
+        findSender().sendMessage(message);
     }
 
     public Collection<String> getGroups() {
-        return sender.getGroups();
+        return findSender().getGroups();
     }
 
     public void addGroups(String... groups) {
-        sender.addGroups(groups);
+        findSender().addGroups(groups);
     }
 
     public void removeGroups(String... groups) {
-        sender.removeGroups(groups);
+        findSender().removeGroups(groups);
     }
 
     public boolean hasPermission(String permission) {
-        return sender.hasPermission(permission);
+        return findSender().hasPermission(permission);
     }
 
     public void setPermission(String permission, boolean value) {
-        sender.setPermission(permission, value);
+        findSender().setPermission(permission, value);
     }
 
     public Collection<String> getPermissions() {
-        return sender.getPermissions();
+        return findSender().getPermissions();
     }
 }

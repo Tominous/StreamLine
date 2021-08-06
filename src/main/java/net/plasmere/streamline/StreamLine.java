@@ -255,14 +255,11 @@ public class StreamLine extends Plugin {
         });
         initThread.start();
 
-        // Guilds.
-		loadGuilds();
-
 		// Players.
 		loadPlayers();
 
-		// Timers.
-		loadTimers();
+		// Guilds.
+		loadGuilds();
 
 		// Events.
 		loadEvents();
@@ -273,6 +270,9 @@ public class StreamLine extends Plugin {
 		} else {
 			getLogger().severe("Streamline server custom configs have been disabled due to no ViaVersion being detected.");
 		}
+
+		// Timers.
+		loadTimers();
 
 		// Set up ConsolePlayer.
 		ConsolePlayer console = PlayerUtils.applyConsole();
@@ -344,8 +344,6 @@ public class StreamLine extends Plugin {
 		}
 
 		saveGuilds();
-
-		PlayerUtils.removeOfflineStats();
 
 		PluginUtils.state = NetworkState.STOPPED;
 	}

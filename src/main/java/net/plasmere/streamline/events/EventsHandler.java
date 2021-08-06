@@ -184,6 +184,8 @@ public class EventsHandler {
         int success = 0;
 
         for (String tag : event.tags){
+            if (check == null) return false;
+
             for (String t : check.tagList){
                 if (tag.equals(t)) {
                     success++;

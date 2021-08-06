@@ -70,8 +70,6 @@ public class JoinLeaveListener implements Listener {
         stat.tryAddNewIP(player);
 
         try {
-            List<SavableUser> users = new ArrayList<>(PlayerUtils.getStats());
-
             if (stat.guild != null) {
                 if (! stat.guild.equals("")) {
                     if (! GuildUtils.existsByUUID(stat.guild)) {

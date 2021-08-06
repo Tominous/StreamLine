@@ -28,40 +28,11 @@ public class PlaytimeTimer implements Runnable {
     public void done(){
         countdown = reset;
         try {
-            for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
-                Player p = PlayerUtils.getPlayerStat(player);
-
-                if (p == null) continue;
-                if (! p.online) continue;
-
-                p.addPlaySecond(1);
+            for (Player player : PlayerUtils.getJustPlayersOnline()) {
+                player.addPlaySecond(1);
             }
 
             //if (ConfigUtils.debug) MessagingUtils.logInfo("Just gave out PlayTime to " + StreamLine.getInstance().getProxy().getPlayers().size() + " online players!");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        try {
-            int count = 0;
-            List<Player> players = PlayerUtils.getJustPlayers();
-            List<Player> toRemove = new ArrayList<>();
-
-            for (Player player : players) {
-                if (! player.online) {
-                    toRemove.add(player);
-                }
-            }
-
-            for (Player player : toRemove) {
-                try {
-                    player.saveInfo();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                PlayerUtils.removeStat(player);
-                count ++;
-            }
         } catch (Exception e){
             e.printStackTrace();
         }

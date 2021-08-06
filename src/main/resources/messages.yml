@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "12"
+version: "13"
 
 # All bungee messages accept all color and formatting codes.
 # For new lines, use %newline%.
@@ -30,6 +30,8 @@ command-error:
     needs-int: "&cYou need to specify an integer..."
     # If the error was thrown because it needs a stringed time duration.
     needs-stringed-time: "&cYou have to specify a stringed time duration... i.e. 1y or 20d"
+    # If the error was thrown because it cannot find the sender's player stat.
+    cant-find-you: "&cSorry, but we cannot find your user in our files... This appears to be a problem with the %class% class!"
 # If a command is disabled.
 command-disabled:
   # Discord error message when a command is not enabled.
@@ -603,7 +605,7 @@ party:
     # %leader% = the party leader.
     # %leader_normal% = the party leader formatted without their display name.
     # User who is being invited.
-    user: "&b%sender% &einvited you to &b%leader%&e's party!%newline%&eType &a/party accept %leader_normal% &eto join!"
+    user: "&b%sender% &einvited you to &b%leader%&e's party!%newline%&eType &a/party accept %leader_absolute% &eto join!"
     # Members of party.
     members: "&b%sender% &einvited &b%user% &eto your party!"
     # Leader of party.
@@ -1126,7 +1128,7 @@ guild:
     # %leader% = the guild leader.
     # %leader_normal% = the guild leader formatted without their display name.
     # For user who was invited.
-    user: "&b%sender% &einvited you to &b%leader%&e's guild!%newline%&eType &a/guild accept %leader_normal% &eto join!"
+    user: "&b%sender% &einvited you to &b%leader%&e's guild!%newline%&eType &a/guild accept %leader_absolute% &eto join!"
     # For members.
     members: "&b%sender% &einvited &b%user% &eto your guild!"
     # For leader.

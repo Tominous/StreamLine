@@ -15,6 +15,7 @@ import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.users.ConsolePlayer;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.users.SavableUser;
@@ -38,6 +39,7 @@ public class PlayerUtils {
     private static final List<SavableUser> stats = new ArrayList<>();
 
     private static HashMap<Player, SingleSet<Integer, Integer>> connections = new HashMap<>();
+    private static TreeMap<String, TreeMap<Integer, SavableUser>> toSave = new TreeMap<>();
 
     public static ConsolePlayer applyConsole(){
         if (exists("%")) {
@@ -116,7 +118,8 @@ public class PlayerUtils {
                 Player player = getOrGetPlayerStatByUUID(uuid);
                 return addPlayerStat(player);
             } else {
-                return addPlayerStat(new Player(uuid, true));
+                if (! isInOnlineList(UUIDUtils.getCachedName(uuid))) return null;
+                else return addPlayerStat(new Player(uuid, true));
             }
         }
     }
@@ -156,7 +159,10 @@ public class PlayerUtils {
     }
 
     public static Player addPlayerStat(ProxiedPlayer pp){
-        if (isInStatsListByUUID(pp.getUniqueId().toString())) return getPlayerStat(pp);
+        if (isInStatsListByUUID(pp.getUniqueId().toString())) {
+            Player player = getPlayerStat(pp);
+            if (player != null) return player;
+        }
 
         Player player = getOrGetPlayerStatByUUID(pp.getUniqueId().toString());
 
@@ -177,14 +183,6 @@ public class PlayerUtils {
         if (isInStatsList(stat)) return;
 
         stats.add(stat);
-    }
-
-    public static boolean isInStatsListByUUID(String uuid) {
-        for (SavableUser user : getStats()) {
-            if (user.uuid.equals(uuid)) return true;
-        }
-
-        return false;
     }
 
     public static boolean isInStatsList(SavableUser stat) {
@@ -211,9 +209,42 @@ public class PlayerUtils {
     }
 
     public static boolean isInStatsList(String username) {
+        List<SavableUser> toRemove = new ArrayList<>();
+
         for (SavableUser user : getStats()) {
-            if (user.latestName == null) continue;
+            if (user.uuid == null) {
+                toRemove.add(user);
+                continue;
+            }
+            if (user.latestName == null) {
+                toRemove.add(user);
+                continue;
+            }
+
             if (user.latestName.equals(username)) return true;
+        }
+
+        for (SavableUser user : toRemove) {
+            removeStat(user);
+        }
+
+        return false;
+    }
+
+    public static boolean isInStatsListByUUID(String uuid) {
+        List<SavableUser> toRemove = new ArrayList<>();
+
+        for (SavableUser user : getStats()) {
+            if (user.uuid == null) {
+                toRemove.add(user);
+                continue;
+            }
+
+            if (user.uuid.equals(uuid)) return true;
+        }
+
+        for (SavableUser user : toRemove) {
+            removeStat(user);
         }
 
         return false;
@@ -250,11 +281,6 @@ public class PlayerUtils {
 
         for (SavableUser player : toRemove) {
             stats.remove(player);
-            try {
-                stat.saveInfo();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -263,7 +289,7 @@ public class PlayerUtils {
 
         for (SavableUser user : users) {
             try {
-                user.saveInfo();
+                addCascadingSave(user);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -276,14 +302,14 @@ public class PlayerUtils {
         List<Player> toRemove = new ArrayList<>();
 
         for (Player player : players) {
-            if (! player.online) {
-                toRemove.add(player);
-            }
+            if (player.uuid == null) toRemove.add(player);
+
+            if (! player.online) toRemove.add(player);
         }
 
         for (Player player : toRemove) {
             try {
-                player.saveInfo();
+                addCascadingSave(player);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -291,6 +317,8 @@ public class PlayerUtils {
 
             count ++;
         }
+
+        GuildUtils.loadAllMembersInAllGuilds();
 
         return count;
     }
@@ -453,6 +481,17 @@ public class PlayerUtils {
         return players;
     }
 
+    public static List<Player> getJustPlayersOnline(){
+        List<Player> players = new ArrayList<>(getJustPlayers());
+        List<Player> online = new ArrayList<>();
+
+        for (Player player : players) {
+            if (player.online) online.add(player);
+        }
+
+        return online;
+    }
+
     public static List<ConsolePlayer> getJustProxies(){
         List<ConsolePlayer> proxies = new ArrayList<>();
 
@@ -597,7 +636,7 @@ public class PlayerUtils {
     public static Player getPlayerStat(CommandSender sender) {
         try {
             for (Player stat : getJustPlayers()) {
-                if (sender.equals(stat.sender)) {
+                if (sender.equals(stat.findSender())) {
                     return stat;
                 }
             }
@@ -788,6 +827,24 @@ public class PlayerUtils {
                     }
                 } else return null;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static SavableUser getOrGetSavableUser(CommandSender sender) {
+        if (sender.getName().equals(StreamLine.getInstance().getProxy().getConsole().getName())) return getConsoleStat();
+
+        try {
+            if (exists(sender.getName())){
+                if (isInStatsList(sender.getName())) {
+                    return getPlayerStat(sender.getName());
+                } else {
+                    return new Player(UUIDUtils.getCachedUUID(sender.getName()), false);
+                }
+            } else return null;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -998,7 +1055,7 @@ public class PlayerUtils {
     public static void doMessage(SavableUser from, SavableUser to, String message, boolean reply){
         if (to instanceof Player) {
             if (! ((Player) to).online) {
-                MessagingUtils.sendBUserMessage(from.sender, MessageConfUtils.noPlayer);
+                MessagingUtils.sendBUserMessage(from.findSender(), MessageConfUtils.noPlayer);
                 return;
             }
         }
@@ -1024,9 +1081,9 @@ public class PlayerUtils {
         to.updateLastFromMessage(message);
 
         if (reply) {
-            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.replySender);
+            MessagingUtils.sendBMessagenging(from.findSender(), from, to, message, MessageConfUtils.replySender);
 
-            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.replyTo);
+            MessagingUtils.sendBMessagenging(to.findSender(), from, to, message, MessageConfUtils.replyTo);
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
                 Player p = PlayerUtils.getOrCreatePlayerStat(player);
@@ -1036,9 +1093,9 @@ public class PlayerUtils {
                 MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.replySSPY);
             }
         } else {
-            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.messageSender);
+            MessagingUtils.sendBMessagenging(from.findSender(), from, to, message, MessageConfUtils.messageSender);
 
-            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.messageTo);
+            MessagingUtils.sendBMessagenging(to.findSender(), from, to, message, MessageConfUtils.messageTo);
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
                 Player p = PlayerUtils.getOrCreatePlayerStat(player);
@@ -1053,13 +1110,13 @@ public class PlayerUtils {
     public static void doMessageWithIgnoreCheck(SavableUser from, SavableUser to, String message, boolean reply){
         if (to instanceof Player) {
             if (! ((Player) to).online) {
-                MessagingUtils.sendBUserMessage(from.sender, MessageConfUtils.noPlayer);
+                MessagingUtils.sendBUserMessage(from.findSender(), MessageConfUtils.noPlayer);
                 return;
             }
         }
 
         if (to.ignoredList.contains(from.uuid)) {
-            MessagingUtils.sendBUserMessage(from.sender, MessageConfUtils.messageIgnored);
+            MessagingUtils.sendBUserMessage(from.findSender(), MessageConfUtils.messageIgnored);
             return;
         }
 
@@ -1084,9 +1141,9 @@ public class PlayerUtils {
         to.updateLastFromMessage(message);
 
         if (reply) {
-            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.replySender);
+            MessagingUtils.sendBMessagenging(from.findSender(), from, to, message, MessageConfUtils.replySender);
 
-            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.replyTo);
+            MessagingUtils.sendBMessagenging(to.findSender(), from, to, message, MessageConfUtils.replyTo);
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
                 Player p = PlayerUtils.getOrCreatePlayerStat(player);
@@ -1096,9 +1153,9 @@ public class PlayerUtils {
                 MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.replySSPY);
             }
         } else {
-            MessagingUtils.sendBMessagenging(from.sender, from, to, message, MessageConfUtils.messageSender);
+            MessagingUtils.sendBMessagenging(from.findSender(), from, to, message, MessageConfUtils.messageSender);
 
-            MessagingUtils.sendBMessagenging(to.sender, from, to, message, MessageConfUtils.messageTo);
+            MessagingUtils.sendBMessagenging(to.findSender(), from, to, message, MessageConfUtils.messageTo);
 
             for (ProxiedPlayer player : StreamLine.getInstance().getProxy().getPlayers()) {
                 Player p = PlayerUtils.getOrCreatePlayerStat(player);
@@ -1161,6 +1218,30 @@ public class PlayerUtils {
 
     public static void addConn(Player player){
         connections.put(player, new SingleSet<>(ConfigUtils.lobbyTimeOut, 0));
+    }
+
+    public static void tickConn(){
+        if (connections == null) return;
+
+        List<Player> conns = new ArrayList<>(connections.keySet());
+        List<Player> toRemove = new ArrayList<>();
+
+        for (Player player : conns) {
+            SingleSet<Integer, Integer> conn = PlayerUtils.getConnection(player);
+
+            if (conn == null) continue;
+
+            PlayerUtils.removeSecondFromConn(player, conn);
+
+            conn = PlayerUtils.getConnection(player);
+
+            if (conn == null) continue;
+            if (conn.key <= 0) toRemove.add(player);
+        }
+
+        for (Player remove : toRemove) {
+            PlayerUtils.removeConn(remove);
+        }
     }
 
     /* ----------------------------
@@ -1322,6 +1403,22 @@ public class PlayerUtils {
         return MessageConfUtils.nullD;
     }
 
+    public static String getOffOnAbsoluteDiscord(SavableUser stat){
+        if (stat == null) {
+            return MessageConfUtils.nullD;
+        }
+
+        if (stat instanceof ConsolePlayer) {
+            return "%";
+        }
+
+        if (stat instanceof Player) {
+            return stat.latestName;
+        }
+
+        return MessageConfUtils.nullD;
+    }
+
     /* ----------------------------
 
     PlayerUtils <-- ProxiedPlayer.
@@ -1421,6 +1518,73 @@ public class PlayerUtils {
         ProxiedPlayer pp = PlayerUtils.getPPlayerByUUID(player.uuid);
         if (pp != null) pp.disconnect(TextUtils.codedText(message));
     }
+
+    public static TreeMap<String, TreeMap<Integer, SavableUser>> getCascadingSaves(){
+        return toSave;
+    }
+
+    public static void addCascadingSave(SavableUser user){
+        if (toSave == null) {
+            TreeMap<Integer, SavableUser> map = new TreeMap<>();
+            map.put(1, user);
+            toSave.put(user.uuid, map);
+            return;
+        }
+
+        if (user.uuid == null) {
+            removeStat(user);
+            return;
+        }
+
+        if (toSave.containsKey(user.uuid)) {
+            TreeMap<Integer, SavableUser> map = toSave.get(user.uuid);
+            if (map.containsValue(user)) {
+                map.put(map.lastKey() + 1, user);
+            }
+            toSave.get(user.uuid).clear();
+            toSave.get(user.uuid).putAll(map);
+        } else {
+            TreeMap<Integer, SavableUser> map = new TreeMap<>();
+            map.put(1, user);
+            toSave.put(user.uuid, map);
+        }
+    }
+
+    public static void cascadeSave(String uuid){
+        if (! toSave.containsKey(uuid)) return;
+
+        TreeMap<Integer, SavableUser> map = toSave.get(uuid);
+
+        if (map.firstEntry() == null) {
+            toSave.remove(uuid);
+            return;
+        }
+
+        SavableUser user = map.firstEntry().getValue();
+        try {
+            user.saveInfo();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        TreeMap<Integer, SavableUser> users = new TreeMap<>(map);
+        TreeMap<Integer, SavableUser> toNew = new TreeMap<>();
+
+        for (int it : users.keySet()) {
+            if (it == users.firstKey()) continue;
+            toNew.put(it - 1, users.get(it));
+        }
+
+        toSave.get(uuid).clear();
+        toSave.get(uuid).putAll(toNew);
+    }
+
+//    public static void updateServerAll(){
+//        for (SavableUser user : PlayerUtils.getStats()) {
+//            if (! isInOnlineList(user.latestName)) continue;
+//            user.updateServer();
+//        }
+//    }
 
     // No stats.
     public static final String noStatsFound = StreamLine.config.getMessString("stats.no-stats");

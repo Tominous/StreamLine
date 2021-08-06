@@ -83,7 +83,7 @@ public class IgnoreCommand extends Command implements TabExecutor {
                             .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
                     );
                     if ((other instanceof Player && ((Player) other).online) || other instanceof ConsolePlayer) {
-                        MessagingUtils.sendBUserMessage(other.sender, MessageConfUtils.ignoreAddIgnored
+                        MessagingUtils.sendBUserMessage(other.findSender(), MessageConfUtils.ignoreAddIgnored
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(stat))
                         );
                     }
@@ -106,7 +106,7 @@ public class IgnoreCommand extends Command implements TabExecutor {
                             .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
                     );
                     if ((other instanceof Player && ((Player) other).online) || other instanceof ConsolePlayer) {
-                        MessagingUtils.sendBUserMessage(other.sender, MessageConfUtils.ignoreRemIgnored
+                        MessagingUtils.sendBUserMessage(other.findSender(), MessageConfUtils.ignoreRemIgnored
                                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(stat))
                         );
                     }

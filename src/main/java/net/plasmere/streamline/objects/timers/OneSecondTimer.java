@@ -4,6 +4,7 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.lists.SingleSet;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.PlayerUtils;
 
 import java.util.*;
@@ -30,29 +31,17 @@ public class OneSecondTimer implements Runnable {
         try {
             countdown = reset;
 
-            Set<Player> c = PlayerUtils.getConnections().keySet();
-            List<Player> conns = new ArrayList<>(c);
-            List<Player> toRemove = new ArrayList<>();
+            if (PlayerUtils.getCascadingSaves().size() > 0) {
+                TreeMap<String, TreeMap<Integer, SavableUser>> map = new TreeMap<>(PlayerUtils.getCascadingSaves());
 
-            for (Player player : conns) {
-                SingleSet<Integer, Integer> conn = PlayerUtils.getConnection(player);
-
-                if (conn == null) continue;
-
-                PlayerUtils.removeSecondFromConn(player, conn);
-
-                conn = PlayerUtils.getConnection(player);
-
-                if (conn == null) continue;
-                if (conn.key <= 0) toRemove.add(player);
+                for (String uuid : map.keySet())
+                PlayerUtils.cascadeSave(uuid);
             }
 
-            for (Player remove : toRemove) {
-                PlayerUtils.removeConn(remove);
-            }
+            PlayerUtils.tickConn();
 
             if (StreamLine.lpHolder.enabled) {
-                for (Player player : PlayerUtils.getJustPlayers()) {
+                for (Player player : PlayerUtils.getJustPlayersOnline()) {
                     if (player.latestName == null) continue;
                     if (player.latestName.equals("")) continue;
                     PlayerUtils.updateDisplayName(player);
@@ -63,7 +52,7 @@ public class OneSecondTimer implements Runnable {
                 PlayerUtils.checkAndUpdateIfMuted(player);
             }
 
-            PlayerUtils.saveAll();
+//            PlayerUtils.updateServerAll();
         } catch (ConcurrentModificationException e) {
             if (ConfigUtils.debug) e.printStackTrace();
         }

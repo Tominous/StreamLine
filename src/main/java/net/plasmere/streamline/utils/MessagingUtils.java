@@ -23,11 +23,21 @@ import java.util.*;
 
 public class MessagingUtils {
     public static void sendStaffMessage(CommandSender sender, String from, String msg){
+        sendPermissionedMessage(ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage
+                .replace("%user%", sender.getName())
+                .replace("%from%", from)
+                .replace("%message%", msg)
+                .replace("%server%", PlayerUtils.getOrCreateSavableUser(sender).findServer())
+                .replace("%version%", PlayerUtils.getOrCreateSavableUser(sender).latestVersion)
+        );
+    }
+
+    public static void sendStaffMessageNonSelf(CommandSender sender, String from, String msg){
         sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage
                 .replace("%user%", sender.getName())
                 .replace("%from%", from)
                 .replace("%message%", msg)
-                .replace("%server%", PlayerUtils.getOrCreateSavableUser(sender).latestServer)
+                .replace("%server%", PlayerUtils.getOrCreateSavableUser(sender).findServer())
                 .replace("%version%", PlayerUtils.getOrCreateSavableUser(sender).latestVersion)
         );
     }
@@ -455,11 +465,11 @@ public class MessagingUtils {
                 .replace("%length%", String.valueOf(guild.name.length()))
                 .replace("%max_length%", String.valueOf(ConfigUtils.guildMaxLength))
                 .replace("%codes%", (ConfigUtils.guildIncludeColors ? GuildUtils.withCodes : GuildUtils.withoutCodes))
-                .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSavableUser(sender)))
-                .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSavableUser(sender)))
+                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(sender)))
+                .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(sender)))
-                .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
-                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                .replace("%leader_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                 .replace("%leader_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(guild.leaderUUID)))
         ));
     }
@@ -494,10 +504,10 @@ public class MessagingUtils {
                 .replace("%codes%", (ConfigUtils.guildIncludeColors ? GuildUtils.withCodes : GuildUtils.withoutCodes))
                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSavableUser(message.sender)))
                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSavableUser(message.sender)))
-                .replace("%sender_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(message.sender)))
+                .replace("%sender_absolute%", PlayerUtils.getOffOnAbsoluteDiscord(PlayerUtils.getOrCreateSavableUser(message.sender)))
                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                 .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
-                .replace("%leader_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(guild.leaderUUID)));
+                .replace("%leader_absolute%", PlayerUtils.getOffOnAbsoluteDiscord(PlayerUtils.getOrCreateSavableUserByUUID(guild.leaderUUID)));
 
         try {
             if (ConfigUtils.moduleUseMCAvatar) {
@@ -678,10 +688,10 @@ public class MessagingUtils {
         sendTo.sendMessage(TextUtils.codedText(msg
                 .replace("%from%", from.displayName)
                 .replace("%from_normal%", from.latestName)
-                .replace("%from_server%", (from instanceof Player ? ((Player) from).player.getServer().getInfo().getName() : ConfigUtils.consoleServer))
+                .replace("%from_server%", from.findServer())
                 .replace("%to%", to.displayName)
                 .replace("%to_normal%", to.latestName)
-                .replace("%to_server%", (to instanceof Player ? ((Player) to).player.getServer().getInfo().getName() : ConfigUtils.consoleServer))
+                .replace("%to_server%", to.findServer())
                 .replace("%message%", playerMessage)
         ));
     }
@@ -732,14 +742,17 @@ public class MessagingUtils {
     }
 
     public static void logInfo(String msg){
+        if (msg == null) msg = "";
         StreamLine.getInstance().getLogger().info(TextUtils.newLined(msg));
     }
 
     public static void logWarning(String msg){
+        if (msg == null) msg = "";
         StreamLine.getInstance().getLogger().warning(TextUtils.newLined(msg));
     }
 
     public static void logSevere(String msg){
+        if (msg == null) msg = "";
         StreamLine.getInstance().getLogger().severe(TextUtils.newLined(msg));
     }
 

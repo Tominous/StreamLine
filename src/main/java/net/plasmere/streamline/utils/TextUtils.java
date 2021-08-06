@@ -270,7 +270,11 @@ public class TextUtils {
     }
 
     public static String newLined(String text){
-        return text.replace("%newline%", "\n").replace("%uniques%", String.valueOf(StreamLine.getInstance().getPlDir().listFiles().length));
+        try {
+            return text.replace("%newline%", "\n").replace("%uniques%", String.valueOf(StreamLine.getInstance().getPlDir().listFiles().length));
+        } catch (Exception e) {
+            return text.replace("%newline%", "\n");
+        }
     }
 
     public static boolean isCommand(String msg){

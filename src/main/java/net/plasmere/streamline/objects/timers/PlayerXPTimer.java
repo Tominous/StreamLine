@@ -31,15 +31,13 @@ public class PlayerXPTimer implements Runnable {
     public void done(){
         countdown = reset;
         try {
-            for (Player player : PlayerUtils.getJustPlayers()) {
+            for (Player player : PlayerUtils.getJustPlayersOnline()) {
                 player.addTotalXP(ConfigUtils.xpPerGiveP);
             }
 
-            if (ConfigUtils.debug) MessagingUtils.logInfo("Just gave out XP to " + StreamLine.getInstance().getProxy().getPlayers().size() + " online players!");
+//            if (ConfigUtils.debug) MessagingUtils.logInfo("Just gave out XP to " + PlayerUtils.getJustPlayersOnline().size() + " online players!");
         } catch (Exception e){
             e.printStackTrace();
         }
-
-        PlayerUtils.removeOfflineStats();
     }
 }

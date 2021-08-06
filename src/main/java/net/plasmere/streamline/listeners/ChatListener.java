@@ -32,17 +32,9 @@ public class ChatListener implements Listener {
 
         ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
 
-        Player stat = PlayerUtils.getPlayerStat(sender);
         String msg = e.getMessage();
 
-        if (stat == null) {
-            PlayerUtils.createPlayerStat(sender);
-            stat = PlayerUtils.getPlayerStat(sender);
-            if (stat == null) {
-                MessagingUtils.logSevere("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
-                return;
-            }
-        }
+        Player stat = PlayerUtils.addPlayerStat(sender);
 
         stat.updateLastMessage(msg);
 

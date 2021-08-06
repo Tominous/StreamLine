@@ -19,32 +19,29 @@ public class ReplyCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        SavableUser stat = PlayerUtils.getOrCreateSavableUser(sender);
+        String thing = "";
+
+        if (PlayerUtils.isInOnlineList(sender.getName())) thing = sender.getName();
+        else thing = "%";
+
+        SavableUser stat = PlayerUtils.getOrGetSavableUser(thing);
 
         if (stat == null) {
-            stat = PlayerUtils.getOrCreateSavableUser(sender);
-            if (stat == null) {
-                MessagingUtils.logSevere("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                return;
-            }
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorNoYou);
+            return;
         }
 
         if (args.length <= 0) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else {
-            if (stat instanceof ConsolePlayer || stat.hasPermission(ConfigUtils.comBReplyPerm)) {
-                SavableUser statTo = PlayerUtils.getOrGetSavableUser(stat.replyToUUID);
+            SavableUser statTo = PlayerUtils.getOrGetSavableUser(stat.replyToUUID);
 
-                if (statTo == null) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
-                    return;
-                }
-
-                PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.normalize(args), true);
-            } else {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
+            if (statTo == null) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                return;
             }
+
+            PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.normalize(args), true);
         }
     }
 }

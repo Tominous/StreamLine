@@ -26,43 +26,40 @@ public class MessageCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        SavableUser stat = PlayerUtils.getOrGetSavableUser(sender.getName());
+        String thing = "";
+
+        if (PlayerUtils.isInOnlineList(sender.getName())) thing = sender.getName();
+        else thing = "%";
+
+        SavableUser stat = PlayerUtils.getOrGetSavableUser(thing);
 
         if (stat == null) {
-            stat = PlayerUtils.getOrCreateSavableUser(sender);
-            if (stat == null) {
-                MessagingUtils.logSevere("CANNOT INSTANTIATE THE PLAYER: " + sender.getName());
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
-                return;
-            }
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorNoYou);
+            return;
         }
 
         if (args.length <= 0) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else {
-            if (stat instanceof ConsolePlayer || stat.hasPermission(ConfigUtils.comBMessagePerm)) {
-                SavableUser statTo;
+            SavableUser statTo;
 
-                if (args[0].equals("%")) {
-                    statTo = PlayerUtils.getSavableUserByUUID("%");
-                } else {
-                    if (! PlayerUtils.exists(args[0])) {
-                        MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
-                        return;
-                    }
-
-                    statTo = PlayerUtils.getOrGetPlayerStat(args[0]);
-                }
-
-                if (statTo == null) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+            if (args[0].equals("%")) {
+                statTo = PlayerUtils.getSavableUserByUUID("%");
+            } else {
+                if (! PlayerUtils.exists(args[0])) {
+                    MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
                     return;
                 }
 
-                PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.argsToStringMinus(args, 0), false);
-            } else {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
+                statTo = PlayerUtils.getOrGetSavableUser(args[0]);
             }
+
+            if (statTo == null) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                return;
+            }
+
+            PlayerUtils.doMessageWithIgnoreCheck(stat, statTo, TextUtils.argsToStringMinus(args, 0), false);
         }
     }
 

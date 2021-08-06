@@ -38,6 +38,8 @@ public class Player extends SavableUser {
     public boolean viewsc;
     public ProxiedPlayer player;
 
+    public int defaultLevel = 1;
+
     public Player(ProxiedPlayer player) {
         super(player.getUniqueId().toString());
         this.player = player;
@@ -85,13 +87,10 @@ public class Player extends SavableUser {
         this.uuid = player.getUniqueId().toString();
         this.latestIP = ipSt;
         this.latestName = player.getName();
-        if (player.getServer() != null) this.latestServer = player.getServer().getInfo().getName();
 
         this.ips = ipSt;
         this.names = player.getName();
         this.online = onlineCheck();
-        this.displayName = player.getDisplayName();
-        this.tagList = ConfigUtils.tagsDefaults;
 
         if (StreamLine.viaHolder.enabled) {
             if (StreamLine.geyserHolder.enabled && StreamLine.geyserHolder.file.hasProperty(this.uuid)) {
@@ -115,7 +114,7 @@ public class Player extends SavableUser {
         defaults.add("ips=" + ips);
         defaults.add("names=" + names);
         defaults.add("latest-ip=" + latestIP);
-        defaults.add("lvl=1");
+        defaults.add("lvl=" + defaultLevel);
         defaults.add("total-xp=0");
         defaults.add("currentXP=0");
         defaults.add("playtime=0");
@@ -159,7 +158,6 @@ public class Player extends SavableUser {
         }
         this.viewsc = Boolean.parseBoolean(getFromKey("view-sc"));
         if (! this.online) this.latestVersion = getFromKey("latest-version");
-        if (! this.online) this.latestServer = getFromKey("latest-server");
     }
 
     @Override
@@ -267,7 +265,9 @@ public class Player extends SavableUser {
         String search = "ips";
 
         try {
-            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (getFromKey(search) == null) return thing;
+            if (getFromKey(search).equals("")) return thing;
+
             if (! getFromKey(search).contains(",")) {
                 thing.add(getFromKey(search));
                 return thing;
@@ -296,7 +296,9 @@ public class Player extends SavableUser {
         String search = "names";
 
         try {
-            if (getFromKey(search).equals("") || getFromKey(search) == null) return thing;
+            if (getFromKey(search) == null) return thing;
+            if (getFromKey(search).equals("")) return thing;
+
             if (! getFromKey(search).contains(",")) {
                 thing.add(getFromKey(search));
                 return thing;
@@ -329,7 +331,7 @@ public class Player extends SavableUser {
     public int getNeededXp(int fromLevel){
         int needed = 0;
 
-        needed = 2500 + (2500 * fromLevel);
+        needed = 2500 + (2500 * (fromLevel - defaultLevel));
 
         return needed;
     }
