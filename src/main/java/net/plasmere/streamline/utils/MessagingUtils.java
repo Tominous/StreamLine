@@ -164,7 +164,7 @@ public class MessagingUtils {
         // we send the data to the server
         // using ServerInfo the packet is being queued if there are no players in the server
         // using only the server to send data the packet will be lost if no players are in it
-        player.sendData(StreamLine.customChannel, out.toByteArray());
+        player.getServer().getInfo().sendData(StreamLine.customChannel, out.toByteArray());
     }
 
     public static void sendStaffMessageFromDiscord(String sender, String from, String msg){

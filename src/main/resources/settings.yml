@@ -46,6 +46,6 @@ proxy-chat:
   # Example permission to give to players: "streamline.chat.1"
   # Lowest = Default.
   chats:
-    1: "&d%sender%&r &9&l>> &f%message%"
-    2: "&d%sender%&r &9&l>> &e%message%"
-    3: "&d%sender%&r &9&l>> &6%message%"
+    1: "&d%sender%&r &7&l>> &f%message%"
+    2: "&d%sender%&r &7&l>> &e%message%"
+    3: "&d%sender%&r &7&l>> &6%message%"
