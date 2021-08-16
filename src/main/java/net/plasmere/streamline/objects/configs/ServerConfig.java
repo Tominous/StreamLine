@@ -1,12 +1,12 @@
 package net.plasmere.streamline.objects.configs;
 
-import net.md_5.bungee.api.scheduler.ScheduledTask;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
-import net.plasmere.streamline.objects.timers.MOTDUpdaterTimer;
+import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.TextUtils;
 
@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.TreeMap;
-import java.util.concurrent.TimeUnit;
 
 public class ServerConfig {
     private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "configs" + File.separator;
@@ -299,5 +298,139 @@ public class ServerConfig {
                 return StreamLine.getInstance().getProxy().getPlayers().size();
             }
         }
+    }
+
+    public void setProxyChatEnabled(boolean bool) {
+        serverConfig.set("proxy-chat.enabled", bool);
+        saveConfig();
+        reloadConfig();
+    }
+
+    public void toggleProxyChatEnabled() {
+        setProxyChatEnabled(! getProxyChatEnabled());
+    }
+
+    public boolean getProxyChatEnabled() {
+        reloadConfig();
+        return serverConfig.getBoolean("proxy-chat.enabled");
+    }
+
+    public void setChatBasePerm(String set) {
+        serverConfig.set("proxy-chat.base-perm", set);
+        saveConfig();
+        reloadConfig();
+    }
+
+    public String getChatBasePerm() {
+        reloadConfig();
+        return serverConfig.getString("proxy-chat.base-perm");
+    }
+
+    public Configuration getProxyChatChats() {
+        reloadConfig();
+        return serverConfig.getSection("proxy-chat.chats");
+    }
+
+    public TreeMap<Integer, String> getChatsMap() {
+        reloadConfig();
+        TreeMap<Integer, String> map = new TreeMap<>();
+
+        if (getProxyChatChats() == null) return map;
+        if (getProxyChatChats().getKeys().size() <= 0) return map;
+
+        for (String key : getProxyChatChats().getKeys()) {
+            int thing = 0;
+
+            try {
+                thing = Integer.parseInt(key);
+            } catch (Exception e) {
+                MessagingUtils.logSevere("You have an error with your proxy chats! Keys can only be integers!");
+                e.printStackTrace();
+                continue;
+            }
+
+            if (map.containsKey(thing)) {
+                MessagingUtils.logSevere("You have an error with your proxy chats! Keys cannot be the same! Skipping...");
+                continue;
+            }
+            map.put(thing, getProxyChatChats().getString(key));
+        }
+
+        return map;
+    }
+
+    public boolean hasProxyChatPermission(SavableUser user) {
+        for (Integer integer : getChatsMap().keySet()) {
+            if (user.hasPermission(getChatBasePerm() + integer)) return true;
+        }
+        return false;
+    }
+
+    public String getDefaultFormat() {
+        return getChatsMap().firstEntry().getValue();
+    }
+
+    public String getPermissionedProxyChatMessage(SavableUser user){
+        if (getChatsMap().size() <= 0) return "&r<&d%sender%&r> %message%";
+
+        if (! hasProxyChatPermission(user)) return getDefaultFormat();
+
+        String msg = "";
+        int highest = getChatsMap().lastKey();
+
+        return findFromChatsMap(user, highest, 0); // Allow for one extra run?
+    }
+
+    public String findFromChatsMap(SavableUser user, int trial, int running) {
+        if (running > getChatsMap().size()) return "&r<&d%sender%&r> %message%";
+
+        running ++;
+
+        String perm = getChatBasePerm() + trial;
+        if (user.hasPermission(perm)) return getChatsMap().get(trial);
+        return findFromChatsMap(user, iterateChatsMapFromHigher(trial), running);
+    }
+
+    public boolean hasProxyChatPermission(ProxiedPlayer player) {
+        for (Integer integer : getChatsMap().keySet()) {
+            if (player.hasPermission(getChatBasePerm() + integer)) return true;
+        }
+        return false;
+    }
+
+    public String getPermissionedProxyChatMessage(ProxiedPlayer player){
+        if (getChatsMap().size() <= 0) return "&r<&d%sender%&r> %message%";
+
+        if (! hasProxyChatPermission(player)) return getChatsMap().firstEntry().getValue();
+
+        String msg = "";
+        int highest = getChatsMap().lastKey();
+
+        return findFromChatsMap(player, highest, 0); // Allow for one extra run?
+    }
+
+    public String findFromChatsMap(ProxiedPlayer player, int trial, int running) {
+        if (running > getChatsMap().size()) return "&r<&d%sender%&r> %message%";
+
+        running ++;
+
+        String perm = getChatBasePerm() + trial;
+        if (player.hasPermission(perm)) return getChatsMap().get(trial);
+        return findFromChatsMap(player, iterateChatsMapFromHigher(trial), running);
+    }
+
+    public int iterateChatsMapFromHigher(int fromHigher){
+        return getChatsMap().lowerKey(fromHigher);
+    }
+
+    public void setProxyChatChats(String integer, String format) {
+        serverConfig.set("proxy-chat.chats." + integer, format);
+        saveConfig();
+        reloadConfig();
+    }
+
+    public String getProxyChatChatsAt(int integer) {
+        reloadConfig();
+        return serverConfig.getString("proxy-chat.chats." + integer);
     }
 }

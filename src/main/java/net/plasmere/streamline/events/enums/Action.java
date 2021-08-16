@@ -12,6 +12,13 @@ public enum Action {
     GIVE_POINTS,
     TAKE_POINTS,
     SET_POINTS,
+    ADD_TAG,
+    REM_TAG,
+    SEND_MESSAGE_TO_FRIENDS,
+    SEND_MESSAGE_TO_PARTY_MEMBERS,
+    SEND_MESSAGE_TO_GUILD_MEMBERS,
+    SEND_MESSAGE_TO_STAFF,
+    SEND_MESSAGE_TO_PERMISSION,
     ;
 
     public static String toString(Action action){
@@ -34,6 +41,20 @@ public enum Action {
                 return "TAKE_POINTS";
             case SET_POINTS:
                 return "SET_POINTS";
+            case ADD_TAG:
+                return "ADD_TAG";
+            case REM_TAG:
+                return "REM_TAG";
+            case SEND_MESSAGE_TO_FRIENDS:
+                return "SEND_MESSAGE_TO_FRIENDS";
+            case SEND_MESSAGE_TO_PARTY_MEMBERS:
+                return "SEND_MESSAGE_TO_PARTY_MEMBERS";
+            case SEND_MESSAGE_TO_GUILD_MEMBERS:
+                return "SEND_MESSAGE_TO_GUILD_MEMBERS";
+            case SEND_MESSAGE_TO_STAFF:
+                return "SEND_MESSAGE_TO_STAFF";
+            case SEND_MESSAGE_TO_PERMISSION:
+                return "SEND_MESSAGE_TO_PERMISSION";
             default:
                 return "";
         }
@@ -61,6 +82,20 @@ public enum Action {
                 return TAKE_POINTS;
             case "SET_POINTS":
                 return SET_POINTS;
+            case "ADD_TAG":
+                return ADD_TAG;
+            case "REM_TAG":
+                return REM_TAG;
+            case "SEND_MESSAGE_TO_FRIENDS":
+                return SEND_MESSAGE_TO_FRIENDS;
+            case "SEND_MESSAGE_TO_PARTY_MEMBERS":
+                return SEND_MESSAGE_TO_PARTY_MEMBERS;
+            case "SEND_MESSAGE_TO_GUILD_MEMBERS":
+                return SEND_MESSAGE_TO_GUILD_MEMBERS;
+            case "SEND_MESSAGE_TO_STAFF":
+                return SEND_MESSAGE_TO_STAFF;
+            case "SEND_MESSAGE_TO_PERMISSION":
+                return SEND_MESSAGE_TO_PERMISSION;
             default:
                 return null;
         }

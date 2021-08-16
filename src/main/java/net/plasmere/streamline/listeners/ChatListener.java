@@ -117,6 +117,11 @@ public class ChatListener implements Listener {
             }
         }
 
+        if (StreamLine.serverConfig.getProxyChatEnabled()) {
+            String format = StreamLine.serverConfig.getPermissionedProxyChatMessage(stat);
+            MessagingUtils.sendServerMessageFromUser(sender, sender.getServer(), format, msg);
+        }
+
         if (ConfigUtils.events) {
             if (!msg.startsWith("/")) {
                 for (Event event : EventsHandler.getEvents()) {

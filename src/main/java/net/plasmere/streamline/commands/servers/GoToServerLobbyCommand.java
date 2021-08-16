@@ -16,10 +16,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
+import net.plasmere.streamline.utils.TextUtils;
 
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -74,13 +73,14 @@ public class GoToServerLobbyCommand extends Command implements TabExecutor {
     @Override
     public Iterable<String> onTabComplete(final CommandSender sender, final String[] args)
     {
-        return ( args.length > 1 ) ? Collections.EMPTY_LIST : StreamSupport.stream(Iterables.filter(ProxyServer.getInstance().getServers().values(), new Predicate<ServerInfo>() {
-            private final String lower = (args.length == 0) ? "" : args[0].toLowerCase(Locale.ROOT);
+        List<String> servers = new ArrayList<>();
 
-            @Override
-            public boolean apply(ServerInfo input) {
-                return input.getName().toLowerCase(Locale.ROOT).startsWith(lower) && input.canAccess(sender);
-            }
-        }).spliterator(), false).map(input -> input.getName()).collect(Collectors.toList());
+        for (ServerInfo serverInfo : StreamLine.getInstance().getProxy().getServers().values()) {
+            if (! serverInfo.canAccess(sender)) continue;
+
+            servers.add(serverInfo.getName().toLowerCase(Locale.ROOT));
+        }
+
+        return TextUtils.getCompletion(servers, args[0]);
     }
 }

@@ -741,7 +741,7 @@ commands:
           - "r"
           - "re"
           - "followup"
-      # The reply command.
+      # The friend command.
       friend:
         # Enables / disables the use of the command.
         enabled: true
@@ -753,6 +753,21 @@ commands:
         aliases:
           - "f"
           - "fr"
+    # Debugging commands.
+    debug:
+      # The delete stat command.
+      delete-stat:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "deletestat"
+        # Custom permission.
+        permission: "streamline.command.deletestat"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "ds"
+          - "removestat"
+          - "rs"
 
 ### MODULE SETTINGS ###
 modules:
@@ -794,6 +809,8 @@ modules:
     # Must have "staffchat-to-minecraft" set as "true". See above.
     # Must have "staff-role" set to the ID of the role you want all staff to be (on Discord). See "Roles" section.
     staffchat-to-minecraft-only-staff-role: false
+    # The replacement for "%server%" in the staffchat message for bungee.
+    staffchat-server: "satellite 5"
     # Enables / disables startup messages in discord.
     startup-message: false
     # Enables / disables shutdown messages in discord.
@@ -1122,3 +1139,11 @@ modules:
       kick-message: true
       # Hack the /end command?
       hack-end-command: true
+    # For all spying commands. i.e. "/sspy"
+    spies:
+      # Determines the aliases for the view-self part of the command.  i.e. "/sspy viewself", which toggles viewing your own messages.
+      view-self-aliases:
+        - "vs"
+        - "viewself"
+        - "vself"
+        - "views"

@@ -54,6 +54,8 @@ public class StreamLine extends Plugin {
 	public static LPHolder lpHolder;
 	public static ServerConfig serverConfig;
 
+	public final static String customChannel = "streamline:channel";
+
 	private static JDA jda = null;
 	private static boolean isReady = false;
 
@@ -216,6 +218,8 @@ public class StreamLine extends Plugin {
 
 		instance = this;
 
+		getProxy().registerChannel(customChannel);
+
 		// Teller.
 		getLogger().info("Loading version [v" + getProxy().getPluginManager().getPlugin("StreamLine").getDescription().getVersion() + "]...");
 
@@ -288,6 +292,8 @@ public class StreamLine extends Plugin {
 	@Override
 	public void onDisable() {
 		PluginUtils.state = NetworkState.STOPPING;
+
+		getProxy().unregisterChannel(customChannel);
 
 		if (ConfigUtils.onCloseSafeKick && ConfigUtils.onCloseKickMessage) {
 			PlayerUtils.kickAll(MessageConfUtils.kicksStopping);

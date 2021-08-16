@@ -164,7 +164,7 @@ staffchat:
   # Message shown when someone chats in staff chat.
   message:
     # When toggling...
-    toggle: "&eToggled &bstaffchat %toggle%&e!"
+    toggle: "&eToggled &bstaffchat &eto %toggle%&e!"
     # Title of the embeded staff chat message (on Discord).
     embed-title: "STAFF"
     # Fillers:
@@ -1395,7 +1395,7 @@ stats:
 # SSPY command.
 sspy:
   # Message.
-  message: "&eToggled &bSSPY %toggle%&e!"
+  message: "&eToggled &bSSPY &eto %toggle%&e!"
   # When toggling.
   toggle:
     # If toggled on.
@@ -1406,7 +1406,7 @@ sspy:
 # GSPY command.
 gspy:
   # Message.
-  message: "&eToggled &bGSPY %toggle%&e!"
+  message: "&eToggled &bGSPY &eto %toggle%&e!"
   # When toggling.
   toggle:
     # If toggled on.
@@ -1417,7 +1417,7 @@ gspy:
 # PSPY command.
 pspy:
   # Message.
-  message: "&eToggled &bPSPY %toggle%&e!"
+  message: "&eToggled &bPSPY &eto %toggle%&e!"
   # When toggling.
   toggle:
     # If toggled on.
@@ -1428,7 +1428,51 @@ pspy:
 # SCView command.
 sc-view:
   # Message.
-  message: "&eToggled &bSCView %toggle%&e!"
+  message: "&eToggled &bSCView &eto %toggle%&e!"
+  # When toggling.
+  toggle:
+    # If toggled on.
+    true: "&aTRUE"
+    # If toggled off.
+    false: "&cFALSE"
+
+# SSPY view-self command.
+sspyvs:
+  # Message.
+  message: "&eToggled &bSSPY &eview-self to %toggle%&e!"
+  # When toggling.
+  toggle:
+    # If toggled on.
+    true: "&aTRUE"
+    # If toggled off.
+    false: "&cFALSE"
+
+# Party SPY view-self command.
+pspyvs:
+  # Message.
+  message: "&eToggled &bPSPY &eview-self to %toggle%&e!"
+  # When toggling.
+  toggle:
+    # If toggled on.
+    true: "&aTRUE"
+    # If toggled off.
+    false: "&cFALSE"
+
+# Guild SPY view-self command.
+gspyvs:
+  # Message.
+  message: "&eToggled &bGSPY &eview-self to %toggle%&e!"
+  # When toggling.
+  toggle:
+    # If toggled on.
+    true: "&aTRUE"
+    # If toggled off.
+    false: "&cFALSE"
+
+# Staff Chat view-self command.
+scvs:
+  # Message.
+  message: "&eToggled &bstaffchat &eview-self to %toggle%&e!"
   # When toggling.
   toggle:
     # If toggled on.
@@ -1820,7 +1864,7 @@ settings:
     version: "&eJust set &cVersion &eto &b\"%set%&b\"&e!"
     # Sample.
     # Fillers:
-    # %number% = the number of the MOTD page.
+    # %number% = the number of the Sample page.
     # %set% = what you set it to.
     sample: "&eJust set &cSample &a#%number% &eto &b\"%set%&b\"&e!"
     # Max Players.
@@ -1831,6 +1875,19 @@ settings:
     # Fillers:
     # %set% = what you set it to.
     online-players: "&eJust set &cOnline Players &eto &b\"%set%&b\"&e!"
+    # Proxy Chat Enabled.
+    # Fillers:
+    # %set% = what you set it to.
+    proxy-chat-enabled: "&eJust set &cChat Uses Proxy &eto &b\"%set%&b\"&e!"
+    # Proxy Chat Chats.
+    # Fillers:
+    # %number% = the number of the Chats page.
+    # %set% = what you set it to.
+    proxy-chat-chats: "&eJust set &cProxy Chat Chat &a#%number% &eto &b\"%set%&b\"&e!"
+    # Proxy Chat Base Perm.
+    # Fillers:
+    # %set% = what you set it to.
+    proxy-chat-base-perm: "&eJust set &cProxy Chat Base Perm &eto &b\"%set%&b\"&e!"
   # For getting...
   get:
     # MOTD.
@@ -1848,7 +1905,7 @@ settings:
     version: "&cVersion &eis &b\"%set%&b\"&e!"
     # Sample.
     # Fillers:
-    # %number% = the number of the MOTD page.
+    # %number% = the number of the Sample page.
     # %set% = what you set it to.
     sample: "&cSample &a#%number% &eis &b\"%set%&b\"&e!"
     # Max Players.
@@ -1859,6 +1916,19 @@ settings:
     # Fillers:
     # %set% = what you set it to.
     online-players: "&cOnline Players &eis &b\"%set%&b\"&e!"
+    # Proxy Chat Enabled.
+    # Fillers:
+    # %set% = what you set it to.
+    proxy-chat-enabled: "&cChat Uses Proxy &eis &b\"%set%&b\"&e!"
+    # Proxy Chat Chats.
+    # Fillers:
+    # %number% = the number of the Chats page.
+    # %set% = what you set it to.
+    proxy-chat-chats: "&cProxy Chat Chat &a#%number% &eis &b\"%set%&b\"&e!"
+    # Proxy Chat Base Perm.
+    # Fillers:
+    # %set% = what you set it to.
+    proxy-chat-base-perm: "&cProxy Chat Base Perm &eis &b\"%set%&b\"&e!"
 
 # For the info command.
 # Fillers:
@@ -1877,3 +1947,8 @@ graceful-end:
   sender: "&eShutting down the server gracefully!"
   # For all who are kicked.
   kick-message: "&cSorry, but the server stopped...! We are starting back up momentarily! Join back when you can!"
+
+delete-stat:
+  message: "&eSuccessfully removed &b%file_name% &efrom your player files&8!"
+
+bteleport: "&eSuccessfully teleported to &d%player%&8!"

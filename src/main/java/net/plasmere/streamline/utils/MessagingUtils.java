@@ -1,6 +1,9 @@
 package net.plasmere.streamline.utils;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.md_5.bungee.api.config.ServerInfo;
+import net.md_5.bungee.api.connection.Server;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
@@ -22,8 +25,16 @@ import net.plasmere.streamline.objects.users.SavableUser;
 import java.util.*;
 
 public class MessagingUtils {
+    public static HashMap<ProxiedPlayer, String> serveredUsernames = new HashMap<>();
+
     public static void sendStaffMessage(CommandSender sender, String from, String msg){
-        sendPermissionedMessage(ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage
+        List<SavableUser> toExclude = new ArrayList<>();
+
+        for (SavableUser user : PlayerUtils.getJustStaffOnline()) {
+            if (! user.scvs || ! user.viewsc) toExclude.add(user);
+        }
+
+        sendPermissionedMessageExcludePlayers(toExclude, ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage
                 .replace("%user%", sender.getName())
                 .replace("%from%", from)
                 .replace("%message%", msg)
@@ -32,7 +43,7 @@ public class MessagingUtils {
         );
     }
 
-    public static void sendStaffMessageNonSelf(CommandSender sender, String from, String msg){
+    public static void sendStaffMessageExcludeSelf(CommandSender sender, String from, String msg){
         sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage
                 .replace("%user%", sender.getName())
                 .replace("%from%", from)
@@ -40,6 +51,24 @@ public class MessagingUtils {
                 .replace("%server%", PlayerUtils.getOrCreateSavableUser(sender).findServer())
                 .replace("%version%", PlayerUtils.getOrCreateSavableUser(sender).latestVersion)
         );
+    }
+
+    public static void sendPermissionedMessageExcludePlayers(List<SavableUser> toExclude, String toPermission, String message){
+        List<SavableUser> toUsers = new ArrayList<>();
+        List<String> excludedUUIDs = new ArrayList<>();
+
+        for (SavableUser user : toExclude) {
+            excludedUUIDs.add(user.uuid);
+        }
+
+        for (SavableUser user : PlayerUtils.getStatsOnline()) {
+            if (excludedUUIDs.contains(user.uuid)) continue;
+            if (user.hasPermission(toPermission)) toUsers.add(user);
+        }
+
+        for (SavableUser player : toUsers) {
+            player.sendMessage(TextUtils.codedText(message));
+        }
     }
 
     public static void sendPermissionedMessage(String toPermission, String message){
@@ -97,9 +126,51 @@ public class MessagingUtils {
         );
     }
 
-    public static void sendStaffMessageSC(String sender, String from, String msg){
+    public static void sendServerMessageFromUser(ProxiedPlayer player, Server server, String format, String message) {
+        for (ProxiedPlayer p : PlayerUtils.getServeredPPlayers(server)) {
+            p.sendMessage(TextUtils.codedText(format
+                    .replace("%sender%", getPlayerDisplayName(player))
+                    .replace("%message%", message)
+            ));
+        }
+    }
+
+    public static String getPlayerDisplayName(ProxiedPlayer player) {
+        sendDisplayPluginMessageRequest(player);
+        String string = serveredUsernames.get(player);
+
+        return (string == null) ? PlayerUtils.getOrCreatePlayerStat(player).displayName : string;
+    }
+
+    public static void sendDisplayPluginMessageRequest(ProxiedPlayer player) {
+        if (PlayerUtils.getServeredPPlayers(player.getServer()).size() <= 0) return;
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF( "request.displayname" ); // the channel could be whatever you want
+
+        // we send the data to the server
+        // using ServerInfo the packet is being queued if there are no players in the server
+        // using only the server to send data the packet will be lost if no players are in it
+        player.getServer().getInfo().sendData( StreamLine.customChannel, out.toByteArray() );
+    }
+
+    public static void sendTeleportPluginMessageRequest(ProxiedPlayer player, ProxiedPlayer to) {
+        if (PlayerUtils.getServeredPPlayers(player.getServer()).size() <= 0) return;
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("teleport"); // the channel could be whatever you want
+        out.writeUTF(to.getUniqueId().toString()); // this data could be whatever you want // THIS IS THE TO PLAYER
+
+        // we send the data to the server
+        // using ServerInfo the packet is being queued if there are no players in the server
+        // using only the server to send data the packet will be lost if no players are in it
+        player.sendData(StreamLine.customChannel, out.toByteArray());
+    }
+
+    public static void sendStaffMessageFromDiscord(String sender, String from, String msg){
         Collection<ProxiedPlayer> staff = StreamLine.getInstance().getProxy().getPlayers();
         Set<ProxiedPlayer> staffs = new HashSet<>(staff);
+        JDA jda = StreamLine.getJda();
 
         for (ProxiedPlayer player : staff){
             try {
@@ -116,6 +187,8 @@ public class MessagingUtils {
                             .replace("%user%", sender)
                             .replace("%from%", from)
                             .replace("%message%", msg)
+                            .replace("%server%", ConfigUtils.moduleStaffChatServer)
+                            .replace("%version%", "JDA")
                     )
             );
         }
@@ -373,9 +446,9 @@ public class MessagingUtils {
                 .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(party.leaderUUID)))
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSavableUser(sender)))
-                .replace("%sender_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(sender)))
+                .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(party.leaderUUID)))
-                .replace("%leader_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(party.leaderUUID)))
+                .replace("%leader_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(party.leaderUUID)))
                 .replace("%size%", Integer.toString(party.getSize()))
         ));
     }
@@ -403,9 +476,9 @@ public class MessagingUtils {
                 .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(party.leaderUUID)))
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(message.sender)))
                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSavableUser(message.sender)))
-                .replace("%sender_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(message.sender)))
+                .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(message.sender)))
                 .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(party.leaderUUID)))
-                .replace("%leader_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(party.leaderUUID)))
+                .replace("%leader_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(party.leaderUUID)))
                 .replace("%size%", Integer.toString(party.getSize()));
 
         try {
@@ -467,10 +540,10 @@ public class MessagingUtils {
                 .replace("%codes%", (ConfigUtils.guildIncludeColors ? GuildUtils.withCodes : GuildUtils.withoutCodes))
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateSavableUser(sender)))
-                .replace("%sender_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(sender)))
+                .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                 .replace("%leader_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
-                .replace("%leader_absolute%", PlayerUtils.getOffOnAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(guild.leaderUUID)))
+                .replace("%leader_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(guild.leaderUUID)))
         ));
     }
 
@@ -504,10 +577,10 @@ public class MessagingUtils {
                 .replace("%codes%", (ConfigUtils.guildIncludeColors ? GuildUtils.withCodes : GuildUtils.withoutCodes))
                 .replace("%sender%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSavableUser(message.sender)))
                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSavableUser(message.sender)))
-                .replace("%sender_absolute%", PlayerUtils.getOffOnAbsoluteDiscord(PlayerUtils.getOrCreateSavableUser(message.sender)))
+                .replace("%sender_absolute%", PlayerUtils.getAbsoluteDiscord(PlayerUtils.getOrCreateSavableUser(message.sender)))
                 .replace("%leader%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
                 .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
-                .replace("%leader_absolute%", PlayerUtils.getOffOnAbsoluteDiscord(PlayerUtils.getOrCreateSavableUserByUUID(guild.leaderUUID)));
+                .replace("%leader_absolute%", PlayerUtils.getAbsoluteDiscord(PlayerUtils.getOrCreateSavableUserByUUID(guild.leaderUUID)));
 
         try {
             if (ConfigUtils.moduleUseMCAvatar) {
@@ -660,6 +733,19 @@ public class MessagingUtils {
         return stringBuilder.toString();
     }
 
+    public static void sendEventUserMessage(SavableUser from, SavableUser to, String msg) {
+        to.sendMessage(TextUtils.codedText(msg
+                .replace("%from%", PlayerUtils.getOffOnDisplayBungee(from))
+                .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
+                .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
+                .replace("%from_server%", from.findServer())
+                .replace("%to%", PlayerUtils.getOffOnDisplayBungee(to))
+                .replace("%to_normal%", PlayerUtils.getOffOnRegBungee(to))
+                .replace("%to_absolute%", PlayerUtils.getAbsoluteBungee(to))
+                .replace("%to_server%", to.findServer())
+        ));
+    }
+
     public static void sendBUserMessage(CommandSender sender, String msg){
         if (sender instanceof ProxiedPlayer) {
             sender.sendMessage(TextUtils.codedText(msg
@@ -686,11 +772,13 @@ public class MessagingUtils {
 
     public static void sendBMessagenging(CommandSender sendTo, SavableUser from, SavableUser to, String playerMessage, String msg) {
         sendTo.sendMessage(TextUtils.codedText(msg
-                .replace("%from%", from.displayName)
-                .replace("%from_normal%", from.latestName)
+                .replace("%from%", PlayerUtils.getOffOnDisplayBungee(from))
+                .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
+                .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
                 .replace("%from_server%", from.findServer())
-                .replace("%to%", to.displayName)
-                .replace("%to_normal%", to.latestName)
+                .replace("%to%", PlayerUtils.getOffOnDisplayBungee(to))
+                .replace("%to_normal%", PlayerUtils.getOffOnRegBungee(to))
+                .replace("%to_absolute%", PlayerUtils.getAbsoluteBungee(to))
                 .replace("%to_server%", to.findServer())
                 .replace("%message%", playerMessage)
         ));

@@ -45,6 +45,16 @@ public abstract class SavableUser {
     public List<String> pendingFromFriendList;
     public String latestVersion;
 //    public String latestServer;
+    public boolean online;
+    public boolean sspy;
+    public boolean gspy;
+    public boolean pspy;
+    public boolean viewsc;
+    public boolean sc;
+    public boolean sspyvs;
+    public boolean pspyvs;
+    public boolean gspyvs;
+    public boolean scvs;
 
     public List<String> savedKeys = new ArrayList<>();
 
@@ -321,6 +331,15 @@ public abstract class SavableUser {
         defaults.add("pending-to-friends=");
         defaults.add("pending-from-friends=");
         defaults.add("latest-server=" + findServer());
+        defaults.add("sspy=true");
+        defaults.add("gspy=true");
+        defaults.add("pspy=true");
+        defaults.add("sc=false");
+        defaults.add("view-sc=true");
+        defaults.add("sspy-vs=true");
+        defaults.add("pspy-vs=true");
+        defaults.add("gspy-vs=true");
+        defaults.add("sc-vs=true");
         //defaults.add("");
         defaults.addAll(addedProperties());
         return defaults;
@@ -386,6 +405,15 @@ public abstract class SavableUser {
                 e.printStackTrace();
             }
         }
+        this.sspy = Boolean.parseBoolean(getFromKey("sspy"));
+        this.gspy = Boolean.parseBoolean(getFromKey("gspy"));
+        this.pspy = Boolean.parseBoolean(getFromKey("pspy"));
+        this.sc = Boolean.parseBoolean(getFromKey("sc"));
+        this.sspyvs = Boolean.parseBoolean(getFromKey("sspy-vs"));
+        this.pspyvs = Boolean.parseBoolean(getFromKey("pspy-vs"));
+        this.gspyvs = Boolean.parseBoolean(getFromKey("gspy-vs"));
+        this.scvs = Boolean.parseBoolean(getFromKey("sc-vs"));
+        this.viewsc = Boolean.parseBoolean(getFromKey("view-sc"));
     }
 
     abstract public void loadMoreVars();
@@ -721,6 +749,69 @@ public abstract class SavableUser {
         //this.latestServer = server;
         updateKey("latest-server", server);
     }
+
+    public void setSSPY(boolean value) {
+        sspy = value;
+        updateKey("sspy", value);
+    }
+
+    public void toggleSSPY() { setSSPY(! sspy); }
+
+    public void setGSPY(boolean value) {
+        gspy = value;
+        updateKey("gspy", value);
+    }
+
+    public void toggleGSPY() { setGSPY(! gspy); }
+
+    public void setPSPY(boolean value) {
+        pspy = value;
+        updateKey("pspy", value);
+    }
+
+    public void togglePSPY() { setPSPY(! pspy); }
+
+    public void setSC(boolean value) {
+        sc = value;
+        updateKey("sc", value);
+    }
+
+    public void toggleSC() { setSC(! sc); }
+
+    public void setSCView(boolean value) {
+        viewsc = value;
+        updateKey("view-sc", value);
+    }
+
+    public void toggleSCView() { setSCView(! viewsc); }
+
+    public void setSSPYVS(boolean value) {
+        sspyvs = value;
+        updateKey("sspy-vs", value);
+    }
+
+    public void toggleSSPYVS() { setSSPYVS(! sspyvs); }
+
+    public void setPSPYVS(boolean value) {
+        pspyvs = value;
+        updateKey("pspy-vs", value);
+    }
+
+    public void togglePSPYVS() { setPSPYVS(! pspyvs); }
+
+    public void setGSPYVS(boolean value) {
+        gspyvs = value;
+        updateKey("gspy-vs", value);
+    }
+
+    public void toggleGSPYVS() { setGSPYVS(! gspyvs); }
+
+    public void setSCVS(boolean value) {
+        scvs = value;
+        updateKey("sc-vs", value);
+    }
+
+    public void toggleSCVS() { setSCVS(! scvs); }
 
     public void saveInfo() throws IOException {
         file.delete();

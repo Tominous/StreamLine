@@ -10,7 +10,9 @@ import net.luckperms.api.node.types.SuffixNode;
 import net.luckperms.api.query.QueryMode;
 import net.luckperms.api.query.QueryOptions;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
@@ -202,6 +204,10 @@ public class PlayerUtils {
     public static boolean isInStatsList(ConsolePlayer stat) {
         for (ConsolePlayer player : getJustProxies()) {
             if (stat.equals(player)) return true;
+            if (player.latestName == null) {
+                stats.remove(player);
+                return false;
+            }
             if (player.latestName.equals(stat.latestName)) return true;
         }
 
@@ -481,6 +487,48 @@ public class PlayerUtils {
         return players;
     }
 
+    public static List<String> getNamesJustPlayers(){
+        return getUserNamesFrom(getJustPlayers());
+    }
+
+    public static List<String> getNamesJustStaffOnline(){
+        return getUserNamesFrom(getJustStaffOnline());
+    }
+
+    public static List<String> getNamesJustProxy(){
+        return getUserNamesFrom(getJustProxies());
+    }
+
+    public static List<String> getNamesFromAllUsers(){
+        return getUserNamesFrom(stats);
+    }
+
+
+    public static List<String> getUserNamesFrom(Iterable<? extends SavableUser> users) {
+        List<String> names = new ArrayList<>();
+
+        for (SavableUser user : users) {
+            names.add(user.getName());
+        }
+
+        return names;
+    }
+
+    public static List<SavableUser> getJustStaffOnline(){
+        List<SavableUser> users = new ArrayList<>();
+
+        for (SavableUser user : getJustPlayersOnline()) {
+            if (! user.online) continue;
+            if (user.hasPermission(ConfigUtils.staffPerm)) {
+                users.add(user);
+            }
+        }
+
+        users.add(getConsoleStat());
+
+        return users;
+    }
+
     public static List<Player> getJustPlayersOnline(){
         List<Player> players = new ArrayList<>(getJustPlayers());
         List<Player> online = new ArrayList<>();
@@ -490,6 +538,27 @@ public class PlayerUtils {
         }
 
         return online;
+    }
+
+    public static List<SavableUser> getStatsOnline(){
+        List<Player> players = new ArrayList<>(getJustPlayers());
+        List<SavableUser> online = new ArrayList<>();
+
+        for (Player player : players) {
+            if (player.online) online.add(player);
+        }
+
+        online.add(getConsoleStat());
+
+        return online;
+    }
+
+    public static boolean isStatOnline(SavableUser user) {
+        for (SavableUser online : PlayerUtils.getStatsOnline()) {
+            if (online.equals(user)) return true;
+        }
+
+        return false;
     }
 
     public static List<ConsolePlayer> getJustProxies(){
@@ -1089,6 +1158,7 @@ public class PlayerUtils {
                 Player p = PlayerUtils.getOrCreatePlayerStat(player);
 
                 if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
+                if (! p.sspyvs) if (from.uuid.equals(p.uuid) || to.uuid.equals(p.uuid)) continue;
 
                 MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.replySSPY);
             }
@@ -1101,6 +1171,7 @@ public class PlayerUtils {
                 Player p = PlayerUtils.getOrCreatePlayerStat(player);
 
                 if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
+                if (! p.sspyvs) if (from.uuid.equals(p.uuid) || to.uuid.equals(p.uuid)) continue;
 
                 MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.messageSSPY);
             }
@@ -1149,6 +1220,7 @@ public class PlayerUtils {
                 Player p = PlayerUtils.getOrCreatePlayerStat(player);
 
                 if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
+                if (! p.sspyvs) if (from.uuid.equals(p.uuid) || to.uuid.equals(p.uuid)) continue;
 
                 MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.replySSPY);
             }
@@ -1161,6 +1233,7 @@ public class PlayerUtils {
                 Player p = PlayerUtils.getOrCreatePlayerStat(player);
 
                 if (! player.hasPermission(ConfigUtils.messViewPerm) || ! p.sspy) continue;
+                if (! p.sspyvs) if (from.uuid.equals(p.uuid) || to.uuid.equals(p.uuid)) continue;
 
                 MessagingUtils.sendBMessagenging(player, from, to, message, MessageConfUtils.messageSSPY);
             }
@@ -1347,7 +1420,27 @@ public class PlayerUtils {
         return MessageConfUtils.nullB;
     }
 
-    public static String getOffOnAbsoluteBungee(SavableUser stat){
+    public static String getDisplayBungee(SavableUser stat){
+        if (stat == null) {
+            return MessageConfUtils.nullB;
+        }
+
+        if (stat instanceof ConsolePlayer) {
+            return ConfigUtils.consoleDisplayName;
+        }
+
+        if (stat instanceof Player) {
+            if (((Player) stat).online) {
+                return stat.displayName;
+            } else {
+                return stat.displayName;
+            }
+        }
+
+        return MessageConfUtils.nullB;
+    }
+
+    public static String getAbsoluteBungee(SavableUser stat){
         if (stat == null) {
             return MessageConfUtils.nullB;
         }
@@ -1403,7 +1496,27 @@ public class PlayerUtils {
         return MessageConfUtils.nullD;
     }
 
-    public static String getOffOnAbsoluteDiscord(SavableUser stat){
+    public static String getDisplayDiscord(SavableUser stat){
+        if (stat == null) {
+            return MessageConfUtils.nullD;
+        }
+
+        if (stat instanceof ConsolePlayer) {
+            return ConfigUtils.consoleDisplayName;
+        }
+
+        if (stat instanceof Player) {
+            if (((Player) stat).online) {
+                return stat.displayName;
+            } else {
+                return stat.displayName;
+            }
+        }
+
+        return MessageConfUtils.nullD;
+    }
+
+    public static String getAbsoluteDiscord(SavableUser stat){
         if (stat == null) {
             return MessageConfUtils.nullD;
         }
@@ -1427,6 +1540,37 @@ public class PlayerUtils {
 
     public static Collection<ProxiedPlayer> getOnlinePPlayers(){
         return StreamLine.getInstance().getProxy().getPlayers();
+    }
+
+
+
+    public static List<ProxiedPlayer> getServeredPPlayers(Server server) {
+        List<ProxiedPlayer> players = new ArrayList<>();
+
+        for (ProxiedPlayer player : getOnlinePPlayers()) {
+            if (player.getServer() == null) continue;
+            if (player.getServer().equals(server)) players.add(player);
+        }
+
+        return players;
+    }
+
+    public static List<String> getPlayerNamesForAllOnline(){
+        return getPlayerNamesFrom(getOnlinePPlayers());
+    }
+
+    public static List<String> getPlayerNamesByServer(Server server) {
+        return getPlayerNamesFrom(getServeredPPlayers(server));
+    }
+
+    public static List<String> getPlayerNamesFrom(Iterable<ProxiedPlayer> players) {
+        List<String> names = new ArrayList<>();
+
+        for (ProxiedPlayer player : players) {
+            names.add(player.getName());
+        }
+
+        return names;
     }
 
     public static ProxiedPlayer getPPlayer(UUID uuid) {

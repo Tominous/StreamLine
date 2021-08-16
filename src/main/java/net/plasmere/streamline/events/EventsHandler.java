@@ -6,11 +6,12 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.events.enums.Condition;
+import net.plasmere.streamline.objects.Guild;
+import net.plasmere.streamline.objects.Party;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.lists.SingleSet;
-import net.plasmere.streamline.utils.MessagingUtils;
-import net.plasmere.streamline.utils.PlayerUtils;
-import net.plasmere.streamline.utils.TextUtils;
+import net.plasmere.streamline.objects.users.SavableUser;
+import net.plasmere.streamline.utils.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -73,6 +74,59 @@ public class EventsHandler {
                 case SET_POINTS:
                     player.setPoints(Integer.parseInt(event.actions.get(i).value));
                     continue;
+                case ADD_TAG:
+                    player.tryAddNewTag(event.actions.get(i).value);
+                    continue;
+                case REM_TAG:
+                    player.tryRemTag(event.actions.get(i).value);
+                    continue;
+                case SEND_MESSAGE_TO_FRIENDS:
+                    for (String uuid : player.friendList){
+                        SavableUser user = PlayerUtils.getOrGetSavableUser(uuid);
+                        if (user == null) continue;
+
+                        if (PlayerUtils.isStatOnline(user)) {
+                            MessagingUtils.sendEventUserMessage(player, user, event.actions.get(i).value);
+                        }
+                    }
+                    continue;
+                case SEND_MESSAGE_TO_PARTY_MEMBERS:
+                    Party party = PartyUtils.getParty(player);
+                    if (party == null) continue;
+
+                    for (Player user : party.totalMembers) {
+                        if (user.online) {
+                            MessagingUtils.sendEventUserMessage(player, user, event.actions.get(i).value);
+                        }
+                    }
+                    continue;
+                case SEND_MESSAGE_TO_GUILD_MEMBERS:
+                    Guild guild = GuildUtils.getGuild(player);
+                    if (guild == null) continue;
+
+                    for (SavableUser user : guild.totalMembers) {
+                        if (user == null) continue;
+
+                        if (PlayerUtils.isStatOnline(user)) {
+                            MessagingUtils.sendEventUserMessage(player, user, event.actions.get(i).value);
+                        }
+                    }
+                    continue;
+                case SEND_MESSAGE_TO_STAFF:
+                    MessagingUtils.sendPermissionedMessage(ConfigUtils.staffPerm, event.actions.get(i).value);
+                    continue;
+                case SEND_MESSAGE_TO_PERMISSION:
+                    String total = event.actions.get(i).value;
+
+                    if (! total.contains(";")) {
+                        MessagingUtils.logSevere("An event wasn't handled correctly for " + event.path.getPath() + "...");
+                        continue;
+                    }
+
+                    String[] split = total.split(";", 2);
+
+                    MessagingUtils.sendPermissionedMessage(split[0], split[1]);
+                    continue;
                 default:
                     MessagingUtils.logSevere("An event wasn't handled correctly...");
                     break;
@@ -117,6 +171,59 @@ public class EventsHandler {
                     continue;
                 case SET_POINTS:
                     player.setPoints(Integer.parseInt(event.actions.get(i).value));
+                    continue;
+                case ADD_TAG:
+                    player.tryAddNewTag(event.actions.get(i).value);
+                    continue;
+                case REM_TAG:
+                    player.tryRemTag(event.actions.get(i).value);
+                    continue;
+                case SEND_MESSAGE_TO_FRIENDS:
+                    for (String uuid : player.friendList){
+                        SavableUser user = PlayerUtils.getOrGetSavableUser(uuid);
+                        if (user == null) continue;
+
+                        if (PlayerUtils.isStatOnline(user)) {
+                            MessagingUtils.sendBUserMessage(user.findSender(), event.actions.get(i).value);
+                        }
+                    }
+                    continue;
+                case SEND_MESSAGE_TO_PARTY_MEMBERS:
+                    Party party = PartyUtils.getParty(player);
+                    if (party == null) continue;
+
+                    for (Player person : party.totalMembers) {
+                        if (person.online) {
+                            MessagingUtils.sendBUserMessage(person.findSender(), event.actions.get(i).value);
+                        }
+                    }
+                    continue;
+                case SEND_MESSAGE_TO_GUILD_MEMBERS:
+                    Guild guild = GuildUtils.getGuild(player);
+                    if (guild == null) continue;
+
+                    for (SavableUser person : guild.totalMembers) {
+                        if (person == null) continue;
+
+                        if (PlayerUtils.isStatOnline(person)) {
+                            MessagingUtils.sendBUserMessage(person.findSender(), event.actions.get(i).value);
+                        }
+                    }
+                    continue;
+                case SEND_MESSAGE_TO_STAFF:
+                    MessagingUtils.sendPermissionedMessage(ConfigUtils.staffPerm, event.actions.get(i).value);
+                    continue;
+                case SEND_MESSAGE_TO_PERMISSION:
+                    String total = event.actions.get(i).value;
+
+                    if (! total.contains(";")) {
+                        MessagingUtils.logSevere("An event wasn't handled correctly for " + event.path.getPath() + "...");
+                        continue;
+                    }
+
+                    String[] split = total.split(";", 2);
+
+                    MessagingUtils.sendPermissionedMessage(split[0], split[1]);
                     continue;
                 default:
                     MessagingUtils.logSevere("An event wasn't handled correctly...");

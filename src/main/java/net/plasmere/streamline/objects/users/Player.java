@@ -27,15 +27,9 @@ public class Player extends SavableUser {
     public String latestIP;
     public List<String> ipList;
     public List<String> nameList;
-    public boolean online;
-    public boolean sspy;
-    public boolean gspy;
-    public boolean pspy;
-    public boolean sc;
     public String latestVersion;
     public boolean muted;
     public Date mutedTill;
-    public boolean viewsc;
     public ProxiedPlayer player;
 
     public int defaultLevel = 1;
@@ -118,13 +112,8 @@ public class Player extends SavableUser {
         defaults.add("total-xp=0");
         defaults.add("currentXP=0");
         defaults.add("playtime=0");
-        defaults.add("sspy=true");
-        defaults.add("gspy=true");
-        defaults.add("pspy=true");
-        defaults.add("sc=false");
         defaults.add("muted=false");
         defaults.add("muted-till=");
-        defaults.add("view-sc=true");
         //defaults.add("");
         return defaults;
     }
@@ -146,17 +135,12 @@ public class Player extends SavableUser {
         this.currentXP = Integer.parseInt(getFromKey("current-xp"));
         this.playSeconds = Integer.parseInt(getFromKey("playtime"));
         this.online = onlineCheck();
-        this.sspy = Boolean.parseBoolean(getFromKey("sspy"));
-        this.gspy = Boolean.parseBoolean(getFromKey("gspy"));
-        this.pspy = Boolean.parseBoolean(getFromKey("pspy"));
-        this.sc = Boolean.parseBoolean(getFromKey("sc"));
         this.muted = Boolean.parseBoolean(getFromKey("muted"));
         try {
             this.mutedTill = new Date(Long.parseLong(getFromKey("muted-till")));
         } catch (Exception e) {
             this.mutedTill = null;
         }
-        this.viewsc = Boolean.parseBoolean(getFromKey("view-sc"));
         if (! this.online) this.latestVersion = getFromKey("latest-version");
     }
 
@@ -370,41 +354,6 @@ public class Player extends SavableUser {
     public int getCurrentXP(){
         return this.totalXP - getCurrentLevelXP();
     }
-
-    public void setSSPY(boolean value) {
-        sspy = value;
-        updateKey("sspy", value);
-    }
-
-    public void toggleSSPY() { setSSPY(! sspy); }
-
-    public void setGSPY(boolean value) {
-        gspy = value;
-        updateKey("gspy", value);
-    }
-
-    public void toggleGSPY() { setGSPY(! gspy); }
-
-    public void setPSPY(boolean value) {
-        pspy = value;
-        updateKey("pspy", value);
-    }
-
-    public void togglePSPY() { setPSPY(! pspy); }
-
-    public void setSC(boolean value) {
-        sc = value;
-        updateKey("sc", value);
-    }
-
-    public void toggleSC() { setSC(! sc); }
-
-    public void setSCView(boolean value) {
-        viewsc = value;
-        updateKey("view-sc", value);
-    }
-
-    public void toggleSCView() { setSCView(! viewsc); }
 
     public void setMuted(boolean value) {
         muted = value;

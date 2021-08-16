@@ -320,6 +320,12 @@ public class ConfigUtils {
     public static String comBFriendBase = StreamLine.config.getConfString("commands.bungee.messaging.friend.base");
     public static List<String> comBFriendAliases = StreamLine.config.getConfStringList("commands.bungee.messaging.friend.aliases");
     public static String comBFriendPerm = StreamLine.config.getConfString("commands.bungee.messaging.friend.permission");
+    // // Debug.
+    // Delete Stat.
+    public static boolean comBDeleteStat = StreamLine.config.getConfBoolean("commands.bungee.debug.delete-stat.enabled");
+    public static String comBDeleteStatBase = StreamLine.config.getConfString("commands.bungee.debug.delete-stat.base");
+    public static List<String> comBDeleteStatAliases = StreamLine.config.getConfStringList("commands.bungee.debug.delete-stat.aliases");
+    public static String comBDeleteStatPerm = StreamLine.config.getConfString("commands.bungee.debug.delete-stat.permission");
     // ... ... Modules.
     public static String staffPerm = StreamLine.config.getConfString("modules.staff-permission");
     // ... Discord.
@@ -336,6 +342,7 @@ public class ConfigUtils {
     // StaffChat.
     public static boolean moduleStaffChatToMinecraft = StreamLine.config.getConfBoolean("modules.discord.staffchat-to-minecraft");
     public static boolean moduleSCOnlyStaffRole = StreamLine.config.getConfBoolean("modules.discord.staffchat-to-minecraft-only-staff-role");
+    public static String moduleStaffChatServer = StreamLine.config.getConfString("modules.discord.staffchat-server");
     // Startup / Shutdowns.
     public static boolean moduleStartups = StreamLine.config.getConfBoolean("modules.discord.startup-message");
     public static boolean moduleShutdowns = StreamLine.config.getConfBoolean("modules.discord.shutdown-message");
@@ -485,4 +492,6 @@ public class ConfigUtils {
     public static boolean onCloseSafeKick = StreamLine.config.getConfBoolean("modules.bungee.on-close.safe-kick");
     public static boolean onCloseKickMessage = StreamLine.config.getConfBoolean("modules.bungee.on-close.kick-message");
     public static boolean onCloseHackEnd = StreamLine.config.getConfBoolean("modules.bungee.on-close.hack-end-command");
+    // Spies.
+    public static List<String> viewSelfAliases = StreamLine.config.getConfStringList("modules.bungee.spies.view-self-aliases");
 }

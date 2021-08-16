@@ -1,6 +1,5 @@
 package net.plasmere.streamline.discordbot;
 
-import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.discordbot.commands.*;
@@ -26,14 +25,14 @@ public class MessageListener extends ListenerAdapter {
             if (ConfigUtils.moduleSCOnlyStaffRole){
                 try {
                     if (Objects.requireNonNull(event.getMessage().getMember()).getRoles().contains(event.getJDA().getRoleById(ConfigUtils.roleStaff))) {
-                        MessagingUtils.sendStaffMessageSC(event.getAuthor().getName(), MessageConfUtils.discordStaffChatFrom, em);
+                        MessagingUtils.sendStaffMessageFromDiscord(event.getAuthor().getName(), MessageConfUtils.discordStaffChatFrom, em);
                     } else
                         return;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
-                MessagingUtils.sendStaffMessageSC(event.getAuthor().getName(), MessageConfUtils.discordStaffChatFrom, em);
+                MessagingUtils.sendStaffMessageFromDiscord(event.getAuthor().getName(), MessageConfUtils.discordStaffChatFrom, em);
             }
 
             if (ConfigUtils.debug) MessagingUtils.logInfo("Someone talked in staffchat (discord)... sending to bungee...");

@@ -170,6 +170,22 @@ public class MessageConfUtils {
     public static String scViewToggle = StreamLine.config.getMessString("sc-view.message");
     public static String scViewOn = StreamLine.config.getMessString("sc-view.toggle.true");
     public static String scViewOff = StreamLine.config.getMessString("sc-view.toggle.false");
+    // SSPYVS.
+    public static String sspyvsToggle = StreamLine.config.getMessString("sspyvs.message");
+    public static String sspyvsOn = StreamLine.config.getMessString("sspyvs.toggle.true");
+    public static String sspyvsOff = StreamLine.config.getMessString("sspyvs.toggle.false");
+    // PSPYVS.
+    public static String pspyvsToggle = StreamLine.config.getMessString("pspyvs.message");
+    public static String pspyvsOn = StreamLine.config.getMessString("pspyvs.toggle.true");
+    public static String pspyvsOff = StreamLine.config.getMessString("pspyvs.toggle.false");
+    // GSPYVS.
+    public static String gspyvsToggle = StreamLine.config.getMessString("gspyvs.message");
+    public static String gspyvsOn = StreamLine.config.getMessString("gspyvs.toggle.true");
+    public static String gspyvsOff = StreamLine.config.getMessString("gspyvs.toggle.false");
+    // SCVS.
+    public static String scvsToggle = StreamLine.config.getMessString("scvs.message");
+    public static String scvsOn = StreamLine.config.getMessString("scvs.toggle.true");
+    public static String scvsOff = StreamLine.config.getMessString("scvs.toggle.false");
     // EVReload.
     public static String evReload = StreamLine.config.getMessString("evreload.message");
     // Points.
@@ -308,6 +324,9 @@ public class MessageConfUtils {
     public static String settingsSetSample = StreamLine.config.getMessString("settings.set.sample");
     public static String settingsSetMaxP = StreamLine.config.getMessString("settings.set.max-players");
     public static String settingsSetOnlineP = StreamLine.config.getMessString("settings.set.online-players");
+    public static String settingsSetPCEnabled = StreamLine.config.getMessString("settings.set.proxy-chat-enabled");
+    public static String settingsSetPCChats = StreamLine.config.getMessString("settings.set.proxy-chat-chats");
+    public static String settingsSetPCBPerm = StreamLine.config.getMessString("settings.set.proxy-chat-base-perm");
     // Get.
     public static String settingsGetMOTD = StreamLine.config.getMessString("settings.get.motd");
     public static String settingsGetMOTDTime = StreamLine.config.getMessString("settings.get.motd-time");
@@ -315,9 +334,16 @@ public class MessageConfUtils {
     public static String settingsGetSample = StreamLine.config.getMessString("settings.get.sample");
     public static String settingsGetMaxP = StreamLine.config.getMessString("settings.get.max-players");
     public static String settingsGetOnlineP = StreamLine.config.getMessString("settings.get.online-players");
+    public static String settingsGetPCEnabled = StreamLine.config.getMessString("settings.get.proxy-chat-enabled");
+    public static String settingsGetPCChats = StreamLine.config.getMessString("settings.get.proxy-chat-chats");
+    public static String settingsGetPCBPerm = StreamLine.config.getMessString("settings.get.proxy-chat-base-perm");
     // // Info.
     public static String info = StreamLine.config.getMessString("info");
     // // Graceful End.
     public static String gracefulEndSender = StreamLine.config.getMessString("graceful-end.sender");
     public static String gracefulEndKickMessage = StreamLine.config.getMessString("graceful-end.kick-message");
+    // Delete Stat.
+    public static String deleteStatMessage = StreamLine.config.getMessString("delete-stat.message");
+    // B-Teleport.
+    public static String bteleport = StreamLine.config.getMessString("bteleport");
 }

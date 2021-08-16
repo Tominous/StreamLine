@@ -1,6 +1,7 @@
-package net.plasmere.streamline.commands.staff.spy;
+package net.plasmere.streamline.commands.staff;
 
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
@@ -14,31 +15,31 @@ import net.plasmere.streamline.utils.TextUtils;
 
 import java.util.ArrayList;
 
-public class SSPYCommand extends Command implements TabExecutor {
-    public SSPYCommand(String base, String perm, String[] aliases){
+public class TeleportCommand extends Command implements TabExecutor {
+
+    public TeleportCommand(String base, String perm, String[] aliases){
         super(base, perm, aliases);
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof ProxiedPlayer) {
-            Player player = PlayerUtils.getPlayerStat(sender);
-            if (player == null) return;
-
-            if (args.length > 0) {
-                if (PluginUtils.checkEqualsStrings(args[0], PluginUtils.stringListToArray(ConfigUtils.viewSelfAliases))) {
-                    player.toggleSSPYVS();
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sspyvsToggle
-                            .replace("%toggle%", (player.sspyvs ? MessageConfUtils.sspyvsOn : MessageConfUtils.sspyvsOff))
-                    );
-                    return;
-                }
+            ProxiedPlayer player = PlayerUtils.getPPlayer(args[0]);
+            if (player == null) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                return;
             }
 
-            player.toggleSSPY();
+            ServerInfo serverInfo = player.getServer().getInfo();
 
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sspyToggle
-                            .replace("%toggle%", (player.sspy ? MessageConfUtils.sspyOn : MessageConfUtils.sspyOff))
+            ProxiedPlayer s = (ProxiedPlayer) sender;
+
+            s.connect(serverInfo);
+
+            MessagingUtils.sendTeleportPluginMessageRequest(s, player);
+
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bteleport
+                    .replace("%player%", player.getName())
             );
         } else {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
@@ -48,7 +49,7 @@ public class SSPYCommand extends Command implements TabExecutor {
     @Override
     public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
         if (args.length <= 1) {
-            return TextUtils.getCompletion(ConfigUtils.viewSelfAliases, args[0]);
+            return TextUtils.getCompletion(PlayerUtils.getPlayerNamesForAllOnline(), args[0]);
         } else {
             return new ArrayList<>();
         }

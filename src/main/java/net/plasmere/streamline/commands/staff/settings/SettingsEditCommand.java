@@ -125,6 +125,53 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                                 .replace("%set%", onp)
                         );
                         break;
+                    case "proxy-chat-enabled":
+                        String cusp = TextUtils.argsToStringMinus(args, 0, 1);
+
+                        boolean cuspBool = true;
+                        try {
+                            cuspBool = Boolean.parseBoolean(cusp);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        StreamLine.serverConfig.setProxyChatEnabled(cuspBool);
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetPCEnabled
+                                .replace("%set%", String.valueOf(cuspBool))
+                        );
+                        break;
+                    case "proxy-chat-chats":
+                        if (args.length < 4) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            return;
+                        }
+
+                        int atChat = 0;
+                        try {
+                            atChat = Integer.parseInt(args[2]);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            return;
+                        }
+
+                        String chats = StreamLine.serverConfig.getProxyChatChatsAt(atChat);
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetPCChats
+                                .replace("%number%", Integer.toString(atChat))
+                                .replace("%set%", chats)
+                        );
+                        break;
+                    case "proxy-chat-base-perm":
+                        String baseP = TextUtils.argsToStringMinus(args, 0, 1);
+
+                        StreamLine.serverConfig.setChatBasePerm(baseP);
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetPCBPerm
+                                .replace("%set%", baseP)
+                        );
+                        break;
                 }
                 break;
             case "check":
@@ -206,6 +253,42 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                                 .replace("%set%", onp)
                         );
                         break;
+                    case "proxy-chat-enabled":
+                        Boolean cusp = StreamLine.serverConfig.getProxyChatEnabled();
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetPCEnabled
+                                .replace("%set%", String.valueOf(cusp))
+                        );
+                        break;
+                    case "proxy-chat-chats":
+                        if (args.length < 3) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            return;
+                        }
+
+                        int atChat = 0;
+                        try {
+                            atChat = Integer.parseInt(args[2]);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            return;
+                        }
+
+                        String chats = StreamLine.serverConfig.getProxyChatChatsAt(atChat);
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetPCChats
+                                .replace("%number%", Integer.toString(atChat))
+                                .replace("%set%", chats)
+                        );
+                        break;
+                    case "proxy-chat-base-perm":
+                        String baseP = StreamLine.serverConfig.getChatBasePerm();
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetPCBPerm
+                                .replace("%set%", baseP)
+                        );
+                        break;
                 }
                 break;
         }
@@ -227,6 +310,9 @@ public class SettingsEditCommand extends Command implements TabExecutor {
         options2.add("sample");
         options2.add("max-players");
         options2.add("online-players");
+        options2.add("proxy-chat-enabled");
+        options2.add("proxy-chat-chats");
+        options2.add("proxy-chat-base-perm");
 
         if (args.length == 1) {
             final String param1 = args[0];

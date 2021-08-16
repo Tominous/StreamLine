@@ -35,3 +35,17 @@ max-players: '1000'
 # '-<number>' = exact number of online players - the number you input.
 # '<number>' = the number you input.
 online-players: 'exact'
+# For proxy chat settings...
+proxy-chat:
+  # Defines if chat should use proxy.
+  enabled: true
+  # Defines the default string prior to the chats.<number> number for permissions with chats!
+  base-perm: "streamline.chat."
+  # Defines specific chats (MUST BE INTEGERS!) for different teams.
+  # Higher number = more priority.
+  # Example permission to give to players: "streamline.chat.1"
+  # Lowest = Default.
+  chats:
+    1: "&d%sender%&r &9&l>> &f%message%"
+    2: "&d%sender%&r &9&l>> &e%message%"
+    3: "&d%sender%&r &9&l>> &6%message%"
