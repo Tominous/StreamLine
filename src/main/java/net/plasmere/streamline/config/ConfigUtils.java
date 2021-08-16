@@ -293,6 +293,11 @@ public class ConfigUtils {
     public static String comBEndBase = StreamLine.config.getConfString("commands.bungee.staff.end.base");
     public static List<String> comBEndAliases = StreamLine.config.getConfStringList("commands.bungee.staff.end.aliases");
     public static String comBEndPerm = StreamLine.config.getConfString("commands.bungee.staff.end.permission");
+    // B-Teleport.
+    public static boolean comBTeleport = StreamLine.config.getConfBoolean("commands.bungee.staff.bteleport.enabled");
+    public static String comBTeleportBase = StreamLine.config.getConfString("commands.bungee.staff.bteleport.base");
+    public static List<String> comBTeleportAliases = StreamLine.config.getConfStringList("commands.bungee.staff.bteleport.aliases");
+    public static String comBTeleportPerm = StreamLine.config.getConfString("commands.bungee.staff.bteleport.permission");
     // // Configs.
     // Settings.
     public static boolean comBSettings = StreamLine.config.getConfBoolean("commands.bungee.configs.settings.enabled");

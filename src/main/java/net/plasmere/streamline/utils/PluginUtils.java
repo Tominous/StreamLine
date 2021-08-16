@@ -93,6 +93,9 @@ public class PluginUtils {
         } else {
             if (ConfigUtils.debug) MessagingUtils.logInfo("Settings enabled = false...");
         }
+        if (ConfigUtils.comBTeleport) {
+            registerCommand(plugin, new TeleportCommand(ConfigUtils.comBTeleportBase, ConfigUtils.comBTeleportPerm, stringListToArray(ConfigUtils.comBTeleportAliases)));
+        }
         // // Spying.
         if (ConfigUtils.comBSSPY) {
             registerCommand(plugin, new SSPYCommand(ConfigUtils.comBSSPYBase, ConfigUtils.comBSSPYPerm, stringListToArray(ConfigUtils.comBSSPYAliases)));
