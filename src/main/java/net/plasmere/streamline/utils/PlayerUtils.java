@@ -40,6 +40,8 @@ public class PlayerUtils {
 
     private static final List<SavableUser> stats = new ArrayList<>();
 
+    public static HashMap<ProxiedPlayer, SingleSet<Integer, ProxiedPlayer>> teleports = new HashMap<>();
+
     private static HashMap<Player, SingleSet<Integer, Integer>> connections = new HashMap<>();
     private static TreeMap<String, TreeMap<Integer, SavableUser>> toSave = new TreeMap<>();
 
@@ -1544,12 +1546,12 @@ public class PlayerUtils {
 
 
 
-    public static List<ProxiedPlayer> getServeredPPlayers(Server server) {
+    public static List<ProxiedPlayer> getServeredPPlayers(String serverName) {
         List<ProxiedPlayer> players = new ArrayList<>();
 
         for (ProxiedPlayer player : getOnlinePPlayers()) {
             if (player.getServer() == null) continue;
-            if (player.getServer().equals(server)) players.add(player);
+            if (player.getServer().getInfo().getName().equals(serverName)) players.add(player);
         }
 
         return players;
@@ -1560,7 +1562,7 @@ public class PlayerUtils {
     }
 
     public static List<String> getPlayerNamesByServer(Server server) {
-        return getPlayerNamesFrom(getServeredPPlayers(server));
+        return getPlayerNamesFrom(getServeredPPlayers(server.getInfo().getName()));
     }
 
     public static List<String> getPlayerNamesFrom(Iterable<ProxiedPlayer> players) {
@@ -1621,6 +1623,24 @@ public class PlayerUtils {
         }
 
         return ps;
+    }
+
+    public static void tickTeleport() {
+        List<ProxiedPlayer> toTp = new ArrayList<>(teleports.keySet());
+
+        for (ProxiedPlayer player : toTp) {
+            if (teleports.get(player).key <= 0) {
+                MessagingUtils.sendTeleportPluginMessageRequest(player, teleports.get(player).value);
+                teleports.remove(player);
+                continue;
+            }
+
+            teleports.replace(player, new SingleSet<>(teleports.get(player).key - 1, teleports.get(player).value));
+        }
+    }
+
+    public static void addTeleport(ProxiedPlayer sender, ProxiedPlayer to) {
+        teleports.put(sender, new SingleSet<>(ConfigUtils.helperTeleportDelay, to));
     }
 
     /* ----------------------------

@@ -127,7 +127,7 @@ public class MessagingUtils {
     }
 
     public static void sendServerMessageFromUser(ProxiedPlayer player, Server server, String format, String message) {
-        for (ProxiedPlayer p : PlayerUtils.getServeredPPlayers(server)) {
+        for (ProxiedPlayer p : PlayerUtils.getServeredPPlayers(server.getInfo().getName())) {
             p.sendMessage(TextUtils.codedText(format
                     .replace("%sender%", getPlayerDisplayName(player))
                     .replace("%message%", message)
@@ -143,28 +143,42 @@ public class MessagingUtils {
     }
 
     public static void sendDisplayPluginMessageRequest(ProxiedPlayer player) {
-        if (PlayerUtils.getServeredPPlayers(player.getServer()).size() <= 0) return;
+        if (PlayerUtils.getServeredPPlayers(player.getServer().getInfo().getName()).size() <= 0) return;
 
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF( "request.displayname" ); // the channel could be whatever you want
-
-        // we send the data to the server
-        // using ServerInfo the packet is being queued if there are no players in the server
-        // using only the server to send data the packet will be lost if no players are in it
-        player.getServer().getInfo().sendData( StreamLine.customChannel, out.toByteArray() );
-    }
-
-    public static void sendTeleportPluginMessageRequest(ProxiedPlayer player, ProxiedPlayer to) {
-        if (PlayerUtils.getServeredPPlayers(player.getServer()).size() <= 0) return;
-
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF("teleport"); // the channel could be whatever you want
-        out.writeUTF(to.getUniqueId().toString()); // this data could be whatever you want // THIS IS THE TO PLAYER
+        out.writeUTF("request.displayname"); // the channel could be whatever you want
 
         // we send the data to the server
         // using ServerInfo the packet is being queued if there are no players in the server
         // using only the server to send data the packet will be lost if no players are in it
         player.getServer().getInfo().sendData(StreamLine.customChannel, out.toByteArray());
+    }
+
+    public static void sendTeleportPluginMessageRequest(ProxiedPlayer sender, ProxiedPlayer to) {
+        if (PlayerUtils.getServeredPPlayers(sender.getServer().getInfo().getName()).size() <= 0) return;
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("teleport"); // the channel could be whatever you want
+        out.writeUTF(sender.getUniqueId().toString()); // this data could be whatever you want // THIS IS THE SENDER PLAYER
+        out.writeUTF(to.getUniqueId().toString()); // this data could be whatever you want // THIS IS THE TO PLAYER
+
+        // we send the data to the server
+        // using ServerInfo the packet is being queued if there are no players in the server
+        // using only the server to send data the packet will be lost if no players are in it
+        sender.getServer().getInfo().sendData(StreamLine.customChannel, out.toByteArray());
+    }
+
+    public static void sendTagPingPluginMessageRequest(ProxiedPlayer toPing) {
+        if (PlayerUtils.getServeredPPlayers(toPing.getServer().getInfo().getName()).size() <= 0) return;
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("tag-ping"); // the channel could be whatever you want
+        out.writeUTF(toPing.getUniqueId().toString()); // this data could be whatever you want // THIS IS THE SENDER PLAYER
+
+        // we send the data to the server
+        // using ServerInfo the packet is being queued if there are no players in the server
+        // using only the server to send data the packet will be lost if no players are in it
+        toPing.getServer().getInfo().sendData(StreamLine.customChannel, out.toByteArray());
     }
 
     public static void sendStaffMessageFromDiscord(String sender, String from, String msg){

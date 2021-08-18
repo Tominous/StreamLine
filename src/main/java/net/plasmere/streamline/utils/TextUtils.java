@@ -4,15 +4,16 @@ import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.objects.lists.SingleSet;
 
 import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -202,6 +203,16 @@ public class TextUtils {
         return normalize(argsSet);
     }
 
+    public static String argsToString(String[] args){
+        TreeMap<Integer, String> argsSet = new TreeMap<>();
+
+        for (int i = 0; i < args.length; i++) {
+            argsSet.put(i, args[i]);
+        }
+
+        return normalize(argsSet);
+    }
+
     public static TextComponent codedText(String text) {
         text = ChatColor.translateAlternateColorCodes('&', newLined(text));
 
@@ -267,6 +278,33 @@ public class TextUtils {
         HoverEvent he = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(codedString(hoverText)));
         textComponent.setHoverEvent(he);
         return textComponent;
+    }
+
+    public static TreeMap<Integer, ProxiedPlayer> getTaggedPlayersIndexed(String[] args, String serverName) {
+        TreeMap<Integer, ProxiedPlayer> toIndex = new TreeMap<>();
+        List<ProxiedPlayer> players = PlayerUtils.getServeredPPlayers(serverName);
+
+        for (ProxiedPlayer player : players) {
+            for (int i = 0; i < args.length; i ++) {
+                if (player.getName().equals(args[i])) {
+                    toIndex.put(i, player);
+                }
+            }
+        }
+
+        return toIndex;
+    }
+
+    public static SingleSet<String, List<ProxiedPlayer>> getMessageWithTags(ProxiedPlayer sender, String message) {
+        String[] args = message.split(" ");
+
+        TreeMap<Integer, ProxiedPlayer> indexed = getTaggedPlayersIndexed(args, sender.getServer().getInfo().getName());
+
+        for (Integer index : indexed.keySet()) {
+            args[index] = StreamLine.serverConfig.getTagsPrefix() + args[index];
+        }
+
+        return new SingleSet<>(normalize(args), new ArrayList<>(indexed.values()));
     }
 
     public static String newLined(String text){

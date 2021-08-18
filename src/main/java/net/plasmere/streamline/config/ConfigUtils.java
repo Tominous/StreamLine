@@ -499,4 +499,7 @@ public class ConfigUtils {
     public static boolean onCloseHackEnd = StreamLine.config.getConfBoolean("modules.bungee.on-close.hack-end-command");
     // Spies.
     public static List<String> viewSelfAliases = StreamLine.config.getConfStringList("modules.bungee.spies.view-self-aliases");
+    // // Helper.
+    // Teleport.
+    public static int helperTeleportDelay = StreamLine.config.getConfInteger("modules.bungee.helper.teleport.delay");
 }

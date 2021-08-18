@@ -433,4 +433,26 @@ public class ServerConfig {
         reloadConfig();
         return serverConfig.getString("proxy-chat.chats." + integer);
     }
+
+    public void setTagsPingEnabled(boolean bool) {
+        serverConfig.set("proxy-chat.tags.enable-ping", bool);
+        saveConfig();
+        reloadConfig();
+    }
+
+    public boolean getTagsPingEnabled() {
+        reloadConfig();
+        return serverConfig.getBoolean("proxy-chat.tags.enable-ping");
+    }
+
+    public void setTagsPrefix(String prefix) {
+        serverConfig.set("proxy-chat.tags.tag-prefix", prefix);
+        saveConfig();
+        reloadConfig();
+    }
+
+    public String getTagsPrefix() {
+        reloadConfig();
+        return serverConfig.getString("proxy-chat.tags.tag-prefix");
+    }
 }

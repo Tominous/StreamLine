@@ -49,3 +49,6 @@ proxy-chat:
     1: "&d%sender%&r &7&l>> &f%message%"
     2: "&d%sender%&r &7&l>> &e%message%"
     3: "&d%sender%&r &7&l>> &6%message%"
+  tags:
+    enable-ping: true
+    tag-prefix: "&2"

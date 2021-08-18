@@ -25,6 +25,15 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
+        if (args == null) {
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            return;
+        }
+        if (args.length <= 0) {
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            return;
+        }
+
         switch (args[0]) {
             case "set":
                 if (args.length <= 2) {

@@ -1160,3 +1160,10 @@ modules:
         - "viewself"
         - "vself"
         - "views"
+    # For use of the Helper sub-server plugin.
+    helper:
+      # For teleportation.
+      teleport:
+        # Delay for teleports (in seconds).
+        # Should be, at minimum, the amount of time it takes to go from one server to another.
+        delay: 2

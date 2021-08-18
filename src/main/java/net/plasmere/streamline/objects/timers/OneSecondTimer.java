@@ -1,10 +1,12 @@
 package net.plasmere.streamline.objects.timers;
 
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.objects.users.SavableUser;
+import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 
 import java.util.*;
@@ -52,7 +54,7 @@ public class OneSecondTimer implements Runnable {
                 PlayerUtils.checkAndUpdateIfMuted(player);
             }
 
-//            PlayerUtils.updateServerAll();
+            PlayerUtils.tickTeleport();
         } catch (ConcurrentModificationException e) {
             if (ConfigUtils.debug) e.printStackTrace();
         }

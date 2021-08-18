@@ -64,12 +64,12 @@ public class StreamLine extends Plugin {
 	private final File confDir = new File(getDataFolder() + File.separator + "configs" + File.separator);
 	private File eventsDir;
 
-	private ScheduledTask guilds;
-	private ScheduledTask players;
-	private ScheduledTask cachedPlayers;
-	private ScheduledTask playtime;
-	private ScheduledTask oneSecTimer;
-	private ScheduledTask motdUpdater;
+	public ScheduledTask guilds;
+	public ScheduledTask players;
+	public ScheduledTask cachedPlayers;
+	public ScheduledTask playtime;
+	public ScheduledTask oneSecTimer;
+	public ScheduledTask motdUpdater;
 
 	private String currentMOTD;
 	private int motdPage;

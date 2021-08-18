@@ -5,6 +5,7 @@ import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
+import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.users.Player;
@@ -36,7 +37,8 @@ public class TeleportCommand extends Command implements TabExecutor {
 
             s.connect(serverInfo);
 
-            MessagingUtils.sendTeleportPluginMessageRequest(s, player);
+//            MessagingUtils.sendTeleportPluginMessageRequest(s, player);
+            PlayerUtils.addTeleport(s, player);
 
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bteleport
                     .replace("%player%", player.getName())

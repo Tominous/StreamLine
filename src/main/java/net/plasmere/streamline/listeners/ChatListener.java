@@ -6,6 +6,7 @@ import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.events.Event;
 import net.plasmere.streamline.events.EventsHandler;
 import net.plasmere.streamline.events.enums.Condition;
+import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.users.Player;
@@ -20,6 +21,7 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class ChatListener implements Listener {
@@ -118,8 +120,14 @@ public class ChatListener implements Listener {
         }
 
         if (StreamLine.serverConfig.getProxyChatEnabled()) {
+            SingleSet<String, List<ProxiedPlayer>> msgWithTagged = TextUtils.getMessageWithTags(sender, msg);
+
             String format = StreamLine.serverConfig.getPermissionedProxyChatMessage(stat);
-            MessagingUtils.sendServerMessageFromUser(sender, sender.getServer(), format, msg);
+            MessagingUtils.sendServerMessageFromUser(sender, sender.getServer(), format, msgWithTagged.key);
+
+            for (ProxiedPlayer player : msgWithTagged.value) {
+                MessagingUtils.sendTagPingPluginMessageRequest(player);
+            }
             e.setCancelled(true);
         }
 
