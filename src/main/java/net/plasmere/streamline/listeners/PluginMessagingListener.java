@@ -10,6 +10,7 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.utils.MessagingUtils;
+import net.plasmere.streamline.utils.PlayerUtils;
 
 public class PluginMessagingListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -28,7 +29,11 @@ public class PluginMessagingListener implements Listener {
             if (event.getReceiver() instanceof ProxiedPlayer)
             {
                 ProxiedPlayer receiver = (ProxiedPlayer) event.getReceiver();
-                MessagingUtils.serveredUsernames.put(receiver, in.readUTF());
+
+                String data = in.readUTF();
+                if (data.equals("")) data = PlayerUtils.getOrCreatePlayerStat(receiver).displayName;
+
+                MessagingUtils.serveredUsernames.put(receiver, data);
             }
         }
     }

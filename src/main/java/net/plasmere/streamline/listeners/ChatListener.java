@@ -120,14 +120,21 @@ public class ChatListener implements Listener {
         }
 
         if (StreamLine.serverConfig.getProxyChatEnabled()) {
-            SingleSet<String, List<ProxiedPlayer>> msgWithTagged = TextUtils.getMessageWithTags(sender, msg);
-
             String format = StreamLine.serverConfig.getPermissionedProxyChatMessage(stat);
-            MessagingUtils.sendServerMessageFromUser(sender, sender.getServer(), format, msgWithTagged.key);
+            SingleSet<String, List<ProxiedPlayer>> msgWithTagged = TextUtils.getMessageWithTags(sender, msg, format);
+
+            String withEmotes = TextUtils.getMessageWithEmotes(sender, msgWithTagged.key);
+
+            MessagingUtils.sendServerMessageFromUser(sender, sender.getServer(), format, withEmotes);
 
             for (ProxiedPlayer player : msgWithTagged.value) {
                 MessagingUtils.sendTagPingPluginMessageRequest(player);
             }
+
+            if (StreamLine.serverConfig.getProxyChatConsoleEnabled()) {
+                MessagingUtils.sendServerMessageFromUserToConsole(sender, sender.getServer(), format, withEmotes);
+            }
+
             e.setCancelled(true);
         }
 

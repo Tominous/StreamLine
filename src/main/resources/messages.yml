@@ -1879,6 +1879,10 @@ settings:
     # Fillers:
     # %set% = what you set it to.
     proxy-chat-enabled: "&eJust set &cChat Uses Proxy &eto &b\"%set%&b\"&e!"
+    # Proxy Chat Console Enabled.
+    # Fillers:
+    # %set% = what you set it to.
+    proxy-chat-to-console: "&eJust set &cChat Goes to Console &eto &b\"%set%&b\"&e!"
     # Proxy Chat Chats.
     # Fillers:
     # %number% = the number of the Chats page.
@@ -1888,6 +1892,24 @@ settings:
     # Fillers:
     # %set% = what you set it to.
     proxy-chat-base-perm: "&eJust set &cProxy Chat Base Perm &eto &b\"%set%&b\"&e!"
+    # Tags Enable Ping.
+    # Fillers:
+    # %set% = what you set it to.
+    tags-enable-ping: "&eJust set &cTags Enable Ping &eto &b\"%set%&b\"&e!"
+    # Tags Tag Prefix.
+    # Fillers:
+    # %set% = what you set it to.
+    tags-tag-prefix: "&eJust set &cTags Tag Prefix &eto &b\"%set%&b\"&e!"
+    # Emotes.
+    # Fillers:
+    # %emote% = the number of the Chats page.
+    # %set% = what you set it to.
+    emotes: "&eJust set &cEmote &a%emote% &eto &b\"%set%&b\"&e!"
+    # Emote Permissions.
+    # Fillers:
+    # %emote% = the number of the Chats page.
+    # %set% = what you set it to.
+    emote-permissions: "&eJust set &cEmote Permission &efor &a%emote% &eto &b\"%set%&b\"&e!"
   # For getting...
   get:
     # MOTD.
@@ -1920,6 +1942,10 @@ settings:
     # Fillers:
     # %set% = what you set it to.
     proxy-chat-enabled: "&cChat Uses Proxy &eis &b\"%set%&b\"&e!"
+    # Proxy Chat Console Enabled.
+    # Fillers:
+    # %set% = what you set it to.
+    proxy-chat-to-console: "&cChat Goes to Console &eis &b\"%set%&b\"&e!"
     # Proxy Chat Chats.
     # Fillers:
     # %number% = the number of the Chats page.
@@ -1929,6 +1955,24 @@ settings:
     # Fillers:
     # %set% = what you set it to.
     proxy-chat-base-perm: "&cProxy Chat Base Perm &eis &b\"%set%&b\"&e!"
+    # Tags Enable Ping.
+    # Fillers:
+    # %set% = what you set it to.
+    tags-enable-ping: "&cTags Enable Ping &eis &b\"%set%&b\"&e!"
+    # Tags Tag Prefix.
+    # Fillers:
+    # %set% = what you set it to.
+    tags-tag-prefix: "&cTags Tag Prefix &eis &b\"%set%&b\"&e!"
+    # Emotes.
+    # Fillers:
+    # %emote% = the number of the Chats page.
+    # %set% = what you set it to.
+    emotes: "&cEmote &a%emote% &eis &b\"%set%&b\"&e!"
+    # Emote Permissions.
+    # Fillers:
+    # %emote% = the number of the Chats page.
+    # %set% = what you set it to.
+    emote-permissions: "&cEmote Permission &efor &a%emote% &eis &b\"%set%&b\"&e!"
 
 # For the info command.
 # Fillers:

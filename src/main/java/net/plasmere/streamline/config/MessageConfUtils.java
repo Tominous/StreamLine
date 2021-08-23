@@ -325,8 +325,13 @@ public class MessageConfUtils {
     public static String settingsSetMaxP = StreamLine.config.getMessString("settings.set.max-players");
     public static String settingsSetOnlineP = StreamLine.config.getMessString("settings.set.online-players");
     public static String settingsSetPCEnabled = StreamLine.config.getMessString("settings.set.proxy-chat-enabled");
+    public static String settingsSetChatToConsole = StreamLine.config.getMessString("settings.set.proxy-chat-to-console");
     public static String settingsSetPCChats = StreamLine.config.getMessString("settings.set.proxy-chat-chats");
     public static String settingsSetPCBPerm = StreamLine.config.getMessString("settings.set.proxy-chat-base-perm");
+    public static String settingsSetTagsEnablePing = StreamLine.config.getMessString("settings.set.tags-enable-ping");
+    public static String settingsSetTagsTagPrefix = StreamLine.config.getMessString("settings.set.tags-tag-prefix");
+    public static String settingsSetEmotes = StreamLine.config.getMessString("settings.set.emotes");
+    public static String settingsSetEmotePermissions = StreamLine.config.getMessString("settings.set.emote-permissions");
     // Get.
     public static String settingsGetMOTD = StreamLine.config.getMessString("settings.get.motd");
     public static String settingsGetMOTDTime = StreamLine.config.getMessString("settings.get.motd-time");
@@ -335,8 +340,13 @@ public class MessageConfUtils {
     public static String settingsGetMaxP = StreamLine.config.getMessString("settings.get.max-players");
     public static String settingsGetOnlineP = StreamLine.config.getMessString("settings.get.online-players");
     public static String settingsGetPCEnabled = StreamLine.config.getMessString("settings.get.proxy-chat-enabled");
+    public static String settingsGetChatToConsole = StreamLine.config.getMessString("settings.get.proxy-chat-to-console");
     public static String settingsGetPCChats = StreamLine.config.getMessString("settings.get.proxy-chat-chats");
     public static String settingsGetPCBPerm = StreamLine.config.getMessString("settings.get.proxy-chat-base-perm");
+    public static String settingsGetTagsEnablePing = StreamLine.config.getMessString("settings.get.tags-enable-ping");
+    public static String settingsGetTagsTagPrefix = StreamLine.config.getMessString("settings.get.tags-tag-prefix");
+    public static String settingsGetEmotes = StreamLine.config.getMessString("settings.get.emotes");
+    public static String settingsGetEmotePermissions = StreamLine.config.getMessString("settings.get.emote-permissions");
     // // Info.
     public static String info = StreamLine.config.getMessString("info");
     // // Graceful End.

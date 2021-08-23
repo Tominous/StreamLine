@@ -10,6 +10,7 @@ import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.lists.SingleSet;
+import org.apache.commons.collections4.list.TreeList;
 
 import java.awt.*;
 import java.util.*;
@@ -137,6 +138,18 @@ public class TextUtils {
     }
 
     public static TreeSet<String> getCompletion(List<String> of, String param){
+        return of.stream()
+                .filter(completion -> completion.toLowerCase(Locale.ROOT).startsWith(param.toLowerCase(Locale.ROOT)))
+                .collect(Collectors.toCollection(TreeSet::new));
+    }
+
+    public static TreeSet<String> getCompletion(TreeSet<String> of, String param){
+        return of.stream()
+                .filter(completion -> completion.toLowerCase(Locale.ROOT).startsWith(param.toLowerCase(Locale.ROOT)))
+                .collect(Collectors.toCollection(TreeSet::new));
+    }
+
+    public static TreeSet<String> getCompletion(TreeList<String> of, String param){
         return of.stream()
                 .filter(completion -> completion.toLowerCase(Locale.ROOT).startsWith(param.toLowerCase(Locale.ROOT)))
                 .collect(Collectors.toCollection(TreeSet::new));
@@ -295,8 +308,10 @@ public class TextUtils {
         return toIndex;
     }
 
-    public static SingleSet<String, List<ProxiedPlayer>> getMessageWithTags(ProxiedPlayer sender, String message) {
+    public static SingleSet<String, List<ProxiedPlayer>> getMessageWithTags(ProxiedPlayer sender, String message, String format) {
         String[] args = message.split(" ");
+
+        String chatColor = isolateChatColor(format);
 
         TreeMap<Integer, ProxiedPlayer> indexed = getTaggedPlayersIndexed(args, sender.getServer().getInfo().getName());
 
@@ -304,7 +319,24 @@ public class TextUtils {
             args[index] = StreamLine.serverConfig.getTagsPrefix() + args[index];
         }
 
+        for (int i = 0; i < args.length; i ++) {
+            args[i] = chatColor + args[i];
+        }
+
         return new SingleSet<>(normalize(args), new ArrayList<>(indexed.values()));
+    }
+
+    public static String isolateChatColor(String format) {
+        String[] strings = format.split(" ");
+
+        for (String string : strings) {
+            if (string.contains("%message%")) {
+                String[] gotten = string.split("%message%");
+                return gotten[0];
+            }
+        }
+
+        return "";
     }
 
     public static String newLined(String text){
@@ -368,5 +400,14 @@ public class TextUtils {
         }
 
         return text.toString();
+    }
+
+    public static String getMessageWithEmotes(ProxiedPlayer player, String input) {
+        for (String emote : StreamLine.serverConfig.getEmotes()) {
+            if (! player.hasPermission(StreamLine.serverConfig.getEmotePermission(emote))) continue;
+            input = input.replace(emote, StreamLine.serverConfig.getEmote(emote));
+        }
+
+        return input;
     }
 }

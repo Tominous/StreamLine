@@ -8,6 +8,7 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.TextUtils;
+import org.apache.commons.collections4.list.TreeList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -150,6 +151,22 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                                 .replace("%set%", String.valueOf(cuspBool))
                         );
                         break;
+                    case "proxy-chat-to-console":
+                        String toConsole = TextUtils.argsToStringMinus(args, 0, 1);
+
+                        boolean toConsoleBool = true;
+                        try {
+                            toConsoleBool = Boolean.parseBoolean(toConsole);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        StreamLine.serverConfig.setProxyChatConsoleEnabled(toConsoleBool);
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetChatToConsole
+                                .replace("%set%", String.valueOf(toConsoleBool))
+                        );
+                        break;
                     case "proxy-chat-chats":
                         if (args.length < 4) {
                             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
@@ -179,6 +196,63 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetPCBPerm
                                 .replace("%set%", baseP)
+                        );
+                        break;
+                    case "tags-enable-ping":
+                        String enablePing = TextUtils.argsToStringMinus(args, 0, 1);
+
+                        boolean enableP = true;
+                        try {
+                            enableP = Boolean.parseBoolean(enablePing);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        StreamLine.serverConfig.setTagsPingEnabled(enableP);
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetTagsEnablePing
+                                .replace("%set%", String.valueOf(enableP))
+                        );
+                        break;
+                    case "tags-tag-prefix":
+                        String tagPrefix = TextUtils.argsToStringMinus(args, 0, 1);
+
+                        StreamLine.serverConfig.setTagsPrefix(tagPrefix);
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetTagsTagPrefix
+                                .replace("%set%", tagPrefix)
+                        );
+                        break;
+                    case "emotes":
+                        if (args.length < 4) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            return;
+                        }
+
+                        String emote = args[2];
+                        String toEmote = TextUtils.argsToStringMinus(args, 0, 1, 2);
+
+                        StreamLine.serverConfig.setEmote(emote, toEmote);
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetEmotes
+                                .replace("%emote%", emote)
+                                .replace("%set%", toEmote)
+                        );
+                        break;
+                    case "emote-permissions":
+                        if (args.length < 4) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            return;
+                        }
+
+                        String theEmote = args[2];
+                        String toEPerm = TextUtils.argsToStringMinus(args, 0, 1, 2);
+
+                        StreamLine.serverConfig.setEmotePermission(theEmote, toEPerm);
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetEmotePermissions
+                                .replace("%emote%", theEmote)
+                                .replace("%set%", toEPerm)
                         );
                         break;
                 }
@@ -269,6 +343,13 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                                 .replace("%set%", String.valueOf(cusp))
                         );
                         break;
+                    case "proxy-chat-to-console":
+                        Boolean toConsole = StreamLine.serverConfig.getProxyChatConsoleEnabled();
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetChatToConsole
+                                .replace("%set%", String.valueOf(toConsole))
+                        );
+                        break;
                     case "proxy-chat-chats":
                         if (args.length < 3) {
                             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
@@ -298,6 +379,49 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                                 .replace("%set%", baseP)
                         );
                         break;
+                    case "tags-enable-ping":
+                        boolean enableP = StreamLine.serverConfig.getTagsPingEnabled();
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetTagsEnablePing
+                                .replace("%set%", String.valueOf(enableP))
+                        );
+                        break;
+                    case "tags-tag-prefix":
+                        String tagPrefix = StreamLine.serverConfig.getTagsPrefix();
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetTagsTagPrefix
+                                .replace("%set%", tagPrefix)
+                        );
+                        break;
+                    case "emotes":
+                        if (args.length < 3) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            return;
+                        }
+
+                        String emote = args[2];
+
+                        String theReturnedEmote = StreamLine.serverConfig.getEmote(emote);
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetEmotes
+                                .replace("%emote%", emote)
+                                .replace("%set%", theReturnedEmote)
+                        );
+                        break;
+                    case "emote-permissions":
+                        if (args.length < 3) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            return;
+                        }
+
+                        String theEmote = args[2];
+                        String toEPerm = StreamLine.serverConfig.getEmotePermission(theEmote);
+
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetEmotePermissions
+                                .replace("%emote%", theEmote)
+                                .replace("%set%", toEPerm)
+                        );
+                        break;
                 }
                 break;
         }
@@ -320,24 +444,19 @@ public class SettingsEditCommand extends Command implements TabExecutor {
         options2.add("max-players");
         options2.add("online-players");
         options2.add("proxy-chat-enabled");
+        options2.add("proxy-chat-to-console");
         options2.add("proxy-chat-chats");
         options2.add("proxy-chat-base-perm");
+        options2.add("tags-enable-ping");
+        options2.add("tags-tag-prefix");
+        options2.add("emotes");
+        options2.add("emote-permissions");
 
         if (args.length == 1) {
-            final String param1 = args[0];
-
-            return options.stream()
-                    .filter(completion -> completion.startsWith(param1))
-                    .collect(Collectors.toList());
+            return TextUtils.getCompletion(options, args[0]);
         } else if (args.length == 2) {
-            final String param2 = args[1];
-
-            return options2.stream()
-                    .filter(completion -> completion.startsWith(param2))
-                    .collect(Collectors.toList());
+            return TextUtils.getCompletion(options2, args[1]);
         } else if (args.length == 3) {
-            final String param3 = args[2];
-
             if (args[1].equals("motd") || args[1].equals("sample")) {
                 List<String> keys = new ArrayList<>();
 
@@ -351,9 +470,11 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                     keys.add(String.valueOf(key));
                 }
 
-                return keys.stream()
-                        .filter(completion -> completion.startsWith(param3))
-                        .collect(Collectors.toList());
+                return TextUtils.getCompletion(keys, args[2]);
+            }
+
+            if (args[1].equals("emotes") || args[1].equals("emote-permissions")) {
+                return TextUtils.getCompletion(StreamLine.serverConfig.getEmotes(), args[2]);
             }
         }
 

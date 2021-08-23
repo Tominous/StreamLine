@@ -1298,6 +1298,8 @@ public class PlayerUtils {
     public static void tickConn(){
         if (connections == null) return;
 
+        if (connections.size() <= 0) connections = new HashMap<>();
+
         List<Player> conns = new ArrayList<>(connections.keySet());
         List<Player> toRemove = new ArrayList<>();
 

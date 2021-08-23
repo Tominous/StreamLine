@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class ServerConfig {
     private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "configs" + File.separator;
@@ -315,6 +316,21 @@ public class ServerConfig {
         return serverConfig.getBoolean("proxy-chat.enabled");
     }
 
+    public void setProxyChatConsoleEnabled(boolean bool) {
+        serverConfig.set("proxy-chat.to-console", bool);
+        saveConfig();
+        reloadConfig();
+    }
+
+    public void toggleProxyChatConsoleEnabled() {
+        setProxyChatConsoleEnabled(! getProxyChatConsoleEnabled());
+    }
+
+    public boolean getProxyChatConsoleEnabled() {
+        reloadConfig();
+        return serverConfig.getBoolean("proxy-chat.to-console");
+    }
+
     public void setChatBasePerm(String set) {
         serverConfig.set("proxy-chat.base-perm", set);
         saveConfig();
@@ -454,5 +470,34 @@ public class ServerConfig {
     public String getTagsPrefix() {
         reloadConfig();
         return serverConfig.getString("proxy-chat.tags.tag-prefix");
+    }
+
+    public void setEmote(String emote, String value) {
+        serverConfig.set("proxy-chat.emotes." + emote + ".emote", value);
+        if (getEmotePermission(emote) == null) setEmotePermission(emote, "");
+        if (getEmotePermission(emote) == "") setEmotePermission(emote, "");
+        saveConfig();
+        reloadConfig();
+    }
+
+    public String getEmote(String emote) {
+        reloadConfig();
+        return serverConfig.getString("proxy-chat.emotes." + emote + ".emote");
+    }
+
+    public void setEmotePermission(String emote, String permission) {
+        serverConfig.set("proxy-chat.emotes." + emote + ".permission", permission);
+        saveConfig();
+        reloadConfig();
+    }
+
+    public String getEmotePermission(String emote) {
+        reloadConfig();
+        return serverConfig.getString("proxy-chat.emotes." + emote + ".permission");
+    }
+
+    public TreeSet<String> getEmotes() {
+        reloadConfig();
+        return new TreeSet<>(serverConfig.getSection("proxy-chat.emotes").getKeys());
     }
 }

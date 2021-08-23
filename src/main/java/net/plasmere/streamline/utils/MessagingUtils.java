@@ -131,8 +131,17 @@ public class MessagingUtils {
             p.sendMessage(TextUtils.codedText(format
                     .replace("%sender%", getPlayerDisplayName(player))
                     .replace("%message%", message)
+                    .replace("%server%", server.getInfo().getName())
             ));
         }
+    }
+
+    public static void sendServerMessageFromUserToConsole(ProxiedPlayer player, Server server, String format, String message) {
+        PlayerUtils.getConsoleStat().sendMessage(TextUtils.codedText(format
+                .replace("%sender%", getPlayerDisplayName(player))
+                .replace("%message%", message)
+                .replace("%server%", server.getInfo().getName())
+        ));
     }
 
     public static String getPlayerDisplayName(ProxiedPlayer player) {

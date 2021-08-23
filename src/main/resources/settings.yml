@@ -39,6 +39,8 @@ online-players: 'exact'
 proxy-chat:
   # Defines if chat should use proxy.
   enabled: true
+  # If it should log chat to console.
+  to-console: true
   # Defines the default string prior to the chats.<number> number for permissions with chats!
   base-perm: "streamline.chat."
   # Defines specific chats (MUST BE INTEGERS!) for different teams.
@@ -49,6 +51,27 @@ proxy-chat:
     1: "&d%sender%&r &7&l>> &f%message%"
     2: "&d%sender%&r &7&l>> &e%message%"
     3: "&d%sender%&r &7&l>> &6%message%"
+  # When someone says someone's name in chat (on the same server).
   tags:
+    # Enable getting pinged.
     enable-ping: true
+    # The color prefix
     tag-prefix: "&2"
+  # These will replace the key in chat.
+  # i.e. ":shrug:" will be replaced with: "&a¯\\_(ツ)_/¯"
+  emotes:
+    ":shrug:":
+      emote: "&a¯\\_(ツ)_/¯&r"
+      permission: "streamline.emote.shrug"
+    ":oof:":
+      emote: "&c&lOOF&r"
+      permission: "streamline.emote.oof"
+    'o/':
+      emote: "&d( ﾟ◡ﾟ)/&r"
+      permission: "streamline.emote.wave"
+    ':gimme:':
+      emote: "&b༼つ◕_◕༽つ&r"
+      permission: "streamline.emote.gimme"
+    ':wizard:':
+      emote: "&e(&b'-'&e)⊃━&5☆&dﾟ&4.&c*&3･&b｡&6ﾟ&r"
+      permission: "streamline.emote.wizard"
