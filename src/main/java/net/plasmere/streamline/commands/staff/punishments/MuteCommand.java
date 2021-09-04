@@ -24,7 +24,7 @@ public class MuteCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (args.length <= 0) {
+        if (args.length < 2) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
         } else if (args.length > 2 && ! (args[0].equals("add") || args[0].equals("temp"))) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess);
@@ -53,6 +53,11 @@ public class MuteCommand extends Command implements TabExecutor {
                     }
 
                     final double timeAmount = TimeUtil.convertStringTimeToDouble(args[2]);
+
+                    if (timeAmount == -1d) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                        return;
+                    }
 
                     other.updateMute(true, new Date((long) (System.currentTimeMillis() + timeAmount)));
 
@@ -115,7 +120,7 @@ public class MuteCommand extends Command implements TabExecutor {
                             new DiscordMessage(
                                     sender,
                                     MessageConfUtils.muteEmbed,
-                                    MessageConfUtils.muteMPermMuted
+                                    MessageConfUtils.muteMPermDiscord
                                             .replace("%punisher%", sender.getName())
                                             .replace("%player%", other.latestName)
                                     ,
@@ -129,57 +134,61 @@ public class MuteCommand extends Command implements TabExecutor {
                         .replace("%player%", other.latestName)
                 );
             } else if (args[0].equals("temp")) {
+                if (args.length < 3) {
+                    return;
+                }
+
                 if (PlayerUtils.hasOfflinePermission(ConfigUtils.punMutesBypass, other.uuid)) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteCannot);
                     return;
                 }
-
-                if (args.length < 3) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                } else {
-                    if (! ConfigUtils.punMutesReplaceable) {
-                        if (other.muted) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMTempAlready);
-                            return;
-                        }
+                if (!ConfigUtils.punMutesReplaceable) {
+                    if (other.muted) {
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMTempAlready);
+                        return;
                     }
+                }
 
-                    final double timeAmount = TimeUtil.convertStringTimeToDouble(args[2]);
+                final double timeAmount = TimeUtil.convertStringTimeToDouble(args[2]);
 
-                    other.updateMute(true, new Date((long) (System.currentTimeMillis() + timeAmount)));
+                if (timeAmount == -1d) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                    return;
+                }
 
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMTempSender
-                            .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
-                            .replace("%date%", other.mutedTill.toString())
-                    );
-                    if (other.online) {
-                        MessagingUtils.sendBUserMessage(PlayerUtils.getPPlayerByUUID(other.uuid), MessageConfUtils.muteMTempMuted
-                                .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreatePlayerStatByUUID(((ProxiedPlayer) sender).getUniqueId().toString())))
-                                .replace("%date%", other.mutedTill.toString())
-                        );
-                    }
+                other.updateMute(true, new Date((long) (System.currentTimeMillis() + timeAmount)));
 
-                    if (ConfigUtils.punMutesDiscord) {
-                        MessagingUtils.sendDiscordEBMessage(
-                                new DiscordMessage(
-                                        sender,
-                                        MessageConfUtils.muteEmbed,
-                                        MessageConfUtils.muteMTempDiscord
-                                                .replace("%punisher%", sender.getName())
-                                                .replace("%player%", other.latestName)
-                                                .replace("%date%", other.mutedTill.toString())
-                                        ,
-                                        ConfigUtils.textChannelMutes
-                                )
-                        );
-                    }
-
-                    MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.muteMTempStaff
-                            .replace("%punisher%", sender.getName())
-                            .replace("%player%", other.latestName)
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMTempSender
+                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                        .replace("%date%", other.mutedTill.toString())
+                );
+                if (other.online) {
+                    MessagingUtils.sendBUserMessage(PlayerUtils.getPPlayerByUUID(other.uuid), MessageConfUtils.muteMTempMuted
+                            .replace("%sender%", sender instanceof ProxyServer ? "CONSOLE" : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreatePlayerStatByUUID(((ProxiedPlayer) sender).getUniqueId().toString())))
                             .replace("%date%", other.mutedTill.toString())
                     );
                 }
+
+                if (ConfigUtils.punMutesDiscord) {
+                    MessagingUtils.sendDiscordEBMessage(
+                            new DiscordMessage(
+                                    sender,
+                                    MessageConfUtils.muteEmbed,
+                                    MessageConfUtils.muteMTempDiscord
+                                            .replace("%punisher%", sender.getName())
+                                            .replace("%player%", other.latestName)
+                                            .replace("%date%", other.mutedTill.toString())
+                                    ,
+                                    ConfigUtils.textChannelMutes
+                            )
+                    );
+                }
+
+                MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.muteMTempStaff
+                        .replace("%punisher%", sender.getName())
+                        .replace("%player%", other.latestName)
+                        .replace("%date%", other.mutedTill.toString())
+                );
             } else if (args[0].equals("remove")) {
                 if (! other.muted) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteUnAlready);

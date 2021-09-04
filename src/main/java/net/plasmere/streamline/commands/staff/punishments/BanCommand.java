@@ -35,12 +35,17 @@ public class BanCommand extends Command implements TabExecutor {
             String otherUUID = UUIDUtils.getCachedUUID(otherName);
 
             if (args[0].equals("add")) {
+                if (args.length < 3) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    return;
+                }
+
                 if (PlayerUtils.hasOfflinePermission(ConfigUtils.punBansBypass, otherUUID)) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banCannot);
                     return;
                 }
 
-                if (args.length == 4 && ( args[2].endsWith("y") || args[2].endsWith("mo") || args[2].endsWith("w") || args[2].endsWith("d") || args[2].endsWith("h") || args[2].endsWith("m") || args[2].endsWith("s"))) {
+                if (args.length >= 4 && (args[2].endsWith("y") || args[2].endsWith("mo") || args[2].endsWith("w") || args[2].endsWith("d") || args[2].endsWith("h") || args[2].endsWith("m") || args[2].endsWith("s"))) {
                     if (! ConfigUtils.punBansReplaceable) {
                         if (bans.contains(otherUUID)) {
                             if (bans.getBoolean(otherUUID + ".banned")) {
@@ -170,85 +175,86 @@ public class BanCommand extends Command implements TabExecutor {
                         .replace("%reason%", reason)
                 );
             } else if (args[0].equals("temp")) {
+                if (args.length < 4) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    return;
+                }
+
                 if (PlayerUtils.hasOfflinePermission(ConfigUtils.punBansBypass, otherUUID)) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banCannot);
                     return;
                 }
 
-                if (args.length < 4) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                } else {
-                    if (! ConfigUtils.punBansReplaceable) {
-                        if (bans.contains(otherUUID)) {
-                            if (bans.getBoolean(otherUUID + ".banned")) {
-                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMTempAlready
-                                        .replace("%player%", otherName)
-                                );
-                                return;
-                            }
+                if (!ConfigUtils.punBansReplaceable) {
+                    if (bans.contains(otherUUID)) {
+                        if (bans.getBoolean(otherUUID + ".banned")) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.muteMTempAlready
+                                    .replace("%player%", otherName)
+                            );
+                            return;
                         }
                     }
+                }
 
-                    double toAdd = 0d;
+                double toAdd = 0d;
 
-                    try {
-                        toAdd = TimeUtil.convertStringTimeToDouble(args[2]);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorSTime);
-                        return;
+                try {
+                    toAdd = TimeUtil.convertStringTimeToDouble(args[2]);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorSTime);
+                    return;
+                }
+
+                String till = String.valueOf((long) (System.currentTimeMillis() + toAdd));
+
+                String reason = TextUtils.argsToStringMinus(args, 0, 1, 2);
+
+                bans.set(otherUUID + ".banned", true);
+                bans.set(otherUUID + ".reason", reason);
+                bans.set(otherUUID + ".till", till);
+                bans.set(otherUUID + ".sentenced", Instant.now().toString());
+                StreamLine.bans.saveConfig();
+
+                if (PlayerUtils.isOnline(otherName)) {
+                    ProxiedPlayer pp = PlayerUtils.getPPlayerByUUID(otherUUID);
+
+                    if (pp != null) {
+                        pp.disconnect(TextUtils.codedText(MessageConfUtils.punBannedTemp
+                                .replace("%reason%", reason)
+                                .replace("%date%", new Date(Long.parseLong(till)).toString())
+                        ));
                     }
+                }
 
-                    String till = String.valueOf((long) (System.currentTimeMillis() + toAdd));
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banBTempSender
+                        .replace("%player%", otherName)
+                        .replace("%reason%", reason)
+                        .replace("%date%", new Date(Long.parseLong(till)).toString())
+                );
 
-                    String reason = TextUtils.argsToStringMinus(args, 0, 1, 2);
-
-                    bans.set(otherUUID + ".banned", true);
-                    bans.set(otherUUID + ".reason", reason);
-                    bans.set(otherUUID + ".till", till);
-                    bans.set(otherUUID + ".sentenced", Instant.now().toString());
-                    StreamLine.bans.saveConfig();
-
-                    if (PlayerUtils.isOnline(otherName)) {
-                        ProxiedPlayer pp = PlayerUtils.getPPlayerByUUID(otherUUID);
-
-                        if (pp != null) {
-                            pp.disconnect(TextUtils.codedText(MessageConfUtils.punBannedTemp
-                                    .replace("%reason%", reason)
-                                    .replace("%date%", new Date(Long.parseLong(till)).toString())
-                            ));
-                        }
-                    }
-
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banBTempSender
-                            .replace("%player%", otherName)
-                            .replace("%reason%", reason)
-                            .replace("%date%", new Date(Long.parseLong(till)).toString())
-                    );
-
-                    if (ConfigUtils.punBansDiscord) {
-                        MessagingUtils.sendDiscordEBMessage(
-                                new DiscordMessage(
-                                        sender,
-                                        MessageConfUtils.banEmbed,
-                                        MessageConfUtils.banBTempDiscord
-                                                .replace("%punisher%", sender.getName())
-                                                .replace("%player%", otherName)
-                                                .replace("%reason%", reason)
-                                                .replace("%date%", new Date(Long.parseLong(till)).toString())
-                                        ,
-                                        ConfigUtils.textChannelBans
-                                )
-                        );
-                    }
-
-                    MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.banBTempStaff
-                            .replace("%punisher%", sender.getName())
-                            .replace("%player%", otherName)
-                            .replace("%reason%", reason)
-                            .replace("%date%", new Date(Long.parseLong(till)).toString())
+                if (ConfigUtils.punBansDiscord) {
+                    MessagingUtils.sendDiscordEBMessage(
+                            new DiscordMessage(
+                                    sender,
+                                    MessageConfUtils.banEmbed,
+                                    MessageConfUtils.banBTempDiscord
+                                            .replace("%punisher%", sender.getName())
+                                            .replace("%player%", otherName)
+                                            .replace("%reason%", reason)
+                                            .replace("%date%", new Date(Long.parseLong(till)).toString())
+                                    ,
+                                    ConfigUtils.textChannelBans
+                            )
                     );
                 }
+
+                MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.banBTempStaff
+                        .replace("%punisher%", sender.getName())
+                        .replace("%player%", otherName)
+                        .replace("%reason%", reason)
+                        .replace("%date%", new Date(Long.parseLong(till)).toString())
+                );
             } else if (args[0].equals("remove")) {
                 if (! bans.contains(otherUUID)) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.banUnAlready

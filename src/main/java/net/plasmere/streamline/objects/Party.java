@@ -7,6 +7,7 @@ import net.luckperms.api.query.QueryOptions;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PartyUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 
@@ -239,33 +240,56 @@ public class Party {
     public void loadLists(){
         totalMembers.clear();
         for (String u : totalMembersByUUID) {
-            Player p = PlayerUtils.getOrCreatePlayerStatByUUID(u);
+            Player p = PlayerUtils.getOrGetPlayerStatByUUID(u);
+
+            if (p == null) continue;
 
             totalMembers.add(p);
         }
 
         members.clear();
         for (String u : membersByUUID) {
-            Player p = PlayerUtils.getOrCreatePlayerStatByUUID(u);
+            Player p = PlayerUtils.getOrGetPlayerStatByUUID(u);
+
+            if (p == null) continue;
 
             members.add(p);
         }
 
         moderators.clear();
         for (String u : modsByUUID) {
-            Player p = PlayerUtils.getOrCreatePlayerStatByUUID(u);
+            Player p = PlayerUtils.getOrGetPlayerStatByUUID(u);
+
+            if (p == null) continue;
 
             moderators.add(p);
         }
 
         invites.clear();
         for (String u : invitesByUUID) {
-            Player p = PlayerUtils.getOrCreatePlayerStatByUUID(u);
+            Player p = PlayerUtils.getOrGetPlayerStatByUUID(u);
+
+            if (p == null) continue;
 
             invites.add(p);
         }
 
-        this.leader = PlayerUtils.getOrCreatePlayerStatByUUID(leaderUUID);
+        this.leader = PlayerUtils.getOrGetPlayerStatByUUID(leaderUUID);
+
+        /*
+        =================================================
+        TODO FIX THIS SOON! THIS IS JUST A PATCH FOR THIS!
+        =================================================
+         */
+
+        if (this.leader == null) {
+            for (Player player : totalMembers) {
+                MessagingUtils.sendBPUserMessage(this, PlayerUtils.getConsoleStat().findSender(), player.findSender(), PartyUtils.disbandMembers);
+            }
+
+            PartyUtils.removeParty(this);
+            this.dispose();
+        }
     }
 
     public boolean isModerator(Player member) {

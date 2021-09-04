@@ -453,7 +453,7 @@ public class MessagingUtils {
         to.sendMessage(TextUtils.codedText(msg
                 .replace("%size%", Integer.toString(party.getSize()))
                 .replace("%max%", Integer.toString(party.maxSize))
-                .replace("%maxmax%", Integer.toString(party.getMaxSize(party.leader)))
+                .replace("%maxmax%", party.leader == null ? MessageConfUtils.nullB : Integer.toString(party.getMaxSize(party.leader)))
                 .replace("%mods_count%", Integer.toString(party.moderators.size()))
                 .replace("%members_count%", Integer.toString(party.members.size()))
                 .replace("%total_count%", Integer.toString(party.totalMembers.size()))
@@ -466,12 +466,12 @@ public class MessagingUtils {
                 .replace("%ismuted%", getIsMuted(party))
                 .replace("%version%", PlayerUtils.getOrCreateSavableUser(sender).latestVersion)
                 .replace("%version%", PlayerUtils.getOrCreatePlayerStat((ProxiedPlayer) sender).latestVersion)
-                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(party.leaderUUID)))
+                .replace("%leader%", party.leader == null ? MessageConfUtils.nullB : PlayerUtils.getOffOnDisplayBungee(party.leader))
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(sender)))
-                .replace("%leader_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSUByUUID(party.leaderUUID)))
-                .replace("%leader_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(party.leaderUUID)))
+                .replace("%leader_normal%", party.leader == null ? MessageConfUtils.nullB : PlayerUtils.getOffOnRegDiscord(party.leader))
+                .replace("%leader_absolute%", party.leader == null ? MessageConfUtils.nullB : PlayerUtils.getAbsoluteBungee(party.leader))
                 .replace("%size%", Integer.toString(party.getSize()))
         ));
     }
@@ -564,9 +564,9 @@ public class MessagingUtils {
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(sender)))
-                .replace("%leader%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
-                .replace("%leader_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
-                .replace("%leader_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(guild.leaderUUID)))
+                .replace("%leader%", guild.leaderUUID == null ? MessageConfUtils.nullB : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                .replace("%leader_normal%", guild.leaderUUID == null ? MessageConfUtils.nullB : PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                .replace("%leader_absolute%", guild.leaderUUID == null ? MessageConfUtils.nullB : PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(guild.leaderUUID)))
         ));
     }
 

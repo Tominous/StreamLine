@@ -31,6 +31,7 @@ public class ChatListener implements Listener {
     public void onPlayerChat(ChatEvent e){
         if (e.isCancelled()) return;
         if (! (e.getSender() instanceof ProxiedPlayer)) return;
+        boolean isStaffMessage = false;
 
         ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
 
@@ -93,9 +94,10 @@ public class ChatListener implements Listener {
                                     .replace("%message%", msg),
                             ConfigUtils.textChannelStaffChat));
                 }
+                isStaffMessage = true;
             } else if (ConfigUtils.moduleStaffChatDoPrefix) {
-                if (msg.startsWith(prefix) && !prefix.equals("/")) {
-                    if (!sender.hasPermission(ConfigUtils.staffPerm)) {
+                if (msg.startsWith(prefix) && ! prefix.equals("/")) {
+                    if (! sender.hasPermission(ConfigUtils.staffPerm)) {
                         return;
                     }
 
@@ -115,11 +117,12 @@ public class ChatListener implements Listener {
                                         .replace("%message%", msg.substring(prefix.length())),
                                 ConfigUtils.textChannelStaffChat));
                     }
+                    isStaffMessage = true;
                 }
             }
         }
 
-        if (StreamLine.serverConfig.getProxyChatEnabled()) {
+        if (StreamLine.serverConfig.getProxyChatEnabled() && ! isStaffMessage) {
             String format = StreamLine.serverConfig.getPermissionedProxyChatMessage(stat);
             SingleSet<String, List<ProxiedPlayer>> msgWithTagged = TextUtils.getMessageWithTags(sender, msg, format);
 

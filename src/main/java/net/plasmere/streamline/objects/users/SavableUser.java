@@ -336,10 +336,10 @@ public abstract class SavableUser {
         defaults.add("pspy=true");
         defaults.add("sc=false");
         defaults.add("view-sc=true");
-        defaults.add("sspy-vs=true");
-        defaults.add("pspy-vs=true");
-        defaults.add("gspy-vs=true");
-        defaults.add("sc-vs=true");
+        defaults.add("sspy-vs=false");
+        defaults.add("pspy-vs=false");
+        defaults.add("gspy-vs=false");
+        defaults.add("sc-vs=false");
         //defaults.add("");
         defaults.addAll(addedProperties());
         return defaults;

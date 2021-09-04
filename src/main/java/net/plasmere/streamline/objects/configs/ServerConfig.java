@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -475,7 +476,7 @@ public class ServerConfig {
     public void setEmote(String emote, String value) {
         serverConfig.set("proxy-chat.emotes." + emote + ".emote", value);
         if (getEmotePermission(emote) == null) setEmotePermission(emote, "");
-        if (getEmotePermission(emote) == "") setEmotePermission(emote, "");
+        if (Objects.equals(getEmotePermission(emote), "")) setEmotePermission(emote, "");
         saveConfig();
         reloadConfig();
     }

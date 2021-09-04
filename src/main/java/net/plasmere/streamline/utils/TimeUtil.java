@@ -1,5 +1,7 @@
 package net.plasmere.streamline.utils;
 
+import net.plasmere.streamline.config.ConfigUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -133,6 +135,11 @@ public class TimeUtil {
             timeToParse = stringedTime.replaceAll("s", "");
         }
 
-        return Double.parseDouble(timeToParse) * factor;
+        try {
+            return Double.parseDouble(timeToParse) * factor;
+        } catch (Exception e) {
+            if (ConfigUtils.debug) e.printStackTrace();
+            return -1d;
+        }
     }
 }

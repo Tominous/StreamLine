@@ -51,6 +51,11 @@ public class IPBanCommand extends Command implements TabExecutor {
             }
 
             if (args[0].equals("add")) {
+                if (args.length < 3) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    return;
+                }
+
                 if (! args[1].contains(".")) {
                     Player other = PlayerUtils.getPlayerStat(args[1]);
 
@@ -67,7 +72,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                     }
                 }
 
-                if (args.length == 4 && ( args[2].endsWith("y") || args[2].endsWith("mo") || args[2].endsWith("w") || args[2].endsWith("d") || args[2].endsWith("h") || args[2].endsWith("m") || args[2].endsWith("s"))) {
+                if (args.length >= 4 && (args[2].endsWith("y") || args[2].endsWith("mo") || args[2].endsWith("w") || args[2].endsWith("d") || args[2].endsWith("h") || args[2].endsWith("m") || args[2].endsWith("s"))) {
                     for (String ip : ipsToBan) {
                         String ipToBan = ip.replace(".", "_");
                         if (! ConfigUtils.punIPBansReplaceable) {
@@ -207,7 +212,12 @@ public class IPBanCommand extends Command implements TabExecutor {
                     );
                 }
             } else if (args[0].equals("temp")) {
-                if (! args[1].contains(".")) {
+                if (args.length < 4) {
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    return;
+                }
+
+                if (!args[1].contains(".")) {
                     Player other = PlayerUtils.getPlayerStat(args[1]);
 
                     if (other == null) {
@@ -222,87 +232,83 @@ public class IPBanCommand extends Command implements TabExecutor {
                         return;
                     }
                 }
-
-                if (args.length < 4) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
-                } else {
-                    for (String ip : ipsToBan) {
-                        String ipToBan = ip.replace(".", "_");
-                        if (! ConfigUtils.punIPBansReplaceable) {
-                            if (bans.contains(ipToBan)) {
-                                if (bans.getBoolean(ipToBan + ".banned")) {
-                                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBTempAlready
-                                            .replace("%ip%", ip)
-                                    );
-                                    return;
-                                }
+                for (String ip : ipsToBan) {
+                    String ipToBan = ip.replace(".", "_");
+                    if (!ConfigUtils.punIPBansReplaceable) {
+                        if (bans.contains(ipToBan)) {
+                            if (bans.getBoolean(ipToBan + ".banned")) {
+                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBTempAlready
+                                        .replace("%ip%", ip)
+                                );
+                                return;
                             }
                         }
+                    }
 
-                        double toAdd = 0d;
+                    double toAdd = 0d;
 
-                        try {
-                            toAdd = TimeUtil.convertStringTimeToDouble(args[2]);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorSTime);
-                            return;
-                        }
+                    try {
+                        toAdd = TimeUtil.convertStringTimeToDouble(args[2]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorSTime);
+                        return;
+                    }
 
-                        String till = String.valueOf((long) (System.currentTimeMillis() + toAdd));
+                    String till = String.valueOf((long) (System.currentTimeMillis() + toAdd));
 
-                        String reason = TextUtils.argsToStringMinus(args, 0, 1, 2);
+                    String reason = TextUtils.argsToStringMinus(args, 0, 1, 2);
 
-                        bans.set(ipToBan + ".banned", true);
-                        bans.set(ipToBan + ".reason", reason);
-                        bans.set(ipToBan + ".till", till);
-                        bans.set(ipToBan + ".sentenced", Instant.now().toString());
-                        StreamLine.bans.saveConfig();
+                    bans.set(ipToBan + ".banned", true);
+                    bans.set(ipToBan + ".reason", reason);
+                    bans.set(ipToBan + ".till", till);
+                    bans.set(ipToBan + ".sentenced", Instant.now().toString());
+                    StreamLine.bans.saveConfig();
 
-                        for (Player player : PlayerUtils.getPlayerStatsByIP(ip)) {
-                            if (player.online) {
-                                ProxiedPlayer pp = PlayerUtils.getPPlayerByUUID(player.uuid);
+                    for (Player player : PlayerUtils.getPlayerStatsByIP(ip)) {
+                        if (player.online) {
+                            ProxiedPlayer pp = PlayerUtils.getPPlayerByUUID(player.uuid);
 
-                                if (pp != null) {
-                                    pp.disconnect(TextUtils.codedText(MessageConfUtils.punIPBannedTemp
-                                            .replace("%reason%", reason)
-                                            .replace("%date%", new Date(Long.parseLong(till)).toString())
-                                    ));
-                                }
+                            if (pp != null) {
+                                pp.disconnect(TextUtils.codedText(MessageConfUtils.punIPBannedTemp
+                                        .replace("%reason%", reason)
+                                        .replace("%date%", new Date(Long.parseLong(till)).toString())
+                                ));
                             }
                         }
+                    }
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBTempSender
-                                .replace("%ip%", ip)
-                                .replace("%reason%", reason)
-                                .replace("%date%", new Date(Long.parseLong(till)).toString())
-                        );
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBTempSender
+                            .replace("%ip%", ip)
+                            .replace("%reason%", reason)
+                            .replace("%date%", new Date(Long.parseLong(till)).toString())
+                    );
 
-                        if (ConfigUtils.punIPBansDiscord) {
-                            MessagingUtils.sendDiscordEBMessage(
-                                    new DiscordMessage(
-                                            sender,
-                                            MessageConfUtils.ipBanEmbed,
-                                            MessageConfUtils.ipBanBTempDiscord
-                                                    .replace("%punisher%", sender.getName())
-                                                    .replace("%ip%", ip)
-                                                    .replace("%reason%", reason)
-                                                    .replace("%date%", new Date(Long.parseLong(till)).toString())
-                                            ,
-                                            ConfigUtils.textChannelIPBans
-                                    )
-                            );
-                        }
-
-                        MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.ipBanBTempStaff
-                                .replace("%punisher%", sender.getName())
-                                .replace("%ip%", ip)
-                                .replace("%reason%", reason)
-                                .replace("%date%", new Date(Long.parseLong(till)).toString())
+                    if (ConfigUtils.punIPBansDiscord) {
+                        MessagingUtils.sendDiscordEBMessage(
+                                new DiscordMessage(
+                                        sender,
+                                        MessageConfUtils.ipBanEmbed,
+                                        MessageConfUtils.ipBanBTempDiscord
+                                                .replace("%punisher%", sender.getName())
+                                                .replace("%ip%", ip)
+                                                .replace("%reason%", reason)
+                                                .replace("%date%", new Date(Long.parseLong(till)).toString())
+                                        ,
+                                        ConfigUtils.textChannelIPBans
+                                )
                         );
                     }
+
+                    MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.ipBanBTempStaff
+                            .replace("%punisher%", sender.getName())
+                            .replace("%ip%", ip)
+                            .replace("%reason%", reason)
+                            .replace("%date%", new Date(Long.parseLong(till)).toString())
+                    );
                 }
             } else if (args[0].equals("remove")) {
+
                 for (String ip : ipsToBan) {
                     String ipToBan = ip.replace(".", "_");
                     if (! bans.contains(ipToBan)) {
