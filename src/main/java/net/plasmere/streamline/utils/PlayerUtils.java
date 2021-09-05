@@ -10,21 +10,18 @@ import net.luckperms.api.node.types.SuffixNode;
 import net.luckperms.api.query.QueryMode;
 import net.luckperms.api.query.QueryOptions;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.users.ConsolePlayer;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.objects.lists.SingleSet;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
 import java.util.function.Predicate;
@@ -43,7 +40,7 @@ public class PlayerUtils {
     public static HashMap<ProxiedPlayer, SingleSet<Integer, ProxiedPlayer>> teleports = new HashMap<>();
 
     private static HashMap<Player, SingleSet<Integer, Integer>> connections = new HashMap<>();
-    private static TreeMap<String, TreeMap<Integer, SavableUser>> toSave = new TreeMap<>();
+    private static List<SavableUser> toSave = new ArrayList<>();
 
     public static ConsolePlayer applyConsole(){
         if (exists("%")) {
@@ -292,16 +289,22 @@ public class PlayerUtils {
         }
     }
 
-    public static void saveAll(){
+    public static int saveAll(){
         List<SavableUser> users = new ArrayList<>(getStats());
+
+        int push = 0;
 
         for (SavableUser user : users) {
             try {
-                addCascadingSave(user);
+                addToSave(user);
+                pushSaves();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            push ++;
         }
+
+        return push;
     }
 
     public static int removeOfflineStats(){
@@ -317,7 +320,8 @@ public class PlayerUtils {
 
         for (Player player : toRemove) {
             try {
-                addCascadingSave(player);
+                addToSave(player);
+                doSave(player);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1685,64 +1689,30 @@ public class PlayerUtils {
         if (pp != null) pp.disconnect(TextUtils.codedText(message));
     }
 
-    public static TreeMap<String, TreeMap<Integer, SavableUser>> getCascadingSaves(){
+    public static List<SavableUser> getToSave(){
         return toSave;
     }
 
-    public static void addCascadingSave(SavableUser user){
-        if (toSave == null) {
-            TreeMap<Integer, SavableUser> map = new TreeMap<>();
-            map.put(1, user);
-            toSave.put(user.uuid, map);
-            return;
-        }
+    public static void addToSave(SavableUser user){
+        if (toSave.contains(user)) return;
 
-        if (user.uuid == null) {
-            removeStat(user);
-            return;
-        }
+        toSave.add(user);
+    }
 
-        if (toSave.containsKey(user.uuid)) {
-            TreeMap<Integer, SavableUser> map = toSave.get(user.uuid);
-            if (map.containsValue(user)) {
-                map.put(map.lastKey() + 1, user);
-            }
-            toSave.get(user.uuid).clear();
-            toSave.get(user.uuid).putAll(map);
-        } else {
-            TreeMap<Integer, SavableUser> map = new TreeMap<>();
-            map.put(1, user);
-            toSave.put(user.uuid, map);
+    public static void pushSaves(){
+        for (SavableUser user : new ArrayList<>(toSave)) {
+            doSave(user);
         }
     }
 
-    public static void cascadeSave(String uuid){
-        if (! toSave.containsKey(uuid)) return;
-
-        TreeMap<Integer, SavableUser> map = toSave.get(uuid);
-
-        if (map.firstEntry() == null) {
-            toSave.remove(uuid);
-            return;
-        }
-
-        SavableUser user = map.firstEntry().getValue();
+    public static void doSave(SavableUser user){
         try {
             user.saveInfo();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        TreeMap<Integer, SavableUser> users = new TreeMap<>(map);
-        TreeMap<Integer, SavableUser> toNew = new TreeMap<>();
-
-        for (int it : users.keySet()) {
-            if (it == users.firstKey()) continue;
-            toNew.put(it - 1, users.get(it));
-        }
-
-        toSave.get(uuid).clear();
-        toSave.get(uuid).putAll(toNew);
+        toSave.remove(user);
     }
 
 //    public static void updateServerAll(){

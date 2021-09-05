@@ -431,6 +431,7 @@ public class ConfigUtils {
     public static int xpPerGiveP = StreamLine.config.getConfInteger("modules.bungee.stats.xp.amount-per");
     public static int timePerGiveP = StreamLine.config.getConfInteger("modules.bungee.stats.xp.time-per");
     public static int cachedPClear = StreamLine.config.getConfInteger("modules.bungee.stats.cache-clear");
+    public static int cachedPSave = StreamLine.config.getConfInteger("modules.bungee.stats.cache-save");
     public static boolean updateDisplayNames = StreamLine.config.getConfBoolean("modules.bungee.stats.update-display-names");
     // ... Redirect.
     public static boolean redirectEnabled = StreamLine.config.getConfBoolean("modules.bungee.redirect.enabled");

@@ -27,7 +27,6 @@ public class Player extends SavableUser {
     public String latestIP;
     public List<String> ipList;
     public List<String> nameList;
-    public String latestVersion;
     public boolean muted;
     public Date mutedTill;
     public ProxiedPlayer player;
@@ -86,15 +85,21 @@ public class Player extends SavableUser {
         this.names = player.getName();
         this.online = onlineCheck();
 
+        String toLatestVersion = "";
+
         if (StreamLine.viaHolder.enabled) {
             if (StreamLine.geyserHolder.enabled && StreamLine.geyserHolder.file.hasProperty(this.uuid)) {
-                this.latestVersion = "GEYSER";
+                toLatestVersion = "GEYSER";
             } else {
-                this.latestVersion = StreamLine.viaHolder.getProtocal(UUID.fromString(this.uuid)).getName();
+                toLatestVersion = StreamLine.viaHolder.getProtocal(UUID.fromString(this.uuid)).getName();
             }
         } else {
-            this.latestVersion = "Not Enabled";
+            toLatestVersion = "Not Enabled";
         }
+
+
+        this.latestVersion = toLatestVersion;
+        updateKey("latest-version", toLatestVersion);
     }
 
     @Override

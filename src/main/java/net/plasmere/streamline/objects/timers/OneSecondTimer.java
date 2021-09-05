@@ -1,12 +1,9 @@
 package net.plasmere.streamline.objects.timers;
 
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.users.Player;
-import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.objects.users.SavableUser;
-import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 
 import java.util.*;
@@ -33,11 +30,10 @@ public class OneSecondTimer implements Runnable {
         try {
             countdown = reset;
 
-            if (PlayerUtils.getCascadingSaves().size() > 0) {
-                TreeMap<String, TreeMap<Integer, SavableUser>> map = new TreeMap<>(PlayerUtils.getCascadingSaves());
-
-                for (String uuid : map.keySet())
-                PlayerUtils.cascadeSave(uuid);
+            if (PlayerUtils.getToSave().size() > 0) {
+                for (SavableUser user : new ArrayList<>(PlayerUtils.getToSave())) {
+                    PlayerUtils.doSave(user);
+                }
             }
 
             PlayerUtils.tickConn();

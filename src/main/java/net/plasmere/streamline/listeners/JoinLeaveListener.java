@@ -486,6 +486,8 @@ public class JoinLeaveListener implements Listener {
         }
 
         try {
+            PlayerUtils.addToSave(stat);
+            PlayerUtils.doSave(stat);
             PlayerUtils.removeStat(stat);
         } catch (Exception e) {
             e.printStackTrace();

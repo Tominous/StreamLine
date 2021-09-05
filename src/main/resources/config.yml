@@ -1003,6 +1003,8 @@ modules:
         time-per: 20
       # Time in seconds to wait before trying to clear the cached stats.
       cache-clear: 300
+      # Time in seconds to wait before trying to save the cached stats.
+      cache-save: 600
       # Enables updating player's display names. Disable if you have another plugin doing this. MUST HAVE LUCKPERMS.
       update-display-names: true
     # For server redirects...

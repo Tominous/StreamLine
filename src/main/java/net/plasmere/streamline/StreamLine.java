@@ -66,7 +66,8 @@ public class StreamLine extends Plugin {
 
 	public ScheduledTask guilds;
 	public ScheduledTask players;
-	public ScheduledTask cachedPlayers;
+	public ScheduledTask clearCachedPlayers;
+	public ScheduledTask saveCachedPlayers;
 	public ScheduledTask playtime;
 	public ScheduledTask oneSecTimer;
 	public ScheduledTask motdUpdater;
@@ -177,15 +178,16 @@ public class StreamLine extends Plugin {
 
 	public void loadTimers(){
 		try {
-			guilds = getProxy().getScheduler().schedule(this, new GuildXPTimer(ConfigUtils.timePerGiveG), 1, 1, TimeUnit.SECONDS);
-			players = getProxy().getScheduler().schedule(this, new PlayerXPTimer(ConfigUtils.timePerGiveP), 1, 1, TimeUnit.SECONDS);
-			cachedPlayers = getProxy().getScheduler().schedule(this, new PlayerClearTimer(ConfigUtils.cachedPClear), 1, 1, TimeUnit.SECONDS);
-			playtime = getProxy().getScheduler().schedule(this, new PlaytimeTimer(1), 1, 1, TimeUnit.SECONDS);
-			oneSecTimer = getProxy().getScheduler().schedule(this, new OneSecondTimer(), 1, 1, TimeUnit.SECONDS);
+			guilds = getProxy().getScheduler().schedule(this, new GuildXPTimer(ConfigUtils.timePerGiveG), 0, 1, TimeUnit.SECONDS);
+			players = getProxy().getScheduler().schedule(this, new PlayerXPTimer(ConfigUtils.timePerGiveP), 0, 1, TimeUnit.SECONDS);
+			clearCachedPlayers = getProxy().getScheduler().schedule(this, new PlayerClearTimer(ConfigUtils.cachedPClear), 0, 1, TimeUnit.SECONDS);
+			saveCachedPlayers = getProxy().getScheduler().schedule(this, new PlayerSaveTimer(ConfigUtils.cachedPSave), 0, 1, TimeUnit.SECONDS);
+			playtime = getProxy().getScheduler().schedule(this, new PlaytimeTimer(1), 0, 1, TimeUnit.SECONDS);
+			oneSecTimer = getProxy().getScheduler().schedule(this, new OneSecondTimer(), 0, 1, TimeUnit.SECONDS);
 			motdUpdater = getProxy().getScheduler().schedule(this, new MOTDUpdaterTimer(serverConfig.getMOTDTime()), 0, 1, TimeUnit.SECONDS);
 
 			// DO NOT FORGET TO UPDATE AMOUNT BELOW! :/
-			getLogger().info("Loaded 5 timers (Runnables) into memory...!");
+			getLogger().info("Loaded 7 timers (Runnables) into memory...!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -311,7 +313,8 @@ public class StreamLine extends Plugin {
 		guilds.cancel();
 		players.cancel();
 		playtime.cancel();
-		cachedPlayers.cancel();
+		clearCachedPlayers.cancel();
+		saveCachedPlayers.cancel();
 		oneSecTimer.cancel();
 		motdUpdater.cancel();
 

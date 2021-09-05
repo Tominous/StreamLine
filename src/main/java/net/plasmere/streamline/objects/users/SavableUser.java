@@ -386,6 +386,15 @@ public abstract class SavableUser {
         this.friendList = loadFriends();
         this.pendingToFriendList = loadPendingToFriends();
         this.pendingFromFriendList = loadPendingFromFriends();
+        this.sspy = Boolean.parseBoolean(getFromKey("sspy"));
+        this.gspy = Boolean.parseBoolean(getFromKey("gspy"));
+        this.pspy = Boolean.parseBoolean(getFromKey("pspy"));
+        this.sc = Boolean.parseBoolean(getFromKey("sc"));
+        this.sspyvs = Boolean.parseBoolean(getFromKey("sspy-vs"));
+        this.pspyvs = Boolean.parseBoolean(getFromKey("pspy-vs"));
+        this.gspyvs = Boolean.parseBoolean(getFromKey("gspy-vs"));
+        this.scvs = Boolean.parseBoolean(getFromKey("sc-vs"));
+        this.viewsc = Boolean.parseBoolean(getFromKey("view-sc"));
 //        this.latestServer = getFromKey("latest-server");
 
         loadMoreVars();
@@ -405,15 +414,6 @@ public abstract class SavableUser {
                 e.printStackTrace();
             }
         }
-        this.sspy = Boolean.parseBoolean(getFromKey("sspy"));
-        this.gspy = Boolean.parseBoolean(getFromKey("gspy"));
-        this.pspy = Boolean.parseBoolean(getFromKey("pspy"));
-        this.sc = Boolean.parseBoolean(getFromKey("sc"));
-        this.sspyvs = Boolean.parseBoolean(getFromKey("sspy-vs"));
-        this.pspyvs = Boolean.parseBoolean(getFromKey("pspy-vs"));
-        this.gspyvs = Boolean.parseBoolean(getFromKey("gspy-vs"));
-        this.scvs = Boolean.parseBoolean(getFromKey("sc-vs"));
-        this.viewsc = Boolean.parseBoolean(getFromKey("view-sc"));
     }
 
     abstract public void loadMoreVars();
@@ -813,25 +813,6 @@ public abstract class SavableUser {
 
     public void toggleSCVS() { setSCVS(! scvs); }
 
-    public void saveInfo() throws IOException {
-        file.delete();
-
-        file.createNewFile();
-
-        savedKeys = new ArrayList<>();
-        FileWriter writer = new FileWriter(file);
-        for (String s : getInfoAsPropertyList()){
-            String key = s.split("=")[0];
-            if (savedKeys.contains(key)) continue;
-            savedKeys.add(key);
-
-            writer.write(tryUpdateFormatRaw(s) + "\n");
-        }
-        writer.close();
-
-        //MessagingUtils.logInfo("Just saved Player info for player: " + PlayerUtils.getOffOnReg(player));
-    }
-
     public String toString(){
         return latestName;
     }
@@ -904,5 +885,24 @@ public abstract class SavableUser {
 
     public Collection<String> getPermissions() {
         return findSender().getPermissions();
+    }
+
+    public void saveInfo() throws IOException {
+        file.delete();
+
+        file.createNewFile();
+
+        savedKeys = new ArrayList<>();
+        FileWriter writer = new FileWriter(file);
+        for (String s : getInfoAsPropertyList()){
+            String key = s.split("=")[0];
+            if (savedKeys.contains(key)) continue;
+            savedKeys.add(key);
+
+            writer.write(tryUpdateFormatRaw(s) + "\n");
+        }
+        writer.close();
+
+        if (ConfigUtils.debug) MessagingUtils.logInfo("Just saved Player info for player: " + this.uuid + " (Player: " + this.latestName + ")");
     }
 }
