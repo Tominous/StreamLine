@@ -4,6 +4,7 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.ConfigHandler;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.utils.MessagingUtils;
 
@@ -22,8 +23,8 @@ public abstract class From {
         COMMANDS,
     }
 
-    // TreeMap < order , SingleSet < locale name , SingleSet < path , stringed value > > >
-    public TreeMap<Integer, SingleSet<String, SingleSet<String, Object>>> locales = new TreeMap<>();
+    // TreeMap < locale name , TreeMap < order , SingleSet < path , stringed value > > >
+    public TreeMap<String, TreeMap<Integer, SingleSet<String, Object>>> locales = new TreeMap<>();
     // TreeMap < order , SingleSet < path , stringed value > >
     public TreeMap<Integer, SingleSet<String, Object>> config = new TreeMap<>();
     public TreeMap<Integer, SingleSet<String, Object>> serverConfig = new TreeMap<>();
@@ -62,15 +63,16 @@ public abstract class From {
     public From(String language) {
         this.language = language;
         getAllConfigurations();
+        chargeLocalesMaps();
 
         setupConfigFix();
-        setupTranslationsFix();
+        setupLocalesFix();
         setupServerConfigFix();
         setupDiscordBotFix();
         setupCommandsFix();
 
         applyConfig();
-        applylocales();
+        applyLocales();
         applyServerConfig();
         applyDiscordBot();
         applyCommands();
@@ -196,7 +198,7 @@ public abstract class From {
     }
 
     public abstract void setupConfigFix();
-    public abstract void setupTranslationsFix();
+    public abstract void setupLocalesFix();
     public abstract void setupServerConfigFix();
     public abstract void setupDiscordBotFix();
     public abstract void setupCommandsFix();
@@ -209,12 +211,23 @@ public abstract class From {
         config.put(putInt, new SingleSet<>(path, object));
     }
 
+    public void chargeLocalesMaps() {
+        for (String locale : ConfigHandler.acceptableTranslations()) {
+            locales.put(locale, new TreeMap<>());
+        }
+    }
+
     public void addUpdatedLocalesEntry(String path, Object object, String locale) {
         int putInt = 0;
 
-        if (locales.size() > 0) putInt = locales.lastKey() + 1;
+        if (locales.get(locale).size() > 0) putInt = locales.get(locale).lastKey() + 1;
 
-        locales.put(putInt, new SingleSet<>(locale, new SingleSet<>(path, object)));
+        TreeMap<Integer, SingleSet<String, Object>> map = new TreeMap<>(locales.get(locale));
+        map.put(putInt, new SingleSet<>(path, object));
+
+        locales.put(locale, map);
+
+        MessagingUtils.logWarning("Map: locale (" + locale + ") , putInt (" + putInt + ") , object (" + object + ")");
     }
 
     public void addUpdatedServerConfigEntry(String path, Object object) {
@@ -260,19 +273,22 @@ public abstract class From {
         return applied;
     }
 
-    public int applylocales() {
+    public int applyLocales() {
         int applied = 0;
 
-        for (int itgr : locales.keySet()) {
-            m.set(locales.get(itgr).key, locales.get(itgr).value);
-            applied ++;
-        }
+        for (String locale : locales.keySet()) {
+            for (int itgr : locales.get(locale).keySet()) {
+                m.set(locales.get(locale).get(itgr).key, locales.get(locale).get(itgr).value);
+                applied ++;
+            }
 
-        if (applied > 0) {
-            try {
-                ConfigurationProvider.getProvider(YamlConfiguration.class).save(m, mfile(this.language));
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (locales.get(locale).keySet().size() > 0) {
+                try {
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(m, mfile(locale));
+                    MessagingUtils.logWarning("Added: " + locales.get(locale).keySet().size());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 

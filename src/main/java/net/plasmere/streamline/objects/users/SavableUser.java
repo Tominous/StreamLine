@@ -114,7 +114,7 @@ public abstract class SavableUser {
         } else {
             ProxiedPlayer player = PlayerUtils.getPPlayerByUUID(this.uuid);
 
-            if (player == null) return MessageConfUtils.nullB;
+            if (player == null) return MessageConfUtils.nullB();
 
             if (player.getServer() == null) return ConfigUtils.consoleServer;
 

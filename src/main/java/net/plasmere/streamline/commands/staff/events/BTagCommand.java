@@ -25,7 +25,7 @@ public class BTagCommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length <= 0) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
         } else {
             if (! PlayerUtils.exists(args[0])) {
                 MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
@@ -35,13 +35,13 @@ public class BTagCommand extends Command implements TabExecutor {
             SavableUser stat = PlayerUtils.getOrGetSavableUser(args[0]);
 
             if (stat == null) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                 return;
             }
 
             if (! stat.latestName.equals(sender.getName())) {
                 if (! sender.hasPermission(CommandsConfUtils.comBBTagOPerm)) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm());
                     return;
                 }
             }
@@ -52,12 +52,12 @@ public class BTagCommand extends Command implements TabExecutor {
                 case "r":
                 case "-":
                     if (! sender.hasPermission(CommandsConfUtils.comBBTagChPerm)) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm());
                         return;
                     }
 
                     if (args.length <= 2) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                         return;
                     }
                     PlayerUtils.remTag(sender, stat, args[2]);
@@ -66,12 +66,12 @@ public class BTagCommand extends Command implements TabExecutor {
                 case "a":
                 case "+":
                     if (! sender.hasPermission(CommandsConfUtils.comBBTagChPerm)) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm());
                         return;
                     }
 
                     if (args.length <= 2) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                         return;
                     }
                     PlayerUtils.addTag(sender, stat, args[2]);

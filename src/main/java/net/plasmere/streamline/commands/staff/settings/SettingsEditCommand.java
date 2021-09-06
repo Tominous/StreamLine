@@ -27,24 +27,24 @@ public class SettingsEditCommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args == null) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
             return;
         }
         if (args.length <= 0) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
             return;
         }
 
         switch (args[0]) {
             case "set":
                 if (args.length <= 2) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                     return;
                 }
                 switch (args[1]) {
                     case "motd":
                         if (args.length < 4) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                             return;
                         }
 
@@ -53,7 +53,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                             at = Integer.parseInt(args[2]);
                         } catch (Exception e) {
                             e.printStackTrace();
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
                             return;
                         }
 
@@ -61,7 +61,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         StreamLine.serverConfig.setMOTD(Integer.toString(at), rest);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetMOTD
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetMOTD()
                                 .replace("%number%", Integer.toString(at))
                                 .replace("%set%", rest)
                         );
@@ -74,13 +74,13 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                             time = Integer.parseInt(motdtime);
                         } catch (Exception e) {
                             e.printStackTrace();
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
                             return;
                         }
 
                         StreamLine.serverConfig.setMOTDTime(time);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetMOTDTime
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetMOTDTime()
                                 .replace("%set%", motdtime)
                         );
                         break;
@@ -89,13 +89,13 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         StreamLine.serverConfig.setVersion(version);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetVersion
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetVersion()
                                 .replace("%set%", version)
                         );
                         break;
                     case "sample":
                         if (args.length < 4) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                             return;
                         }
 
@@ -104,7 +104,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                             atS = Integer.parseInt(args[2]);
                         } catch (Exception e) {
                             e.printStackTrace();
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
                             return;
                         }
 
@@ -112,7 +112,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         StreamLine.serverConfig.setSample(Integer.toString(atS), sample);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetSample
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetSample()
                                 .replace("%number%", Integer.toString(atS))
                                 .replace("%set%", sample)
                         );
@@ -122,7 +122,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         StreamLine.serverConfig.setMaxPlayers(maxp);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetMaxP
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetMaxP()
                                 .replace("%set%", maxp)
                         );
                         break;
@@ -131,7 +131,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         StreamLine.serverConfig.setOnlinePlayers(onp);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetOnlineP
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetOnlineP()
                                 .replace("%set%", onp)
                         );
                         break;
@@ -147,7 +147,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         StreamLine.serverConfig.setProxyChatEnabled(cuspBool);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetPCEnabled
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetPCEnabled()
                                 .replace("%set%", String.valueOf(cuspBool))
                         );
                         break;
@@ -163,13 +163,13 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         StreamLine.serverConfig.setProxyChatConsoleEnabled(toConsoleBool);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetChatToConsole
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetChatToConsole()
                                 .replace("%set%", String.valueOf(toConsoleBool))
                         );
                         break;
                     case "proxy-chat-chats":
                         if (args.length < 4) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                             return;
                         }
 
@@ -178,13 +178,13 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                             atChat = Integer.parseInt(args[2]);
                         } catch (Exception e) {
                             e.printStackTrace();
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
                             return;
                         }
 
                         String chats = StreamLine.serverConfig.getProxyChatChatsAt(atChat);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetPCChats
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetPCChats()
                                 .replace("%number%", Integer.toString(atChat))
                                 .replace("%set%", chats)
                         );
@@ -194,7 +194,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         StreamLine.serverConfig.setChatBasePerm(baseP);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetPCBPerm
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetPCBPerm()
                                 .replace("%set%", baseP)
                         );
                         break;
@@ -210,7 +210,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         StreamLine.serverConfig.setTagsPingEnabled(enableP);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetTagsEnablePing
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetTagsEnablePing()
                                 .replace("%set%", String.valueOf(enableP))
                         );
                         break;
@@ -219,13 +219,13 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         StreamLine.serverConfig.setTagsPrefix(tagPrefix);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetTagsTagPrefix
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetTagsTagPrefix()
                                 .replace("%set%", tagPrefix)
                         );
                         break;
                     case "emotes":
                         if (args.length < 4) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                             return;
                         }
 
@@ -234,14 +234,14 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         StreamLine.serverConfig.setEmote(emote, toEmote);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetEmotes
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetEmotes()
                                 .replace("%emote%", emote)
                                 .replace("%set%", toEmote)
                         );
                         break;
                     case "emote-permissions":
                         if (args.length < 4) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                             return;
                         }
 
@@ -250,7 +250,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         StreamLine.serverConfig.setEmotePermission(theEmote, toEPerm);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetEmotePermissions
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetEmotePermissions()
                                 .replace("%emote%", theEmote)
                                 .replace("%set%", toEPerm)
                         );
@@ -260,13 +260,13 @@ public class SettingsEditCommand extends Command implements TabExecutor {
             case "check":
             case "get":
                 if (args.length <= 1) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                     return;
                 }
                 switch (args[1]) {
                     case "motd":
                         if (args.length < 3) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                             return;
                         }
 
@@ -275,13 +275,13 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                             at = Integer.parseInt(args[2]);
                         } catch (Exception e) {
                             e.printStackTrace();
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
                             return;
                         }
 
                         String motd = StreamLine.serverConfig.getMOTDat(at);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMOTD
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMOTD()
                                 .replace("%number%", Integer.toString(at))
                                 .replace("%set%", motd)
                         );
@@ -289,20 +289,20 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                     case "motd-time":
                         String motdtime = Integer.toString(StreamLine.serverConfig.getMOTDTime());
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMOTDTime
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMOTDTime()
                                 .replace("%set%", motdtime)
                         );
                         break;
                     case "version":
                         String version = StreamLine.serverConfig.getVersion();
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetVersion
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetVersion()
                                 .replace("%set%", version)
                         );
                         break;
                     case "sample":
                         if (args.length < 3) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                             return;
                         }
 
@@ -311,13 +311,13 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                             atS = Integer.parseInt(args[2]);
                         } catch (Exception e) {
                             e.printStackTrace();
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
                             return;
                         }
 
                         String sample = StreamLine.serverConfig.getSampleAt(atS);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetSample
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetSample()
                                 .replace("%number%", Integer.toString(atS))
                                 .replace("%set%", sample)
                         );
@@ -325,34 +325,34 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                     case "max-players":
                         String maxp = StreamLine.serverConfig.getMaxPlayers();
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMaxP
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMaxP()
                                 .replace("%set%", maxp)
                         );
                         break;
                     case "online-players":
                         String onp = StreamLine.serverConfig.getOnlinePlayers();
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetOnlineP
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetOnlineP()
                                 .replace("%set%", onp)
                         );
                         break;
                     case "proxy-chat-enabled":
                         Boolean cusp = StreamLine.serverConfig.getProxyChatEnabled();
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetPCEnabled
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetPCEnabled()
                                 .replace("%set%", String.valueOf(cusp))
                         );
                         break;
                     case "proxy-chat-to-console":
                         Boolean toConsole = StreamLine.serverConfig.getProxyChatConsoleEnabled();
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetChatToConsole
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetChatToConsole()
                                 .replace("%set%", String.valueOf(toConsole))
                         );
                         break;
                     case "proxy-chat-chats":
                         if (args.length < 3) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                             return;
                         }
 
@@ -361,13 +361,13 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                             atChat = Integer.parseInt(args[2]);
                         } catch (Exception e) {
                             e.printStackTrace();
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
                             return;
                         }
 
                         String chats = StreamLine.serverConfig.getProxyChatChatsAt(atChat);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetPCChats
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetPCChats()
                                 .replace("%number%", Integer.toString(atChat))
                                 .replace("%set%", chats)
                         );
@@ -375,27 +375,27 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                     case "proxy-chat-base-perm":
                         String baseP = StreamLine.serverConfig.getChatBasePerm();
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetPCBPerm
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetPCBPerm()
                                 .replace("%set%", baseP)
                         );
                         break;
                     case "tags-enable-ping":
                         boolean enableP = StreamLine.serverConfig.getTagsPingEnabled();
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetTagsEnablePing
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetTagsEnablePing()
                                 .replace("%set%", String.valueOf(enableP))
                         );
                         break;
                     case "tags-tag-prefix":
                         String tagPrefix = StreamLine.serverConfig.getTagsPrefix();
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetTagsTagPrefix
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetTagsTagPrefix()
                                 .replace("%set%", tagPrefix)
                         );
                         break;
                     case "emotes":
                         if (args.length < 3) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                             return;
                         }
 
@@ -403,21 +403,21 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         String theReturnedEmote = StreamLine.serverConfig.getEmote(emote);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetEmotes
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetEmotes()
                                 .replace("%emote%", emote)
                                 .replace("%set%", theReturnedEmote)
                         );
                         break;
                     case "emote-permissions":
                         if (args.length < 3) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                             return;
                         }
 
                         String theEmote = args[2];
                         String toEPerm = StreamLine.serverConfig.getEmotePermission(theEmote);
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsSetEmotePermissions
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetEmotePermissions()
                                 .replace("%emote%", theEmote)
                                 .replace("%set%", toEPerm)
                         );

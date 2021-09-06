@@ -23,29 +23,29 @@ public class StreamCommand extends Command {
 
             if (player.hasPermission(perm)){
                 if (args.length != 1){
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.streamNeedLink);
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeImproperUsage
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.streamNeedLink());
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeImproperUsage()
                             .replace("%usage%", "/stream <link>")
                     );
                 } else {
                     if (! args[0].startsWith("https://") && ! args[0].startsWith("http://") && ! args[0].startsWith("ftp://") && ! args[0].startsWith("sftp://")) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.streamNotLink);
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeImproperUsage
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.streamNotLink());
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeImproperUsage()
                                 .replace("%usage%", "/stream <link>")
                         );
                     } else {
-                        MessagingUtils.sendBCLHBroadcast(sender, MessageConfUtils.streamMessage
+                        MessagingUtils.sendBCLHBroadcast(sender, MessageConfUtils.streamMessage()
                                 .replace("%user%", sender.getName())
                                 .replace("%link%", args[0])
-                                , MessageConfUtils.streamHoverPrefix
+                                , MessageConfUtils.streamHoverPrefix()
                         );
                     }
                 }
             } else {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm());
             }
         } else {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers());
         }
     }
 }

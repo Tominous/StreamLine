@@ -19,7 +19,7 @@ public class ReportCommand extends Command {
         String msg = TextUtils.normalize(args);
 
         if (msg.length() <= 0){
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.discordNeedsMore);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.discordNeedsMore());
             return;
         }
 
@@ -29,7 +29,7 @@ public class ReportCommand extends Command {
         if (ConfigUtils.moduleReportsSendChat)
             MessagingUtils.sendStaffMessageReport(sender.getName(), true, msg);
         if (ConfigUtils.moduleReportsBConfirmation)
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bConfirmReportMessage
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bConfirmReportMessage()
                     .replace("%reporter%", sender.getName())
                     .replace("%report%", TextUtils.normalize(args))
             );

@@ -34,12 +34,12 @@ public class MessageCommand extends Command implements TabExecutor {
         SavableUser stat = PlayerUtils.getOrGetSavableUser(thing);
 
         if (stat == null) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorNoYou);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorNoYou());
             return;
         }
 
         if (args.length <= 0) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
         } else {
             SavableUser statTo;
 
@@ -55,7 +55,7 @@ public class MessageCommand extends Command implements TabExecutor {
             }
 
             if (statTo == null) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                 return;
             }
 

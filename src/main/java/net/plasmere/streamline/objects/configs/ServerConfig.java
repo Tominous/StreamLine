@@ -19,8 +19,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class ServerConfig {
-    public File file;
-
     private Configuration serverConfig;
     private final String setstring = "settings.yml";
     private final File scfile = new File(StreamLine.getInstance().getConfDir(), setstring);

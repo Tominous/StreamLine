@@ -16,12 +16,12 @@ public class GuildsCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (GuildUtils.getGuilds().size() <= 0) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.guildsNone);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.guildsNone());
             return;
         }
 
         for (Guild guild : GuildUtils.getGuilds()){
-            MessagingUtils.sendBGUserMessage(guild, sender, sender, MessageConfUtils.guildsMessage);
+            MessagingUtils.sendBGUserMessage(guild, sender, sender, MessageConfUtils.guildsMessage());
         }
     }
 }

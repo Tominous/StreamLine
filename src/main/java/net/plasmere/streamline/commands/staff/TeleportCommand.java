@@ -27,7 +27,7 @@ public class TeleportCommand extends Command implements TabExecutor {
         if (sender instanceof ProxiedPlayer) {
             ProxiedPlayer player = PlayerUtils.getPPlayer(args[0]);
             if (player == null) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                 return;
             }
 
@@ -40,11 +40,11 @@ public class TeleportCommand extends Command implements TabExecutor {
 //            MessagingUtils.sendTeleportPluginMessageRequest(s, player);
             PlayerUtils.addTeleport(s, player);
 
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bteleport
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bteleport()
                     .replace("%player%", player.getName())
             );
         } else {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers());
         }
     }
 

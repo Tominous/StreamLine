@@ -681,7 +681,7 @@ party:
     console: "%sender_absolute% viens de mettre le groupe de %leader_normal% à %toggle%!"
     # Toggle for message above.
     toggle:
-      muted: "muet
+      muted: "muet"
       unmuted: "non-muet"
     # Discord embed title.
     title: "MUTAGE DE GROUPE"
@@ -1995,7 +1995,7 @@ graceful-end:
 delete-stat:
   message: "&eRetrait du fichier &b%file_name% &ede vos fichiers de joueurs&8!"
 
-bteleport: "&eTéléportation vers &d%player% &aRéussie&8!"
+bteleport(): "&eTéléportation vers &d%player% &aRéussie&8!"
 
 language:
   message: "&eYou are now using &c%locale% &eas your locale&8!"

@@ -29,8 +29,8 @@ public class StaffOnlineCommand {
         }
 
         MessagingUtils.sendDSelfMessage(event,
-                MessageConfUtils.sOnlineMessageEmbedTitle,
-                MessageConfUtils.sOnlineDiscordMain
+                MessageConfUtils.sOnlineMessageEmbedTitle(),
+                MessageConfUtils.sOnlineDiscordMain()
                         .replace("%amount%", Integer.toString(lstaffs.size()))
                         .replace("%staffbulk%", getStaffList(lstaffs))
         );
@@ -44,12 +44,12 @@ public class StaffOnlineCommand {
 
         for (ProxiedPlayer player : lstaffs){
             if (i < lstaffs.size())
-                staff.append(MessageConfUtils.sOnlineDiscordBulkNotLast
+                staff.append(MessageConfUtils.sOnlineDiscordBulkNotLast()
                         .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", player.getServer().getInfo().getName().toLowerCase())
                 );
             else
-                staff.append(MessageConfUtils.sOnlineDiscordBulkLast
+                staff.append(MessageConfUtils.sOnlineDiscordBulkLast()
                         .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", player.getServer().getInfo().getName().toLowerCase())
                 );

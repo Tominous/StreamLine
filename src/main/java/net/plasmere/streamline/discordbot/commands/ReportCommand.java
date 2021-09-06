@@ -16,12 +16,12 @@ public class ReportCommand {
         String msg = om.substring((prefix + command + " ").length());
 
         if (msg.length() <= 0){
-            MessagingUtils.sendDSelfMessage(event, MessageConfUtils.discordErrTitle, MessageConfUtils.discordNeedsMore);
+            MessagingUtils.sendDSelfMessage(event, MessageConfUtils.discordErrTitle(), MessageConfUtils.discordNeedsMore());
             return;
         }
 
         if (ConfigUtils.moduleReportsDConfirmation)
-            MessagingUtils.sendDSelfMessage(event, MessageConfUtils.reportEmbedTitle, MessageConfUtils.dConfirmReportMessage
+            MessagingUtils.sendDSelfMessage(event, MessageConfUtils.reportEmbedTitle(), MessageConfUtils.dConfirmReportMessage()
                     .replace("%report%", msg)
             );
 

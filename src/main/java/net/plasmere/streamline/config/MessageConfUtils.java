@@ -4,359 +4,1237 @@ import net.plasmere.streamline.StreamLine;
 
 public class MessageConfUtils {
     // Messages:
-//    public static String s = StreamLine.config.getMessString("");
-    // Basics.
-//    public static String version = StreamLine.config.getMessString("version");
-    public static String prefix = StreamLine.config.getMessString("message-prefix");
-    public static String noPerm = StreamLine.config.getMessString("no-permission");
-    public static String reload = StreamLine.config.getMessString("reload-message");
-    public static String onlyPlayers = StreamLine.config.getMessString("only-players");
-    public static String noPlayer = StreamLine.config.getMessString("no-player");
-    public static String discordErrTitle = StreamLine.config.getMessString("discord-err-title");
+    public static String prefix() {
+        return StreamLine.config.mess.getString("message-prefix");
+    }
+
+    public static String noPerm() {
+        return StreamLine.config.mess.getString("no-permission");
+    }
+
+    public static String reload() {
+        return StreamLine.config.mess.getString("reload-message");
+    }
+
+    public static String onlyPlayers() {
+        return StreamLine.config.mess.getString("only-players");
+    }
+
+    public static String noPlayer() {
+        return StreamLine.config.mess.getString("no-player");
+    }
+
+    public static String discordErrTitle() {
+        return StreamLine.config.mess.getString("discord-err-title");
+    }
+
     // ... Command Error.
     // Discord.
-    public static String discordCommandErrorUnd = StreamLine.config.getMessString("command-error.discord.undefined");
+    public static String discordCommandErrorUnd() {
+        return StreamLine.config.mess.getString("command-error.discord.undefined");
+    }
+
     // Bungee.
-    public static String bungeeCommandErrorUnd = StreamLine.config.getMessString("command-error.bungee.undefined");
-    public static String bungeeCommandErrorInt = StreamLine.config.getMessString("command-error.bungee.needs-int");
-    public static String bungeeCommandErrorSTime = StreamLine.config.getMessString("command-error.bungee.needs-stringed-time");
-    public static String bungeeCommandErrorNoYou = StreamLine.config.getMessString("command-error.bungee.cant-find-you");
+    public static String bungeeCommandErrorUnd() {
+        return StreamLine.config.mess.getString("command-error.bungee.undefined");
+    }
+
+    public static String bungeeCommandErrorInt() {
+        return StreamLine.config.mess.getString("command-error.bungee.needs-int");
+    }
+
+    public static String bungeeCommandErrorSTime() {
+        return StreamLine.config.mess.getString("command-error.bungee.needs-stringed-time");
+    }
+
+    public static String bungeeCommandErrorNoYou() {
+        return StreamLine.config.mess.getString("command-error.bungee.cant-find-you");
+    }
+
     // Command Disabled.
-    public static String discordCommandDisabled = StreamLine.config.getMessString("command-disabled.discord");
-    public static String bungeeCommandDisabled = StreamLine.config.getMessString("command-disabled.bungee");
+    public static String discordCommandDisabled() {
+        return StreamLine.config.mess.getString("command-disabled.discord");
+    }
+
+    public static String bungeeCommandDisabled() {
+        return StreamLine.config.mess.getString("command-disabled.bungee");
+    }
+
     // Module Disabled.
-    public static String discordModuleDisabled = StreamLine.config.getMessString("module-disabled.discord");
-    public static String bungeeModuleDisabled = StreamLine.config.getMessString("module-disabled.bungee");
+    public static String discordModuleDisabled() {
+        return StreamLine.config.mess.getString("module-disabled.discord");
+    }
+
+    public static String bungeeModuleDisabled() {
+        return StreamLine.config.mess.getString("module-disabled.bungee");
+    }
+
     // Not command / improper usage.
-    public static String discordNotACommand = StreamLine.config.getMessString("not-a-command.discord");
-    public static String bungeeImproperUsage = StreamLine.config.getMessString("improper-usage.bungee");
+    public static String discordNotACommand() {
+        return StreamLine.config.mess.getString("not-a-command.discord");
+    }
+
+    public static String bungeeImproperUsage() {
+        return StreamLine.config.mess.getString("improper-usage.bungee");
+    }
+
     // Command needs args.
-    public static String discordNeedsMore = StreamLine.config.getMessString("command-needs-args.more.discord");
-    public static String bungeeNeedsMore = StreamLine.config.getMessString("command-needs-args.more.bungee");
-    public static String discordNeedsLess = StreamLine.config.getMessString("command-needs-args.less.discord");
-    public static String bungeeNeedsLess = StreamLine.config.getMessString("command-needs-args.less.bungee");
+    public static String discordNeedsMore() {
+        return StreamLine.config.mess.getString("command-needs-args.more.discord");
+    }
+
+    public static String bungeeNeedsMore() {
+        return StreamLine.config.mess.getString("command-needs-args.more.bungee");
+    }
+
+    public static String discordNeedsLess() {
+        return StreamLine.config.mess.getString("command-needs-args.less.discord");
+    }
+
+    public static String bungeeNeedsLess() {
+        return StreamLine.config.mess.getString("command-needs-args.less.bungee");
+    }
+
     // Players.
-    public static String offlineB = StreamLine.config.getMessString("players.bungee.offline");
-    public static String onlineB = StreamLine.config.getMessString("players.bungee.online");
-    public static String nullB = StreamLine.config.getMessString("players.bungee.null");
-    public static String offlineD = StreamLine.config.getMessString("players.discord.offline");
-    public static String onlineD = StreamLine.config.getMessString("players.discord.online");
-    public static String nullD = StreamLine.config.getMessString("players.discord.null");
+    public static String offlineB() {
+        return StreamLine.config.mess.getString("players.bungee.offline");
+    }
+
+    public static String onlineB() {
+        return StreamLine.config.mess.getString("players.bungee.online");
+    }
+
+    public static String nullB() {
+        return StreamLine.config.mess.getString("players.bungee.null");
+    }
+
+    public static String offlineD() {
+        return StreamLine.config.mess.getString("players.discord.offline");
+    }
+
+    public static String onlineD() {
+        return StreamLine.config.mess.getString("players.discord.online");
+    }
+
+    public static String nullD() {
+        return StreamLine.config.mess.getString("players.discord.null");
+    }
+
     // Redirect.
-    public static String vbBlocked = StreamLine.config.getMessString("redirect.by-version.blocked");
+    public static String vbBlocked() {
+        return StreamLine.config.mess.getString("redirect.by-version.blocked");
+    }
+
     // Kicks.
-    public static String kicksStopping = StreamLine.config.getMessString("kicks.stopping");
+    public static String kicksStopping() {
+        return StreamLine.config.mess.getString("kicks.stopping");
+    }
+
     // ... Punishments.
     // Mutes.
-    public static String punMutedTemp = StreamLine.config.getMessString("punishments.muted.temp");
-    public static String punMutedPerm = StreamLine.config.getMessString("punishments.muted.perm");
+    public static String punMutedTemp() {
+        return StreamLine.config.mess.getString("punishments.muted.temp");
+    }
+
+    public static String punMutedPerm() {
+        return StreamLine.config.mess.getString("punishments.muted.perm");
+    }
+
     // Bans.
-    public static String punBannedTemp = StreamLine.config.getMessString("punishments.banned.temp");
-    public static String punBannedPerm = StreamLine.config.getMessString("punishments.banned.perm");
+    public static String punBannedTemp() {
+        return StreamLine.config.mess.getString("punishments.banned.temp");
+    }
+
+    public static String punBannedPerm() {
+        return StreamLine.config.mess.getString("punishments.banned.perm");
+    }
+
     // IPBans.
-    public static String punIPBannedTemp = StreamLine.config.getMessString("punishments.ip-banned.temp");
-    public static String punIPBannedPerm = StreamLine.config.getMessString("punishments.ip-banned.perm");
+    public static String punIPBannedTemp() {
+        return StreamLine.config.mess.getString("punishments.ip-banned.temp");
+    }
+
+    public static String punIPBannedPerm() {
+        return StreamLine.config.mess.getString("punishments.ip-banned.perm");
+    }
+
     // Reports.
-    public static String reportEmbedTitle = StreamLine.config.getMessString("report-message.embed-title");
-    public static String dToDReportMessage = StreamLine.config.getMessString("report-message.from-discord.discord");
-    public static String dToBReportMessage = StreamLine.config.getMessString("report-message.from-discord.bungee");
-    public static String dConfirmReportMessage = StreamLine.config.getMessString("report-message.from-discord.confirmation");
-    public static String bToDReportMessage = StreamLine.config.getMessString("report-message.from-bungee.discord");
-    public static String bToBReportMessage = StreamLine.config.getMessString("report-message.from-bungee.bungee");
-    public static String bConfirmReportMessage = StreamLine.config.getMessString("report-message.from-bungee.confirmation");
+    public static String reportEmbedTitle() {
+        return StreamLine.config.mess.getString("report-message.embed-title");
+    }
+
+    public static String dToDReportMessage() {
+        return StreamLine.config.mess.getString("report-message.from-discord.discord");
+    }
+
+    public static String dToBReportMessage() {
+        return StreamLine.config.mess.getString("report-message.from-discord.bungee");
+    }
+
+    public static String dConfirmReportMessage() {
+        return StreamLine.config.mess.getString("report-message.from-discord.confirmation");
+    }
+
+    public static String bToDReportMessage() {
+        return StreamLine.config.mess.getString("report-message.from-bungee.discord");
+    }
+
+    public static String bToBReportMessage() {
+        return StreamLine.config.mess.getString("report-message.from-bungee.bungee");
+    }
+
+    public static String bConfirmReportMessage() {
+        return StreamLine.config.mess.getString("report-message.from-bungee.confirmation");
+    }
+
     // Start.
-    public static String startTitle = StreamLine.config.getMessString("start.embed-title");
-    public static String startMessage = StreamLine.config.getMessString("start.message");
+    public static String startTitle() {
+        return StreamLine.config.mess.getString("start.embed-title");
+    }
+
+    public static String startMessage() {
+        return StreamLine.config.mess.getString("start.message");
+    }
+
     // Stop.
-    public static String shutdownTitle = StreamLine.config.getMessString("shutdown.embed-title");
-    public static String shutdownMessage = StreamLine.config.getMessString("shutdown.message");
+    public static String shutdownTitle() {
+        return StreamLine.config.mess.getString("shutdown.embed-title");
+    }
+
+    public static String shutdownMessage() {
+        return StreamLine.config.mess.getString("shutdown.message");
+    }
+
     // StaffChat.
-    public static String staffChatEmbedTitle = StreamLine.config.getMessString("staffchat.message.embed-title");
-    public static String discordStaffChatMessage = StreamLine.config.getMessString("staffchat.message.discord");
-    public static String bungeeStaffChatMessage = StreamLine.config.getMessString("staffchat.message.bungee");
-    public static String discordStaffChatFrom = StreamLine.config.getMessString("staffchat.message.from.discord");
-    public static String bungeeStaffChatFrom = StreamLine.config.getMessString("staffchat.message.from.bungee");
-    public static String staffChatJustPrefix = StreamLine.config.getMessString("staffchat.just-prefix");
-    public static String staffChatToggle = StreamLine.config.getMessString("staffchat.message.toggle");
-    public static String staffChatOn = StreamLine.config.getMessString("staffchat.toggle.true");
-    public static String staffChatOff = StreamLine.config.getMessString("staffchat.toggle.false");
+    public static String staffChatEmbedTitle() {
+        return StreamLine.config.mess.getString("staffchat.message.embed-title");
+    }
+
+    public static String discordStaffChatMessage() {
+        return StreamLine.config.mess.getString("staffchat.message.discord");
+    }
+
+    public static String bungeeStaffChatMessage() {
+        return StreamLine.config.mess.getString("staffchat.message.bungee");
+    }
+
+    public static String discordStaffChatFrom() {
+        return StreamLine.config.mess.getString("staffchat.message.from.discord");
+    }
+
+    public static String bungeeStaffChatFrom() {
+        return StreamLine.config.mess.getString("staffchat.message.from.bungee");
+    }
+
+    public static String staffChatJustPrefix() {
+        return StreamLine.config.mess.getString("staffchat.just-prefix");
+    }
+
+    public static String staffChatToggle() {
+        return StreamLine.config.mess.getString("staffchat.message.toggle");
+    }
+
+    public static String staffChatOn() {
+        return StreamLine.config.mess.getString("staffchat.toggle.true");
+    }
+
+    public static String staffChatOff() {
+        return StreamLine.config.mess.getString("staffchat.toggle.false");
+    }
+
     // Online.
-    public static String onlineMessageNoPlayers = StreamLine.config.getMessString("online.message.no-players");
-    public static String onlineMessageNoGroups = StreamLine.config.getMessString("online.message.no-groups");
-    public static String onlineMessageEmbedTitle = StreamLine.config.getMessString("online.message.embed-title");
-    public static String onlineMessageDiscord = StreamLine.config.getMessString("online.message.discord");
-    public static String onlineMessageBMain = StreamLine.config.getMessString("online.message.bungee.main");
-    public static String onlineMessageBServers = StreamLine.config.getMessString("online.message.bungee.servers");
-    public static String onlineMessageBPlayersMain = StreamLine.config.getMessString("online.message.bungee.players.main");
-    public static String onlineMessageBPlayersBulkNotLast = StreamLine.config.getMessString("online.message.bungee.players.playerbulk.if-not-last");
-    public static String onlineMessageBPlayersBulkLast = StreamLine.config.getMessString("online.message.bungee.players.playerbulk.if-last");
+    public static String onlineMessageNoPlayers() {
+        return StreamLine.config.mess.getString("online.message.no-players");
+    }
+
+    public static String onlineMessageNoGroups() {
+        return StreamLine.config.mess.getString("online.message.no-groups");
+    }
+
+    public static String onlineMessageEmbedTitle() {
+        return StreamLine.config.mess.getString("online.message.embed-title");
+    }
+
+    public static String onlineMessageDiscord() {
+        return StreamLine.config.mess.getString("online.message.discord");
+    }
+
+    public static String onlineMessageBMain() {
+        return StreamLine.config.mess.getString("online.message.bungee.main");
+    }
+
+    public static String onlineMessageBServers() {
+        return StreamLine.config.mess.getString("online.message.bungee.servers");
+    }
+
+    public static String onlineMessageBPlayersMain() {
+        return StreamLine.config.mess.getString("online.message.bungee.players.main");
+    }
+
+    public static String onlineMessageBPlayersBulkNotLast() {
+        return StreamLine.config.mess.getString("online.message.bungee.players.playerbulk.if-not-last");
+    }
+
+    public static String onlineMessageBPlayersBulkLast() {
+        return StreamLine.config.mess.getString("online.message.bungee.players.playerbulk.if-last");
+    }
+
     // ... Join Leaves.
     // Discord.
-    public static String discordOnline = StreamLine.config.getMessString("join-leave.discord.online.text");
-    public static String discordOnlineEmbed = StreamLine.config.getMessString("join-leave.discord.online.embed");
-    public static String discordOffline = StreamLine.config.getMessString("join-leave.discord.offline.text");
-    public static String discordOfflineEmbed = StreamLine.config.getMessString("join-leave.discord.offline.embed");
+    public static String discordOnline() {
+        return StreamLine.config.mess.getString("join-leave.discord.online.text");
+    }
+
+    public static String discordOnlineEmbed() {
+        return StreamLine.config.mess.getString("join-leave.discord.online.embed");
+    }
+
+    public static String discordOffline() {
+        return StreamLine.config.mess.getString("join-leave.discord.offline.text");
+    }
+
+    public static String discordOfflineEmbed() {
+        return StreamLine.config.mess.getString("join-leave.discord.offline.embed");
+    }
+
     // Bungee.
-    public static String bungeeOnline = StreamLine.config.getMessString("join-leave.bungee.online");
-    public static String bungeeOffline = StreamLine.config.getMessString("join-leave.bungee.offline");
+    public static String bungeeOnline() {
+        return StreamLine.config.mess.getString("join-leave.bungee.online");
+    }
+
+    public static String bungeeOffline() {
+        return StreamLine.config.mess.getString("join-leave.bungee.offline");
+    }
+
     // ... StaffOnline.
     // Discord.
-    public static String sOnlineMessageEmbedTitle = StreamLine.config.getMessString("staffonline.message.embed-title");
-    public static String sOnlineDiscordMain = StreamLine.config.getMessString("staffonline.message.discord.main");
-    public static String sOnlineDiscordBulkNotLast = StreamLine.config.getMessString("staffonline.message.discord.staffbulk.if-not-last");
-    public static String sOnlineDiscordBulkLast = StreamLine.config.getMessString("staffonline.message.discord.staffbulk.if-last");
+    public static String sOnlineMessageEmbedTitle() {
+        return StreamLine.config.mess.getString("staffonline.message.embed-title");
+    }
+
+    public static String sOnlineDiscordMain() {
+        return StreamLine.config.mess.getString("staffonline.message.discord.main");
+    }
+
+    public static String sOnlineDiscordBulkNotLast() {
+        return StreamLine.config.mess.getString("staffonline.message.discord.staffbulk.if-not-last");
+    }
+
+    public static String sOnlineDiscordBulkLast() {
+        return StreamLine.config.mess.getString("staffonline.message.discord.staffbulk.if-last");
+    }
+
     // Bungee.
-    public static String sOnlineBungeeMain = StreamLine.config.getMessString("staffonline.message.bungee.main");
-    public static String sOnlineBungeeBulkNotLast = StreamLine.config.getMessString("staffonline.message.bungee.staffbulk.if-not-last");
-    public static String sOnlineBungeeBulkLast = StreamLine.config.getMessString("staffonline.message.bungee.staffbulk.if-last");
+    public static String sOnlineBungeeMain() {
+        return StreamLine.config.mess.getString("staffonline.message.bungee.main");
+    }
+
+    public static String sOnlineBungeeBulkNotLast() {
+        return StreamLine.config.mess.getString("staffonline.message.bungee.staffbulk.if-not-last");
+    }
+
+    public static String sOnlineBungeeBulkLast() {
+        return StreamLine.config.mess.getString("staffonline.message.bungee.staffbulk.if-last");
+    }
+
     // Stream.
-    public static String streamNeedLink = StreamLine.config.getMessString("stream.need-link");
-    public static String streamNotLink = StreamLine.config.getMessString("stream.not-link");
-    public static String streamMessage = StreamLine.config.getMessString("stream.message");
-    public static String streamHoverPrefix = StreamLine.config.getMessString("stream.hover-prefix");
+    public static String streamNeedLink() {
+        return StreamLine.config.mess.getString("stream.need-link");
+    }
+
+    public static String streamNotLink() {
+        return StreamLine.config.mess.getString("stream.not-link");
+    }
+
+    public static String streamMessage() {
+        return StreamLine.config.mess.getString("stream.message");
+    }
+
+    public static String streamHoverPrefix() {
+        return StreamLine.config.mess.getString("stream.hover-prefix");
+    }
+
     // Party.
-    public static String partyConnect = StreamLine.config.getMessString("party.connect");
-    public static String partyDisconnect = StreamLine.config.getMessString("party.disconnect");
+    public static String partyConnect() {
+        return StreamLine.config.mess.getString("party.connect");
+    }
+
+    public static String partyDisconnect() {
+        return StreamLine.config.mess.getString("party.disconnect");
+    }
+
     // Guild.
-    public static String guildConnect = StreamLine.config.getMessString("guild.connect");
-    public static String guildDisconnect = StreamLine.config.getMessString("guild.disconnect");
+    public static String guildConnect() {
+        return StreamLine.config.mess.getString("guild.connect");
+    }
+
+    public static String guildDisconnect() {
+        return StreamLine.config.mess.getString("guild.disconnect");
+    }
+
     // Parties.
-    public static String partiesNone = StreamLine.config.getMessString("parties.no-parties");
-    public static String partiesMessage = StreamLine.config.getMessString("parties.parties");
-    public static String partiesModsNLast = StreamLine.config.getMessString("parties.mods.not-last");
-    public static String partiesModsLast = StreamLine.config.getMessString("parties.mods.last");
-    public static String partiesMemsNLast = StreamLine.config.getMessString("parties.members.not-last");
-    public static String partiesMemsLast = StreamLine.config.getMessString("parties.members.last");
-    public static String partiesTMemsNLast = StreamLine.config.getMessString("parties.totalmembers.not-last");
-    public static String partiesTMemsLast = StreamLine.config.getMessString("parties.totalmembers.last");
-    public static String partiesInvsNLast = StreamLine.config.getMessString("parties.invites.not-last");
-    public static String partiesInvsLast = StreamLine.config.getMessString("parties.invites.last");
-    public static String partiesIsPublicTrue = StreamLine.config.getMessString("parties.ispublic.true");
-    public static String partiesIsPublicFalse = StreamLine.config.getMessString("parties.ispublic.false");
-    public static String partiesIsMutedTrue = StreamLine.config.getMessString("parties.ismuted.true");
-    public static String partiesIsMutedFalse = StreamLine.config.getMessString("parties.ismuted.false");
+    public static String partiesNone() {
+        return StreamLine.config.mess.getString("parties.no-parties");
+    }
+
+    public static String partiesMessage() {
+        return StreamLine.config.mess.getString("parties.parties");
+    }
+
+    public static String partiesModsNLast() {
+        return StreamLine.config.mess.getString("parties.mods.not-last");
+    }
+
+    public static String partiesModsLast() {
+        return StreamLine.config.mess.getString("parties.mods.last");
+    }
+
+    public static String partiesMemsNLast() {
+        return StreamLine.config.mess.getString("parties.members.not-last");
+    }
+
+    public static String partiesMemsLast() {
+        return StreamLine.config.mess.getString("parties.members.last");
+    }
+
+    public static String partiesTMemsNLast() {
+        return StreamLine.config.mess.getString("parties.totalmembers.not-last");
+    }
+
+    public static String partiesTMemsLast() {
+        return StreamLine.config.mess.getString("parties.totalmembers.last");
+    }
+
+    public static String partiesInvsNLast() {
+        return StreamLine.config.mess.getString("parties.invites.not-last");
+    }
+
+    public static String partiesInvsLast() {
+        return StreamLine.config.mess.getString("parties.invites.last");
+    }
+
+    public static String partiesIsPublicTrue() {
+        return StreamLine.config.mess.getString("parties.ispublic.true");
+    }
+
+    public static String partiesIsPublicFalse() {
+        return StreamLine.config.mess.getString("parties.ispublic.false");
+    }
+
+    public static String partiesIsMutedTrue() {
+        return StreamLine.config.mess.getString("parties.ismuted.true");
+    }
+
+    public static String partiesIsMutedFalse() {
+        return StreamLine.config.mess.getString("parties.ismuted.false");
+    }
+
     // Guilds.
-    public static String guildsNone = StreamLine.config.getMessString("guilds.no-guilds");
-    public static String guildsMessage = StreamLine.config.getMessString("guilds.guilds");
-    public static String guildsModsNLast = StreamLine.config.getMessString("guilds.mods.not-last");
-    public static String guildsModsLast = StreamLine.config.getMessString("guilds.mods.last");
-    public static String guildsMemsNLast = StreamLine.config.getMessString("guilds.members.not-last");
-    public static String guildsMemsLast = StreamLine.config.getMessString("guilds.members.last");
-    public static String guildsTMemsNLast = StreamLine.config.getMessString("guilds.totalmembers.not-last");
-    public static String guildsTMemsLast = StreamLine.config.getMessString("guilds.totalmembers.last");
-    public static String guildsInvsNLast = StreamLine.config.getMessString("guilds.invites.not-last");
-    public static String guildsInvsLast = StreamLine.config.getMessString("guilds.invites.last");
-    public static String guildsIsPublicTrue = StreamLine.config.getMessString("guilds.ispublic.true");
-    public static String guildsIsPublicFalse = StreamLine.config.getMessString("guilds.ispublic.false");
-    public static String guildsIsMutedTrue = StreamLine.config.getMessString("guilds.ismuted.true");
-    public static String guildsIsMutedFalse = StreamLine.config.getMessString("guilds.ismuted.false");
+    public static String guildsNone() {
+        return StreamLine.config.mess.getString("guilds.no-guilds");
+    }
+
+    public static String guildsMessage() {
+        return StreamLine.config.mess.getString("guilds.guilds");
+    }
+
+    public static String guildsModsNLast() {
+        return StreamLine.config.mess.getString("guilds.mods.not-last");
+    }
+
+    public static String guildsModsLast() {
+        return StreamLine.config.mess.getString("guilds.mods.last");
+    }
+
+    public static String guildsMemsNLast() {
+        return StreamLine.config.mess.getString("guilds.members.not-last");
+    }
+
+    public static String guildsMemsLast() {
+        return StreamLine.config.mess.getString("guilds.members.last");
+    }
+
+    public static String guildsTMemsNLast() {
+        return StreamLine.config.mess.getString("guilds.totalmembers.not-last");
+    }
+
+    public static String guildsTMemsLast() {
+        return StreamLine.config.mess.getString("guilds.totalmembers.last");
+    }
+
+    public static String guildsInvsNLast() {
+        return StreamLine.config.mess.getString("guilds.invites.not-last");
+    }
+
+    public static String guildsInvsLast() {
+        return StreamLine.config.mess.getString("guilds.invites.last");
+    }
+
+    public static String guildsIsPublicTrue() {
+        return StreamLine.config.mess.getString("guilds.ispublic.true");
+    }
+
+    public static String guildsIsPublicFalse() {
+        return StreamLine.config.mess.getString("guilds.ispublic.false");
+    }
+
+    public static String guildsIsMutedTrue() {
+        return StreamLine.config.mess.getString("guilds.ismuted.true");
+    }
+
+    public static String guildsIsMutedFalse() {
+        return StreamLine.config.mess.getString("guilds.ismuted.false");
+    }
+
     // Sudo.
-    public static String sudoWorked = StreamLine.config.getMessString("sudo.worked");
-    public static String sudoNoWork = StreamLine.config.getMessString("sudo.no-work");
-    public static String sudoNoSudo = StreamLine.config.getMessString("sudo.no-sudo");
+    public static String sudoWorked() {
+        return StreamLine.config.mess.getString("sudo.worked");
+    }
+
+    public static String sudoNoWork() {
+        return StreamLine.config.mess.getString("sudo.no-work");
+    }
+
+    public static String sudoNoSudo() {
+        return StreamLine.config.mess.getString("sudo.no-sudo");
+    }
+
     // SSPY.
-    public static String sspyToggle = StreamLine.config.getMessString("sspy.message");
-    public static String sspyOn = StreamLine.config.getMessString("sspy.toggle.true");
-    public static String sspyOff = StreamLine.config.getMessString("sspy.toggle.false");
+    public static String sspyToggle() {
+        return StreamLine.config.mess.getString("sspy.message");
+    }
+
+    public static String sspyOn() {
+        return StreamLine.config.mess.getString("sspy.toggle.true");
+    }
+
+    public static String sspyOff() {
+        return StreamLine.config.mess.getString("sspy.toggle.false");
+    }
+
     // GSPY.
-    public static String gspyToggle = StreamLine.config.getMessString("gspy.message");
-    public static String gspyOn = StreamLine.config.getMessString("gspy.toggle.true");
-    public static String gspyOff = StreamLine.config.getMessString("gspy.toggle.false");
+    public static String gspyToggle() {
+        return StreamLine.config.mess.getString("gspy.message");
+    }
+
+    public static String gspyOn() {
+        return StreamLine.config.mess.getString("gspy.toggle.true");
+    }
+
+    public static String gspyOff() {
+        return StreamLine.config.mess.getString("gspy.toggle.false");
+    }
+
     // PSPY.
-    public static String pspyToggle = StreamLine.config.getMessString("pspy.message");
-    public static String pspyOn = StreamLine.config.getMessString("pspy.toggle.true");
-    public static String pspyOff = StreamLine.config.getMessString("pspy.toggle.false");
+    public static String pspyToggle() {
+        return StreamLine.config.mess.getString("pspy.message");
+    }
+
+    public static String pspyOn() {
+        return StreamLine.config.mess.getString("pspy.toggle.true");
+    }
+
+    public static String pspyOff() {
+        return StreamLine.config.mess.getString("pspy.toggle.false");
+    }
+
     // PSPY.
-    public static String scViewToggle = StreamLine.config.getMessString("sc-view.message");
-    public static String scViewOn = StreamLine.config.getMessString("sc-view.toggle.true");
-    public static String scViewOff = StreamLine.config.getMessString("sc-view.toggle.false");
+    public static String scViewToggle() {
+        return StreamLine.config.mess.getString("sc-view.message");
+    }
+
+    public static String scViewOn() {
+        return StreamLine.config.mess.getString("sc-view.toggle.true");
+    }
+
+    public static String scViewOff() {
+        return StreamLine.config.mess.getString("sc-view.toggle.false");
+    }
+
     // SSPYVS.
-    public static String sspyvsToggle = StreamLine.config.getMessString("sspyvs.message");
-    public static String sspyvsOn = StreamLine.config.getMessString("sspyvs.toggle.true");
-    public static String sspyvsOff = StreamLine.config.getMessString("sspyvs.toggle.false");
+    public static String sspyvsToggle() {
+        return StreamLine.config.mess.getString("sspyvs.message");
+    }
+
+    public static String sspyvsOn() {
+        return StreamLine.config.mess.getString("sspyvs.toggle.true");
+    }
+
+    public static String sspyvsOff() {
+        return StreamLine.config.mess.getString("sspyvs.toggle.false");
+    }
+
     // PSPYVS.
-    public static String pspyvsToggle = StreamLine.config.getMessString("pspyvs.message");
-    public static String pspyvsOn = StreamLine.config.getMessString("pspyvs.toggle.true");
-    public static String pspyvsOff = StreamLine.config.getMessString("pspyvs.toggle.false");
+    public static String pspyvsToggle() {
+        return StreamLine.config.mess.getString("pspyvs.message");
+    }
+
+    public static String pspyvsOn() {
+        return StreamLine.config.mess.getString("pspyvs.toggle.true");
+    }
+
+    public static String pspyvsOff() {
+        return StreamLine.config.mess.getString("pspyvs.toggle.false");
+    }
+
     // GSPYVS.
-    public static String gspyvsToggle = StreamLine.config.getMessString("gspyvs.message");
-    public static String gspyvsOn = StreamLine.config.getMessString("gspyvs.toggle.true");
-    public static String gspyvsOff = StreamLine.config.getMessString("gspyvs.toggle.false");
+    public static String gspyvsToggle() {
+        return StreamLine.config.mess.getString("gspyvs.message");
+    }
+
+    public static String gspyvsOn() {
+        return StreamLine.config.mess.getString("gspyvs.toggle.true");
+    }
+
+    public static String gspyvsOff() {
+        return StreamLine.config.mess.getString("gspyvs.toggle.false");
+    }
+
     // SCVS.
-    public static String scvsToggle = StreamLine.config.getMessString("scvs.message");
-    public static String scvsOn = StreamLine.config.getMessString("scvs.toggle.true");
-    public static String scvsOff = StreamLine.config.getMessString("scvs.toggle.false");
+    public static String scvsToggle() {
+        return StreamLine.config.mess.getString("scvs.message");
+    }
+
+    public static String scvsOn() {
+        return StreamLine.config.mess.getString("scvs.toggle.true");
+    }
+
+    public static String scvsOff() {
+        return StreamLine.config.mess.getString("scvs.toggle.false");
+    }
+
     // EVReload.
-    public static String evReload = StreamLine.config.getMessString("evreload.message");
+    public static String evReload() {
+        return StreamLine.config.mess.getString("evreload.message");
+    }
+
     // Points.
-    public static String pointsViewS = StreamLine.config.getMessString("points.view.self");
-    public static String pointsViewO = StreamLine.config.getMessString("points.view.other");
-    public static String pointsAddS = StreamLine.config.getMessString("points.add.self");
-    public static String pointsAddO = StreamLine.config.getMessString("points.add.other");
-    public static String pointsRemoveS = StreamLine.config.getMessString("points.remove.self");
-    public static String pointsRemoveO = StreamLine.config.getMessString("points.remove.other");
-    public static String pointsSetS = StreamLine.config.getMessString("points.set.self");
-    public static String pointsSetO = StreamLine.config.getMessString("points.set.other");
+    public static String pointsViewS() {
+        return StreamLine.config.mess.getString("points.view.self");
+    }
+
+    public static String pointsViewO() {
+        return StreamLine.config.mess.getString("points.view.other");
+    }
+
+    public static String pointsAddS() {
+        return StreamLine.config.mess.getString("points.add.self");
+    }
+
+    public static String pointsAddO() {
+        return StreamLine.config.mess.getString("points.add.other");
+    }
+
+    public static String pointsRemoveS() {
+        return StreamLine.config.mess.getString("points.remove.self");
+    }
+
+    public static String pointsRemoveO() {
+        return StreamLine.config.mess.getString("points.remove.other");
+    }
+
+    public static String pointsSetS() {
+        return StreamLine.config.mess.getString("points.set.self");
+    }
+
+    public static String pointsSetO() {
+        return StreamLine.config.mess.getString("points.set.other");
+    }
+
     // Ignore.
-    public static String ignoreAddSelf = StreamLine.config.getMessString("ignore.add.self");
-    public static String ignoreAddIgnored = StreamLine.config.getMessString("ignore.add.ignored");
-    public static String ignoreAddAlready = StreamLine.config.getMessString("ignore.add.already");
-    public static String ignoreAddNSelf = StreamLine.config.getMessString("ignore.add.not-self");
-    public static String ignoreRemSelf = StreamLine.config.getMessString("ignore.remove.self");
-    public static String ignoreRemIgnored = StreamLine.config.getMessString("ignore.remove.ignored");
-    public static String ignoreRemAlready = StreamLine.config.getMessString("ignore.remove.already");
-    public static String ignoreRemNSelf = StreamLine.config.getMessString("ignore.remove.not-self");
-    public static String ignoreListMain = StreamLine.config.getMessString("ignore.list.main");
-    public static String ignoreListNLast = StreamLine.config.getMessString("ignore.list.ignores.not-last");
-    public static String ignoreListLast = StreamLine.config.getMessString("ignore.list.ignores.last");
+    public static String ignoreAddSelf() {
+        return StreamLine.config.mess.getString("ignore.add.self");
+    }
+
+    public static String ignoreAddIgnored() {
+        return StreamLine.config.mess.getString("ignore.add.ignored");
+    }
+
+    public static String ignoreAddAlready() {
+        return StreamLine.config.mess.getString("ignore.add.already");
+    }
+
+    public static String ignoreAddNSelf() {
+        return StreamLine.config.mess.getString("ignore.add.not-self");
+    }
+
+    public static String ignoreRemSelf() {
+        return StreamLine.config.mess.getString("ignore.remove.self");
+    }
+
+    public static String ignoreRemIgnored() {
+        return StreamLine.config.mess.getString("ignore.remove.ignored");
+    }
+
+    public static String ignoreRemAlready() {
+        return StreamLine.config.mess.getString("ignore.remove.already");
+    }
+
+    public static String ignoreRemNSelf() {
+        return StreamLine.config.mess.getString("ignore.remove.not-self");
+    }
+
+    public static String ignoreListMain() {
+        return StreamLine.config.mess.getString("ignore.list.main");
+    }
+
+    public static String ignoreListNLast() {
+        return StreamLine.config.mess.getString("ignore.list.ignores.not-last");
+    }
+
+    public static String ignoreListLast() {
+        return StreamLine.config.mess.getString("ignore.list.ignores.last");
+    }
+
     // Message.
-    public static String messageSender = StreamLine.config.getMessString("message.sender");
-    public static String messageTo = StreamLine.config.getMessString("message.to");
-    public static String messageIgnored = StreamLine.config.getMessString("message.ignored");
-    public static String messageSSPY = StreamLine.config.getMessString("message.sspy");
+    public static String messageSender() {
+        return StreamLine.config.mess.getString("message.sender");
+    }
+
+    public static String messageTo() {
+        return StreamLine.config.mess.getString("message.to");
+    }
+
+    public static String messageIgnored() {
+        return StreamLine.config.mess.getString("message.ignored");
+    }
+
+    public static String messageSSPY() {
+        return StreamLine.config.mess.getString("message.sspy");
+    }
+
     // Reply.
-    public static String replySender = StreamLine.config.getMessString("message.sender");
-    public static String replyTo = StreamLine.config.getMessString("message.to");
-    public static String replyIgnored = StreamLine.config.getMessString("message.ignored");
-    public static String replySSPY = StreamLine.config.getMessString("message.sspy");
+    public static String replySender() {
+        return StreamLine.config.mess.getString("message.sender");
+    }
+
+    public static String replyTo() {
+        return StreamLine.config.mess.getString("message.to");
+    }
+
+    public static String replyIgnored() {
+        return StreamLine.config.mess.getString("message.ignored");
+    }
+
+    public static String replySSPY() {
+        return StreamLine.config.mess.getString("message.sspy");
+    }
+
     // Mute.
-    public static String muteEmbed = StreamLine.config.getMessString("mute.discord-embed-title");
-    public static String muteCannot = StreamLine.config.getMessString("mute.cannot");
-    public static String muteMTempSender = StreamLine.config.getMessString("mute.mute.temp.sender");
-    public static String muteMTempMuted = StreamLine.config.getMessString("mute.mute.temp.muted");
-    public static String muteMTempAlready = StreamLine.config.getMessString("mute.mute.temp.already");
-    public static String muteMTempStaff = StreamLine.config.getMessString("mute.mute.temp.staff");
-    public static String muteMTempDiscord = StreamLine.config.getMessString("mute.mute.temp.discord");
-    public static String muteMPermSender = StreamLine.config.getMessString("mute.mute.perm.sender");
-    public static String muteMPermMuted = StreamLine.config.getMessString("mute.mute.perm.muted");
-    public static String muteMPermAlready = StreamLine.config.getMessString("mute.mute.perm.already");
-    public static String muteMPermStaff = StreamLine.config.getMessString("mute.mute.perm.staff");
-    public static String muteMPermDiscord = StreamLine.config.getMessString("mute.mute.perm.discord");
-    public static String muteUnSender = StreamLine.config.getMessString("mute.unmute.sender");
-    public static String muteUnMuted = StreamLine.config.getMessString("mute.unmute.muted");
-    public static String muteUnAlready = StreamLine.config.getMessString("mute.unmute.already");
-    public static String muteUnStaff = StreamLine.config.getMessString("mute.unmute.staff");
-    public static String muteUnDiscord = StreamLine.config.getMessString("mute.unmute.discord");
-    public static String muteCheckMain = StreamLine.config.getMessString("mute.check.main");
-    public static String muteCheckMuted = StreamLine.config.getMessString("mute.check.muted");
-    public static String muteCheckUnMuted = StreamLine.config.getMessString("mute.check.unmuted");
-    public static String muteCheckNoDate = StreamLine.config.getMessString("mute.check.no-date");
+    public static String muteEmbed() {
+        return StreamLine.config.mess.getString("mute.discord-embed-title");
+    }
+
+    public static String muteCannot() {
+        return StreamLine.config.mess.getString("mute.cannot");
+    }
+
+    public static String muteMTempSender() {
+        return StreamLine.config.mess.getString("mute.mute.temp.sender");
+    }
+
+    public static String muteMTempMuted() {
+        return StreamLine.config.mess.getString("mute.mute.temp.muted");
+    }
+
+    public static String muteMTempAlready() {
+        return StreamLine.config.mess.getString("mute.mute.temp.already");
+    }
+
+    public static String muteMTempStaff() {
+        return StreamLine.config.mess.getString("mute.mute.temp.staff");
+    }
+
+    public static String muteMTempDiscord() {
+        return StreamLine.config.mess.getString("mute.mute.temp.discord");
+    }
+
+    public static String muteMPermSender() {
+        return StreamLine.config.mess.getString("mute.mute.perm.sender");
+    }
+
+    public static String muteMPermMuted() {
+        return StreamLine.config.mess.getString("mute.mute.perm.muted");
+    }
+
+    public static String muteMPermAlready() {
+        return StreamLine.config.mess.getString("mute.mute.perm.already");
+    }
+
+    public static String muteMPermStaff() {
+        return StreamLine.config.mess.getString("mute.mute.perm.staff");
+    }
+
+    public static String muteMPermDiscord() {
+        return StreamLine.config.mess.getString("mute.mute.perm.discord");
+    }
+
+    public static String muteUnSender() {
+        return StreamLine.config.mess.getString("mute.unmute.sender");
+    }
+
+    public static String muteUnMuted() {
+        return StreamLine.config.mess.getString("mute.unmute.muted");
+    }
+
+    public static String muteUnAlready() {
+        return StreamLine.config.mess.getString("mute.unmute.already");
+    }
+
+    public static String muteUnStaff() {
+        return StreamLine.config.mess.getString("mute.unmute.staff");
+    }
+
+    public static String muteUnDiscord() {
+        return StreamLine.config.mess.getString("mute.unmute.discord");
+    }
+
+    public static String muteCheckMain() {
+        return StreamLine.config.mess.getString("mute.check.main");
+    }
+
+    public static String muteCheckMuted() {
+        return StreamLine.config.mess.getString("mute.check.muted");
+    }
+
+    public static String muteCheckUnMuted() {
+        return StreamLine.config.mess.getString("mute.check.unmuted");
+    }
+
+    public static String muteCheckNoDate() {
+        return StreamLine.config.mess.getString("mute.check.no-date");
+    }
+
     // Kick.
-    public static String kickEmbed = StreamLine.config.getMessString("kick.discord-embed-title");
-    public static String kickCannot = StreamLine.config.getMessString("kick.cannot");
-    public static String kickSender = StreamLine.config.getMessString("kick.sender");
-    public static String kickKicked = StreamLine.config.getMessString("kick.kicked");
-    public static String kickStaff = StreamLine.config.getMessString("kick.staff");
-    public static String kickDiscord = StreamLine.config.getMessString("kick.discord");
+    public static String kickEmbed() {
+        return StreamLine.config.mess.getString("kick.discord-embed-title");
+    }
+
+    public static String kickCannot() {
+        return StreamLine.config.mess.getString("kick.cannot");
+    }
+
+    public static String kickSender() {
+        return StreamLine.config.mess.getString("kick.sender");
+    }
+
+    public static String kickKicked() {
+        return StreamLine.config.mess.getString("kick.kicked");
+    }
+
+    public static String kickStaff() {
+        return StreamLine.config.mess.getString("kick.staff");
+    }
+
+    public static String kickDiscord() {
+        return StreamLine.config.mess.getString("kick.discord");
+    }
+
     // Ban.
-    public static String banEmbed = StreamLine.config.getMessString("ban.discord-embed-title");
-    public static String banCannot = StreamLine.config.getMessString("ban.cannot");
-    public static String banBTempSender = StreamLine.config.getMessString("ban.ban.temp.sender");
-    public static String banBTempAlready = StreamLine.config.getMessString("ban.ban.temp.already");
-    public static String banBTempStaff = StreamLine.config.getMessString("ban.ban.temp.staff");
-    public static String banBTempDiscord = StreamLine.config.getMessString("ban.ban.temp.discord");
-    public static String banBPermSender = StreamLine.config.getMessString("ban.ban.perm.sender");
-    public static String banBPermAlready = StreamLine.config.getMessString("ban.ban.perm.already");
-    public static String banBPermStaff = StreamLine.config.getMessString("ban.ban.perm.staff");
-    public static String banBPermDiscord = StreamLine.config.getMessString("ban.ban.perm.discord");
-    public static String banUnSender = StreamLine.config.getMessString("ban.unban.sender");
-    public static String banUnAlready = StreamLine.config.getMessString("ban.unban.already");
-    public static String banUnStaff = StreamLine.config.getMessString("ban.unban.staff");
-    public static String banUnDiscord = StreamLine.config.getMessString("ban.unban.discord");
-    public static String banCheckMain = StreamLine.config.getMessString("ban.check.main");
-    public static String banCheckBanned = StreamLine.config.getMessString("ban.check.banned");
-    public static String banCheckUnBanned = StreamLine.config.getMessString("ban.check.unbanned");
-    public static String banCheckNoDate = StreamLine.config.getMessString("ban.check.no-date");
+    public static String banEmbed() {
+        return StreamLine.config.mess.getString("ban.discord-embed-title");
+    }
+
+    public static String banCannot() {
+        return StreamLine.config.mess.getString("ban.cannot");
+    }
+
+    public static String banBTempSender() {
+        return StreamLine.config.mess.getString("ban.ban.temp.sender");
+    }
+
+    public static String banBTempAlready() {
+        return StreamLine.config.mess.getString("ban.ban.temp.already");
+    }
+
+    public static String banBTempStaff() {
+        return StreamLine.config.mess.getString("ban.ban.temp.staff");
+    }
+
+    public static String banBTempDiscord() {
+        return StreamLine.config.mess.getString("ban.ban.temp.discord");
+    }
+
+    public static String banBPermSender() {
+        return StreamLine.config.mess.getString("ban.ban.perm.sender");
+    }
+
+    public static String banBPermAlready() {
+        return StreamLine.config.mess.getString("ban.ban.perm.already");
+    }
+
+    public static String banBPermStaff() {
+        return StreamLine.config.mess.getString("ban.ban.perm.staff");
+    }
+
+    public static String banBPermDiscord() {
+        return StreamLine.config.mess.getString("ban.ban.perm.discord");
+    }
+
+    public static String banUnSender() {
+        return StreamLine.config.mess.getString("ban.unban.sender");
+    }
+
+    public static String banUnAlready() {
+        return StreamLine.config.mess.getString("ban.unban.already");
+    }
+
+    public static String banUnStaff() {
+        return StreamLine.config.mess.getString("ban.unban.staff");
+    }
+
+    public static String banUnDiscord() {
+        return StreamLine.config.mess.getString("ban.unban.discord");
+    }
+
+    public static String banCheckMain() {
+        return StreamLine.config.mess.getString("ban.check.main");
+    }
+
+    public static String banCheckBanned() {
+        return StreamLine.config.mess.getString("ban.check.banned");
+    }
+
+    public static String banCheckUnBanned() {
+        return StreamLine.config.mess.getString("ban.check.unbanned");
+    }
+
+    public static String banCheckNoDate() {
+        return StreamLine.config.mess.getString("ban.check.no-date");
+    }
+
     // IPBan.
-    public static String ipBanEmbed = StreamLine.config.getMessString("ipban.discord-embed-title");
-    public static String ipBanCannot = StreamLine.config.getMessString("ipban.cannot");
-    public static String ipBanBTempSender = StreamLine.config.getMessString("ipban.ban.temp.sender");
-    public static String ipBanBTempAlready = StreamLine.config.getMessString("ipban.ban.temp.already");
-    public static String ipBanBTempStaff = StreamLine.config.getMessString("ipban.ban.temp.staff");
-    public static String ipBanBTempDiscord = StreamLine.config.getMessString("ipban.ban.temp.discord");
-    public static String ipBanBPermSender = StreamLine.config.getMessString("ipban.ban.perm.sender");
-    public static String ipBanBPermAlready = StreamLine.config.getMessString("ipban.ban.perm.already");
-    public static String ipBanBPermStaff = StreamLine.config.getMessString("ipban.ban.perm.staff");
-    public static String ipBanBPermDiscord = StreamLine.config.getMessString("ipban.ban.perm.discord");
-    public static String ipBanUnSender = StreamLine.config.getMessString("ipban.unban.sender");
-    public static String ipBanUnAlready = StreamLine.config.getMessString("ipban.unban.already");
-    public static String ipBanUnStaff = StreamLine.config.getMessString("ipban.unban.staff");
-    public static String ipBanUnDiscord = StreamLine.config.getMessString("ipban.unban.discord");
-    public static String ipBanCheckMain = StreamLine.config.getMessString("ipban.check.main");
-    public static String ipBanCheckBanned = StreamLine.config.getMessString("ipban.check.banned");
-    public static String ipBanCheckUnBanned = StreamLine.config.getMessString("ipban.check.unbanned");
-    public static String ipBanCheckNoDate = StreamLine.config.getMessString("ipban.check.no-date");
+    public static String ipBanEmbed() {
+        return StreamLine.config.mess.getString("ipban.discord-embed-title");
+    }
+
+    public static String ipBanCannot() {
+        return StreamLine.config.mess.getString("ipban.cannot");
+    }
+
+    public static String ipBanBTempSender() {
+        return StreamLine.config.mess.getString("ipban.ban.temp.sender");
+    }
+
+    public static String ipBanBTempAlready() {
+        return StreamLine.config.mess.getString("ipban.ban.temp.already");
+    }
+
+    public static String ipBanBTempStaff() {
+        return StreamLine.config.mess.getString("ipban.ban.temp.staff");
+    }
+
+    public static String ipBanBTempDiscord() {
+        return StreamLine.config.mess.getString("ipban.ban.temp.discord");
+    }
+
+    public static String ipBanBPermSender() {
+        return StreamLine.config.mess.getString("ipban.ban.perm.sender");
+    }
+
+    public static String ipBanBPermAlready() {
+        return StreamLine.config.mess.getString("ipban.ban.perm.already");
+    }
+
+    public static String ipBanBPermStaff() {
+        return StreamLine.config.mess.getString("ipban.ban.perm.staff");
+    }
+
+    public static String ipBanBPermDiscord() {
+        return StreamLine.config.mess.getString("ipban.ban.perm.discord");
+    }
+
+    public static String ipBanUnSender() {
+        return StreamLine.config.mess.getString("ipban.unban.sender");
+    }
+
+    public static String ipBanUnAlready() {
+        return StreamLine.config.mess.getString("ipban.unban.already");
+    }
+
+    public static String ipBanUnStaff() {
+        return StreamLine.config.mess.getString("ipban.unban.staff");
+    }
+
+    public static String ipBanUnDiscord() {
+        return StreamLine.config.mess.getString("ipban.unban.discord");
+    }
+
+    public static String ipBanCheckMain() {
+        return StreamLine.config.mess.getString("ipban.check.main");
+    }
+
+    public static String ipBanCheckBanned() {
+        return StreamLine.config.mess.getString("ipban.check.banned");
+    }
+
+    public static String ipBanCheckUnBanned() {
+        return StreamLine.config.mess.getString("ipban.check.unbanned");
+    }
+
+    public static String ipBanCheckNoDate() {
+        return StreamLine.config.mess.getString("ipban.check.no-date");
+    }
+
     // Ignore.
-    public static String friendReqSelf = StreamLine.config.getMessString("friend.request.self");
-    public static String friendReqOther = StreamLine.config.getMessString("friend.request.other");
-    public static String friendReqAlready = StreamLine.config.getMessString("friend.request.already");
-    public static String friendReqNSelf = StreamLine.config.getMessString("friend.request.not-self");
-    public static String friendReqIgnored = StreamLine.config.getMessString("friend.request.ignored");
-    public static String friendAcceptSelf = StreamLine.config.getMessString("friend.accept.self");
-    public static String friendAcceptOther = StreamLine.config.getMessString("friend.accept.other");
-    public static String friendAcceptNone = StreamLine.config.getMessString("friend.accept.none");
-    public static String friendDenySelf = StreamLine.config.getMessString("friend.deny.self");
-    public static String friendDenyOther = StreamLine.config.getMessString("friend.deny.other");
-    public static String friendDenyNone = StreamLine.config.getMessString("friend.deny.none");
-    public static String friendRemSelf = StreamLine.config.getMessString("friend.remove.self");
-    public static String friendRemOther = StreamLine.config.getMessString("friend.remove.other");
-    public static String friendRemAlready = StreamLine.config.getMessString("friend.remove.already");
-    public static String friendRemNSelf = StreamLine.config.getMessString("friend.remove.not-self");
-    public static String friendListMain = StreamLine.config.getMessString("friend.list.main");
-    public static String friendListFNLast = StreamLine.config.getMessString("friend.list.friends.not-last");
-    public static String friendListFLast = StreamLine.config.getMessString("friend.list.friends.last");
-    public static String friendListPTNLast = StreamLine.config.getMessString("friend.list.pending-to.not-last");
-    public static String friendListPTLast = StreamLine.config.getMessString("friend.list.pending-to.last");
-    public static String friendListPFNLast = StreamLine.config.getMessString("friend.list.pending-from.not-last");
-    public static String friendListPFLast = StreamLine.config.getMessString("friend.list.pending-from.last");
-    public static String friendConnect = StreamLine.config.getMessString("friend.connect");
-    public static String friendDisconnect = StreamLine.config.getMessString("friend.disconnect");
+    public static String friendReqSelf() {
+        return StreamLine.config.mess.getString("friend.request.self");
+    }
+
+    public static String friendReqOther() {
+        return StreamLine.config.mess.getString("friend.request.other");
+    }
+
+    public static String friendReqAlready() {
+        return StreamLine.config.mess.getString("friend.request.already");
+    }
+
+    public static String friendReqNSelf() {
+        return StreamLine.config.mess.getString("friend.request.not-self");
+    }
+
+    public static String friendReqIgnored() {
+        return StreamLine.config.mess.getString("friend.request.ignored");
+    }
+
+    public static String friendAcceptSelf() {
+        return StreamLine.config.mess.getString("friend.accept.self");
+    }
+
+    public static String friendAcceptOther() {
+        return StreamLine.config.mess.getString("friend.accept.other");
+    }
+
+    public static String friendAcceptNone() {
+        return StreamLine.config.mess.getString("friend.accept.none");
+    }
+
+    public static String friendDenySelf() {
+        return StreamLine.config.mess.getString("friend.deny.self");
+    }
+
+    public static String friendDenyOther() {
+        return StreamLine.config.mess.getString("friend.deny.other");
+    }
+
+    public static String friendDenyNone() {
+        return StreamLine.config.mess.getString("friend.deny.none");
+    }
+
+    public static String friendRemSelf() {
+        return StreamLine.config.mess.getString("friend.remove.self");
+    }
+
+    public static String friendRemOther() {
+        return StreamLine.config.mess.getString("friend.remove.other");
+    }
+
+    public static String friendRemAlready() {
+        return StreamLine.config.mess.getString("friend.remove.already");
+    }
+
+    public static String friendRemNSelf() {
+        return StreamLine.config.mess.getString("friend.remove.not-self");
+    }
+
+    public static String friendListMain() {
+        return StreamLine.config.mess.getString("friend.list.main");
+    }
+
+    public static String friendListFNLast() {
+        return StreamLine.config.mess.getString("friend.list.friends.not-last");
+    }
+
+    public static String friendListFLast() {
+        return StreamLine.config.mess.getString("friend.list.friends.last");
+    }
+
+    public static String friendListPTNLast() {
+        return StreamLine.config.mess.getString("friend.list.pending-to.not-last");
+    }
+
+    public static String friendListPTLast() {
+        return StreamLine.config.mess.getString("friend.list.pending-to.last");
+    }
+
+    public static String friendListPFNLast() {
+        return StreamLine.config.mess.getString("friend.list.pending-from.not-last");
+    }
+
+    public static String friendListPFLast() {
+        return StreamLine.config.mess.getString("friend.list.pending-from.last");
+    }
+
+    public static String friendConnect() {
+        return StreamLine.config.mess.getString("friend.connect");
+    }
+
+    public static String friendDisconnect() {
+        return StreamLine.config.mess.getString("friend.disconnect");
+    }
+
     // GetStats.
-    public static String getStatsNone = StreamLine.config.getMessString("getstats.no-stats");
-    public static String getStatsMessage = StreamLine.config.getMessString("getstats.message.main");
-    public static String getStatsNLast = StreamLine.config.getMessString("getstats.message.not-last");
-    public static String getStatsLast = StreamLine.config.getMessString("getstats.message.last");
+    public static String getStatsNone() {
+        return StreamLine.config.mess.getString("getstats.no-stats");
+    }
+
+    public static String getStatsMessage() {
+        return StreamLine.config.mess.getString("getstats.message.main");
+    }
+
+    public static String getStatsNLast() {
+        return StreamLine.config.mess.getString("getstats.message.not-last");
+    }
+
+    public static String getStatsLast() {
+        return StreamLine.config.mess.getString("getstats.message.last");
+    }
+
     // // Settings.
     // Set.
-    public static String settingsSetMOTD = StreamLine.config.getMessString("settings.set.motd");
-    public static String settingsSetMOTDTime = StreamLine.config.getMessString("settings.set.motd-time");
-    public static String settingsSetVersion = StreamLine.config.getMessString("settings.set.version");
-    public static String settingsSetSample = StreamLine.config.getMessString("settings.set.sample");
-    public static String settingsSetMaxP = StreamLine.config.getMessString("settings.set.max-players");
-    public static String settingsSetOnlineP = StreamLine.config.getMessString("settings.set.online-players");
-    public static String settingsSetPCEnabled = StreamLine.config.getMessString("settings.set.proxy-chat-enabled");
-    public static String settingsSetChatToConsole = StreamLine.config.getMessString("settings.set.proxy-chat-to-console");
-    public static String settingsSetPCChats = StreamLine.config.getMessString("settings.set.proxy-chat-chats");
-    public static String settingsSetPCBPerm = StreamLine.config.getMessString("settings.set.proxy-chat-base-perm");
-    public static String settingsSetTagsEnablePing = StreamLine.config.getMessString("settings.set.tags-enable-ping");
-    public static String settingsSetTagsTagPrefix = StreamLine.config.getMessString("settings.set.tags-tag-prefix");
-    public static String settingsSetEmotes = StreamLine.config.getMessString("settings.set.emotes");
-    public static String settingsSetEmotePermissions = StreamLine.config.getMessString("settings.set.emote-permissions");
+    public static String settingsSetMOTD() {
+        return StreamLine.config.mess.getString("settings.set.motd");
+    }
+
+    public static String settingsSetMOTDTime() {
+        return StreamLine.config.mess.getString("settings.set.motd-time");
+    }
+
+    public static String settingsSetVersion() {
+        return StreamLine.config.mess.getString("settings.set.version");
+    }
+
+    public static String settingsSetSample() {
+        return StreamLine.config.mess.getString("settings.set.sample");
+    }
+
+    public static String settingsSetMaxP() {
+        return StreamLine.config.mess.getString("settings.set.max-players");
+    }
+
+    public static String settingsSetOnlineP() {
+        return StreamLine.config.mess.getString("settings.set.online-players");
+    }
+
+    public static String settingsSetPCEnabled() {
+        return StreamLine.config.mess.getString("settings.set.proxy-chat-enabled");
+    }
+
+    public static String settingsSetChatToConsole() {
+        return StreamLine.config.mess.getString("settings.set.proxy-chat-to-console");
+    }
+
+    public static String settingsSetPCChats() {
+        return StreamLine.config.mess.getString("settings.set.proxy-chat-chats");
+    }
+
+    public static String settingsSetPCBPerm() {
+        return StreamLine.config.mess.getString("settings.set.proxy-chat-base-perm");
+    }
+
+    public static String settingsSetTagsEnablePing() {
+        return StreamLine.config.mess.getString("settings.set.tags-enable-ping");
+    }
+
+    public static String settingsSetTagsTagPrefix() {
+        return StreamLine.config.mess.getString("settings.set.tags-tag-prefix");
+    }
+
+    public static String settingsSetEmotes() {
+        return StreamLine.config.mess.getString("settings.set.emotes");
+    }
+
+    public static String settingsSetEmotePermissions() {
+        return StreamLine.config.mess.getString("settings.set.emote-permissions");
+    }
+
     // Get.
-    public static String settingsGetMOTD = StreamLine.config.getMessString("settings.get.motd");
-    public static String settingsGetMOTDTime = StreamLine.config.getMessString("settings.get.motd-time");
-    public static String settingsGetVersion = StreamLine.config.getMessString("settings.get.version");
-    public static String settingsGetSample = StreamLine.config.getMessString("settings.get.sample");
-    public static String settingsGetMaxP = StreamLine.config.getMessString("settings.get.max-players");
-    public static String settingsGetOnlineP = StreamLine.config.getMessString("settings.get.online-players");
-    public static String settingsGetPCEnabled = StreamLine.config.getMessString("settings.get.proxy-chat-enabled");
-    public static String settingsGetChatToConsole = StreamLine.config.getMessString("settings.get.proxy-chat-to-console");
-    public static String settingsGetPCChats = StreamLine.config.getMessString("settings.get.proxy-chat-chats");
-    public static String settingsGetPCBPerm = StreamLine.config.getMessString("settings.get.proxy-chat-base-perm");
-    public static String settingsGetTagsEnablePing = StreamLine.config.getMessString("settings.get.tags-enable-ping");
-    public static String settingsGetTagsTagPrefix = StreamLine.config.getMessString("settings.get.tags-tag-prefix");
-    public static String settingsGetEmotes = StreamLine.config.getMessString("settings.get.emotes");
-    public static String settingsGetEmotePermissions = StreamLine.config.getMessString("settings.get.emote-permissions");
+    public static String settingsGetMOTD() {
+        return StreamLine.config.mess.getString("settings.get.motd");
+    }
+
+    public static String settingsGetMOTDTime() {
+        return StreamLine.config.mess.getString("settings.get.motd-time");
+    }
+
+    public static String settingsGetVersion() {
+        return StreamLine.config.mess.getString("settings.get.version");
+    }
+
+    public static String settingsGetSample() {
+        return StreamLine.config.mess.getString("settings.get.sample");
+    }
+
+    public static String settingsGetMaxP() {
+        return StreamLine.config.mess.getString("settings.get.max-players");
+    }
+
+    public static String settingsGetOnlineP() {
+        return StreamLine.config.mess.getString("settings.get.online-players");
+    }
+
+    public static String settingsGetPCEnabled() {
+        return StreamLine.config.mess.getString("settings.get.proxy-chat-enabled");
+    }
+
+    public static String settingsGetChatToConsole() {
+        return StreamLine.config.mess.getString("settings.get.proxy-chat-to-console");
+    }
+
+    public static String settingsGetPCChats() {
+        return StreamLine.config.mess.getString("settings.get.proxy-chat-chats");
+    }
+
+    public static String settingsGetPCBPerm() {
+        return StreamLine.config.mess.getString("settings.get.proxy-chat-base-perm");
+    }
+
+    public static String settingsGetTagsEnablePing() {
+        return StreamLine.config.mess.getString("settings.get.tags-enable-ping");
+    }
+
+    public static String settingsGetTagsTagPrefix() {
+        return StreamLine.config.mess.getString("settings.get.tags-tag-prefix");
+    }
+
+    public static String settingsGetEmotes() {
+        return StreamLine.config.mess.getString("settings.get.emotes");
+    }
+
+    public static String settingsGetEmotePermissions() {
+        return StreamLine.config.mess.getString("settings.get.emote-permissions");
+    }
+
     // // Info.
-    public static String info = StreamLine.config.getMessString("info");
+    public static String info() {
+        return StreamLine.config.mess.getString("info");
+    }
+
     // // Graceful End.
-    public static String gracefulEndSender = StreamLine.config.getMessString("graceful-end.sender");
-    public static String gracefulEndKickMessage = StreamLine.config.getMessString("graceful-end.kick-message");
+    public static String gracefulEndSender() {
+        return StreamLine.config.mess.getString("graceful-end.sender");
+    }
+
+    public static String gracefulEndKickMessage() {
+        return StreamLine.config.mess.getString("graceful-end.kick-message");
+    }
+
     // Delete Stat.
-    public static String deleteStatMessage = StreamLine.config.getMessString("delete-stat.message");
+    public static String deleteStatMessage() {
+        return StreamLine.config.mess.getString("delete-stat.message");
+    }
+
     // B-Teleport.
-    public static String bteleport = StreamLine.config.getMessString("bteleport");
+    public static String bteleport() {
+        return StreamLine.config.mess.getString("bteleport()");
+    }
+
     // Language
-    public static String languageMessage = StreamLine.config.getMessString("language.message");
-    public static String languageInvalidLocale = StreamLine.config.getMessString("language.invalid-locale");
+    public static String languageMessage() {
+        return StreamLine.config.mess.getString("language.message");
+    }
+
+    public static String languageInvalidLocale() {
+        return StreamLine.config.mess.getString("language.invalid-locale");
+    }
 }

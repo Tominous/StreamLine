@@ -24,24 +24,24 @@ public class PartyCommand extends Command implements TabExecutor {
             // Usage: /party <join !|leave |create !|promote !|demote !|chat !|list !|open !|close !|disband |accept !|deny !|invite !|kick !|mute !|warp !>
             if (args.length <= 0 || args[0].length() <= 0) {
                 try {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBParJoinAliases)) {
                 if (args.length <= 1) {
                     try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 } else {
                     try {
                         PartyUtils.joinParty(PlayerUtils.getOrCreatePlayerStat(sender), PlayerUtils.getOrCreatePlayerStat(args[1]));
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 }
@@ -49,56 +49,56 @@ public class PartyCommand extends Command implements TabExecutor {
                 try {
                     PartyUtils.leaveParty(PlayerUtils.getOrCreatePlayerStat(sender));
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBParCreateAliases)) {
                 try {
                     PartyUtils.createParty(PlayerUtils.getOrCreatePlayerStat(sender));
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBParPromoteAliases)) {
                 if (args.length <= 1) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                 } else {
                     try {
                         PartyUtils.promotePlayer(PlayerUtils.getOrCreatePlayerStat(sender), PlayerUtils.getOrCreatePlayerStat(args[1]));
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 }
             } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBParDemoteAliases)) {
                 if (args.length <= 1) {
                     try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 } else {
                     try {
                         PartyUtils.demotePlayer(PlayerUtils.getOrCreatePlayerStat(sender), PlayerUtils.getOrCreatePlayerStat(args[1]));
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 }
             } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBParChatAliases)) {
                 if (args.length <= 1) {
                     try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 } else {
                     try {
                         PartyUtils.sendChat(PlayerUtils.getOrCreatePlayerStat(sender), TextUtils.argsToStringMinus(args, 0));
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 }
@@ -106,7 +106,7 @@ public class PartyCommand extends Command implements TabExecutor {
                 try {
                     PartyUtils.listParty(PlayerUtils.getOrCreatePlayerStat(sender));
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBParOpenAliases)) {
@@ -114,7 +114,7 @@ public class PartyCommand extends Command implements TabExecutor {
                     try {
                         PartyUtils.openParty(PlayerUtils.getOrCreatePlayerStat(sender));
                     }  catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 } else {
@@ -125,7 +125,7 @@ public class PartyCommand extends Command implements TabExecutor {
                             PartyUtils.createPartySized(PlayerUtils.getOrCreatePlayerStat(sender), Integer.parseInt(args[1]));
                         }
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 }
@@ -133,77 +133,77 @@ public class PartyCommand extends Command implements TabExecutor {
                 try {
                     PartyUtils.closeParty(PlayerUtils.getOrCreatePlayerStat(sender));
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBParDisbandAliases)) {
                 try {
                     PartyUtils.disband(PlayerUtils.getOrCreatePlayerStat(sender));
                 } catch (Throwable e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBParAcceptAliases)) {
                 if (args.length <= 1) {
                     try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 } else {
                     try {
                         PartyUtils.acceptInvite(PlayerUtils.getOrCreatePlayerStat(sender), PlayerUtils.getOrCreatePlayerStat(args[1]));
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 }
             } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBParDenyAliases)) {
                 if (args.length <= 1) {
                     try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 } else {
                     try {
                         PartyUtils.denyInvite(PlayerUtils.getOrCreatePlayerStat(sender), PlayerUtils.getOrCreatePlayerStat(args[1]));
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 }
             } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBParInvAliases)) {
                 if (args.length <= 1) {
                     try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 } else {
                     try {
                         PartyUtils.sendInvite(PlayerUtils.getOrCreatePlayerStat(args[1]), PlayerUtils.getOrCreatePlayerStat(sender));
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 }
             } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBParKickAliases)) {
                 if (args.length <= 1) {
                     try {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 } else {
                     try {
                         PartyUtils.kickMember(PlayerUtils.getOrCreatePlayerStat(sender), PlayerUtils.getOrCreatePlayerStat(args[1]));
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         e.printStackTrace();
                     }
                 }
@@ -211,14 +211,14 @@ public class PartyCommand extends Command implements TabExecutor {
                 try {
                     PartyUtils.muteParty(PlayerUtils.getOrCreatePlayerStat(sender));
                 } catch (Throwable e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBParWarpAliases)) {
                 try {
                     PartyUtils.warpParty(PlayerUtils.getOrCreatePlayerStat(sender));
                 } catch (Throwable e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else {
@@ -226,18 +226,18 @@ public class PartyCommand extends Command implements TabExecutor {
                     Player p = PlayerUtils.getOrCreatePlayerStat(args[0]);
 
                     if (p == null) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         return;
                     }
 
                     PartyUtils.sendInvite(p, PlayerUtils.getOrCreatePlayerStat(sender));
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             }
         } else {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers());
         }
     }
 

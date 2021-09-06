@@ -47,7 +47,7 @@ public class GoToServerLobbyCommand extends Command implements TabExecutor {
                         player.connect(vanServer, ServerConnectEvent.Reason.COMMAND);
                     }
                 } else {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm());
                 }
             } else {
                 sender.sendMessage(new TextComponent(ChatColor.RED + "Sorry, but only a player can do this..."));

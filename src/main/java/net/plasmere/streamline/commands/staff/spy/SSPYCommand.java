@@ -28,8 +28,8 @@ public class SSPYCommand extends Command implements TabExecutor {
             if (args.length > 0) {
                 if (PluginUtils.checkEqualsStrings(args[0], PluginUtils.stringListToArray(ConfigUtils.viewSelfAliases))) {
                     player.toggleSSPYVS();
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sspyvsToggle
-                            .replace("%toggle%", (player.sspyvs ? MessageConfUtils.sspyvsOn : MessageConfUtils.sspyvsOff))
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sspyvsToggle()
+                            .replace("%toggle%", (player.sspyvs ? MessageConfUtils.sspyvsOn() : MessageConfUtils.sspyvsOff()))
                     );
                     return;
                 }
@@ -37,11 +37,11 @@ public class SSPYCommand extends Command implements TabExecutor {
 
             player.toggleSSPY();
 
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sspyToggle
-                            .replace("%toggle%", (player.sspy ? MessageConfUtils.sspyOn : MessageConfUtils.sspyOff))
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sspyToggle()
+                            .replace("%toggle%", (player.sspy ? MessageConfUtils.sspyOn() : MessageConfUtils.sspyOff()))
             );
         } else {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers());
         }
     }
 

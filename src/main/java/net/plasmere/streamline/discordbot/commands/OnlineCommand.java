@@ -13,8 +13,8 @@ import net.plasmere.streamline.utils.PlayerUtils;
 public class OnlineCommand {
     public static void sendMessage(String command, MessageReceivedEvent event){
         MessagingUtils.sendDSelfMessage(event,
-                MessageConfUtils.onlineMessageEmbedTitle,
-                MessageConfUtils.onlineMessageDiscord
+                MessageConfUtils.onlineMessageEmbedTitle(),
+                MessageConfUtils.onlineMessageDiscord()
                         .replace("%amount%", Integer.toString(StreamLine.getInstance().getProxy().getOnlineCount()))
                         .replace("%servers%", compileServers())
                         .replace("%online%", getOnline())

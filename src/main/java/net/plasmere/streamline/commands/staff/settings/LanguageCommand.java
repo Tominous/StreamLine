@@ -21,19 +21,19 @@ public class LanguageCommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length < 1) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
         } else if (args.length > 1){
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess());
         } else {
             if (! TextUtils.equalsAny(args[0], ConfigHandler.acceptableTranslations())) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.languageInvalidLocale.replace("%locale%", args[0]));
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.languageInvalidLocale().replace("%locale%", args[0]));
             } else {
                 try {
                     StreamLine.config.setLanguage(args[0]);
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.languageMessage.replace("%locale%", args[0]));
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.languageMessage().replace("%locale%", args[0]));
                 } catch (Exception e) {
                     e.printStackTrace();
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.languageInvalidLocale.replace("%locale%", args[0]));
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.languageInvalidLocale().replace("%locale%", args[0]));
                 }
             }
         }

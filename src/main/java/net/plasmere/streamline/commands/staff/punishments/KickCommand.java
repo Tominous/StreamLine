@@ -25,32 +25,32 @@ public class KickCommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length <= 0) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
         } else {
             Player other = PlayerUtils.getOrGetPlayerStat(args[0]);
 
             if (other == null) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                 return;
             }
 
             if (! other.online) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                 return;
             }
 
             if (PlayerUtils.hasOfflinePermission(ConfigUtils.punKicksBypass, other.uuid)) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.kickCannot);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.kickCannot());
                 return;
             }
 
             String reason = TextUtils.argsToStringMinus(args, 0);
 
-            PlayerUtils.kick(other, MessageConfUtils.kickKicked
+            PlayerUtils.kick(other, MessageConfUtils.kickKicked()
                     .replace("%reason%", reason)
             );
 
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.kickSender
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.kickSender()
                     .replace("%reason%", reason)
                     .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
                     .replace("%reason%", reason)
@@ -61,8 +61,8 @@ public class KickCommand extends Command implements TabExecutor {
                     MessagingUtils.sendDiscordEBMessage(
                             new DiscordMessage(
                                     sender,
-                                    MessageConfUtils.kickEmbed,
-                                    MessageConfUtils.kickDiscord
+                                    MessageConfUtils.kickEmbed(),
+                                    MessageConfUtils.kickDiscord()
                                             .replace("%punisher%", sender.getName())
                                             .replace("%player%", other.latestName)
                                             .replace("%reason%", reason)
@@ -73,7 +73,7 @@ public class KickCommand extends Command implements TabExecutor {
                 }
             }
 
-            MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.kickStaff
+            MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.kickStaff()
                     .replace("%punisher%", sender.getName())
                     .replace("%player%", other.latestName)
                     .replace("%reason%", reason)

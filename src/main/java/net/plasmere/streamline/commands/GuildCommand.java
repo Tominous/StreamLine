@@ -24,37 +24,37 @@ public class GuildCommand extends Command implements TabExecutor {
         SavableUser stat = PlayerUtils.getOrGetSavableUser(sender);
         
         if (stat == null) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorNoYou);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorNoYou());
             return;
         }
 
         // Usage: /guild <join !|leave !|create !|promote !|demote !|chat !|list !|open !|close !|disband !|accept !|deny !|invite !|kick|mute|warp>
         if (args.length <= 0 || args[0].length() <= 0) {
             try {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
             } catch (Exception e) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                 e.printStackTrace();
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildJoinAliases)) {
             if (args.length <= 1) {
                 try {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else {
                 try {
                     SavableUser user = PlayerUtils.getOrGetSavableUser(args[1]);
                     if (user == null) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                         return;
                     }
 
                     GuildUtils.joinGuild(stat, user);
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             }
@@ -62,77 +62,77 @@ public class GuildCommand extends Command implements TabExecutor {
             try {
                 GuildUtils.leaveGuild(stat);
             } catch (Exception e) {
-                MessagingUtils.sendBUserMessage(stat.findSender(), MessageConfUtils.bungeeCommandErrorUnd);
+                MessagingUtils.sendBUserMessage(stat.findSender(), MessageConfUtils.bungeeCommandErrorUnd());
                 e.printStackTrace();
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildCreateAliases)) {
             if (args.length <= 1) {
                 try {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else {
                 try {
                     GuildUtils.createGuild(stat, TextUtils.argsToStringMinus(args, 0));
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildPromoteAliases)) {
             if (args.length <= 1) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
             } else {
                 try {
                     SavableUser user = PlayerUtils.getOrGetSavableUser(args[1]);
                     if (user == null) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                         return;
                     }
 
                     GuildUtils.promotePlayer(stat, user);
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(stat.findSender(), MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(stat.findSender(), MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildDemoteAliases)) {
             if (args.length <= 1) {
                 try {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else {
                 try {
                     SavableUser user = PlayerUtils.getOrGetSavableUser(args[1]);
                     if (user == null) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                         return;
                     }
 
                     GuildUtils.demotePlayer(stat, user);
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildChatAliases)) {
             if (args.length <= 1) {
                 try {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else {
                 try {
                     GuildUtils.sendChat(stat, TextUtils.argsToStringMinus(args, 0));
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             }
@@ -140,115 +140,115 @@ public class GuildCommand extends Command implements TabExecutor {
             try {
                 GuildUtils.listGuild(stat);
             } catch (Exception e) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                 e.printStackTrace();
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildOpenAliases)) {
             try {
                 GuildUtils.openGuild(stat);
             } catch (Exception e) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                 e.printStackTrace();
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildCloseAliases)) {
             try {
                 GuildUtils.closeGuild(stat);
             } catch (Exception e) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                 e.printStackTrace();
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildDisbandAliases)) {
             try {
                 GuildUtils.disband(stat);
             } catch (Throwable e) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                 e.printStackTrace();
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildAcceptAliases)) {
             if (args.length <= 1) {
                 try {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else {
                 try {
                     SavableUser user = PlayerUtils.getOrGetSavableUser(args[1]);
                     if (user == null) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                         return;
                     }
 
                     GuildUtils.acceptInvite(stat, user);
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildDenyAliases)) {
             if (args.length <= 1) {
                 try {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else {
                 try {
                     SavableUser user = PlayerUtils.getOrGetSavableUser(args[1]);
                     if (user == null) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                         return;
                     }
 
                     GuildUtils.denyInvite(stat, user);
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildInvAliases)) {
             if (args.length <= 1) {
                 try {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else {
                 try {
                     SavableUser user = PlayerUtils.getOrGetSavableUser(args[1]);
                     if (user == null) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                         return;
                     }
 
                     GuildUtils.sendInvite(user, stat);
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildKickAliases)) {
             if (args.length <= 1) {
                 try {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else {
                 try {
                     SavableUser user = PlayerUtils.getOrGetSavableUser(args[1]);
                     if (user == null) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                         return;
                     }
 
                     GuildUtils.kickMember(stat, user);
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             }
@@ -256,36 +256,36 @@ public class GuildCommand extends Command implements TabExecutor {
             try {
                 GuildUtils.muteGuild(stat);
             } catch (Throwable e) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                 e.printStackTrace();
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildWarpAliases)) {
             try {
                 GuildUtils.warpGuild(stat);
             } catch (Throwable e) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                 e.printStackTrace();
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildInfoAliases)) {
             try {
                 GuildUtils.info(stat);
             } catch (Throwable e) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                 e.printStackTrace();
             }
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comBGuildRenameAliases)) {
             if (args.length <= 1) {
                 try {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             } else {
                 try {
                     GuildUtils.rename(stat, TextUtils.argsToStringMinus(args, 0));
                 } catch (Exception e) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                     e.printStackTrace();
                 }
             }
@@ -293,13 +293,13 @@ public class GuildCommand extends Command implements TabExecutor {
             try {
                 SavableUser user = PlayerUtils.getOrGetSavableUser(args[0]);
                 if (user == null) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                     return;
                 }
 
                 GuildUtils.sendInvite(user, stat);
             } catch (Exception e) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                 e.printStackTrace();
             }
         }

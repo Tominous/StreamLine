@@ -16,14 +16,14 @@ public class EndCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.gracefulEndSender);
+        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.gracefulEndSender());
 
         PlayerUtils.saveAll();
 
-        PlayerUtils.kickAll(MessageConfUtils.gracefulEndKickMessage);
+        PlayerUtils.kickAll(MessageConfUtils.gracefulEndKickMessage());
 
         GuildUtils.saveAll();
 
-        StreamLine.getInstance().getProxy().stop(TextUtils.codedString(MessageConfUtils.kicksStopping));
+        StreamLine.getInstance().getProxy().stop(TextUtils.codedString(MessageConfUtils.kicksStopping()));
     }
 }

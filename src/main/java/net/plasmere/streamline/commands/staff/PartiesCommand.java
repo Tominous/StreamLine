@@ -15,11 +15,11 @@ public class PartiesCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (PartyUtils.getParties().size() <= 0) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.partiesNone);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.partiesNone());
             return;
         }
         for (Party party : PartyUtils.getParties()){
-            MessagingUtils.sendBPUserMessage(party, sender, sender, MessageConfUtils.partiesMessage);
+            MessagingUtils.sendBPUserMessage(party, sender, sender, MessageConfUtils.partiesMessage());
         }
     }
 }

@@ -72,9 +72,9 @@ public class ChatListener implements Listener {
         if (ConfigUtils.punMutes && stat.muted) {
             e.setCancelled(true);
             if (stat.mutedTill != null) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.punMutedTemp.replace("%date%", stat.mutedTill.toString()));
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.punMutedTemp().replace("%date%", stat.mutedTill.toString()));
             } else {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.punMutedPerm);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.punMutedPerm());
             }
             return;
         }
@@ -86,12 +86,12 @@ public class ChatListener implements Listener {
                 }
 
                 e.setCancelled(true);
-                MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg);
+                MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom(), msg);
                 if (ConfigUtils.moduleDEnabled) {
                     if (ConfigUtils.moduleStaffChatMToDiscord) {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
-                                MessageConfUtils.staffChatEmbedTitle,
-                                MessageConfUtils.discordStaffChatMessage
+                                MessageConfUtils.staffChatEmbedTitle(),
+                                MessageConfUtils.discordStaffChatMessage()
                                         .replace("%user%", sender.getName())
                                         .replace("%message%", msg),
                                 DiscordBotConfUtils.textChannelStaffChat));
@@ -105,18 +105,18 @@ public class ChatListener implements Listener {
                     }
 
                     if (msg.equals(prefix)) {
-                        sender.sendMessage(TextUtils.codedText(MessageConfUtils.staffChatJustPrefix.replace("%newline%", "\n")));
+                        sender.sendMessage(TextUtils.codedText(MessageConfUtils.staffChatJustPrefix().replace("%newline%", "\n")));
                         e.setCancelled(true);
                         return;
                     }
 
                     e.setCancelled(true);
-                    MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg.substring(prefix.length()));
+                    MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom(), msg.substring(prefix.length()));
                     if (ConfigUtils.moduleDEnabled) {
                         if (ConfigUtils.moduleStaffChatMToDiscord) {
                             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
-                                    MessageConfUtils.staffChatEmbedTitle,
-                                    MessageConfUtils.discordStaffChatMessage
+                                    MessageConfUtils.staffChatEmbedTitle(),
+                                    MessageConfUtils.discordStaffChatMessage()
                                             .replace("%user%", sender.getName())
                                             .replace("%message%", msg.substring(prefix.length())),
                                     DiscordBotConfUtils.textChannelStaffChat));

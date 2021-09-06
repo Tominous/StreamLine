@@ -29,28 +29,28 @@ public class StaffChatCommand extends Command {
                     if (args.length <= 0 || args[0].equals("") || args[0].equals(" ")) {
                         player.toggleSC();
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.staffChatToggle
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.staffChatToggle()
 //                                .replace("%toggle%", (player.sc ? "&aON" : "&cOFF"))
-                                .replace("%toggle%", (player.sc ? MessageConfUtils.staffChatOn : MessageConfUtils.staffChatOff))
+                                .replace("%toggle%", (player.sc ? MessageConfUtils.staffChatOn() : MessageConfUtils.staffChatOff()))
                         );
                         return;
                     }
 
-                    MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, TextUtils.normalize(args));
+                    MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom(), TextUtils.normalize(args));
                     if (ConfigUtils.moduleDEnabled) {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
-                                MessageConfUtils.staffChatEmbedTitle,
-                                MessageConfUtils.discordStaffChatMessage
+                                MessageConfUtils.staffChatEmbedTitle(),
+                                MessageConfUtils.discordStaffChatMessage()
                                         .replace("%user%", sender.getName())
                                         .replace("%message%", TextUtils.normalize(args)),
                                 DiscordBotConfUtils.textChannelStaffChat));
                     }
                 } else {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix + MessageConfUtils.noPerm);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix() + MessageConfUtils.noPerm());
                 }
             }
         } else {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers());
         }
     }
 }

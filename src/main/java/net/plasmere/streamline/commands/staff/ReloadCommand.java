@@ -20,13 +20,13 @@ public class ReloadCommand extends Command {
         if (sender.hasPermission(perm)) {
             try {
                 StreamLine.config.reloadConfig();
-                StreamLine.config.reloadMessages();
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix + MessageConfUtils.reload);
+                StreamLine.config.reloadLocales();
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix() + MessageConfUtils.reload());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix + MessageConfUtils.noPerm);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix() + MessageConfUtils.noPerm());
         }
     }
 }

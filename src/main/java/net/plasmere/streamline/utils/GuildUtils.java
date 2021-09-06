@@ -530,7 +530,7 @@ public class GuildUtils {
         }
 
         if (sender instanceof ConsolePlayer) {
-            MessagingUtils.sendBUserMessage(sender.findSender(), MessageConfUtils.onlyPlayers);
+            MessagingUtils.sendBUserMessage(sender.findSender(), MessageConfUtils.onlyPlayers());
             return;
         }
 
@@ -685,7 +685,7 @@ public class GuildUtils {
                 }
             }
         } catch (Exception e) {
-            MessagingUtils.sendBGUserMessage(guild, sender.findSender(), sender.findSender(), MessageConfUtils.bungeeCommandErrorUnd);
+            MessagingUtils.sendBGUserMessage(guild, sender.findSender(), sender.findSender(), MessageConfUtils.bungeeCommandErrorUnd());
             e.printStackTrace();
         }
     }

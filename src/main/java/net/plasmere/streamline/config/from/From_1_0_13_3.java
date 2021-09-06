@@ -24,7 +24,7 @@ public class From_1_0_13_3 extends From {
     }
 
     @Override
-    public void setupTranslationsFix() {
+    public void setupLocalesFix() {
         try {
             en_USFile.delete();
 
@@ -37,6 +37,7 @@ public class From_1_0_13_3 extends From {
 
         addUpdatedLocalesEntry("language.message", "&eYou are now using &c%locale% &eas your locale&8!", "en_US");
         addUpdatedLocalesEntry("language.message", "&eVous utilisez maintenant &c%locale% &ecomme paramètre régional&8!", "fr_FR");
+
         addUpdatedLocalesEntry("language.invalid-locale", "&cSorry, but &6%locale% &cis an invalid locale...!", "en_US");
         addUpdatedLocalesEntry("language.invalid-locale", "&cPardon, mais &6%locale% &cs'agit d'un paramètre régional non valide...!", "fr_FR");
     }

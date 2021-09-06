@@ -29,8 +29,8 @@ public class GSPYCommand extends Command implements TabExecutor {
             if (args.length > 0) {
                 if (PluginUtils.checkEqualsStrings(args[0], PluginUtils.stringListToArray(ConfigUtils.viewSelfAliases))) {
                     player.toggleGSPYVS();
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.gspyvsToggle
-                            .replace("%toggle%", (player.gspyvs ? MessageConfUtils.gspyvsOn : MessageConfUtils.gspyvsOff))
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.gspyvsToggle()
+                            .replace("%toggle%", (player.gspyvs ? MessageConfUtils.gspyvsOn() : MessageConfUtils.gspyvsOff()))
                     );
                     return;
                 }
@@ -38,12 +38,12 @@ public class GSPYCommand extends Command implements TabExecutor {
 
             player.toggleGSPY();
 
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.gspyToggle
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.gspyToggle()
 //                    .replace("%toggle%", (player.gspy ? "&aON" : "&cOFF"))
-                    .replace("%toggle%", (player.gspy ? MessageConfUtils.gspyOn : MessageConfUtils.gspyOff))
+                    .replace("%toggle%", (player.gspy ? MessageConfUtils.gspyOn() : MessageConfUtils.gspyOff()))
             );
         } else {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers());
         }
     }
 

@@ -16,11 +16,11 @@ public class GetStatsCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (PlayerUtils.getStats().size() <= 0) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.getStatsNone);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.getStatsNone());
             return;
         }
 
-        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.getStatsMessage
+        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.getStatsMessage()
                 .replace("%stats%", getStats())
         );
     }
@@ -31,9 +31,9 @@ public class GetStatsCommand extends Command {
         int i = 1;
         for (SavableUser stat : PlayerUtils.getStats()) {
             if (i >= PlayerUtils.getStats().size()) {
-                stringBuilder.append(MessageConfUtils.getStatsLast.replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat)));
+                stringBuilder.append(MessageConfUtils.getStatsLast().replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat)));
             } else {
-                stringBuilder.append(MessageConfUtils.getStatsNLast.replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat)));
+                stringBuilder.append(MessageConfUtils.getStatsNLast().replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat)));
             }
             i ++;
         }

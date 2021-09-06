@@ -24,7 +24,7 @@ public class ConfigHandler {
     public Configuration discordBot;
     public Configuration commands;
 
-    public String language = "";
+    public static String language = "";
 
 //    public final String configVer = "13.3";
 //    public final String messagesVer = "13.3";
@@ -53,7 +53,7 @@ public class ConfigHandler {
             }
         }
 
-        this.language = language;
+        ConfigHandler.language = language;
 
         conf = loadConf();
         mess = loadTrans(language);
@@ -62,30 +62,37 @@ public class ConfigHandler {
     }
 
     public void setLanguage(String language) throws Exception {
-        if (TextUtils.equalsAny(language, acceptableTranslations())) throw new Exception("Unsupported language!");
+        if (! TextUtils.equalsAny(language, acceptableTranslations())) throw new Exception("Unsupported language!");
 
-        this.language = language;
+        ConfigHandler.language = language;
+        this.reloadLocales(language);
         int localeLineNumber = 3;
+
+        MessagingUtils.logWarning("[DEBUG] local locale = " + language + " , this.locale = " + ConfigHandler.language);
 
         List<String> lines = Files.readAllLines(StreamLine.getInstance().languageFile.toPath(), StandardCharsets.UTF_8);
         lines.set(localeLineNumber - 1, language);
         Files.write(StreamLine.getInstance().languageFile.toPath(), lines, StandardCharsets.UTF_8);
     }
 
-    public void reloadConfig(){
-        try {
-            conf = loadConf();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+    public void reloadConfig() {
+        conf = loadConf();
     }
 
-    public void reloadMessages(){
-        try {
-            mess = loadTrans(this.language);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+    public void reloadLocales(String language) {
+        mess = loadTrans(language);
+    }
+
+    public void reloadLocales(){
+        reloadLocales(ConfigHandler.language);
+    }
+
+    public void reloadDiscordBot() {
+        discordBot = loadDiscordBot();
+    }
+
+    public void reloadCommands() {
+        commands = loadCommands();
     }
 
     public Configuration loadConf(){
@@ -118,15 +125,17 @@ public class ConfigHandler {
     }
 
     public Configuration loadTrans(String language) {
-        if (! mfile(language).exists()){
-            if (! translationPath.exists()) if (! translationPath.mkdirs()) MessagingUtils.logSevere("COULD NOT MAKE TRANSLATION FOLDER(S)!");
+        if (! translationPath.exists()) if (! translationPath.mkdirs()) MessagingUtils.logSevere("COULD NOT MAKE TRANSLATION FOLDER(S)!");
 
+        if (! en_USFile.exists()) {
             try (InputStream in = StreamLine.getInstance().getResourceAsStream(en_USString)) {
                 Files.copy(in, en_USFile.toPath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
 
+        if (! fr_FRFile.exists()) {
             try (InputStream in = StreamLine.getInstance().getResourceAsStream(fr_FRString)) {
                 Files.copy(in, fr_FRFile.toPath());
             } catch (IOException e) {
@@ -202,7 +211,7 @@ public class ConfigHandler {
 
     public void saveMess(){
         try {
-            ConfigurationProvider.getProvider(YamlConfiguration.class).save(mess, mfile(this.language));
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(mess, mfile(ConfigHandler.language));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -270,137 +279,137 @@ public class ConfigHandler {
     }
 
     public String getMessString(String path) {
-        reloadMessages();
+        reloadLocales();
         return mess.getString(path);
     }
 
     public boolean getMessBoolean(String path) {
-        reloadMessages();
+        reloadLocales();
         return mess.getBoolean(path);
     }
 
     public int getMessInteger(String path) {
-        reloadMessages();
+        reloadLocales();
         return mess.getInt(path);
     }
 
     public List<String> getMessStringList(String path) {
-        reloadMessages();
+        reloadLocales();
         return mess.getStringList(path);
     }
 
     public List<Integer> getMessIntegerList(String path) {
-        reloadMessages();
+        reloadLocales();
         return conf.getIntList(path);
     }
 
     public Configuration getMessSection(String path) {
-        reloadMessages();
+        reloadLocales();
         return mess.getSection(path);
     }
 
     public Object getObjectMess(String path){
-        reloadMessages();
+        reloadLocales();
         return mess.get(path);
     }
 
     public void setObjectMess(String path, Object thing){
         mess.set(path, thing);
-        reloadMessages();
+        reloadLocales();
     }
 
     public Collection<String> getMessKeys() {
-        reloadMessages();
+        reloadLocales();
         return mess.getKeys();
     }
 
     public String getDisBotString(String path) {
-        reloadMessages();
+        reloadDiscordBot();
         return discordBot.getString(path);
     }
 
     public boolean getDisBotBoolean(String path) {
-        reloadMessages();
+        reloadDiscordBot();
         return discordBot.getBoolean(path);
     }
 
     public int getDisBotInteger(String path) {
-        reloadMessages();
+        reloadDiscordBot();
         return discordBot.getInt(path);
     }
 
     public List<String> getDisBotStringList(String path) {
-        reloadMessages();
+        reloadDiscordBot();
         return discordBot.getStringList(path);
     }
 
     public List<Integer> getDisBotIntegerList(String path) {
-        reloadMessages();
+        reloadDiscordBot();
         return discordBot.getIntList(path);
     }
 
     public Configuration getDisBotSection(String path) {
-        reloadMessages();
+        reloadDiscordBot();
         return discordBot.getSection(path);
     }
 
     public Object getObjectDisBot(String path){
-        reloadMessages();
+        reloadDiscordBot();
         return discordBot.get(path);
     }
 
     public void setObjectDisBot(String path, Object thing){
         discordBot.set(path, thing);
-        reloadMessages();
+        reloadDiscordBot();
     }
 
     public Collection<String> getDisBotKeys() {
-        reloadMessages();
+        reloadDiscordBot();
         return discordBot.getKeys();
     }
 
     public String getCommandString(String path) {
-        reloadMessages();
+        reloadCommands();
         return commands.getString(path);
     }
 
     public boolean getCommandBoolean(String path) {
-        reloadMessages();
+        reloadCommands();
         return commands.getBoolean(path);
     }
 
     public int getCommandInteger(String path) {
-        reloadMessages();
+        reloadCommands();
         return commands.getInt(path);
     }
 
     public List<String> getCommandStringList(String path) {
-        reloadMessages();
+        reloadCommands();
         return commands.getStringList(path);
     }
 
     public List<Integer> getCommandIntegerList(String path) {
-        reloadMessages();
+        reloadCommands();
         return commands.getIntList(path);
     }
 
     public Configuration getCommandSection(String path) {
-        reloadMessages();
+        reloadCommands();
         return commands.getSection(path);
     }
 
     public Object getObjectCommand(String path){
-        reloadMessages();
+        reloadCommands();
         return commands.get(path);
     }
 
     public void setObjectCommand(String path, Object thing){
         commands.set(path, thing);
-        reloadMessages();
+        reloadCommands();
     }
 
     public Collection<String> getCommandKeys() {
-        reloadMessages();
+        reloadCommands();
         return commands.getKeys();
     }
 }

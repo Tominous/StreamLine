@@ -32,19 +32,19 @@ public class GlobalOnlineCommand extends Command {
     // Use in a try statement:
     private void compileList(CommandSender sendTo){
         if (StreamLine.getInstance().getProxy().getOnlineCount() <= 0){
-            sendTo.sendMessage(TextUtils.codedText(MessageConfUtils.onlineMessageNoPlayers));
+            sendTo.sendMessage(TextUtils.codedText(MessageConfUtils.onlineMessageNoPlayers()));
             return;
         }
 
         Set<Group> groups = StreamLine.lpHolder.api.getGroupManager().getLoadedGroups();
 
         if (groups.size() <= 0){
-            sendTo.sendMessage(TextUtils.codedText(MessageConfUtils.onlineMessageNoGroups));
+            sendTo.sendMessage(TextUtils.codedText(MessageConfUtils.onlineMessageNoGroups()));
             return;
         }
 
         MessagingUtils.sendBUserMessage(sendTo,
-                MessageConfUtils.onlineMessageBMain
+                MessageConfUtils.onlineMessageBMain()
                         .replace("%amount%", Integer.toString(StreamLine.getInstance().getProxy().getOnlineCount()))
                         .replace("%servers%", compileServers())
                         .replace("%online%", Objects.requireNonNull(getOnline(groups)))
@@ -65,12 +65,12 @@ public class GlobalOnlineCommand extends Command {
         int i = 1;
         for (ServerInfo server : servers){
             if (i != servers.size()) {
-                msg.append(TextUtils.newLined(MessageConfUtils.onlineMessageBServers
+                msg.append(TextUtils.newLined(MessageConfUtils.onlineMessageBServers()
                         .replace("%server%", server.getName().toUpperCase())
                         .replace("%count%", Integer.toString(server.getPlayers().size()))
                 )).append("\n");
             } else {
-                msg.append(TextUtils.newLined(MessageConfUtils.onlineMessageBServers
+                msg.append(TextUtils.newLined(MessageConfUtils.onlineMessageBServers()
                         .replace("%server%", server.getName().toUpperCase())
                         .replace("%count%", Integer.toString(server.getPlayers().size()))
                 ));
@@ -122,7 +122,7 @@ public class GlobalOnlineCommand extends Command {
         }
 
 
-        return MessageConfUtils.onlineMessageBPlayersMain
+        return MessageConfUtils.onlineMessageBPlayersMain()
                 .replace("%group%", group.toUpperCase())
                 .replace("%count%", Integer.toString(players.size()))
                 .replace("%playerbulk%", getPlayerBulk(players, playerServers));
@@ -136,12 +136,12 @@ public class GlobalOnlineCommand extends Command {
         for (ProxiedPlayer player : players){
             Server server = playerServers.get(player);
             if (! (i == players.size() - 1))
-                text.append(MessageConfUtils.onlineMessageBPlayersBulkNotLast
+                text.append(MessageConfUtils.onlineMessageBPlayersBulkNotLast()
                         .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", server.getInfo().getName())
                 );
             else
-                text.append(MessageConfUtils.onlineMessageBPlayersBulkLast
+                text.append(MessageConfUtils.onlineMessageBPlayersBulkLast()
                         .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", server.getInfo().getName())
                 );

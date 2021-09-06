@@ -23,24 +23,24 @@ public class DeleteStatCommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length < 1) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
             return;
         }
         if (args.length > 1) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess());
             return;
         }
 
         SavableUser user = PlayerUtils.getOrGetSavableUser(args[0]);
 
         if (user == null) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
             return;
         }
 
         PlayerUtils.removeStat(user);
         try {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.deleteStatMessage
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.deleteStatMessage()
                     .replace("%file_name%", user.file.getName())
             );
             user.file.delete();

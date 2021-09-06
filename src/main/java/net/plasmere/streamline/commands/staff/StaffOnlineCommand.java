@@ -32,7 +32,7 @@ public class StaffOnlineCommand extends Command {
         }
 
         MessagingUtils.sendBUserMessage(sender,
-                MessageConfUtils.sOnlineBungeeMain
+                MessageConfUtils.sOnlineBungeeMain()
                         .replace("%amount%", Integer.toString(lstaffs.size()))
                         .replace("%staffbulk%", getStaffList(lstaffs))
         );
@@ -44,12 +44,12 @@ public class StaffOnlineCommand extends Command {
 
         for (ProxiedPlayer player : lstaffs){
             if (i < lstaffs.size())
-                staff.append(MessageConfUtils.sOnlineBungeeBulkNotLast
+                staff.append(MessageConfUtils.sOnlineBungeeBulkNotLast()
                         .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", player.getServer().getInfo().getName().toLowerCase())
                 );
             else
-                staff.append(MessageConfUtils.sOnlineBungeeBulkLast
+                staff.append(MessageConfUtils.sOnlineBungeeBulkLast()
                         .replace("%player%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", player.getServer().getInfo().getName().toLowerCase())
                 );

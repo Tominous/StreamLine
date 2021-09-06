@@ -35,7 +35,7 @@ public class MessagingUtils {
             if (! user.scvs || ! user.viewsc) toExclude.add(user);
         }
 
-        sendPermissionedMessageExcludePlayers(toExclude, ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage
+        sendPermissionedMessageExcludePlayers(toExclude, ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage()
                 .replace("%user%", sender.getName())
                 .replace("%from%", from)
                 .replace("%message%", msg)
@@ -45,7 +45,7 @@ public class MessagingUtils {
     }
 
     public static void sendStaffMessageExcludeSelf(CommandSender sender, String from, String msg){
-        sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage
+        sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage()
                 .replace("%user%", sender.getName())
                 .replace("%from%", from)
                 .replace("%message%", msg)
@@ -206,7 +206,7 @@ public class MessagingUtils {
         }
 
         for (ProxiedPlayer player : staffs) {
-            player.sendMessage(TextUtils.codedText(MessageConfUtils.bungeeStaffChatMessage
+            player.sendMessage(TextUtils.codedText(MessageConfUtils.bungeeStaffChatMessage()
                             .replace("%user%", sender)
                             .replace("%from%", from)
                             .replace("%message%", msg)
@@ -233,14 +233,14 @@ public class MessagingUtils {
 
         for (ProxiedPlayer player : staffs) {
             if (fromBungee)
-                player.sendMessage(TextUtils.codedText(MessageConfUtils.bToBReportMessage
+                player.sendMessage(TextUtils.codedText(MessageConfUtils.bToBReportMessage()
                                 .replace("%reporter%", sender)
                                 .replace("%report%", report)
                                 .replace("%version%", PlayerUtils.getOrCreatePlayerStat(player).latestVersion)
                         )
                 );
             else
-                player.sendMessage(TextUtils.codedText(MessageConfUtils.dToBReportMessage
+                player.sendMessage(TextUtils.codedText(MessageConfUtils.dToBReportMessage()
                                 .replace("%reporter%", sender)
                                 .replace("%report%", report)
                         )
@@ -261,18 +261,18 @@ public class MessagingUtils {
                 Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelBJoins))
                         .sendMessageEmbeds(
                                 eb
-                                        .setDescription(MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
+                                        .setDescription(MessageConfUtils.discordOnline().replace("%player_default%", player.getName())
                                                 .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
-                                        .setAuthor(MessageConfUtils.discordOnlineEmbed, jda.getSelfUser().getAvatarUrl(), jda.getSelfUser().getAvatarUrl())
+                                        .setAuthor(MessageConfUtils.discordOnlineEmbed(), jda.getSelfUser().getAvatarUrl(), jda.getSelfUser().getAvatarUrl())
                                         .build()
                         ).queue();
             } else {
                 Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelBLeaves))
                         .sendMessageEmbeds(
                                 eb
-                                        .setDescription(MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
+                                        .setDescription(MessageConfUtils.discordOffline().replace("%player_default%", player.getName())
                                                 .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
-                                        .setAuthor(MessageConfUtils.discordOfflineEmbed, jda.getSelfUser().getAvatarUrl(), jda.getSelfUser().getAvatarUrl())
+                                        .setAuthor(MessageConfUtils.discordOfflineEmbed(), jda.getSelfUser().getAvatarUrl(), jda.getSelfUser().getAvatarUrl())
                                         .build()
                         ).queue();
             }
@@ -295,9 +295,9 @@ public class MessagingUtils {
                     Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelBJoins))
                             .sendMessageEmbeds(
                                     eb
-                                            .setDescription(MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
+                                            .setDescription(MessageConfUtils.discordOnline().replace("%player_default%", player.getName())
                                                     .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
-                                            .setAuthor(MessageConfUtils.discordOnlineEmbed, jda.getSelfUser().getAvatarUrl(), FaceFetcher.getFaceAvatarURL(player))
+                                            .setAuthor(MessageConfUtils.discordOnlineEmbed(), jda.getSelfUser().getAvatarUrl(), FaceFetcher.getFaceAvatarURL(player))
                                             .build()
                             ).queue();
                 } catch (NullPointerException e) {
@@ -308,9 +308,9 @@ public class MessagingUtils {
                 Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelBLeaves))
                         .sendMessageEmbeds(
                                 eb
-                                        .setDescription(MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
+                                        .setDescription(MessageConfUtils.discordOffline().replace("%player_default%", player.getName())
                                                 .replace("%player%", PlayerUtils.getOffOnDisplayDiscord(player)))
-                                        .setAuthor(MessageConfUtils.discordOfflineEmbed, jda.getSelfUser().getAvatarUrl(), FaceFetcher.getFaceAvatarURL(player))
+                                        .setAuthor(MessageConfUtils.discordOfflineEmbed(), jda.getSelfUser().getAvatarUrl(), FaceFetcher.getFaceAvatarURL(player))
                                         .build()
                         ).queue();
 
@@ -407,18 +407,18 @@ public class MessagingUtils {
         EmbedBuilder eb = new EmbedBuilder();
 
         try {
-            String replace = MessageConfUtils.dToDReportMessage
+            String replace = MessageConfUtils.dToDReportMessage()
                     .replace("%reporter%", sender)
                     .replace("%report%", report);
 
-            String replace1 = MessageConfUtils.bToDReportMessage
+            String replace1 = MessageConfUtils.bToDReportMessage()
                     .replace("%reporter%", sender)
                     .replace("%report%", report);
 
             if (ConfigUtils.moduleUseMCAvatar) {
                 if (fromBungee)
                     Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelReports)).sendMessageEmbeds(
-                            eb.setTitle(MessageConfUtils.reportEmbedTitle)
+                            eb.setTitle(MessageConfUtils.reportEmbedTitle())
                                     .setDescription(TextUtils.newLined(
                                             replace1
                                             )
@@ -426,7 +426,7 @@ public class MessagingUtils {
                     ).queue();
                 else
                     Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelReports)).sendMessageEmbeds(
-                            eb.setTitle(MessageConfUtils.reportEmbedTitle)
+                            eb.setTitle(MessageConfUtils.reportEmbedTitle())
                                     .setDescription(TextUtils.newLined(
                                             replace
                                             )
@@ -435,7 +435,7 @@ public class MessagingUtils {
             } else {
                 if (fromBungee)
                     Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelReports)).sendMessageEmbeds(
-                            eb.setTitle(MessageConfUtils.reportEmbedTitle)
+                            eb.setTitle(MessageConfUtils.reportEmbedTitle())
                                     .setDescription(TextUtils.newLined(
                                             replace1
                                             )
@@ -443,7 +443,7 @@ public class MessagingUtils {
                     ).queue();
                 else
                     Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelReports)).sendMessageEmbeds(
-                            eb.setTitle(MessageConfUtils.reportEmbedTitle)
+                            eb.setTitle(MessageConfUtils.reportEmbedTitle())
                                     .setDescription(TextUtils.newLined(
                                             replace
                                             )
@@ -469,7 +469,7 @@ public class MessagingUtils {
         to.sendMessage(TextUtils.codedText(msg
                 .replace("%size%", Integer.toString(party.getSize()))
                 .replace("%max%", Integer.toString(party.maxSize))
-                .replace("%maxmax%", party.leader == null ? MessageConfUtils.nullB : Integer.toString(party.getMaxSize(party.leader)))
+                .replace("%maxmax%", party.leader == null ? MessageConfUtils.nullB() : Integer.toString(party.getMaxSize(party.leader)))
                 .replace("%mods_count%", Integer.toString(party.moderators.size()))
                 .replace("%members_count%", Integer.toString(party.members.size()))
                 .replace("%total_count%", Integer.toString(party.totalMembers.size()))
@@ -482,12 +482,12 @@ public class MessagingUtils {
                 .replace("%ismuted%", getIsMuted(party))
                 .replace("%version%", PlayerUtils.getOrCreateSavableUser(sender).latestVersion)
                 .replace("%version%", PlayerUtils.getOrCreatePlayerStat((ProxiedPlayer) sender).latestVersion)
-                .replace("%leader%", party.leader == null ? MessageConfUtils.nullB : PlayerUtils.getOffOnDisplayBungee(party.leader))
+                .replace("%leader%", party.leader == null ? MessageConfUtils.nullB() : PlayerUtils.getOffOnDisplayBungee(party.leader))
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(sender)))
-                .replace("%leader_normal%", party.leader == null ? MessageConfUtils.nullB : PlayerUtils.getOffOnRegDiscord(party.leader))
-                .replace("%leader_absolute%", party.leader == null ? MessageConfUtils.nullB : PlayerUtils.getAbsoluteBungee(party.leader))
+                .replace("%leader_normal%", party.leader == null ? MessageConfUtils.nullB() : PlayerUtils.getOffOnRegDiscord(party.leader))
+                .replace("%leader_absolute%", party.leader == null ? MessageConfUtils.nullB() : PlayerUtils.getAbsoluteBungee(party.leader))
                 .replace("%size%", Integer.toString(party.getSize()))
         ));
     }
@@ -584,9 +584,9 @@ public class MessagingUtils {
                 .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateSavableUser(sender)))
                 .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUser(sender)))
-                .replace("%leader%", guild.leaderUUID == null ? MessageConfUtils.nullB : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
-                .replace("%leader_normal%", guild.leaderUUID == null ? MessageConfUtils.nullB : PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
-                .replace("%leader_absolute%", guild.leaderUUID == null ? MessageConfUtils.nullB : PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(guild.leaderUUID)))
+                .replace("%leader%", guild.leaderUUID == null ? MessageConfUtils.nullB() : PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                .replace("%leader_normal%", guild.leaderUUID == null ? MessageConfUtils.nullB() : PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreateSUByUUID(guild.leaderUUID)))
+                .replace("%leader_absolute%", guild.leaderUUID == null ? MessageConfUtils.nullB() : PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreateSavableUserByUUID(guild.leaderUUID)))
         ));
     }
 
@@ -668,7 +668,7 @@ public class MessagingUtils {
             ConsolePlayer player = PlayerUtils.getConsoleStat();
 
             if (player == null) {
-                sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                sendBUserMessage(sender, MessageConfUtils.noPlayer());
                 return;
             }
 
@@ -698,7 +698,7 @@ public class MessagingUtils {
             Player player = PlayerUtils.getOrGetPlayerStatByUUID(user.uuid);
 
             if (player == null) {
-                sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                sendBUserMessage(sender, MessageConfUtils.noPlayer());
                 return;
             }
 
@@ -897,12 +897,12 @@ public class MessagingUtils {
         int i = 1;
         for (Player m : party.moderators){
             if (i < party.moderators.size()){
-                msg.append(MessageConfUtils.partiesModsNLast
+                msg.append(MessageConfUtils.partiesModsNLast()
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             } else {
-                msg.append(MessageConfUtils.partiesModsLast
+                msg.append(MessageConfUtils.partiesModsLast()
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
@@ -920,12 +920,12 @@ public class MessagingUtils {
         int i = 1;
         for (Player m : party.members){
             if (i < party.members.size()){
-                msg.append(MessageConfUtils.partiesMemsNLast
+                msg.append(MessageConfUtils.partiesMemsNLast()
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             } else {
-                msg.append(MessageConfUtils.partiesMemsLast
+                msg.append(MessageConfUtils.partiesMemsLast()
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
@@ -943,12 +943,12 @@ public class MessagingUtils {
         int i = 1;
         for (Player m : party.totalMembers){
             if (i != party.totalMembers.size()){
-                msg.append(MessageConfUtils.partiesTMemsNLast
+                msg.append(MessageConfUtils.partiesTMemsNLast()
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             } else {
-                msg.append(MessageConfUtils.partiesTMemsLast
+                msg.append(MessageConfUtils.partiesTMemsLast()
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
@@ -966,12 +966,12 @@ public class MessagingUtils {
         int i = 1;
         for (Player m : party.invites){
             if (i < party.invites.size()){
-                msg.append(MessageConfUtils.partiesInvsNLast
+                msg.append(MessageConfUtils.partiesInvsNLast()
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             } else {
-                msg.append(MessageConfUtils.partiesInvsLast
+                msg.append(MessageConfUtils.partiesInvsLast()
                         .replace("%user%", PlayerUtils.getOffOnDisplayBungee(Objects.requireNonNull(m)))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
@@ -984,11 +984,11 @@ public class MessagingUtils {
     }
 
     public static String getIsPublic(Party party){
-        return party.isPublic ? MessageConfUtils.partiesIsPublicTrue : MessageConfUtils.partiesIsPublicFalse;
+        return party.isPublic ? MessageConfUtils.partiesIsPublicTrue() : MessageConfUtils.partiesIsPublicFalse();
     }
 
     public static String getIsMuted(Party party){
-        return party.isMuted ? MessageConfUtils.partiesIsMutedTrue : MessageConfUtils.partiesIsMutedFalse;
+        return party.isMuted ? MessageConfUtils.partiesIsMutedTrue() : MessageConfUtils.partiesIsMutedFalse();
     }
 
     public static String modsGuild(Guild guild){
@@ -1004,12 +1004,12 @@ public class MessagingUtils {
             }
 
             if (i != guild.modsByUUID.size()){
-                msg.append(MessageConfUtils.guildsModsNLast
+                msg.append(MessageConfUtils.guildsModsNLast()
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                         .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
             } else {
-                msg.append(MessageConfUtils.guildsModsLast
+                msg.append(MessageConfUtils.guildsModsLast()
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                         .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
@@ -1034,12 +1034,12 @@ public class MessagingUtils {
             }
 
             if (i != guild.membersByUUID.size()){
-                msg.append(MessageConfUtils.guildsMemsNLast
+                msg.append(MessageConfUtils.guildsMemsNLast()
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                         .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
             } else {
-                msg.append(MessageConfUtils.guildsMemsLast
+                msg.append(MessageConfUtils.guildsMemsLast()
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                         .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
@@ -1064,12 +1064,12 @@ public class MessagingUtils {
             }
 
             if (i != guild.totalMembersByUUID.size()){
-                msg.append(MessageConfUtils.guildsTMemsNLast
+                msg.append(MessageConfUtils.guildsTMemsNLast()
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                         .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
             } else {
-                msg.append(MessageConfUtils.guildsTMemsLast
+                msg.append(MessageConfUtils.guildsTMemsLast()
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                         .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
@@ -1094,12 +1094,12 @@ public class MessagingUtils {
             }
 
             if (i != guild.invites.size()){
-                msg.append(MessageConfUtils.guildsInvsNLast
+                msg.append(MessageConfUtils.guildsInvsNLast()
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                         .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
             } else {
-                msg.append(MessageConfUtils.guildsInvsLast
+                msg.append(MessageConfUtils.guildsInvsLast()
                         .replace("%user%", PlayerUtils.getOffOnRegBungee(player))
                         .replace("%version%", Objects.requireNonNull(player).latestVersion)
                 );
@@ -1112,15 +1112,15 @@ public class MessagingUtils {
     }
 
     public static String getIsPublicGuild(Guild guild){
-        return guild.isPublic ? MessageConfUtils.guildsIsPublicTrue : MessageConfUtils.guildsIsPublicFalse;
+        return guild.isPublic ? MessageConfUtils.guildsIsPublicTrue() : MessageConfUtils.guildsIsPublicFalse();
     }
 
     public static String getIsMutedGuild(Guild guild){
-        return guild.isMuted ? MessageConfUtils.guildsIsMutedTrue : MessageConfUtils.guildsIsMutedFalse;
+        return guild.isMuted ? MessageConfUtils.guildsIsMutedTrue() : MessageConfUtils.guildsIsMutedFalse();
     }
 
     public static void sendInfo(CommandSender sender) {
-        sender.sendMessage(TextUtils.codedText(MessageConfUtils.info
+        sender.sendMessage(TextUtils.codedText(MessageConfUtils.info()
                 .replace("%name%", StreamLine.getInstance().getDescription().getName())
                 .replace("%version%", StreamLine.getInstance().getDescription().getVersion())
                 .replace("%author%", StreamLine.getInstance().getDescription().getAuthor())

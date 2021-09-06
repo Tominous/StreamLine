@@ -25,7 +25,7 @@ public class ReadyListener implements EventListener {
                 try {
                     JDA jda = event.getJDA();
 
-                    MessagingUtils.sendDiscordEBMessage(jda, new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(), MessageConfUtils.startTitle, MessageConfUtils.startMessage, DiscordBotConfUtils.textChannelOfflineOnline));
+                    MessagingUtils.sendDiscordEBMessage(jda, new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(), MessageConfUtils.startTitle(), MessageConfUtils.startMessage(), DiscordBotConfUtils.textChannelOfflineOnline));
 
 //                    Objects.requireNonNull(event.getJDA().getTextChannelById(ConfigUtils.textChannelOfflineOnline)).sendMessageEmbeds(eb.setDescription("Bot online!").build()).queue();
                 } catch (NullPointerException n) {

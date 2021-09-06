@@ -20,11 +20,11 @@ public class EventReloadCommand extends Command {
             EventsHandler.unloadEvents();
             StreamLine.getInstance().loadEvents();
 
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.evReload
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.evReload()
                     .replace("%count%", String.valueOf(EventsHandler.getEvents().size()))
             );
         } else {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm());
         }
     }
 }

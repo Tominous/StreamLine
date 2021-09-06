@@ -23,7 +23,7 @@ public class JDAPingerCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] strings) {
         if (! ConfigUtils.moduleDEnabled) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
             return;
         }
 

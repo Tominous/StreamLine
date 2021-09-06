@@ -25,7 +25,7 @@ public class NetworkPointsCommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length <= 0) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
         } else {
             if (! PlayerUtils.exists(args[0])) {
                 MessagingUtils.sendBUserMessage(sender, PlayerUtils.noStatsFound);
@@ -35,26 +35,26 @@ public class NetworkPointsCommand extends Command implements TabExecutor {
             SavableUser stat = PlayerUtils.getOrGetSavableUser(args[0]);
 
             if (stat == null) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                 return;
             }
 
             if (! stat.latestName.equals(sender.getName())) {
                 if (! sender.hasPermission(CommandsConfUtils.comBPointsOPerm)) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm());
                     return;
                 }
             }
 
             if (args.length <= 1) {
                 if (! stat.latestName.equals(sender.getName())) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsViewO
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsViewO()
                             .replace("%points%", String.valueOf(stat.points))
                             .replace("%other%", stat.latestName)
                     );
                     return;
                 } else {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsViewS
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsViewS()
                             .replace("%points%", String.valueOf(stat.points))
                     );
                     return;
@@ -62,7 +62,7 @@ public class NetworkPointsCommand extends Command implements TabExecutor {
             }
 
             if (! sender.hasPermission(CommandsConfUtils.comBPointsChPerm)) {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm());
                 return;
             }
 
@@ -72,7 +72,7 @@ public class NetworkPointsCommand extends Command implements TabExecutor {
                 case "r":
                 case "-":
                     if (args.length <= 2) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                         return;
                     }
 
@@ -80,17 +80,17 @@ public class NetworkPointsCommand extends Command implements TabExecutor {
                         stat.remPoints(Integer.parseInt(args[2]));
 
                         if (! stat.latestName.equals(sender.getName())) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsRemoveO
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsRemoveO()
                                     .replace("%points%", args[2])
                                     .replace("%other%", stat.latestName)
                             );
                         } else {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsRemoveS
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsRemoveS()
                                     .replace("%points%", args[2])
                             );
                         }
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
                         if (ConfigUtils.errSendToConsole) e.printStackTrace();
                     }
                     break;
@@ -98,7 +98,7 @@ public class NetworkPointsCommand extends Command implements TabExecutor {
                 case "a":
                 case "+":
                     if (args.length <= 2) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                         return;
                     }
 
@@ -106,17 +106,17 @@ public class NetworkPointsCommand extends Command implements TabExecutor {
                         stat.addPoints(Integer.parseInt(args[2]));
 
                         if (! stat.latestName.equals(sender.getName())) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsAddO
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsAddO()
                                     .replace("%points%", args[2])
                                     .replace("%other%", stat.latestName)
                             );
                         } else {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsAddS
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsAddS()
                                     .replace("%points%", args[2])
                             );
                         }
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
                         if (ConfigUtils.errSendToConsole) e.printStackTrace();
                     }
                     break;
@@ -125,7 +125,7 @@ public class NetworkPointsCommand extends Command implements TabExecutor {
                 case "=":
                 default:
                     if (args.length <= 2) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                         return;
                     }
 
@@ -133,17 +133,17 @@ public class NetworkPointsCommand extends Command implements TabExecutor {
                         stat.setPoints(Integer.parseInt(args[2]));
 
                         if (! stat.latestName.equals(sender.getName())) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsSetO
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsSetO()
                                     .replace("%points%", args[2])
                                     .replace("%other%", stat.latestName)
                             );
                         } else {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsSetS
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.pointsSetS()
                                     .replace("%points%", args[2])
                             );
                         }
                     } catch (Exception e) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
                         if (ConfigUtils.errSendToConsole) e.printStackTrace();
                     }
                     break;

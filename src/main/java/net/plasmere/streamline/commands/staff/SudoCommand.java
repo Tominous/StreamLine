@@ -21,23 +21,23 @@ public class SudoCommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length <= 1) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
         } else {
             ProxiedPlayer sudoOn = StreamLine.getInstance().getProxy().getPlayer(args[0]);
 
             if (sudoOn.hasPermission(ConfigUtils.noSudoPerm)){
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoNoSudo
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoNoSudo()
                         .replace("%user%", sudoOn.getDisplayName())
                 );
                 return;
             }
 
             if (StreamLine.getInstance().getProxy().getPluginManager().dispatchCommand(sudoOn, TextUtils.argsToStringMinus(args, 0))){
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoWorked
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoWorked()
                         .replace("%user%", sudoOn.getDisplayName())
                 );
             } else {
-                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoNoWork
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoNoWork()
                         .replace("%user%", sudoOn.getDisplayName())
                 );
             }

@@ -31,9 +31,9 @@ public class IPBanCommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length <= 1) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
         } else if (args.length > 2 && ! args[0].equals("add") && ! args[0].equals("temp")) {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess());
         } else {
             List<String> ipsToBan = new ArrayList<>();
             if (args[1].contains(".")) {
@@ -43,7 +43,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                     Player other = PlayerUtils.getOrGetPlayerStat(args[1]);
 
                     if (other == null) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                         return;
                     }
 
@@ -53,7 +53,7 @@ public class IPBanCommand extends Command implements TabExecutor {
 
             if (args[0].equals("add")) {
                 if (args.length < 3) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                     return;
                 }
 
@@ -61,14 +61,14 @@ public class IPBanCommand extends Command implements TabExecutor {
                     Player other = PlayerUtils.getPlayerStat(args[1]);
 
                     if (other == null) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPlayer());
                         return;
                     }
 
                     String otherUUID = other.uuid;
 
                     if (PlayerUtils.hasOfflinePermission(ConfigUtils.punIPBansBypass, otherUUID)) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanCannot);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanCannot());
                         return;
                     }
                 }
@@ -79,7 +79,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                         if (! ConfigUtils.punIPBansReplaceable) {
                             if (bans.contains(ipToBan)) {
                                 if (bans.getBoolean(ipToBan + ".banned")) {
-                                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBTempAlready
+                                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBTempAlready()
                                             .replace("%ip%", ip)
                                     );
                                     return;
@@ -93,7 +93,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                             toAdd = TimeUtil.convertStringTimeToDouble(args[2]);
                         } catch (Exception e) {
                             e.printStackTrace();
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorSTime);
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorSTime());
                             return;
                         }
 
@@ -112,7 +112,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                                 ProxiedPlayer pp = PlayerUtils.getPPlayerByUUID(player.uuid);
 
                                 if (pp != null) {
-                                    pp.disconnect(TextUtils.codedText(MessageConfUtils.punIPBannedTemp
+                                    pp.disconnect(TextUtils.codedText(MessageConfUtils.punIPBannedTemp()
                                             .replace("%reason%", reason)
                                             .replace("%date%", new Date(Long.parseLong(till)).toString())
                                     ));
@@ -120,7 +120,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                             }
                         }
 
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBTempSender
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBTempSender()
                                 .replace("%ip%", ip)
                                 .replace("%reason%", reason)
                                 .replace("%date%", new Date(Long.parseLong(till)).toString())
@@ -131,8 +131,8 @@ public class IPBanCommand extends Command implements TabExecutor {
                                 MessagingUtils.sendDiscordEBMessage(
                                         new DiscordMessage(
                                                 sender,
-                                                MessageConfUtils.ipBanEmbed,
-                                                MessageConfUtils.ipBanBTempDiscord
+                                                MessageConfUtils.ipBanEmbed(),
+                                                MessageConfUtils.ipBanBTempDiscord()
                                                         .replace("%punisher%", sender.getName())
                                                         .replace("%ip%", ip)
                                                         .replace("%reason%", reason)
@@ -144,7 +144,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                             }
                         }
 
-                        MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.ipBanBTempStaff
+                        MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.ipBanBTempStaff()
                                 .replace("%punisher%", sender.getName())
                                 .replace("%ip%", ip)
                                 .replace("%reason%", reason)
@@ -160,7 +160,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                     if (! ConfigUtils.punIPBansReplaceable) {
                         if (bans.contains(ipToBan)) {
                             if (bans.getBoolean(ipToBan + ".banned")) {
-                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBPermAlready
+                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBPermAlready()
                                         .replace("%ip%", ip)
                                 );
                                 return;
@@ -181,14 +181,14 @@ public class IPBanCommand extends Command implements TabExecutor {
                             ProxiedPlayer pp = PlayerUtils.getPPlayerByUUID(player.uuid);
 
                             if (pp != null) {
-                                pp.disconnect(TextUtils.codedText(MessageConfUtils.punIPBannedPerm
+                                pp.disconnect(TextUtils.codedText(MessageConfUtils.punIPBannedPerm()
                                         .replace("%reason%", reason)
                                 ));
                             }
                         }
                     }
 
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBPermSender
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBPermSender()
                             .replace("%ip%", ip)
                             .replace("%reason%", reason)
                     );
@@ -198,8 +198,8 @@ public class IPBanCommand extends Command implements TabExecutor {
                             MessagingUtils.sendDiscordEBMessage(
                                     new DiscordMessage(
                                             sender,
-                                            MessageConfUtils.ipBanEmbed,
-                                            MessageConfUtils.ipBanBPermDiscord
+                                            MessageConfUtils.ipBanEmbed(),
+                                            MessageConfUtils.ipBanBPermDiscord()
                                                     .replace("%punisher%", sender.getName())
                                                     .replace("%ip%", ip)
                                                     .replace("%reason%", reason)
@@ -210,7 +210,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                         }
                     }
 
-                    MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.ipBanBPermStaff
+                    MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.ipBanBPermStaff()
                             .replace("%punisher%", sender.getName())
                             .replace("%ip%", ip)
                             .replace("%reason%", reason)
@@ -218,7 +218,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                 }
             } else if (args[0].equals("temp")) {
                 if (args.length < 4) {
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore);
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                     return;
                 }
 
@@ -226,14 +226,14 @@ public class IPBanCommand extends Command implements TabExecutor {
                     Player other = PlayerUtils.getPlayerStat(args[1]);
 
                     if (other == null) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
                         return;
                     }
 
                     String otherUUID = other.uuid;
 
                     if (PlayerUtils.hasOfflinePermission(ConfigUtils.punIPBansBypass, otherUUID)) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanCannot);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanCannot());
                         return;
                     }
                 }
@@ -242,7 +242,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                     if (!ConfigUtils.punIPBansReplaceable) {
                         if (bans.contains(ipToBan)) {
                             if (bans.getBoolean(ipToBan + ".banned")) {
-                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBTempAlready
+                                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBTempAlready()
                                         .replace("%ip%", ip)
                                 );
                                 return;
@@ -256,7 +256,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                         toAdd = TimeUtil.convertStringTimeToDouble(args[2]);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorSTime);
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorSTime());
                         return;
                     }
 
@@ -275,7 +275,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                             ProxiedPlayer pp = PlayerUtils.getPPlayerByUUID(player.uuid);
 
                             if (pp != null) {
-                                pp.disconnect(TextUtils.codedText(MessageConfUtils.punIPBannedTemp
+                                pp.disconnect(TextUtils.codedText(MessageConfUtils.punIPBannedTemp()
                                         .replace("%reason%", reason)
                                         .replace("%date%", new Date(Long.parseLong(till)).toString())
                                 ));
@@ -283,7 +283,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                         }
                     }
 
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBTempSender
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanBTempSender()
                             .replace("%ip%", ip)
                             .replace("%reason%", reason)
                             .replace("%date%", new Date(Long.parseLong(till)).toString())
@@ -293,8 +293,8 @@ public class IPBanCommand extends Command implements TabExecutor {
                         MessagingUtils.sendDiscordEBMessage(
                                 new DiscordMessage(
                                         sender,
-                                        MessageConfUtils.ipBanEmbed,
-                                        MessageConfUtils.ipBanBTempDiscord
+                                        MessageConfUtils.ipBanEmbed(),
+                                        MessageConfUtils.ipBanBTempDiscord()
                                                 .replace("%punisher%", sender.getName())
                                                 .replace("%ip%", ip)
                                                 .replace("%reason%", reason)
@@ -305,7 +305,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                         );
                     }
 
-                    MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.ipBanBTempStaff
+                    MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.ipBanBTempStaff()
                             .replace("%punisher%", sender.getName())
                             .replace("%ip%", ip)
                             .replace("%reason%", reason)
@@ -317,7 +317,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                 for (String ip : ipsToBan) {
                     String ipToBan = ip.replace(".", "_");
                     if (! bans.contains(ipToBan)) {
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanUnAlready
+                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanUnAlready()
                                 .replace("%ip%", ip)
                         );
                         return;
@@ -326,7 +326,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                     bans.set(ipToBan + ".banned", false);
                     StreamLine.bans.saveConfig();
 
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanUnSender
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanUnSender()
                             .replace("%ip%", ip)
                     );
 
@@ -334,8 +334,8 @@ public class IPBanCommand extends Command implements TabExecutor {
                         MessagingUtils.sendDiscordEBMessage(
                                 new DiscordMessage(
                                         sender,
-                                        MessageConfUtils.ipBanEmbed,
-                                        MessageConfUtils.ipBanUnDiscord
+                                        MessageConfUtils.ipBanEmbed(),
+                                        MessageConfUtils.ipBanUnDiscord()
                                                 .replace("%punisher%", sender.getName())
                                                 .replace("%ip%", ip)
                                         ,
@@ -344,7 +344,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                         );
                     }
 
-                    MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.ipBanUnStaff
+                    MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.ipBanUnStaff()
                             .replace("%punisher%", sender.getName())
                             .replace("%ip%", ip)
                     );
@@ -368,12 +368,12 @@ public class IPBanCommand extends Command implements TabExecutor {
                     String bannedMillis = bans.getString(bannedIP + ".till");
                     if (bannedMillis == null) bannedMillis = "";
 
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanCheckMain
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ipBanCheckMain()
                             .replace("%ip%", ip)
-                            .replace("%check%", bans.getBoolean(ip + ".banned") ? MessageConfUtils.ipBanCheckBanned
-                                    .replace("%date%", (!bannedMillis.equals("") ? new Date(Long.parseLong(bannedMillis)).toString() : MessageConfUtils.ipBanCheckNoDate))
+                            .replace("%check%", bans.getBoolean(ip + ".banned") ? MessageConfUtils.ipBanCheckBanned()
+                                    .replace("%date%", (!bannedMillis.equals("") ? new Date(Long.parseLong(bannedMillis)).toString() : MessageConfUtils.ipBanCheckNoDate()))
                                     .replace("%reason%", reason)
-                                    : MessageConfUtils.ipBanCheckUnBanned)
+                                    : MessageConfUtils.ipBanCheckUnBanned())
                     );
                 }
             }

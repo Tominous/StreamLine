@@ -101,7 +101,7 @@ public class JoinLeaveListener implements Listener {
                         case "staff":
                             if (player.hasPermission(ConfigUtils.staffPerm)) {
                                 if (p.hasPermission(ConfigUtils.staffPerm)) {
-                                    MessagingUtils.sendBUserMessage(p, MessageConfUtils.bungeeOnline
+                                    MessagingUtils.sendBUserMessage(p, MessageConfUtils.bungeeOnline()
                                             .replace("%player_default%", player.getName())
                                             .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
                                     );
@@ -116,7 +116,7 @@ public class JoinLeaveListener implements Listener {
                             if (guild == null) continue;
 
                             if (guild.hasMember(stat)) {
-                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.guildConnect
+                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.guildConnect()
                                         .replace("%player_default%", player.getName())
                                         .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
                                 );
@@ -130,7 +130,7 @@ public class JoinLeaveListener implements Listener {
                             if (party == null) continue;
 
                             if (party.hasMember(stat)) {
-                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.partyConnect
+                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.partyConnect()
                                         .replace("%player_default%", player.getName())
                                         .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
                                 );
@@ -139,7 +139,7 @@ public class JoinLeaveListener implements Listener {
                             break;
                         case "friend":
                             if (stat.friendList.contains(other.uuid)) {
-                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.friendConnect
+                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.friendConnect()
                                         .replace("%player_default%", player.getName())
                                         .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
                                 );
@@ -156,8 +156,8 @@ public class JoinLeaveListener implements Listener {
                 case "yes":
                     if (ConfigUtils.joinsLeavesAsConsole) {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
-                                MessageConfUtils.discordOnlineEmbed,
-                                MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
+                                MessageConfUtils.discordOnlineEmbed(),
+                                MessageConfUtils.discordOnline().replace("%player_default%", player.getName())
                                         .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
                                 DiscordBotConfUtils.textChannelBJoins));
                     } else {
@@ -172,8 +172,8 @@ public class JoinLeaveListener implements Listener {
                     if (player.hasPermission(ConfigUtils.staffPerm)) {
                         if (ConfigUtils.joinsLeavesAsConsole) {
                             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
-                                    MessageConfUtils.discordOnlineEmbed,
-                                    MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
+                                    MessageConfUtils.discordOnlineEmbed(),
+                                    MessageConfUtils.discordOnline().replace("%player_default%", player.getName())
                                             .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
                                     DiscordBotConfUtils.textChannelBJoins));
                         } else {
@@ -277,7 +277,7 @@ public class JoinLeaveListener implements Listener {
                         int version = StreamLine.viaHolder.via.getPlayerVersion(player.getUniqueId());
 
                         if (!StreamLine.serverPermissions.isAllowed(version, server.getName())) {
-                            MessagingUtils.sendBUserMessage(ev.getPlayer(), MessageConfUtils.vbBlocked);
+                            MessagingUtils.sendBUserMessage(ev.getPlayer(), MessageConfUtils.vbBlocked());
                             ev.setCancelled(true);
                             return;
                         }
@@ -371,7 +371,7 @@ public class JoinLeaveListener implements Listener {
                         case "staff":
                             if (player.hasPermission(ConfigUtils.staffPerm)) {
                                 if (p.hasPermission(ConfigUtils.staffPerm)) {
-                                    MessagingUtils.sendBUserMessage(p, MessageConfUtils.bungeeOffline
+                                    MessagingUtils.sendBUserMessage(p, MessageConfUtils.bungeeOffline()
                                             .replace("%player_default%", player.getName())
                                             .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
                                     );
@@ -386,7 +386,7 @@ public class JoinLeaveListener implements Listener {
                             if (guild == null) continue;
 
                             if (guild.hasMember(stat)) {
-                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.guildDisconnect
+                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.guildDisconnect()
                                         .replace("%player_default%", player.getName())
                                         .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
                                 );
@@ -400,7 +400,7 @@ public class JoinLeaveListener implements Listener {
                             if (party == null) continue;
 
                             if (party.hasMember(stat)) {
-                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.partyDisconnect
+                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.partyDisconnect()
                                         .replace("%player_default%", player.getName())
                                         .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
                                 );
@@ -409,7 +409,7 @@ public class JoinLeaveListener implements Listener {
                             break;
                         case "friend":
                             if (stat.friendList.contains(other.uuid)) {
-                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.friendDisconnect
+                                MessagingUtils.sendBUserMessage(p, MessageConfUtils.friendDisconnect()
                                         .replace("%player_default%", player.getName())
                                         .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
                                 );
@@ -426,8 +426,8 @@ public class JoinLeaveListener implements Listener {
                 case "yes":
                     if (ConfigUtils.joinsLeavesAsConsole) {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
-                                MessageConfUtils.discordOfflineEmbed,
-                                MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
+                                MessageConfUtils.discordOfflineEmbed(),
+                                MessageConfUtils.discordOffline().replace("%player_default%", player.getName())
                                         .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
                                 DiscordBotConfUtils.textChannelBLeaves));
                     } else {
@@ -442,8 +442,8 @@ public class JoinLeaveListener implements Listener {
                     if (player.hasPermission(ConfigUtils.staffPerm)) {
                         if (ConfigUtils.joinsLeavesAsConsole) {
                             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
-                                    MessageConfUtils.discordOfflineEmbed,
-                                    MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
+                                    MessageConfUtils.discordOfflineEmbed(),
+                                    MessageConfUtils.discordOffline().replace("%player_default%", player.getName())
                                             .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
                                     DiscordBotConfUtils.textChannelBLeaves));
                         } else {

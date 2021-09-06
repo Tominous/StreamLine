@@ -37,9 +37,9 @@ public class StaffChatCommand {
         }
 
         for (ProxiedPlayer player : staffs) {
-            player.sendMessage(TextUtils.codedText(MessageConfUtils.bungeeStaffChatMessage
+            player.sendMessage(TextUtils.codedText(MessageConfUtils.bungeeStaffChatMessage()
                             .replace("%user%", event.getAuthor().getName())
-                            .replace("%from%", MessageConfUtils.bungeeStaffChatFrom)
+                            .replace("%from%", MessageConfUtils.bungeeStaffChatFrom())
                             .replace("%message%", msg)
                             .replace("%newline%", "\n")
                     )

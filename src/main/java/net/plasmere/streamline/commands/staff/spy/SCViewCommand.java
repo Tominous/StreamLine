@@ -29,8 +29,8 @@ public class SCViewCommand extends Command implements TabExecutor {
             if (args.length > 0) {
                 if (PluginUtils.checkEqualsStrings(args[0], PluginUtils.stringListToArray(ConfigUtils.viewSelfAliases))) {
                     player.toggleSCVS();
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.scvsToggle
-                            .replace("%toggle%", (player.scvs ? MessageConfUtils.scvsOn : MessageConfUtils.scvsOff))
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.scvsToggle()
+                            .replace("%toggle%", (player.scvs ? MessageConfUtils.scvsOn() : MessageConfUtils.scvsOff()))
                     );
                     return;
                 }
@@ -38,12 +38,12 @@ public class SCViewCommand extends Command implements TabExecutor {
 
             player.toggleSCView();
 
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.scViewToggle
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.scViewToggle()
 //                    .replace("%toggle%", (player.viewsc ? "&aON" : "&cOFF"))
-                    .replace("%toggle%", (player.viewsc ? MessageConfUtils.scViewOn : MessageConfUtils.scViewOff))
+                    .replace("%toggle%", (player.viewsc ? MessageConfUtils.scViewOn() : MessageConfUtils.scViewOff()))
             );
         } else {
-            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers);
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers());
         }
     }
 
