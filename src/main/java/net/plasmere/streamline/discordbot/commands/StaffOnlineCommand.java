@@ -14,8 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class StaffOnlineCommand {
-    private static final EmbedBuilder eb = new EmbedBuilder();
-
     public static void sendMessage(String command, MessageReceivedEvent event){
         Collection<ProxiedPlayer> staffs = StreamLine.getInstance().getProxy().getPlayers();
         Set<ProxiedPlayer> lstaffs = new HashSet<>(staffs);

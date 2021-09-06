@@ -19,8 +19,8 @@ public class ConfigHandler {
     private Configuration mess;
     private Configuration oMess;
 
-    private final String configVer = "13";
-    private final String messagesVer = "13";
+    private final String configVer = "13.3";
+    private final String messagesVer = "13.3";
 
     //    private static final StreamLine inst = StreamLine.getInstance();
     private final String cstring = "config.yml";

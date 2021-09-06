@@ -11,8 +11,6 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.utils.PlayerUtils;
 
 public class OnlineCommand {
-    private static final EmbedBuilder eb = new EmbedBuilder();
-
     public static void sendMessage(String command, MessageReceivedEvent event){
         MessagingUtils.sendDSelfMessage(event,
                 MessageConfUtils.onlineMessageEmbedTitle,

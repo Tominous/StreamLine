@@ -8,9 +8,8 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CommandsCommand {
-    private static final EmbedBuilder eb = new EmbedBuilder();
-
     public static void sendMessage(String command, MessageReceivedEvent event){
+        EmbedBuilder eb = new EmbedBuilder();
         event.getChannel().sendMessage(eb.setDescription(compileCommands(event)).build()).queue();
         if (ConfigUtils.debug) MessagingUtils.logInfo("Sent message for \"" + command + "\"!");
     }

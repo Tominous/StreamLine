@@ -94,20 +94,22 @@ public class BanCommand extends Command implements TabExecutor {
                             .replace("%date%", new Date(Long.parseLong(till)).toString())
                     );
 
-                    if (ConfigUtils.punBansDiscord) {
-                        MessagingUtils.sendDiscordEBMessage(
-                                new DiscordMessage(
-                                        sender,
-                                        MessageConfUtils.banEmbed,
-                                        MessageConfUtils.banBTempDiscord
-                                                .replace("%punisher%", sender.getName())
-                                                .replace("%player%", otherName)
-                                                .replace("%reason%", reason)
-                                                .replace("%date%", new Date(Long.parseLong(till)).toString())
-                                        ,
-                                        ConfigUtils.textChannelBans
-                                )
-                        );
+                    if (ConfigUtils.moduleDEnabled) {
+                        if (ConfigUtils.punBansDiscord) {
+                            MessagingUtils.sendDiscordEBMessage(
+                                    new DiscordMessage(
+                                            sender,
+                                            MessageConfUtils.banEmbed,
+                                            MessageConfUtils.banBTempDiscord
+                                                    .replace("%punisher%", sender.getName())
+                                                    .replace("%player%", otherName)
+                                                    .replace("%reason%", reason)
+                                                    .replace("%date%", new Date(Long.parseLong(till)).toString())
+                                            ,
+                                            ConfigUtils.textChannelBans
+                                    )
+                            );
+                        }
                     }
 
                     MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.banBTempStaff
@@ -154,19 +156,21 @@ public class BanCommand extends Command implements TabExecutor {
                         .replace("%reason%", reason)
                 );
 
-                if (ConfigUtils.punBansDiscord) {
-                    MessagingUtils.sendDiscordEBMessage(
-                            new DiscordMessage(
-                                    sender,
-                                    MessageConfUtils.banEmbed,
-                                    MessageConfUtils.banBPermDiscord
-                                            .replace("%punisher%", sender.getName())
-                                            .replace("%player%", otherName)
-                                            .replace("%reason%", reason)
-                                    ,
-                                    ConfigUtils.textChannelBans
-                            )
-                    );
+                if (ConfigUtils.moduleDEnabled) {
+                    if (ConfigUtils.punBansDiscord) {
+                        MessagingUtils.sendDiscordEBMessage(
+                                new DiscordMessage(
+                                        sender,
+                                        MessageConfUtils.banEmbed,
+                                        MessageConfUtils.banBPermDiscord
+                                                .replace("%punisher%", sender.getName())
+                                                .replace("%player%", otherName)
+                                                .replace("%reason%", reason)
+                                        ,
+                                        ConfigUtils.textChannelBans
+                                )
+                        );
+                    }
                 }
 
                 MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.banBPermStaff

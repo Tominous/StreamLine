@@ -24,7 +24,8 @@ public class ReportCommand extends Command {
         }
 
         if (ConfigUtils.moduleReportsMToDiscord)
-            MessagingUtils.sendDiscordReportMessage(sender.getName(), true, msg);
+            if (ConfigUtils.moduleDEnabled)
+                MessagingUtils.sendDiscordReportMessage(sender.getName(), true, msg);
         if (ConfigUtils.moduleReportsSendChat)
             MessagingUtils.sendStaffMessageReport(sender.getName(), true, msg);
         if (ConfigUtils.moduleReportsBConfirmation)

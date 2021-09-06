@@ -193,7 +193,6 @@ public class MessagingUtils {
     public static void sendStaffMessageFromDiscord(String sender, String from, String msg){
         Collection<ProxiedPlayer> staff = StreamLine.getInstance().getProxy().getPlayers();
         Set<ProxiedPlayer> staffs = new HashSet<>(staff);
-        JDA jda = StreamLine.getJda();
 
         for (ProxiedPlayer player : staff){
             try {
@@ -249,6 +248,10 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordJoinLeaveMessagePlain(boolean isJoin, Player player){
+        if (! ConfigUtils.moduleDEnabled) {
+            return;
+        }
+
         JDA jda = StreamLine.getJda();
         EmbedBuilder eb = new EmbedBuilder();
 
@@ -278,6 +281,10 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordJoinLeaveMessageIcon(boolean isJoin, Player player){
+        if (! ConfigUtils.moduleDEnabled) {
+            return;
+        }
+
         JDA jda = StreamLine.getJda();
         EmbedBuilder eb = new EmbedBuilder();
 
@@ -316,6 +323,10 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordEBMessage(DiscordMessage message){
+        if (! ConfigUtils.moduleDEnabled) {
+            return;
+        }
+
         JDA jda = StreamLine.getJda();
         EmbedBuilder eb = new EmbedBuilder();
 
@@ -387,6 +398,10 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordReportMessage(String sender, boolean fromBungee, String report){
+        if (! ConfigUtils.moduleDEnabled) {
+            return;
+        }
+
         JDA jda = StreamLine.getJda();
         EmbedBuilder eb = new EmbedBuilder();
 
@@ -477,6 +492,10 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordPEBMessage(Party party, DiscordMessage message){
+        if (! ConfigUtils.moduleDEnabled) {
+            return;
+        }
+
         JDA jda = StreamLine.getJda();
         EmbedBuilder eb = new EmbedBuilder();
 
@@ -571,6 +590,10 @@ public class MessagingUtils {
     }
 
     public static void sendDiscordGEBMessage(Guild guild, DiscordMessage message){
+        if (! ConfigUtils.moduleDEnabled) {
+            return;
+        }
+
         JDA jda = StreamLine.getJda();
         EmbedBuilder eb = new EmbedBuilder();
 

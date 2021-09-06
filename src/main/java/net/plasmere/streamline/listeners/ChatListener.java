@@ -86,13 +86,15 @@ public class ChatListener implements Listener {
 
                 e.setCancelled(true);
                 MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg);
-                if (ConfigUtils.moduleStaffChatMToDiscord) {
-                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
-                            MessageConfUtils.staffChatEmbedTitle,
-                            MessageConfUtils.discordStaffChatMessage
-                                    .replace("%user%", sender.getName())
-                                    .replace("%message%", msg),
-                            ConfigUtils.textChannelStaffChat));
+                if (ConfigUtils.moduleDEnabled) {
+                    if (ConfigUtils.moduleStaffChatMToDiscord) {
+                        MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
+                                MessageConfUtils.staffChatEmbedTitle,
+                                MessageConfUtils.discordStaffChatMessage
+                                        .replace("%user%", sender.getName())
+                                        .replace("%message%", msg),
+                                ConfigUtils.textChannelStaffChat));
+                    }
                 }
                 isStaffMessage = true;
             } else if (ConfigUtils.moduleStaffChatDoPrefix) {
@@ -109,13 +111,15 @@ public class ChatListener implements Listener {
 
                     e.setCancelled(true);
                     MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, msg.substring(prefix.length()));
-                    if (ConfigUtils.moduleStaffChatMToDiscord) {
-                        MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
-                                MessageConfUtils.staffChatEmbedTitle,
-                                MessageConfUtils.discordStaffChatMessage
-                                        .replace("%user%", sender.getName())
-                                        .replace("%message%", msg.substring(prefix.length())),
-                                ConfigUtils.textChannelStaffChat));
+                    if (ConfigUtils.moduleDEnabled) {
+                        if (ConfigUtils.moduleStaffChatMToDiscord) {
+                            MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
+                                    MessageConfUtils.staffChatEmbedTitle,
+                                    MessageConfUtils.discordStaffChatMessage
+                                            .replace("%user%", sender.getName())
+                                            .replace("%message%", msg.substring(prefix.length())),
+                                    ConfigUtils.textChannelStaffChat));
+                        }
                     }
                     isStaffMessage = true;
                 }

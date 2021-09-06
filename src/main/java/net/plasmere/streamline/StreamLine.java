@@ -254,12 +254,14 @@ public class StreamLine extends Plugin {
 		PluginUtils.loadListeners(this);
 
 		// JDA init.
-        Thread initThread = new Thread(this::initJDA, "Streamline - Initialization");
-        initThread.setUncaughtExceptionHandler((t, e) -> {
-            e.printStackTrace();
-            getLogger().severe("Streamline failed to load properly: " + e.getMessage() + ".");
-        });
-        initThread.start();
+		if (ConfigUtils.moduleDEnabled) {
+			Thread initThread = new Thread(this::initJDA, "Streamline - Initialization");
+			initThread.setUncaughtExceptionHandler((t, e) -> {
+				e.printStackTrace();
+				getLogger().severe("Streamline failed to load properly: " + e.getMessage() + ".");
+			});
+			initThread.start();
+		}
 
 		// Players.
 		loadPlayers();
@@ -319,33 +321,35 @@ public class StreamLine extends Plugin {
 		motdUpdater.cancel();
 
 		try {
-			if (jda != null) {
-				if (ConfigUtils.moduleShutdowns) {
-					try {
+			if (ConfigUtils.moduleDEnabled) {
+				if (jda != null) {
+					if (ConfigUtils.moduleShutdowns) {
+						try {
 //						Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelOfflineOnline)).sendMessageEmbeds(eb.setDescription("Bot shutting down...!").build()).queue();
-						MessagingUtils.sendDiscordEBMessage(new DiscordMessage(getProxy().getConsole(), MessageConfUtils.shutdownTitle, MessageConfUtils.shutdownMessage, ConfigUtils.textChannelOfflineOnline));
+							MessagingUtils.sendDiscordEBMessage(new DiscordMessage(getProxy().getConsole(), MessageConfUtils.shutdownTitle, MessageConfUtils.shutdownMessage, ConfigUtils.textChannelOfflineOnline));
+						} catch (Exception e) {
+							getLogger().warning("An unknown error occurred with sending online message: " + e.getMessage());
+						}
+					}
+
+					Thread.sleep(2000);
+
+					jda.getEventManager().getRegisteredListeners().forEach(listener -> jda.getEventManager().unregister(listener));
+					CompletableFuture<Void> shutdownTask = new CompletableFuture<>();
+					jda.addEventListener(new ListenerAdapter() {
+						@Override
+						public void onShutdown(@NotNull ShutdownEvent event) {
+							shutdownTask.complete(null);
+						}
+					});
+					jda.shutdownNow();
+					jda = null;
+
+					try {
+						shutdownTask.get(5, TimeUnit.SECONDS);
 					} catch (Exception e) {
-						getLogger().warning("An unknown error occurred with sending online message: " + e.getMessage());
+						getLogger().warning("JDA took too long to shutdown, skipping!");
 					}
-				}
-
-				Thread.sleep(2000);
-
-				jda.getEventManager().getRegisteredListeners().forEach(listener -> jda.getEventManager().unregister(listener));
-				CompletableFuture<Void> shutdownTask = new CompletableFuture<>();
-				jda.addEventListener(new ListenerAdapter() {
-					@Override
-					public void onShutdown(@NotNull ShutdownEvent event) {
-						shutdownTask.complete(null);
-					}
-				});
-				jda.shutdownNow();
-				jda = null;
-
-				try {
-					shutdownTask.get(5, TimeUnit.SECONDS);
-				} catch (Exception e) {
-					getLogger().warning("JDA took too long to shutdown, skipping!");
 				}
 			}
 		} catch (Exception e){

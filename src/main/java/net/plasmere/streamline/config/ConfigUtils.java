@@ -336,6 +336,7 @@ public class ConfigUtils {
     // ... Discord.
     // Basics.
     public static boolean moduleDMainConsole = StreamLine.config.getConfBoolean("modules.discord.main-console");
+    public static boolean moduleDEnabled = StreamLine.config.getConfBoolean("modules.discord.enabled");
     public static boolean moduleUseMCAvatar = StreamLine.config.getConfBoolean("modules.discord.use-mc-avatar");
     public static boolean joinsLeavesIcon = StreamLine.config.getConfBoolean("modules.discord.joins-leaves.use-bot-icon");
     public static boolean joinsLeavesAsConsole = StreamLine.config.getConfBoolean("modules.discord.joins-leaves.send-as-console");

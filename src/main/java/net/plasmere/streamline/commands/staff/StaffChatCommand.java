@@ -36,12 +36,14 @@ public class StaffChatCommand extends Command {
                     }
 
                     MessagingUtils.sendStaffMessage(sender, MessageConfUtils.bungeeStaffChatFrom, TextUtils.normalize(args));
-                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
-                            MessageConfUtils.staffChatEmbedTitle,
-                            MessageConfUtils.discordStaffChatMessage
-                                    .replace("%user%", sender.getName())
-                                    .replace("%message%", TextUtils.normalize(args)),
-                            ConfigUtils.textChannelStaffChat));
+                    if (ConfigUtils.moduleDEnabled) {
+                        MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
+                                MessageConfUtils.staffChatEmbedTitle,
+                                MessageConfUtils.discordStaffChatMessage
+                                        .replace("%user%", sender.getName())
+                                        .replace("%message%", TextUtils.normalize(args)),
+                                ConfigUtils.textChannelStaffChat));
+                    }
                 } else {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix + MessageConfUtils.noPerm);
                 }

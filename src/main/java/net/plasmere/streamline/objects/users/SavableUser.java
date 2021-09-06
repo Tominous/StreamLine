@@ -150,6 +150,11 @@ public abstract class SavableUser {
         loadVars();
     }
 
+    public void updateKeyNoLoad(String key, Object value) {
+        info.remove(key);
+        addKeyValuePair(key, String.valueOf(value));
+    }
+
     public boolean hasProperty(String property) {
         for (String info : getInfoAsPropertyList()) {
             if (info.startsWith(property)) return true;

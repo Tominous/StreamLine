@@ -99,7 +99,7 @@ public class Player extends SavableUser {
 
 
         this.latestVersion = toLatestVersion;
-        updateKey("latest-version", toLatestVersion);
+        updateKeyNoLoad("latest-version", toLatestVersion);
     }
 
     @Override
@@ -130,23 +130,25 @@ public class Player extends SavableUser {
 
     @Override
     public void loadMoreVars() {
+        this.online = onlineCheck();
+        if (! this.online) this.latestVersion = getFromKey("latest-version");
+
         this.ips = getFromKey("ips");
         this.names = getFromKey("names");
         this.latestIP = getFromKey("latest-ip");
         this.ipList = loadIPs();
         this.nameList = loadNames();
-        this.lvl = Integer.parseInt(getFromKey("lvl"));
-        this.totalXP = Integer.parseInt(getFromKey("total-xp"));
-        this.currentXP = Integer.parseInt(getFromKey("current-xp"));
         this.playSeconds = Integer.parseInt(getFromKey("playtime"));
-        this.online = onlineCheck();
         this.muted = Boolean.parseBoolean(getFromKey("muted"));
         try {
             this.mutedTill = new Date(Long.parseLong(getFromKey("muted-till")));
         } catch (Exception e) {
             this.mutedTill = null;
         }
-        if (! this.online) this.latestVersion = getFromKey("latest-version");
+
+        this.lvl = Integer.parseInt(getFromKey("lvl"));
+        this.totalXP = Integer.parseInt(getFromKey("total-xp"));
+        this.currentXP = Integer.parseInt(getFromKey("current-xp"));
     }
 
     @Override

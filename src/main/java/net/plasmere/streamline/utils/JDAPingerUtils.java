@@ -2,10 +2,7 @@ package net.plasmere.streamline.utils;
 
 import net.plasmere.streamline.StreamLine;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.md_5.bungee.api.Callback;
-import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.config.ServerInfo;
 
 import java.io.DataInputStream;
@@ -16,7 +13,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class JDAPingerUtils {
-    private static JDA jda = null;
     private static final EmbedBuilder eb = new EmbedBuilder();
 
     private static int i = 0;

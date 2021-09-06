@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS LINE: (Used to determine if config is out of date.)
-version: "13"
+version: "13.3"
 
 #### DEBUG ####
 # Enables debug mode.
@@ -789,6 +789,8 @@ modules:
   staff-permission: "streamline.staff"
   # Discord modules...
   discord:
+    # Enables / disables Discord integration.
+    enabled: true
     # Enables / disables the Discord main console.
     main-console: true
     # Enables / disables if the bot should use the sender's Minecraft "face" avatar when sending messages.

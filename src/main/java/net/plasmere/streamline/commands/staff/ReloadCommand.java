@@ -5,11 +5,9 @@ import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.*;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
-import net.dv8tion.jda.api.JDA;
 
 public class ReloadCommand extends Command {
     private String perm = "";
-    private JDA jda = StreamLine.getJda();
 
     public ReloadCommand(String base, String perm, String[] aliases){
         super(base, perm, aliases);

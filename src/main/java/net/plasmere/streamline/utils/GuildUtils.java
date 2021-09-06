@@ -193,10 +193,12 @@ public class GuildUtils {
 
             MessagingUtils.sendBGUserMessage(guild, sender.findSender(), sender.findSender(),  create);
 
-            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleCreates) {
-                MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), createTitle,
-                        createConsole
-                        , ConfigUtils.textChannelGuilds));
+            if (ConfigUtils.moduleDEnabled) {
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleCreates) {
+                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), createTitle,
+                            createConsole
+                            , ConfigUtils.textChannelGuilds));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -332,13 +334,15 @@ public class GuildUtils {
             invites.remove(guild);
             invites.put(guild, guild.invites);
 
-            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleInvites) {
-                MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(from.findSender(), inviteTitle,
-                        inviteConsole
-                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(to))
-                                .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
-                                .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(to))
-                        , ConfigUtils.textChannelGuilds));
+            if (ConfigUtils.moduleDEnabled) {
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleInvites) {
+                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(from.findSender(), inviteTitle,
+                            inviteConsole
+                                    .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(to))
+                                    .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
+                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(to))
+                            , ConfigUtils.textChannelGuilds));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -409,28 +413,30 @@ public class GuildUtils {
                 guild.addMember(accepter);
                 guild.remFromInvites(from, accepter);
 
-                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleJoins) {
-                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(accepter.findSender(), joinsTitle,
-                            joinsConsole
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(accepter))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(accepter))
-                                    .replace("%from%", PlayerUtils.getOffOnDisplayDiscord(from))
-                                    .replace("%from_normal%", PlayerUtils.getOffOnRegDiscord(from))
-                                    .replace("%from_absolute%", PlayerUtils.getAbsoluteDiscord(from))
-                            , ConfigUtils.textChannelGuilds));
-                }
+                if (ConfigUtils.moduleDEnabled) {
+                    if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleJoins) {
+                        MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(accepter.findSender(), joinsTitle,
+                                joinsConsole
+                                        .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(accepter))
+                                        .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
+                                        .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(accepter))
+                                        .replace("%from%", PlayerUtils.getOffOnDisplayDiscord(from))
+                                        .replace("%from_normal%", PlayerUtils.getOffOnRegDiscord(from))
+                                        .replace("%from_absolute%", PlayerUtils.getAbsoluteDiscord(from))
+                                , ConfigUtils.textChannelGuilds));
+                    }
 
-                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleAccepts) {
-                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(accepter.findSender(), acceptTitle,
-                            acceptConsole
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(accepter))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(accepter))
-                                    .replace("%from%", PlayerUtils.getOffOnDisplayDiscord(from))
-                                    .replace("%from_normal%", PlayerUtils.getOffOnRegDiscord(from))
-                                    .replace("%from_absolute%", PlayerUtils.getAbsoluteDiscord(from))
-                            , ConfigUtils.textChannelGuilds));
+                    if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleAccepts) {
+                        MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(accepter.findSender(), acceptTitle,
+                                acceptConsole
+                                        .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(accepter))
+                                        .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
+                                        .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(accepter))
+                                        .replace("%from%", PlayerUtils.getOffOnDisplayDiscord(from))
+                                        .replace("%from_normal%", PlayerUtils.getOffOnRegDiscord(from))
+                                        .replace("%from_absolute%", PlayerUtils.getAbsoluteDiscord(from))
+                                , ConfigUtils.textChannelGuilds));
+                    }
                 }
             } else {
                 MessagingUtils.sendBUserMessage(accepter.findSender(), acceptFailure);
@@ -493,16 +499,18 @@ public class GuildUtils {
 
                 guild.remFromInvites(from, denier);
 
-                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleDenies) {
-                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(denier.findSender(), denyTitle,
-                            denyConsole
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(denier))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(denier))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(denier))
-                                    .replace("%from%", PlayerUtils.getOffOnDisplayDiscord(from))
-                                    .replace("%from_normal%", PlayerUtils.getOffOnRegDiscord(from))
-                                    .replace("%from_absolute%", PlayerUtils.getAbsoluteDiscord(from))
-                            , ConfigUtils.textChannelGuilds));
+                if (ConfigUtils.moduleDEnabled) {
+                    if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleDenies) {
+                        MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(denier.findSender(), denyTitle,
+                                denyConsole
+                                        .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(denier))
+                                        .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(denier))
+                                        .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(denier))
+                                        .replace("%from%", PlayerUtils.getOffOnDisplayDiscord(from))
+                                        .replace("%from_normal%", PlayerUtils.getOffOnRegDiscord(from))
+                                        .replace("%from_absolute%", PlayerUtils.getAbsoluteDiscord(from))
+                                , ConfigUtils.textChannelGuilds));
+                    }
                 }
             } else {
                 MessagingUtils.sendBUserMessage(denier.findSender(), denyFailure);
@@ -597,10 +605,12 @@ public class GuildUtils {
         }
         guild.toggleMute();
 
-        if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleMutes) {
-            MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), muteTitle,
-                    muteConsole
-                    , ConfigUtils.textChannelGuilds));
+        if (ConfigUtils.moduleDEnabled) {
+            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleMutes) {
+                MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), muteTitle,
+                        muteConsole
+                        , ConfigUtils.textChannelGuilds));
+            }
         }
     }
 
@@ -663,13 +673,15 @@ public class GuildUtils {
                 guild.removeMemberFromGuild(player);
             }
 
-            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleKicks) {
-                MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), kickTitle,
-                        kickConsole
-                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
-                                .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                                .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(player))
-                        , ConfigUtils.textChannelGuilds));
+            if (ConfigUtils.moduleDEnabled) {
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleKicks) {
+                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), kickTitle,
+                            kickConsole
+                                    .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                    .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
+                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(player))
+                            , ConfigUtils.textChannelGuilds));
+                }
             }
         } catch (Exception e) {
             MessagingUtils.sendBGUserMessage(guild, sender.findSender(), sender.findSender(), MessageConfUtils.bungeeCommandErrorUnd);
@@ -723,10 +735,12 @@ public class GuildUtils {
 
             }
 
-            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleDisbands) {
-                MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), disbandTitle,
-                        disbandConsole
-                        , ConfigUtils.textChannelGuilds));
+            if (ConfigUtils.moduleDEnabled) {
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleDisbands) {
+                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), disbandTitle,
+                            disbandConsole
+                            , ConfigUtils.textChannelGuilds));
+                }
             }
 
             guilds.remove(guild);
@@ -771,10 +785,12 @@ public class GuildUtils {
                     }
                 }
 
-                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleOpens) {
-                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), openTitle,
-                            openConsole
-                            , ConfigUtils.textChannelGuilds));
+                if (ConfigUtils.moduleDEnabled) {
+                    if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleOpens) {
+                        MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), openTitle,
+                                openConsole
+                                , ConfigUtils.textChannelGuilds));
+                    }
                 }
             }
         } catch (Exception e) {
@@ -817,10 +833,12 @@ public class GuildUtils {
                     }
                 }
 
-                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleCloses) {
-                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), closeTitle,
-                            closeConsole
-                            , ConfigUtils.textChannelGuilds));
+                if (ConfigUtils.moduleDEnabled) {
+                    if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleCloses) {
+                        MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), closeTitle,
+                                closeConsole
+                                , ConfigUtils.textChannelGuilds));
+                    }
                 }
             }
         } catch (Exception e) {
@@ -1039,13 +1057,15 @@ public class GuildUtils {
                     break;
             }
 
-            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsolePromotes) {
-                MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), promoteTitle,
-                        promoteConsole
-                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
-                                .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                                .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(player))
-                        , ConfigUtils.textChannelGuilds));
+            if (ConfigUtils.moduleDEnabled) {
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsolePromotes) {
+                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), promoteTitle,
+                            promoteConsole
+                                    .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                    .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
+                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(player))
+                            , ConfigUtils.textChannelGuilds));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1144,13 +1164,15 @@ public class GuildUtils {
                     break;
             }
 
-            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleDemotes) {
-                MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), demoteTitle,
-                        demoteConsole
-                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
-                                .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                                .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(player))
-                        , ConfigUtils.textChannelGuilds));
+            if (ConfigUtils.moduleDEnabled) {
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleDemotes) {
+                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), demoteTitle,
+                            demoteConsole
+                                    .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                    .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
+                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(player))
+                            , ConfigUtils.textChannelGuilds));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1194,10 +1216,12 @@ public class GuildUtils {
                     }
                 }
 
-                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleJoins) {
-                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), joinsTitle,
-                            joinsConsole
-                            , ConfigUtils.textChannelGuilds));
+                if (ConfigUtils.moduleDEnabled) {
+                    if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleJoins) {
+                        MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), joinsTitle,
+                                joinsConsole
+                                , ConfigUtils.textChannelGuilds));
+                    }
                 }
             } else {
                 MessagingUtils.sendBGUserMessage(guild, sender.findSender(), sender.findSender(),  joinFailure);
@@ -1250,10 +1274,12 @@ public class GuildUtils {
 
                 guild.removeMemberFromGuild(sender);
 
-                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleLeaves) {
-                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), leaveTitle,
-                            leaveConsole
-                            , ConfigUtils.textChannelGuilds));
+                if (ConfigUtils.moduleDEnabled) {
+                    if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleLeaves) {
+                        MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), leaveTitle,
+                                leaveConsole
+                                , ConfigUtils.textChannelGuilds));
+                    }
                 }
             } else {
                 MessagingUtils.sendBGUserMessage(guild, sender.findSender(), sender.findSender(),  leaveFailure);
@@ -1290,11 +1316,13 @@ public class GuildUtils {
                 );
             }
 
-            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleChats) {
-                MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), chatTitle,
-                        chatConsole
-                                .replace("%message%", msg)
-                        , ConfigUtils.textChannelGuilds));
+            if (ConfigUtils.moduleDEnabled) {
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleChats) {
+                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), chatTitle,
+                            chatConsole
+                                    .replace("%message%", msg)
+                            , ConfigUtils.textChannelGuilds));
+                }
             }
 
             for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
@@ -1370,12 +1398,14 @@ public class GuildUtils {
                 }
             }
 
-            if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleRenames) {
-                MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), renameTitle,
-                        renameConsole
-                                .replace("%new%", newName)
-                                .replace("%old_name%", oldName)
-                        , ConfigUtils.textChannelGuilds));
+            if (ConfigUtils.moduleDEnabled) {
+                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleRenames) {
+                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), renameTitle,
+                            renameConsole
+                                    .replace("%new%", newName)
+                                    .replace("%old_name%", oldName)
+                            , ConfigUtils.textChannelGuilds));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

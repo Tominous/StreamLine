@@ -125,20 +125,22 @@ public class IPBanCommand extends Command implements TabExecutor {
                                 .replace("%date%", new Date(Long.parseLong(till)).toString())
                         );
 
-                        if (ConfigUtils.punIPBansDiscord) {
-                            MessagingUtils.sendDiscordEBMessage(
-                                    new DiscordMessage(
-                                            sender,
-                                            MessageConfUtils.ipBanEmbed,
-                                            MessageConfUtils.ipBanBTempDiscord
-                                                    .replace("%punisher%", sender.getName())
-                                                    .replace("%ip%", ip)
-                                                    .replace("%reason%", reason)
-                                                    .replace("%date%", new Date(Long.parseLong(till)).toString())
-                                            ,
-                                            ConfigUtils.textChannelIPBans
-                                    )
-                            );
+                        if (ConfigUtils.moduleDEnabled) {
+                            if (ConfigUtils.punIPBansDiscord) {
+                                MessagingUtils.sendDiscordEBMessage(
+                                        new DiscordMessage(
+                                                sender,
+                                                MessageConfUtils.ipBanEmbed,
+                                                MessageConfUtils.ipBanBTempDiscord
+                                                        .replace("%punisher%", sender.getName())
+                                                        .replace("%ip%", ip)
+                                                        .replace("%reason%", reason)
+                                                        .replace("%date%", new Date(Long.parseLong(till)).toString())
+                                                ,
+                                                ConfigUtils.textChannelIPBans
+                                        )
+                                );
+                            }
                         }
 
                         MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.ipBanBTempStaff
@@ -190,19 +192,21 @@ public class IPBanCommand extends Command implements TabExecutor {
                             .replace("%reason%", reason)
                     );
 
-                    if (ConfigUtils.punIPBansDiscord) {
-                        MessagingUtils.sendDiscordEBMessage(
-                                new DiscordMessage(
-                                        sender,
-                                        MessageConfUtils.ipBanEmbed,
-                                        MessageConfUtils.ipBanBPermDiscord
-                                                .replace("%punisher%", sender.getName())
-                                                .replace("%ip%", ip)
-                                                .replace("%reason%", reason)
-                                        ,
-                                        ConfigUtils.textChannelIPBans
-                                )
-                        );
+                    if (ConfigUtils.moduleDEnabled) {
+                        if (ConfigUtils.punIPBansDiscord) {
+                            MessagingUtils.sendDiscordEBMessage(
+                                    new DiscordMessage(
+                                            sender,
+                                            MessageConfUtils.ipBanEmbed,
+                                            MessageConfUtils.ipBanBPermDiscord
+                                                    .replace("%punisher%", sender.getName())
+                                                    .replace("%ip%", ip)
+                                                    .replace("%reason%", reason)
+                                            ,
+                                            ConfigUtils.textChannelIPBans
+                                    )
+                            );
+                        }
                     }
 
                     MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.ipBanBPermStaff

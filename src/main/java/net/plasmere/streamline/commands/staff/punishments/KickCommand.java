@@ -55,19 +55,21 @@ public class KickCommand extends Command implements TabExecutor {
                     .replace("%reason%", reason)
             );
 
-            if (ConfigUtils.punKicksDiscord) {
-                MessagingUtils.sendDiscordEBMessage(
-                        new DiscordMessage(
-                                sender,
-                                MessageConfUtils.kickEmbed,
-                                MessageConfUtils.kickDiscord
-                                        .replace("%punisher%", sender.getName())
-                                        .replace("%player%", other.latestName)
-                                        .replace("%reason%", reason)
-                                ,
-                                ConfigUtils.textChannelKicks
-                        )
-                );
+            if (ConfigUtils.moduleDEnabled) {
+                if (ConfigUtils.punKicksDiscord) {
+                    MessagingUtils.sendDiscordEBMessage(
+                            new DiscordMessage(
+                                    sender,
+                                    MessageConfUtils.kickEmbed,
+                                    MessageConfUtils.kickDiscord
+                                            .replace("%punisher%", sender.getName())
+                                            .replace("%player%", other.latestName)
+                                            .replace("%reason%", reason)
+                                    ,
+                                    ConfigUtils.textChannelKicks
+                            )
+                    );
+                }
             }
 
             MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.kickStaff

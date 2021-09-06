@@ -271,30 +271,22 @@ public class PlayerUtils {
     }
 
     public static void removeStat(SavableUser stat){
-        List<SavableUser> toRemove = new ArrayList<>();
-
-        for (SavableUser player : getStats()) {
+        for (SavableUser player : new ArrayList<>(stats)) {
             if (player.latestName == null) {
-                toRemove.add(player);
+                stats.remove(player);
                 continue;
             }
 
-            if (player.latestName.equals(stat.latestName)) {
-                toRemove.add(player);
+            if (player.uuid.equals(stat.uuid)) {
+                stats.remove(player);
             }
-        }
-
-        for (SavableUser player : toRemove) {
-            stats.remove(player);
         }
     }
 
     public static int saveAll(){
-        List<SavableUser> users = new ArrayList<>(getStats());
-
         int push = 0;
 
-        for (SavableUser user : users) {
+        for (SavableUser user : new ArrayList<>(stats)) {
             try {
                 addToSave(user);
                 pushSaves();

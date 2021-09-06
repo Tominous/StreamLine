@@ -8,8 +8,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class ReportCommand {
-    private final static EmbedBuilder eb = new EmbedBuilder();
-
     public static void sendMessage(String command, MessageReceivedEvent event){
         String om = event.getMessage().getContentDisplay();
         String prefix = ConfigUtils.botPrefix;

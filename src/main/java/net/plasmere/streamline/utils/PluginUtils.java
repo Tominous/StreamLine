@@ -218,7 +218,7 @@ public class PluginUtils {
         }
         // // Guilds.
         if (ConfigUtils.comBGuilds) {
-            registerCommand(plugin, new GuildsCommand(ConfigUtils.comBPartiesBase, ConfigUtils.comBGuildsPerm, stringListToArray(ConfigUtils.comBGuildsAliases)));
+            registerCommand(plugin, new GuildsCommand(ConfigUtils.comBGuildsBase, ConfigUtils.comBGuildsPerm, stringListToArray(ConfigUtils.comBGuildsAliases)));
         }
         if (ConfigUtils.comBGuild) {
             registerCommand(plugin, new GuildCommand(ConfigUtils.comBGuildBase, ConfigUtils.comBGuildPerm, stringListToArray(ConfigUtils.comBGuildMainAliases)));

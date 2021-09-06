@@ -72,19 +72,21 @@ public class MuteCommand extends Command implements TabExecutor {
                         );
                     }
 
-                    if (ConfigUtils.punMutesDiscord) {
-                        MessagingUtils.sendDiscordEBMessage(
-                                new DiscordMessage(
-                                        sender,
-                                        MessageConfUtils.muteEmbed,
-                                        MessageConfUtils.muteMTempDiscord
-                                                .replace("%punisher%", sender.getName())
-                                                .replace("%player%", other.latestName)
-                                                .replace("%date%", other.mutedTill.toString())
-                                        ,
-                                        ConfigUtils.textChannelMutes
-                                )
-                        );
+                    if (ConfigUtils.moduleDEnabled) {
+                        if (ConfigUtils.punMutesDiscord) {
+                            MessagingUtils.sendDiscordEBMessage(
+                                    new DiscordMessage(
+                                            sender,
+                                            MessageConfUtils.muteEmbed,
+                                            MessageConfUtils.muteMTempDiscord
+                                                    .replace("%punisher%", sender.getName())
+                                                    .replace("%player%", other.latestName)
+                                                    .replace("%date%", other.mutedTill.toString())
+                                            ,
+                                            ConfigUtils.textChannelMutes
+                                    )
+                            );
+                        }
                     }
 
                     MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.muteMTempStaff
@@ -115,18 +117,20 @@ public class MuteCommand extends Command implements TabExecutor {
                     );
                 }
 
-                if (ConfigUtils.punMutesDiscord) {
-                    MessagingUtils.sendDiscordEBMessage(
-                            new DiscordMessage(
-                                    sender,
-                                    MessageConfUtils.muteEmbed,
-                                    MessageConfUtils.muteMPermDiscord
-                                            .replace("%punisher%", sender.getName())
-                                            .replace("%player%", other.latestName)
-                                    ,
-                                    ConfigUtils.textChannelMutes
-                            )
-                    );
+                if (ConfigUtils.moduleDEnabled) {
+                    if (ConfigUtils.punMutesDiscord) {
+                        MessagingUtils.sendDiscordEBMessage(
+                                new DiscordMessage(
+                                        sender,
+                                        MessageConfUtils.muteEmbed,
+                                        MessageConfUtils.muteMPermDiscord
+                                                .replace("%punisher%", sender.getName())
+                                                .replace("%player%", other.latestName)
+                                        ,
+                                        ConfigUtils.textChannelMutes
+                                )
+                        );
+                    }
                 }
 
                 MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.muteMPermStaff
