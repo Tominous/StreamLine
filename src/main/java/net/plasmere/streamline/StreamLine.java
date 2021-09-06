@@ -243,6 +243,8 @@ public class StreamLine extends Plugin {
 
 				reader.close();
 			}
+
+			if (version.equals("")) throw new Exception("Version file could not be read!");
 		} catch (Exception e) {
 			e.printStackTrace();
 			version = "13.3";
@@ -260,7 +262,7 @@ public class StreamLine extends Plugin {
 			}
 
 			if (languageFile.exists()) {
-				Scanner reader = new Scanner(language);
+				Scanner reader = new Scanner(languageFile);
 
 				while (reader.hasNextLine()) {
 					String data = reader.nextLine();
@@ -272,6 +274,8 @@ public class StreamLine extends Plugin {
 
 				reader.close();
 			}
+
+			if (language.equals("")) throw new Exception("Language file could not be read!");
 		} catch (Exception e) {
 			e.printStackTrace();
 			language = "en_US";
@@ -379,6 +383,8 @@ public class StreamLine extends Plugin {
 		if (ConfigUtils.onCloseMain) {
 			config.saveConf();
 			config.saveMess();
+			config.saveDiscordBot();
+			config.saveCommands();
 		}
 
 		if (ConfigUtils.onCloseSettings) {

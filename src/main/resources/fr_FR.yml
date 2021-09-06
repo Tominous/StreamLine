@@ -1996,3 +1996,7 @@ delete-stat:
   message: "&eRetrait du fichier &b%file_name% &ede vos fichiers de joueurs&8!"
 
 bteleport: "&eTéléportation vers &d%player% &aRéussie&8!"
+
+language:
+  message: "&eYou are now using &c%locale% &eas your locale&8!"
+  invalid-locale: "&cPardon, mais &6%locale% &cs'agit d'un paramètre régional non valide...!"

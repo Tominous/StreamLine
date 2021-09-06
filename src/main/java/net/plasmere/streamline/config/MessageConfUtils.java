@@ -356,4 +356,7 @@ public class MessageConfUtils {
     public static String deleteStatMessage = StreamLine.config.getMessString("delete-stat.message");
     // B-Teleport.
     public static String bteleport = StreamLine.config.getMessString("bteleport");
+    // Language
+    public static String languageMessage = StreamLine.config.getMessString("language.message");
+    public static String languageInvalidLocale = StreamLine.config.getMessString("language.invalid-locale");
 }

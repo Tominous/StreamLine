@@ -10,6 +10,7 @@ import net.plasmere.streamline.utils.TextUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Collection;
 import java.util.List;
@@ -33,16 +34,16 @@ public class ConfigHandler {
     public final File cfile = new File(StreamLine.getInstance().getDataFolder(), cstring);
     public final File translationPath = new File(StreamLine.getInstance().getDataFolder() + File.separator + "translations" + File.separator);
     public final String en_USString = "en_US.yml";
-    public final File en_USFile = new File(translationPath + en_USString);
+    public final File en_USFile = new File(translationPath, en_USString);
     public final String fr_FRString = "fr_FR.yml";
-    public final File fr_FRFile = new File(translationPath + fr_FRString);
+    public final File fr_FRFile = new File(translationPath, fr_FRString);
     public final String disbotString = "discord-bot.yml";
     public final File disbotFile = new File(StreamLine.getInstance().getDataFolder(), disbotString);
     public final String commandString = "commands.yml";
     public final File commandFile = new File(StreamLine.getInstance().getDataFolder(), commandString);
 
     public File mfile(String language) {
-        return new File(translationPath + (language.endsWith(".yml") ? language : language + ".yml"));
+        return new File(translationPath, (language.endsWith(".yml") ? language : language + ".yml"));
     }
 
     public ConfigHandler(String language){
@@ -61,9 +62,14 @@ public class ConfigHandler {
     }
 
     public void setLanguage(String language) throws Exception {
-        if (TextUtils.equalsAny(language, "en_US", "fr_FR")) throw new Exception("Unsupported language!");
+        if (TextUtils.equalsAny(language, acceptableTranslations())) throw new Exception("Unsupported language!");
 
         this.language = language;
+        int localeLineNumber = 3;
+
+        List<String> lines = Files.readAllLines(StreamLine.getInstance().languageFile.toPath(), StandardCharsets.UTF_8);
+        lines.set(localeLineNumber - 1, language);
+        Files.write(StreamLine.getInstance().languageFile.toPath(), lines, StandardCharsets.UTF_8);
     }
 
     public void reloadConfig(){
@@ -197,6 +203,22 @@ public class ConfigHandler {
     public void saveMess(){
         try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(mess, mfile(this.language));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveDiscordBot(){
+        try {
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(discordBot, disbotFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveCommands(){
+        try {
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(commands, commandFile);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,11 +1,11 @@
 package net.plasmere.streamline.config.from;
 
-import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class From_1_0_13_3 extends From {
 
@@ -26,10 +26,19 @@ public class From_1_0_13_3 extends From {
     @Override
     public void setupTranslationsFix() {
         try {
-            Files.copy((new File(StreamLine.getInstance().getDataFolder(), "messages.yml").toPath()), translationPath.toPath());
+            en_USFile.delete();
+
+            Files.copy((new File(StreamLine.getInstance().getDataFolder(), "messages.yml").toPath()), en_USFile.toPath());
+
+            m = getFirstTranslations(this.language);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        addUpdatedLocalesEntry("language.message", "&eYou are now using &c%locale% &eas your locale&8!", "en_US");
+        addUpdatedLocalesEntry("language.message", "&eVous utilisez maintenant &c%locale% &ecomme paramètre régional&8!", "fr_FR");
+        addUpdatedLocalesEntry("language.invalid-locale", "&cSorry, but &6%locale% &cis an invalid locale...!", "en_US");
+        addUpdatedLocalesEntry("language.invalid-locale", "&cPardon, mais &6%locale% &cs'agit d'un paramètre régional non valide...!", "fr_FR");
     }
 
     @Override
@@ -46,5 +55,10 @@ public class From_1_0_13_3 extends From {
     @Override
     public void setupCommandsFix() {
         findDeepKeys(c, "commands", FileType.COMMANDS);
+
+        addUpdatedCommandsEntry("commands.bungee.configs.language.enabled", true);
+        addUpdatedCommandsEntry("commands.bungee.configs.language.base", "language");
+        addUpdatedCommandsEntry("commands.bungee.configs.language.permission", "streamline.command.language");
+        addUpdatedCommandsEntry("commands.bungee.configs.language.aliases", Arrays.asList("lang", "locale", "loc"));
     }
 }

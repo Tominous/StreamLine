@@ -1993,3 +1993,7 @@ delete-stat:
   message: "&eSuccessfully removed &b%file_name% &efrom your player files&8!"
 
 bteleport: "&eSuccessfully teleported to &d%player%&8!"
+
+language:
+  message: "&eYou are now using &c%locale% &eas your locale&8!"
+  invalid-locale: "&cSorry, but &6%locale% &cis an invalid locale...!"

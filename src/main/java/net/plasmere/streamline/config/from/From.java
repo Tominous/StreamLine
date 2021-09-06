@@ -4,8 +4,6 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import net.plasmere.streamline.StreamLine;
-import net.plasmere.streamline.config.ConfigHandler;
-import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.utils.MessagingUtils;
 
@@ -14,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 public abstract class From {
     public enum FileType {
@@ -25,9 +22,10 @@ public abstract class From {
         COMMANDS,
     }
 
+    // TreeMap < order , SingleSet < locale name , SingleSet < path , stringed value > > >
+    public TreeMap<Integer, SingleSet<String, SingleSet<String, Object>>> locales = new TreeMap<>();
     // TreeMap < order , SingleSet < path , stringed value > >
     public TreeMap<Integer, SingleSet<String, Object>> config = new TreeMap<>();
-    public TreeMap<Integer, SingleSet<String, Object>> messages = new TreeMap<>();
     public TreeMap<Integer, SingleSet<String, Object>> serverConfig = new TreeMap<>();
     public TreeMap<Integer, SingleSet<String, Object>> discordBot = new TreeMap<>();
     public TreeMap<Integer, SingleSet<String, Object>> commands = new TreeMap<>();
@@ -43,9 +41,9 @@ public abstract class From {
     public final File cfile = new File(StreamLine.getInstance().getDataFolder(), cstring);
     public final File translationPath = new File(StreamLine.getInstance().getDataFolder() + File.separator + "translations" + File.separator);
     public final String en_USString = "en_US.yml";
-    public final File en_USFile = new File(translationPath + en_USString);
+    public final File en_USFile = new File(translationPath, en_USString);
     public final String fr_FRString = "fr_FR.yml";
-    public final File fr_FRFile = new File(translationPath + fr_FRString);
+    public final File fr_FRFile = new File(translationPath, fr_FRString);
     public final String setstring = "settings.yml";
     public final File scfile = new File(StreamLine.getInstance().getConfDir(), setstring);
     public final String disbotString = "discord-bot.yml";
@@ -56,7 +54,7 @@ public abstract class From {
     public String language = "";
 
     public File mfile(String language) {
-        return new File(translationPath + (language.endsWith(".yml") ? language : language + ".yml"));
+        return new File(translationPath, (language.endsWith(".yml") ? language : language + ".yml"));
     }
 
     public abstract String versionFrom();
@@ -72,12 +70,12 @@ public abstract class From {
         setupCommandsFix();
 
         applyConfig();
-        applyMessages();
+        applylocales();
         applyServerConfig();
         applyDiscordBot();
         applyCommands();
 
-        if (ConfigUtils.debug) MessagingUtils.logInfo("Updated your files from previous version: " + versionFrom());
+        MessagingUtils.logInfo("Updated your files from previous version: " + versionFrom());
     }
 
     public void getAllConfigurations() {
@@ -109,16 +107,17 @@ public abstract class From {
     }
 
     public Configuration getFirstTranslations(String language) {
-        if (! translationPath.exists()) {
-            if (! translationPath.mkdirs()) MessagingUtils.logSevere("COULD NOT MAKE TRANSLATION FOLDER(S)!");
+        if (! translationPath.exists()) if (! translationPath.mkdirs()) MessagingUtils.logSevere("COULD NOT MAKE TRANSLATION FOLDER(S)!");
 
+        if (! en_USFile.exists()) {
             try (InputStream in = StreamLine.getInstance().getResourceAsStream(en_USString)) {
-                MessagingUtils.logInfo(in.toString());
                 Files.copy(in, en_USFile.toPath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
 
+        if (! fr_FRFile.exists()) {
             try (InputStream in = StreamLine.getInstance().getResourceAsStream(fr_FRString)) {
                 Files.copy(in, fr_FRFile.toPath());
             } catch (IOException e) {
@@ -205,23 +204,23 @@ public abstract class From {
     public void addUpdatedConfigEntry(String path, Object object) {
         int putInt = 0;
 
-        if (config.size() > 0) putInt = config.firstKey() + 1;
+        if (config.size() > 0) putInt = config.lastKey() + 1;
 
         config.put(putInt, new SingleSet<>(path, object));
     }
 
-    public void addUpdatedMessagesEntry(String path, Object object) {
+    public void addUpdatedLocalesEntry(String path, Object object, String locale) {
         int putInt = 0;
 
-        if (messages.size() > 0) putInt = messages.firstKey() + 1;
+        if (locales.size() > 0) putInt = locales.lastKey() + 1;
 
-        messages.put(putInt, new SingleSet<>(path, object));
+        locales.put(putInt, new SingleSet<>(locale, new SingleSet<>(path, object)));
     }
 
     public void addUpdatedServerConfigEntry(String path, Object object) {
         int putInt = 0;
 
-        if (serverConfig.size() > 0) putInt = serverConfig.firstKey() + 1;
+        if (serverConfig.size() > 0) putInt = serverConfig.lastKey() + 1;
 
         serverConfig.put(putInt, new SingleSet<>(path, object));
     }
@@ -229,7 +228,7 @@ public abstract class From {
     public void addUpdatedDiscordBotEntry(String path, Object object) {
         int putInt = 0;
 
-        if (discordBot.size() > 0) putInt = discordBot.firstKey() + 1;
+        if (discordBot.size() > 0) putInt = discordBot.lastKey() + 1;
 
         discordBot.put(putInt, new SingleSet<>(path, object));
     }
@@ -237,7 +236,7 @@ public abstract class From {
     public void addUpdatedCommandsEntry(String path, Object object) {
         int putInt = 0;
 
-        if (commands.size() > 0) putInt = commands.firstKey() + 1;
+        if (commands.size() > 0) putInt = commands.lastKey() + 1;
 
         commands.put(putInt, new SingleSet<>(path, object));
     }
@@ -261,11 +260,11 @@ public abstract class From {
         return applied;
     }
 
-    public int applyMessages() {
+    public int applylocales() {
         int applied = 0;
 
-        for (int itgr : messages.keySet()) {
-            m.set(messages.get(itgr).key, messages.get(itgr).value);
+        for (int itgr : locales.keySet()) {
+            m.set(locales.get(itgr).key, locales.get(itgr).value);
             applied ++;
         }
 
@@ -303,7 +302,7 @@ public abstract class From {
         int applied = 0;
 
         for (int itgr : discordBot.keySet()) {
-            c.set(discordBot.get(itgr).key, discordBot.get(itgr).value);
+            dis.set(discordBot.get(itgr).key, discordBot.get(itgr).value);
             applied ++;
         }
 
@@ -322,7 +321,7 @@ public abstract class From {
         int applied = 0;
 
         for (int itgr : commands.keySet()) {
-            c.set(commands.get(itgr).key, commands.get(itgr).value);
+            comm.set(commands.get(itgr).key, commands.get(itgr).value);
             applied ++;
         }
 
@@ -374,7 +373,7 @@ public abstract class From {
                         addUpdatedConfigEntry(currSearch, base.get(currSearch));
                         break;
                     case TRANSLATION:
-                        addUpdatedMessagesEntry(currSearch, base.get(currSearch));
+                        addUpdatedLocalesEntry(currSearch, base.get(currSearch), "en_US");
                         break;
                     case SERVERCONFIG:
                         addUpdatedServerConfigEntry(currSearch, base.get(currSearch));

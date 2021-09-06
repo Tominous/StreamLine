@@ -655,6 +655,19 @@ commands:
           - "setedit"
           - "se"
           - "settingsedit"
+      # The settings command.
+      language:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "language"
+        # Custom permission.
+        permission: "streamline.command.language"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "lang"
+          - "locale"
+          - "loc"
     # For messaging commands...
     messaging:
       # The ignore command.

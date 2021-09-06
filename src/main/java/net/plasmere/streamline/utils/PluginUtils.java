@@ -16,6 +16,7 @@ import net.plasmere.streamline.commands.staff.punishments.BanCommand;
 import net.plasmere.streamline.commands.staff.punishments.IPBanCommand;
 import net.plasmere.streamline.commands.staff.punishments.KickCommand;
 import net.plasmere.streamline.commands.staff.punishments.MuteCommand;
+import net.plasmere.streamline.commands.staff.settings.LanguageCommand;
 import net.plasmere.streamline.commands.staff.settings.SettingsEditCommand;
 import net.plasmere.streamline.commands.staff.spy.GSPYCommand;
 import net.plasmere.streamline.commands.staff.spy.PSPYCommand;
@@ -88,11 +89,10 @@ public class PluginUtils {
             registerCommand(plugin, new GlobalOnlineCommand(CommandsConfUtils.comBGlobalOnlineBase, CommandsConfUtils.comBGlobalOnlinePerm, stringListToArray(CommandsConfUtils.comBGlobalOnlineAliases)));
         }
         if (CommandsConfUtils.comBSettings) {
-            if (ConfigUtils.debug) MessagingUtils.logInfo("Settings make start...");
             registerCommand(plugin, new SettingsEditCommand(CommandsConfUtils.comBSettingsBase, CommandsConfUtils.comBSettingsPerm, stringListToArray(CommandsConfUtils.comBSettingsAliases)));
-            if (ConfigUtils.debug) MessagingUtils.logInfo("Settings make finish...");
-        } else {
-            if (ConfigUtils.debug) MessagingUtils.logInfo("Settings enabled = false...");
+        }
+        if (CommandsConfUtils.comBLang) {
+            registerCommand(plugin, new LanguageCommand(CommandsConfUtils.comBLangBase, CommandsConfUtils.comBLangPerm, stringListToArray(CommandsConfUtils.comBLangAliases)));
         }
         if (CommandsConfUtils.comBTeleport) {
             registerCommand(plugin, new TeleportCommand(CommandsConfUtils.comBTeleportBase, CommandsConfUtils.comBTeleportPerm, stringListToArray(CommandsConfUtils.comBTeleportAliases)));
