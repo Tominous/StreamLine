@@ -5,6 +5,7 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import net.plasmere.streamline.utils.MessagingUtils;
+import net.plasmere.streamline.utils.TextUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,46 +13,58 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Collection;
 import java.util.List;
+import java.util.TreeSet;
 
 public class ConfigHandler {
-    private Configuration conf;
-    private Configuration oConf;
-    private Configuration mess;
-    private Configuration oMess;
+    public Configuration conf;
+//    public Configuration oConf;
+    public Configuration mess;
+//    public Configuration oMess;
+    public Configuration discordBot;
+    public Configuration commands;
 
-    private final String configVer = "13.3";
-    private final String messagesVer = "13.3";
+    public String language = "";
 
-    //    private static final StreamLine inst = StreamLine.getInstance();
-    private final String cstring = "config.yml";
-    private final File cfile = new File(StreamLine.getInstance().getDataFolder(), cstring);
-    private final String mstring = "messages.yml";
-    private final File mfile = new File(StreamLine.getInstance().getDataFolder(), mstring);
+//    public final String configVer = "13.3";
+//    public final String messagesVer = "13.3";
 
-    public ConfigHandler(){
+    //    public static final StreamLine inst = StreamLine.getInstance();
+    public final String cstring = "config.yml";
+    public final File cfile = new File(StreamLine.getInstance().getDataFolder(), cstring);
+    public final File translationPath = new File(StreamLine.getInstance().getDataFolder() + File.separator + "translations" + File.separator);
+    public final String en_USString = "en_US.yml";
+    public final File en_USFile = new File(translationPath + en_USString);
+    public final String fr_FRString = "fr_FR.yml";
+    public final File fr_FRFile = new File(translationPath + fr_FRString);
+    public final String disbotString = "discord-bot.yml";
+    public final File disbotFile = new File(StreamLine.getInstance().getDataFolder(), disbotString);
+    public final String commandString = "commands.yml";
+    public final File commandFile = new File(StreamLine.getInstance().getDataFolder(), commandString);
+
+    public File mfile(String language) {
+        return new File(translationPath + (language.endsWith(".yml") ? language : language + ".yml"));
+    }
+
+    public ConfigHandler(String language){
         if (! StreamLine.getInstance().getDataFolder().exists()) {
             if (StreamLine.getInstance().getDataFolder().mkdirs()) {
                 MessagingUtils.logInfo("Made folder: " + StreamLine.getInstance().getDataFolder().getName());
             }
         }
 
-//        this.configVer = StreamLine.getInstance().getDescription().getVersion();
-//        this.messagesVer = StreamLine.getInstance().getDescription().getVersion();
-
-//        System.out.println("config load - start");
+        this.language = language;
 
         conf = loadConf();
-        MessagingUtils.logInfo("Loaded configuration!");
-        mess = loadMess();
-        MessagingUtils.logInfo("Loaded messages!");
-
-//        System.out.println("config load - end");
+        mess = loadTrans(language);
+        discordBot = loadDiscordBot();
+        commands = loadCommands();
     }
 
-//    public static Configuration getConf() { return conf; }
-//    public static Configuration getMess() { return mess; }
-//    public static Configuration getoConf() { return oConf; }
-//    public static Configuration getoMess() { return oMess; }
+    public void setLanguage(String language) throws Exception {
+        if (TextUtils.equalsAny(language, "en_US", "fr_FR")) throw new Exception("Unsupported language!");
+
+        this.language = language;
+    }
 
     public void reloadConfig(){
         try {
@@ -63,7 +76,7 @@ public class ConfigHandler {
 
     public void reloadMessages(){
         try {
-            mess = loadMess();
+            mess = loadTrans(this.language);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -82,14 +95,6 @@ public class ConfigHandler {
 
         try {
             thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(cfile);
-            if (! this.configVer.equals(thing.getString("version"))){
-                thing = iterateConfigs("oldconfig.yml");
-
-                MessagingUtils.logSevere("----------------------------------------------------------");
-                MessagingUtils.logSevere("YOU NEED TO UPDATE THE VALUES IN YOUR NEW CONFIG FILE AS");
-                MessagingUtils.logSevere("YOUR OLD ONE WAS OUTDATED. I IMPORTED THE NEW ONE FOR YOU.");
-                MessagingUtils.logSevere("----------------------------------------------------------");
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -97,10 +102,46 @@ public class ConfigHandler {
         return thing;
     }
 
-    public Configuration loadMess(){
-        if (! mfile.exists()){
-            try	(InputStream in = StreamLine.getInstance().getResourceAsStream(mstring)){
-                Files.copy(in, mfile.toPath());
+    public static TreeSet<String> acceptableTranslations() {
+        TreeSet<String> trans = new TreeSet<>();
+
+        trans.add("en_US");
+        trans.add("fr_FR");
+
+        return trans;
+    }
+
+    public Configuration loadTrans(String language) {
+        if (! mfile(language).exists()){
+            if (! translationPath.exists()) if (! translationPath.mkdirs()) MessagingUtils.logSevere("COULD NOT MAKE TRANSLATION FOLDER(S)!");
+
+            try (InputStream in = StreamLine.getInstance().getResourceAsStream(en_USString)) {
+                Files.copy(in, en_USFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try (InputStream in = StreamLine.getInstance().getResourceAsStream(fr_FRString)) {
+                Files.copy(in, fr_FRFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Configuration thing = new Configuration();
+
+        try {
+            thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(mfile(language));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return thing;
+    }
+
+    public Configuration loadDiscordBot(){
+        if (! disbotFile.exists()){
+            try	(InputStream in = StreamLine.getInstance().getResourceAsStream(disbotString)){
+                Files.copy(in, disbotFile.toPath());
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -109,54 +150,41 @@ public class ConfigHandler {
         Configuration thing = new Configuration();
 
         try {
-            thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(mfile);
-            if (! this.messagesVer.equals(thing.getString("version"))){
-                thing = iterateMessagesConf("oldmessages.yml");
-
-                MessagingUtils.logSevere("----------------------------------------------------------");
-                MessagingUtils.logSevere("YOU NEED TO UPDATE THE VALUES IN YOUR NEW MESSAGES FILE AS");
-                MessagingUtils.logSevere("YOUR OLD ONE WAS OUTDATED. I IMPORTED THE NEW ONE FOR YOU.");
-                MessagingUtils.logSevere("----------------------------------------------------------");
-            }
+            thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(disbotFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return thing;
     }
 
-    private Configuration iterateConfigs(String old) throws IOException {
-        File oldfile = new File(StreamLine.getInstance().getDataFolder(), old);
-        if (oldfile.exists()) {
-            return iterateConfigs("new" + old);
-        } else {
-            try (InputStream in = StreamLine.getInstance().getResourceAsStream(cstring)) {
-                Files.move(cfile.toPath(), oldfile.toPath());
-                Files.copy(in, cfile.toPath());
-            } catch (IOException e) {
+    public Configuration loadCommands(){
+        if (! commandFile.exists()){
+            try	(InputStream in = StreamLine.getInstance().getResourceAsStream(commandString)){
+                Files.copy(in, commandFile.toPath());
+            } catch (IOException e){
                 e.printStackTrace();
             }
-
-            oConf = conf;
-            return ConfigurationProvider.getProvider(YamlConfiguration.class).load(cfile);
         }
+
+        Configuration thing = new Configuration();
+
+        try {
+            thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(commandFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return thing;
     }
 
-    private Configuration iterateMessagesConf(String old) throws IOException {
-        File oldfile = new File(StreamLine.getInstance().getDataFolder(), old);
-        if (oldfile.exists()) {
-            return iterateMessagesConf("new" + old);
-        } else {
-            try (InputStream in = StreamLine.getInstance().getResourceAsStream(mstring)) {
-                Files.move(mfile.toPath(), oldfile.toPath());
-                Files.copy(in, mfile.toPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            oMess = mess;
-            return ConfigurationProvider.getProvider(YamlConfiguration.class).load(mfile);
-        }
-    }
+    /*
+    \        /\        /\        /\        /\        /\        /\        /\        /\        /\        /\        /\        /\        /\        /\        /\        /
+     \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /  \      /
+      \    /    \    /    \    /    \    /    \    /    \    /    \    /    \    /    \    /    \    /    \    /    \    /    \    /    \    /    \    /    \    /
+       \  /      \  /      \  /      \  /      \  /      \  /      \  /      \  /      \  /      \  /      \  /      \  /      \  /      \  /      \  /      \  /
+        \/        \/        \/        \/        \/        \/        \/        \/        \/        \/        \/        \/        \/        \/        \/        \/
+     */
 
     public void saveConf(){
         try {
@@ -168,7 +196,7 @@ public class ConfigHandler {
 
     public void saveMess(){
         try {
-            ConfigurationProvider.getProvider(YamlConfiguration.class).save(mess, mfile);
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(mess, mfile(this.language));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -262,5 +290,95 @@ public class ConfigHandler {
     public Collection<String> getMessKeys() {
         reloadMessages();
         return mess.getKeys();
+    }
+
+    public String getDisBotString(String path) {
+        reloadMessages();
+        return discordBot.getString(path);
+    }
+
+    public boolean getDisBotBoolean(String path) {
+        reloadMessages();
+        return discordBot.getBoolean(path);
+    }
+
+    public int getDisBotInteger(String path) {
+        reloadMessages();
+        return discordBot.getInt(path);
+    }
+
+    public List<String> getDisBotStringList(String path) {
+        reloadMessages();
+        return discordBot.getStringList(path);
+    }
+
+    public List<Integer> getDisBotIntegerList(String path) {
+        reloadMessages();
+        return discordBot.getIntList(path);
+    }
+
+    public Configuration getDisBotSection(String path) {
+        reloadMessages();
+        return discordBot.getSection(path);
+    }
+
+    public Object getObjectDisBot(String path){
+        reloadMessages();
+        return discordBot.get(path);
+    }
+
+    public void setObjectDisBot(String path, Object thing){
+        discordBot.set(path, thing);
+        reloadMessages();
+    }
+
+    public Collection<String> getDisBotKeys() {
+        reloadMessages();
+        return discordBot.getKeys();
+    }
+
+    public String getCommandString(String path) {
+        reloadMessages();
+        return commands.getString(path);
+    }
+
+    public boolean getCommandBoolean(String path) {
+        reloadMessages();
+        return commands.getBoolean(path);
+    }
+
+    public int getCommandInteger(String path) {
+        reloadMessages();
+        return commands.getInt(path);
+    }
+
+    public List<String> getCommandStringList(String path) {
+        reloadMessages();
+        return commands.getStringList(path);
+    }
+
+    public List<Integer> getCommandIntegerList(String path) {
+        reloadMessages();
+        return commands.getIntList(path);
+    }
+
+    public Configuration getCommandSection(String path) {
+        reloadMessages();
+        return commands.getSection(path);
+    }
+
+    public Object getObjectCommand(String path){
+        reloadMessages();
+        return commands.get(path);
+    }
+
+    public void setObjectCommand(String path, Object thing){
+        commands.set(path, thing);
+        reloadMessages();
+    }
+
+    public Collection<String> getCommandKeys() {
+        reloadMessages();
+        return commands.getKeys();
     }
 }

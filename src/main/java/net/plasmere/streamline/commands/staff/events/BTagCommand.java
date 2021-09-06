@@ -5,6 +5,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.CommandsConfUtils;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.users.SavableUser;
@@ -39,7 +40,7 @@ public class BTagCommand extends Command implements TabExecutor {
             }
 
             if (! stat.latestName.equals(sender.getName())) {
-                if (! sender.hasPermission(ConfigUtils.comBBTagOPerm)) {
+                if (! sender.hasPermission(CommandsConfUtils.comBBTagOPerm)) {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
                     return;
                 }
@@ -50,7 +51,7 @@ public class BTagCommand extends Command implements TabExecutor {
                 case "rem":
                 case "r":
                 case "-":
-                    if (! sender.hasPermission(ConfigUtils.comBBTagChPerm)) {
+                    if (! sender.hasPermission(CommandsConfUtils.comBBTagChPerm)) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
                         return;
                     }
@@ -64,7 +65,7 @@ public class BTagCommand extends Command implements TabExecutor {
                 case "add":
                 case "a":
                 case "+":
-                    if (! sender.hasPermission(ConfigUtils.comBBTagChPerm)) {
+                    if (! sender.hasPermission(CommandsConfUtils.comBBTagChPerm)) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.noPerm);
                         return;
                     }
@@ -87,7 +88,7 @@ public class BTagCommand extends Command implements TabExecutor {
 
     @Override
     public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
-        if (! sender.hasPermission(ConfigUtils.comBBTagPerm)) return new ArrayList<>();
+        if (! sender.hasPermission(CommandsConfUtils.comBBTagPerm)) return new ArrayList<>();
 
         Collection<ProxiedPlayer> players = StreamLine.getInstance().getProxy().getPlayers();
         List<String> strPlayers = new ArrayList<>();

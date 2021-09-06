@@ -7,6 +7,7 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.utils.*;
@@ -106,7 +107,7 @@ public class BanCommand extends Command implements TabExecutor {
                                                     .replace("%reason%", reason)
                                                     .replace("%date%", new Date(Long.parseLong(till)).toString())
                                             ,
-                                            ConfigUtils.textChannelBans
+                                            DiscordBotConfUtils.textChannelBans
                                     )
                             );
                         }
@@ -167,7 +168,7 @@ public class BanCommand extends Command implements TabExecutor {
                                                 .replace("%player%", otherName)
                                                 .replace("%reason%", reason)
                                         ,
-                                        ConfigUtils.textChannelBans
+                                        DiscordBotConfUtils.textChannelBans
                                 )
                         );
                     }
@@ -248,7 +249,7 @@ public class BanCommand extends Command implements TabExecutor {
                                             .replace("%reason%", reason)
                                             .replace("%date%", new Date(Long.parseLong(till)).toString())
                                     ,
-                                    ConfigUtils.textChannelBans
+                                    DiscordBotConfUtils.textChannelBans
                             )
                     );
                 }
@@ -283,7 +284,7 @@ public class BanCommand extends Command implements TabExecutor {
                                             .replace("%punisher%", sender.getName())
                                             .replace("%player%", otherName)
                                     ,
-                                    ConfigUtils.textChannelBans
+                                    DiscordBotConfUtils.textChannelBans
                             )
                     );
                 }

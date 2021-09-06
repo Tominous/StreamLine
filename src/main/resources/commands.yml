@@ -1,0 +1,727 @@
+### COMMAND SETTINGS ###
+commands:
+  # Discord commands...
+  discord:
+    # The help command.
+    help:
+      # Enables / disables the use of the "help" bot command.
+      enabled: true
+      # All aliases for the command. Listed in yml list format. Including the main command.
+      aliases:
+        - "?"
+        - "commands"
+        - "help"
+      # Put the ID of the Discord role here:
+      permission: "put-id-here"
+    # The online command.
+    online:
+      # Enables / disables the use of the "online" bot command.
+      enabled: true
+      # All aliases for the command. Listed in yml list format. Including the main command.
+      aliases:
+        - "o"
+        - "on"
+        - "online"
+      # Put the ID of the Discord role here:
+      permission: "put-id-here"
+    # The report command.
+    report:
+      # Enables / disables the use of the "report" bot command.
+      enabled: true
+      # All aliases for the command. Listed in yml list format. Including the main command.
+      aliases:
+        - "r"
+        - "rep"
+        - "report"
+      # Put the ID of the Discord role here:
+      permission: "put-id-here"
+    # The staffchat command.
+    staffchat:
+      # Enables / disables being able to use a command in Discord to talk to staff on the bungee server.
+      enabled: true
+      # All aliases for the command. Listed in yml list format. Including the main command.
+      aliases:
+        - "sc"
+        - "!"
+        - "#"
+        - "staffchat"
+      # Put the ID of the Discord role here:
+      permission: "put-id-here"
+    # The staffonline command.
+    staffonline:
+      # Enables / disables the use of the "staffonline" bot command.
+      enabled: true
+      # All aliases for the command. Listed in yml list format. Including the main command.
+      aliases:
+        - "so"
+        - "staff"
+        - "staffonline"
+      # Put the ID of the Discord role here:
+      permission: "put-id-here"
+  # Bungee commands...
+  bungee:
+    # The ping command.
+    ping:
+      # Enables / disables the use of the "ping" bungee command.
+      enabled: true
+      # Main command that the aliases point to.
+      base: "ping"
+      # Custom permission.
+      permission: "streamline.command.ping"
+      # All aliases for the command. Listed in yml list format.
+      aliases:
+        - "pn"
+        - "png"
+    # The plugins command.
+    plugins:
+      # Enables / disables the use of the "plugins" bungee command.
+      enabled: true
+      # Main command that the aliases point to.
+      base: "plugins"
+      # Custom permission.
+      permission: "streamline.command.plugins"
+      # All aliases for the command. Listed in yml list format.
+      aliases:
+        - "pl"
+        - "plug"
+        - "plugs"
+    # The stream command.
+    stream:
+      # Enables / disables the use of the "stream" bungee command.
+      enabled: true
+      # Main command that the aliases point to.
+      base: "stream"
+      # Custom permission.
+      permission: "streamline.command.stream"
+      # All aliases for the command. Listed in yml list format.
+      aliases:
+        - "str"
+        - "link"
+    # The report command.
+    report:
+      # Enables / disables the use of the "report" bungee command.
+      enabled: true
+      # Main command that the aliases point to.
+      base: "report"
+      # Custom permission.
+      permission: "streamline.command.report"
+      # All aliases for the command. Listed in yml list format.
+      aliases:
+        - "rep"
+        - "!!!"
+    # The party command.
+    party:
+      # Enables / disables the use of the "party" bungee command.
+      enabled: true
+      # Main command that the aliases point to.
+      base: "party"
+      # Enables / disables the use of "/pc <msg>" for quick messaging.
+      quick-chat: true
+      # Custom permission.
+      permission: "streamline.command.party"
+      # All aliases for the command. Listed in yml list format.
+      aliases:
+        # Main command.
+        main:
+          - "p"
+          - "par"
+          - "part"
+        # Join subcommand.
+        join:
+          - "j"
+          - "go"
+          - "join"
+        # Leave subcommand.
+        leave:
+          - "l"
+          - "bye"
+          - "leave"
+        # Create subcommand.
+        create:
+          - "cr"
+          - "new"
+          - "create"
+        # Promote subcommand.
+        promote:
+          - "pr"
+          - "++"
+          - "promote"
+        # Demote subcommand.
+        demote:
+          - "de"
+          - "--"
+          - "demote"
+        # Chat subcommand.
+        chat:
+          - "c"
+          - "ch"
+          - "chat"
+        # List subcommand.
+        list:
+          - "l"
+          - "members"
+          - "list"
+        # Open subcommand.
+        open:
+          - "op"
+          - "open"
+        # Close subcommand.
+        close:
+          - "cl"
+          - "shut"
+          - "close"
+        # Disband subcommand.
+        disband:
+          - "dis"
+          - "end"
+          - "disband"
+        # Accept subcommand.
+        accept:
+          - "a"
+          - "yes"
+          - "accept"
+        # Deny subcommand.
+        deny:
+          - "d"
+          - "no"
+          - "deny"
+        # Invite subcommand.
+        invite:
+          - "inv"
+          - "add"
+          - "invite"
+        # Kick subcommand.
+        kick:
+          - "k"
+          - "-"
+          - "kick"
+        # Mute subcommand.
+        mute:
+          - "mu"
+          - "mut"
+          - "mute"
+        # Warp subcommand.
+        warp:
+          - "wa"
+          - "summon"
+          - "warp"
+    # The guild command.
+    guild:
+      # Enables / disables the use of the "party" bungee command.
+      enabled: true
+      # Main command that the aliases point to.
+      base: "guild"
+      # Enables / disables the use of "/gc <msg>" for quick messaging.
+      quick-chat: true
+      # Custom permission.
+      permission: "streamline.command.guild"
+      # All aliases for the command. Listed in yml list format.
+      aliases:
+        # Main command.
+        main:
+          - "g"
+          - "gu"
+          - "gul"
+        # Join subcommand.
+        join:
+          - "j"
+          - "go"
+          - "join"
+        # Leave subcommand.
+        leave:
+          - "l"
+          - "bye"
+          - "leave"
+        # Create subcommand.
+        create:
+          - "cr"
+          - "new"
+          - "create"
+        # Promote subcommand.
+        promote:
+          - "pr"
+          - "++"
+          - "promote"
+        # Demote subcommand.
+        demote:
+          - "de"
+          - "--"
+          - "demote"
+        # Chat subcommand.
+        chat:
+          - "c"
+          - "ch"
+          - "chat"
+        # List subcommand.
+        list:
+          - "l"
+          - "members"
+          - "list"
+        # Open subcommand.
+        open:
+          - "op"
+          - "open"
+        # Close subcommand.
+        close:
+          - "cl"
+          - "shut"
+          - "close"
+        # Disband subcommand.
+        disband:
+          - "dis"
+          - "end"
+          - "disband"
+        # Accept subcommand.
+        accept:
+          - "a"
+          - "yes"
+          - "accept"
+        # Deny subcommand.
+        deny:
+          - "d"
+          - "no"
+          - "deny"
+        # Invite subcommand.
+        invite:
+          - "inv"
+          - "add"
+          - "invite"
+        # Kick subcommand.
+        kick:
+          - "k"
+          - "-"
+          - "kick"
+        # Mute subcommand.
+        mute:
+          - "mu"
+          - "mut"
+          - "mute"
+        # Warp subcommand.
+        warp:
+          - "wa"
+          - "summon"
+          - "warp"
+        info:
+          - "in"
+          - "inf"
+          - "stats"
+          - "info"
+        rename:
+          - "rename"
+          - "ren"
+          - "rn"
+    # Stats command.
+    stats:
+      # Enables / disables the use of the "stats" bungee command.
+      enabled: true
+      # Main command that the aliases point to.
+      base: "stats"
+      # Custom permission.
+      permission: "streamline.command.stats"
+      # All aliases for the command. Listed in yml list format.
+      aliases:
+        - "st"
+        - "myinfo"
+        - "mi"
+        - "lookup"
+      # For viewing others.
+      view-others:
+        # Enables / disables viewing other stats.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.stats.others"
+    # Server commands...
+    servers:
+      # The lobby command.
+      lobby:
+        # Enables / disables the use of the "lobby" bungee command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "lobby"
+        # Custom permission.
+        permission: "streamline.command.servers.lobby"
+        # Put the name of your main lobby / hub server. Not an IP.
+        points-to: "lobby"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "l"
+          - "hub"
+      # The trampoline command fix.
+      fabric-fix:
+        # Enables / disables the use of the "trampoline" bungee command fix.
+        enabled: true
+        # Custom permission.
+        permission: "streamline.command.servers.fabric"
+        # Should be a server name. Not an IP.
+        points-to: "vanilla"
+    # Staff commands...
+    staff:
+      # The globalonline command.
+      globalonline:
+        # Enables / disables the use of the "globalonline" bungee command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "globalonline"
+        # Custom permission.
+        permission: "streamline.command.globalonline"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "gl"
+          - "go"
+          - "online"
+      # The staffchat command.
+      staffchat:
+        # Enables / disables the use of the "staffchat" bungee command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "staffchat"
+        # Custom permission.
+        permission: "streamline.command.staffchat"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "sc"
+          - "mc"
+          - "schat"
+      # The staffonline command.
+      staffonline:
+        # Enables / disables the use of the "staffonline" bungee command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "staffonline"
+        # Custom permission.
+        permission: "streamline.command.staffonline"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "so"
+          - "staff"
+      # The streamline reload command.
+      slreload:
+        # Main command that the aliases point to.
+        base: "slreload"
+        # Custom permission.
+        permission: "streamline.command.reload"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "slr"
+          - "stre"
+          - "slrel"
+      # The parties command.
+      parties:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "parties"
+        # Custom permission.
+        permission: "streamline.command.parties"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "parts"
+          - "pars"
+          - "ps"
+      # The guilds command.
+      guilds:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "guilds"
+        # Custom permission.
+        permission: "streamline.command.guilds"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "gilds"
+          - "gds"
+          - "gs"
+      # The getstats command.
+      getstats:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "getstats"
+        # Custom permission.
+        permission: "streamline.command.getstats"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "gets"
+          - "gstats"
+          - "players"
+      # The bungee sudo command.
+      bsudo:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "bsudo"
+        # Custom permission.
+        permission: "streamline.command.bsudo"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "bs"
+          - "bsu"
+          - "psuedo"
+      # The social spy command.
+      sspy:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "sspy"
+        # Custom permission.
+        permission: "streamline.command.sspy"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "socialspy"
+      # The guild spy command.
+      gspy:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "gspy"
+        # Custom permission.
+        permission: "streamline.command.gspy"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "guildspy"
+      # The party spy command.
+      pspy:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "pspy"
+        # Custom permission.
+        permission: "streamline.command.pspy"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "partyspy"
+      # The staff chat view command.
+      scview:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "scview"
+        # Custom permission.
+        permission: "streamline.command.scview"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "scv"
+          - "sctoggle"
+          - "stafftoggle"
+      # The bungee tag command.
+      btag:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "btag"
+        # Custom permission.
+        permission: "streamline.command.btag"
+        # View others permission.
+        other-perm: "streamline.command.btag.others"
+        # Change values permission.
+        change-perm: "streamline.command.btag.change"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "bungeetag"
+      # The events reload command.
+      evreload:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "evreload"
+        # Custom permission.
+        permission: "streamline.command.ereload"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "reloadevents"
+          - "reloade"
+          - "reev"
+      # The network points command.
+      points:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "points"
+        # Custom permission.
+        permission: "streamline.command.points"
+        # View others permission.
+        other-perm: "streamline.command.points.others"
+        # Change values permission.
+        change-perm: "streamline.command.points.change"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "networkpoints"
+          - "netp"
+          - "np"
+          - "gold"
+      # The server ping command.
+      serverping:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "serverping"
+        # Custom permission.
+        permission: "streamline.command.serverping"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "sping"
+      # The mute command.
+      mute:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "mute"
+        # Custom permission.
+        permission: "streamline.command.mute"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "silence"
+      # The kick command.
+      kick:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "kick"
+        # Custom permission.
+        permission: "streamline.command.kick"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "no"
+      # The ban command.
+      ban:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "ban"
+        # Custom permission.
+        permission: "streamline.command.ban"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "hammer"
+      # The ipban command.
+      ipban:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "ipban"
+        # Custom permission.
+        permission: "streamline.command.ipban"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "ipb"
+          - "iphammer"
+      # The info command.
+      info:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "info"
+        # Custom permission.
+        permission: "streamline.command.info"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "slv"
+      # The end command.
+      end:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "end"
+        # Custom permission.
+        permission: "streamline.command.end"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "gracefulend"
+      # The bteleport command.
+      bteleport:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "bteleport"
+        # Custom permission.
+        permission: "streamline.command.btp"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "bt"
+          - "btp"
+          - "btele"
+    # For configs commands...
+    configs:
+      # The settings command.
+      settings:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "settings"
+        # Custom permission.
+        permission: "streamline.command.settings"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "setedit"
+          - "se"
+          - "settingsedit"
+    # For messaging commands...
+    messaging:
+      # The ignore command.
+      ignore:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "ignore"
+        # Custom permission.
+        permission: "streamline.command.ignore"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "ig"
+          - "shutup"
+          - "block"
+      # The message command.
+      message:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "message"
+        # Custom permission.
+        permission: "streamline.command.msg"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "m"
+          - "tell"
+          - "w"
+          - "msg"
+          - "whisper"
+      # The reply command.
+      reply:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "reply"
+        # Custom permission.
+        permission: "streamline.command.reply"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "r"
+          - "re"
+          - "followup"
+      # The friend command.
+      friend:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "friend"
+        # Custom permission.
+        permission: "streamline.command.friend"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "f"
+          - "fr"
+    # Debugging commands.
+    debug:
+      # The delete stat command.
+      delete-stat:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "deletestat"
+        # Custom permission.
+        permission: "streamline.command.deletestat"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "ds"
+          - "removestat"
+          - "rs"

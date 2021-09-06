@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.CommandsConfUtils;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
@@ -37,7 +38,7 @@ public class GoToServerLobbyCommand extends Command implements TabExecutor {
                 if (player.hasPermission("streamline.server.lobby") || player.hasPermission("streamline.*")) {
                     ProxyServer proxy = StreamLine.getInstance().getProxy();
 
-                    ServerInfo vanServer = proxy.getServerInfo(ConfigUtils.comBLobbyEnd);
+                    ServerInfo vanServer = proxy.getServerInfo(CommandsConfUtils.comBLobbyEnd);
 
                     if (!vanServer.canAccess(player))
                         player.sendMessage(new TextComponent(ChatColor.RED + "Cannot connect..."));

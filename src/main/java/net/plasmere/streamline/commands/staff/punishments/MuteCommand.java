@@ -7,6 +7,7 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.users.Player;
@@ -83,7 +84,7 @@ public class MuteCommand extends Command implements TabExecutor {
                                                     .replace("%player%", other.latestName)
                                                     .replace("%date%", other.mutedTill.toString())
                                             ,
-                                            ConfigUtils.textChannelMutes
+                                            DiscordBotConfUtils.textChannelMutes
                                     )
                             );
                         }
@@ -127,7 +128,7 @@ public class MuteCommand extends Command implements TabExecutor {
                                                 .replace("%punisher%", sender.getName())
                                                 .replace("%player%", other.latestName)
                                         ,
-                                        ConfigUtils.textChannelMutes
+                                        DiscordBotConfUtils.textChannelMutes
                                 )
                         );
                     }
@@ -183,7 +184,7 @@ public class MuteCommand extends Command implements TabExecutor {
                                             .replace("%player%", other.latestName)
                                             .replace("%date%", other.mutedTill.toString())
                                     ,
-                                    ConfigUtils.textChannelMutes
+                                    DiscordBotConfUtils.textChannelMutes
                             )
                     );
                 }
@@ -220,7 +221,7 @@ public class MuteCommand extends Command implements TabExecutor {
                                             .replace("%punisher%", sender.getName())
                                             .replace("%player%", other.latestName)
                                     ,
-                                    ConfigUtils.textChannelMutes
+                                    DiscordBotConfUtils.textChannelMutes
                             )
                     );
                 }

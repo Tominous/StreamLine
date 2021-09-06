@@ -2,6 +2,7 @@ package net.plasmere.streamline.commands.staff;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.users.Player;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
@@ -42,7 +43,7 @@ public class StaffChatCommand extends Command {
                                 MessageConfUtils.discordStaffChatMessage
                                         .replace("%user%", sender.getName())
                                         .replace("%message%", TextUtils.normalize(args)),
-                                ConfigUtils.textChannelStaffChat));
+                                DiscordBotConfUtils.textChannelStaffChat));
                     }
                 } else {
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.prefix + MessageConfUtils.noPerm);

@@ -2,6 +2,7 @@ package net.plasmere.streamline.discordbot.commands;
 
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.TextUtils;
@@ -18,7 +19,7 @@ public class StaffChatCommand {
 
     public static void sendMessage(String command, MessageReceivedEvent event){
         String om = event.getMessage().getContentDisplay();
-        String prefix = ConfigUtils.botPrefix;
+        String prefix = DiscordBotConfUtils.botPrefix;
 
         String msg = om.substring((prefix + command + " ").length());
 

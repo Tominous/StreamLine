@@ -1,6 +1,7 @@
 package net.plasmere.streamline.commands.servers;
 
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.CommandsConfUtils;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -25,7 +26,7 @@ public class GoToServerVanillaCommand extends Command {
             if (player.hasPermission("streamline.server.fabric") || player.hasPermission("streamline.*")) {
                 ProxyServer proxy = StreamLine.getInstance().getProxy();
 
-                ServerInfo vanServer = proxy.getServerInfo(ConfigUtils.comBFabricEnd);
+                ServerInfo vanServer = proxy.getServerInfo(CommandsConfUtils.comBFabricEnd);
 
                 if (!vanServer.canAccess(player))
                     player.sendMessage(new TextComponent(ChatColor.RED + "Cannot connect..."));

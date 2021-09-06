@@ -5,6 +5,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.CommandsConfUtils;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
@@ -23,7 +24,7 @@ public class StatsCommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof ProxiedPlayer) {
-            if (args.length <= 0 || ! ConfigUtils.comBStatsOthers) {
+            if (args.length <= 0 || ! CommandsConfUtils.comBStatsOthers) {
                 PlayerUtils.info(sender, PlayerUtils.getOrGetPlayerStat(sender.getName()));
             } else {
                 SavableUser person = PlayerUtils.getOrGetSavableUser(args[0]);
@@ -62,7 +63,7 @@ public class StatsCommand extends Command implements TabExecutor {
 
         strPlayers.add("%");
 
-        if (sender.hasPermission(ConfigUtils.comBStatsPermOthers)) {
+        if (sender.hasPermission(CommandsConfUtils.comBStatsPermOthers)) {
             return TextUtils.getCompletion(strPlayers, args[0]);
         }
 

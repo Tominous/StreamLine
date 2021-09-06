@@ -6,6 +6,7 @@ import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.Server;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.events.EventsHandler;
 import net.plasmere.streamline.objects.*;
@@ -257,7 +258,7 @@ public class MessagingUtils {
 
         try {
             if (isJoin) {
-                Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBJoins))
+                Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelBJoins))
                         .sendMessageEmbeds(
                                 eb
                                         .setDescription(MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
@@ -266,7 +267,7 @@ public class MessagingUtils {
                                         .build()
                         ).queue();
             } else {
-                Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBLeaves))
+                Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelBLeaves))
                         .sendMessageEmbeds(
                                 eb
                                         .setDescription(MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
@@ -291,7 +292,7 @@ public class MessagingUtils {
         try {
             if (isJoin) {
                 try {
-                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBJoins))
+                    Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelBJoins))
                             .sendMessageEmbeds(
                                     eb
                                             .setDescription(MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
@@ -300,11 +301,11 @@ public class MessagingUtils {
                                             .build()
                             ).queue();
                 } catch (NullPointerException e) {
-                    MessagingUtils.logSevere("Discord bot is either not in the Discord server, or the bot cannot find " + ConfigUtils.textChannelBJoins);
+                    MessagingUtils.logSevere("Discord bot is either not in the Discord server, or the bot cannot find " + DiscordBotConfUtils.textChannelBJoins);
                 }
             } else {
                 try {
-                Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBLeaves))
+                Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelBLeaves))
                         .sendMessageEmbeds(
                                 eb
                                         .setDescription(MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
@@ -314,7 +315,7 @@ public class MessagingUtils {
                         ).queue();
 
                 } catch (NullPointerException e) {
-                    MessagingUtils.logSevere("Discord bot is either not in the Discord server, or the bot cannot find " + ConfigUtils.textChannelBJoins);
+                    MessagingUtils.logSevere("Discord bot is either not in the Discord server, or the bot cannot find " + DiscordBotConfUtils.textChannelBJoins);
                 }
             }
         } catch (Exception e) {
@@ -416,7 +417,7 @@ public class MessagingUtils {
 
             if (ConfigUtils.moduleUseMCAvatar) {
                 if (fromBungee)
-                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessageEmbeds(
+                    Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelReports)).sendMessageEmbeds(
                             eb.setTitle(MessageConfUtils.reportEmbedTitle)
                                     .setDescription(TextUtils.newLined(
                                             replace1
@@ -424,7 +425,7 @@ public class MessagingUtils {
                                     ).setAuthor(sender, FaceFetcher.getFaceAvatarURL(sender), FaceFetcher.getFaceAvatarURL(sender)).build()
                     ).queue();
                 else
-                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessageEmbeds(
+                    Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelReports)).sendMessageEmbeds(
                             eb.setTitle(MessageConfUtils.reportEmbedTitle)
                                     .setDescription(TextUtils.newLined(
                                             replace
@@ -433,7 +434,7 @@ public class MessagingUtils {
                     ).queue();
             } else {
                 if (fromBungee)
-                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessageEmbeds(
+                    Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelReports)).sendMessageEmbeds(
                             eb.setTitle(MessageConfUtils.reportEmbedTitle)
                                     .setDescription(TextUtils.newLined(
                                             replace1
@@ -441,7 +442,7 @@ public class MessagingUtils {
                                     ).build()
                     ).queue();
                 else
-                    Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelReports)).sendMessageEmbeds(
+                    Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelReports)).sendMessageEmbeds(
                             eb.setTitle(MessageConfUtils.reportEmbedTitle)
                                     .setDescription(TextUtils.newLined(
                                             replace

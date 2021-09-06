@@ -3,7 +3,9 @@ package net.plasmere.streamline;
 import net.md_5.bungee.api.scheduler.ScheduledTask;
 import net.plasmere.streamline.config.ConfigHandler;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.config.from.FindFrom;
 import net.plasmere.streamline.discordbot.MessageListener;
 import net.plasmere.streamline.discordbot.ReadyListener;
 import net.plasmere.streamline.events.Event;
@@ -32,17 +34,19 @@ import net.dv8tion.jda.api.JDABuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 public class StreamLine extends Plugin {
-
 	private static StreamLine instance = null;
 
 	public static ConfigHandler config;
@@ -63,6 +67,9 @@ public class StreamLine extends Plugin {
 	private final File gDir = new File(getDataFolder() + File.separator + "guilds" + File.separator);
 	private final File confDir = new File(getDataFolder() + File.separator + "configs" + File.separator);
 	private File eventsDir;
+
+	public final File versionFile = new File(getDataFolder(), "version.txt");
+	public final File languageFile = new File(getDataFolder(), "language.txt");
 
 	public ScheduledTask guilds;
 	public ScheduledTask players;
@@ -97,8 +104,8 @@ public class StreamLine extends Plugin {
 		if (jda != null) try { jda.shutdownNow(); jda = null; } catch (Exception e) { e.printStackTrace(); }
 
 		try {
-			JDABuilder jdaBuilder = JDABuilder.createDefault(ConfigUtils.botToken)
-					.setActivity(Activity.playing(ConfigUtils.botStatusMessage));
+			JDABuilder jdaBuilder = JDABuilder.createDefault(DiscordBotConfUtils.botToken)
+					.setActivity(Activity.playing(DiscordBotConfUtils.botStatusMessage));
 			jdaBuilder.addEventListeners(
 					new MessageListener(),
 					new ReadyListener()
@@ -210,6 +217,77 @@ public class StreamLine extends Plugin {
 		}
 	}
 
+	public void loadConfigs() {
+		String version = "";
+		String language = "";
+
+		try {
+			if (! versionFile.exists()) {
+				if (! versionFile.createNewFile()) if (ConfigUtils.debug) { MessagingUtils.logSevere("COULD NOT CREATE VERSION FILE!"); }
+
+				FileWriter writer = new FileWriter(versionFile);
+				writer.write("13.3");
+				writer.close();
+			}
+
+			if (versionFile.exists()) {
+				Scanner reader = new Scanner(versionFile);
+
+				while (reader.hasNextLine()) {
+					String data = reader.nextLine();
+					while (data.startsWith("#")) {
+						data = reader.nextLine();
+					}
+					version = data;
+				}
+
+				reader.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			version = "13.3";
+		}
+
+		try {
+			if (! languageFile.exists()) {
+				if (! languageFile.createNewFile()) if (ConfigUtils.debug) { MessagingUtils.logSevere("COULD NOT CREATE LANGUAGE FILE!"); }
+
+				FileWriter writer = new FileWriter(languageFile);
+				writer.write("# To define which language you want to use.\n");
+				writer.write("# Current supported languages: en_US, fr_FR\n");
+				writer.write("en_US");
+				writer.close();
+			}
+
+			if (languageFile.exists()) {
+				Scanner reader = new Scanner(language);
+
+				while (reader.hasNextLine()) {
+					String data = reader.nextLine();
+					while (data.startsWith("#")) {
+						data = reader.nextLine();
+					}
+					language = data;
+				}
+
+				reader.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			language = "en_US";
+		}
+
+		FindFrom.doUpdate(version, language);
+
+		// Main config.
+		config = new ConfigHandler(language);
+
+		// Server ConfigHandler.
+		if (ConfigUtils.sc) {
+			serverConfig = new ServerConfig();
+		}
+	}
+
     public void onLoad(){
     	InstanceHolder.setInst(instance);
 	}
@@ -225,14 +303,14 @@ public class StreamLine extends Plugin {
 		// Teller.
 		getLogger().info("Loading version [v" + getProxy().getPluginManager().getPlugin("StreamLine").getDescription().getVersion() + "]...");
 
+		// Configs...
+		loadConfigs();
+
 		// LP Support.
 		lpHolder = new LPHolder();
 
 		// Via Support.
 		viaHolder = new ViaHolder();
-
-		// ConfigHandler.
-		config = new ConfigHandler();
 
 		// Geyser Support.
 		geyserHolder = new GeyserHolder();
@@ -240,11 +318,6 @@ public class StreamLine extends Plugin {
 		// Bans.
 		if (ConfigUtils.punBans) {
 			bans = new Bans();
-		}
-
-		// Server ConfigHandler.
-		if (ConfigUtils.sc) {
-			serverConfig = new ServerConfig();
 		}
 
 		// Commands.
@@ -326,7 +399,7 @@ public class StreamLine extends Plugin {
 					if (ConfigUtils.moduleShutdowns) {
 						try {
 //						Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelOfflineOnline)).sendMessageEmbeds(eb.setDescription("Bot shutting down...!").build()).queue();
-							MessagingUtils.sendDiscordEBMessage(new DiscordMessage(getProxy().getConsole(), MessageConfUtils.shutdownTitle, MessageConfUtils.shutdownMessage, ConfigUtils.textChannelOfflineOnline));
+							MessagingUtils.sendDiscordEBMessage(new DiscordMessage(getProxy().getConsole(), MessageConfUtils.shutdownTitle, MessageConfUtils.shutdownMessage, DiscordBotConfUtils.textChannelOfflineOnline));
 						} catch (Exception e) {
 							getLogger().warning("An unknown error occurred with sending online message: " + e.getMessage());
 						}

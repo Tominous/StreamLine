@@ -7,6 +7,7 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.users.Player;
@@ -137,7 +138,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                                                         .replace("%reason%", reason)
                                                         .replace("%date%", new Date(Long.parseLong(till)).toString())
                                                 ,
-                                                ConfigUtils.textChannelIPBans
+                                                DiscordBotConfUtils.textChannelIPBans
                                         )
                                 );
                             }
@@ -203,7 +204,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                                                     .replace("%ip%", ip)
                                                     .replace("%reason%", reason)
                                             ,
-                                            ConfigUtils.textChannelIPBans
+                                            DiscordBotConfUtils.textChannelIPBans
                                     )
                             );
                         }
@@ -299,7 +300,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                                                 .replace("%reason%", reason)
                                                 .replace("%date%", new Date(Long.parseLong(till)).toString())
                                         ,
-                                        ConfigUtils.textChannelIPBans
+                                        DiscordBotConfUtils.textChannelIPBans
                                 )
                         );
                     }
@@ -338,7 +339,7 @@ public class IPBanCommand extends Command implements TabExecutor {
                                                 .replace("%punisher%", sender.getName())
                                                 .replace("%ip%", ip)
                                         ,
-                                        ConfigUtils.textChannelIPBans
+                                        DiscordBotConfUtils.textChannelIPBans
                                 )
                         );
                     }

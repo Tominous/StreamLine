@@ -1,7 +1,9 @@
 package net.plasmere.streamline.discordbot.commands;
 
 import net.plasmere.streamline.StreamLine;
+import net.plasmere.streamline.config.CommandsConfUtils;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PermissionHelper;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -15,19 +17,19 @@ public class CommandsCommand {
     }
 
     private static String compileCommands(MessageReceivedEvent event){
-        String prefix = ConfigUtils.botPrefix;
+        String prefix = DiscordBotConfUtils.botPrefix;
 
         StringBuilder commands = new StringBuilder();
         commands.append("-- Commands --");
-        if (ConfigUtils.comDCommands && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDCommandsPerm))
+        if (CommandsConfUtils.comDCommands && PermissionHelper.checkRoleIDPerms(event, CommandsConfUtils.comDCommandsPerm))
             commands.append("\n").append(prefix).append("commands : Shows you this list.");
-        if (ConfigUtils.comDOnline && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDOnlinePerm))
+        if (CommandsConfUtils.comDOnline && PermissionHelper.checkRoleIDPerms(event, CommandsConfUtils.comDOnlinePerm))
             commands.append("\n").append(prefix).append("online : Shows you who is all online...");
-        if (ConfigUtils.comDReport && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDReportPerm))
+        if (CommandsConfUtils.comDReport && PermissionHelper.checkRoleIDPerms(event, CommandsConfUtils.comDReportPerm))
             commands.append("\n").append(prefix).append("report <explanation> : Reports a player from the Discord.");
-        if (ConfigUtils.comDStaffChat && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDStaffChatPerm))
+        if (CommandsConfUtils.comDStaffChat && PermissionHelper.checkRoleIDPerms(event, CommandsConfUtils.comDStaffChatPerm))
             commands.append("\n").append(prefix).append("staffchat <message> : Puts a message in chat to all staff online.");
-        if (ConfigUtils.comDStaffOnline && PermissionHelper.checkRoleIDPerms(event, ConfigUtils.comDStaffOnlinePerm))
+        if (CommandsConfUtils.comDStaffOnline && PermissionHelper.checkRoleIDPerms(event, CommandsConfUtils.comDStaffOnlinePerm))
             commands.append("\n").append(prefix).append("staffonline : shows the amount of staff and the actual staff online.");
 
         return commands.toString();

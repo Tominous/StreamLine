@@ -19,12 +19,11 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class ServerConfig {
-    private final String filePrePath = StreamLine.getInstance().getDataFolder() + File.separator + "configs" + File.separator;
-
     public File file;
 
     private Configuration serverConfig;
-    private final File scfile = new File(StreamLine.getInstance().getConfDir(), "settings.yml");
+    private final String setstring = "settings.yml";
+    private final File scfile = new File(StreamLine.getInstance().getConfDir(), setstring);
 
     public ServerConfig(){
         if (! StreamLine.getInstance().getConfDir().exists()) {
@@ -55,7 +54,7 @@ public class ServerConfig {
 
     public Configuration loadConfig(){
         if (! scfile.exists()){
-            try	(InputStream in = StreamLine.getInstance().getResourceAsStream("settings.yml")){
+            try	(InputStream in = StreamLine.getInstance().getResourceAsStream(setstring)){
                 Files.copy(in, scfile.toPath());
             } catch (IOException e){
                 e.printStackTrace();
@@ -500,5 +499,11 @@ public class ServerConfig {
     public TreeSet<String> getEmotes() {
         reloadConfig();
         return new TreeSet<>(serverConfig.getSection("proxy-chat.emotes").getKeys());
+    }
+
+    public void setObject(String pathTo, Object object) {
+        serverConfig.set(pathTo, object);
+        saveConfig();
+        reloadConfig();
     }
 }

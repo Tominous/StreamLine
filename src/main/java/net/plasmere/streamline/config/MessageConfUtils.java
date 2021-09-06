@@ -6,7 +6,7 @@ public class MessageConfUtils {
     // Messages:
 //    public static String s = StreamLine.config.getMessString("");
     // Basics.
-    public static String version = StreamLine.config.getMessString("version");
+//    public static String version = StreamLine.config.getMessString("version");
     public static String prefix = StreamLine.config.getMessString("message-prefix");
     public static String noPerm = StreamLine.config.getMessString("no-permission");
     public static String reload = StreamLine.config.getMessString("reload-message");

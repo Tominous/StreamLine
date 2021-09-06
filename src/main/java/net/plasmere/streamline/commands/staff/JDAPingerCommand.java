@@ -2,6 +2,7 @@ package net.plasmere.streamline.commands.staff;
 
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.JDAPingerUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
@@ -31,6 +32,6 @@ public class JDAPingerCommand extends Command {
         ProxiedPlayer player = (ProxiedPlayer) sender;
         player.sendMessage(TextUtils.codedText("&aAttempting to ping..."));
 
-        JDAPingerUtils.sendMessage(Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelBConsole)));
+        JDAPingerUtils.sendMessage(Objects.requireNonNull(jda.getTextChannelById(DiscordBotConfUtils.textChannelBConsole)));
     }
 }

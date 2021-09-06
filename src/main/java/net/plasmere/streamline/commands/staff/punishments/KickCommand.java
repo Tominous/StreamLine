@@ -6,6 +6,7 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.users.Player;
@@ -66,7 +67,7 @@ public class KickCommand extends Command implements TabExecutor {
                                             .replace("%player%", other.latestName)
                                             .replace("%reason%", reason)
                                     ,
-                                    ConfigUtils.textChannelKicks
+                                    DiscordBotConfUtils.textChannelKicks
                             )
                     );
                 }

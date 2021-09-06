@@ -7,6 +7,7 @@ import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.event.*;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.events.Event;
 import net.plasmere.streamline.events.EventsHandler;
@@ -158,7 +159,7 @@ public class JoinLeaveListener implements Listener {
                                 MessageConfUtils.discordOnlineEmbed,
                                 MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
                                         .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
-                                ConfigUtils.textChannelBJoins));
+                                DiscordBotConfUtils.textChannelBJoins));
                     } else {
                         if (ConfigUtils.joinsLeavesIcon) {
                             MessagingUtils.sendDiscordJoinLeaveMessageIcon(true, stat);
@@ -174,7 +175,7 @@ public class JoinLeaveListener implements Listener {
                                     MessageConfUtils.discordOnlineEmbed,
                                     MessageConfUtils.discordOnline.replace("%player_default%", player.getName())
                                             .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
-                                    ConfigUtils.textChannelBJoins));
+                                    DiscordBotConfUtils.textChannelBJoins));
                         } else {
                             if (ConfigUtils.joinsLeavesIcon) {
                                 MessagingUtils.sendDiscordJoinLeaveMessageIcon(true, stat);
@@ -428,7 +429,7 @@ public class JoinLeaveListener implements Listener {
                                 MessageConfUtils.discordOfflineEmbed,
                                 MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
                                         .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
-                                ConfigUtils.textChannelBLeaves));
+                                DiscordBotConfUtils.textChannelBLeaves));
                     } else {
                         if (ConfigUtils.joinsLeavesIcon) {
                             MessagingUtils.sendDiscordJoinLeaveMessageIcon(false, stat);
@@ -444,7 +445,7 @@ public class JoinLeaveListener implements Listener {
                                     MessageConfUtils.discordOfflineEmbed,
                                     MessageConfUtils.discordOffline.replace("%player_default%", player.getName())
                                             .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
-                                    ConfigUtils.textChannelBLeaves));
+                                    DiscordBotConfUtils.textChannelBLeaves));
                         } else {
                             if (ConfigUtils.joinsLeavesIcon) {
                                 MessagingUtils.sendDiscordJoinLeaveMessageIcon(false, stat);

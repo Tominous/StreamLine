@@ -6,7 +6,7 @@
 
     <groupId>net.plasmere</groupId>
     <artifactId>StreamLine</artifactId>
-    <version>1.0.13.3</version>
+    <version>1.0.14.0</version>
     <packaging>jar</packaging>
 
     <name>StreamLine</name>

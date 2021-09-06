@@ -2,6 +2,7 @@ package net.plasmere.streamline.listeners;
 
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.events.Event;
 import net.plasmere.streamline.events.EventsHandler;
@@ -93,7 +94,7 @@ public class ChatListener implements Listener {
                                 MessageConfUtils.discordStaffChatMessage
                                         .replace("%user%", sender.getName())
                                         .replace("%message%", msg),
-                                ConfigUtils.textChannelStaffChat));
+                                DiscordBotConfUtils.textChannelStaffChat));
                     }
                 }
                 isStaffMessage = true;
@@ -118,7 +119,7 @@ public class ChatListener implements Listener {
                                     MessageConfUtils.discordStaffChatMessage
                                             .replace("%user%", sender.getName())
                                             .replace("%message%", msg.substring(prefix.length())),
-                                    ConfigUtils.textChannelStaffChat));
+                                    DiscordBotConfUtils.textChannelStaffChat));
                         }
                     }
                     isStaffMessage = true;
