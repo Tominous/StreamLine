@@ -2003,3 +2003,18 @@ language:
   message: "&eYou are now using &c%locale% &eas your locale&8!"
   # If invalid locale...
   invalid-locale: "&cSorry, but &6%locale% &cis an invalid locale...!"
+
+# When switching chat channels...
+chat-channels:
+  local:
+    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+  global:
+    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+  guild:
+    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+  party:
+    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+  g-officer:
+    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+  p-officer:
+    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"

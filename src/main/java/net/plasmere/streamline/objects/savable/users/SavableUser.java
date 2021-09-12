@@ -56,15 +56,6 @@ public abstract class SavableUser {
     public boolean gspyvs;
     public boolean scvs;
 
-    public enum ChatLevel {
-        GLOBAL,
-        LOCAL,
-        PARTY,
-        GUILD,
-        GOFFICER,
-        POFFICER,
-    }
-
     public List<String> savedKeys = new ArrayList<>();
 
     public SavableUser(String fileName) {

@@ -21,6 +21,8 @@ public class Event {
     public List<String> tags;
     public TreeMap<Integer, SingleSet<Condition, String>> conditions = new TreeMap<>();
     public TreeMap<Integer, SingleSet<Action, String>> actions = new TreeMap<>();
+    public String name;
+    public File file;
 
     public Event(File file){
         try {
@@ -30,6 +32,8 @@ public class Event {
 
             this.conditions = compileCond();
             this.actions = compileAction();
+            this.file = file;
+            this.name = file.getName();
         } catch (Exception e) {
             e.printStackTrace();
         }

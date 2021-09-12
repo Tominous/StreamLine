@@ -243,6 +243,18 @@ public class PluginUtils {
         return a;
     }
 
+    public static String[] stringListToArray(TreeSet<String> aliases){
+        String[] a = new String[aliases.size()];
+
+        int i = 0;
+        for (String alias : aliases){
+            a[i] = alias;
+            i++;
+        }
+
+        return a;
+    }
+
     public static void loadListeners(StreamLine plugin){
         listenerAmount = 0;
 

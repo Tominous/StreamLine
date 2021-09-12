@@ -499,6 +499,28 @@ public class ServerConfig {
         return new TreeSet<>(serverConfig.getSection("proxy-chat.emotes").getKeys());
     }
 
+    public void setAllowGlobal(boolean bool) {
+        serverConfig.set("proxy-chat.allow.global", bool);
+        saveConfig();
+        reloadConfig();
+    }
+
+    public boolean getAllowGlobal() {
+        reloadConfig();
+        return serverConfig.getBoolean("proxy-chat.allow.global");
+    }
+
+    public void setAllowLocal(boolean bool) {
+        serverConfig.set("proxy-chat.allow.local", bool);
+        saveConfig();
+        reloadConfig();
+    }
+
+    public boolean getAllowLocal() {
+        reloadConfig();
+        return serverConfig.getBoolean("proxy-chat.allow.local");
+    }
+
     public void setObject(String pathTo, Object object) {
         serverConfig.set(pathTo, object);
         saveConfig();

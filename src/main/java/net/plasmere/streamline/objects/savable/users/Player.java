@@ -30,6 +30,7 @@ public class Player extends SavableUser {
     public boolean muted;
     public Date mutedTill;
     public ProxiedPlayer player;
+    public ChatLevel chatLevel;
 
     public int defaultLevel = 1;
 
@@ -119,6 +120,7 @@ public class Player extends SavableUser {
         defaults.add("playtime=0");
         defaults.add("muted=false");
         defaults.add("muted-till=");
+        defaults.add("chat-level=LOCAL");
         //defaults.add("");
         return defaults;
     }
@@ -149,6 +151,26 @@ public class Player extends SavableUser {
         this.lvl = Integer.parseInt(getFromKey("lvl"));
         this.totalXP = Integer.parseInt(getFromKey("total-xp"));
         this.currentXP = Integer.parseInt(getFromKey("current-xp"));
+
+        this.chatLevel = parseChatLevel(getFromKey("chat-level"));
+    }
+
+    public ChatLevel parseChatLevel(String string) {
+        switch (string) {
+            case "GLOBAL":
+                return ChatLevel.GLOBAL;
+            case "GUILD":
+                return ChatLevel.GUILD;
+            case "PARTY":
+                return ChatLevel.PARTY;
+            case "GOFFICER":
+                return ChatLevel.GOFFICER;
+            case "POFFICER":
+                return ChatLevel.POFFICER;
+            case "LOCAL":
+            default:
+                return ChatLevel.LOCAL;
+        }
     }
 
     @Override
@@ -164,6 +186,22 @@ public class Player extends SavableUser {
         thing.put("currentXP", "current-xp");
 
         return thing;
+    }
+
+    public ChatLevel setChatLevel(String string) {
+        ChatLevel chatLevel = parseChatLevel(string);
+
+        this.chatLevel = chatLevel;
+        updateKey("chat-level", chatLevel.toString());
+
+        return chatLevel;
+    }
+
+    public ChatLevel setChatLevel(ChatLevel chatLevel) {
+        this.chatLevel = chatLevel;
+        updateKey("chat-level", chatLevel.toString());
+
+        return chatLevel;
     }
 
     public void tryAddNewName(String name){
