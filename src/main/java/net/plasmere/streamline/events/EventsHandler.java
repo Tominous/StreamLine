@@ -8,9 +8,9 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.events.enums.Condition;
 import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Party;
-import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.savable.users.Player;
 import net.plasmere.streamline.objects.lists.SingleSet;
-import net.plasmere.streamline.objects.users.SavableUser;
+import net.plasmere.streamline.objects.savable.users.SavableUser;
 import net.plasmere.streamline.utils.*;
 
 import java.util.ArrayList;

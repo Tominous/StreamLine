@@ -60,18 +60,41 @@ proxy-chat:
   # These will replace the key in chat.
   # i.e. ":shrug:" will be replaced with: "&a¯\\_(ツ)_/¯"
   emotes:
-    ":shrug:":
-      emote: "&a¯\\_(ツ)_/¯&r"
-      permission: "streamline.emote.shrug"
-    ":oof:":
-      emote: "&c&lOOF&r"
-      permission: "streamline.emote.oof"
-    'o/':
-      emote: "&d( ﾟ◡ﾟ)/&r"
-      permission: "streamline.emote.wave"
+    ':shrug:':
+      emote: '&a¯\_(ツ)_/¯&r'
+      permission: streamline.emote.shrug
+    ':oof:':
+      emote: '&c&lOOF&r'
+      permission: streamline.emote.oof
+    o/:
+      emote: '&d( ﾟ◡ﾟ)/&r'
+      permission: streamline.emote.wave
     ':gimme:':
-      emote: "&b༼つ◕_◕༽つ&r"
-      permission: "streamline.emote.gimme"
+      emote: '&b༼つ◕_◕༽つ&r'
+      permission: streamline.emote.gimme
     ':wizard:':
-      emote: "&e(&b'-'&e)⊃━&5☆&dﾟ&4.&c*&3･&b｡&6ﾟ&r"
-      permission: "streamline.emote.wizard"
+      emote: '&e(&b''-''&e)⊃━&5☆&dﾟ&4.&c*&3･&b｡&6ﾟ&r'
+      permission: streamline.emote.wizard
+    ^-^:
+      emote: '&a^-^&r'
+      permission: streamline.emote.content
+    <3:
+      emote: '&c❤&r'
+      permission: streamline.emote.heart
+    ':123:':
+      emote: '&c1&d2&e3'
+      permission: streamline.emote.123
+    ':tableflip:':
+      emote: '&5(╯°□°）╯︵ ┻━┻&r'
+      permission: streamline.emote.tableflip
+    ':unflip:':
+      emote: '&5┬─┬ ノ( ゜-゜ノ)&r'
+      permission: streamline.emote.unflip
+  # Enables different chat availability.
+  # If global is enabled and local is not, then
+  # players will automatically talk in global chat.
+  allow:
+    global: true
+    local: true
+maintenance-mode:
+  enabled: false

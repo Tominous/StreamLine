@@ -2,8 +2,8 @@ package net.plasmere.streamline.objects.timers;
 
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
-import net.plasmere.streamline.objects.users.Player;
-import net.plasmere.streamline.objects.users.SavableUser;
+import net.plasmere.streamline.objects.savable.users.Player;
+import net.plasmere.streamline.objects.savable.users.SavableUser;
 import net.plasmere.streamline.utils.PlayerUtils;
 
 import java.util.*;

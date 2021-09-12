@@ -17,8 +17,7 @@ import net.plasmere.streamline.objects.Party;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
-import net.plasmere.streamline.objects.users.Player;
-import net.plasmere.streamline.objects.users.SavableUser;
+import net.plasmere.streamline.objects.savable.users.Player;
 import net.plasmere.streamline.utils.*;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Listener;
@@ -193,9 +192,9 @@ public class JoinLeaveListener implements Listener {
 
         if (ConfigUtils.events) {
             for (Event event : EventsHandler.getEvents()) {
-                if (!EventsHandler.checkTags(event, stat)) continue;
+                if (! EventsHandler.checkTags(event, stat)) continue;
 
-                if (!(EventsHandler.checkEventConditions(event, stat, Condition.JOIN, "network"))) continue;
+                if (! (EventsHandler.checkEventConditions(event, stat, Condition.JOIN, "network"))) continue;
 
                 EventsHandler.runEvent(event, stat);
             }

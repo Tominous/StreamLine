@@ -1989,11 +1989,17 @@ graceful-end:
   # For all who are kicked.
   kick-message: "&cSorry, but the server stopped...! We are starting back up momentarily! Join back when you can!"
 
+# For deleting a stat from the players folder.
 delete-stat:
+  # Message when complete.
   message: "&eSuccessfully removed &b%file_name% &efrom your player files&8!"
 
-bteleport(): "&eSuccessfully teleported to &d%player%&8!"
+# Message when teleporting...
+bteleport: "&eSuccessfully teleported to &d%player%&8!"
 
+# When switching languages...
 language:
+  # Message when complete.
   message: "&eYou are now using &c%locale% &eas your locale&8!"
+  # If invalid locale...
   invalid-locale: "&cSorry, but &6%locale% &cis an invalid locale...!"

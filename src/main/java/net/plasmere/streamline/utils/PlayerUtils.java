@@ -17,10 +17,12 @@ import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.CommandsConfUtils;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
-import net.plasmere.streamline.objects.users.ConsolePlayer;
-import net.plasmere.streamline.objects.users.Player;
-import net.plasmere.streamline.objects.users.SavableUser;
+import net.plasmere.streamline.objects.savable.history.HistorySave;
+import net.plasmere.streamline.objects.savable.users.ConsolePlayer;
+import net.plasmere.streamline.objects.savable.users.Player;
+import net.plasmere.streamline.objects.savable.users.SavableUser;
 import net.plasmere.streamline.objects.lists.SingleSet;
+import org.apache.commons.collections4.list.TreeList;
 
 import java.io.File;
 import java.time.Instant;
@@ -39,6 +41,7 @@ public class PlayerUtils {
     private static final List<SavableUser> stats = new ArrayList<>();
 
     public static HashMap<ProxiedPlayer, SingleSet<Integer, ProxiedPlayer>> teleports = new HashMap<>();
+    public static TreeMap<String, HistorySave> chatHistories = new TreeMap<>();
 
     private static HashMap<Player, SingleSet<Integer, Integer>> connections = new HashMap<>();
     private static List<SavableUser> toSave = new ArrayList<>();
@@ -1714,6 +1717,65 @@ public class PlayerUtils {
 //            user.updateServer();
 //        }
 //    }
+
+    /* ----------------------------
+
+    PlayerUtils <-- Chat History
+
+    ---------------------------- */
+
+    public static HistorySave addChatHistory(String uuid) {
+        if (chatHistories.containsKey(uuid)) return getChatHistory(uuid);
+
+        HistorySave save = new HistorySave(uuid);
+
+        chatHistories.put(uuid, save);
+
+        return save;
+    }
+
+    public static HistorySave getChatHistory(String uuid) {
+        if (! chatHistories.containsKey(uuid)) return addChatHistory(uuid);
+
+        return chatHistories.get(uuid);
+    }
+
+    public static TreeList<String> getChatHistoryFilesByUUID() {
+        File[] files = StreamLine.getInstance().getChatHistoryDir().listFiles();
+        TreeList<String> thing = new TreeList<>();
+
+        if (files == null) return thing;
+        if (files.length <= 0) return thing;
+
+        for (File file : files) {
+            String trial = file.getName().split("\\.")[0];
+            if (! trial.contains("-")) continue;
+
+            thing.add(trial);
+        }
+
+        return thing;
+    }
+
+    public static void loadAllChatHistories(boolean onlyOnlinePlayers) {
+        if (onlyOnlinePlayers) {
+            for (ProxiedPlayer player : getOnlinePPlayers()) {
+                addChatHistory(player.getUniqueId().toString());
+            }
+        } else {
+            for (String uuid : getChatHistoryFilesByUUID()) {
+                addChatHistory(uuid);
+            }
+        }
+    }
+
+    public static String addLineToChatHistory(String uuid, String line) {
+        return addLineToChatHistory(getChatHistory(uuid), line);
+    }
+
+    public static String addLineToChatHistory(HistorySave save, String line) {
+        return save.addLine(line);
+    }
 
     // No stats.
     public static final String noStatsFound = StreamLine.config.getMessString("stats.no-stats");

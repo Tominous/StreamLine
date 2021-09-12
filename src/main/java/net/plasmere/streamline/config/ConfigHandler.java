@@ -18,9 +18,9 @@ import java.util.TreeSet;
 
 public class ConfigHandler {
     public Configuration conf;
-//    public Configuration oConf;
+    //    public Configuration oConf;
     public Configuration mess;
-//    public Configuration oMess;
+    //    public Configuration oMess;
     public Configuration discordBot;
     public Configuration commands;
 
@@ -56,7 +56,7 @@ public class ConfigHandler {
         ConfigHandler.language = language;
 
         conf = loadConf();
-        mess = loadTrans(language);
+        mess = loadLocales(language);
         discordBot = loadDiscordBot();
         commands = loadCommands();
     }
@@ -80,7 +80,7 @@ public class ConfigHandler {
     }
 
     public void reloadLocales(String language) {
-        mess = loadTrans(language);
+        mess = loadLocales(language);
     }
 
     public void reloadLocales(){
@@ -124,7 +124,7 @@ public class ConfigHandler {
         return trans;
     }
 
-    public Configuration loadTrans(String language) {
+    public Configuration loadLocales(String language) {
         if (! translationPath.exists()) if (! translationPath.mkdirs()) MessagingUtils.logSevere("COULD NOT MAKE TRANSLATION FOLDER(S)!");
 
         if (! en_USFile.exists()) {
@@ -209,7 +209,7 @@ public class ConfigHandler {
         }
     }
 
-    public void saveMess(){
+    public void saveLocales(){
         try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(mess, mfile(ConfigHandler.language));
         } catch (IOException e) {

@@ -397,3 +397,10 @@ modules:
         # Delay for teleports (in seconds).
         # Should be, at minimum, the amount of time it takes to go from one server to another.
         delay: 2
+    # For chat history on the network.
+    chat-history:
+      # Enables / disables the chat history module.
+      enabled: true
+      # This will enabled loading player chat history on start up.
+      # This will be resource intensive, only enable if you want it to be faster.
+      load-history-on-startup: false

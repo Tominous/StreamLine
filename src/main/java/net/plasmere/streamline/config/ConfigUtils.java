@@ -188,4 +188,7 @@ public class ConfigUtils {
     // // Helper.
     // Teleport.
     public static int helperTeleportDelay = StreamLine.config.getConfInteger("modules.bungee.helper.teleport.delay");
+    // Chat History.
+    public static boolean chatHistoryEnabled = StreamLine.config.getConfBoolean("modules.bungee.chat-history.enabled");
+    public static boolean chatHistoryLoadHistoryStartup = StreamLine.config.getConfBoolean("modules.bungee.chat-history.load-history-on-startup");
 }

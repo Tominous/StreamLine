@@ -6,10 +6,10 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.Guild;
-import net.plasmere.streamline.objects.users.ConsolePlayer;
-import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.savable.users.ConsolePlayer;
+import net.plasmere.streamline.objects.savable.users.Player;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
-import net.plasmere.streamline.objects.users.SavableUser;
+import net.plasmere.streamline.objects.savable.users.SavableUser;
 
 import java.io.File;
 import java.io.IOException;
@@ -544,8 +544,10 @@ public class GuildUtils {
             return;
         }
 
-        if (sender instanceof Player && ((Player) sender).online) {
+        if (sender instanceof Player && sender.online) {
             for (SavableUser pl : guild.totalMembers) {
+                if (! pl.online) continue;
+
                 if (pl.equals(sender)) {
                     MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), warpSender);
                 } else {
@@ -555,7 +557,7 @@ public class GuildUtils {
                 if (pl instanceof Player) {
                     Player p = (Player) pl;
                     if (! p.online) continue;
-                    p.player.connect(((Player) sender).player.getServer().getInfo());
+                    p.player.connect(((Player) sender).getServer().getInfo());
                 }
             }
         }

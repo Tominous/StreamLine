@@ -9,12 +9,11 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.DiscordBotConfUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
-import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.savable.users.Player;
 import net.plasmere.streamline.utils.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 public class KickCommand extends Command implements TabExecutor {

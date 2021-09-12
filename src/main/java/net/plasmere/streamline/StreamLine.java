@@ -19,7 +19,7 @@ import net.plasmere.streamline.objects.configs.ServerPermissions;
 import net.plasmere.streamline.objects.enums.NetworkState;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.timers.*;
-import net.plasmere.streamline.objects.users.ConsolePlayer;
+import net.plasmere.streamline.objects.savable.users.ConsolePlayer;
 import net.plasmere.streamline.utils.*;
 import net.plasmere.streamline.utils.holders.GeyserHolder;
 import net.plasmere.streamline.utils.holders.LPHolder;
@@ -40,7 +40,6 @@ import java.io.InputStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
@@ -66,6 +65,7 @@ public class StreamLine extends Plugin {
 	private final File plDir = new File(getDataFolder() + File.separator + "players" + File.separator);
 	private final File gDir = new File(getDataFolder() + File.separator + "guilds" + File.separator);
 	private final File confDir = new File(getDataFolder() + File.separator + "configs" + File.separator);
+	private final File chatHistoryDir = new File(getDataFolder() + File.separator + "chat-history" + File.separator);
 	private File eventsDir;
 
 	public final File versionFile = new File(getDataFolder(), "version.txt");
@@ -94,6 +94,7 @@ public class StreamLine extends Plugin {
 	}
 	public File getEDir() { return eventsDir; }
 	public File getConfDir() { return confDir; }
+	public File getChatHistoryDir() { return chatHistoryDir; }
 
 	public String getCurrentMOTD() { return currentMOTD; }
 	public int getMotdPage() { return motdPage; }
@@ -292,6 +293,14 @@ public class StreamLine extends Plugin {
 		}
 	}
 
+	public void loadChatHistory() {
+		if (! chatHistoryDir.exists()) if (! chatHistoryDir.mkdirs()) if (ConfigUtils.debug) MessagingUtils.logWarning("Chat history folder could not be made!");
+
+		if (ConfigUtils.chatHistoryLoadHistoryStartup) {
+			PlayerUtils.loadAllChatHistories(false);
+		}
+	}
+
     public void onLoad(){
     	InstanceHolder.setInst(instance);
 	}
@@ -365,7 +374,10 @@ public class StreamLine extends Plugin {
 			GuildUtils.addGuild(new Guild(console.guild, false));
 		}
 
-		//getLogger().
+		// Setting up Player's HistorySave files.
+		if (ConfigUtils.chatHistoryEnabled) {
+			loadChatHistory();
+		}
 
 		PluginUtils.state = NetworkState.RUNNING;
 	}
@@ -382,7 +394,7 @@ public class StreamLine extends Plugin {
 
 		if (ConfigUtils.onCloseMain) {
 			config.saveConf();
-			config.saveMess();
+			config.saveLocales();
 			config.saveDiscordBot();
 			config.saveCommands();
 		}

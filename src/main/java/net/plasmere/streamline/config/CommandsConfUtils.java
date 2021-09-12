@@ -263,10 +263,10 @@ public class CommandsConfUtils {
     public static List<String> comBEndAliases = StreamLine.config.getCommandStringList("commands.bungee.staff.end.aliases");
     public static String comBEndPerm = StreamLine.config.getCommandString("commands.bungee.staff.end.permission");
     // B-Teleport.
-    public static boolean comBTeleport = StreamLine.config.getCommandBoolean("commands.bungee.staff.bteleport().enabled");
-    public static String comBTeleportBase = StreamLine.config.getCommandString("commands.bungee.staff.bteleport().base");
-    public static List<String> comBTeleportAliases = StreamLine.config.getCommandStringList("commands.bungee.staff.bteleport().aliases");
-    public static String comBTeleportPerm = StreamLine.config.getCommandString("commands.bungee.staff.bteleport().permission");
+    public static boolean comBTeleport = StreamLine.config.getCommandBoolean("commands.bungee.staff.bteleport.enabled");
+    public static String comBTeleportBase = StreamLine.config.getCommandString("commands.bungee.staff.bteleport.base");
+    public static List<String> comBTeleportAliases = StreamLine.config.getCommandStringList("commands.bungee.staff.bteleport.aliases");
+    public static String comBTeleportPerm = StreamLine.config.getCommandString("commands.bungee.staff.bteleport.permission");
     // // Configs.
     // Settings.
     public static boolean comBSettings = StreamLine.config.getCommandBoolean("commands.bungee.configs.settings.enabled");

@@ -10,7 +10,7 @@ import net.plasmere.streamline.events.enums.Condition;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
-import net.plasmere.streamline.objects.users.Player;
+import net.plasmere.streamline.objects.savable.users.Player;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
@@ -144,6 +144,10 @@ public class ChatListener implements Listener {
             }
 
             e.setCancelled(true);
+        }
+
+        if (ConfigUtils.chatHistoryEnabled) {
+            PlayerUtils.addLineToChatHistory(sender.getUniqueId().toString(), msg);
         }
 
         if (ConfigUtils.events) {

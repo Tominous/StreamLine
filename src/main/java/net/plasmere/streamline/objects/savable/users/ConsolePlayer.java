@@ -1,7 +1,6 @@
-package net.plasmere.streamline.objects.users;
+package net.plasmere.streamline.objects.savable.users;
 
 import net.md_5.bungee.api.*;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 

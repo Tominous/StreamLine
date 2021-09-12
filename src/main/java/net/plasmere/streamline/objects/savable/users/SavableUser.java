@@ -1,4 +1,4 @@
-package net.plasmere.streamline.objects.users;
+package net.plasmere.streamline.objects.savable.users;
 
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -55,6 +55,15 @@ public abstract class SavableUser {
     public boolean pspyvs;
     public boolean gspyvs;
     public boolean scvs;
+
+    public enum ChatLevel {
+        GLOBAL,
+        LOCAL,
+        PARTY,
+        GUILD,
+        GOFFICER,
+        POFFICER,
+    }
 
     public List<String> savedKeys = new ArrayList<>();
 

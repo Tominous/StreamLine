@@ -4,7 +4,6 @@ import net.plasmere.streamline.StreamLine;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class From_1_0_13_3 extends From {
@@ -20,7 +19,10 @@ public class From_1_0_13_3 extends From {
 
     @Override
     public void setupConfigFix() {
+        addUpdatedConfigEntry("modules.discord.enabled", true);
         addUpdatedConfigEntry("modules.automatically-update-configs", true);
+        addUpdatedConfigEntry("modules.bungee.chat-history.enabled", true);
+        addUpdatedConfigEntry("modules.bungee.chat-history.load-history-on-startup", false);
     }
 
     @Override
@@ -44,7 +46,8 @@ public class From_1_0_13_3 extends From {
 
     @Override
     public void setupServerConfigFix() {
-
+        addUpdatedServerConfigEntry("proxy-chat.allow.global", true);
+        addUpdatedServerConfigEntry("proxy-chat.allow.local", true);
     }
 
     @Override

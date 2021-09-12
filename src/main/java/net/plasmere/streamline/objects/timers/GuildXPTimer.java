@@ -1,11 +1,8 @@
 package net.plasmere.streamline.objects.timers;
 
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.Guild;
-import net.plasmere.streamline.objects.users.Player;
-import net.plasmere.streamline.objects.users.SavableUser;
+import net.plasmere.streamline.objects.savable.users.SavableUser;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 

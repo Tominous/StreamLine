@@ -3,10 +3,8 @@ package net.plasmere.streamline.utils;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.gson.*;
-import net.md_5.bungee.api.CommandSender;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
-import net.plasmere.streamline.objects.users.Player;
 
 import java.io.*;
 import java.net.HttpURLConnection;
