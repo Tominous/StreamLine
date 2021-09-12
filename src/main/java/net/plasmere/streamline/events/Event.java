@@ -5,6 +5,7 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.events.enums.Action;
 import net.plasmere.streamline.events.enums.Condition;
 import net.plasmere.streamline.objects.lists.SingleSet;
@@ -38,6 +39,22 @@ public class Event {
             e.printStackTrace();
         }
     }
+
+    public void createEventFile(){
+        File f = new File(path,name + ".yml");
+
+        if(!StreamLine.getInstance().getDataFolder().exists())
+            StreamLine.getInstance().getDataFolder().mkdirs();
+
+        if(!f.exists()){
+            try{
+                f.createNewFile();
+            }catch(Exception e){
+                MessagingUtils.logInfo("Unable to create file " + f.getName() + ". Returning error " + e.getMessage());
+            }
+        }
+    }
+
 
     public TreeMap<Integer, SingleSet<Condition, String>> compileCond() {
         TreeMap<Integer, SingleSet<Condition, String>> c = new TreeMap<>();

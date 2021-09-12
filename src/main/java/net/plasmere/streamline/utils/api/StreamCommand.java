@@ -16,6 +16,7 @@ public class StreamCommand extends Command {
 
     public String commandLabel;
     public String permissionNeeded;
+    public String permissionMessage;
     public List<Event> events;
     public TreeSet<String> aliases;
     private boolean enabled = true;
@@ -28,12 +29,14 @@ public class StreamCommand extends Command {
      * @param permissionNeeded -> The permission needed to execute the command.
      * @param events -> All the events that are going to be executed when executing the command.
      */
-    public StreamCommand(String commandLabel, String permissionNeeded, List<Event> events, TreeSet<String> aliases) {
+    public StreamCommand(String commandLabel, String commandDescription, String permissionNeeded, String permissionMessage, List<Event> events, TreeSet<String> aliases) {
         //define default values for command
         super(commandLabel, permissionNeeded, PluginUtils.stringListToArray(aliases));
         this.commandLabel = commandLabel;
         this.events = events;
         this.permissionNeeded = permissionNeeded;
+        this.permissionMessage = permissionMessage;
+        this.setPermissionMessage(permissionMessage);
     }
 
     /**

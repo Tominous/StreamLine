@@ -2004,14 +2004,14 @@ language:
 # When switching chat channels...
 chat-channels:
   local:
-    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+    switch: "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!"
   global:
-    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+    switch: "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!"
   guild:
-    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+    switch: "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!"
   party:
-    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+    switch: "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!"
   g-officer:
-    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+    switch: "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!"
   p-officer:
-    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+    switch: "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!"

@@ -54,14 +54,14 @@ public class From_1_0_13_3 extends From {
 
         addUpdatedLocalesEntry("language.message", "&eVous utilisez maintenant &c%locale% &ecomme paramètre régional&8!", "fr_FR");
 
-        addUpdatedLocalesEntry("language.invalid-locale", "&cPardon, mais &6%locale% &cs'agit d'un paramètre régional non valide...!", "fr_FR");
+        addUpdatedLocalesEntry("language.invalid-locale", "&cDésolé, mais &6%locale% &cest un paramètre régional non valide...!", "fr_FR");
 
-        addUpdatedLocalesEntry("chat-channels.local.switch", "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!", "en_FR");
-        addUpdatedLocalesEntry("chat-channels.global.switch", "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!", "fr_FR");
-        addUpdatedLocalesEntry("chat-channels.guild.switch", "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!", "fr_FR");
-        addUpdatedLocalesEntry("chat-channels.party.switch", "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!", "fr_FR");
-        addUpdatedLocalesEntry("chat-channels.g-officer.switch", "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!", "fr_FR");
-        addUpdatedLocalesEntry("chat-channels.p-officer.switch", "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!", "fr_FR");
+        addUpdatedLocalesEntry("chat-channels.local.switch", "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!", "fr_FR");
+        addUpdatedLocalesEntry("chat-channels.global.switch", "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!", "fr_FR");
+        addUpdatedLocalesEntry("chat-channels.guild.switch", "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!", "fr_FR");
+        addUpdatedLocalesEntry("chat-channels.party.switch", "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!", "fr_FR");
+        addUpdatedLocalesEntry("chat-channels.g-officer.switch", "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!", "fr_FR");
+        addUpdatedLocalesEntry("chat-channels.p-officer.switch", "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!", "fr_FR");
     }
 
     @Override
