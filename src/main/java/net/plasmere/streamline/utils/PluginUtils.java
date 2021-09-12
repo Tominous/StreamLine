@@ -3,10 +3,7 @@ package net.plasmere.streamline.utils;
 import net.md_5.bungee.api.plugin.PluginManager;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.commands.*;
-import net.plasmere.streamline.commands.messaging.FriendCommand;
-import net.plasmere.streamline.commands.messaging.IgnoreCommand;
-import net.plasmere.streamline.commands.messaging.MessageCommand;
-import net.plasmere.streamline.commands.messaging.ReplyCommand;
+import net.plasmere.streamline.commands.messaging.*;
 import net.plasmere.streamline.commands.servers.GoToServerLobbyCommand;
 import net.plasmere.streamline.commands.servers.GoToServerVanillaCommand;
 import net.plasmere.streamline.commands.staff.*;
@@ -183,6 +180,9 @@ public class PluginUtils {
         }
         if (CommandsConfUtils.comBFriend) {
             registerCommand(plugin, new FriendCommand(CommandsConfUtils.comBFriendBase, CommandsConfUtils.comBFriendPerm, stringListToArray(CommandsConfUtils.comBFriendAliases)));
+        }
+        if (CommandsConfUtils.comBChatLevel) {
+            registerCommand(plugin, new ChatChannelCommand(CommandsConfUtils.comBChatLevelBase, CommandsConfUtils.comBChatLevelPerm, stringListToArray(CommandsConfUtils.comBChatLevelAliases)));
         }
 
         // Servers.

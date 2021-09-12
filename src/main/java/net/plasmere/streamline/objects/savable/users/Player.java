@@ -11,6 +11,8 @@ import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.score.Scoreboard;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 
 import java.net.InetSocketAddress;
@@ -188,13 +190,41 @@ public class Player extends SavableUser {
         return thing;
     }
 
+    public static void sendMessageFormatted(CommandSender sender, String formatFrom, ChatLevel newLevel, ChatLevel oldLevel) {
+        MessagingUtils.sendBUserMessage(sender, formatFrom
+                .replace("%new_channel%", newLevel.toString())
+                .replace("%old_channel%", oldLevel.toString())
+        );
+    }
+
     public ChatLevel setChatLevel(String string) {
-        ChatLevel chatLevel = parseChatLevel(string);
+        ChatLevel newLevel = parseChatLevel(string);
 
-        this.chatLevel = chatLevel;
-        updateKey("chat-level", chatLevel.toString());
+        switch (newLevel) {
+            case LOCAL:
+                sendMessageFormatted(player, MessageConfUtils.chatChannelsLocalSwitch(), newLevel, chatLevel);
+                break;
+            case GLOBAL:
+                sendMessageFormatted(player, MessageConfUtils.chatChannelsGlobalSwitch(), newLevel, chatLevel);
+                break;
+            case GUILD:
+                sendMessageFormatted(player, MessageConfUtils.chatChannelsGuildSwitch(), newLevel, chatLevel);
+                break;
+            case PARTY:
+                sendMessageFormatted(player, MessageConfUtils.chatChannelsPartySwitch(), newLevel, chatLevel);
+                break;
+            case GOFFICER:
+                sendMessageFormatted(player, MessageConfUtils.chatChannelsGOfficerSwitch(), newLevel, chatLevel);
+                break;
+            case POFFICER:
+                sendMessageFormatted(player, MessageConfUtils.chatChannelsPOfficerSwitch(), newLevel, chatLevel);
+                break;
+        }
 
-        return chatLevel;
+        this.chatLevel = newLevel;
+        updateKey("chat-level", newLevel.toString());
+
+        return newLevel;
     }
 
     public ChatLevel setChatLevel(ChatLevel chatLevel) {

@@ -10,6 +10,7 @@ import net.plasmere.streamline.events.enums.Condition;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
+import net.plasmere.streamline.objects.savable.users.ChatLevel;
 import net.plasmere.streamline.objects.savable.users.Player;
 import net.plasmere.streamline.utils.GuildUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
@@ -127,27 +128,55 @@ public class ChatListener implements Listener {
             }
         }
 
+
         if (StreamLine.serverConfig.getProxyChatEnabled() && ! isStaffMessage) {
-            String format = StreamLine.serverConfig.getPermissionedProxyChatMessage(stat);
-            SingleSet<String, List<ProxiedPlayer>> msgWithTagged = TextUtils.getMessageWithTags(sender, msg, format);
+            boolean allowGlobal = StreamLine.serverConfig.getAllowGlobal();
+            boolean allowLocal = StreamLine.serverConfig.getAllowLocal();
 
-            String withEmotes = TextUtils.getMessageWithEmotes(sender, msgWithTagged.key);
+            if (allowGlobal || allowLocal) {
+                if (!allowGlobal && stat.chatLevel.equals(ChatLevel.GLOBAL)) {
+                    stat.setChatLevel(ChatLevel.LOCAL);
+                }
+                if (!allowLocal && stat.chatLevel.equals(ChatLevel.LOCAL)) {
+                    stat.setChatLevel(ChatLevel.GLOBAL);
+                }
 
-            MessagingUtils.sendServerMessageFromUser(sender, sender.getServer(), format, withEmotes);
+                if (stat.chatLevel.equals(ChatLevel.GLOBAL)) {
+                    String format = StreamLine.serverConfig.getPermissionedProxyChatMessageGlobal(stat);
+                    SingleSet<String, List<ProxiedPlayer>> msgWithTagged = TextUtils.getMessageWithTags(sender, msg, format);
 
-            for (ProxiedPlayer player : msgWithTagged.value) {
-                MessagingUtils.sendTagPingPluginMessageRequest(player);
+                    String withEmotes = TextUtils.getMessageWithEmotes(sender, msgWithTagged.key);
+
+                    MessagingUtils.sendGlobalMessageFromUser(sender, sender.getServer(), format, withEmotes);
+
+                    for (ProxiedPlayer player : msgWithTagged.value) {
+                        MessagingUtils.sendTagPingPluginMessageRequest(player);
+                    }
+
+                    if (StreamLine.serverConfig.getProxyChatConsoleEnabled()) {
+                        MessagingUtils.sendMessageFromUserToConsole(sender, sender.getServer(), format, withEmotes);
+                    }
+
+                    e.setCancelled(true);
+                } else if (stat.chatLevel.equals(ChatLevel.LOCAL)) {
+                    String format = StreamLine.serverConfig.getPermissionedProxyChatMessageLocal(stat);
+                    SingleSet<String, List<ProxiedPlayer>> msgWithTagged = TextUtils.getMessageWithTags(sender, msg, format);
+
+                    String withEmotes = TextUtils.getMessageWithEmotes(sender, msgWithTagged.key);
+
+                    MessagingUtils.sendServerMessageFromUser(sender, sender.getServer(), format, withEmotes);
+
+                    for (ProxiedPlayer player : msgWithTagged.value) {
+                        MessagingUtils.sendTagPingPluginMessageRequest(player);
+                    }
+
+                    if (StreamLine.serverConfig.getProxyChatConsoleEnabled()) {
+                        MessagingUtils.sendMessageFromUserToConsole(sender, sender.getServer(), format, withEmotes);
+                    }
+
+                    e.setCancelled(true);
+                }
             }
-
-            if (StreamLine.serverConfig.getProxyChatConsoleEnabled()) {
-                MessagingUtils.sendServerMessageFromUserToConsole(sender, sender.getServer(), format, withEmotes);
-            }
-
-            e.setCancelled(true);
-        }
-
-        if (ConfigUtils.chatHistoryEnabled) {
-            PlayerUtils.addLineToChatHistory(sender.getUniqueId().toString(), msg);
         }
 
         if (ConfigUtils.events) {

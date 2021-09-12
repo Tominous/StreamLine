@@ -8,12 +8,10 @@ import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.TextUtils;
-import org.apache.commons.collections4.list.TreeList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SettingsEditCommand extends Command implements TabExecutor {
     public SettingsEditCommand(String base, String perm, String[] aliases){
@@ -265,166 +263,132 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                 }
                 switch (args[1]) {
                     case "motd":
-                        if (args.length < 3) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
-                            return;
-                        }
-
-                        int at = 0;
-                        try {
-                            at = Integer.parseInt(args[2]);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
-                            return;
-                        }
-
-                        String motd = StreamLine.serverConfig.getMOTDat(at);
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMOTD()
-                                .replace("%number%", Integer.toString(at))
-                                .replace("%set%", motd)
-                        );
+                        sendGetMessageNumbered(sender, MessageConfUtils.settingsGetMOTD(), StreamLine.serverConfig.getMOTDat(getInt(sender, args)), args);
                         break;
                     case "motd-time":
-                        String motdtime = Integer.toString(StreamLine.serverConfig.getMOTDTime());
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMOTDTime()
-                                .replace("%set%", motdtime)
-                        );
+                        sendGetMessage(sender, MessageConfUtils.settingsGetMOTDTime(), StreamLine.serverConfig.getMOTDTime());
                         break;
                     case "version":
-                        String version = StreamLine.serverConfig.getVersion();
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetVersion()
-                                .replace("%set%", version)
-                        );
+                        sendGetMessage(sender, MessageConfUtils.settingsGetVersion(), StreamLine.serverConfig.getVersion());
                         break;
                     case "sample":
-                        if (args.length < 3) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
-                            return;
-                        }
-
-                        int atS = 0;
-                        try {
-                            atS = Integer.parseInt(args[2]);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
-                            return;
-                        }
-
-                        String sample = StreamLine.serverConfig.getSampleAt(atS);
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetSample()
-                                .replace("%number%", Integer.toString(atS))
-                                .replace("%set%", sample)
-                        );
+                        sendGetMessageNumbered(sender, MessageConfUtils.settingsGetSample(), StreamLine.serverConfig.getSampleAt(getInt(sender, args)), args);
                         break;
                     case "max-players":
-                        String maxp = StreamLine.serverConfig.getMaxPlayers();
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetMaxP()
-                                .replace("%set%", maxp)
-                        );
+                        sendGetMessage(sender, MessageConfUtils.settingsGetMaxP(), StreamLine.serverConfig.getMaxPlayers());
                         break;
                     case "online-players":
-                        String onp = StreamLine.serverConfig.getOnlinePlayers();
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetOnlineP()
-                                .replace("%set%", onp)
-                        );
+                        sendGetMessage(sender, MessageConfUtils.settingsGetOnlineP(), StreamLine.serverConfig.getOnlinePlayers());
                         break;
                     case "proxy-chat-enabled":
-                        Boolean cusp = StreamLine.serverConfig.getProxyChatEnabled();
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetPCEnabled()
-                                .replace("%set%", String.valueOf(cusp))
-                        );
+                        sendGetMessage(sender, MessageConfUtils.settingsGetPCEnabled(), StreamLine.serverConfig.getProxyChatEnabled());
                         break;
                     case "proxy-chat-to-console":
-                        Boolean toConsole = StreamLine.serverConfig.getProxyChatConsoleEnabled();
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetChatToConsole()
-                                .replace("%set%", String.valueOf(toConsole))
-                        );
+                        sendGetMessage(sender, MessageConfUtils.settingsGetChatToConsole(), StreamLine.serverConfig.getProxyChatConsoleEnabled());
                         break;
                     case "proxy-chat-chats":
-                        if (args.length < 3) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
-                            return;
-                        }
-
-                        int atChat = 0;
-                        try {
-                            atChat = Integer.parseInt(args[2]);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
-                            return;
-                        }
-
-                        String chats = StreamLine.serverConfig.getProxyChatChatsAt(atChat);
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetPCChats()
-                                .replace("%number%", Integer.toString(atChat))
-                                .replace("%set%", chats)
-                        );
+                        sendGetMessageNumbered(sender, MessageConfUtils.settingsGetPCChats(), StreamLine.serverConfig.getProxyChatChatsAt(getInt(sender, args)), args);
                         break;
                     case "proxy-chat-base-perm":
-                        String baseP = StreamLine.serverConfig.getChatBasePerm();
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetPCBPerm()
-                                .replace("%set%", baseP)
-                        );
+                        sendGetMessage(sender, MessageConfUtils.settingsGetPCBPerm(), StreamLine.serverConfig.getChatBasePerm());
                         break;
                     case "tags-enable-ping":
-                        boolean enableP = StreamLine.serverConfig.getTagsPingEnabled();
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetTagsEnablePing()
-                                .replace("%set%", String.valueOf(enableP))
-                        );
+                        sendGetMessage(sender, MessageConfUtils.settingsGetTagsEnablePing(), StreamLine.serverConfig.getTagsPingEnabled());
                         break;
                     case "tags-tag-prefix":
-                        String tagPrefix = StreamLine.serverConfig.getTagsPrefix();
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetTagsTagPrefix()
-                                .replace("%set%", tagPrefix)
-                        );
+                        sendGetMessage(sender, MessageConfUtils.settingsGetTagsTagPrefix(), StreamLine.serverConfig.getTagsPrefix());
                         break;
                     case "emotes":
-                        if (args.length < 3) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
-                            return;
-                        }
-
-                        String emote = args[2];
-
-                        String theReturnedEmote = StreamLine.serverConfig.getEmote(emote);
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetEmotes()
-                                .replace("%emote%", emote)
-                                .replace("%set%", theReturnedEmote)
-                        );
+                        sendGetMessageEmote(sender, MessageConfUtils.settingsGetEmotes(), StreamLine.serverConfig.getEmote(args[2]), args);
                         break;
                     case "emote-permissions":
-                        if (args.length < 3) {
-                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
-                            return;
-                        }
-
-                        String theEmote = args[2];
-                        String toEPerm = StreamLine.serverConfig.getEmotePermission(theEmote);
-
-                        MessagingUtils.sendBUserMessage(sender, MessageConfUtils.settingsGetEmotePermissions()
-                                .replace("%emote%", theEmote)
-                                .replace("%set%", toEPerm)
-                        );
+                        sendGetMessageEmote(sender, MessageConfUtils.settingsGetEmotePermissions(), StreamLine.serverConfig.getEmotePermission(args[2]), args);
                         break;
                 }
                 break;
         }
+    }
+
+    public int getInt(CommandSender sender, String[] args) {
+        if (args.length < 3) {
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
+            return -10000000;
+        }
+
+        int atChat = 0;
+        try {
+            atChat = Integer.parseInt(args[2]);
+        } catch (Exception e) {
+            e.printStackTrace();
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
+            return -10000000;
+        }
+
+        return atChat;
+    }
+
+    public void sendGetMessage(CommandSender sender, String message, Object get) {
+        MessagingUtils.sendBUserMessage(sender, message
+                .replace("%set%", get.toString())
+        );
+    }
+
+    public void sendSetMessage(CommandSender sender, String message, Object set) {
+        MessagingUtils.sendBUserMessage(sender, message
+                .replace("%set%", set.toString())
+        );
+    }
+
+    public void sendGetMessageEmote(CommandSender sender, String message, String get, String[] args) {
+        if (args.length < 3) {
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
+            return;
+        }
+
+        MessagingUtils.sendBUserMessage(sender, message
+                .replace("%emote%", args[2])
+                .replace("%set%", get)
+        );
+    }
+
+    public void sendSetMessageEmote(CommandSender sender, String message, String set, String[] args) {
+        if (args.length < 4) {
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
+            return;
+        }
+
+        MessagingUtils.sendBUserMessage(sender, message
+                .replace("%emote%", args[2])
+                .replace("%set%", set)
+        );
+    }
+
+    public void sendGetMessageNumbered(CommandSender sender, String message, String get, String[] args) {
+        if (get.equals("")) return;
+
+        if (args.length < 3) {
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
+            return;
+        }
+
+        MessagingUtils.sendBUserMessage(sender, message
+                .replace("%number%", args[2])
+                .replace("%set%", get)
+        );
+    }
+
+    public void sendSetMessageNumbered(CommandSender sender, String message, String set, String[] args) {
+        if (set.equals("")) return;
+
+        if (args.length < 4) {
+            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
+            return;
+        }
+
+        MessagingUtils.sendBUserMessage(sender, message
+                .replace("%number%", args[2])
+                .replace("%set%", set)
+        );
     }
 
     @Override

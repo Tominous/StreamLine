@@ -340,19 +340,24 @@ public class ServerConfig {
         return serverConfig.getString("proxy-chat.base-perm");
     }
 
-    public Configuration getProxyChatChats() {
+    public Configuration getProxyChatChatsLocal() {
         reloadConfig();
-        return serverConfig.getSection("proxy-chat.chats");
+        return serverConfig.getSection("proxy-chat.chats.local");
     }
 
-    public TreeMap<Integer, String> getChatsMap() {
+    public Configuration getProxyChatChatsGlobal() {
+        reloadConfig();
+        return serverConfig.getSection("proxy-chat.chats.global");
+    }
+
+    public TreeMap<Integer, String> getChatsMapLocal() {
         reloadConfig();
         TreeMap<Integer, String> map = new TreeMap<>();
 
-        if (getProxyChatChats() == null) return map;
-        if (getProxyChatChats().getKeys().size() <= 0) return map;
+        if (getProxyChatChatsLocal() == null) return map;
+        if (getProxyChatChatsLocal().getKeys().size() <= 0) return map;
 
-        for (String key : getProxyChatChats().getKeys()) {
+        for (String key : getProxyChatChatsLocal().getKeys()) {
             int thing = 0;
 
             try {
@@ -367,74 +372,166 @@ public class ServerConfig {
                 MessagingUtils.logSevere("You have an error with your proxy chats! Keys cannot be the same! Skipping...");
                 continue;
             }
-            map.put(thing, getProxyChatChats().getString(key));
+            map.put(thing, getProxyChatChatsLocal().getString(key));
         }
 
         return map;
     }
 
-    public boolean hasProxyChatPermission(SavableUser user) {
-        for (Integer integer : getChatsMap().keySet()) {
+    public TreeMap<Integer, String> getChatsMapGlobal() {
+        reloadConfig();
+        TreeMap<Integer, String> map = new TreeMap<>();
+
+        if (getProxyChatChatsGlobal() == null) return map;
+        if (getProxyChatChatsGlobal().getKeys().size() <= 0) return map;
+
+        for (String key : getProxyChatChatsGlobal().getKeys()) {
+            int thing = 0;
+
+            try {
+                thing = Integer.parseInt(key);
+            } catch (Exception e) {
+                MessagingUtils.logSevere("You have an error with your proxy chats! Keys can only be integers!");
+                e.printStackTrace();
+                continue;
+            }
+
+            if (map.containsKey(thing)) {
+                MessagingUtils.logSevere("You have an error with your proxy chats! Keys cannot be the same! Skipping...");
+                continue;
+            }
+            map.put(thing, getProxyChatChatsGlobal().getString(key));
+        }
+
+        return map;
+    }
+
+    public boolean hasProxyChatPermissionLocal(SavableUser user) {
+        for (Integer integer : getChatsMapLocal().keySet()) {
             if (user.hasPermission(getChatBasePerm() + integer)) return true;
         }
         return false;
     }
 
-    public String getDefaultFormat() {
-        return getChatsMap().firstEntry().getValue();
+    public boolean hasProxyChatPermissionGlobal(SavableUser user) {
+        for (Integer integer : getChatsMapLocal().keySet()) {
+            if (user.hasPermission(getChatBasePerm() + integer)) return true;
+        }
+        return false;
     }
 
-    public String getPermissionedProxyChatMessage(SavableUser user){
-        if (getChatsMap().size() <= 0) return "&r<&d%sender%&r> %message%";
+    public String getDefaultFormatLocal() {
+        return getChatsMapLocal().firstEntry().getValue();
+    }
 
-        if (! hasProxyChatPermission(user)) return getDefaultFormat();
+    public String getDefaultFormatGlobal() {
+        return getChatsMapGlobal().firstEntry().getValue();
+    }
+
+    public String getPermissionedProxyChatMessageLocal(SavableUser user){
+        if (getChatsMapLocal().size() <= 0) return "&r<&d%sender%&r> %message%";
+
+        if (! hasProxyChatPermissionLocal(user)) return getDefaultFormatLocal();
 
         String msg = "";
-        int highest = getChatsMap().lastKey();
+        int highest = getChatsMapLocal().lastKey();
 
-        return findFromChatsMap(user, highest, 0); // Allow for one extra run?
+        return findFromChatsMapLocal(user, highest, 0); // Allow for one extra run?
     }
 
-    public String findFromChatsMap(SavableUser user, int trial, int running) {
-        if (running > getChatsMap().size()) return "&r<&d%sender%&r> %message%";
+    public String getPermissionedProxyChatMessageGlobal(SavableUser user){
+        if (getChatsMapGlobal().size() <= 0) return "&r<&d%sender%&r> %message%";
+
+        if (! hasProxyChatPermissionGlobal(user)) return getDefaultFormatGlobal();
+
+        String msg = "";
+        int highest = getChatsMapGlobal().lastKey();
+
+        return findFromChatsMapGlobal(user, highest, 0); // Allow for one extra run?
+    }
+
+    public String findFromChatsMapLocal(SavableUser user, int trial, int running) {
+        if (running > getChatsMapLocal().size()) return "&r<&d%sender%&r> %message%";
 
         running ++;
 
         String perm = getChatBasePerm() + trial;
-        if (user.hasPermission(perm)) return getChatsMap().get(trial);
-        return findFromChatsMap(user, iterateChatsMapFromHigher(trial), running);
+        if (user.hasPermission(perm)) return getChatsMapLocal().get(trial);
+        return findFromChatsMapLocal(user, iterateChatsMapFromHigherLocal(trial), running);
     }
 
-    public boolean hasProxyChatPermission(ProxiedPlayer player) {
-        for (Integer integer : getChatsMap().keySet()) {
+    public String findFromChatsMapGlobal(SavableUser user, int trial, int running) {
+        if (running > getChatsMapGlobal().size()) return "&r<&d%sender%&r> %message%";
+
+        running ++;
+
+        String perm = getChatBasePerm() + trial;
+        if (user.hasPermission(perm)) return getChatsMapGlobal().get(trial);
+        return findFromChatsMapGlobal(user, iterateChatsMapFromHigherGlobal(trial), running);
+    }
+
+    public boolean hasProxyChatPermissionLocal(ProxiedPlayer player) {
+        for (Integer integer : getChatsMapLocal().keySet()) {
             if (player.hasPermission(getChatBasePerm() + integer)) return true;
         }
         return false;
     }
 
-    public String getPermissionedProxyChatMessage(ProxiedPlayer player){
-        if (getChatsMap().size() <= 0) return "&r<&d%sender%&r> %message%";
-
-        if (! hasProxyChatPermission(player)) return getChatsMap().firstEntry().getValue();
-
-        String msg = "";
-        int highest = getChatsMap().lastKey();
-
-        return findFromChatsMap(player, highest, 0); // Allow for one extra run?
+    public boolean hasProxyChatPermissionGlobal(ProxiedPlayer player) {
+        for (Integer integer : getChatsMapGlobal().keySet()) {
+            if (player.hasPermission(getChatBasePerm() + integer)) return true;
+        }
+        return false;
     }
 
-    public String findFromChatsMap(ProxiedPlayer player, int trial, int running) {
-        if (running > getChatsMap().size()) return "&r<&d%sender%&r> %message%";
+    public String getPermissionedProxyChatMessageLocal(ProxiedPlayer player){
+        if (getChatsMapLocal().size() <= 0) return "&r<&d%sender%&r> %message%";
+
+        if (! hasProxyChatPermissionLocal(player)) return getChatsMapLocal().firstEntry().getValue();
+
+        String msg = "";
+        int highest = getChatsMapLocal().lastKey();
+
+        return findFromChatsMapLocal(player, highest, 0); // Allow for one extra run?
+    }
+
+    public String getPermissionedProxyChatMessageGlobal(ProxiedPlayer player){
+        if (getChatsMapGlobal().size() <= 0) return "&r<&d%sender%&r> %message%";
+
+        if (! hasProxyChatPermissionGlobal(player)) return getChatsMapLocal().firstEntry().getValue();
+
+        String msg = "";
+        int highest = getChatsMapGlobal().lastKey();
+
+        return findFromChatsMapGlobal(player, highest, 0); // Allow for one extra run?
+    }
+
+    public String findFromChatsMapLocal(ProxiedPlayer player, int trial, int running) {
+        if (running > getChatsMapLocal().size()) return "&r<&d%sender%&r> %message%";
 
         running ++;
 
         String perm = getChatBasePerm() + trial;
-        if (player.hasPermission(perm)) return getChatsMap().get(trial);
-        return findFromChatsMap(player, iterateChatsMapFromHigher(trial), running);
+        if (player.hasPermission(perm)) return getChatsMapLocal().get(trial);
+        return findFromChatsMapLocal(player, iterateChatsMapFromHigherLocal(trial), running);
     }
 
-    public int iterateChatsMapFromHigher(int fromHigher){
-        return getChatsMap().lowerKey(fromHigher);
+    public String findFromChatsMapGlobal(ProxiedPlayer player, int trial, int running) {
+        if (running > getChatsMapGlobal().size()) return "&r<&d%sender%&r> %message%";
+
+        running ++;
+
+        String perm = getChatBasePerm() + trial;
+        if (player.hasPermission(perm)) return getChatsMapGlobal().get(trial);
+        return findFromChatsMapGlobal(player, iterateChatsMapFromHigherGlobal(trial), running);
+    }
+
+    public int iterateChatsMapFromHigherLocal(int fromHigher){
+        return getChatsMapLocal().lowerKey(fromHigher);
+    }
+
+    public int iterateChatsMapFromHigherGlobal(int fromHigher){
+        return getChatsMapGlobal().lowerKey(fromHigher);
     }
 
     public void setProxyChatChats(String integer, String format) {
