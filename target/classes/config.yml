@@ -1,0 +1,399 @@
+#### DEBUG ####
+# Enables debug mode.
+debug: false
+
+#### BASICS ####
+# What do you want to be before links found when they are put into hoverable text.
+link-prefix: "&b&o&n"
+
+### MODULE SETTINGS ###
+modules:
+  # Permission that you will give to all of your staff.
+  # (Used for staff chats and other staff determined staff modules...)
+  staff-permission: "streamline.staff"
+  # Forces configs to be updated! (false = updates automatically, true = does not)
+  do-not-automatically-update-configs: false
+  # Discord modules...
+  discord:
+    # Enables / disables Discord integration.
+    enabled: true
+    # Enables / disables the Discord main console.
+    main-console: true
+    # Enables / disables if the bot should use the sender's Minecraft "face" avatar when sending messages.
+    use-mc-avatar: true
+    # Joins and leaves for BungeeCord sent to Discord.
+    joins-leaves:
+      # Enables / disables if when sending the join or leave message to Discord,
+      # whether there should be an icon with the message or not.
+      # If set to true, it will use the bot's icon.
+      use-bot-icon: true
+      # Enables / disables if when sending the join or leave message to Discord,
+      # whether it should be as console or be as defined in
+      # en_US.yml > join-leave > discord
+      # use-bot-icon must be true
+      send-as-console: false
+    # Reports...
+    reports:
+      # Enables / disables sending a confirmation message to the sender of the report.
+      send-confirmation: true
+      # Enables / disables output of reports to "report-channel" below. See "Text Channels" section from discord.
+      report-to-channel: true
+      # Enables / disables messaging players with the permission "streamline.staff.reports" (on bungee) when someone reports from discord.
+      discord-to-minecraft: true
+    # Enables / disables pinging "reporting-role".
+    # Must have "report-to-channel" set as "true". See above.
+    # Must have "reporting-role" set to the ID of the role you want to be pinged (on Discord). See "Roles" section.
+    report-channel-pings-a-role: false
+    # Enables / disables Discord staff chat going to all staff on the bungee server.
+    staffchat-to-minecraft: true
+    # Enables / disables the staff chat going to the bungee server only being from the "staff-role" Discord role.
+    # Must have "staffchat-to-minecraft" set as "true". See above.
+    # Must have "staff-role" set to the ID of the role you want all staff to be (on Discord). See "Roles" section.
+    staffchat-to-minecraft-only-staff-role: false
+    # The replacement for "%server%" in the staffchat message for bungee.
+    staffchat-server: "satellite 5"
+    # Enables / disables startup messages in discord.
+    startup-message: false
+    # Enables / disables shutdown messages in discord.
+    shutdown-message: false
+    # Enables / disables telling users if a command is not a command.
+    # Can be:
+    # "yes" = it will.
+    # "no" = it will not.
+    # "staff" = it will only tell it to the staff role listed above. (When they run the command.)
+    # "owner" = it will only tell it to the owner of the Discord server. (When they run the command.)
+    say-if-not-a-command: "staff"
+    # Enables / disables telling users if a command is disabled.
+    # Can be:
+    # "yes" = it will.
+    # "no" = it will not.
+    # "staff" = it will only tell it to the staff role listed above. (When they run the command.)
+    # "owner" = it will only tell it to the owner of the Discord server. (When they run the command.)
+    say-if-command-disabled: "staff"
+    # Enables / disables telling the text channel defined in "joins" (in the discord > text-channels section) (on Discord) when all players joins.
+    # Can be:
+    # "yes" = all players.
+    # "no" = none.
+    # "staff" = only players with the staff permission.
+    player-joins: "staff"
+    # Enables / disables telling the text channel defined in "leaves" (in the discord > text-channels section) (on Discord) when all players leaves.
+    # Can be:
+    # "yes" = all players.
+    # "no" = none.
+    # "staff" = only players with the staff permission.
+    player-leaves: "staff"
+  # Bungee modules...
+  bungee:
+    # Reports...
+    reports:
+      # Enables / disables sending a confirmation message to the sender of the report.
+      send-confirmation: true
+      # Enables / disables messaging players with the permission "streamline.staff.reports" (on bungee) when someone reports from bungee.
+      send-in-chat: true
+      # Enables / disables messaging the channel defined in "reports" (in the discord > text-channels section) (on discord) when someone reports from bungee.
+      minecraft-to-discord: true
+    # StaffChat...
+    staffchat:
+      # Enables / disables the bungee staff chat for players with the permission staff (on bungee).
+      enabled: true
+      # Enables / disables the bungee staff chat prefix in "prefix" (in the modules > bungee > staffchat section).
+      enable-prefix: true
+      # The prefix to use for quickly using staff chat.
+      prefix: "#"
+      # Enables / disables the staff chat going to the Discord server.
+      minecraft-to-discord: true
+    # Hierarchy of what players should see when other people join.
+    # Can have:
+    # "staff" = ONLY for people with the modules.staff-permission permission.
+    # "guild" = guild members.
+    # "party" = party members.
+    # "friend" = friends.
+    # Set to empty to disable.
+    # Example: "staff,guild,party,friend"
+    # --> If a player joins who is staff, they will be shown (only to staff)
+    # --> If a player joins who is in your guild, they will be shown if not staff (and you are staff)
+    # --> If a player joins who is in your party, they will be shown if not staff (and you are staff), or in your guild.
+    # --> If a player joins who is in your friends list, they will be shown if not staff (and you are staff), or in your guild, or in your party.
+    # --> If none above, will not be shown.
+    # NOTE: per-server connection events can be made with the events module.
+    player-joins-order: "staff,guild,party,friend"
+    # Permission for players you want to see the join message.
+    joins-permission: "streamline.joins.view"
+      # Hierarchy of what players should see when other people leave.
+      # Can have:
+      # "staff" = ONLY for people with the modules.staff-permission permission.
+      # "guild" = guild members.
+      # "party" = party members.
+      # "friend" = friends.
+      # Set to empty to disable.
+      # Example: "staff,guild,party,friend"
+      # --> If a player leaves who is staff, they will be shown (only to staff)
+      # --> If a player leaves who is in your guild, they will be shown if not staff (and you are staff)
+      # --> If a player leaves who is in your party, they will be shown if not staff (and you are staff), or in your guild.
+      # --> If a player leaves who is in your friends list, they will be shown if not staff (and you are staff), or in your guild, or in your party.
+    # --> If none above, will not be shown.
+    # NOTE: per-server connection events can be made with the events module.
+    player-leaves-order: "staff,guild,party,friend"
+    # Permission for players you want to see the leaving message.
+    leaves-permission: "streamline.leaves.view"
+    # Parties...
+    parties:
+      # Go to discord.
+      to-discord: true
+      # Maximum size of any party.
+      max-size: 100
+      # Give this plus: "<size>"
+      # where "<size>" is equal to
+      # the max you want them to have,
+      # but less than the "max-size" above.
+      # EXAMPLE: give people "streamline.party.max.10"
+      base-permission: "streamline.party.max."
+      # Whether or not party things should be able to be seen on discord console.
+      console:
+        chats: true
+        creates: true
+        disbands: true
+        opens: true
+        closes: true
+        joins: true
+        accepts: true
+        denies: true
+        leaves: true
+        promotes: true
+        demotes: true
+        invites: true
+        kicks: true
+        mutes: true
+        warps: true
+      # (Staff) permission to see party messages.
+      view-permission: "streamline.view.party"
+      # For network joins / leaves.
+      send:
+        # If they should be sent to all party members.
+        join: true
+        leave: true
+    # Sudoing...
+    sudo:
+      # Permission for players you don't want to be able to be sudoed.
+      no-sudo-permission: "streamline.sudo.nosudo"
+    # Guilds...
+    guilds:
+      # Go to discord.
+      to-discord: true
+      # Maximum size of any guild.
+      max-size: 120
+      # Whether or not guild things should be able to be seen on discord console.
+      console:
+        chats: true
+        creates: true
+        disbands: true
+        opens: true
+        closes: true
+        joins: true
+        leaves: true
+        accepts: true
+        denies: true
+        promotes: true
+        demotes: true
+        invites: true
+        kicks: true
+        mutes: true
+        warps: true
+        renames: true
+      # GEXP for guilds.
+      xp:
+        # Amount to give each guild per player online every "time-per" seconds.
+        amount-per: 1
+        # Amount of seconds per xp handout.
+        time-per: 20
+      # (Staff) permission to see guild messages.
+      view-permission: "streamline.view.guild"
+      # Name info.
+      name:
+        # Max length a name can be.
+        max-length: 16
+        # If the max length should include colors.
+        max-includes-colors: false
+      # For network joins / leaves.
+      send:
+        # If they should be sent to all guild members.
+        join: true
+        leave: true
+    # Stats command...
+    stats:
+      # Enables / disables telling the player when their stats have been created.
+      tell-when-create: true
+      # Network EXP for players.
+      xp:
+        # Amount to give each guild per player online every "time-per" seconds.
+        amount-per: 1
+        # Amount of seconds per xp handout.
+        time-per: 20
+      # Time in seconds to wait before trying to clear the cached stats.
+      cache-clear: 300
+      # Time in seconds to wait before trying to save the cached stats.
+      cache-save: 600
+      # Enables updating player's display names. Disable if you have another plugin doing this. MUST HAVE LUCKPERMS.
+      update-display-names: true
+    # For server redirects...
+    # This redirects players upon joining the server.
+    # Nice if you need to direct certain players to a different server when they join.
+    redirect:
+      enabled: true
+      # Give this to players per server.
+      # Example permission to give to a player: streamline.send.skyblock
+      # This example will send the player to the skyblock server on your server upon joining the network.
+      # Only works if you have a server specifically called "skyblock" in your bungee config.yml
+      permission-prefix: "streamline.send."
+      # Main lobby server name as defined in your bungee config.yml
+      main: "lobby"
+      # This will make it so you can block players from joining a specific server without a certain Minecraft version.
+      version-block:
+        # Enables this feature.
+        enabled: true
+        # Permission to override the version block.
+        override-permission: "streamline.block.override"
+        # File that determines which servers can be accessed on which versions.
+        server-permission-file: "servers.properties"
+      # This does:
+      # 1. Upon joining the network, you will be tried to join specified servers in the order in the file
+      # 2. Upon the server you were on shutting down, you will be tried to join specified servers in the order in the file.
+      # > All configurable by version.
+      lobbies:
+        # Enables this feature.
+        enabled: true
+        # Defines the file. (Will be in the configs folder.)
+        file: "lobbies.properties"
+        # Time in seconds to wait before removing a player who is connecting to any server from the connection list.
+        # Do not put lower than the time it takes to connect from one server to another.
+        time-out: 5
+    # Network points.
+    points:
+      # Default amount given to players upon first join to the network.
+      default: 0
+    # Network tags. (Used for events.)
+    tags:
+      # Default tags given upon first join to the network.
+      defaults:
+        - newbie
+    # Network events.
+    # Check the wiki for how to use: https://github.com/xNitrate/StreamLine/wiki/How-to-do-Events
+    events:
+      # Enables feature.
+      enabled: true
+      # Folder for events.
+      folder: "events"
+      # Puts the default event into the folder above when the folder is empty.
+      add-default-when-empty: false
+    # For when players are sent an error when running a command...
+    user-errors:
+      # If the stacktrace should be sent to console.
+      # Disable if you do not want random errors when players mistype a command.
+      send-to-console: true
+    # For all punishments...
+    punishments:
+      # For mutes...
+      mutes:
+        # Enables / disables mutes.
+        enabled: true
+        # Enables / disables if mutes should also block all commands.
+        hard-mutes: false
+        # Makes it so that you can write over previous mutes so that you do not have to unban then reban to change a message.
+        replaceable: true
+        # Make it get put in the specified mutes channel?
+        discord: true
+        # Permission to bypass.
+        by-pass: "streamline.bypass.mutes"
+      # For kicks...
+      kicks:
+        # Make it get put in the specified mutes channel?
+        discord: true
+        # Permission to bypass.
+        by-pass: "streamline.bypass.kicks"
+      # For bans.
+      bans:
+        # Enables / disables bans.
+        enabled: true
+        # Makes it so that you can write over previous bans so that you do not have to unban then reban to change a message.
+        replaceable: true
+        # Make it get put in the specified bans channel?
+        discord: true
+        # Permission to bypass.
+        by-pass: "streamline.bypass.bans"
+      # For ipbans.
+      ipbans:
+        # Enables / disables bans.
+        enabled: true
+        # Makes it so that you can write over previous ipbans so that you do not have to unban then reban to change a message.
+        replaceable: true
+        # Make it get put in the specified ipbans channel?
+        discord: true
+        # Permission to bypass.
+        by-pass: "streamline.bypass.ipbans"
+    # For all private messaging.
+    messaging:
+      # Permission for viewing private messages.
+      view-permission: "streamline.staff"
+      # If reply goes to last messenger, or to the last person they sent to, or both.
+      # Options:
+      # "sent-to" = Who the person last sent to.
+      # "sent-from" = Who sent to the person last.
+      # "very-last" (or anything else) = Whichever of the previous two is most recent.
+      reply-to: "very-last"
+    # Settings for server config.
+    # This is for MOTD, etc.
+    server-config:
+      # Allows the use of the server configs.
+      enabled: true
+      # Make the file if file does not exist?
+      make-if-not-exist: true
+      # Allows the use of the MOTD in the server list.
+      motd: true
+      # Allows the use of the Version in the server list.
+      version: true
+      # Allows the use of the Sample in the server list.
+      sample: true
+      # Allows the use of the Max Players in the server list.
+      max-players: true
+      # Allows the use of the Online Players in the server list.
+      online-players: true
+    # Settings for console.
+    console:
+      # Name of the console. For use when using commands as the console.
+      name: "CONSOLE"
+      # Display name of the console. For use when using commands as the console.
+      display-name: "&4&lCONSOLE"
+      # Default tags of the console. For use when using commands as the console.
+      default-tags:
+        - "staff"
+      # Default amount of points of the console. For use when using commands as the console.
+      default-points: 0
+      # What to show when getting the Console's server. For use when using commands as the console.
+      server: "SPACE"
+    # If on network shut down...
+    on-close:
+      # Save the MOTD settings?
+      save-settings: true
+      # Save the main settings?
+      save-main: false
+      # Kick everyone our way? This will make it a little bit cleaner and more graceful.
+      safe-kick: true
+      # Should we show a message (on the kick screen)? ("safe-kick" must be true.) --> Can be defined in message.yml
+      kick-message: true
+      # Hack the /end command?
+      hack-end-command: true
+    # For all spying commands. i.e. "/sspy"
+    spies:
+      # Determines the aliases for the view-self part of the command.  i.e. "/sspy viewself", which toggles viewing your own messages.
+      view-self-aliases:
+        - "vs"
+        - "viewself"
+        - "vself"
+        - "views"
+    # For use of the Helper sub-server plugin.
+    helper:
+      # For teleportation.
+      teleport:
+        # Delay for teleports (in seconds).
+        # Should be, at minimum, the amount of time it takes to go from one server to another.
+        delay: 2

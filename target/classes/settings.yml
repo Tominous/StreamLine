@@ -1,0 +1,77 @@
+# All Fillers:
+# %online% = players online.
+# %max% = max players online.
+# MOTD.
+motd:
+  1: '&eThis &5BungeeCord &7server &eruns the &dStreamLine &cplugin&e!%newline%&4JOIN NOW! &a%online%&8/&a%max%'
+  2: '&eIt allows for &ctimed &eMOTDs!'
+  3: '&eIt is very cool!'
+# Time in seconds.
+motd-time: 1
+# Server version.
+version: 'Minecraft 1.8 to 1.17'
+# Sample.
+sample:
+  1: '&7======================================='
+  2: '&eWelcome to &dmy.server.net'
+  3: '&eStore: &dhttps://store.server.net'
+  4: '&eWebsite: &dhttps://www.server.net'
+  5: '&7======================================='
+# Max players.
+# Options:
+# 'exact' = exact number of online players.
+# 'exact+<number>' = exact number of online players + the number you input.
+# 'exact-<number>' = exact number of online players - the number you input.
+# '+<number>' = what bungee config.yml says + the number you input.
+# '-<number>' = what bungee config.yml says - the number you input.
+# '<number>' = the number you input.
+max-players: '1000'
+# Online players.
+# Options:
+# 'exact' = exact number of online players.
+# 'exact+<number>' = exact number of online players + the number you input.
+# 'exact-<number>' = exact number of online players - the number you input.
+# '+<number>' = exact number of online players + the number you input.
+# '-<number>' = exact number of online players - the number you input.
+# '<number>' = the number you input.
+online-players: 'exact'
+# For proxy chat settings...
+proxy-chat:
+  # Defines if chat should use proxy.
+  enabled: true
+  # If it should log chat to console.
+  to-console: true
+  # Defines the default string prior to the chats.<number> number for permissions with chats!
+  base-perm: "streamline.chat."
+  # Defines specific chats (MUST BE INTEGERS!) for different teams.
+  # Higher number = more priority.
+  # Example permission to give to players: "streamline.chat.1"
+  # Lowest = Default.
+  chats:
+    1: "&d%sender%&r &7&l>> &f%message%"
+    2: "&d%sender%&r &7&l>> &e%message%"
+    3: "&d%sender%&r &7&l>> &6%message%"
+  # When someone says someone's name in chat (on the same server).
+  tags:
+    # Enable getting pinged.
+    enable-ping: true
+    # The color prefix
+    tag-prefix: "&2"
+  # These will replace the key in chat.
+  # i.e. ":shrug:" will be replaced with: "&a¯\\_(ツ)_/¯"
+  emotes:
+    ":shrug:":
+      emote: "&a¯\\_(ツ)_/¯&r"
+      permission: "streamline.emote.shrug"
+    ":oof:":
+      emote: "&c&lOOF&r"
+      permission: "streamline.emote.oof"
+    'o/':
+      emote: "&d( ﾟ◡ﾟ)/&r"
+      permission: "streamline.emote.wave"
+    ':gimme:':
+      emote: "&b༼つ◕_◕༽つ&r"
+      permission: "streamline.emote.gimme"
+    ':wizard:':
+      emote: "&e(&b'-'&e)⊃━&5☆&dﾟ&4.&c*&3･&b｡&6ﾟ&r"
+      permission: "streamline.emote.wizard"

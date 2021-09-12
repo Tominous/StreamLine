@@ -1,0 +1,9 @@
+name: StreamLine
+version: 1.0.14.0
+main: net.plasmere.streamline.StreamLine
+author: Nitrate
+depends: []
+softdepends:
+  - ViaVersion
+  - LuckPerms
+  - Geyser-BungeeCord

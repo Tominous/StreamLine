@@ -1,0 +1,1999 @@
+# All bungee messages accept all color and formatting codes.
+# For new lines, use %newline%.
+
+# Message prefix.
+message-prefix: "&d&lStreamline &7&l>> &r"
+# Message shown when a player doesn't have permission.
+no-permission: "&cSorry, but you do not have permission to do this..."
+# Message shown when reloading.
+reload-message: "&aConfiguration reloaded!"
+# For things that only players can do.
+only-players: "&cSorry, but only online players can use this command...!"
+# Player not found...
+no-player: "&cSorry, but that player either does not exist or is not online..."
+# Discord error title.
+discord-err-title: "ERROR"
+# Error with command.
+command-error:
+  # For discord.
+  discord:
+    # If the error has not been defined yet.
+    undefined: "There was an error executing this command..."
+  # For bungee.
+  bungee:
+    # If the error has not been defined yet.
+    undefined: "&cThere was an error executing this command..."
+    # If the error was thrown because it needs an integer.
+    needs-int: "&cYou need to specify an integer..."
+    # If the error was thrown because it needs a stringed time duration.
+    needs-stringed-time: "&cYou have to specify a stringed time duration... i.e. 1y or 20d"
+    # If the error was thrown because it cannot find the sender's player stat.
+    cant-find-you: "&cSorry, but we cannot find your user in our files... This appears to be a problem with the %class% class!"
+# If a command is disabled.
+command-disabled:
+  # Discord error message when a command is not enabled.
+  discord: "Sorry, but this command is disabled!"
+  # Bungee error message when a command is not enabled.
+  bungee: "&cSorry, but this command is disabled!"
+# If a module is disabled.
+module-disabled:
+  # Discord error message when a module is not enabled.
+  discord: "Sorry, but this module is disabled!"
+  # Bungee error message when a module is not enabled.
+  bungee: "&cSorry, but this module is disabled!"
+# If a command needs more / less arguments.
+command-needs-args:
+  # If needs more...
+  more:
+    # Discord error message when a command needs more arguments.
+    discord: "Sorry, but you need to supply more information!"
+    # Bungee error message when a command needs more arguments.
+    bungee: "&cSorry, but you need to supply more information!"
+  # If needs less...
+  less:
+    # Discord error message when a command needs more arguments.
+    discord: "Sorry, but you need to supply less information!"
+    # Bungee error message when a command needs more arguments.
+    bungee: "&cSorry, but you need to supply less information!"
+
+# If not a command.
+not-a-command:
+  discord: "Not a command!%newline%Do !commands to see the commands!"
+# If command usage not correct.
+improper-usage:
+  # For bungee.
+  bungee: "&cUsage: &b%usage%"
+
+# To determine how it shows up if a player is offline or online.
+# Fillers:
+# %player% = the player's name.
+players:
+  # For discord.
+  discord:
+    # If offline on network.
+    offline: "%player% -"
+    # If online.
+    online: "%player% +"
+    # If NULL
+    null: "NULL"
+  # For bungee.
+  bungee:
+    # If offline on network.
+    offline: "&d%player% &c•"
+    # If online.
+    online: "&d%player% &a•"
+    # If NULL
+    null: "&4&lNULL"
+
+# For the redirect module.
+redirect:
+  # Per version module.
+  by-version:
+    # If you are blocked.
+    blocked: "&cYou were blocked from joining that server in version &3%version%"
+
+# When handling kicks.
+kicks:
+  # When stopping the entire network.
+  stopping: "&cSorry, but the server stopped...! We are starting back up momentarily! Join back when you can!"
+
+# For punishment messages.
+punishments:
+  # When trying to talk...
+  muted:
+    # If only temp.
+    temp: "&cYou are muted until &b%date%&c!"
+    # If permanent.
+    perm: "&cYou are &4PERMANENTLY &cmuted!"
+  # When trying to join...
+  banned:
+    # If only temp.
+    temp: "&cYou are banned until &b%date%&c!%newline%&cReason: &e%reason%"
+    # If permanent.
+    perm: "&cYou are &4PERMANENTLY &cbanned!%newline%&cReason: &e%reason%"
+  # When trying to join...
+  ip-banned:
+    # If only temp.
+    temp: "&cYou are banned until &b%date%&c!%newline%&cReason: &e%reason%"
+    # If permanent.
+    perm: "&cYou are &4PERMANENTLY &cbanned!%newline%&cReason: &e%reason%"
+
+# (Discord) When starting up...
+start:
+  # The title of the embed.
+  embed-title: "STARTING"
+  # The message...
+  message: "Network is starting up!"
+
+# (Discord) When shutting down...
+shutdown:
+  # The title of the embed.
+  embed-title: "STOPPING"
+  # The message...
+  message: "Network is shutting down!"
+
+# When reporting...
+# Fillers:
+# "%reporter%" = the one reporting.
+# "%report%" = what is being reported.
+report-message:
+  # Title of the embeded report message (on Discord).
+  embed-title: "Report"
+  # Reports from the Discord server.
+  from-discord:
+    # Message shown to players with the Discord role stated or in the reports channel. "report-bungee" must be set "true".
+    discord: "[DISCORD REPORT] **%reporter%** reported ``%report%``"
+    # Message shown to players with the permission "streamline.staff.reports". "report-bungee" must be set "true".
+    bungee: "&e[&9DISCORD &cREPORT&e] &a%reporter% &dreported &c%report%"
+    # Message shown to a player when they make a report (on Discord).
+    confirmation: "Your report:%newline%%report%%newline%We will look into it!"
+  # Reports from the Bungee server.
+  from-bungee:
+    # Message shown to players with the Discord role stated or in the reports channel. "report-bungee" must be set "true".
+    discord: "[BUNGEE REPORT] **%reporter%** reported ``%report%``"
+    # Message shown to players with the permission "streamline.staff.reports". "report-bungee" must be set "true".
+    bungee: "&e[&6BUNGEE &cREPORT&e] &a%reporter% &dreported &c%report%"
+    # Message shown to a player when they make a report (on Discord).
+    confirmation: "&aYour report:%newline%&c%report%%newline%&dWe will look into it!"
+
+# When using staff chat...
+staffchat:
+  # Message shown when someone chats in staff chat.
+  message:
+    # When toggling...
+    toggle: "&eToggled &bstaffchat &eto %toggle%&e!"
+    # Title of the embeded staff chat message (on Discord).
+    embed-title: "STAFF"
+    # Fillers:
+    # %user% = who chatted.
+    # %message% = the message said.
+    # %from% = where the message originated. i.e. bungeecord or discord
+    # Message on Discord.
+    discord: "%message%"
+    # Message on bungee.
+    bungee: "&2&lSTAFF &7&l>> &a%user% &7[%from%&7] &e(&4%server%&e) &8: &e%message%"
+    # Text to use when using "%from%" in your messages.
+    from:
+      # If message originated from Discord.
+      discord: "&9discord"
+      # If message originated from Bungee.
+      bungee: "&6bungee"
+  # Message shown when using just the prefix without a message.
+  just-prefix: "&cSorry, but you need to supply more than just the prefix!"
+  # If you toggle staff chat.
+  toggle:
+    # If true.
+    true: "&aTRUE"
+    # If false.
+    false: "&cFALSE"
+
+# When using online list...
+online:
+  # Message for it.
+  message:
+    # If no players.
+    no-players: "&cNo players online!"
+    # If no groups.
+    no-groups: "&cSorry, but groups are not configured!"
+    # Embed title for Discord.
+    embed-title: "Global List"
+    # Fillers:
+    # %amount% = the amount of people on the server.
+    # %servers% = a compiled list of servers with the amount online.
+    # %online% = a compiled list of all who are online excluding those who have the permission "streamline.staff.vanish".
+    # Message on Discord.
+    discord: "Total Online: %amount%%newline%Servers: %newline%%servers%%newline%Online: %newline%%online%"
+    # Message on bungee.
+    bungee:
+      # The main message.
+      # Fillers:
+      # %amount% = the amount of people on the server.
+      # %servers% = a compiled list of servers with the amount online.
+      # %online% = a compiled list of all who are online.
+      main: "&7--< &5Global List &e(&6%amount%&e) &7>--%newline%&2Servers&8: %newline%%servers%%newline%&2Players&8: %newline%%online%"
+      # Server format.
+      # Fillers:
+      # %server% = specific server.
+      # %count% = amount of players on said server.
+      servers: "&9%server%&8: &6%count% &donline&8..."
+      # Player format.
+      players:
+        # Main bulk of player format.
+        # Fillers:
+        # %group% = the luckperms group.
+        # %count% = the amount online in said luckperms group.
+        # %playerbulk% = a compiled list of players in said luckperms group.
+        main: "&d%group% &e(&6%count%&e)&8: %playerbulk%"
+        # Format for compiling players.
+        playerbulk:
+          # Fillers:
+          # %player% = a said player in a luckperm group.
+          # %server% = the server said player is currently on.
+          # If not the last player in group.
+          if-not-last: "&2%player% &0(&e%server%&0)&8, "
+          # If last.
+          if-last: "&2%player% &0(&e%server%&0)&8."
+
+# For player joins and leaves.
+join-leave:
+  # Use "%player_default%" to substitute just the player name without a off / on check.
+  # For Discord...
+  discord:
+    # Message to be sent to a chat (on Discord) when a player comes online on the bungee server.
+    online:
+      # Embed title for Discord.
+      embed: "Join"
+      # Embed text.
+      text: "%player_default% is now online."
+    # Message to be sent to a chat (on Discord) when a player goes offline on the bungee server.
+    offline:
+      # Embed title for Discord.
+      embed: "Leave"
+      # Embed text.
+      text: "%player_default% is now offline."
+  # For bungee...
+  bungee:
+    # Message to be sent to chat (on bungee) when a player comes online on the bungee server.
+    online: "&d%player_default% &eis now &aonline&8."
+    # Message to be sent to chat (on bungee) when a player goes offline on the bungee server.
+    offline: "&d%player_default% &eis now &coffline&8."
+
+# When using staffonline...
+staffonline:
+  # Messages for it...
+  message:
+    # Embed title for Discord.
+    embed-title: "Staff"
+    # Message on Discord.
+    discord:
+      # The main message.
+      # Fillers:
+      # %amount% = the amount of staff on the server.
+      # %staffbulk% = a compiled list of all staff who are online.
+      main: "Total Online: %amount%%newline%Online: %staffbulk%"
+      # Format for compiling staff.
+      staffbulk:
+        # Fillers:
+        # %player% = a said player in a luckperm group.
+        # %server% = the server said player is currently on.
+        # If not the last player in group.
+        if-not-last: "%player% (%server%), "
+        if-last: "%player% (%server%)."
+    # Message on bungee.
+    bungee:
+      # The main message.
+      main: "&6Staff Online &e(&6%amount%&e)&8: %staffbulk%"
+      # Format for compiling players.
+      staffbulk:
+        # Fillers:
+        # %player% = a said player in a luckperm group.
+        # %server% = the server said player is currently on.
+        # If not the last player in group.
+        if-not-last: "&2%player% &0(&e%server%&0)&8, "
+        # If last.
+        if-last: "&2%player% &0(&e%server%&0)&8."
+
+# When using party...
+party:
+  # Fillers:
+  # %leader% = party leader.
+  # %size% = party size.
+  # %max% = party max size.
+  # %sender% = command sender.
+  # Text used for when talking about each party level...
+  text:
+    # Defines what each should be when you promote or demote a player.
+    leader: "LEADER"
+    moderator: "MODERATOR"
+    member: "MEMBER"
+  # When a player connects.
+  connect: "&bPARTY &9> &d%player% &a+"
+  # When a player disconnects.
+  disconnect: "&bPARTY &9> &d%player% &c-"
+  # Guild Spy message.
+  spy: "&d%leader%&a's PARTY &9>> &d%sender% &8: &e%message%"
+  # When it finds no party.
+  no-party: "&cNo party found!"
+  # Already made.
+  already-made: "&cThis guild has already been made!"
+  # In different one.
+  # Fillers:
+  # %player% = player who the sender is trying to invite.
+  already-has: "&cSorry, but &d%player% &cis already in a party..."
+  # When the the size of /par open <size> is to big.
+  too-big: "&cSorry, but you can't create a party that big."
+  # Not high enough party permissions.
+  no-permission: "&cYou do not have high enough party permissions to do this!"
+  # Not in a party...
+  not-in-a-party: "&cSorry, but you are not in a party..."
+  other-not-in-party: "&cSorry, but they are not in the party..."
+  # Not enough space in party...
+  not-enough-space: "&cSorry, but the party is full!"
+  # When creating a party...
+  create:
+    sender: "&eYou have just created a party with size of &3%max%&e!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %sender_normal% = the player's regular name.
+    # %size% = the size of the party.
+    console: "%sender_absolute% created a party with size %size%!"
+    # Discord embed title.
+    title: "PARTY CREATE"
+  # Message for when someone joins a party...
+  join:
+    # Fillers:
+    # %user% = the person joining.
+    # %leader% = the party leader.
+    # Members of the party.
+    members: "&b%sender% &ejust joined the party!"
+    # Command sender.
+    user: "&eYou just joined &b%leader%&e's party!"
+    # If failed.
+    failure: "&cThere is no party to join."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader% = the leader-of-the-group's display name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %size% = the size of the party.
+    console: "%sender_absolute% joined %leader_normal%'s party!"
+    # Discord embed title.
+    title: "PARTY JOIN"
+  # Message for when someone leaves a party...
+  leave:
+    # Fillers:
+    # %user% = the person joining.
+    # %leader% = the party leader.
+    # Members of the party.
+    members: "&b%sender% &ejust left the party."
+    # Command sender.
+    user: "&eYou just left &b%leader%&e's party."
+    # If failed.
+    failure: "&cThere is no party to leave."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %size% = the size of the party.
+    console: "%sender_absolute% left %leader_normal%'s party!"
+    # Discord embed title.
+    title: "PARTY LEAVE"
+  # Message for when promoting someone...
+  promote:
+    # Fillers:
+    # %user% = the person being promoted.
+    # %leader% = the party leader.
+    # %level% = the permission level the person is going to.
+    # Members of party.
+    members: "&b%sender% &ejust promoted &b%user% &eto &c%level%&e in the party!"
+    # User being promoted.
+    user: "&eYou were just promoted to &c%level% &ein the party!"
+    # Party leader.
+    leader: "&eYou just promoted &b%user% to &c%level%&e!"
+    # If failed.
+    failure: "&cAlready at highest level."
+    # Message in discord console.
+    # Options:
+    # %user% = the user-the-action-is-being-used-on's display name.
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %size% = the size of the party.
+    console: "%sender_absolute% promoted %user_normal% in %leader_normal%'s party!"
+    # Discord embed title.
+    title: "PARTY PROMOTE"
+  # Message for demoting someone...
+  demote:
+    # Fillers:
+    # %user% = the person being demoted.
+    # %leader% = the party leader.
+    # %level% = the permission level the person is going to.
+    # Members of party.
+    members: "&b%sender% &ejust demoted &b%user% &eto &c%level%&e in the party."
+    # User being demoted.
+    user: "&eYou were just demoted to &c%level% &ein the party."
+    # Party leader.
+    leader: "&eYou just demoted &b%user% to &c%level%&e."
+    # If failed.
+    failure: "&cAlready at lowest level."
+    # If you are the party leader.
+    is-leader: "&cCannot demote yourself..."
+    # Message in discord console.
+    # Options:
+    # %user% = the user-the-action-is-being-used-on's display name.
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %size% = the size of the party.
+    console: "%sender_absolute% demoted %user_normal% in %leader_normal%'s party!"
+    # Discord embed title.
+    title: "PARTY DEMOTE"
+  # Message when someone chats...
+  # Fillers:
+  # %sender% = Messager.
+  # %message% = Message user said being sent.
+  chat:
+    # Message format.
+    message: "&aPARTY &9&l>> &b%sender% &8: &f%message%"
+    # If the party is muted.
+    muted: "&cSorry, but the party is muted!"
+    # Message in discord console when people chat in parties.
+    # Options:
+    # %message% = the message.
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %size% = the size of the party.
+    console: "%message%"
+    # Discord embed title.
+    title: "PARTY CHAT"
+  # Message when some lists the party...
+  list:
+    # Fillers:
+    # %leaderbulk% = leaderbulk section.
+    # %moderatorbulk% = moderatorbulk section.
+    # %memberbulk% = memberbulk section.
+    # %user% = (only in context of "not-last" and "last") the specific member in the list of members
+    # %sender% = the one running the command.
+    # Main message used to determine the other of parts of the message...
+    main: "&7--< &5Party &6%size%&8/&6%max% &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
+    # Bulk leader message.
+    leaderbulk: "&eParty Leader: &c%leader%"
+    # Bulk mod message.
+    moderatorbulk:
+      # Message.
+      main: "&eParty Moderators: %moderators%"
+      # For mods.
+      moderators:
+        # If not last mod.
+        not-last: "&b%user%&e, "
+        # If last.
+        last: "&b%user%&e."
+        # If there are none.
+        if-none: "&cNONE"
+    # Bulk member message.
+    memberbulk:
+      # Message.
+      main: "&eParty Members: %members%"
+      # Members in party.
+      members:
+        # If not last in party.
+        not-last: "&7%user%&e, "
+        # If last.
+        last: "&7%user%&e."
+        # If there are none.
+        if-none: "&cNONE"
+  # Message for opening the party...
+  open:
+    # Fillers:
+    # %leader% = the party leader.
+    # %size% = the new size of the party.
+    # For members of party.
+    members: "&b%sender% &ejust opened the party to a size of &e%max%&e."
+    # For leader.
+    leader: "&eYou just opened the party to a size of &3%max%&e."
+    # If failure.
+    failure: "&cAlready open."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %sender_normal% = the player's regular name.
+    # %size% = the size of the party.
+    console: "%sender_absolute% just opened %leader_normal%'s party to a size of %size%!"
+    # Discord embed title.
+    title: "PARTY OPEN"
+  # Message for closing the party...
+  close:
+    # Fillers:
+    # %leader% = the party leader.
+    # %size% = the size of the party.
+    # For members of party.
+    members: "&b%sender% &ejust closed the party."
+    # For sender.
+    sender: "&eYou just closed the party."
+    # If failure.
+    failure: "&cAlready closed."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %size% = the size of the party.
+    console: "%sender_absolute% closed %leader_normal%'s party!"
+    # Discord embed title.
+    title: "PARTY CLOSE"
+  # Message for disbanding the party...
+  disband:
+    # Fillers:
+    # %leader% = the party leader.
+    # For members of party.
+    members: "&b%sender% &ejust disbanded the party."
+    # For leader.
+    leader: "&eYou just disbanded the party."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %size% = the size of the party.
+    console: "%sender_absolute% disbanded %leader_normal%'s party!"
+    # Discord embed title.
+    title: "PARTY DISBAND"
+  # Message for accepting an invite to a party...
+  accept:
+    # Fillers:
+    # %user% = the accepter.
+    # %leader% = the party leader.
+    # User who accepts.
+    user: "&eAccepted the request to &b%leader%&e's party."
+    # Leader of party.
+    leader: "&b%user% &ejust &aaccepted &eyour invite!"
+    # Members of party.
+    members: "&b%user% &ejust &aaccepted &ethe invite!"
+    # If failed.
+    failure: "&cNo invites!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %size% = the size of the party.
+    console: "%sender_absolute% accepted invite to %leader_normal%'s party!"
+    # Discord embed title.
+    title: "PARTY ACCEPT"
+  # Message for denying an invite to a party...
+  deny:
+    # Fillers:
+    # %user% = the accepter.
+    # %leader% = the party leader.
+    # User who denied.
+    user: "&eDenied the request to &b%leader%&e's party."
+    # Leader of party.
+    leader: "&b%user% &ejust &cdenied &eyour invite!"
+    # Members of party.
+    members: "&b%user% &ejust &cdenied &ethe invite!"
+    # If failed.
+    failure: "&cNo invites!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %size% = the size of the party.
+    console: "%sender_absolute% denied the invite to %leader_normal%'s party!"
+    # Discord embed title.
+    title: "PARTY DENY"
+  # Message for sending an invite of a party...
+  invite:
+    # Fillers:
+    # %sender% = person sending the request.
+    # %user% = the accepter.
+    # %leader% = the party leader.
+    # %leader_normal% = the party leader formatted without their display name.
+    # User who is being invited.
+    user: "&b%sender% &einvited you to &b%leader%&e's party!%newline%&eType &a/party accept %leader_absolute% &eto join!"
+    # Members of party.
+    members: "&b%sender% &einvited &b%user% &eto your party!"
+    # Leader of party.
+    leader: "&eJust invited &b%user% &eto your party!"
+    # If failed.
+    failure: "&cAlready invited this person."
+    # If self.
+    non-self: "&cCannot invite yourself!"
+    # Message in discord console.
+    # Options:
+    # %user% = the user-the-action-is-being-used-on's display name.
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %size% = the size of the party.
+    console: "%sender_absolute% invited %user_normal% to %leader_normal%'s party!"
+    # Discord embed title.
+    title: "PARTY INVITE"
+  # Messages for kicking...
+  kick:
+    # Fillers:
+    # %user% = the person being kicked.
+    # User who is kicked.
+    user: "&b%sender% &ekicked you from their party."
+    # Members of party.
+    members: "&b%user% &ewas kicked by &b%leader% &e from the party."
+    # Sender of command.
+    sender: "&eYou kicked &b%user% &efrom your party."
+    # If failed.
+    failure: "&cThis player is not in the party."
+    # If it is a mod being kicked.
+    mod: "&cCannot kick a party mod."
+    # If self.
+    self: "&cCannot kick self."
+    # Message in discord console.
+    # Options:
+    # %user% = the user-the-action-is-being-used-on's display name.
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %size% = the size of the party.
+    console: "%sender_absolute% kicked %user_normal% from %leader_normal%'s party!"
+    # Discord embed title.
+    title: "PARTY KICK"
+  # Messages for muting...
+  mute:
+    # Fillers:
+    # %sender% = person sending the command.
+    # If muted.
+    mute:
+      # For sender.
+      user: "&eYou just &cmuted &ethe party."
+      # For members.
+      members: "&b%sender% &ejust &cmuted &ethe party."
+    # If unmuted.
+    unmute:
+      # For sender.
+      user: "&eYou just &aunmuted &ethe party."
+      # For members.
+      members: "&b%sender% &ejust &aunmuted &ethe party."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %toggle% = the message below for guild.mute.toggle
+    # %size% = the size of the party.
+    console: "%sender_absolute% set %leader_normal%'s party's to %toggle%!"
+    # Toggle for message above.
+    toggle:
+      muted: "muted"
+      unmuted: "unmuted"
+    # Discord embed title.
+    title: "PARTY MUTE"
+  # Messages for warping...
+  warp:
+    # Command sender.
+    sender: "&eYou warped your party of &3%size% &eto your server!"
+    # For members.
+    members: "&b%sender% &ewarped you to their server!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% warped %leader_normal%'s party's to their server!"
+    # Discord embed title.
+    title: "PARTY WARP"
+
+# Messages for the stream command:
+stream:
+  # If they didn't supply a link.
+  need-link: "&cSorry, but you need to specify a link..."
+  # If what they supplied wasn't a link.
+  not-link: "&cSorry, but you need to specify a link beginning with \"https://\"..."
+  # Message: (Do not put anything directly after the link. You need a space!
+  message: "&a%user% &dis streaming at &b&n%link%&8... &dCome and check it out!"
+  # Hover formatted prefix.
+  hover-prefix: "&b&o&n"
+
+# Messages for the parties command:
+parties:
+  # If there are no parties.
+  no-parties: "&cNo parties..."
+  # Fillers:
+  # %sender% = person sending the command.
+  # %leader% = party leader.
+  # %size% = current size of party.
+  # %max% = max party size. --> set by leader.
+  # %maxmax% = absolute max party size. --> set by permissions.
+  # %mods_count% = amount of mods in party.
+  # %members_count% = amount of members in the party.
+  # %total_count% = amount of members in the party.
+  # %invites_count% = amount of invites in the party.
+  # %mods% = a list of mods.
+  # %members% = a list of mods.
+  # %totalmembers% = a list of all members.
+  # %invites% = a list of invited players.
+  # %ispublic% = true if open, false if not.
+  # %ismuted% = true if muted, false if not.
+  # Main message.
+  parties: "&5PARTY &9>> &eleader&8(&b%leader%&8)&e, size&8(&3%size%&8)&e, partyMax&8(&3%max%&8)&e, permMax&8(&3%maxmax%&8)&e, mods&8(&3%mods_count% &4--> %mods%&8)&e, members&8(&3%members_count% &4--> %members%&8)&e, all&8(&3%total_count% &4--> %totalmembers%&8)&e, invites&8(&3%invites_count% &4--> %invites%&8)&e, public&8(%ispublic%&8)&e, muted&8(%ismuted%&8)&e."
+  # Mods in message.
+  mods:
+    # If not last in list.
+    not-last: "&d%user%&e, "
+    # If last.
+    last: "&d%user%"
+  # Members in message.
+  members:
+    # If not last in list.
+    not-last: "&d%user%&e, "
+    # If last.
+    last: "&d%user%"
+  # Invites in message.
+  invites:
+    # If not last in list.
+    not-last: "&d%user%&e, "
+    # If last.
+    last: "&d%user%"
+  # Total members in message.
+  totalmembers:
+    # If not last in list.
+    not-last: "&d%user%&e, "
+    # If last.
+    last: "&d%user%"
+  # Message for if public.
+  ispublic:
+    # If it is.
+    true: "&aTRUE"
+    # If not.
+    false: "&cFALSE"
+  # Message for if muted.
+  ismuted:
+    # If it is.
+    true: "&aTRUE"
+    # If not.
+    false: "&cFALSE"
+
+# For command "sudo":
+sudo:
+  # Fillers:
+  # %user% = the user being sudo-ed.
+  # If it worked.
+  worked: "&eJust sudoed &d%user%&e."
+  # If it didn't.
+  no-work: "&cFailed to sudo &d%user%&c."
+  # If you cannot sudo that player.
+  no-sudo: "&cSorry, but you cannot sudo &d%user%&c..."
+
+# When using guild...
+guild:
+  # Fillers:
+  # %leader% = guild leader.
+  # %size% = guild size.
+  # %max% = guild max size.
+  # %sender% = command sender.
+  # %total_xp% = guild totalXP.
+  # %level% = guild level.
+  # %name% = guild name.
+  # %xpneeded% = guild totalXP needed FOR level up.
+  # %xplevel% = guild totalXP needed UNTIL level up.
+  # Text used for when talking about each guild level...
+  text:
+    # Defines what each should be when you promote or demote a player.
+    leader: "LEADER"
+    moderator: "MODERATOR"
+    member: "MEMBER"
+  # For Discord.
+  discord:
+    # Embed title.
+    title: "GUILD"
+  # When a player connects.
+  connect: "&2GUILD &9> &d%player% &a+"
+  # When a player disconnects.
+  disconnect: "&2GUILD &9> &d%player% &c-"
+  # For Guild Spy.
+  spy: "&d%leader%&a's GUILD &9>> &d%sender% &8: &e%message%"
+  # When it finds no guild.
+  no-guild: "&cNo guild found!"
+  # Message shown when the name is too long.
+  # Fillers:
+  # %length% = amount of characters allowed.
+  # %codes% = if or if not codes are count towards length.
+  name-too-long: "&cThat name is too long (%length%)! The max length is %max_length% %codes% including color codes!"
+  # For %codes% above.
+  codes:
+    # If it is true in config.
+    if-true: "with"
+    # If it is false in config.
+    if-false: "without"
+  # Already made.
+  already-made: "&cThis guild has already been made!"
+  # In different one.
+  # Fillers:
+  # %player% = player who the sender is trying to invite.
+  already-has-others: "&cSorry, but &d%player% &cis already in a guild..."
+  # If you are already in one.
+  already-has-self: "&cSorry, but you are already in a guild!"
+  # Not high enough guild permissions.
+  no-permission: "&cYou do not have high enough guild permissions to do this!"
+  # Not in a guild...
+  not-in-a-guild: "&cSorry, but you are not in a guild..."
+  # If that player is not in a guild.
+  other-not-in-guild: "&cSorry, but they are not in the guild..."
+  # Not enough space in guild...
+  not-enough-space: "&cSorry, but the guild is full!"
+  # When creating a guild...
+  create:
+    # Message to sender.
+    sender: "&eYou have just created the guild &4%name%&e!"
+    # If name is "".
+    non-empty: "&cName cannot be empty!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %sender_normal% = the player's regular name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% created a guild with size %size% named %name%!"
+    # Discord embed title.
+    title: "GUILD CREATE"
+  # Message for when someone joins a guild...
+  join:
+    # Fillers:
+    # %user% = the person joining.
+    # %leader% = the guild leader.
+    # For members.
+    members: "&b%sender% &ejust joined the guild!"
+    # For joining player.
+    user: "&eYou just joined &b%leader%&e's guild!"
+    # If failed.
+    failure: "&cThere is no guild to join."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% joined %leader_normal%'s guild!"
+    # Discord embed title.
+    title: "GUILD JOIN"
+  # Message for when someone leaves a guild...
+  leave:
+    # Fillers:
+    # %user% = the person joining.
+    # %leader% = the guild leader.
+    # For members.
+    members: "&b%sender% &ejust left the guild."
+    # For user who left.
+    user: "&eYou just left &b%leader%&e's guild."
+    failure: "&cThere is no guild to leave."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% left %leader_normal%'s guild!"
+    # Discord embed title.
+    title: "GUILD LEAVE"
+  # Message for when promoting someone...
+  promote:
+    # Fillers:
+    # %user% = the person being promoted.
+    # %leader% = the guild leader.
+    # %level% = the permission level the person is going to.
+    # For members.
+    members: "&b%sender% &ejust promoted &b%user% &eto &c%level%&e in the guild!"
+    # For user who was promoted.
+    user: "&eYou were just promoted to &c%level% &ein the guild!"
+    # For leader.
+    leader: "&eYou just promoted &b%user% to &c%level%&e!"
+    # If failed.
+    failure: "&cAlready at highest level."
+    # Message in discord console.
+    # Options:
+    # %user% = the user-the-action-is-being-used-on's display name.
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %sender_absolute% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% promoted %user_normal% in %leader_normal%'s guild!"
+    # Discord embed title.
+    title: "GUILD PROMOTE"
+  # Message for demoting someone...
+  demote:
+    # Fillers:
+    # %user% = the person being demoted.
+    # %leader% = the guild leader.
+    # %level% = the permission level the person is going to.
+    # For members.
+    members: "&b%sender% &ejust demoted &b%user% &eto &c%level%&e in the guild."
+    # For user who was demoted.
+    user: "&eYou were just demoted to &c%level% &ein the guild."
+    # For leader.
+    leader: "&eYou just demoted &b%user% to &c%level%&e."
+    # If failed.
+    failure: "&cAlready at lowest level."
+    # If it is leader.
+    is-leader: "&cCannot demote yourself..."
+    # Message in discord console.
+    # Options:
+    # %user% = the user-the-action-is-being-used-on's display name.
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% demoted %user_normal% in %leader_normal%'s guild!"
+    # Discord embed title.
+    title: "GUILD DEMOTE"
+  # Message when someone chats...
+  # Fillers:
+  # %sender% = Messager.
+  # %message% = Message user said being sent.
+  chat:
+    # Main message.
+    message: "&aGUILD &9&l>> &b%sender% &8: &f%message%"
+    # If the guild is muted.
+    muted: "&cSorry, but the guild is muted!"
+    # Message in discord console.
+    # Options:
+    # %message% = the message.
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%message%"
+    # Discord embed title.
+    title: "GUILD CHAT"
+  # Message when some lists the guild...
+  list:
+    # Fillers:
+    # %leaderbulk% = leaderbulk section.
+    # %moderatorbulk% = moderatorbulk section.
+    # %memberbulk% = memberbulk section.
+    # %user% = (only in context of "not-last" and "last") the specific member in the list of members
+    # %user% = (in everything else ^) the one running the command.
+    # Main message used to determine the other of things...
+    main: "&7--< &5Guild &6%size%&8/&6%max% &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
+    # Leader bulk message.
+    leaderbulk: "&eGuild Leader: &c%leader%"
+    # Mods bulk message.
+    moderatorbulk:
+      # Main message.
+      main: "&eGuild Moderators: %moderators%"
+      # Mods.
+      moderators:
+        # If not last in list.
+        not-last: "&b%user%&e, "
+        # If last.
+        last: "&b%user%&e."
+        # If none in list.
+        if-none: "&cNONE"
+    # Member bulk message.
+    memberbulk:
+      # Main message.
+      main: "&eGuild Members: %members%"
+      # Members.
+      members:
+        # If not last in list.
+        not-last: "&7%user%&e, "
+        # If last.
+        last: "&7%user%&e."
+        # If none in list.
+        if-none: "&cNONE"
+  # Message for opening the guild...
+  open:
+    # Fillers:
+    # %leader% = the guild leader.
+    # %size% = the new size of the guild.
+    # For members.
+    members: "&b%sender% &ejust opened the guild to a size of &e%max%&e."
+    # For sender.
+    sender: "&eYou just opened the guild."
+    # If failed.
+    failure: "&cAlready open."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% just opened %leader_normal%'s guild to a size of %size%!"
+    # Discord embed title.
+    title: "GUILD OPEN"
+  # Message for closing the guild...
+  close:
+    # Fillers:
+    # %leader% = the guild leader.
+    # %size% = the size of the guild.
+    # For members.
+    members: "&b%sender% &ejust closed the guild."
+    # For sender.
+    sender: "&eYou just closed the guild."
+    # If failed.
+    failure: "&cAlready closed."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% closed %leader_normal%'s guild!"
+    # Discord embed title.
+    title: "GUILD CLOSE"
+  # Message for disbanding the guild...
+  disband:
+    # Fillers:
+    # %leader% = the guild leader.
+    # For members.
+    members: "&b%sender% &ejust disbanded the guild."
+    # For leader.
+    leader: "&eYou just disbanded the guild."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% disbanded %leader_normal%'s guild!"
+    # Discord embed title.
+    title: "GUILD DISBAND"
+  # Message for accepting an invite to a guild...
+  accept:
+    # Fillers:
+    # %user% = the accepter.
+    # %leader% = the guild leader.
+    # For user who accepted.
+    user: "&eAccepted the request to &b%leader%&e's guild."
+    # For leader.
+    leader: "&b%user% &ejust &aaccepted &eyour invite!"
+    # For members.
+    members: "&b%user% &ejust &aaccepted &ethe invite!"
+    # If failed.
+    failure: "&cNo invites!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% accepted invite to %leader_normal%'s guild!"
+    # Discord embed title.
+    title: "GUILD ACCEPT"
+  # Message for denying an invite to a guild...
+  deny:
+    # Fillers:
+    # %user% = the accepter.
+    # %leader% = the guild leader.
+    # For user who denied.
+    user: "&eDenied the request to &b%leader%&e's guild."
+    # For leader.
+    leader: "&b%user% &ejust &cdenied &eyour invite!"
+    # For members.
+    members: "&b%user% &ejust &cdenied &ethe invite!"
+    # If failed.
+    failure: "&cNo invites!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% denied invite to %leader_normal%'s guild!"
+    # Discord embed title.
+    title: "GUILD DENY"
+  # Message for sending an invite of a guild...
+  invite:
+    # Fillers:
+    # %sender% = person sending the request.
+    # %user% = the accepter.
+    # %leader% = the guild leader.
+    # %leader_normal% = the guild leader formatted without their display name.
+    # For user who was invited.
+    user: "&b%sender% &einvited you to &b%leader%&e's guild!%newline%&eType &a/guild accept %leader_absolute% &eto join!"
+    # For members.
+    members: "&b%sender% &einvited &b%user% &eto your guild!"
+    # For leader.
+    leader: "&eJust invited &b%user% &eto your guild!"
+    # If failed.
+    failure: "&cAlready invited this person."
+    # If self.
+    non-self: "&cCannot invite yourself!"
+    # Message in discord console.
+    # Options:
+    # %user% = the user-the-action-is-being-used-on's display name.
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% invited %user_normal% to %leader_normal%'s guild!"
+    # Discord embed title.
+    title: "GUILD INVITE"
+  # Kick messages...
+  kick:
+    # Fillers:
+    # %user% = the person being kicked.
+    # For user who was kicked.
+    user: "&b%sender% &ekicked you from their guild."
+    # For members.
+    members: "&b%user% &ewas kicked by &b%sender% &e from the guild."
+    # For sender.
+    sender: "&eYou kicked &b%user% &efrom your guild."
+    # If failed.
+    failure: "&cThis player is not in the guild."
+    # If mod.
+    mod: "&cCannot kick a guild mod."
+    # If self.
+    self: "&cCannot kick self."
+    # Message in discord console.
+    # Options:
+    # %user% = the user-the-action-is-being-used-on's display name.
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% kicked %user_normal% from %leader_normal%'s guild!"
+    # Discord embed title.
+    title: "GUILD KICK"
+  # Mute messages.
+  mute:
+    # Fillers:
+    # %sender% = person sending the command.
+    # If muted.
+    mute:
+      # For sender.
+      user: "&eYou just &cmuted &ethe guild."
+      # For members.
+      members: "&b%sender% &ejust &cmuted &ethe guild."
+    # If unmuted.
+    unmute:
+      # For sender.
+      user: "&eYou just &aunmuted &ethe guild."
+      # For members.
+      members: "&b%sender% &ejust &aunmuted &ethe guild."
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% set %leader_normal%'s guild's to %toggle%!"
+    # Toggle for message above.
+    toggle:
+      muted: "muted"
+      unmuted: "unmuted"
+    # Discord embed title.
+    title: "GUILD MUTE"
+  # Warp messages...
+  warp:
+    # For sender.
+    sender: "&eYou warped your guild of &3%size% &eto your server!"
+    # For members.
+    members: "&d%sender% &ewarped you to their server!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %name% = the name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% warped %leader_normal%'s guild to their server!"
+    # Discord embed title.
+    title: "GUILD WARP"
+  # Info message.
+  info: "&9----- &2Guild Info For &4%name% &9-----%newline%&eGEXP&8: &6%total_xp%%newline%&eLevel&8: &6%level%%newline%&eGEXP Needed For Level Up&8: &6%xplevel% &9(&6%xpneeded%&9)"
+  # Rename messages...
+  rename:
+    sender: "&eYou just renamed the guild from &c%old% &eto &c%new%&e!"
+    members: "&d%sender% &erenamed the guild from &c%old% &eto &c%new%&e!"
+    non-empty: "&cName cannot be empty!"
+    # Message in discord console.
+    # Options:
+    # %sender% = the player's display name.
+    # %leader% = the leader-of-the-group's display name.
+    # %sender_normal% = the player's regular name.
+    # %leader_normal% = the leader-of-the-group's regular name.
+    # %name% = the name of the guild.
+    # %old_name% = the old name of the guild.
+    # %size% = the size of the guild.
+    console: "%sender_absolute% renamed %leader_normal%'s guild to %name% from %old_name%!"
+    # Discord embed title.
+    title: "GUILD RENAME"
+
+# Messages for the guilds command:
+guilds:
+  # If no guilds found.
+  no-guilds: "&cNo guilds..."
+  # Fillers:
+  # %sender% = person sending the command.
+  # %leader% = party leader.
+  # %size% = current size of party.
+  # %max% = max party size. --> set by leader.
+  # %maxmax% = absolute max party size. --> set by permissions.
+  # %mods_count% = amount of mods in party.
+  # %members_count% = amount of members in the party.
+  # %total_count% = amount of members in the party.
+  # %invites_count% = amount of invites in the party.
+  # %mods% = a list of mods.
+  # %members% = a list of mods.
+  # %totalmembers% = a list of all members.
+  # %invites% = a list of invited players.
+  # %ispublic% = true if open, false if not.
+  # %ismuted% = true if muted, false if not.
+  # Main message.
+  guilds: "&5GUILD &9>> &eleader&8(&b%leader%&8)&e, size&8(&3%size%&8)&e, guildMax&8(&3%max%&8)&e, mods&8(&3%mods_count% &4--> %mods%&8)&e, members&8(&3%members_count% &4--> %members%&8)&e, all&8(&3%total_count% &4--> %totalmembers%&8)&e, invites&8(&3%invites_count% &4--> %invites%&8)&e, public&8(%ispublic%&8)&e, muted&8(%ismuted%&8)&e."
+  # Mods of guild.
+  mods:
+    # If not last in list.
+    not-last: "&d%user%&e, "
+    # If last.
+    last: "&d%user%"
+  # Members of guild.
+  members:
+    # If not last in list.
+    not-last: "&d%user%&e, "
+    # If last.
+    last: "&d%user%"
+  # Invites of guild.
+  invites:
+    # If not last in list.
+    not-last: "&d%user%&e, "
+    # If last.
+    last: "&d%user%"
+  # Total members of guild.
+  totalmembers:
+    # If not last in list.
+    not-last: "&d%user%&e, "
+    # If last.
+    last: "&d%user%"
+  # If is public
+  ispublic:
+    # If true.
+    true: "&aTRUE"
+    # If false.
+    false: "&cFALSE"
+  # If is muted.
+  ismuted:
+    # If true.
+    true: "&aTRUE"
+    # If false.
+    false: "&cFALSE"
+
+# Info for stats.
+# Fillers:
+# %total_xp% = network exp.
+# %level% = network level.
+# %player% = the player you are looking at stats of's name.
+# %xpneeded% = the player you are looking at stats of's totalXP needed FOR level up.
+# %xplevel% = the player you are looking at stats of's totalXP needed UNTIL level up.
+# %playtime% = the player you are looking at stats of's playtime in hours.
+# %version% = the player you are looking at stats of's version. (Need to have ViaVersion installed.)
+# %points% = the player you are looking at stats of's points.
+# %points_name% = the name of the point system (defined in config.yml).
+# %uuid% = the player you are looking at stats of's Minecraft Java / Bedrock uuid.
+# %tags% = the player you are looking at stats of's tags.
+# %ip% = the player you are looking at stats of's current ip.
+# %ips% = the player you are looking at stats of's ips.
+# %display% = the player you are looking at stats of's display name.
+# %names% = all the names that the player has logged into the network with on that same uuid.
+# %guild% = the player you are looking at stats of's guild name.
+# %guild_members% = the player you are looking at stats of's amount of guild members.
+# %guild_xp_total% = the player you are looking at stats of's amount of guild experience.
+# %guild_lvl% = the player you are looking at stats of's guild level.
+# %guild_leader% = the player you are looking at stats of's guild leader's name.
+# %guild_uuid% = the uuid of the leader of the guild which the player is in.
+# %sspy% = the toggled value of if the player has sspy enabled.
+# %gspy% = the toggled value of if the player has gspy enabled.
+# %pspy% = the toggled value of if the player has pspy enabled.
+# %sc% = the toggled value of if the player has sc enabled.
+# %online% = the value of if the player is online or not.
+stats:
+  # If no stat.
+  no-stats: "&cCouldn't find the stats..."
+  # If no permission.
+  no-permission: "&cSorry, but you do not have permission for that."
+  # When being created.
+  create: "&aJust created a stats profile for you! You can view it by doing &b/stats"
+  # Points name.
+  points-name: "&6Network Gold"
+  # Player bulk message.
+  player: "&9----- &d%player% &7Network Info &9-----%newline%&eUUID&8: &b%uuid%%newline%&eMinecraft Version&8: &c%version%%newline%&eEXP&8: &6%total_xp%%newline%&eLevel&8: &6%level%%newline%&eXP Needed&8: &6%xplevel% &0(&6%xpneeded% &etotal needed&0)%newline%&ePlaytime&8: &6%playtime% &ehours%newline%&e%points_name%&8: &6%points%%newline%&eTags&8: &c%tags%%newline%&eDisplay Name&8: &d%display%%newline%&eAll names&8: &c%names%%newline%&2Guild&8: &r%guild%%newline%&2Guild Members&8: &6%guild_members%%newline%&2Guild EXP&7/&2LVL&8: &6%guild_xp_total%&7/&6%guild_lvl%%newline%&2Guild Leader&8: &d%guild_leader% &0(&b%guild_uuid%&0)%newline%&eSocial SPY &0(%sspy%&0) &eGuild SPY &0(%gspy%&0) &eParty SPY &0(%pspy%&0) &eOnline &0(%online%&0)"
+  # ConsolePlayer bulk message.
+  console-player: "&9----- &d%player% &7Network Info &9-----%newline%&eUUID&8: &b%uuid%%newline%&eMinecraft Version&8: &c%version%%newline%&e%points_name%&8: &6%points%%newline%&eTags&8: &c%tags%%newline%&eDisplay Name&8: &d%display%%newline%&2Guild&8: &r%guild%%newline%&2Guild Members&8: &6%guild_members%%newline%&2Guild EXP&7/&2LVL&8: &6%guild_xp_total%&7/&6%guild_lvl%%newline%&2Guild Leader&8: &d%guild_leader% &0(&b%guild_uuid%&0)"
+  # Tags.
+  tags:
+    # If not last in list.
+    last: "&c%value%"
+    # If last.
+    not-last: "&c%value%&8, "
+  # IPs.
+  ips:
+    # If not last in list.
+    last: "&a%value%"
+    # If last.
+    not-last: "&a%value%&8, "
+  # Names.
+  names:
+    # If not last in list.
+    last: "&c%value%"
+    # If last.
+    not-last: "&c%value%&8, "
+  # Social Spy.
+  sspy:
+    # If not last in list.
+    true: "&aTRUE"
+    # If last.
+    false: "&cFALSE"
+  # Guild Spy.
+  gspy:
+    # If not last in list.
+    true: "&aTRUE"
+    # If last.
+    false: "&cFALSE"
+  # Party Spy.
+  pspy:
+    # If not last in list.
+    true: "&aTRUE"
+    # If last.
+    false: "&cFALSE"
+  # Online.
+  online:
+    # If not last in list.
+    true: "&aTRUE"
+    # If last.
+    false: "&cFALSE"
+  # If not set.
+  not-set: "&cNot Set"
+
+# SSPY command.
+sspy:
+  # Message.
+  message: "&eToggled &bSSPY &eto %toggle%&e!"
+  # When toggling.
+  toggle:
+    # If toggled on.
+    true: "&aTRUE"
+    # If toggled off.
+    false: "&cFALSE"
+
+# GSPY command.
+gspy:
+  # Message.
+  message: "&eToggled &bGSPY &eto %toggle%&e!"
+  # When toggling.
+  toggle:
+    # If toggled on.
+    true: "&aTRUE"
+    # If toggled off.
+    false: "&cFALSE"
+
+# PSPY command.
+pspy:
+  # Message.
+  message: "&eToggled &bPSPY &eto %toggle%&e!"
+  # When toggling.
+  toggle:
+    # If toggled on.
+    true: "&aTRUE"
+    # If toggled off.
+    false: "&cFALSE"
+
+# SCView command.
+sc-view:
+  # Message.
+  message: "&eToggled &bSCView &eto %toggle%&e!"
+  # When toggling.
+  toggle:
+    # If toggled on.
+    true: "&aTRUE"
+    # If toggled off.
+    false: "&cFALSE"
+
+# SSPY view-self command.
+sspyvs:
+  # Message.
+  message: "&eToggled &bSSPY &eview-self to %toggle%&e!"
+  # When toggling.
+  toggle:
+    # If toggled on.
+    true: "&aTRUE"
+    # If toggled off.
+    false: "&cFALSE"
+
+# Party SPY view-self command.
+pspyvs:
+  # Message.
+  message: "&eToggled &bPSPY &eview-self to %toggle%&e!"
+  # When toggling.
+  toggle:
+    # If toggled on.
+    true: "&aTRUE"
+    # If toggled off.
+    false: "&cFALSE"
+
+# Guild SPY view-self command.
+gspyvs:
+  # Message.
+  message: "&eToggled &bGSPY &eview-self to %toggle%&e!"
+  # When toggling.
+  toggle:
+    # If toggled on.
+    true: "&aTRUE"
+    # If toggled off.
+    false: "&cFALSE"
+
+# Staff Chat view-self command.
+scvs:
+  # Message.
+  message: "&eToggled &bstaffchat &eview-self to %toggle%&e!"
+  # When toggling.
+  toggle:
+    # If toggled on.
+    true: "&aTRUE"
+    # If toggled off.
+    false: "&cFALSE"
+
+# Messages for bungee tag.
+btag:
+  # Fillers:
+  # %player% = player whose tags are being changed.
+  # %tag% = tag being changed.
+  # When removing one.
+  remove: "&eRemoved &6%tag% &eoff of &d%player%&e."
+  # When adding one,
+  add: "&eAdded &6%tag% &eto &d%player%&e."
+  # Bulk list message...
+  list:
+    # Main message.
+    main: "&d%player%&e's tags: %tags%"
+    # For tags.
+    tags:
+      # If last in list.
+      last: "&6%tag%"
+      # If not last in list.
+      not-last: "&6%tag%&e, "
+
+# Event reload messages...
+evreload:
+  # Fillers:
+  # %count% = amount of events that are now loaded.
+  # Message.
+  message: "&aReloaded all events (&6%count%&a)!"
+
+# For the points command.
+points:
+  # Viewing points...
+  view:
+    # If you are viewing your own.
+    self: "&dYou &ehave &6%points% &cNetwork Gold&e!"
+    # If you are viewing someone else's
+    other: "&d%other% &ehas &6%points% &cNetwork Gold&e!"
+  # Adding points...
+  add:
+    # Adding to self.
+    self: "&eJust added &6%points% &cNetwork Gold &eto &dself&e!"
+    # Adding to someone else.
+    other: "&eJust added &6%points% &cNetwork Gold &eto &d%other%&e!"
+  # Removing points...
+  remove:
+    # Removing from self.
+    self: "&eJust removed &6%points% &cNetwork Gold &efrom &dself&e!"
+    # Removing from someone else.
+    other: "&eJust removed &6%points% &cNetwork Gold &efrom &d%other%&e!"
+  # Setting points...
+  set:
+    # Setting own points.
+    self: "&eJust set &down &cNetwork Gold &eto &6%points%&e!"
+    # Setting someone else's points.
+    other: "&eJust set &d%other%&e's &cNetwork Gold &eto &6%points%&e!"
+
+# Ignore command...
+ignore:
+  # Adding someone to ignore.
+  add:
+    # What you see.
+    self: "&eYou just &cignored &d%player%&e!"
+    # What they see.
+    ignored: "&d%sender% &ejust &cignored &eyou!"
+    # Already added.
+    already: "&cYou already ignored this person!"
+    # Not self.
+    not-self: "&cCannot ignore yourself..."
+  # Removing someone from ignore.
+  remove:
+    # What you see.
+    self: "&eYou just &aun-ignored &d%player%&e!"
+    # What they see.
+    ignored: "&d%sender% &ejust &aun-ignored &eyou!"
+    # Already removed.
+    already: "&cYou don't have this person ignored!"
+    # Not self.
+    not-self: "&cCannot un-ignore yourself..."
+  # Listing ignores.
+  list:
+    # Main message.
+    main: "&d%player%&e's ignores: %ignores%"
+    # For %ignores%.
+    ignores:
+      # If not the last ignored.
+      not-last: "&c%player%&e, "
+      # If last ignored.
+      last: "&c%player%&e."
+
+# Fillers for both message and reply:
+# %from% = sender's display name.
+# %to_normal% = receiver's display name.
+# %from_normal% = sender's name.
+# %to_normal% = receiver's name.
+# %from_server% = sender's server.
+# %to_server% = receiver's server.
+
+# For message command.
+message:
+  # For sender.
+  sender: "&7[ &d%from% &9(&c%from_server%&9) &8>> &d%to% &9(&c%to_server%&9) &7] &e%message%"
+  # For receiver.
+  to: "&7[ &d%from% &9(&c%from_server%&9) &8>> &d%to% &9(&c%to_server%&9) &7] &e%message%"
+  # If ignored.
+  ignored: "&cSorry, but this player has ignored you!"
+  # To SSPY.
+  sspy: "&7[ &e%from% &2(&4%from_server%&2) &8>> &e%to% &2(&4%to_server%&2) &7] &8%message%"
+
+# For reply command.
+reply:
+  # For sender.
+  sender: "&7[ &d%from% &9(&c%from_server%&9) &8>> &d%to% &9(&c%to_server%&9) &7] &e%message%"
+  # For receiver.
+  to: "&7[ &d%from% &9(&c%from_server%&9) &8>> &d%to% &9(&c%to_server%&9) &7] &e%message%"
+  # If ignored.
+  ignored: "&cSorry, but this player has ignored you!"
+  # To SSPY.
+  sspy: "&7[ &e%from% &2(&4%from_server%&2) &8>> &e%to% &2(&4%to_server%&2) &7] &8%message%"
+
+# For the mute command.
+mute:
+  # Embed title for when muting people.
+  discord-embed-title: "MUTE"
+  # If you cannot do this punishment on the specified player.
+  cannot: "&cSorry, but you cannot mute this player!"
+  # If being muted.
+  mute:
+    # If only temp.
+    temp:
+      # For sender.
+      sender: "&eYou have &cmuted &d%player% &euntil &b%date%&e!"
+      # For other staff.
+      staff: "&d%punisher% &ejust &cmuted &d%player%&e &euntil &b%date%&e!"
+      # For person being muted.
+      muted: "&eYou have been &cmuted &euntil &b%date%&e!"
+      # If already.
+      already: "&cThis player is already muted!"
+      # Discord message.
+      discord: "*%punisher%* just muted *%player%* until **%date%**!"
+    # If perm.
+    perm:
+      # For sender.
+      sender: "&eYou have &cmuted &d%player%&e!"
+      # For other staff.
+      staff: "&d%punisher% &ejust &cmuted &d%player%&e!"
+      # For person being muted.
+      muted: "&eYou have been &4PERMANENTLY &cmuted&e!"
+      # If already.
+      already: "&cThis player is already muted!"
+      # Discord message.
+      discord: "*%punisher%* just muted *%player%* **PERMANENTLY**!"
+  # If being unmuted.
+  unmute:
+    # For sender.
+    sender: "&eYou have &aunmuted &d%player%&e!"
+    # For other staff.
+    staff: "&d%punisher% &ejust &aunmuted &d%player%&e!"
+    # For person being unmuted.
+    muted: "&eYou have been &aunmuted&e!"
+    # If already.
+    already: "&cThis player is already unmuted!"
+    # Discord message.
+    discord: "*%punisher%* just unmuted *%player%*!"
+  # For checking if muted.
+  check:
+    # Main.
+    main: "&d%player% &eis %check%&e!"
+    # If banned.
+    banned: "&cbanned &euntil &b%date%"
+    # If unbanned.
+    unbanned: "&aunbanned"
+    # If date not present.
+    no-date: "&c&lFOREVER"
+
+# Kick command...
+kick:
+  # Embed title for when kick people.
+  discord-embed-title: "KICK"
+  # If you cannot do this punishment on the specified player.
+  cannot: "&cSorry, but you cannot kick this player!"
+  # For sender.
+  sender: "&eYou have &ckicked &d%player% &efor reason &a\"&b%reason%&a\"&e!"
+  # For other staff.
+  staff: "&d%punisher% &ejust &ckicked &d%player% &efor reason &a\"&b%reason%&a\"&e!"
+  # For kicked.
+  kicked: "&cYou have been &ckicked&c! Reason: &b%reason%"
+  # Discord message.
+  discord: "*%punisher%* just kicked *%player%* for reason \"**%reason%**\"!"
+
+# For the ban command.
+ban:
+  # Embed title for when kick people.
+  discord-embed-title: "BAN"
+  # If you cannot do this punishment on the specified player.
+  cannot: "&cSorry, but you cannot ban this player!"
+  # If being banned.
+  ban:
+    # If temp.
+    temp:
+      # For sender.
+      sender: "&eYou have &cbanned &d%player% &efor &a\"&b%reason%&a\" &euntil &b%date%&e!"
+      # For other staff.
+      staff: "&d%punisher% &ejust &cbanned &d%player% &efor &a\"&b%reason%&a\" &euntil &b%date%&e!"
+      # If already banned.
+      already: "&d%player% &cis already banned!"
+      # Discord message.
+      discord: "*%punisher%* just banned *%player%* for reason \"**%reason%**\" until %date%!"
+    # If perm.
+    perm:
+      # For sender.
+      sender: "&eYou have &cbanned &d%player% &efor &a\"&b%reason%&b\" &cPERMANENTLY&e!"
+      # For other staff.
+      staff: "&d%punisher% &ejust &cbanned &d%player% &efor &a\"&b%reason%&a\" &cPERMANENTLY&e!"
+      # If already banned.
+      already: "&d%player% &cis already banned!"
+      # Discord message.
+      discord: "*%punisher%* just banned *%player%* for reason \"**%reason%**\" PERMANENTLY!"
+  # If being unbanned.
+  unban:
+    # For sender.
+    sender: "&eYou have &aunbanned &d%player%&e!"
+    # For other staff.
+    staff: "&d%punisher% &ejust &aunbanned &d%player%&e!"
+    # If already unbanned.
+    already: "&cThis player is already unbanned!"
+    # Discord message.
+    discord: "*%punisher%* just unbanned *%player%*!"
+  # If checking if banned.
+  check:
+    # Main.
+    main: "&d%player% &eis %check%!"
+    # If banned.
+    banned: "&cbanned &euntil &b%date% &efor reason &a\"&b%reason%&a\""
+    # If unbanned.
+    unbanned: "&aunbanned"
+    # If date not present.
+    no-date: "&c&lFOREVER"
+
+# For the ipban command.
+ipban:
+  # Embed title for when kick people.
+  discord-embed-title: "IPBAN"
+  # If you cannot do this punishment on the specified player.
+  cannot: "&cSorry, but you cannot ipban this player!"
+  # If being banned.
+  ban:
+    # If temp.
+    temp:
+      # For sender.
+      sender: "&eYou have &cbanned &d%ip% &efor &a\"&b%reason%&a\" &euntil &b%date%&e!"
+      # For other staff.
+      staff: "&d%punisher% &ejust &cbanned &d%ip% &efor &a\"&b%reason%&a\" &euntil &b%date%&e!"
+      # If already banned.
+      already: "&d%ip% &cis already banned!"
+      # Discord message.
+      discord: "*%punisher%* just banned *%ip%* for reason \"**%reason%**\" until %date%!"
+    # If perm.
+    perm:
+      # For sender.
+      sender: "&eYou have &cbanned &d%ip% &efor &a\"&b%reason%&b\" &cPERMANENTLY&e!"
+      # For other staff.
+      staff: "&d%punisher% &ejust &cbanned &d%ip% &efor &a\"&b%reason%&a\" &cPERMANENTLY&e!"
+      # If already banned.
+      already: "&d%ip% &cis already banned!"
+      # Discord message.
+      discord: "*%punisher%* just banned *%ip%* for reason \"**%reason%**\" PERMANENTLY!"
+  # If being unbanned.
+  unban:
+    # For sender.
+    sender: "&eYou have &aunbanned &d%ip%&e!"
+    # For other staff.
+    staff: "&d%punisher% &ejust &aunbanned &d%ip%&e!"
+    # If already unbanned.
+    already: "&d%ip% &eis already &aunbanned&e!"
+    # Discord message.
+    discord: "*%punisher%* just unbanned *%ip%*!"
+  # If checking if banned.
+  check:
+    # Main.
+    main: "&d%ip% &eis %check%!"
+    # If banned.
+    banned: "&cbanned &euntil &b%date% &efor reason &a\"&b%reason%&a\""
+    # If unbanned.
+    unbanned: "&aunbanned"
+    # If date not present.
+    no-date: "&c&lFOREVER"
+
+# Friend command...
+friend:
+  # For requesting...
+  request:
+    # What you see.
+    self: "&eYou just requested &d%player%&e to be your &afriend&e!"
+    # What they see.
+    other: "&d%sender% &ejust requested you to be their &afriend&e!%newline%&eType &b/f accept %sender_absolute% &eto accept!"
+    # Already added.
+    already: "&cYou already friended &d%player%&e!"
+    # Not self.
+    not-self: "&cCannot ignore yourself..."
+    # Ignored...
+    ignored: "&cThis person has you ignored..."
+  # Accepting someone's friend request.
+  accept:
+    # What you see.
+    self: "&eYou just &aaccepted &ethe friend request from &d%player%&e!"
+    # What they see.
+    other: "&d%sender% &ejust &aaccepted &ethe friend request from you!"
+    # No requests.
+    none: "&cNo requests from &d%player%&c!"
+  # Denying someone's friend request.
+  deny:
+    # What you see.
+    self: "&eYou just &cdenied &ethe friend request from &d%player%&e!"
+    # What they see.
+    other: "&d%sender% &ejust &cdenied &ethe friend request from you!"
+    # No requests.
+    none: "&cNo requests from &d%player%&c!"
+  # Removing someone from ignore.
+  remove:
+    # What you see.
+    self: "&eYou just &cun-friended &d%player%&e!"
+    # What they see.
+    other: "&d%sender% &ejust &cun-friended &eyou!"
+    # Already removed.
+    already: "&cYou don't have this person friended!"
+    # Not self.
+    not-self: "&cCannot un-friend yourself..."
+  # Listing ignores.
+  list:
+    # Main message.
+    main: "&d%player%&e's friends: %friends%%newline%&d%player%&e's pending-to: %pending-to%%newline%&d%player%&e's pending-from: %pending-from%"
+    # For %friends%.
+    friends:
+      # If not the last.
+      not-last: "&c%player%&e, "
+      # If last.
+      last: "&c%player%&e."
+    # For %pending-to%.
+    pending-to:
+      # If not the last.
+      not-last: "&c%player%&e, "
+      # If last ignored.
+      last: "&c%player%&e."
+    # For %pending-to%.
+    pending-from:
+      # If not the last.
+      not-last: "&c%player%&e, "
+      # If last.
+      last: "&c%player%&e."
+  # On player connect.
+  connect: "&aFRIEND &9> &d%player% &a+"
+  # On player disconnect.
+  disconnect: "&aFRIEND &9> &d%player% &c-"
+
+# GetStats command...
+getstats:
+  # If there are no stats to display.
+  no-stats: "&cSorry, but there are no loaded stats..."
+  # For the message...
+  message:
+    # Main message.
+    main: "&eLoaded stats: %stats%"
+    # If not the last stat.
+    not-last: "&d%player%&8, "
+    # If the last stat.
+    last: "&d%player%&8."
+
+# Settings command...
+settings:
+  # For setting...
+  set:
+    # MOTD.
+    # Fillers:
+    # %number% = the number of the MOTD page.
+    # %set% = what you set it to.
+    motd: "&eJust set &cMOTD &a#%number% &eto &b\"%set%&b\"&e!"
+    # MOTD Time.
+    # Fillers:
+    # %set% = what you set it to.
+    motd-time: "&eJust set &cMOTD Time &eto &b\"%set%&b\"&e!"
+    # Version.
+    # Fillers:
+    # %set% = what you set it to.
+    version: "&eJust set &cVersion &eto &b\"%set%&b\"&e!"
+    # Sample.
+    # Fillers:
+    # %number% = the number of the Sample page.
+    # %set% = what you set it to.
+    sample: "&eJust set &cSample &a#%number% &eto &b\"%set%&b\"&e!"
+    # Max Players.
+    # Fillers:
+    # %set% = what you set it to.
+    max-players: "&eJust set &cMax Players &eto &b\"%set%&b\"&e!"
+    # Online Players.
+    # Fillers:
+    # %set% = what you set it to.
+    online-players: "&eJust set &cOnline Players &eto &b\"%set%&b\"&e!"
+    # Proxy Chat Enabled.
+    # Fillers:
+    # %set% = what you set it to.
+    proxy-chat-enabled: "&eJust set &cChat Uses Proxy &eto &b\"%set%&b\"&e!"
+    # Proxy Chat Console Enabled.
+    # Fillers:
+    # %set% = what you set it to.
+    proxy-chat-to-console: "&eJust set &cChat Goes to Console &eto &b\"%set%&b\"&e!"
+    # Proxy Chat Chats.
+    # Fillers:
+    # %number% = the number of the Chats page.
+    # %set% = what you set it to.
+    proxy-chat-chats: "&eJust set &cProxy Chat Chat &a#%number% &eto &b\"%set%&b\"&e!"
+    # Proxy Chat Base Perm.
+    # Fillers:
+    # %set% = what you set it to.
+    proxy-chat-base-perm: "&eJust set &cProxy Chat Base Perm &eto &b\"%set%&b\"&e!"
+    # Tags Enable Ping.
+    # Fillers:
+    # %set% = what you set it to.
+    tags-enable-ping: "&eJust set &cTags Enable Ping &eto &b\"%set%&b\"&e!"
+    # Tags Tag Prefix.
+    # Fillers:
+    # %set% = what you set it to.
+    tags-tag-prefix: "&eJust set &cTags Tag Prefix &eto &b\"%set%&b\"&e!"
+    # Emotes.
+    # Fillers:
+    # %emote% = the number of the Chats page.
+    # %set% = what you set it to.
+    emotes: "&eJust set &cEmote &a%emote% &eto &b\"%set%&b\"&e!"
+    # Emote Permissions.
+    # Fillers:
+    # %emote% = the number of the Chats page.
+    # %set% = what you set it to.
+    emote-permissions: "&eJust set &cEmote Permission &efor &a%emote% &eto &b\"%set%&b\"&e!"
+  # For getting...
+  get:
+    # MOTD.
+    # Fillers:
+    # %number% = the number of the MOTD page.
+    # %set% = what you set it to.
+    motd: "&cMOTD &a#%number% &eis &b\"%set%&b\"&e!"
+    # MOTD Time.
+    # Fillers:
+    # %set% = what you set it to.
+    motd-time: "&cMOTD Time &eis &b\"%set%&b\"&e!"
+    # Version.
+    # Fillers:
+    # %set% = what you set it to.
+    version: "&cVersion &eis &b\"%set%&b\"&e!"
+    # Sample.
+    # Fillers:
+    # %number% = the number of the Sample page.
+    # %set% = what you set it to.
+    sample: "&cSample &a#%number% &eis &b\"%set%&b\"&e!"
+    # Max Players.
+    # Fillers:
+    # %set% = what you set it to.
+    max-players: "&cMax Players &eis &b\"%set%&b\"&e!"
+    # Online Players.
+    # Fillers:
+    # %set% = what you set it to.
+    online-players: "&cOnline Players &eis &b\"%set%&b\"&e!"
+    # Proxy Chat Enabled.
+    # Fillers:
+    # %set% = what you set it to.
+    proxy-chat-enabled: "&cChat Uses Proxy &eis &b\"%set%&b\"&e!"
+    # Proxy Chat Console Enabled.
+    # Fillers:
+    # %set% = what you set it to.
+    proxy-chat-to-console: "&cChat Goes to Console &eis &b\"%set%&b\"&e!"
+    # Proxy Chat Chats.
+    # Fillers:
+    # %number% = the number of the Chats page.
+    # %set% = what you set it to.
+    proxy-chat-chats: "&cProxy Chat Chat &a#%number% &eis &b\"%set%&b\"&e!"
+    # Proxy Chat Base Perm.
+    # Fillers:
+    # %set% = what you set it to.
+    proxy-chat-base-perm: "&cProxy Chat Base Perm &eis &b\"%set%&b\"&e!"
+    # Tags Enable Ping.
+    # Fillers:
+    # %set% = what you set it to.
+    tags-enable-ping: "&cTags Enable Ping &eis &b\"%set%&b\"&e!"
+    # Tags Tag Prefix.
+    # Fillers:
+    # %set% = what you set it to.
+    tags-tag-prefix: "&cTags Tag Prefix &eis &b\"%set%&b\"&e!"
+    # Emotes.
+    # Fillers:
+    # %emote% = the number of the Chats page.
+    # %set% = what you set it to.
+    emotes: "&cEmote &a%emote% &eis &b\"%set%&b\"&e!"
+    # Emote Permissions.
+    # Fillers:
+    # %emote% = the number of the Chats page.
+    # %set% = what you set it to.
+    emote-permissions: "&cEmote Permission &efor &a%emote% &eis &b\"%set%&b\"&e!"
+
+# For the info command.
+# Fillers:
+# %name% = the plugin's name.
+# %version% = the plugin's version.
+# %author% = the plugin's author.
+# %num_commands% = the number of commands loaded.
+# %num_listeners% = the number of listeners loaded.
+# %num_events% = the number of events loaded.
+# %discord% = the plugin's discord server.
+info: "&eYou are currently running &b%name% &7[&av%version%&7] &eby &d%author%%newline%&eLoaded commands&8: &a%num_commands%%newline%&eLoaded listeners&8: &a%num_listeners%%newline%&eLoaded custom events&8: &a%num_events%%newline%&eWant to get more out of the plugin&8? &5&lDiscord&8: &b&n%discord%"
+
+# For the end command hack.
+graceful-end:
+  # For the sender.
+  sender: "&eShutting down the server gracefully!"
+  # For all who are kicked.
+  kick-message: "&cSorry, but the server stopped...! We are starting back up momentarily! Join back when you can!"
+
+delete-stat:
+  message: "&eSuccessfully removed &b%file_name% &efrom your player files&8!"
+
+bteleport(): "&eSuccessfully teleported to &d%player%&8!"
+
+language:
+  message: "&eYou are now using &c%locale% &eas your locale&8!"
+  invalid-locale: "&cSorry, but &6%locale% &cis an invalid locale...!"

@@ -1,0 +1,44 @@
+#### DISCORD BOT ####
+bot:
+  # Prefix the bot uses. Default: "."
+  prefix: '.'
+  # Bot token that the bot uses to connect to your Bot Discord App.
+  token: "put token here"
+  # Status of your bot. (Only uses "Playing...") Example outcome: Playing... myserver.net
+  server-ip: "myserver.net"
+
+### DISCORD SETTINGS ###
+discord:
+  ## Text Channels ##
+  text-channels:
+    # Report channel ID. "report-to-channel" must be set "true".
+    reports: "put-id-here"
+    # Staff channel ID. "staffchat-to-minecraft" must be set "true".
+    staffchat: "put-id-here"
+    # Bot offline and online message output channel ID. Either "startup-message" or "shutdown-message" should be "true".
+    offline-online: "put-id-here"
+    # Bungee player joins channel ID. "player-joins" must be set to "yes" or "staff".
+    bungee-joins: "put-id-here"
+    # Bungee player leaves channel ID. "player-leaves" must be set to "yes" or "staff".
+    bungee-leaves: "put-id-here"
+    # Bungee main console channel ID.
+    console: "put-id-here"
+    # Bungee guilds console channel ID.
+    guilds: "put-id-here"
+    # Bungee parties console channel ID.
+    parties: "put-id-here"
+    # Bungee mutes channel ID.
+    mutes: "put-id-here"
+    # Bungee kicks channel ID.
+    kicks: "put-id-here"
+    # Bungee bans channel ID.
+    bans: "put-id-here"
+    # Bungee ipbans channel ID.
+    ipbans: "put-id-here"
+
+  ## Roles ##
+  roles:
+    # Role you want to be pinged when someone does a report. "report-channel-pings" must be set "true".
+    reports: "put-id-here"
+    # Role you want to be designated as the "Staff" role. All staff should have this role.
+    staff: "put-id-here"

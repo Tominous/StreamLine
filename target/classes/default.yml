@@ -1,0 +1,18 @@
+tags:
+ - "tag"
+ - "list"
+ - "here"
+conditions:
+	1:
+		type: "MESSAGE_CONTAINS"
+		value: "i like streamline"
+	2:
+		type: "NAME_EXACT"
+		value: "StreamLineLover"
+actions:
+	1:
+		type: "SEND_MESSAGE_TO"
+		value: "&eI agree!"
+	2:
+		type: "GIVE_POINTS"
+		value: "1000"
