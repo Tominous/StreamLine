@@ -155,7 +155,7 @@ public class Player extends SavableUser {
         this.chatLevel = parseChatLevel(getFromKey("chat-level"));
     }
 
-    public ChatLevel parseChatLevel(String string) {
+    public static ChatLevel parseChatLevel(String string) {
         switch (string) {
             case "GLOBAL":
                 return ChatLevel.GLOBAL;

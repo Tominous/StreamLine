@@ -34,18 +34,67 @@ public class ChatChannelCommand extends Command implements TabExecutor {
                 boolean allowLocal = StreamLine.serverConfig.getAllowLocal();
 
                 if (allowGlobal && allowLocal) {
-                    player.setChatLevel(ChatLevel.LOCAL);
+                    ChatLevel newLevel = ChatLevel.LOCAL;
 
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.chatChannelsLocalSwitch().replace("%new_channel%", ChatLevel.LOCAL.toString()));
+                    sendMessageFormatted(sender, MessageConfUtils.chatChannelsLocalSwitch(), newLevel, player.chatLevel);
+
+                    player.setChatLevel(newLevel);
                 } else if (allowGlobal && ! allowLocal) {
-                    player.setChatLevel(ChatLevel.GLOBAL);
+                    ChatLevel newLevel = ChatLevel.GLOBAL;
+
+                    sendMessageFormatted(sender, MessageConfUtils.chatChannelsGlobalSwitch(), newLevel, player.chatLevel);
+
+                    player.setChatLevel(newLevel);
+                } else if (! allowGlobal && ! allowLocal) {
+                    ChatLevel newLevel = ChatLevel.LOCAL;
+
+                    sendMessageFormatted(sender, MessageConfUtils.chatChannelsLocalSwitch(), newLevel, player.chatLevel);
+
+                    player.setChatLevel(newLevel);
                 }
+
+                return;
             }
 
+            if (args.length > 1) {
+                MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsLess());
+                return;
+            }
 
+            ChatLevel newLevel = Player.parseChatLevel(args[0]);
+
+            switch (newLevel) {
+                case LOCAL:
+                    sendMessageFormatted(sender, MessageConfUtils.chatChannelsLocalSwitch(), newLevel, player.chatLevel);
+                    break;
+                case GLOBAL:
+                    sendMessageFormatted(sender, MessageConfUtils.chatChannelsGlobalSwitch(), newLevel, player.chatLevel);
+                    break;
+                case GUILD:
+                    sendMessageFormatted(sender, MessageConfUtils.chatChannelsGuildSwitch(), newLevel, player.chatLevel);
+                    break;
+                case PARTY:
+                    sendMessageFormatted(sender, MessageConfUtils.chatChannelsPartySwitch(), newLevel, player.chatLevel);
+                    break;
+                case GOFFICER:
+                    sendMessageFormatted(sender, MessageConfUtils.chatChannelsGOfficerSwitch(), newLevel, player.chatLevel);
+                    break;
+                case POFFICER:
+                    sendMessageFormatted(sender, MessageConfUtils.chatChannelsPOfficerSwitch(), newLevel, player.chatLevel);
+                    break;
+            }
+
+            player.setChatLevel(newLevel);
         } else {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers());
         }
+    }
+
+    public void sendMessageFormatted(CommandSender sender, String formatFrom, ChatLevel newLevel, ChatLevel oldLevel) {
+        MessagingUtils.sendBUserMessage(sender, formatFrom
+                .replace("%new_channel%", newLevel.toString())
+                .replace("%old_channel%", oldLevel.toString())
+        );
     }
 
     @Override
