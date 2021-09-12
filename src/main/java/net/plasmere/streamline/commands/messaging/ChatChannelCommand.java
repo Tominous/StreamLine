@@ -36,7 +36,7 @@ public class ChatChannelCommand extends Command implements TabExecutor {
                 if (allowGlobal && allowLocal) {
                     player.setChatLevel(ChatLevel.LOCAL);
 
-                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.chatChannelsLocalSwitch().replace());
+                    MessagingUtils.sendBUserMessage(sender, MessageConfUtils.chatChannelsLocalSwitch().replace("%new_channel%", ChatLevel.LOCAL.toString()));
                 } else if (allowGlobal && ! allowLocal) {
                     player.setChatLevel(ChatLevel.GLOBAL);
                 }
