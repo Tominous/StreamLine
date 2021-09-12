@@ -4,15 +4,26 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 import net.plasmere.streamline.events.Event;
 import net.plasmere.streamline.events.EventsHandler;
+import net.plasmere.streamline.events.enums.Condition;
+import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.objects.savable.users.Player;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.PlayerUtils;
 import net.plasmere.streamline.utils.PluginUtils;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
-public class StreamCommand extends Command {
+public class CommandBuilder extends Command {
+
+    /**
+     *
+     * This class is temporary and might not stay
+     * in the long run.
+     *
+     */
 
     public String commandLabel;
     public String permissionNeeded;
@@ -29,7 +40,7 @@ public class StreamCommand extends Command {
      * @param permissionNeeded -> The permission needed to execute the command.
      * @param events -> All the events that are going to be executed when executing the command.
      */
-    public StreamCommand(String commandLabel, String commandDescription, String permissionNeeded, String permissionMessage, List<Event> events, TreeSet<String> aliases) {
+    public CommandBuilder(String commandLabel, String commandDescription, String permissionNeeded, String permissionMessage, List<Event> events, TreeSet<String> aliases) {
         //define default values for command
         super(commandLabel, permissionNeeded, PluginUtils.stringListToArray(aliases));
         this.commandLabel = commandLabel;
@@ -46,7 +57,7 @@ public class StreamCommand extends Command {
      * @param commandLabel -> The command label.
      * @param permissionNeeded -> The permission needed to execute the command.
      */
-    public StreamCommand(String commandLabel, String permissionNeeded) {
+    public CommandBuilder(String commandLabel, String permissionNeeded) {
         // Define default values for command
         super(commandLabel, permissionNeeded);
         this.commandLabel = commandLabel;
@@ -61,7 +72,7 @@ public class StreamCommand extends Command {
      * @param commandLabel -> The command label.
      * @param events -> All the events that are going to be executed when executing the command.
      */
-    public StreamCommand(String commandLabel,List<Event> events) {
+    public CommandBuilder(String commandLabel, List<Event> events) {
         super(commandLabel);
         this.commandLabel = commandLabel;
         this.events = events;
@@ -74,7 +85,7 @@ public class StreamCommand extends Command {
      *
      * @param commandLabel
      */
-    public StreamCommand(String commandLabel) {
+    public CommandBuilder(String commandLabel) {
         super(commandLabel);
         this.commandLabel = commandLabel;
     }
@@ -87,9 +98,8 @@ public class StreamCommand extends Command {
      */
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(sender.hasPermission(getPermissionNeeded())) {
+        if(sender.hasPermission(getPermissionNeeded()))
             executeEvents(PlayerUtils.getPlayerStat(sender));
-        }
     }
 
     private void executeEvents(Player player) {
