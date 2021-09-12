@@ -43,6 +43,7 @@ public class Event {
     public void createEventFile(){
         File f = new File(path,name + ".yml");
 
+        // added
         if(!StreamLine.getInstance().getDataFolder().exists())
             StreamLine.getInstance().getDataFolder().mkdirs();
 
