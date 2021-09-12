@@ -1,5 +1,6 @@
 package net.plasmere.streamline;
 
+import net.md_5.bungee.api.plugin.PluginManager;
 import net.md_5.bungee.api.scheduler.ScheduledTask;
 import net.plasmere.streamline.config.ConfigHandler;
 import net.plasmere.streamline.config.ConfigUtils;
