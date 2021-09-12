@@ -50,6 +50,11 @@ public class From_1_0_13_3 extends From {
         addUpdatedLocalesEntry("chat-channels.g-officer.switch", "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!", "en_US");
         addUpdatedLocalesEntry("chat-channels.p-officer.switch", "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!", "en_US");
 
+        rename("settings.set.proxy-chat-chats", "settings.set.proxy-chat-chats-local",  FileType.TRANSLATION,"en_US");
+        addUpdatedLocalesEntry("settings.set.proxy-chat-chats-global", "&eJust set &cProxy Chat Global &a#%number% &eto &b\"%set%&b\"&e!", "en_US");
+        rename("settings.get.proxy-chat-chats", "settings.get.proxy-chat-chats-local",  FileType.TRANSLATION,"en_US");
+        addUpdatedLocalesEntry("settings.get.proxy-chat-chats-global", "&cProxy Chat Global &a#%number% &eis &b\"%set%&b\"&e!", "en_US");
+
         // fr_FR
 
         addUpdatedLocalesEntry("language.message", "&eVous utilisez maintenant &c%locale% &ecomme paramètre régional&8!", "fr_FR");
@@ -62,6 +67,11 @@ public class From_1_0_13_3 extends From {
         addUpdatedLocalesEntry("chat-channels.party.switch", "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!", "fr_FR");
         addUpdatedLocalesEntry("chat-channels.g-officer.switch", "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!", "fr_FR");
         addUpdatedLocalesEntry("chat-channels.p-officer.switch", "&eChangement du &bCanal Textuel &ede %old_channel% à &e%new_channel%l&8!", "fr_FR");
+
+        rename("settings.set.proxy-chat-chats", "settings.set.proxy-chat-chats-local",  FileType.TRANSLATION,"fr_FR");
+        addUpdatedLocalesEntry("settings.set.proxy-chat-chats-global", "&eJust set &cProxy Chat Global &a#%number% &eto &b\"%set%&b\"&e!", "fr_FR");
+        rename("settings.get.proxy-chat-chats", "settings.get.proxy-chat-chats-local",  FileType.TRANSLATION,"fr_FR");
+        addUpdatedLocalesEntry("settings.get.proxy-chat-chats-global", "&cProxy Chat Global &a#%number% &eis &b\"%set%&b\"&e!", "fr_FR");
     }
 
     @Override

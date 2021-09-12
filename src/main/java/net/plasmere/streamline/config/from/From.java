@@ -353,11 +353,47 @@ public abstract class From {
     }
 
     public void saveAllConfigurations() {
+        saveConfig();
+        saveLocales();
+        saveSettingsConfig();
+        saveDiscordBot();
+        saveCommands();
+    }
+
+    public void saveConfig() {
         try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(c, cfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveLocales() {
+        try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(m, mfile(this.language));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveSettingsConfig() {
+        try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(sc, scfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveDiscordBot() {
+        try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(dis, disbotFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveCommands() {
+        try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(comm, commandFile);
         } catch (IOException e) {
             e.printStackTrace();
@@ -403,5 +439,31 @@ public abstract class From {
                 }
             }
         }
+    }
+
+    public void rename(String fromPath, String toPath, FileType fileType, String language) {
+        switch (fileType) {
+            case CONFIG:
+                addUpdatedConfigEntry(toPath, setNull(c, fromPath));
+                break;
+            case TRANSLATION:
+                addUpdatedLocalesEntry(toPath, setNull(m, fromPath), language);
+                break;
+            case SERVERCONFIG:
+                addUpdatedServerConfigEntry(toPath, setNull(sc, fromPath));
+                break;
+            case DISCORDBOT:
+                addUpdatedDiscordBotEntry(toPath, setNull(dis, fromPath));
+                break;
+            case COMMANDS:
+                addUpdatedCommandsEntry(toPath, setNull(comm, fromPath));
+                break;
+        }
+    }
+
+    public Object setNull(Configuration configuration, String path) {
+        Object obj = configuration.get(path);
+        configuration.set(path, null);
+        return obj;
     }
 }

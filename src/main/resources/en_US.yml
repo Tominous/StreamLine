@@ -1880,11 +1880,16 @@ settings:
     # Fillers:
     # %set% = what you set it to.
     proxy-chat-to-console: "&eJust set &cChat Goes to Console &eto &b\"%set%&b\"&e!"
-    # Proxy Chat Chats.
+    # Proxy Chat Local.
     # Fillers:
     # %number% = the number of the Chats page.
     # %set% = what you set it to.
-    proxy-chat-chats: "&eJust set &cProxy Chat Chat &a#%number% &eto &b\"%set%&b\"&e!"
+    proxy-chat-chats-local: "&eJust set &cProxy Chat Local &a#%number% &eto &b\"%set%&b\"&e!"
+    # Proxy Chat Global.
+    # Fillers:
+    # %number% = the number of the Chats page.
+    # %set% = what you set it to.
+    proxy-chat-chats-global: "&eJust set &cProxy Chat Global &a#%number% &eto &b\"%set%&b\"&e!"
     # Proxy Chat Base Perm.
     # Fillers:
     # %set% = what you set it to.
@@ -1943,11 +1948,16 @@ settings:
     # Fillers:
     # %set% = what you set it to.
     proxy-chat-to-console: "&cChat Goes to Console &eis &b\"%set%&b\"&e!"
-    # Proxy Chat Chats.
+    # Proxy Chat Local.
     # Fillers:
     # %number% = the number of the Chats page.
     # %set% = what you set it to.
-    proxy-chat-chats: "&cProxy Chat Chat &a#%number% &eis &b\"%set%&b\"&e!"
+    proxy-chat-chats-local: "&cProxy Chat Local &a#%number% &eis &b\"%set%&b\"&e!"
+    # Proxy Chat Global.
+    # Fillers:
+    # %number% = the number of the Chats page.
+    # %set% = what you set it to.
+    proxy-chat-chats-global: "&cProxy Chat Global &a#%number% &eis &b\"%set%&b\"&e!"
     # Proxy Chat Base Perm.
     # Fillers:
     # %set% = what you set it to.
