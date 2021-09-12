@@ -2000,3 +2000,18 @@ bteleport: "&eTéléportation vers &d%player% &aRéussie&8!"
 language:
   message: "&eYou are now using &c%locale% &eas your locale&8!"
   invalid-locale: "&cPardon, mais &6%locale% &cs'agit d'un paramètre régional non valide...!"
+
+# When switching chat channels...
+chat-channels:
+  local:
+    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+  global:
+    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+  guild:
+    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+  party:
+    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+  g-officer:
+    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
+  p-officer:
+    switch: "&eJust switched to the %new_channel% &bChat Channel &efrom %old_channel% &bChat Channel&8!"
