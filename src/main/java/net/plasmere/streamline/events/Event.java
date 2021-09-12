@@ -40,23 +40,6 @@ public class Event {
         }
     }
 
-    public void createEventFile(){
-        File f = new File(path,name + ".yml");
-
-        // added
-        if(!StreamLine.getInstance().getDataFolder().exists())
-            StreamLine.getInstance().getDataFolder().mkdirs();
-
-        if(!f.exists()){
-            try{
-                f.createNewFile();
-            }catch(Exception e){
-                MessagingUtils.logInfo("Unable to create file " + f.getName() + ". Returning error " + e.getMessage());
-            }
-        }
-    }
-
-
     public TreeMap<Integer, SingleSet<Condition, String>> compileCond() {
         TreeMap<Integer, SingleSet<Condition, String>> c = new TreeMap<>();
 

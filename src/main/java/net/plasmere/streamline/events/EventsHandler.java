@@ -38,6 +38,12 @@ public class EventsHandler {
         events = new ArrayList<>();
     }
 
+    public static void reloadEvents(){
+        // reload all the events.
+        unloadEvents();
+        StreamLine.getInstance().loadEvents();
+    }
+
     public static void runEvent(Event event, Player player){
         ProxiedPlayer p = PlayerUtils.getPPlayerByUUID(player.uuid);
 
