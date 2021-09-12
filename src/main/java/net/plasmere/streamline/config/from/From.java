@@ -441,6 +441,42 @@ public abstract class From {
         }
     }
 
+    public void renameDeep(Configuration base, String fromPath, String toPath, String currSearch, FileType toFileType, String language) {
+        if (hasKeys(base)) {
+            boolean trial = false;
+
+            try {
+                trial = hasKeys(base.getSection(currSearch));
+            } catch (Exception e) {
+                // do nothing
+            }
+
+            if (trial) {
+                for (String key : base.getSection(currSearch).getKeys()) {
+                    findDeepKeys(base, currSearch + "." + key, toFileType);
+                }
+            } else {
+                switch (toFileType) {
+                    case CONFIG:
+                        addUpdatedConfigEntry(currSearch.replace(fromPath, toPath), setNull(base, currSearch));
+                        break;
+                    case TRANSLATION:
+                        addUpdatedLocalesEntry(currSearch.replace(fromPath, toPath), setNull(base, currSearch), language);
+                        break;
+                    case SERVERCONFIG:
+                        addUpdatedServerConfigEntry(currSearch.replace(fromPath, toPath), setNull(base, currSearch));
+                        break;
+                    case DISCORDBOT:
+                        addUpdatedDiscordBotEntry(currSearch.replace(fromPath, toPath), setNull(base, currSearch));
+                        break;
+                    case COMMANDS:
+                        addUpdatedCommandsEntry(currSearch.replace(fromPath, toPath), setNull(base, currSearch));
+                        break;
+                }
+            }
+        }
+    }
+
     public void rename(String fromPath, String toPath, FileType fileType, String language) {
         switch (fileType) {
             case CONFIG:

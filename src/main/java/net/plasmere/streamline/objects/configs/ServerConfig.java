@@ -540,9 +540,26 @@ public class ServerConfig {
         reloadConfig();
     }
 
-    public String getProxyChatChatsAt(int integer) {
+    public String getProxyChatChatsAtLocal(int integer) {
         reloadConfig();
-        return serverConfig.getString("proxy-chat.chats." + integer);
+        return serverConfig.getString("proxy-chat.chats.local." + integer);
+    }
+
+    public void setProxyChatChatsAtLocal(int integer, String set) {
+        serverConfig.set("proxy-chat.chats.local." + integer, set);
+        saveConfig();
+        reloadConfig();
+    }
+
+    public String getProxyChatChatsAtGlobal(int integer) {
+        reloadConfig();
+        return serverConfig.getString("proxy-chat.chats.global." + integer);
+    }
+
+    public void setProxyChatChatsAtGlobal(int integer, String set) {
+        serverConfig.set("proxy-chat.chats.global." + integer,set);
+        saveConfig();
+        reloadConfig();
     }
 
     public void setTagsPingEnabled(boolean bool) {
@@ -616,6 +633,12 @@ public class ServerConfig {
     public boolean getAllowLocal() {
         reloadConfig();
         return serverConfig.getBoolean("proxy-chat.allow.local");
+    }
+
+    public void setMaintenanceMode(boolean bool) {
+        serverConfig.set("maintenance-mode.enabled", bool);
+        saveConfig();
+        reloadConfig();
     }
 
     public void setObject(String pathTo, Object object) {

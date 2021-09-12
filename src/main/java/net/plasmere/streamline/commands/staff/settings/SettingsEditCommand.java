@@ -163,9 +163,30 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                             return;
                         }
 
-                        String chats = StreamLine.serverConfig.getProxyChatChatsAt(atChat);
+                        String setLocals = TextUtils.argsToStringMinus(args, 0, 1, 2);
+                        StreamLine.serverConfig.setProxyChatChatsAtLocal(atChat, setLocals);
 
-                        sendSetMessageNumbered(sender, MessageConfUtils.settingsSetPCChats(), chats, atChat);
+                        sendSetMessageNumbered(sender, MessageConfUtils.settingsSetPCChatsLocal(), setLocals, atChat);
+                        break;
+                    case "proxy-chat-chats-global":
+                        if (args.length < 4) {
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
+                            return;
+                        }
+
+                        int atCh = 0;
+                        try {
+                            atCh = Integer.parseInt(args[2]);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorInt());
+                            return;
+                        }
+
+                        String setGlobals = TextUtils.argsToStringMinus(args, 0, 1, 2);
+                        StreamLine.serverConfig.setProxyChatChatsAtLocal(atCh, setGlobals);
+
+                        sendSetMessageNumbered(sender, MessageConfUtils.settingsSetPCChatsGlobal(), setGlobals, atCh);
                         break;
                     case "proxy-chat-base-perm":
                         String baseP = TextUtils.argsToStringMinus(args, 0, 1);
@@ -256,7 +277,10 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                         sendGetMessage(sender, MessageConfUtils.settingsGetChatToConsole(), StreamLine.serverConfig.getProxyChatConsoleEnabled());
                         break;
                     case "proxy-chat-chats-local":
-                        sendGetMessageNumbered(sender, MessageConfUtils.settingsGetPCChats(), StreamLine.serverConfig.getProxyChatChatsAt(getInt(sender, args)), args);
+                        sendGetMessageNumbered(sender, MessageConfUtils.settingsGetPCChatsLocal(), StreamLine.serverConfig.getProxyChatChatsAtLocal(getInt(sender, args)), args);
+                        break;
+                    case "proxy-chat-chats-global":
+                        sendGetMessageNumbered(sender, MessageConfUtils.settingsGetPCChatsGlobal(), StreamLine.serverConfig.getProxyChatChatsAtLocal(getInt(sender, args)), args);
                         break;
                     case "proxy-chat-base-perm":
                         sendGetMessage(sender, MessageConfUtils.settingsGetPCBPerm(), StreamLine.serverConfig.getChatBasePerm());
@@ -367,6 +391,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
         options2.add("proxy-chat-enabled");
         options2.add("proxy-chat-to-console");
         options2.add("proxy-chat-chats-local");
+        options2.add("proxy-chat-chats-global");
         options2.add("proxy-chat-base-perm");
         options2.add("tags-enable-ping");
         options2.add("tags-tag-prefix");

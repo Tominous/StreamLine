@@ -76,8 +76,16 @@ public class From_1_0_13_3 extends From {
 
     @Override
     public void setupServerConfigFix() {
+        renameDeep(sc, "proxy-chat.chats", "proxy-chat.chats.local", "proxy-chat.chats", FileType.SERVERCONFIG, "");
+
+        addUpdatedServerConfigEntry("proxy-chat.chats.global.1", "&e[&4%server%&e] &d%sender%&r &7&l>> &f%message%");
+        addUpdatedServerConfigEntry("proxy-chat.chats.global.2", "&e[&4%server%&e] &d%sender%&r &7&l>> &e%message%");
+        addUpdatedServerConfigEntry("proxy-chat.chats.global.3", "&e[&4%server%&e] &d%sender%&r &7&l>> &6%message%");
+
         addUpdatedServerConfigEntry("proxy-chat.allow.global", true);
         addUpdatedServerConfigEntry("proxy-chat.allow.local", true);
+
+        addUpdatedServerConfigEntry("maintenance-mode.enabled", false);
     }
 
     @Override
