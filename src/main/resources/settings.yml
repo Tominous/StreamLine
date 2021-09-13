@@ -103,3 +103,4 @@ proxy-chat:
     local: true
 maintenance-mode:
   enabled: false
+  message: "&c&lMaintenance Mode &eis &aenabled&8! &eJoin back when it is &cdisabled&8!"
