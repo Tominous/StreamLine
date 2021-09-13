@@ -201,6 +201,32 @@ public class MessagingUtils {
         toPing.getServer().getInfo().sendData(StreamLine.customChannel, out.toByteArray());
     }
 
+    public static void sendGuildConfigPluginMessage(ProxiedPlayer to, Guild guild) {
+        if (PlayerUtils.getServeredPPlayers(to.getServer().getInfo().getName()).size() <= 0) return;
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("config.guild");
+        out.writeUTF(guild.leaderUUID);
+
+        try {
+            Scanner reader = new Scanner(guild.file);
+
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                while (data.startsWith("#")) {
+                    data = reader.nextLine();
+                }
+                out.writeUTF(data);
+            }
+
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        to.getServer().getInfo().sendData(StreamLine.customChannel, out.toByteArray());
+    }
+
     public static void sendStaffMessageFromDiscord(String sender, String from, String msg){
         Collection<ProxiedPlayer> staff = StreamLine.getInstance().getProxy().getPlayers();
         Set<ProxiedPlayer> staffs = new HashSet<>(staff);

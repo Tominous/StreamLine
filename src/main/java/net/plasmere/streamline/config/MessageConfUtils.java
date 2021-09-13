@@ -1426,6 +1426,11 @@ public class MessageConfUtils {
         return StreamLine.config.mess.getString("settings.set.emote-permissions");
     }
 
+    public static String settingsSetMaintenanceModeEnabled() {
+        StreamLine.config.reloadLocales();
+        return StreamLine.config.mess.getString("settings.set.maintenance-mode-enabled");
+    }
+
     // Get.
     public static String settingsGetMOTD() {
         StreamLine.config.reloadLocales();
@@ -1500,6 +1505,11 @@ public class MessageConfUtils {
     public static String settingsGetEmotePermissions() {
         StreamLine.config.reloadLocales();
         return StreamLine.config.mess.getString("settings.get.emote-permissions");
+    }
+
+    public static String settingsGetMaintenanceModeEnabled() {
+        StreamLine.config.reloadLocales();
+        return StreamLine.config.mess.getString("settings.set.maintenance-mode-enabled");
     }
 
     // // Info.

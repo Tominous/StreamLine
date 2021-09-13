@@ -52,8 +52,10 @@ public class From_1_0_13_3 extends From {
 
         rename("settings.set.proxy-chat-chats", "settings.set.proxy-chat-chats-local",  FileType.TRANSLATION,"en_US");
         addUpdatedLocalesEntry("settings.set.proxy-chat-chats-global", "&eJust set &cProxy Chat Global &a#%number% &eto &b\"%set%&b\"&e!", "en_US");
+        addUpdatedLocalesEntry("settings.set.maintenance-mode-enabled", "&eJust set &cMaintenance Mode &eto &b\"%set%&b\"&e!", "en_US");
         rename("settings.get.proxy-chat-chats", "settings.get.proxy-chat-chats-local",  FileType.TRANSLATION,"en_US");
         addUpdatedLocalesEntry("settings.get.proxy-chat-chats-global", "&cProxy Chat Global &a#%number% &eis &b\"%set%&b\"&e!", "en_US");
+        addUpdatedLocalesEntry("settings.get.maintenance-mode-enabled", "&cMaintenance Mode &eis &b\"%set%&b\"&e!", "en_US");
 
         // fr_FR
 
@@ -70,8 +72,10 @@ public class From_1_0_13_3 extends From {
 
         rename("settings.set.proxy-chat-chats", "settings.set.proxy-chat-chats-local",  FileType.TRANSLATION,"fr_FR");
         addUpdatedLocalesEntry("settings.set.proxy-chat-chats-global", "&eJust set &cProxy Chat Global &a#%number% &eto &b\"%set%&b\"&e!", "fr_FR");
+        addUpdatedLocalesEntry("settings.set.maintenance-mode-enabled", "&eJust set &cMaintenance Mode &eto &b\"%set%&b\"&e!", "fr_FR");
         rename("settings.get.proxy-chat-chats", "settings.get.proxy-chat-chats-local",  FileType.TRANSLATION,"fr_FR");
         addUpdatedLocalesEntry("settings.get.proxy-chat-chats-global", "&cProxy Chat Global &a#%number% &eis &b\"%set%&b\"&e!", "fr_FR");
+        addUpdatedLocalesEntry("settings.get.maintenance-mode-enabled", "&cMaintenance Mode &eis &b\"%set%&b\"&e!", "fr_FR");
     }
 
     @Override

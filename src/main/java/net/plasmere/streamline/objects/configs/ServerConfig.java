@@ -641,6 +641,11 @@ public class ServerConfig {
         reloadConfig();
     }
 
+    public boolean getMaintenanceMode() {
+        reloadConfig();
+        return serverConfig.getBoolean("maintenance-mode.enabled");
+    }
+
     public void setObject(String pathTo, Object object) {
         serverConfig.set(pathTo, object);
         saveConfig();

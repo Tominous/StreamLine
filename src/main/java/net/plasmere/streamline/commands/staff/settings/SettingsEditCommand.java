@@ -242,6 +242,22 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         sendSetMessageEmote(sender, MessageConfUtils.settingsSetEmotePermissions(), theEmote, toEPerm);
                         break;
+                    case "maintenance-mode-enabled":
+                        String enabledMM = TextUtils.argsToStringMinus(args, 0, 1);
+
+                        boolean enabledM = false;
+                        try {
+                            enabledM = Boolean.parseBoolean(enabledMM);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeCommandErrorUnd());
+                            return;
+                        }
+
+                        StreamLine.serverConfig.setTagsPingEnabled(enabledM);
+
+                        sendSetMessage(sender, MessageConfUtils.settingsSetMaintenanceModeEnabled(), enabledM);
+                        break;
                 }
                 break;
             case "check":
@@ -296,6 +312,9 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                         break;
                     case "emote-permissions":
                         sendGetMessageEmote(sender, MessageConfUtils.settingsGetEmotePermissions(), StreamLine.serverConfig.getEmotePermission(args[2]), args);
+                        break;
+                    case "maintenance-mode-enabled":
+                        sendGetMessage(sender, MessageConfUtils.settingsGetMaintenanceModeEnabled(), StreamLine.serverConfig.getMaintenanceMode());
                         break;
                 }
                 break;

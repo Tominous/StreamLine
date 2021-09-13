@@ -1912,6 +1912,10 @@ settings:
     # %emote% = the number of the Chats page.
     # %set% = what you set it to.
     emote-permissions: "&eJust set &cEmote Permission &efor &a%emote% &eto &b\"%set%&b\"&e!"
+    # Maintenance Mode Enabled.
+    # Fillers:
+    # %set% = what you set it to.
+    maintenance-mode-enabled: "&eJust set &cMaintenance Mode &eto &b\"%set%&b\"&e!"
   # For getting...
   get:
     # MOTD.
@@ -1980,6 +1984,10 @@ settings:
     # %emote% = the number of the Chats page.
     # %set% = what you set it to.
     emote-permissions: "&cEmote Permission &efor &a%emote% &eis &b\"%set%&b\"&e!"
+    # Maintenance Mode Enabled.
+    # Fillers:
+    # %set% = what you set it to.
+    maintenance-mode-enabled: "&cMaintenance Mode &eis &b\"%set%&b\"&e!"
 
 # For the info command.
 # Fillers:
