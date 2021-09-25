@@ -38,7 +38,7 @@ public class IgnoreCommand extends Command implements TabExecutor {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
         } else if (args.length < 2 && args[0].equals("list")) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreListMain()
-                    .replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat))
+                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
                     .replace("%ignores%", PlayerUtils.getIgnored(stat))
             );
         } else if (args.length < 2) {
@@ -73,18 +73,18 @@ public class IgnoreCommand extends Command implements TabExecutor {
 
                     if (stat.ignoredList.contains(other.uuid)) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreAddAlready()
-                                .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
                         );
                         return;
                     }
 
                     stat.tryAddNewIgnored(other.uuid);
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreAddSelf()
-                            .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
                     );
                     if ((other instanceof Player && ((Player) other).online) || other instanceof ConsolePlayer) {
                         MessagingUtils.sendBUserMessage(other.findSender(), MessageConfUtils.ignoreAddIgnored()
-                                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(stat))
                         );
                     }
                     break;
@@ -96,24 +96,24 @@ public class IgnoreCommand extends Command implements TabExecutor {
 
                     if (!stat.ignoredList.contains(other.uuid)) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreRemAlready()
-                                .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
                         );
                         return;
                     }
 
                     stat.tryRemIgnored(other.uuid);
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreRemSelf()
-                            .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
                     );
                     if ((other instanceof Player && ((Player) other).online) || other instanceof ConsolePlayer) {
                         MessagingUtils.sendBUserMessage(other.findSender(), MessageConfUtils.ignoreRemIgnored()
-                                .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(stat))
                         );
                     }
                     break;
                 case "list":
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreListMain()
-                            .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
                             .replace("%ignores%", PlayerUtils.getIgnored(other))
                     );
                     break;

@@ -982,7 +982,7 @@ public class PlayerUtils {
         of.tryRemTag(tag);
 
         MessagingUtils.sendBUserMessage(sender, tagRem
-                .replace("%player%", getOffOnDisplayBungee(of))
+                .replace("%player_display%", getOffOnDisplayBungee(of))
                 .replace("%tag%", tag)
         );
     }
@@ -996,7 +996,7 @@ public class PlayerUtils {
         of.tryAddNewTag(tag);
 
         MessagingUtils.sendBUserMessage(sender, tagAdd
-                .replace("%player%", getOffOnDisplayBungee(of))
+                .replace("%player_display%", getOffOnDisplayBungee(of))
                 .replace("%tag%", tag)
         );
     }
@@ -1008,7 +1008,7 @@ public class PlayerUtils {
         }
 
         MessagingUtils.sendBUserMessage(sender, tagListMain
-                .replace("%player%", getOffOnDisplayBungee(of))
+                .replace("%player_display%", getOffOnDisplayBungee(of))
                 .replace("%tags%", compileTagList(of))
         );
     }
@@ -1020,12 +1020,12 @@ public class PlayerUtils {
         for (String tag : of.tagList){
             if (i < of.tagList.size()) {
                 stringBuilder.append(tagListNotLast
-                        .replace("%player%", getOffOnDisplayBungee(of))
+                        .replace("%player_display%", getOffOnDisplayBungee(of))
                         .replace("%tag%", tag)
                 );
             } else {
                 stringBuilder.append(tagListLast
-                        .replace("%player%", getOffOnDisplayBungee(of))
+                        .replace("%player_display%", getOffOnDisplayBungee(of))
                         .replace("%tag%", tag)
                 );
             }
@@ -1043,11 +1043,11 @@ public class PlayerUtils {
         for (String uuid : stat.ignoredList) {
             if (i < stat.ignoredList.size()) {
                 ignored.append(MessageConfUtils.ignoreListNLast()
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
                 );
             } else {
                 ignored.append(MessageConfUtils.ignoreListLast()
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
                 );
             }
 
@@ -1065,11 +1065,11 @@ public class PlayerUtils {
         for (String uuid : stat.friendList) {
             if (i < stat.friendList.size()) {
                 thing.append(MessageConfUtils.friendListFNLast()
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
                 );
             } else {
                 thing.append(MessageConfUtils.friendListFLast()
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
                 );
             }
 
@@ -1087,11 +1087,11 @@ public class PlayerUtils {
         for (String uuid : stat.pendingToFriendList) {
             if (i < stat.pendingToFriendList.size()) {
                 thing.append(MessageConfUtils.friendListPTNLast()
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
                 );
             } else {
                 thing.append(MessageConfUtils.friendListPTLast()
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
                 );
             }
 
@@ -1109,11 +1109,11 @@ public class PlayerUtils {
         for (String uuid : stat.pendingFromFriendList) {
             if (i < stat.pendingFromFriendList.size()) {
                 thing.append(MessageConfUtils.friendListPFNLast()
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
                 );
             } else {
                 thing.append(MessageConfUtils.friendListPFLast()
-                        .replace("%player%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
                 );
             }
 
@@ -1394,10 +1394,10 @@ public class PlayerUtils {
         }
 
         if (stat instanceof Player) {
-            if (((Player) stat).online) {
-                return MessageConfUtils.onlineB().replace("%player%", stat.displayName);
+            if (stat.online) {
+                return MessageConfUtils.onlineB().replace("%player_display%", stat.displayName);
             } else {
-                return MessageConfUtils.offlineB().replace("%player%", stat.displayName);
+                return MessageConfUtils.offlineB().replace("%player_display%", stat.displayName);
             }
         }
 
@@ -1414,17 +1414,17 @@ public class PlayerUtils {
         }
 
         if (stat instanceof Player) {
-            if (((Player) stat).online) {
-                return MessageConfUtils.onlineB().replace("%player%", stat.latestName);
+            if (stat.online) {
+                return MessageConfUtils.onlineB().replace("%player_display%", stat.latestName);
             } else {
-                return MessageConfUtils.offlineB().replace("%player%", stat.latestName);
+                return MessageConfUtils.offlineB().replace("%player_display%", stat.latestName);
             }
         }
 
         return MessageConfUtils.nullB();
     }
 
-    public static String getDisplayBungee(SavableUser stat){
+    public static String getJustDisplayBungee(SavableUser stat){
         if (stat == null) {
             return MessageConfUtils.nullB();
         }
@@ -1434,11 +1434,7 @@ public class PlayerUtils {
         }
 
         if (stat instanceof Player) {
-            if (((Player) stat).online) {
-                return stat.displayName;
-            } else {
-                return stat.displayName;
-            }
+            return stat.displayName;
         }
 
         return MessageConfUtils.nullB();
@@ -1470,10 +1466,10 @@ public class PlayerUtils {
         }
 
         if (stat instanceof Player) {
-            if (((Player) stat).online) {
-                return MessageConfUtils.onlineD().replace("%player%", stat.displayName);
+            if (stat.online) {
+                return MessageConfUtils.onlineD().replace("%player_display%", stat.displayName);
             } else {
-                return MessageConfUtils.offlineD().replace("%player%", stat.displayName);
+                return MessageConfUtils.offlineD().replace("%player_display%", stat.displayName);
             }
         }
 
@@ -1490,17 +1486,17 @@ public class PlayerUtils {
         }
 
         if (stat instanceof Player) {
-            if (((Player) stat).online) {
-                return MessageConfUtils.onlineD().replace("%player%", stat.latestName);
+            if (stat.online) {
+                return MessageConfUtils.onlineD().replace("%player_display%", stat.latestName);
             } else {
-                return MessageConfUtils.offlineD().replace("%player%", stat.latestName);
+                return MessageConfUtils.offlineD().replace("%player_display%", stat.latestName);
             }
         }
 
         return MessageConfUtils.nullD();
     }
 
-    public static String getDisplayDiscord(SavableUser stat){
+    public static String getJustDisplayDiscord(SavableUser stat){
         if (stat == null) {
             return MessageConfUtils.nullD();
         }
@@ -1510,11 +1506,7 @@ public class PlayerUtils {
         }
 
         if (stat instanceof Player) {
-            if (((Player) stat).online) {
-                return stat.displayName;
-            } else {
-                return stat.displayName;
-            }
+            return stat.displayName;
         }
 
         return MessageConfUtils.nullD();

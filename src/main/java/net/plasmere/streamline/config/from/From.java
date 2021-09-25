@@ -52,6 +52,8 @@ public abstract class From {
     public final String commandString = "commands.yml";
     public final File commandFile = new File(StreamLine.getInstance().getDataFolder(), commandString);
 
+    public TreeMap<String, String> catchAll_values = new TreeMap<>();
+
     public String language = "";
 
     public File mfile(String language) {
@@ -64,6 +66,8 @@ public abstract class From {
         this.language = language;
         getAllConfigurations();
         chargeLocalesMaps();
+
+        getCatchAlls();
 
         setupConfigFix();
         setupLocalesFix();
@@ -79,6 +83,16 @@ public abstract class From {
 
         MessagingUtils.logInfo("Updated your files from previous version: " + versionFrom());
     }
+
+    public void getCatchAlls() {
+        getCatchAll_values();
+    }
+
+    public void addCatchAll_values(String regex, String to) {
+        catchAll_values.put(regex, to);
+    }
+
+    public abstract void getCatchAll_values();
 
     public void getAllConfigurations() {
         c = getFirstConfig();

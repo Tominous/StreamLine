@@ -35,7 +35,7 @@ public class StreamCommand extends Command {
                         );
                     } else {
                         MessagingUtils.sendBCLHBroadcast(sender, MessageConfUtils.streamMessage()
-                                .replace("%user%", sender.getName())
+                                .replace("%user_display%", sender.getName())
                                 .replace("%link%", args[0])
                                 , MessageConfUtils.streamHoverPrefix()
                         );

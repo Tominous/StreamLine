@@ -49,13 +49,13 @@ proxy-chat:
   # Lowest = Default.
   chats:
     local:
-      1: "&d%sender%&r &7&l>> &f%message%"
-      2: "&d%sender%&r &7&l>> &e%message%"
-      3: "&d%sender%&r &7&l>> &6%message%"
+      1: "&d%sender_display%&r &7&l>> &f%message%"
+      2: "&d%sender_display%&r &7&l>> &e%message%"
+      3: "&d%sender_display%&r &7&l>> &6%message%"
     global:
-      1: "&e[&4%server%&e] &d%sender%&r &7&l>> &f%message%"
-      2: "&e[&4%server%&e] &d%sender%&r &7&l>> &e%message%"
-      3: "&e[&4%server%&e] &d%sender%&r &7&l>> &6%message%"
+      1: "&e[&4%server%&e] &d%sender_display%&r &7&l>> &f%message%"
+      2: "&e[&4%server%&e] &d%sender_display%&r &7&l>> &e%message%"
+      3: "&e[&4%server%&e] &d%sender_display%&r &7&l>> &6%message%"
   # When someone says someone's name in chat (on the same server).
   tags:
     # Enable getting pinged.

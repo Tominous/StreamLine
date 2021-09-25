@@ -429,7 +429,7 @@ public class ServerConfig {
     }
 
     public String getPermissionedProxyChatMessageLocal(SavableUser user){
-        if (getChatsMapLocal().size() <= 0) return "&r<&d%sender%&r> %message%";
+        if (getChatsMapLocal().size() <= 0) return "&r<&d%sender_display%&r> %message%";
 
         if (! hasProxyChatPermissionLocal(user)) return getDefaultFormatLocal();
 
@@ -440,7 +440,7 @@ public class ServerConfig {
     }
 
     public String getPermissionedProxyChatMessageGlobal(SavableUser user){
-        if (getChatsMapGlobal().size() <= 0) return "&r<&d%sender%&r> %message%";
+        if (getChatsMapGlobal().size() <= 0) return "&r<&d%sender_display%&r> %message%";
 
         if (! hasProxyChatPermissionGlobal(user)) return getDefaultFormatGlobal();
 
@@ -451,7 +451,7 @@ public class ServerConfig {
     }
 
     public String findFromChatsMapLocal(SavableUser user, int trial, int running) {
-        if (running > getChatsMapLocal().size()) return "&r<&d%sender%&r> %message%";
+        if (running > getChatsMapLocal().size()) return "&r<&d%sender_display%&r> %message%";
 
         running ++;
 
@@ -461,7 +461,7 @@ public class ServerConfig {
     }
 
     public String findFromChatsMapGlobal(SavableUser user, int trial, int running) {
-        if (running > getChatsMapGlobal().size()) return "&r<&d%sender%&r> %message%";
+        if (running > getChatsMapGlobal().size()) return "&r<&d%sender_display%&r> %message%";
 
         running ++;
 
@@ -485,7 +485,7 @@ public class ServerConfig {
     }
 
     public String getPermissionedProxyChatMessageLocal(ProxiedPlayer player){
-        if (getChatsMapLocal().size() <= 0) return "&r<&d%sender%&r> %message%";
+        if (getChatsMapLocal().size() <= 0) return "&r<&d%sender_display%&r> %message%";
 
         if (! hasProxyChatPermissionLocal(player)) return getChatsMapLocal().firstEntry().getValue();
 
@@ -496,7 +496,7 @@ public class ServerConfig {
     }
 
     public String getPermissionedProxyChatMessageGlobal(ProxiedPlayer player){
-        if (getChatsMapGlobal().size() <= 0) return "&r<&d%sender%&r> %message%";
+        if (getChatsMapGlobal().size() <= 0) return "&r<&d%sender_display%&r> %message%";
 
         if (! hasProxyChatPermissionGlobal(player)) return getChatsMapLocal().firstEntry().getValue();
 
@@ -507,7 +507,7 @@ public class ServerConfig {
     }
 
     public String findFromChatsMapLocal(ProxiedPlayer player, int trial, int running) {
-        if (running > getChatsMapLocal().size()) return "&r<&d%sender%&r> %message%";
+        if (running > getChatsMapLocal().size()) return "&r<&d%sender_display%&r> %message%";
 
         running ++;
 
@@ -517,7 +517,7 @@ public class ServerConfig {
     }
 
     public String findFromChatsMapGlobal(ProxiedPlayer player, int trial, int running) {
-        if (running > getChatsMapGlobal().size()) return "&r<&d%sender%&r> %message%";
+        if (running > getChatsMapGlobal().size()) return "&r<&d%sender_display%&r> %message%";
 
         running ++;
 

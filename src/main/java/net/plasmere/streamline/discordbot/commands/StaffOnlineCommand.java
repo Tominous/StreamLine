@@ -45,12 +45,12 @@ public class StaffOnlineCommand {
         for (ProxiedPlayer player : lstaffs){
             if (i < lstaffs.size())
                 staff.append(MessageConfUtils.sOnlineDiscordBulkNotLast()
-                        .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", player.getServer().getInfo().getName().toLowerCase())
                 );
             else
                 staff.append(MessageConfUtils.sOnlineDiscordBulkLast()
-                        .replace("%player%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", player.getServer().getInfo().getName().toLowerCase())
                 );
             i++;

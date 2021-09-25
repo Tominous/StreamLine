@@ -37,7 +37,7 @@ public class TeleportCommand extends Command implements TabExecutor {
             PlayerUtils.addTeleport(s, player);
 
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bteleport()
-                    .replace("%player%", player.getName())
+                    .replace("%player_display%", player.getName())
             );
         } else {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.onlyPlayers());

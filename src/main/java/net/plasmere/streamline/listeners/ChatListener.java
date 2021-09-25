@@ -93,7 +93,7 @@ public class ChatListener implements Listener {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                                 MessageConfUtils.staffChatEmbedTitle(),
                                 MessageConfUtils.discordStaffChatMessage()
-                                        .replace("%user%", sender.getName())
+                                        .replace("%user_display%", sender.getName())
                                         .replace("%message%", msg),
                                 DiscordBotConfUtils.textChannelStaffChat));
                     }
@@ -118,7 +118,7 @@ public class ChatListener implements Listener {
                             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                                     MessageConfUtils.staffChatEmbedTitle(),
                                     MessageConfUtils.discordStaffChatMessage()
-                                            .replace("%user%", sender.getName())
+                                            .replace("%user_display%", sender.getName())
                                             .replace("%message%", msg.substring(prefix.length())),
                                     DiscordBotConfUtils.textChannelStaffChat));
                         }

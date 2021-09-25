@@ -213,7 +213,7 @@ public class PartyUtils {
 
             if (to.online) {
                 MessagingUtils.sendBPUserMessage(party, player, to.player, inviteUser
-                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
+                        .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(to))
                         .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(to))
                         .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(to))
                 );
@@ -235,13 +235,13 @@ public class PartyUtils {
 
                 if (pl.equals(from)) {
                     MessagingUtils.sendBPUserMessage(party, player, member, inviteLeader
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(to))
                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(to))
                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(to))
                     );
                 } else {
                     MessagingUtils.sendBPUserMessage(party, player, member, inviteMembers
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(to))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(to))
                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(to))
                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(to))
                     );
@@ -256,7 +256,7 @@ public class PartyUtils {
                 if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleInvites) {
                     MessagingUtils.sendDiscordPEBMessage(party, new DiscordMessage(player, inviteTitle,
                             inviteConsole
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(to))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(to))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(to))
                             , DiscordBotConfUtils.textChannelParties));
@@ -297,10 +297,10 @@ public class PartyUtils {
                 }
 
                 MessagingUtils.sendBPUserMessage(party, p, p, acceptUser
-                        .replace("%user%", PlayerUtils.getOffOnDisplayBungee(accepter))
+                        .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(accepter))
                         .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(accepter))
                         .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(accepter))
-                        .replace("%from%", PlayerUtils.getOffOnDisplayBungee(from))
+                        .replace("%from_display%", PlayerUtils.getOffOnDisplayBungee(from))
                         .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
                         .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
                 );
@@ -314,19 +314,19 @@ public class PartyUtils {
 
                     if (m.equals(party.leader.player)){
                         MessagingUtils.sendBPUserMessage(party, p, m, acceptLeader
-                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(accepter))
+                                .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(accepter))
                                 .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(accepter))
                                 .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(accepter))
-                                .replace("%from%", PlayerUtils.getOffOnDisplayBungee(from))
+                                .replace("%from_display%", PlayerUtils.getOffOnDisplayBungee(from))
                                 .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
                                 .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
                         );
                     } else {
                         MessagingUtils.sendBPUserMessage(party, p, m, acceptMembers
-                                .replace("%user%", PlayerUtils.getOffOnDisplayBungee(accepter))
+                                .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(accepter))
                                 .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(accepter))
                                 .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(accepter))
-                                .replace("%from%", PlayerUtils.getOffOnDisplayBungee(from))
+                                .replace("%from_display%", PlayerUtils.getOffOnDisplayBungee(from))
                                 .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
                                 .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
                         );
@@ -340,10 +340,10 @@ public class PartyUtils {
                     if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleJoins) {
                         MessagingUtils.sendDiscordPEBMessage(party, new DiscordMessage(p, joinsTitle,
                                 joinsConsole
-                                        .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(accepter))
+                                        .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(accepter))
                                         .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
                                         .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(accepter))
-                                        .replace("%from%", PlayerUtils.getOffOnDisplayDiscord(from))
+                                        .replace("%from_display%", PlayerUtils.getOffOnDisplayDiscord(from))
                                         .replace("%from_normal%", PlayerUtils.getOffOnRegDiscord(from))
                                         .replace("%from_absolute%", PlayerUtils.getAbsoluteDiscord(from))
                                 , DiscordBotConfUtils.textChannelParties));
@@ -352,10 +352,10 @@ public class PartyUtils {
                     if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleAccepts) {
                         MessagingUtils.sendDiscordPEBMessage(party, new DiscordMessage(p, acceptTitle,
                                 acceptConsole
-                                        .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(accepter))
+                                        .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(accepter))
                                         .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
                                         .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(accepter))
-                                        .replace("%from%", PlayerUtils.getOffOnDisplayDiscord(from))
+                                        .replace("%from_display%", PlayerUtils.getOffOnDisplayDiscord(from))
                                         .replace("%from_normal%", PlayerUtils.getOffOnRegDiscord(from))
                                         .replace("%from_absolute%", PlayerUtils.getAbsoluteDiscord(from))
                                 , DiscordBotConfUtils.textChannelParties));
@@ -393,10 +393,10 @@ public class PartyUtils {
             party.removeInvite(denier);
 
             MessagingUtils.sendBPUserMessage(party, p, p, denyUser
-                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(denier))
+                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(denier))
                     .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(denier))
                     .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(denier))
-                    .replace("%from%", PlayerUtils.getOffOnDisplayBungee(from))
+                    .replace("%from_display%", PlayerUtils.getOffOnDisplayBungee(from))
                     .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
                     .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
             );
@@ -410,19 +410,19 @@ public class PartyUtils {
 
                 if (m.equals(party.leader.player)){
                     MessagingUtils.sendBPUserMessage(party, p, m, denyLeader
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(denier))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(denier))
                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(denier))
                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(denier))
-                            .replace("%from%", PlayerUtils.getOffOnDisplayBungee(from))
+                            .replace("%from_display%", PlayerUtils.getOffOnDisplayBungee(from))
                             .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
                             .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
                     );
                 } else {
                     MessagingUtils.sendBPUserMessage(party, p, m, denyMembers
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(denier))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(denier))
                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(denier))
                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(denier))
-                            .replace("%from%", PlayerUtils.getOffOnDisplayBungee(from))
+                            .replace("%from_display%", PlayerUtils.getOffOnDisplayBungee(from))
                             .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
                             .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
                     );
@@ -433,10 +433,10 @@ public class PartyUtils {
                 if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleDenies) {
                     MessagingUtils.sendDiscordPEBMessage(party, new DiscordMessage(p, denyTitle,
                             denyConsole
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(denier))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(denier))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(denier))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(denier))
-                                    .replace("%from%", PlayerUtils.getOffOnDisplayDiscord(from))
+                                    .replace("%from_display%", PlayerUtils.getOffOnDisplayDiscord(from))
                                     .replace("%from_normal%", PlayerUtils.getOffOnRegDiscord(from))
                                     .replace("%from_absolute%", PlayerUtils.getAbsoluteDiscord(from))
                             , DiscordBotConfUtils.textChannelParties));
@@ -607,19 +607,19 @@ public class PartyUtils {
                 if (pl.equals(sender)) {
                     MessagingUtils.sendBPUserMessage(party, p, m, kickSender
                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                     );
                 } else if (pl.equals(player)) {
                     MessagingUtils.sendBPUserMessage(party, p, m, kickUser
                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                     );
                 } else {
                     MessagingUtils.sendBPUserMessage(party, p, m, kickMembers
                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                     );
                 }
@@ -633,7 +633,7 @@ public class PartyUtils {
                 MessagingUtils.sendDiscordPEBMessage(party, new DiscordMessage(player.player, kickTitle,
                         kickConsole
                                 .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(player))
-                                .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(player))
                                 .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
                         , DiscordBotConfUtils.textChannelParties));
             }
@@ -889,7 +889,7 @@ public class PartyUtils {
 
             String moderatorBulk = listModBulkMain
                     .replace("%moderators%", moderators(party))
-                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(sender));
+                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(sender));
             String memberBulk = listMemberBulkMain
                     .replace("%members%", members(party));
 
@@ -916,11 +916,11 @@ public class PartyUtils {
             for (Player m : party.moderators) {
                 if (i < party.moderators.size()) {
                     mods.append(listModBulkNotLast
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(m))
                     );
                 } else {
                     mods.append(listModBulkLast
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(m))
                     );
                 }
                 i++;
@@ -946,11 +946,11 @@ public class PartyUtils {
             for (Player m : party.members) {
                 if (i < party.moderators.size()) {
                     mems.append(listMemberBulkNotLast
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(m))
                     );
                 } else {
                     mems.append(listMemberBulkLast
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(m))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(m))
                     );
                 }
                 i++;
@@ -993,11 +993,11 @@ public class PartyUtils {
             switch (party.getLevel(player)) {
                 case LEADER:
                     MessagingUtils.sendBPUserMessage(party, p, p, promoteFailure
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
                             .replace("%level%", textLeader
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player)))
                     );
@@ -1014,31 +1014,31 @@ public class PartyUtils {
 
                         if (m.equals(party.leader.player)) {
                             MessagingUtils.sendBPUserMessage(party, p, m, promoteLeader
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textLeader
-                                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player)))
                             );
                         } else if (m.equals(player)) {
                             MessagingUtils.sendBPUserMessage(party, p, m, promoteUser
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textLeader
-                                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player)))
                             );
                         } else {
                             MessagingUtils.sendBPUserMessage(party, p, m, promoteMembers
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textLeader
-                                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player)))
                             );
@@ -1058,31 +1058,31 @@ public class PartyUtils {
 
                         if (m.equals(party.leader.player)) {
                             MessagingUtils.sendBPUserMessage(party, p, m, promoteLeader
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textModerator
-                                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player)))
                             );
                         } else if (m.equals(player)) {
                             MessagingUtils.sendBPUserMessage(party, p, m, promoteUser
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textModerator
-                                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player)))
                             );
                         } else {
                             MessagingUtils.sendBPUserMessage(party, p, m, promoteMembers
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textModerator
-                                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player)))
                             );
@@ -1095,7 +1095,7 @@ public class PartyUtils {
                 if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsolePromotes) {
                     MessagingUtils.sendDiscordPEBMessage(party, new DiscordMessage(p, promoteTitle,
                             promoteConsole
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(player))
                             , DiscordBotConfUtils.textChannelParties));
@@ -1136,11 +1136,11 @@ public class PartyUtils {
             switch (party.getLevel(player)) {
                 case LEADER:
                     MessagingUtils.sendBPUserMessage(party, p, p, demoteIsLeader
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
                             .replace("%level%", textLeader
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player)))
                     );
@@ -1157,31 +1157,31 @@ public class PartyUtils {
 
                         if (m.equals(party.leader.player)) {
                             MessagingUtils.sendBPUserMessage(party, p, m, demoteLeader
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textMember
-                                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player)))
                             );
                         } else if (m.equals(player)) {
                             MessagingUtils.sendBPUserMessage(party, p, m, demoteUser
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textMember
-                                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player)))
                             );
                         } else {
                             MessagingUtils.sendBPUserMessage(party, p, m, demoteMembers
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textMember
-                                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player)))
                             );
@@ -1191,11 +1191,11 @@ public class PartyUtils {
                 case MEMBER:
                 default:
                     MessagingUtils.sendBPUserMessage(party, p, p, demoteFailure
-                            .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                             .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                             .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
                             .replace("%level%", textMember
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player)))
                     );
@@ -1206,7 +1206,7 @@ public class PartyUtils {
                 if (ConfigUtils.partyToDiscord && ConfigUtils.partyConsoleDemotes) {
                     MessagingUtils.sendDiscordPEBMessage(party, new DiscordMessage(p, demoteTitle,
                             demoteConsole
-                                    .replace("%user%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(player))
                                     .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
                                     .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(player))
                             , DiscordBotConfUtils.textChannelParties));
@@ -1417,7 +1417,7 @@ public class PartyUtils {
 
 //            if (ConfigUtils.partyConsoleChats) {
 //                MessagingUtils.sendBPUserMessage(party, p, StreamLine.getInstance().getProxy().getConsole(), chatConsole
-//                        .replace("%sender%", PlayerUtils.getOffOnDisplayBungee(sender))
+//                        .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(sender))
 //                        .replace("%message%", msg)
 //                );
 //            }

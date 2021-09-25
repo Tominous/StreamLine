@@ -30,9 +30,9 @@ public class GetStatsCommand extends Command {
         int i = 1;
         for (SavableUser stat : PlayerUtils.getStats()) {
             if (i >= PlayerUtils.getStats().size()) {
-                stringBuilder.append(MessageConfUtils.getStatsLast().replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat)));
+                stringBuilder.append(MessageConfUtils.getStatsLast().replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat)));
             } else {
-                stringBuilder.append(MessageConfUtils.getStatsNLast().replace("%player%", PlayerUtils.getOffOnDisplayBungee(stat)));
+                stringBuilder.append(MessageConfUtils.getStatsNLast().replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat)));
             }
             i ++;
         }

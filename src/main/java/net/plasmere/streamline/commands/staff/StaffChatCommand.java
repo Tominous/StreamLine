@@ -41,7 +41,7 @@ public class StaffChatCommand extends Command {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                                 MessageConfUtils.staffChatEmbedTitle(),
                                 MessageConfUtils.discordStaffChatMessage()
-                                        .replace("%user%", sender.getName())
+                                        .replace("%user_display%", sender.getName())
                                         .replace("%message%", TextUtils.normalize(args)),
                                 DiscordBotConfUtils.textChannelStaffChat));
                     }

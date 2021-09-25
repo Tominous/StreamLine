@@ -21,7 +21,10 @@ public class ConfigUtils {
     // Basics.
     public static boolean moduleDMainConsole = StreamLine.config.getConfBoolean("modules.discord.main-console");
     public static boolean moduleDEnabled = StreamLine.config.getConfBoolean("modules.discord.enabled");
-    public static boolean moduleUseMCAvatar = StreamLine.config.getConfBoolean("modules.discord.use-mc-avatar");
+    // Avatars.
+    public static boolean moduleAvatarUse = StreamLine.config.getConfBoolean("modules.discord.avatar.use");
+    public static String moduleAvatarLink = StreamLine.config.getConfString("modules.discord.avatar.link");
+    // Joins / Leaves.
     public static boolean joinsLeavesIcon = StreamLine.config.getConfBoolean("modules.discord.joins-leaves.use-bot-icon");
     public static boolean joinsLeavesAsConsole = StreamLine.config.getConfBoolean("modules.discord.joins-leaves.send-as-console");
     // Reports.
@@ -118,6 +121,7 @@ public class ConfigUtils {
     public static int cachedPClear = StreamLine.config.getConfInteger("modules.bungee.stats.cache-clear");
     public static int cachedPSave = StreamLine.config.getConfInteger("modules.bungee.stats.cache-save");
     public static boolean updateDisplayNames = StreamLine.config.getConfBoolean("modules.bungee.stats.update-display-names");
+    public static boolean deleteBadStats = StreamLine.config.getConfBoolean("modules.bungee.stats.delete-bad");
     // ... Redirect.
     public static boolean redirectEnabled = StreamLine.config.getConfBoolean("modules.bungee.redirect.enabled");
     public static String redirectPre = StreamLine.config.getConfString("modules.bungee.redirect.permission-prefix");

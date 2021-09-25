@@ -27,18 +27,18 @@ public class SudoCommand extends Command implements TabExecutor {
 
             if (sudoOn.hasPermission(ConfigUtils.noSudoPerm)){
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoNoSudo()
-                        .replace("%user%", sudoOn.getDisplayName())
+                        .replace("%user_display%", sudoOn.getDisplayName())
                 );
                 return;
             }
 
             if (StreamLine.getInstance().getProxy().getPluginManager().dispatchCommand(sudoOn, TextUtils.argsToStringMinus(args, 0))){
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoWorked()
-                        .replace("%user%", sudoOn.getDisplayName())
+                        .replace("%user_display%", sudoOn.getDisplayName())
                 );
             } else {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoNoWork()
-                        .replace("%user%", sudoOn.getDisplayName())
+                        .replace("%user_display%", sudoOn.getDisplayName())
                 );
             }
         }

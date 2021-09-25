@@ -51,7 +51,7 @@ public class KickCommand extends Command implements TabExecutor {
 
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.kickSender()
                     .replace("%reason%", reason)
-                    .replace("%player%", PlayerUtils.getOffOnDisplayBungee(other))
+                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
                     .replace("%reason%", reason)
             );
 
@@ -63,7 +63,7 @@ public class KickCommand extends Command implements TabExecutor {
                                     MessageConfUtils.kickEmbed(),
                                     MessageConfUtils.kickDiscord()
                                             .replace("%punisher%", sender.getName())
-                                            .replace("%player%", other.latestName)
+                                            .replace("%player_display%", other.latestName)
                                             .replace("%reason%", reason)
                                     ,
                                     DiscordBotConfUtils.textChannelKicks
@@ -74,7 +74,7 @@ public class KickCommand extends Command implements TabExecutor {
 
             MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.kickStaff()
                     .replace("%punisher%", sender.getName())
-                    .replace("%player%", other.latestName)
+                    .replace("%player_display%", other.latestName)
                     .replace("%reason%", reason)
             );
         }
