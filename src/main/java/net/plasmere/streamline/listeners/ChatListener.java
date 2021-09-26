@@ -13,10 +13,7 @@ import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.savable.history.HistorySave;
 import net.plasmere.streamline.objects.savable.users.ChatLevel;
 import net.plasmere.streamline.objects.savable.users.Player;
-import net.plasmere.streamline.utils.GuildUtils;
-import net.plasmere.streamline.utils.MessagingUtils;
-import net.plasmere.streamline.utils.PlayerUtils;
-import net.plasmere.streamline.utils.TextUtils;
+import net.plasmere.streamline.utils.*;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -177,6 +174,13 @@ public class ChatListener implements Listener {
 
                     e.setCancelled(true);
                 }
+            }
+
+            if (stat.chatLevel.equals(ChatLevel.GUILD)) {
+                GuildUtils.sendChat(stat, msg);
+            }
+            if (stat.chatLevel.equals(ChatLevel.PARTY)) {
+                PartyUtils.sendChat(stat, msg);
             }
         }
 

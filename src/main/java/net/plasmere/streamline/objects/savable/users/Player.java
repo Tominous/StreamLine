@@ -158,6 +158,7 @@ public class Player extends SavableUser {
     }
 
     public static ChatLevel parseChatLevel(String string) {
+        string = string.toUpperCase(Locale.ROOT);
         switch (string) {
             case "GLOBAL":
                 return ChatLevel.GLOBAL;

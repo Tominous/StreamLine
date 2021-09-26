@@ -453,9 +453,47 @@ public abstract class From {
         }
     }
 
-    public TreeMap<String, String> iterateDeepPaths(Configuration base, String fromPath, String toPath, String currSearch, TreeMap<String, String> runningMap) {
-        TreeMap<String, String> old = new TreeMap<>(runningMap);
+    public void setObjectVariedSetNull(String path, String oldPath, FileType of, String language) {
+        switch (of) {
+            case CONFIG:
+                addUpdatedConfigEntry(path, setNull(c, oldPath));
+                break;
+            case TRANSLATION:
+                addUpdatedLocalesEntry(path, setNull(m, oldPath), language);
+                break;
+            case SERVERCONFIG:
+                addUpdatedServerConfigEntry(path, setNull(sc, oldPath));
+                break;
+            case DISCORDBOT:
+                addUpdatedDiscordBotEntry(path, setNull(dis, oldPath));
+                break;
+            case COMMANDS:
+                addUpdatedCommandsEntry(path, setNull(comm, oldPath));
+                break;
+        }
+    }
 
+    public void setObjectVaried(String path, Object toSet, FileType of, String language) {
+        switch (of) {
+            case CONFIG:
+                addUpdatedConfigEntry(path, toSet);
+                break;
+            case TRANSLATION:
+                addUpdatedLocalesEntry(path, toSet, language);
+                break;
+            case SERVERCONFIG:
+                addUpdatedServerConfigEntry(path, toSet);
+                break;
+            case DISCORDBOT:
+                addUpdatedDiscordBotEntry(path, toSet);
+                break;
+            case COMMANDS:
+                addUpdatedCommandsEntry(path, toSet);
+                break;
+        }
+    }
+
+    public void iterateDeepPaths(Configuration base, String fromPath, String toPath, String currSearch, FileType fileType, String language) {
         boolean trial = false;
 
         try {
@@ -465,44 +503,52 @@ public abstract class From {
         }
 
         if (! trial) {
-            old.put(currSearch.replace(fromPath, toPath), currSearch);
+            String newPath = currSearch.replace(fromPath, toPath);
+
+            Object obj = base.get(currSearch);
 
             // TODO: Remove.
-            MessagingUtils.logWarning("Map: new (" + currSearch.replace(fromPath, toPath) + ") , old (" + currSearch + ")");
+            MessagingUtils.logWarning("Map: new (" + newPath + ") > " + obj + " , old (" + currSearch + ") > " + base.get(currSearch));
+
+            setObjectVaried(newPath, obj, fileType, language);
+            setObjectVaried(currSearch, null, fileType, language);
+
+//            base.set(newPath, obj);
+//            base.set(currSearch, null);
         } else {
             for (String key : base.getSection(currSearch).getKeys()) {
-                iterateDeepPaths(base, fromPath, toPath, currSearch + "." + key, old);
+                iterateDeepPaths(base, fromPath, toPath, currSearch + "." + key, fileType, language);
             }
         }
-
-        return old;
     }
 
-    public void renameDeep(Configuration base, String fromPath, String toPath, FileType toFileType, String language) {
-        if (hasKeys(base)) {
-            TreeMap<String, String> old = iterateDeepPaths(base, fromPath, toPath, fromPath, new TreeMap<>());
-            for (String path : old.keySet()) {
-                // TODO: Remove.
-                MessagingUtils.logWarning("GOTTEN Map: new (" + path + ") , old (" + old.get(path) + ")");
-
-                switch (toFileType) {
-                    case CONFIG:
-                        addUpdatedConfigEntry(path, setNull(c, old.get(path)));
-                        break;
-                    case TRANSLATION:
-                        addUpdatedLocalesEntry(path, setNull(m, old.get(path)), language);
-                        break;
-                    case SERVERCONFIG:
-                        addUpdatedServerConfigEntry(path, setNull(sc, old.get(path)));
-                        break;
-                    case DISCORDBOT:
-                        addUpdatedDiscordBotEntry(path, setNull(dis, old.get(path)));
-                        break;
-                    case COMMANDS:
-                        addUpdatedCommandsEntry(path, setNull(comm, old.get(path)));
-                        break;
+    public void renameDeep(String fromPath, String toPath, FileType of, String language) {
+        switch (of) {
+            case CONFIG:
+                if (hasKeys(c)) {
+                    iterateDeepPaths(c, fromPath, toPath, fromPath, of, language);
                 }
-            }
+                break;
+            case TRANSLATION:
+                if (hasKeys(m)) {
+                    iterateDeepPaths(m, fromPath, toPath, fromPath, of, language);
+                }
+                break;
+            case SERVERCONFIG:
+                if (hasKeys(sc)) {
+                    iterateDeepPaths(sc, fromPath, toPath, fromPath, of, language);
+                }
+                break;
+            case DISCORDBOT:
+                if (hasKeys(dis)) {
+                    iterateDeepPaths(dis, fromPath, toPath, fromPath, of, language);
+                }
+                break;
+            case COMMANDS:
+                if (hasKeys(comm)) {
+                    iterateDeepPaths(comm, fromPath, toPath, fromPath, of, language);
+                }
+                break;
         }
     }
 
