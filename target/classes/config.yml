@@ -19,8 +19,20 @@ modules:
     enabled: true
     # Enables / disables the Discord main console.
     main-console: true
-    # Enables / disables if the bot should use the sender's Minecraft "face" avatar when sending messages.
-    use-mc-avatar: true
+    # Using avatars... (Profile pictures.)
+    avatar:
+      # Enables / disables if the bot should use the sender's Minecraft "face" avatar when sending messages.
+      use: true
+      # Link used to find the avatar.
+      # Fillers:
+      # %player_absolute% = Just the player's name.
+      # %player_formatted% = Just the player's display name.
+      # %player_display% = The player's display name formatted for offline online.
+      # %player_normal% = The player's name formatted for offline online.
+      # %player_uuid% = The player's uuid.
+      # %guild_uuid% = The player's guild's uuid. Will be empty if none is found.
+      # %guild_name% = The player's guild's uuid. Will be empty if none is found.
+      link: "https://minotar.net/avatar/%player_absolute%/1280.png"
     # Joins and leaves for BungeeCord sent to Discord.
     joins-leaves:
       # Enables / disables if when sending the join or leave message to Discord,
@@ -235,6 +247,8 @@ modules:
       cache-save: 600
       # Enables updating player's display names. Disable if you have another plugin doing this. MUST HAVE LUCKPERMS.
       update-display-names: true
+      # Automatically deletes bad player stats. (If they get corrupted.)
+      delete-bad: true
     # For server redirects...
     # This redirects players upon joining the server.
     # Nice if you need to direct certain players to a different server when they join.
@@ -397,3 +411,10 @@ modules:
         # Delay for teleports (in seconds).
         # Should be, at minimum, the amount of time it takes to go from one server to another.
         delay: 2
+    # For chat history on the network.
+    chat-history:
+      # Enables / disables the chat history module.
+      enabled: true
+      # This will enabled loading player chat history on start up.
+      # This will be resource intensive, only enable if you want it to be faster.
+      load-history-on-startup: false

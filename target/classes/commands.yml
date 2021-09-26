@@ -627,12 +627,12 @@ commands:
         # All aliases for the command. Listed in yml list format.
         aliases:
           - "gracefulend"
-      # The bteleport() command.
-      bteleport():
+      # The bteleport command.
+      bteleport:
         # Enables / disables the use of the command.
         enabled: true
         # Main command that the aliases point to.
-        base: "bteleport()"
+        base: "bteleport"
         # Custom permission.
         permission: "streamline.command.btp"
         # All aliases for the command. Listed in yml list format.
@@ -723,6 +723,18 @@ commands:
         aliases:
           - "f"
           - "fr"
+      # The chat level command.
+      chat-level:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "chat-level"
+        # Custom permission.
+        permission: "streamline.command.chat-level"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "chat"
+          - "ch"
     # Debugging commands.
     debug:
       # The delete stat command.

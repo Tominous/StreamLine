@@ -300,9 +300,9 @@ public class CommandsConfUtils {
     public static List<String> comBFriendAliases = StreamLine.config.getCommandStringList("commands.bungee.messaging.friend.aliases");
     public static String comBFriendPerm = StreamLine.config.getCommandString("commands.bungee.messaging.friend.permission");
     // Chat Level.
-    public static boolean comBChatLevel = StreamLine.config.getCommandBoolean("commands.bungee.messaging.friend.enabled");
-    public static String comBChatLevelBase = StreamLine.config.getCommandString("commands.bungee.messaging.friend.base");
-    public static List<String> comBChatLevelAliases = StreamLine.config.getCommandStringList("commands.bungee.messaging.friend.aliases");
+    public static boolean comBChatLevel = StreamLine.config.getCommandBoolean("commands.bungee.messaging.chat-level.enabled");
+    public static String comBChatLevelBase = StreamLine.config.getCommandString("commands.bungee.messaging.chat-level.base");
+    public static List<String> comBChatLevelAliases = StreamLine.config.getCommandStringList("commands.bungee.messaging.chat-level.aliases");
     public static String comBChatLevelPerm = StreamLine.config.getCommandString("commands.bungee.messaging.chat-level.permission");
     // // Debug.
     // Delete Stat.
