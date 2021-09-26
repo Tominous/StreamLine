@@ -178,9 +178,13 @@ public class ChatListener implements Listener {
 
             if (stat.chatLevel.equals(ChatLevel.GUILD)) {
                 GuildUtils.sendChat(stat, msg);
+
+                e.setCancelled(true);
             }
             if (stat.chatLevel.equals(ChatLevel.PARTY)) {
                 PartyUtils.sendChat(stat, msg);
+
+                e.setCancelled(true);
             }
         }
 

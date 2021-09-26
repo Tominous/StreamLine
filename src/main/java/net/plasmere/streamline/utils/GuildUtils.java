@@ -1461,7 +1461,7 @@ public class GuildUtils {
     public static final String chatConsole = StreamLine.config.getMessString("guild.chat.console");;
     public static final String chatTitle = StreamLine.config.getMessString("guild.chat.title");
     // Create.
-    public static final String create = StreamLine.config.getMessString("guild.create.findSender()");
+    public static final String create = StreamLine.config.getMessString("guild.create.sender");
     public static final String createNonEmpty = StreamLine.config.getMessString("guild.create.non-empty");
     public static final String createConsole = StreamLine.config.getMessString("guild.create.console");
     public static final String createTitle = StreamLine.config.getMessString("guild.create.title");
@@ -1505,13 +1505,13 @@ public class GuildUtils {
     public static final String listMemberBulkNone = StreamLine.config.getMessString("guild.list.memberbulk.members.if-none");
     // Open.
     public static final String openMembers = StreamLine.config.getMessString("guild.open.members");
-    public static final String openSender = StreamLine.config.getMessString("guild.open.findSender()");
+    public static final String openSender = StreamLine.config.getMessString("guild.open.sender");
     public static final String openFailure = StreamLine.config.getMessString("guild.open.failure");
     public static final String openConsole = StreamLine.config.getMessString("guild.open.console");
     public static final String openTitle = StreamLine.config.getMessString("guild.open.title");
     // Close.
     public static final String closeMembers = StreamLine.config.getMessString("guild.close.members");
-    public static final String closeSender = StreamLine.config.getMessString("guild.close.findSender()");
+    public static final String closeSender = StreamLine.config.getMessString("guild.close.sender");
     public static final String closeFailure = StreamLine.config.getMessString("guild.close.failure");
     public static final String closeConsole = StreamLine.config.getMessString("guild.close.console");
     public static final String closeTitle = StreamLine.config.getMessString("guild.close.title");
@@ -1544,7 +1544,7 @@ public class GuildUtils {
     public static final String inviteTitle = StreamLine.config.getMessString("guild.invite.title");
     // Kick.
     public static final String kickUser = StreamLine.config.getMessString("guild.kick.user");
-    public static final String kickSender = StreamLine.config.getMessString("guild.kick.findSender()");
+    public static final String kickSender = StreamLine.config.getMessString("guild.kick.sender");
     public static final String kickMembers = StreamLine.config.getMessString("guild.kick.members");
     public static final String kickFailure = StreamLine.config.getMessString("guild.kick.failure");
     public static final String kickMod = StreamLine.config.getMessString("guild.kick.mod");
@@ -1561,14 +1561,14 @@ public class GuildUtils {
     public static final String muteToggleMuted = StreamLine.config.getMessString("guild.mute.toggle.muted");
     public static final String muteToggleUnMuted = StreamLine.config.getMessString("guild.mute.toggle.unmuted");
     // Warp.
-    public static final String warpSender = StreamLine.config.getMessString("guild.warp.findSender()");
+    public static final String warpSender = StreamLine.config.getMessString("guild.warp.sender");
     public static final String warpMembers = StreamLine.config.getMessString("guild.warp.members");
     public static final String warpConsole = StreamLine.config.getMessString("guild.warp.console");
     public static final String warpTitle = StreamLine.config.getMessString("guild.warp.title");
     // Info.
     public static final String info = StreamLine.config.getMessString("guild.info");
     // Rename.
-    public static final String renameSender = StreamLine.config.getMessString("guild.rename.findSender()");
+    public static final String renameSender = StreamLine.config.getMessString("guild.rename.sender");
     public static final String renameMembers = StreamLine.config.getMessString("guild.rename.members");
     public static final String renameNonEmpty = StreamLine.config.getMessString("guild.rename.non-empty");
     public static final String renameConsole = StreamLine.config.getMessString("guild.rename.console");
