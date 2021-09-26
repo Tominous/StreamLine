@@ -35,7 +35,7 @@ public class From_1_0_13_3 extends From {
         addUpdatedConfigEntry("modules.bungee.chat-history.load-history-on-startup", false);
         addUpdatedConfigEntry("modules.bungee.stats.delete-bad", true);
         rename("modules.discord.use-mc-avatar", "modules.discord.avatar.use", FileType.CONFIG, "");
-        addUpdatedServerConfigEntry("modules.discord.avatar.link", "https://minotar.net/avatar/%player_absolute%/1280.png");
+        addUpdatedConfigEntry("modules.discord.avatar.link", "https://minotar.net/avatar/%player_absolute%/1280.png");
     }
 
     @Override
@@ -93,7 +93,7 @@ public class From_1_0_13_3 extends From {
 
     @Override
     public void setupServerConfigFix() {
-        renameDeep(sc, "proxy-chat.chats", "proxy-chat.chats.local", "proxy-chat.chats", FileType.SERVERCONFIG, "");
+        renameDeep(sc, "proxy-chat.chats", "proxy-chat.chats.local", FileType.SERVERCONFIG, "");
 
         addUpdatedServerConfigEntry("proxy-chat.chats.global.1", "&e[&4%server%&e] &d%sender_display%&r &7&l>> &f%message%");
         addUpdatedServerConfigEntry("proxy-chat.chats.global.2", "&e[&4%server%&e] &d%sender_display%&r &7&l>> &e%message%");

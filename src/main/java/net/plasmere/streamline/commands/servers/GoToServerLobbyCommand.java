@@ -74,7 +74,7 @@ public class GoToServerLobbyCommand extends Command implements TabExecutor {
     @Override
     public Iterable<String> onTabComplete(final CommandSender sender, final String[] args)
     {
-        List<String> servers = new ArrayList<>();
+        TreeSet<String> servers = new TreeSet<>();
 
         for (ServerInfo serverInfo : StreamLine.getInstance().getProxy().getServers().values()) {
             if (! serverInfo.canAccess(sender)) continue;

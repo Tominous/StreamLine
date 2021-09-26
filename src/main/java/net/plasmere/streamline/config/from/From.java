@@ -5,6 +5,7 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigHandler;
+import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.utils.MessagingUtils;
 
@@ -240,8 +241,6 @@ public abstract class From {
         map.put(putInt, new SingleSet<>(path, object));
 
         locales.put(locale, map);
-
-        MessagingUtils.logWarning("Map: locale (" + locale + ") , putInt (" + putInt + ") , object (" + object + ")");
     }
 
     public void addUpdatedServerConfigEntry(String path, Object object) {
@@ -299,7 +298,6 @@ public abstract class From {
             if (locales.get(locale).keySet().size() > 0) {
                 try {
                     ConfigurationProvider.getProvider(YamlConfiguration.class).save(m, mfile(locale));
-                    MessagingUtils.logWarning("Added: " + locales.get(locale).keySet().size());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -455,36 +453,53 @@ public abstract class From {
         }
     }
 
-    public void renameDeep(Configuration base, String fromPath, String toPath, String currSearch, FileType toFileType, String language) {
-        if (hasKeys(base)) {
-            boolean trial = false;
+    public TreeMap<String, String> iterateDeepPaths(Configuration base, String fromPath, String toPath, String currSearch, TreeMap<String, String> runningMap) {
+        TreeMap<String, String> old = new TreeMap<>(runningMap);
 
-            try {
-                trial = hasKeys(base.getSection(currSearch));
-            } catch (Exception e) {
-                // do nothing
+        boolean trial = false;
+
+        try {
+            trial = hasKeys(base.getSection(currSearch));
+        } catch (Exception e) {
+            // do nothing
+        }
+
+        if (! trial) {
+            old.put(currSearch.replace(fromPath, toPath), currSearch);
+
+            // TODO: Remove.
+            MessagingUtils.logWarning("Map: new (" + currSearch.replace(fromPath, toPath) + ") , old (" + currSearch + ")");
+        } else {
+            for (String key : base.getSection(currSearch).getKeys()) {
+                iterateDeepPaths(base, fromPath, toPath, currSearch + "." + key, old);
             }
+        }
 
-            if (trial) {
-                for (String key : base.getSection(currSearch).getKeys()) {
-                    findDeepKeys(base, currSearch + "." + key, toFileType);
-                }
-            } else {
+        return old;
+    }
+
+    public void renameDeep(Configuration base, String fromPath, String toPath, FileType toFileType, String language) {
+        if (hasKeys(base)) {
+            TreeMap<String, String> old = iterateDeepPaths(base, fromPath, toPath, fromPath, new TreeMap<>());
+            for (String path : old.keySet()) {
+                // TODO: Remove.
+                MessagingUtils.logWarning("GOTTEN Map: new (" + path + ") , old (" + old.get(path) + ")");
+
                 switch (toFileType) {
                     case CONFIG:
-                        addUpdatedConfigEntry(currSearch.replace(fromPath, toPath), setNull(base, currSearch));
+                        addUpdatedConfigEntry(path, setNull(c, old.get(path)));
                         break;
                     case TRANSLATION:
-                        addUpdatedLocalesEntry(currSearch.replace(fromPath, toPath), setNull(base, currSearch), language);
+                        addUpdatedLocalesEntry(path, setNull(m, old.get(path)), language);
                         break;
                     case SERVERCONFIG:
-                        addUpdatedServerConfigEntry(currSearch.replace(fromPath, toPath), setNull(base, currSearch));
+                        addUpdatedServerConfigEntry(path, setNull(sc, old.get(path)));
                         break;
                     case DISCORDBOT:
-                        addUpdatedDiscordBotEntry(currSearch.replace(fromPath, toPath), setNull(base, currSearch));
+                        addUpdatedDiscordBotEntry(path, setNull(dis, old.get(path)));
                         break;
                     case COMMANDS:
-                        addUpdatedCommandsEntry(currSearch.replace(fromPath, toPath), setNull(base, currSearch));
+                        addUpdatedCommandsEntry(path, setNull(comm, old.get(path)));
                         break;
                 }
             }

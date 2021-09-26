@@ -406,18 +406,26 @@ public abstract class SavableUser {
 
         if (this.latestName == null) {
             try {
+                if (ConfigUtils.deleteBadStats) {
+                    this.dispose();
+                }
                 throw new Exception("Bad User Data for user: " + this.uuid + "!");
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 e.printStackTrace();
             }
+            return;
         }
 
         if (this.latestName.equals("null")) {
             try {
+                if (ConfigUtils.deleteBadStats) {
+                    this.dispose();
+                }
                 throw new Exception("Bad User Data for user: " + this.uuid + "!");
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 e.printStackTrace();
             }
+            return;
         }
     }
 
@@ -731,7 +739,9 @@ public abstract class SavableUser {
 
     public void dispose() throws Throwable {
         try {
+            PlayerUtils.removeStat(this);
             this.uuid = null;
+            this.file.delete();
         } finally {
             super.finalize();
         }

@@ -38,12 +38,12 @@ public class DeleteStatCommand extends Command implements TabExecutor {
             return;
         }
 
-        PlayerUtils.removeStat(user);
+//        PlayerUtils.removeStat(user);
         try {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.deleteStatMessage()
                     .replace("%file_name%", user.file.getName())
             );
-            user.file.delete();
+//            user.file.delete();
             user.dispose();
         } catch (Throwable e) {
             e.printStackTrace();
