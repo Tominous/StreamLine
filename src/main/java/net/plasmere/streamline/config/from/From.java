@@ -5,15 +5,19 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigHandler;
+import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.utils.MessagingUtils;
+import net.plasmere.streamline.utils.PlayerUtils;
+import net.plasmere.streamline.utils.PluginUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.util.TreeMap;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class From {
     public enum FileType {
@@ -82,7 +86,19 @@ public abstract class From {
         applyDiscordBot();
         applyCommands();
 
+        applyCatchAlls();
+
         MessagingUtils.logInfo("Updated your files from previous version: " + versionFrom());
+    }
+
+    public void clearAllApplications() {
+        config = new TreeMap<>();
+        locales = new TreeMap<>();
+        serverConfig = new TreeMap<>();
+        discordBot = new TreeMap<>();
+        commands = new TreeMap<>();
+
+        chargeLocalesMaps();
     }
 
     public void getCatchAlls() {
@@ -507,9 +523,6 @@ public abstract class From {
 
             Object obj = base.get(currSearch);
 
-            // TODO: Remove.
-            MessagingUtils.logWarning("Map: new (" + newPath + ") > " + obj + " , old (" + currSearch + ") > " + base.get(currSearch));
-
             setObjectVaried(newPath, obj, fileType, language);
             setObjectVaried(currSearch, null, fileType, language);
 
@@ -576,5 +589,137 @@ public abstract class From {
         Object obj = configuration.get(path);
         configuration.set(path, null);
         return obj;
+    }
+
+    public void replaceAllOccurrencesInFile(String from, String to, File file) {
+        try {
+            TreeMap<Integer, String> lines = new TreeMap<>();
+            int l = 0;
+
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                lines.put(l, line);
+                l ++;
+            }
+            bufferedReader.close();
+
+            file.delete();
+            file.createNewFile();
+
+            FileWriter writer = new FileWriter(file);
+            for (int i = 0; i < lines.size(); i ++) {
+                writer.write(lines.get(i).replace(from, to) + "\n");
+            }
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void replaceDeep(Configuration base, String currSearch, FileType toFileType, String from, String to) {
+        if (hasKeys(base)) {
+            boolean trial = false;
+
+            try {
+                trial = hasKeys(base.getSection(currSearch));
+            } catch (Exception e) {
+                // do nothing
+            }
+
+            if (trial) {
+                for (String key : base.getSection(currSearch).getKeys()) {
+                    findDeepKeys(base, currSearch + "." + key, toFileType);
+                }
+            } else {
+                Object obj = base.get(currSearch);
+                String thing = obj.toString();
+
+//                try {
+//                    thing = (String) obj;
+//                } catch (Exception e) {
+//                    // Isn't string, so return.
+//                    return;
+//                }
+
+                thing = thing.replace(from, to);
+
+                switch (toFileType) {
+                    case CONFIG:
+                        addUpdatedConfigEntry(currSearch, thing);
+                        break;
+                    case TRANSLATION:
+                        addUpdatedLocalesEntry(currSearch, thing, "en_US");
+                        break;
+                    case SERVERCONFIG:
+                        addUpdatedServerConfigEntry(currSearch, thing);
+                        break;
+                    case DISCORDBOT:
+                        addUpdatedDiscordBotEntry(currSearch, thing);
+                        break;
+                    case COMMANDS:
+                        addUpdatedCommandsEntry(currSearch, thing);
+                        break;
+                }
+            }
+        }
+    }
+
+    public void replaceLoop(Configuration base, FileType of, String from, String to) {
+        for (String key : base.getKeys()) {
+            replaceDeep(base, key, of, from, to);
+        }
+    }
+
+    public void replaceAllOccurrences(FileType of, String from, String to) {
+        switch (of) {
+            case CONFIG:
+                replaceLoop(c, of, from, to);
+                break;
+            case TRANSLATION:
+                replaceLoop(m, of, from, to);
+                break;
+            case SERVERCONFIG:
+                replaceLoop(sc, of, from, to);
+                break;
+            case DISCORDBOT:
+                replaceLoop(dis, of, from, to);
+                break;
+            case COMMANDS:
+                replaceLoop(comm, of, from, to);
+                break;
+        }
+    }
+
+    public void applyCatchAlls() {
+        MessagingUtils.logSevere("Could not fix occurrences in your server config because it is currently disabled by the plugin maker! (To fix!)");
+        for (String regex : catchAll_values.keySet()) {
+            for (FileType of : FileType.values()) {
+                replaceAllOccurrencesInFiles(of, regex, catchAll_values.get(regex));
+            }
+        }
+    }
+
+    public void replaceAllOccurrencesInFiles(FileType of, String from, String to) {
+        switch (of) {
+            case CONFIG:
+                replaceAllOccurrencesInFile(from, to, cfile);
+                break;
+            case TRANSLATION:
+                for (String language : ConfigHandler.acceptableTranslations()) {
+                    replaceAllOccurrencesInFile(from, to, mfile(language));
+                }
+                break;
+            case SERVERCONFIG:
+//                replaceAllOccurrencesInFile(from, to, scfile);
+                break;
+            case DISCORDBOT:
+                replaceAllOccurrencesInFile(from, to, disbotFile);
+                break;
+            case COMMANDS:
+                replaceAllOccurrencesInFile(from, to, commandFile);
+                break;
+        }
     }
 }

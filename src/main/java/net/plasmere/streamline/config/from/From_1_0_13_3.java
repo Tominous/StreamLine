@@ -20,6 +20,7 @@ public class From_1_0_13_3 extends From {
         addCatchAll_values("%to%", "%to_display%");
         addCatchAll_values("%leader%", "%leader_display%");
         addCatchAll_values("%display%", "%player_display%");
+        addCatchAll_values("_default%", "_absolute%");
     }
 
     @Override
