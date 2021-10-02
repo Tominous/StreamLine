@@ -45,6 +45,16 @@ public class ConfigUtils {
     // Player logins / logouts.
     public static String moduleDPlayerJoins = StreamLine.config.getConfString("modules.discord.player-joins");
     public static String moduleDPlayerLeaves = StreamLine.config.getConfString("modules.discord.player-leaves");
+    // Proxy Chat.
+    public static boolean moduleDPC = StreamLine.config.getConfBoolean("modules.discord.proxy-chat.enabled");
+    public static boolean moduleDPCConsole = StreamLine.config.getConfBoolean("modules.discord.proxy-chat.to-console");
+    public static boolean moduleDPCOnlyRole = StreamLine.config.getConfBoolean("modules.discord.proxy-chat.only-role");
+    public static boolean moduleDPCChangeOnVerify = StreamLine.config.getConfBoolean("modules.discord.proxy-chat.display-names.verifying.change.enabled");
+    public static String moduleDPCChangeOnVerifyTo = StreamLine.config.getConfString("modules.discord.proxy-chat.display-names.verifying.change.to");
+    public static String moduleDPCChangeOnVerifyType = StreamLine.config.getConfString("modules.discord.proxy-chat.display-names.verifying.change.type");
+    public static List<String> moduleDPCOnVerifyAdd = StreamLine.config.getConfStringList("modules.discord.proxy-chat.display-names.verifying.add-roles");
+    public static List<String> moduleDPCOnVerifyRemove = StreamLine.config.getConfStringList("modules.discord.proxy-chat.display-names.verifying.remove-roles");
+    public static String moduleDPCDisplayNamesUseThis = StreamLine.config.getConfString("modules.discord.proxy-chat.display-names.use");
     // ... Bungee.
     // Reports.
     public static boolean moduleReportsBConfirmation = StreamLine.config.getConfBoolean("modules.bungee.reports.send-confirmation");

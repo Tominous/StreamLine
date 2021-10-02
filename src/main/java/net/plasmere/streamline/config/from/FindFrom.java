@@ -14,6 +14,10 @@ public class FindFrom {
         switch (previousVersion) {
             case "13.3":
                 new From_1_0_13_3(language);
+                new From_1_0_14_0(language);
+                break;
+            case "1.0.14.0":
+                new From_1_0_14_0(language);
                 break;
         }
 

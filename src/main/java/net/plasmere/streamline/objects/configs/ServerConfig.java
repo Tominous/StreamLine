@@ -6,6 +6,8 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
+import net.plasmere.streamline.objects.enums.ChatChannel;
+import net.plasmere.streamline.objects.enums.MessageServerType;
 import net.plasmere.streamline.objects.savable.users.SavableUser;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.TextUtils;
@@ -14,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -534,30 +537,19 @@ public class ServerConfig {
         return getChatsMapGlobal().lowerKey(fromHigher);
     }
 
-    public void setProxyChatChats(String integer, String format) {
-        serverConfig.set("proxy-chat.chats." + integer, format);
+    public void setProxyChatChats(String integer, ChatChannel chatChannel, MessageServerType messageServerType, String format) {
+        serverConfig.set("proxy-chat.chats." + chatChannel.toString().toLowerCase(Locale.ROOT) + "." + messageServerType.toString().toLowerCase(Locale.ROOT) + "." + integer, format);
         saveConfig();
         reloadConfig();
     }
 
-    public String getProxyChatChatsAtLocal(int integer) {
+    public String getProxyChatChatsAt(int integer, ChatChannel chatChannel, MessageServerType messageServerType) {
         reloadConfig();
-        return serverConfig.getString("proxy-chat.chats.local." + integer);
+        return serverConfig.getString("proxy-chat.chats." + chatChannel.toString().toLowerCase(Locale.ROOT) + "." + messageServerType.toString().toLowerCase(Locale.ROOT) + "." + integer);
     }
 
-    public void setProxyChatChatsAtLocal(int integer, String set) {
-        serverConfig.set("proxy-chat.chats.local." + integer, set);
-        saveConfig();
-        reloadConfig();
-    }
-
-    public String getProxyChatChatsAtGlobal(int integer) {
-        reloadConfig();
-        return serverConfig.getString("proxy-chat.chats.global." + integer);
-    }
-
-    public void setProxyChatChatsAtGlobal(int integer, String set) {
-        serverConfig.set("proxy-chat.chats.global." + integer,set);
+    public void setProxyChatChatsAtLocal(int integer, ChatChannel chatChannel, MessageServerType messageServerType, String set) {
+        serverConfig.set("proxy-chat.chats." + chatChannel.toString().toLowerCase(Locale.ROOT) + "." + messageServerType.toString().toLowerCase(Locale.ROOT) + "." + integer, set);
         saveConfig();
         reloadConfig();
     }

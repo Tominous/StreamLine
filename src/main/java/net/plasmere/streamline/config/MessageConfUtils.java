@@ -1391,14 +1391,9 @@ public class MessageConfUtils {
         return StreamLine.config.mess.getString("settings.set.proxy-chat-to-console");
     }
 
-    public static String settingsSetPCChatsLocal() {
+    public static String settingsSetPCChats() {
         StreamLine.config.reloadLocales();
-        return StreamLine.config.mess.getString("settings.set.proxy-chat-chats-local");
-    }
-
-    public static String settingsSetPCChatsGlobal() {
-        StreamLine.config.reloadLocales();
-        return StreamLine.config.mess.getString("settings.set.proxy-chat-chats-global");
+        return StreamLine.config.mess.getString("settings.set.proxy-chat-chats");
     }
 
     public static String settingsSetPCBPerm() {
@@ -1472,14 +1467,9 @@ public class MessageConfUtils {
         return StreamLine.config.mess.getString("settings.get.proxy-chat-to-console");
     }
 
-    public static String settingsGetPCChatsLocal() {
+    public static String settingsGetPCChats() {
         StreamLine.config.reloadLocales();
-        return StreamLine.config.mess.getString("settings.get.proxy-chat-chats-local");
-    }
-
-    public static String settingsGetPCChatsGlobal() {
-        StreamLine.config.reloadLocales();
-        return StreamLine.config.mess.getString("settings.get.proxy-chat-chats-global");
+        return StreamLine.config.mess.getString("settings.get.proxy-chat-chats");
     }
 
     public static String settingsGetPCBPerm() {

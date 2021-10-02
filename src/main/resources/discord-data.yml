@@ -1,0 +1,18 @@
+# List of all who are verified (by Discord ID) with their associated MC UUID.
+verified:
+  '138397636955865089': "c4c95a91-3bbb-49e3-9b79-6abe892e39a9"
+
+# List of all channels people can talk in from Discord to Minecraft. They have a type and an identifier.
+channels:
+  'put_id_here1':
+    type: "GLOBAL"
+    identifier: ""
+  'put_id_here2':
+    type: "GLOBAL"
+    identifier: "streamline.channels.taco"
+  'put_id_here3':
+    type: "GUILD"
+    identifier: "c4c95a91-3bbb-49e3-9b79-6abe892e39a9"
+  'put_id_her4':
+    type: "LOCAL"
+    identifier: "lobby"

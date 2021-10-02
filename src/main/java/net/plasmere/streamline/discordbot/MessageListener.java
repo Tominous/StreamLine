@@ -1,5 +1,6 @@
 package net.plasmere.streamline.discordbot;
 
+import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.CommandsConfUtils;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.DiscordBotConfUtils;
@@ -38,6 +39,12 @@ public class MessageListener extends ListenerAdapter {
             }
 
             if (ConfigUtils.debug) MessagingUtils.logInfo("Someone talked in staffchat (discord)... sending to bungee...");
+        }
+
+        if (ConfigUtils.moduleDPC) {
+            if (StreamLine.discordData.isChannel(event.getChannel().getIdLong())) {
+
+            }
         }
 
         if (! event.getMessage().getContentRaw().toLowerCase().startsWith(prefix)) return;

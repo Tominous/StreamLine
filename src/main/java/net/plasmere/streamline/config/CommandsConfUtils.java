@@ -27,6 +27,10 @@ public class CommandsConfUtils {
     public static boolean comDStaffOnline = StreamLine.config.getCommandBoolean("commands.discord.staffonline.enabled");
     public static List<String> comDStaffOnlineAliases = StreamLine.config.getCommandStringList("commands.discord.staffonline.aliases");
     public static String comDStaffOnlinePerm = StreamLine.config.getCommandString("commands.discord.staffonline.permission");
+    // Channel.
+    public static boolean comDChannel = StreamLine.config.getCommandBoolean("commands.discord.channel.enabled");
+    public static List<String> comDChannelAliases = StreamLine.config.getCommandStringList("commands.discord.channel.aliases");
+    public static String comDChannelPerm = StreamLine.config.getCommandString("commands.discord.channel.permission");
     // ... ... Bungee Stuff.
     // Ping.
     public static boolean comBPing = StreamLine.config.getCommandBoolean("commands.bungee.ping.enabled");

@@ -13,10 +13,7 @@ import net.plasmere.streamline.events.Event;
 import net.plasmere.streamline.events.EventsHandler;
 import net.plasmere.streamline.events.EventsReader;
 import net.plasmere.streamline.objects.Guild;
-import net.plasmere.streamline.objects.configs.Bans;
-import net.plasmere.streamline.objects.configs.Lobbies;
-import net.plasmere.streamline.objects.configs.ServerConfig;
-import net.plasmere.streamline.objects.configs.ServerPermissions;
+import net.plasmere.streamline.objects.configs.*;
 import net.plasmere.streamline.objects.enums.NetworkState;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.timers.*;
@@ -57,6 +54,7 @@ public class StreamLine extends Plugin {
 	public static GeyserHolder geyserHolder;
 	public static LPHolder lpHolder;
 	public static ServerConfig serverConfig;
+	public static DiscordData discordData;
 
 	public final static String customChannel = "streamline:channel";
 
@@ -291,6 +289,11 @@ public class StreamLine extends Plugin {
 		// Server ConfigHandler.
 		if (ConfigUtils.sc) {
 			serverConfig = new ServerConfig();
+		}
+
+		// Discord Data.
+		if (ConfigUtils.moduleDPC) {
+			discordData = new DiscordData();
 		}
 	}
 

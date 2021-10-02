@@ -21,7 +21,9 @@ public class DiscordBotConfUtils {
     public static String textChannelKicks = StreamLine.config.getDisBotString("discord.text-channels.kicks");
     public static String textChannelBans = StreamLine.config.getDisBotString("discord.text-channels.bans");
     public static String textChannelIPBans = StreamLine.config.getDisBotString("discord.text-channels.ipbans");
+    public static String textChannelProxyChat = StreamLine.config.getDisBotString("discord.text-channels.proxy-chat");
     // Roles.
     public static String roleReports = StreamLine.config.getDisBotString("discord.roles.reports");
     public static String roleStaff = StreamLine.config.getDisBotString("discord.roles.staff");
+    public static String roleChat = StreamLine.config.getDisBotString("discord.roles.chat");
 }

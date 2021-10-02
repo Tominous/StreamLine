@@ -281,6 +281,10 @@ public class PlayerUtils {
                 continue;
             }
 
+            if (player.uuid == null) {
+                stats.remove(player);
+            }
+
             if (player.uuid.equals(stat.uuid)) {
                 stats.remove(player);
             }

@@ -6,6 +6,8 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.MessageConfUtils;
+import net.plasmere.streamline.objects.enums.ChatChannel;
+import net.plasmere.streamline.objects.enums.MessageServerType;
 import net.plasmere.streamline.utils.MessagingUtils;
 import net.plasmere.streamline.utils.TextUtils;
 
@@ -148,7 +150,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
 
                         sendSetMessage(sender, MessageConfUtils.settingsSetChatToConsole(), toConsoleBool);
                         break;
-                    case "proxy-chat-chats-local":
+                    case "proxy-chat-chats-local-bungee":
                         if (args.length < 4) {
                             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                             return;
@@ -164,11 +166,11 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                         }
 
                         String setLocals = TextUtils.argsToStringMinus(args, 0, 1, 2);
-                        StreamLine.serverConfig.setProxyChatChatsAtLocal(atChat, setLocals);
+                        StreamLine.serverConfig.setProxyChatChatsAtLocal(atChat, ChatChannel.LOCAL, MessageServerType.BUNGEE, setLocals);
 
-                        sendSetMessageNumbered(sender, MessageConfUtils.settingsSetPCChatsLocal(), setLocals, atChat);
+                        sendSetMessageNumberedPC(sender, setLocals, atChat, ChatChannel.LOCAL, MessageServerType.BUNGEE);
                         break;
-                    case "proxy-chat-chats-global":
+                    case "proxy-chat-chats-global-bungee":
                         if (args.length < 4) {
                             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
                             return;
@@ -184,9 +186,9 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                         }
 
                         String setGlobals = TextUtils.argsToStringMinus(args, 0, 1, 2);
-                        StreamLine.serverConfig.setProxyChatChatsAtLocal(atCh, setGlobals);
+                        StreamLine.serverConfig.setProxyChatChatsAtLocal(atCh, ChatChannel.GLOBAL, MessageServerType.BUNGEE, setGlobals);
 
-                        sendSetMessageNumbered(sender, MessageConfUtils.settingsSetPCChatsGlobal(), setGlobals, atCh);
+                        sendSetMessageNumberedPC(sender, setGlobals, atCh, ChatChannel.GLOBAL, MessageServerType.BUNGEE);
                         break;
                     case "proxy-chat-base-perm":
                         String baseP = TextUtils.argsToStringMinus(args, 0, 1);
@@ -292,11 +294,20 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                     case "proxy-chat-to-console":
                         sendGetMessage(sender, MessageConfUtils.settingsGetChatToConsole(), StreamLine.serverConfig.getProxyChatConsoleEnabled());
                         break;
-                    case "proxy-chat-chats-local":
-                        sendGetMessageNumbered(sender, MessageConfUtils.settingsGetPCChatsLocal(), StreamLine.serverConfig.getProxyChatChatsAtLocal(getInt(sender, args)), args);
+                    case "proxy-chat-chats-local-bungee":
+                        sendGetMessageNumberedPC(sender, args, ChatChannel.LOCAL, MessageServerType.BUNGEE);
                         break;
-                    case "proxy-chat-chats-global":
-                        sendGetMessageNumbered(sender, MessageConfUtils.settingsGetPCChatsGlobal(), StreamLine.serverConfig.getProxyChatChatsAtLocal(getInt(sender, args)), args);
+                    case "proxy-chat-chats-global-bungee":
+                        sendGetMessageNumberedPC(sender, args, ChatChannel.GLOBAL, MessageServerType.BUNGEE);
+                        break;
+                    case "proxy-chat-chats-local-discord":
+                        sendGetMessageNumberedPC(sender, args, ChatChannel.LOCAL, MessageServerType.DISCORD);
+                        break;
+                    case "proxy-chat-chats-global-discord":
+                        sendGetMessageNumberedPC(sender, args, ChatChannel.GLOBAL, MessageServerType.DISCORD);
+                        break;
+                    case "proxy-chat-chats-guild-discord":
+                        sendGetMessageNumberedPC(sender, args, ChatChannel.GUILD, MessageServerType.DISCORD);
                         break;
                     case "proxy-chat-base-perm":
                         sendGetMessage(sender, MessageConfUtils.settingsGetPCBPerm(), StreamLine.serverConfig.getChatBasePerm());
@@ -384,11 +395,25 @@ public class SettingsEditCommand extends Command implements TabExecutor {
         );
     }
 
+    public void sendGetMessageNumberedPC(CommandSender sender, String[] args, ChatChannel chatChannel, MessageServerType messageServerType) {
+        sendGetMessageNumbered(sender, MessageConfUtils.settingsGetPCChats()
+                        .replace("%channel%", chatChannel.toString())
+                        .replace("%server_type%", messageServerType.toString())
+                , StreamLine.serverConfig.getProxyChatChatsAt(getInt(sender, args), chatChannel, messageServerType), args);
+    }
+
     public void sendSetMessageNumbered(CommandSender sender, String message, String set, Object from) {
         MessagingUtils.sendBUserMessage(sender, message
                 .replace("%number%", from.toString())
                 .replace("%set%", set)
         );
+    }
+
+    public void sendSetMessageNumberedPC(CommandSender sender, String set, Object from, ChatChannel chatChannel, MessageServerType messageServerType) {
+        sendSetMessageNumbered(sender, MessageConfUtils.settingsSetPCChats()
+                    .replace("%channel%", chatChannel.toString())
+                    .replace("%server_type%", messageServerType.toString())
+                , set, from);
     }
 
     @Override
@@ -409,8 +434,11 @@ public class SettingsEditCommand extends Command implements TabExecutor {
         options2.add("online-players");
         options2.add("proxy-chat-enabled");
         options2.add("proxy-chat-to-console");
-        options2.add("proxy-chat-chats-local");
-        options2.add("proxy-chat-chats-global");
+        options2.add("proxy-chat-chats-local-bungee");
+        options2.add("proxy-chat-chats-global-bungee");
+        options2.add("proxy-chat-chats-local-discord");
+        options2.add("proxy-chat-chats-global-discord");
+        options2.add("proxy-chat-chats-guild-discord");
         options2.add("proxy-chat-base-perm");
         options2.add("tags-enable-ping");
         options2.add("tags-tag-prefix");

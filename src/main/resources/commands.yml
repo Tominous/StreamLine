@@ -12,7 +12,7 @@ commands:
         - "commands"
         - "help"
       # Put the ID of the Discord role here:
-      permission: "put-id-here"
+      permission: "put_id_here"
     # The online command.
     online:
       # Enables / disables the use of the "online" bot command.
@@ -23,7 +23,7 @@ commands:
         - "on"
         - "online"
       # Put the ID of the Discord role here:
-      permission: "put-id-here"
+      permission: "put_id_here"
     # The report command.
     report:
       # Enables / disables the use of the "report" bot command.
@@ -34,7 +34,7 @@ commands:
         - "rep"
         - "report"
       # Put the ID of the Discord role here:
-      permission: "put-id-here"
+      permission: "put_id_here"
     # The staffchat command.
     staffchat:
       # Enables / disables being able to use a command in Discord to talk to staff on the bungee server.
@@ -46,7 +46,7 @@ commands:
         - "#"
         - "staffchat"
       # Put the ID of the Discord role here:
-      permission: "put-id-here"
+      permission: "put_id_here"
     # The staffonline command.
     staffonline:
       # Enables / disables the use of the "staffonline" bot command.
@@ -57,7 +57,20 @@ commands:
         - "staff"
         - "staffonline"
       # Put the ID of the Discord role here:
-      permission: "put-id-here"
+      permission: "put_id_here"
+    # The channel command.
+    channel:
+      # Enables / disables the use of the "staffonline" bot command.
+      enabled: true
+      # All aliases for the command. Listed in yml list format. Including the main command.
+      aliases:
+        - "ch"
+        - "chel"
+        - "chan"
+        - "channel"
+        - "setchannel"
+      # Put the ID of the Discord role here:
+      permission: "put_id_here"
   # Bungee commands...
   bungee:
     # The ping command.

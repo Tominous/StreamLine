@@ -1884,12 +1884,9 @@ settings:
     # Fillers:
     # %number% = the number of the Chats page.
     # %set% = what you set it to.
-    proxy-chat-chats-local: "&eJust set &cProxy Chat Local &a#%number% &eto &b\"%set%&b\"&e!"
-    # Proxy Chat Global.
-    # Fillers:
-    # %number% = the number of the Chats page.
-    # %set% = what you set it to.
-    proxy-chat-chats-global: "&eJust set &cProxy Chat Global &a#%number% &eto &b\"%set%&b\"&e!"
+    # %channel% = the chat channel.
+    # %server_type% = bungee or discord.
+    proxy-chat-chats: "&eJust set &cProxy Chat %channel% &efor &5%server_type% &a#%number% &eto &b\"%set%&b\"&e!"
     # Proxy Chat Base Perm.
     # Fillers:
     # %set% = what you set it to.
@@ -1956,12 +1953,9 @@ settings:
     # Fillers:
     # %number% = the number of the Chats page.
     # %set% = what you set it to.
-    proxy-chat-chats-local: "&cProxy Chat Local &a#%number% &eis &b\"%set%&b\"&e!"
-    # Proxy Chat Global.
-    # Fillers:
-    # %number% = the number of the Chats page.
-    # %set% = what you set it to.
-    proxy-chat-chats-global: "&cProxy Chat Global &a#%number% &eis &b\"%set%&b\"&e!"
+    # %channel% = the chat channel.
+    # %server_type% = bungee or discord.
+    proxy-chat-chats: "&cProxy Chat %channel% &efor &5%server_type% &a#%number% &eis &b\"%set%&b\"&e!"
     # Proxy Chat Base Perm.
     # Fillers:
     # %set% = what you set it to.
