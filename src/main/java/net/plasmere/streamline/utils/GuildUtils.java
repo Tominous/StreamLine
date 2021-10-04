@@ -85,7 +85,7 @@ public class GuildUtils {
     public static Guild getGuild(String uuid) {
         try {
             for (Guild guild : guilds) {
-                if (guild.hasMember(PlayerUtils.getOrCreateSUByUUID(uuid))) {
+                if (guild.hasMember(PlayerUtils.getOrGetSavableUser(uuid))) {
                     return guild;
                 }
             }
@@ -729,6 +729,8 @@ public class GuildUtils {
             }
 
             for (SavableUser pl : guild.totalMembers) {
+                if (! pl.online) continue;
+
                 if (! pl.uuid.equals(guild.leaderUUID)) {
                     MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), disbandMembers
                     );

@@ -50,7 +50,10 @@ public class MessageListener extends ListenerAdapter {
                 if (member == null) {
                     eb = new EmbedBuilder();
                     event.getChannel().sendMessageEmbeds(eb.setTitle("ERROR").setDescription("Error sending Discord message to Minecraft!").build());
+                    return;
                 }
+
+                MessagingUtils.logWarning("Member id : " + member.getIdLong() + " | Message : " + em);
 
                 StreamLine.discordData.sendBungeeChannel(member.getIdLong(), event.getChannel().getIdLong(), em);
             }

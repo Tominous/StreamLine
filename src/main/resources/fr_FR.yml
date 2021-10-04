@@ -69,22 +69,22 @@ improper-usage:
 
 # To determine how it shows up if a player is offline or online.
 # Fillers:
-# %player_display% = the player's name.
+# %player_formatted% = the player's name.
 players:
   # For discord.
   discord:
     # If offline on network.
-    offline: "%player_display% -"
+    offline: "%player_formatted% -"
     # If online.
-    online: "%player_display% +"
+    online: "%player_formatted% +"
     # If NULL
     null: "NULL"
   # For bungee.
   bungee:
     # If offline on network.
-    offline: "&d%player_display% &c•"
+    offline: "&d%player_formatted% &c•"
     # If online.
-    online: "&d%player_display% &a•"
+    online: "&d%player_formatted% &a•"
     # If NULL
     null: "&4&lNULL"
 
@@ -168,14 +168,14 @@ staffchat:
     # Title of the embeded staff chat message (on Discord).
     embed-title: "STAFF"
     # Fillers:
-    # %user_display% = who chatted.
+    # %user_formatted% = who chatted.
     # %message% = the message said.
-    # %from_display% = where the message originated. i.e. bungeecord or discord
+    # %from_formatted% = where the message originated. i.e. bungeecord or discord
     # Message on Discord.
     discord: "%message%"
     # Message on bungee.
-    bungee: "&2&lSTAFF &7&l>> &a%user_display% &7[%from_display%&7] &e(&4%server%&e) &8: &e%message%"
-    # Text to use when using "%from_display%" in your messages.
+    bungee: "&2&lSTAFF &7&l>> &a%user_formatted% &7[%from_formatted%&7] &e(&4%server%&e) &8: &e%message%"
+    # Text to use when using "%from_formatted%" in your messages.
     from:
       # If message originated from Discord.
       discord: "&9discord"
@@ -230,12 +230,12 @@ online:
         # Format for compiling players.
         playerbulk:
           # Fillers:
-          # %player_display% = a said player in a luckperm group.
+          # %player_formatted% = a said player in a luckperm group.
           # %server% = the server said player is currently on.
           # If not the last player in group.
-          if-not-last: "&2%player_display% &0(&e%server%&0)&8, "
+          if-not-last: "&2%player_formatted% &0(&e%server%&0)&8, "
           # If last.
-          if-last: "&2%player_display% &0(&e%server%&0)&8."
+          if-last: "&2%player_formatted% &0(&e%server%&0)&8."
 
 # For player joins and leaves.
 join-leave:
@@ -277,11 +277,11 @@ staffonline:
       # Format for compiling staff.
       staffbulk:
         # Fillers:
-        # %player_display% = a said player in a luckperm group.
+        # %player_formatted% = a said player in a luckperm group.
         # %server% = the server said player is currently on.
         # If not the last player in group.
-        if-not-last: "%player_display% (%server%), "
-        if-last: "%player_display% (%server%)."
+        if-not-last: "%player_formatted% (%server%), "
+        if-last: "%player_formatted% (%server%)."
     # Message on bungee.
     bungee:
       # The main message.
@@ -289,20 +289,20 @@ staffonline:
       # Format for compiling players.
       staffbulk:
         # Fillers:
-        # %player_display% = a said player in a luckperm group.
+        # %player_formatted% = a said player in a luckperm group.
         # %server% = the server said player is currently on.
         # If not the last player in group.
-        if-not-last: "&2%player_display% &0(&e%server%&0)&8, "
+        if-not-last: "&2%player_formatted% &0(&e%server%&0)&8, "
         # If last.
-        if-last: "&2%player_display% &0(&e%server%&0)&8."
+        if-last: "&2%player_formatted% &0(&e%server%&0)&8."
 
 # When using party...
 party:
   # Fillers:
-  # %leader_display% = party leader.
+  # %leader_formatted% = party leader.
   # %size% = party size.
   # %max% = party max size.
-  # %sender_display% = command sender.
+  # %sender_formatted% = command sender.
   # Text used for when talking about each party level...
   text:
     # Defines what each should be when you promote or demote a player.
@@ -310,19 +310,19 @@ party:
     moderator: "MODERATEUR"
     member: "MEMBRE"
   # When a player connects.
-  connect: "&bGROUPE &9> &d%player_display% &a+"
+  connect: "&bGROUPE &9> &d%player_formatted% &a+"
   # When a player disconnects.
-  disconnect: "&bGROUPE &9> &d%player_display% &c-"
+  disconnect: "&bGROUPE &9> &d%player_formatted% &c-"
   # Guild Spy message.
-  spy: "&3GROUPE &ede &d%leader_display% &9>> &d%sender_display% &8: &e%message%"
+  spy: "&3GROUPE &ede &d%leader_formatted% &9>> &d%sender_formatted% &8: &e%message%"
   # When it finds no party.
   no-party: "&cAucun groupe trouvés!"
   # Already made.
   already-made: "&cCette guilde a déjà été créé!"
   # In different one.
   # Fillers:
-  # %player_display% = player who the sender is trying to invite.
-  already-has: "&cDésolé, mais &d%player_display% &cest déjà dans un groupe..."
+  # %player_formatted% = player who the sender is trying to invite.
+  already-has: "&cDésolé, mais &d%player_formatted% &cest déjà dans un groupe..."
   # When the the size of /par open <size> is to big.
   too-big: "&cDésolé, mais vous ne pouvez pas créer un groupe aussi gros."
   # Not high enough party permissions.
@@ -337,7 +337,7 @@ party:
     sender: "&eVous venez de créer un groupe avec une taille de &3%max%&e!"
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
+    # %sender_formatted% = the player's display name.
     # %sender_normal% = the player's regular name.
     # %size% = the size of the party.
     console: "%sender_absolute% a créer un groupe avec une taille de %size%!"
@@ -346,19 +346,19 @@ party:
   # Message for when someone joins a party...
   join:
     # Fillers:
-    # %user_display% = the person joining.
-    # %leader_display% = the party leader.
+    # %user_formatted% = the person joining.
+    # %leader_formatted% = the party leader.
     # Members of the party.
-    members: "&b%sender_display% &ea rejoint le groupe!"
+    members: "&b%sender_formatted% &ea rejoint le groupe!"
     # Command sender.
-    user: "&eVous venez de rejoindre le groupe de &b%leader_display%&e!"
+    user: "&eVous venez de rejoindre le groupe de &b%leader_formatted%&e!"
     # If failed.
     failure: "&cIl n'y a pas de groupe à rejoindre."
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
+    # %sender_formatted% = the player's display name.
     # %sender_normal% = the player's regular name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
     console: "%sender_absolute% a rejoins le groupe %leader_normal%!"
@@ -367,18 +367,18 @@ party:
   # Message for when someone leaves a party...
   leave:
     # Fillers:
-    # %user_display% = the person joining.
-    # %leader_display% = the party leader.
+    # %user_formatted% = the person joining.
+    # %leader_formatted% = the party leader.
     # Members of the party.
-    members: "&b%sender_display% &ea quitté le groupe."
+    members: "&b%sender_formatted% &ea quitté le groupe."
     # Command sender.
-    user: "&eVous venez de quitter le groupe de &b%leader_display%&e."
+    user: "&eVous venez de quitter le groupe de &b%leader_formatted%&e."
     # If failed.
     failure: "&cIl n'y a pas de groupe à quitter."
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %size% = the size of the party.
     console: "%sender_absolute% a quitté le groupe de %leader_normal%!"
     # Discord embed title.
@@ -386,22 +386,22 @@ party:
   # Message for when promoting someone...
   promote:
     # Fillers:
-    # %user_display% = the person being promoted.
-    # %leader_display% = the party leader.
+    # %user_formatted% = the person being promoted.
+    # %leader_formatted% = the party leader.
     # %level% = the permission level the person is going to.
     # Members of party.
-    members: "&b%sender_display% &ea promu &b%user_display% &eau niveau &c%level%&e dans le groupe!"
+    members: "&b%sender_formatted% &ea promu &b%user_formatted% &eau niveau &c%level%&e dans le groupe!"
     # User being promoted.
     user: "&eVous venez d'être promu au niveau &c%level% &edans le groupe!"
     # Party leader.
-    leader: "&eVous venez de promouvoir &b%user_display% au niveau &c%level%&e!"
+    leader: "&eVous venez de promouvoir &b%user_formatted% au niveau &c%level%&e!"
     # If failed.
     failure: "&cDéjà au niveau maximum."
     # Message in discord console.
     # Options:
-    # %user_display% = the user-the-action-is-being-used-on's display name.
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %user_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
@@ -412,24 +412,24 @@ party:
   # Message for demoting someone...
   demote:
     # Fillers:
-    # %user_display% = the person being demoted.
-    # %leader_display% = the party leader.
+    # %user_formatted% = the person being demoted.
+    # %leader_formatted% = the party leader.
     # %level% = the permission level the person is going to.
     # Members of party.
-    members: "&b%sender_display% &eviens de rétrograder &b%user_display% &eau niveau &c%level%&e dans le groupe."
+    members: "&b%sender_formatted% &eviens de rétrograder &b%user_formatted% &eau niveau &c%level%&e dans le groupe."
     # User being demoted.
     user: "&eVous venez d'être rétrograder au niveau &c%level% &edans le groupe."
     # Party leader.
-    leader: "&eVous venez de rétrograder &b%user_display% au niveau &c%level%&e."
+    leader: "&eVous venez de rétrograder &b%user_formatted% au niveau &c%level%&e."
     # If failed.
     failure: "&cDéjà au niveau minimum."
     # If you are the party leader.
     is-leader: "&cImpossible de vous rétrograder..."
     # Message in discord console.
     # Options:
-    # %user_display% = the user-the-action-is-being-used-on's display name.
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %user_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
@@ -439,18 +439,18 @@ party:
     title: "RÉTROGRADATION DE GROUPE"
   # Message when someone chats...
   # Fillers:
-  # %sender_display% = Messager.
+  # %sender_formatted% = Messager.
   # %message% = Message user said being sent.
   chat:
     # Message format.
-    message: "&3GROUPE &9&l>> &b%sender_display% &8: &f%message%"
+    message: "&3GROUPE &9&l>> &b%sender_formatted% &8: &f%message%"
     # If the party is muted.
     muted: "&cDésolé, mais le groupe est muet!"
     # Message in discord console when people chat in parties.
     # Options:
     # %message% = the message.
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
@@ -463,12 +463,12 @@ party:
     # %leaderbulk% = leaderbulk section.
     # %moderatorbulk% = moderatorbulk section.
     # %memberbulk% = memberbulk section.
-    # %user_display% = (only in context of "not-last" and "last") the specific member in the list of members
-    # %sender_display% = the one running the command.
+    # %user_formatted% = (only in context of "not-last" and "last") the specific member in the list of members
+    # %sender_formatted% = the one running the command.
     # Main message used to determine the other of parts of the message...
     main: "&7--< &5Groupe &6%size%&8/&6%max% &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
     # Bulk leader message.
-    leaderbulk: "&eChef du groupe: &c%leader_display%"
+    leaderbulk: "&eChef du groupe: &c%leader_formatted%"
     # Bulk mod message.
     moderatorbulk:
       # Message.
@@ -476,9 +476,9 @@ party:
       # For mods.
       moderators:
         # If not last mod.
-        not-last: "&b%user_display%&e, "
+        not-last: "&b%user_formatted%&e, "
         # If last.
-        last: "&b%user_display%&e."
+        last: "&b%user_formatted%&e."
         # If there are none.
         if-none: "&cAUCUN"
     # Bulk member message.
@@ -488,25 +488,25 @@ party:
       # Members in party.
       members:
         # If not last in party.
-        not-last: "&7%user_display%&e, "
+        not-last: "&7%user_formatted%&e, "
         # If last.
-        last: "&7%user_display%&e."
+        last: "&7%user_formatted%&e."
         # If there are none.
         if-none: "&cAUCUN"
   # Message for opening the party...
   open:
     # Fillers:
-    # %leader_display% = the party leader.
+    # %leader_formatted% = the party leader.
     # %size% = the new size of the party.
     # For members of party.
-    members: "&b%sender_display% &ea ouvert le groupe avec une taille de &e%max%&e."
+    members: "&b%sender_formatted% &ea ouvert le groupe avec une taille de &e%max%&e."
     # For leader.
     leader: "&eVous venez d'ouvrir le groupe avec une taille de &3%max%&e."
     # If failure.
     failure: "&cDéjà ouvert."
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
+    # %sender_formatted% = the player's display name.
     # %sender_normal% = the player's regular name.
     # %size% = the size of the party.
     console: "%sender_absolute% viens d'ouvrir le groupe de %leader_normal% avec une taille de %size%!"
@@ -515,18 +515,18 @@ party:
   # Message for closing the party...
   close:
     # Fillers:
-    # %leader_display% = the party leader.
+    # %leader_formatted% = the party leader.
     # %size% = the size of the party.
     # For members of party.
-    members: "&b%sender_display% &eviens de fermer le groupe."
+    members: "&b%sender_formatted% &eviens de fermer le groupe."
     # For sender.
     sender: "&eVous venez de fermer le groupe."
     # If failure.
     failure: "&cDéjà fermé."
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
@@ -536,15 +536,15 @@ party:
   # Message for disbanding the party...
   disband:
     # Fillers:
-    # %leader_display% = the party leader.
+    # %leader_formatted% = the party leader.
     # For members of party.
-    members: "&b%sender_display% &evienss de dissoudre le groupe."
+    members: "&b%sender_formatted% &evienss de dissoudre le groupe."
     # For leader.
     leader: "&eVous venez de dissoudre le groupe."
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
@@ -554,20 +554,20 @@ party:
   # Message for accepting an invite to a party...
   accept:
     # Fillers:
-    # %user_display% = the accepter.
-    # %leader_display% = the party leader.
+    # %user_formatted% = the accepter.
+    # %leader_formatted% = the party leader.
     # User who accepts.
-    user: "&eVous venez d'accepter la requête de groupe de &b%leader_display%&e."
+    user: "&eVous venez d'accepter la requête de groupe de &b%leader_formatted%&e."
     # Leader of party.
-    leader: "&b%user_display% &eviens &ad'accepter &evotre invitation!"
+    leader: "&b%user_formatted% &eviens &ad'accepter &evotre invitation!"
     # Members of party.
-    members: "&b%user_display% &eviens &ad'accepter &el'invitation!"
+    members: "&b%user_formatted% &eviens &ad'accepter &el'invitation!"
     # If failed.
     failure: "&cPas d'invitations!"
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
@@ -577,20 +577,20 @@ party:
   # Message for denying an invite to a party...
   deny:
     # Fillers:
-    # %user_display% = the accepter.
-    # %leader_display% = the party leader.
+    # %user_formatted% = the accepter.
+    # %leader_formatted% = the party leader.
     # User who denied.
-    user: "&eA refusé la requête de groupe de &b%leader_display%&e."
+    user: "&eA refusé la requête de groupe de &b%leader_formatted%&e."
     # Leader of party.
-    leader: "&b%user_display% &ea &crefusé &evotre invitation!"
+    leader: "&b%user_formatted% &ea &crefusé &evotre invitation!"
     # Members of party.
-    members: "&b%user_display% &ea &crefusé &el'invitation!"
+    members: "&b%user_formatted% &ea &crefusé &el'invitation!"
     # If failed.
     failure: "&cAucune invitations!"
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
@@ -600,25 +600,25 @@ party:
   # Message for sending an invite of a party...
   invite:
     # Fillers:
-    # %sender_display% = person sending the request.
-    # %user_display% = the accepter.
-    # %leader_display% = the party leader.
+    # %sender_formatted% = person sending the request.
+    # %user_formatted% = the accepter.
+    # %leader_formatted% = the party leader.
     # %leader_normal% = the party leader formatted without their display name.
     # User who is being invited.
-    user: "&b%sender_display% &evous a invité dans le groupe de &b%leader_display%&e!%newline%&eTapez &a/party accept %leader_absolute% &epour rejoindre!"
+    user: "&b%sender_formatted% &evous a invité dans le groupe de &b%leader_formatted%&e!%newline%&eTapez &a/party accept %leader_absolute% &epour rejoindre!"
     # Members of party.
-    members: "&b%sender_display% &ea invité &b%user_display% &eà votre groupe!"
+    members: "&b%sender_formatted% &ea invité &b%user_formatted% &eà votre groupe!"
     # Leader of party.
-    leader: "&eVous venez d'inviter &b%user_display% &eà votre groupe!"
+    leader: "&eVous venez d'inviter &b%user_formatted% &eà votre groupe!"
     # If failed.
     failure: "&cVous avez déjà invité cette personne."
     # If self.
     non-self: "&cImpossible de vous inviter!"
     # Message in discord console.
     # Options:
-    # %user_display% = the user-the-action-is-being-used-on's display name.
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %user_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
@@ -629,13 +629,13 @@ party:
   # Messages for kicking...
   kick:
     # Fillers:
-    # %user_display% = the person being kicked.
+    # %user_formatted% = the person being kicked.
     # User who is kicked.
-    user: "&b%sender_display% &evous a retiré de son groupe."
+    user: "&b%sender_formatted% &evous a retiré de son groupe."
     # Members of party.
-    members: "&b%user_display% &ea été retiré &b%leader_display% &edu groupe."
+    members: "&b%user_formatted% &ea été retiré &b%leader_formatted% &edu groupe."
     # Sender of command.
-    sender: "&eVous avez retiré &b%user_display% &ede votre groupe."
+    sender: "&eVous avez retiré &b%user_formatted% &ede votre groupe."
     # If failed.
     failure: "&cCe joueur n'est pas dans votre groupe."
     # If it is a mod being kicked.
@@ -644,9 +644,9 @@ party:
     self: "&cImpossible de vous retirer vous-même."
     # Message in discord console.
     # Options:
-    # %user_display% = the user-the-action-is-being-used-on's display name.
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %user_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
@@ -657,23 +657,23 @@ party:
   # Messages for muting...
   mute:
     # Fillers:
-    # %sender_display% = person sending the command.
+    # %sender_formatted% = person sending the command.
     # If muted.
     mute:
       # For sender.
       user: "&eVous venez de rendre le groupe &cmuet&e."
       # For members.
-      members: "&b%sender_display% &eviens de rendre le groupe &cmuet&e."
+      members: "&b%sender_formatted% &eviens de rendre le groupe &cmuet&e."
     # If unmuted.
     unmute:
       # For sender.
       user: "&eVous venez de rendre le groupe &anon-muet &e."
       # For members.
-      members: "&b%sender_display% &eviens de rendre le groupe &anon-muet &e."
+      members: "&b%sender_formatted% &eviens de rendre le groupe &anon-muet &e."
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %toggle% = the message below for guild.mute.toggle
@@ -690,11 +690,11 @@ party:
     # Command sender.
     sender: "&eVous venez de téléporter votre groupe de &3%size% &esur votre serveur!"
     # For members.
-    members: "&b%sender_display% &evous a téléporté sur son serveur!"
+    members: "&b%sender_formatted% &evous a téléporté sur son serveur!"
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the guild.
@@ -709,7 +709,7 @@ stream:
   # If what they supplied wasn't a link.
   not-link: "&cDésolé, mais vous devez spécifier un lien qui commence par \"https://\"..."
   # Message: (Do not put anything directly after the link. You need a space!
-  message: "&a%user_display% &dest en directe sur &b&n%link%&8... &dViens découvrir!"
+  message: "&a%user_formatted% &dest en directe sur &b&n%link%&8... &dViens découvrir!"
   # Hover formatted prefix.
   hover-prefix: "&b&o&n"
 
@@ -718,8 +718,8 @@ parties:
   # If there are no parties.
   no-parties: "&cAuncun groupes..."
   # Fillers:
-  # %sender_display% = person sending the command.
-  # %leader_display% = party leader.
+  # %sender_formatted% = person sending the command.
+  # %leader_formatted% = party leader.
   # %size% = current size of party.
   # %max% = max party size. --> set by leader.
   # %maxmax% = absolute max party size. --> set by permissions.
@@ -734,31 +734,31 @@ parties:
   # %ispublic% = true if open, false if not.
   # %ismuted% = true if muted, false if not.
   # Main message.
-  parties: "&5GROUPE &9>> &echef&8(&b%leader_display%&8)&e, taille&8(&3%size%&8)&e, maximumDeGroupe&8(&3%max%&8)&e, permMax&8(&3%maxmax%&8)&e, mods&8(&3%mods_count% &4--> %mods%&8)&e, membres&8(&3%members_count% &4--> %members%&8)&e, total&8(&3%total_count% &4--> %totalmembers%&8)&e, invitations&8(&3%invites_count% &4--> %invites%&8)&e, publique&8(%ispublic%&8)&e, muet&8(%ismuted%&8)&e."
+  parties: "&5GROUPE &9>> &echef&8(&b%leader_formatted%&8)&e, taille&8(&3%size%&8)&e, maximumDeGroupe&8(&3%max%&8)&e, permMax&8(&3%maxmax%&8)&e, mods&8(&3%mods_count% &4--> %mods%&8)&e, membres&8(&3%members_count% &4--> %members%&8)&e, total&8(&3%total_count% &4--> %totalmembers%&8)&e, invitations&8(&3%invites_count% &4--> %invites%&8)&e, publique&8(%ispublic%&8)&e, muet&8(%ismuted%&8)&e."
   # Mods in message.
   mods:
     # If not last in list.
-    not-last: "&d%user_display%&e, "
+    not-last: "&d%user_formatted%&e, "
     # If last.
-    last: "&d%user_display%"
+    last: "&d%user_formatted%"
   # Members in message.
   members:
     # If not last in list.
-    not-last: "&d%user_display%&e, "
+    not-last: "&d%user_formatted%&e, "
     # If last.
-    last: "&d%user_display%"
+    last: "&d%user_formatted%"
   # Invites in message.
   invites:
     # If not last in list.
-    not-last: "&d%user_display%&e, "
+    not-last: "&d%user_formatted%&e, "
     # If last.
-    last: "&d%user_display%"
+    last: "&d%user_formatted%"
   # Total members in message.
   totalmembers:
     # If not last in list.
-    not-last: "&d%user_display%&e, "
+    not-last: "&d%user_formatted%&e, "
     # If last.
-    last: "&d%user_display%"
+    last: "&d%user_formatted%"
   # Message for if public.
   ispublic:
     # If it is.
@@ -775,21 +775,21 @@ parties:
 # For command "sudo":
 sudo:
   # Fillers:
-  # %user_display% = the user being sudo-ed.
+  # %user_formatted% = the user being sudo-ed.
   # If it worked.
-  worked: "&eViens de personnifier &d%user_display%&e."
+  worked: "&eViens de personnifier &d%user_formatted%&e."
   # If it didn't.
-  no-work: "&cImpossible de personnifier &d%user_display%&c."
+  no-work: "&cImpossible de personnifier &d%user_formatted%&c."
   # If you cannot sudo that player.
-  no-sudo: "&cDésolé, mais vous ne pouvez pas personnifier &d%user_display%&c..."
+  no-sudo: "&cDésolé, mais vous ne pouvez pas personnifier &d%user_formatted%&c..."
 
 # When using guild...
 guild:
   # Fillers:
-  # %leader_display% = guild leader.
+  # %leader_formatted% = guild leader.
   # %size% = guild size.
   # %max% = guild max size.
-  # %sender_display% = command sender.
+  # %sender_formatted% = command sender.
   # %total_xp% = guild totalXP.
   # %level% = guild level.
   # %name% = guild name.
@@ -806,11 +806,11 @@ guild:
     # Embed title.
     title: "GUILDE"
   # When a player connects.
-  connect: "&2GUILDE &9> &d%player_display% &a+"
+  connect: "&2GUILDE &9> &d%player_formatted% &a+"
   # When a player disconnects.
-  disconnect: "&2GUILDE &9> &d%player_display% &c-"
+  disconnect: "&2GUILDE &9> &d%player_formatted% &c-"
   # For Guild Spy.
-  spy: "&2GUILDE &ede &d%leader_display% &9>> &d%sender_display% &8: &e%message%"
+  spy: "&2GUILDE &ede &d%leader_formatted% &9>> &d%sender_formatted% &8: &e%message%"
   # When it finds no guild.
   no-guild: "&cAucune guilde trouvées!"
   # Message shown when the name is too long.
@@ -828,8 +828,8 @@ guild:
   already-made: "&cCette guilde a déjà été créée!"
   # In different one.
   # Fillers:
-  # %player_display% = player who the sender is trying to invite.
-  already-has-others: "&cDésolé, mais &d%player_display% &cest déjà dans une guilde..."
+  # %player_formatted% = player who the sender is trying to invite.
+  already-has-others: "&cDésolé, mais &d%player_formatted% &cest déjà dans une guilde..."
   # If you are already in one.
   already-has-self: "&cDésolé, mais vous faites déjà parti d'une guilde!"
   # Not high enough guild permissions.
@@ -848,7 +848,7 @@ guild:
     non-empty: "&cLe nom ne peut être vide!"
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
+    # %sender_formatted% = the player's display name.
     # %sender_normal% = the player's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
@@ -858,18 +858,18 @@ guild:
   # Message for when someone joins a guild...
   join:
     # Fillers:
-    # %user_display% = the person joining.
-    # %leader_display% = the guild leader.
+    # %user_formatted% = the person joining.
+    # %leader_formatted% = the guild leader.
     # For members.
-    members: "&b%sender_display% &eviens de rejoindre la guilde!"
+    members: "&b%sender_formatted% &eviens de rejoindre la guilde!"
     # For joining player.
-    user: "&eVous venez de rejoindre la guilde de &b%leader_display%&e!"
+    user: "&eVous venez de rejoindre la guilde de &b%leader_formatted%&e!"
     # If failed.
     failure: "&cIl n'y a pas de guilde à rejoindre."
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
@@ -880,17 +880,17 @@ guild:
   # Message for when someone leaves a guild...
   leave:
     # Fillers:
-    # %user_display% = the person joining.
-    # %leader_display% = the guild leader.
+    # %user_formatted% = the person joining.
+    # %leader_formatted% = the guild leader.
     # For members.
-    members: "&b%sender_display% &eviens de quitter la guilde."
+    members: "&b%sender_formatted% &eviens de quitter la guilde."
     # For user who left.
-    user: "&eVous venez de quitter la guilde de &b%leader_display%&e."
+    user: "&eVous venez de quitter la guilde de &b%leader_formatted%&e."
     failure: "&cIl n'y a pas de guilde à quitter."
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
@@ -901,22 +901,22 @@ guild:
   # Message for when promoting someone...
   promote:
     # Fillers:
-    # %user_display% = the person being promoted.
-    # %leader_display% = the guild leader.
+    # %user_formatted% = the person being promoted.
+    # %leader_formatted% = the guild leader.
     # %level% = the permission level the person is going to.
     # For members.
-    members: "&b%sender_display% &ea promu &b%user_display% &eau niveau &c%level%&e dans la guilde!"
+    members: "&b%sender_formatted% &ea promu &b%user_formatted% &eau niveau &c%level%&e dans la guilde!"
     # For user who was promoted.
     user: "&eVous venez d'être promu au niveau &c%level% &edans la guilde!"
     # For leader.
-    leader: "&eVous venez de promouvoir &b%user_display% au niveau &c%level%&e!"
+    leader: "&eVous venez de promouvoir &b%user_formatted% au niveau &c%level%&e!"
     # If failed.
     failure: "&cDéjà au niveau maximum."
     # Message in discord console.
     # Options:
-    # %user_display% = the user-the-action-is-being-used-on's display name.
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %user_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_absolute% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
@@ -928,24 +928,24 @@ guild:
   # Message for demoting someone...
   demote:
     # Fillers:
-    # %user_display% = the person being demoted.
-    # %leader_display% = the guild leader.
+    # %user_formatted% = the person being demoted.
+    # %leader_formatted% = the guild leader.
     # %level% = the permission level the person is going to.
     # For members.
-    members: "&b%sender_display% &eviens de rétrograder &b%user_display% &eau niveau &c%level%&e dans la guilde."
+    members: "&b%sender_formatted% &eviens de rétrograder &b%user_formatted% &eau niveau &c%level%&e dans la guilde."
     # For user who was demoted.
     user: "&eVous venez d'être rétrograder au niveau &c%level% &edans la guilde."
     # For leader.
-    leader: "&eVous venez de rétrograder &b%user_display% au niveau &c%level%&e."
+    leader: "&eVous venez de rétrograder &b%user_formatted% au niveau &c%level%&e."
     # If failed.
     failure: "&cDéjà au niveau minimum."
     # If it is leader.
     is-leader: "&cImpossible de vous rétrograder..."
     # Message in discord console.
     # Options:
-    # %user_display% = the user-the-action-is-being-used-on's display name.
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %user_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
@@ -956,18 +956,18 @@ guild:
     title: "RÉTROGRADATION DE GUILDE"
   # Message when someone chats...
   # Fillers:
-  # %sender_display% = Messager.
+  # %sender_formatted% = Messager.
   # %message% = Message user said being sent.
   chat:
     # Main message.
-    message: "&2GUILDE &9&l>> &b%sender_display% &8: &f%message%"
+    message: "&2GUILDE &9&l>> &b%sender_formatted% &8: &f%message%"
     # If the guild is muted.
     muted: "&cDésolé, mais la guilde est muette!"
     # Message in discord console.
     # Options:
     # %message% = the message.
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
@@ -981,12 +981,12 @@ guild:
     # %leaderbulk% = leaderbulk section.
     # %moderatorbulk% = moderatorbulk section.
     # %memberbulk% = memberbulk section.
-    # %user_display% = (only in context of "not-last" and "last") the specific member in the list of members
-    # %user_display% = (in everything else ^) the one running the command.
+    # %user_formatted% = (only in context of "not-last" and "last") the specific member in the list of members
+    # %user_formatted% = (in everything else ^) the one running the command.
     # Main message used to determine the other of things...
     main: "&7--< &5Guilde &6%size%&8/&6%max% &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
     # Leader bulk message.
-    leaderbulk: "&eChef de guilde: &c%leader_display%"
+    leaderbulk: "&eChef de guilde: &c%leader_formatted%"
     # Mods bulk message.
     moderatorbulk:
       # Main message.
@@ -994,9 +994,9 @@ guild:
       # Mods.
       moderators:
         # If not last in list.
-        not-last: "&b%user_display%&e, "
+        not-last: "&b%user_formatted%&e, "
         # If last.
-        last: "&b%user_display%&e."
+        last: "&b%user_formatted%&e."
         # If none in list.
         if-none: "&cAUCUNE"
     # Member bulk message.
@@ -1006,26 +1006,26 @@ guild:
       # Members.
       members:
         # If not last in list.
-        not-last: "&7%user_display%&e, "
+        not-last: "&7%user_formatted%&e, "
         # If last.
-        last: "&7%user_display%&e."
+        last: "&7%user_formatted%&e."
         # If none in list.
         if-none: "&cAUCUNE"
   # Message for opening the guild...
   open:
     # Fillers:
-    # %leader_display% = the guild leader.
+    # %leader_formatted% = the guild leader.
     # %size% = the new size of the guild.
     # For members.
-    members: "&b%sender_display% &ea ouvert la guilde avec une taille de &e%max%&e."
+    members: "&b%sender_formatted% &ea ouvert la guilde avec une taille de &e%max%&e."
     # For sender.
     sender: "&eVous venez d'ouvrir la guilde."
     # If failed.
     failure: "&cDéjà ouverte."
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
@@ -1036,18 +1036,18 @@ guild:
   # Message for closing the guild...
   close:
     # Fillers:
-    # %leader_display% = the guild leader.
+    # %leader_formatted% = the guild leader.
     # %size% = the size of the guild.
     # For members.
-    members: "&b%sender_display% &eviens de fermer la guilde."
+    members: "&b%sender_formatted% &eviens de fermer la guilde."
     # For sender.
     sender: "&eVous venez de fermer la guilde."
     # If failed.
     failure: "&cDéjà fermé."
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
@@ -1058,15 +1058,15 @@ guild:
   # Message for disbanding the guild...
   disband:
     # Fillers:
-    # %leader_display% = the guild leader.
+    # %leader_formatted% = the guild leader.
     # For members.
-    members: "&b%sender_display% &eviens de dissoudre la guilde."
+    members: "&b%sender_formatted% &eviens de dissoudre la guilde."
     # For leader.
     leader: "&eVous venez de dissoudre la guilde."
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
@@ -1077,20 +1077,20 @@ guild:
   # Message for accepting an invite to a guild...
   accept:
     # Fillers:
-    # %user_display% = the accepter.
-    # %leader_display% = the guild leader.
+    # %user_formatted% = the accepter.
+    # %leader_formatted% = the guild leader.
     # For user who accepted.
-    user: "&eA accepté la requête à la guilde de &b%leader_display%&e."
+    user: "&eA accepté la requête à la guilde de &b%leader_formatted%&e."
     # For leader.
-    leader: "&b%user_display% &eviens &ad'accepter &evotre invitation!"
+    leader: "&b%user_formatted% &eviens &ad'accepter &evotre invitation!"
     # For members.
-    members: "&b%user_display% &eviens &ad'accepter &el'invitation!"
+    members: "&b%user_formatted% &eviens &ad'accepter &el'invitation!"
     # If failed.
     failure: "&cAucune invitations!"
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the guild.
@@ -1100,20 +1100,20 @@ guild:
   # Message for denying an invite to a guild...
   deny:
     # Fillers:
-    # %user_display% = the accepter.
-    # %leader_display% = the guild leader.
+    # %user_formatted% = the accepter.
+    # %leader_formatted% = the guild leader.
     # For user who denied.
-    user: "&eA rejeté l'invitation à la guilde de &b%leader_display%&e."
+    user: "&eA rejeté l'invitation à la guilde de &b%leader_formatted%&e."
     # For leader.
-    leader: "&b%user_display% &eviens de &crejeter &evotre invitation!"
+    leader: "&b%user_formatted% &eviens de &crejeter &evotre invitation!"
     # For members.
-    members: "&b%user_display% &eviens de &crejeter &evotre invitation!"
+    members: "&b%user_formatted% &eviens de &crejeter &evotre invitation!"
     # If failed.
     failure: "&cAuncune invitations!"
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the guild.
@@ -1123,25 +1123,25 @@ guild:
   # Message for sending an invite of a guild...
   invite:
     # Fillers:
-    # %sender_display% = person sending the request.
-    # %user_display% = the accepter.
-    # %leader_display% = the guild leader.
+    # %sender_formatted% = person sending the request.
+    # %user_formatted% = the accepter.
+    # %leader_formatted% = the guild leader.
     # %leader_normal% = the guild leader formatted without their display name.
     # For user who was invited.
-    user: "&b%sender_display% &evous a invité à la guilde de &b%leader_display%&e!%newline%&eTapez &a/guild accept %leader_absolute% &epour rejoindre!"
+    user: "&b%sender_formatted% &evous a invité à la guilde de &b%leader_formatted%&e!%newline%&eTapez &a/guild accept %leader_absolute% &epour rejoindre!"
     # For members.
-    members: "&b%sender_display% &ea invité &b%user_display% &eà votre guilde!"
+    members: "&b%sender_formatted% &ea invité &b%user_formatted% &eà votre guilde!"
     # For leader.
-    leader: "&eViens d'inviter &b%user_display% &eà votre guilde!"
+    leader: "&eViens d'inviter &b%user_formatted% &eà votre guilde!"
     # If failed.
     failure: "&cA déjà inviter cette personne."
     # If self.
     non-self: "&cImpossible de vous inviter!"
     # Message in discord console.
     # Options:
-    # %user_display% = the user-the-action-is-being-used-on's display name.
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %user_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
@@ -1153,13 +1153,13 @@ guild:
   # Kick messages...
   kick:
     # Fillers:
-    # %user_display% = the person being kicked.
+    # %user_formatted% = the person being kicked.
     # For user who was kicked.
-    user: "&b%sender_display% &evous a retiré de sa guilde."
+    user: "&b%sender_formatted% &evous a retiré de sa guilde."
     # For members.
-    members: "&b%user_display% &ea été retiré par &b%sender_display% &ede votre guilde."
+    members: "&b%user_formatted% &ea été retiré par &b%sender_formatted% &ede votre guilde."
     # For sender.
-    sender: "&eVous avez retiré &b%user_display% &ede votre guilde."
+    sender: "&eVous avez retiré &b%user_formatted% &ede votre guilde."
     # If failed.
     failure: "&cCe joueur n'est pas dans la guilde."
     # If mod.
@@ -1168,9 +1168,9 @@ guild:
     self: "&cImpossible de vous retirer."
     # Message in discord console.
     # Options:
-    # %user_display% = the user-the-action-is-being-used-on's display name.
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %user_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
@@ -1182,23 +1182,23 @@ guild:
   # Mute messages.
   mute:
     # Fillers:
-    # %sender_display% = person sending the command.
+    # %sender_formatted% = person sending the command.
     # If muted.
     mute:
       # For sender.
       user: "&eVous venez de rendre &cmuette &ela guilde."
       # For members.
-      members: "&b%sender_display% &eviens de rendre &cmuette &ela guilde."
+      members: "&b%sender_formatted% &eviens de rendre &cmuette &ela guilde."
     # If unmuted.
     unmute:
       # For sender.
       user: "&eVous venez de rendre la guilde &anon-muette &e."
       # For members.
-      members: "&b%sender_display% &eviens de rendre la guilde &anon-muette &e."
+      members: "&b%sender_formatted% &eviens de rendre la guilde &anon-muette &e."
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
@@ -1215,11 +1215,11 @@ guild:
     # For sender.
     sender: "&eVous venez de téléporter votre guilde de &3%size% &esur votre serveur!"
     # For members.
-    members: "&d%sender_display% &evous a téléporté sur son serveur!"
+    members: "&d%sender_formatted% &evous a téléporté sur son serveur!"
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
@@ -1232,12 +1232,12 @@ guild:
   # Rename messages...
   rename:
     sender: "&eVous venez de renommer la guilde &c%old% &een &c%new%&e!"
-    members: "&d%sender_display% &ea renommé la guilde &c%old% &een &c%new%&e!"
+    members: "&d%sender_formatted% &ea renommé la guilde &c%old% &een &c%new%&e!"
     non-empty: "&cLe nom ne peut être vide!"
     # Message in discord console.
     # Options:
-    # %sender_display% = the player's display name.
-    # %leader_display% = the leader-of-the-group's display name.
+    # %sender_formatted% = the player's display name.
+    # %leader_formatted% = the leader-of-the-group's display name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
@@ -1252,8 +1252,8 @@ guilds:
   # If no guilds found.
   no-guilds: "&cAuncune guildes..."
   # Fillers:
-  # %sender_display% = person sending the command.
-  # %leader_display% = party leader.
+  # %sender_formatted% = person sending the command.
+  # %leader_formatted% = party leader.
   # %size% = current size of party.
   # %max% = max party size. --> set by leader.
   # %maxmax% = absolute max party size. --> set by permissions.
@@ -1268,31 +1268,31 @@ guilds:
   # %ispublic% = true if open, false if not.
   # %ismuted% = true if muted, false if not.
   # Main message.
-  guilds: "&5GUILDE &9>> &echef&8(&b%leader_display%&8)&e, taille&8(&3%size%&8)&e, maximumDeGuilde&8(&3%max%&8)&e, mods&8(&3%mods_count% &4--> %mods%&8)&e, membres&8(&3%members_count% &4--> %members%&8)&e, total&8(&3%total_count% &4--> %totalmembers%&8)&e, invitations&8(&3%invites_count% &4--> %invites%&8)&e, publique&8(%ispublic%&8)&e, muette&8(%ismuted%&8)&e."
+  guilds: "&5GUILDE &9>> &echef&8(&b%leader_formatted%&8)&e, taille&8(&3%size%&8)&e, maximumDeGuilde&8(&3%max%&8)&e, mods&8(&3%mods_count% &4--> %mods%&8)&e, membres&8(&3%members_count% &4--> %members%&8)&e, total&8(&3%total_count% &4--> %totalmembers%&8)&e, invitations&8(&3%invites_count% &4--> %invites%&8)&e, publique&8(%ispublic%&8)&e, muette&8(%ismuted%&8)&e."
   # Mods of guild.
   mods:
     # If not last in list.
-    not-last: "&d%user_display%&e, "
+    not-last: "&d%user_formatted%&e, "
     # If last.
-    last: "&d%user_display%"
+    last: "&d%user_formatted%"
   # Members of guild.
   members:
     # If not last in list.
-    not-last: "&d%user_display%&e, "
+    not-last: "&d%user_formatted%&e, "
     # If last.
-    last: "&d%user_display%"
+    last: "&d%user_formatted%"
   # Invites of guild.
   invites:
     # If not last in list.
-    not-last: "&d%user_display%&e, "
+    not-last: "&d%user_formatted%&e, "
     # If last.
-    last: "&d%user_display%"
+    last: "&d%user_formatted%"
   # Total members of guild.
   totalmembers:
     # If not last in list.
-    not-last: "&d%user_display%&e, "
+    not-last: "&d%user_formatted%&e, "
     # If last.
-    last: "&d%user_display%"
+    last: "&d%user_formatted%"
   # If is public
   ispublic:
     # If true.
@@ -1310,7 +1310,7 @@ guilds:
 # Fillers:
 # %total_xp% = network exp.
 # %level% = network level.
-# %player_display% = the player you are looking at stats of's name.
+# %player_formatted% = the player you are looking at stats of's name.
 # %xpneeded% = the player you are looking at stats of's totalXP needed FOR level up.
 # %xplevel% = the player you are looking at stats of's totalXP needed UNTIL level up.
 # %playtime% = the player you are looking at stats of's playtime in hours.
@@ -1321,7 +1321,7 @@ guilds:
 # %tags% = the player you are looking at stats of's tags.
 # %ip% = the player you are looking at stats of's current ip.
 # %ips% = the player you are looking at stats of's ips.
-# %player_display% = the player you are looking at stats of's display name.
+# %player_formatted% = the player you are looking at stats of's display name.
 # %names% = all the names that the player has logged into the network with on that same uuid.
 # %guild% = the player you are looking at stats of's guild name.
 # %guild_members% = the player you are looking at stats of's amount of guild members.
@@ -1344,9 +1344,9 @@ stats:
   # Points name.
   points-name: "&6Or de Réseau"
   # Player bulk message.
-  player: "&9----- &d%player_display% &7Informations du réseau &9-----%newline%&eUUID&8: &b%uuid%%newline%&eVersion de Minecraft&8: &c%version%%newline%&eEXP&8: &6%total_xp%%newline%&eNiveau&8: &6%level%%newline%&eEXP Requise&8: &6%xplevel% &0(&6%xpneeded% &etotal needed&0)%newline%&eTemps de jeu&8: &6%playtime% &ehours%newline%&e%points_name%&8: &6%points%%newline%&eTags&8: &c%tags%%newline%&eNom Affiché&8: &d%player_display%%newline%&eTout les noms&8: &c%names%%newline%&2Guilde&8: &r%guild%%newline%&2Membres de guilde&8: &6%guild_members%%newline%&2EXP de guilde&7/&2Niveau&8: &6%guild_xp_total%&7/&6%guild_lvl%%newline%&2Chef de guilde&8: &d%guild_leader% &0(&b%guild_uuid%&0)%newline%&eEspionnage sociale &0(%sspy%&0) &eEspionnage de guilde &0(%gspy%&0) &eEspionnage de groupe &0(%pspy%&0) &eConnectés &0(%online%&0)"
+  player: "&9----- &d%player_formatted% &7Informations du réseau &9-----%newline%&eUUID&8: &b%uuid%%newline%&eVersion de Minecraft&8: &c%version%%newline%&eEXP&8: &6%total_xp%%newline%&eNiveau&8: &6%level%%newline%&eEXP Requise&8: &6%xplevel% &0(&6%xpneeded% &etotal needed&0)%newline%&eTemps de jeu&8: &6%playtime% &ehours%newline%&e%points_name%&8: &6%points%%newline%&eTags&8: &c%tags%%newline%&eNom Affiché&8: &d%player_formatted%%newline%&eTout les noms&8: &c%names%%newline%&2Guilde&8: &r%guild%%newline%&2Membres de guilde&8: &6%guild_members%%newline%&2EXP de guilde&7/&2Niveau&8: &6%guild_xp_total%&7/&6%guild_lvl%%newline%&2Chef de guilde&8: &d%guild_leader% &0(&b%guild_uuid%&0)%newline%&eEspionnage sociale &0(%sspy%&0) &eEspionnage de guilde &0(%gspy%&0) &eEspionnage de groupe &0(%pspy%&0) &eConnectés &0(%online%&0)"
   # ConsolePlayer bulk message.
-  console-player: "&9----- &7Informations réseau de &d%player_display% &9-----%newline%&eUUID&8: &b%uuid%%newline%&eVersion de Minecraft&8: &c%version%%newline%&e%points_name%&8: &6%points%%newline%&eTags&8: &c%tags%%newline%&eNom Affiché&8: &d%player_display%%newline%&2Guilde&8: &r%guild%%newline%&2Membres de guilde&8: &6%guild_members%%newline%&2EXP de guilde&7/&2Niveau&8: &6%guild_xp_total%&7/&6%guild_lvl%%newline%&2Guild Chef&8: &d%guild_leader% &0(&b%guild_uuid%&0)"
+  console-player: "&9----- &7Informations réseau de &d%player_formatted% &9-----%newline%&eUUID&8: &b%uuid%%newline%&eVersion de Minecraft&8: &c%version%%newline%&e%points_name%&8: &6%points%%newline%&eTags&8: &c%tags%%newline%&eNom Affiché&8: &d%player_formatted%%newline%&2Guilde&8: &r%guild%%newline%&2Membres de guilde&8: &6%guild_members%%newline%&2EXP de guilde&7/&2Niveau&8: &6%guild_xp_total%&7/&6%guild_lvl%%newline%&2Guild Chef&8: &d%guild_leader% &0(&b%guild_uuid%&0)"
   # Tags.
   tags:
     # If not last in list.
@@ -1483,16 +1483,16 @@ scvs:
 # Messages for bungee tag.
 btag:
   # Fillers:
-  # %player_display% = player whose tags are being changed.
+  # %player_formatted% = player whose tags are being changed.
   # %tag% = tag being changed.
   # When removing one.
-  remove: "&eRetrait du tag &6%tag% &ede &d%player_display%&e."
+  remove: "&eRetrait du tag &6%tag% &ede &d%player_formatted%&e."
   # When adding one,
-  add: "&eAjout du tag &6%tag% &eà &d%player_display%&e."
+  add: "&eAjout du tag &6%tag% &eà &d%player_formatted%&e."
   # Bulk list message...
   list:
     # Main message.
-    main: "Tags de &d%player_display%&e: %tags%"
+    main: "Tags de &d%player_formatted%&e: %tags%"
     # For tags.
     tags:
       # If last in list.
@@ -1539,9 +1539,9 @@ ignore:
   # Adding someone to ignore.
   add:
     # What you see.
-    self: "&eVous venez &cd'ignorer &d%player_display%&e!"
+    self: "&eVous venez &cd'ignorer &d%player_formatted%&e!"
     # What they see.
-    ignored: "&d%sender_display% &eviens de &evous &cignorer&e!"
+    ignored: "&d%sender_formatted% &eviens de &evous &cignorer&e!"
     # Already added.
     already: "&cVous avez déjà ignoré cette personne!"
     # Not self.
@@ -1549,9 +1549,9 @@ ignore:
   # Removing someone from ignore.
   remove:
     # What you see.
-    self: "&eVous venez de &adé-ignorer &d%player_display%&e!"
+    self: "&eVous venez de &adé-ignorer &d%player_formatted%&e!"
     # What they see.
-    ignored: "&d%sender_display% &eviens de &evous &adé-ignorer&e!"
+    ignored: "&d%sender_formatted% &eviens de &evous &adé-ignorer&e!"
     # Already removed.
     already: "&cVous n'avez pas cette personne ignoré!"
     # Not self.
@@ -1559,16 +1559,16 @@ ignore:
   # Listing ignores.
   list:
     # Main message.
-    main: "&d%player_display% ignore: %ignores%"
+    main: "&d%player_formatted% ignore: %ignores%"
     # For %ignores%.
     ignores:
       # If not the last ignored.
-      not-last: "&c%player_display%&e, "
+      not-last: "&c%player_formatted%&e, "
       # If last ignored.
-      last: "&c%player_display%&e."
+      last: "&c%player_formatted%&e."
 
 # Fillers for both message and reply:
-# %from_display% = sender's display name.
+# %from_formatted% = sender's display name.
 # %to_normal% = receiver's display name.
 # %from_normal% = sender's name.
 # %to_normal% = receiver's name.
@@ -1578,24 +1578,24 @@ ignore:
 # For message command.
 message:
   # For sender.
-  sender: "&7[ &d%from_display% &9(&c%from_server%&9) &8>> &d%to_display% &9(&c%to_server%&9) &7] &e%message%"
+  sender: "&7[ &d%from_formatted% &9(&c%from_server%&9) &8>> &d%to_formatted% &9(&c%to_server%&9) &7] &e%message%"
   # For receiver.
-  to: "&7[ &d%from_display% &9(&c%from_server%&9) &8>> &d%to_display% &9(&c%to_server%&9) &7] &e%message%"
+  to: "&7[ &d%from_formatted% &9(&c%from_server%&9) &8>> &d%to_formatted% &9(&c%to_server%&9) &7] &e%message%"
   # If ignored.
   ignored: "&cDésolé, mais ce joueur vous a ignoré!"
   # To SSPY.
-  sspy: "&7[ &e%from_display% &2(&4%from_server%&2) &8>> &e%to_display% &2(&4%to_server%&2) &7] &8%message%"
+  sspy: "&7[ &e%from_formatted% &2(&4%from_server%&2) &8>> &e%to_formatted% &2(&4%to_server%&2) &7] &8%message%"
 
 # For reply command.
 reply:
   # For sender.
-  sender: "&7[ &d%from_display% &9(&c%from_server%&9) &8>> &d%to_display% &9(&c%to_server%&9) &7] &e%message%"
+  sender: "&7[ &d%from_formatted% &9(&c%from_server%&9) &8>> &d%to_formatted% &9(&c%to_server%&9) &7] &e%message%"
   # For receiver.
-  to: "&7[ &d%from_display% &9(&c%from_server%&9) &8>> &d%to_display% &9(&c%to_server%&9) &7] &e%message%"
+  to: "&7[ &d%from_formatted% &9(&c%from_server%&9) &8>> &d%to_formatted% &9(&c%to_server%&9) &7] &e%message%"
   # If ignored.
   ignored: "&cDésolé, mais ce joueur vous a ignoré!"
   # To SSPY.
-  sspy: "&7[ &e%from_display% &2(&4%from_server%&2) &8>> &e%to_display% &2(&4%to_server%&2) &7] &8%message%"
+  sspy: "&7[ &e%from_formatted% &2(&4%from_server%&2) &8>> &e%to_formatted% &2(&4%to_server%&2) &7] &8%message%"
 
 # For the mute command.
 mute:
@@ -1608,43 +1608,43 @@ mute:
     # If only temp.
     temp:
       # For sender.
-      sender: "&eVous venez de rendre &cmuet &d%player_display% &ejusqu'au &b%date%&e!"
+      sender: "&eVous venez de rendre &cmuet &d%player_formatted% &ejusqu'au &b%date%&e!"
       # For other staff.
-      staff: "&d%punisher% &eviens de rendre &cmuet &d%player_display%&e &ejusqu'au &b%date%&e!"
+      staff: "&d%punisher% &eviens de rendre &cmuet &d%player_formatted%&e &ejusqu'au &b%date%&e!"
       # For person being muted.
       muted: "&eVous avez &cmuté &ejusqu'au &b%date%&e!"
       # If already.
       already: "&cCe joueur est déjà muet!"
       # Discord message.
-      discord: "*%punisher%* viens de rendre muet *%player_display%* jusqu'au **%date%**!"
+      discord: "*%punisher%* viens de rendre muet *%player_formatted%* jusqu'au **%date%**!"
     # If perm.
     perm:
       # For sender.
-      sender: "&eVous venez de rendre &cmuet &d%player_display%&e!"
+      sender: "&eVous venez de rendre &cmuet &d%player_formatted%&e!"
       # For other staff.
-      staff: "&d%punisher% &eviens de rendre &cmuet &d%player_display%&e!"
+      staff: "&d%punisher% &eviens de rendre &cmuet &d%player_formatted%&e!"
       # For person being muted.
       muted: "&eVous avez été &cmuté &ede façon &4PERMANENTE&e!"
       # If already.
       already: "&cCe joueur a déjà été rendu muet!"
       # Discord message.
-      discord: "*%punisher%* viens de rendre muet *%player_display%* **DE FAÇON PERMANENTE**!"
+      discord: "*%punisher%* viens de rendre muet *%player_formatted%* **DE FAÇON PERMANENTE**!"
   # If being unmuted.
   unmute:
     # For sender.
-    sender: "&eVous avez rendu &d%player_display% &anon-muet&e!"
+    sender: "&eVous avez rendu &d%player_formatted% &anon-muet&e!"
     # For other staff.
-    staff: "&d%punisher% &eviens de rendre &d%player_display% &anon-muet &e!"
+    staff: "&d%punisher% &eviens de rendre &d%player_formatted% &anon-muet &e!"
     # For person being unmuted.
     muted: "&eVous avez été &adé-muté&e!"
     # If already.
     already: "&cCe joueur est déjà muet!"
     # Discord message.
-    discord: "*%punisher%* viens de rendre non-muet *%player_display%*!"
+    discord: "*%punisher%* viens de rendre non-muet *%player_formatted%*!"
   # For checking if muted.
   check:
     # Main.
-    main: "&d%player_display% &eest %check%&e!"
+    main: "&d%player_formatted% &eest %check%&e!"
     # If banned.
     banned: "&cbanni &ejusqu'au &b%date%"
     # If unbanned.
@@ -1659,13 +1659,13 @@ kick:
   # If you cannot do this punishment on the specified player.
   cannot: "&cDésolé, mais vous ne pouvez pas éjecter ce joueur!"
   # For sender.
-  sender: "&eVous venez &cd'éjecter &d%player_display% &epour la raison &a\"&b%reason%&a\"&e!"
+  sender: "&eVous venez &cd'éjecter &d%player_formatted% &epour la raison &a\"&b%reason%&a\"&e!"
   # For other staff.
-  staff: "&d%punisher% &eviens &cd'éjecter &d%player_display% &epour la raison &a\"&b%reason%&a\"&e!"
+  staff: "&d%punisher% &eviens &cd'éjecter &d%player_formatted% &epour la raison &a\"&b%reason%&a\"&e!"
   # For kicked.
   kicked: "&cVous avez été &céjecté&c! Raison: &b%reason%"
   # Discord message.
-  discord: "*%punisher%* viens d'éjecter *%player_display%* pour la raison \"**%reason%**\"!"
+  discord: "*%punisher%* viens d'éjecter *%player_formatted%* pour la raison \"**%reason%**\"!"
 
 # For the ban command.
 ban:
@@ -1678,37 +1678,37 @@ ban:
     # If temp.
     temp:
       # For sender.
-      sender: "&eVous avez &cbanni &d%player_display% &epour &a\"&b%reason%&a\" &ejusqu'au &b%date%&e!"
+      sender: "&eVous avez &cbanni &d%player_formatted% &epour &a\"&b%reason%&a\" &ejusqu'au &b%date%&e!"
       # For other staff.
-      staff: "&d%punisher% &eviens de &cbannir &d%player_display% &epour &a\"&b%reason%&a\" &ejusqu'au &b%date%&e!"
+      staff: "&d%punisher% &eviens de &cbannir &d%player_formatted% &epour &a\"&b%reason%&a\" &ejusqu'au &b%date%&e!"
       # If already banned.
-      already: "&d%player_display% &cest déjà banni!"
+      already: "&d%player_formatted% &cest déjà banni!"
       # Discord message.
-      discord: "*%punisher%* viens de bannir *%player_display%* pour la raison \"**%reason%**\" jusqu'au %date%!"
+      discord: "*%punisher%* viens de bannir *%player_formatted%* pour la raison \"**%reason%**\" jusqu'au %date%!"
     # If perm.
     perm:
       # For sender.
-      sender: "&eVous venez de &cbannir &d%player_display% &epour &a\"&b%reason%&b\" &ede façon &cPERMANENTE&e!"
+      sender: "&eVous venez de &cbannir &d%player_formatted% &epour &a\"&b%reason%&b\" &ede façon &cPERMANENTE&e!"
       # For other staff.
-      staff: "&d%punisher% &eviens de &cbannir &d%player_display% &epour &a\"&b%reason%&a\" &ede façon &cPERMANENTE&e!"
+      staff: "&d%punisher% &eviens de &cbannir &d%player_formatted% &epour &a\"&b%reason%&a\" &ede façon &cPERMANENTE&e!"
       # If already banned.
-      already: "&d%player_display% &cest déjà banni!"
+      already: "&d%player_formatted% &cest déjà banni!"
       # Discord message.
-      discord: "*%punisher%* viens de bannir *%player_display%* pour la raison \"**%reason%**\" de façon PERMANENTE!"
+      discord: "*%punisher%* viens de bannir *%player_formatted%* pour la raison \"**%reason%**\" de façon PERMANENTE!"
   # If being unbanned.
   unban:
     # For sender.
-    sender: "&eVous venez de &adébannir &d%player_display%&e!"
+    sender: "&eVous venez de &adébannir &d%player_formatted%&e!"
     # For other staff.
-    staff: "&d%punisher% &eviens de &adébannir &d%player_display%&e!"
+    staff: "&d%punisher% &eviens de &adébannir &d%player_formatted%&e!"
     # If already unbanned.
     already: "&cCe joueur est déjà débanni!"
     # Discord message.
-    discord: "*%punisher%* viens de débannir *%player_display%*!"
+    discord: "*%punisher%* viens de débannir *%player_formatted%*!"
   # If checking if banned.
   check:
     # Main.
-    main: "&d%player_display% &eest %check%!"
+    main: "&d%player_formatted% &eest %check%!"
     # If banned.
     banned: "&cbanni &ejusqu'au &b%date% &epour la raison &a\"&b%reason%&a\""
     # If unbanned.
@@ -1770,11 +1770,11 @@ friend:
   # For requesting...
   request:
     # What you see.
-    self: "&eVous venez d'envoyer une requête d'ami à &d%player_display%&e!"
+    self: "&eVous venez d'envoyer une requête d'ami à &d%player_formatted%&e!"
     # What they see.
-    other: "&d%sender_display% &evous demande d'être son &aami&e!%newline%&eTapez &b/f accept %sender_absolute% &epour accepter!"
+    other: "&d%sender_formatted% &evous demande d'être son &aami&e!%newline%&eTapez &b/f accept %sender_absolute% &epour accepter!"
     # Already added.
-    already: "&cVous êtes déjà ami avec &d%player_display%&e!"
+    already: "&cVous êtes déjà ami avec &d%player_formatted%&e!"
     # Not self.
     not-self: "&cImpossible de vous ignorer..."
     # Ignored...
@@ -1782,25 +1782,25 @@ friend:
   # Accepting someone's friend request.
   accept:
     # What you see.
-    self: "&eVous venez &ad'accepter &ela demande d'ami de &d%player_display%&e!"
+    self: "&eVous venez &ad'accepter &ela demande d'ami de &d%player_formatted%&e!"
     # What they see.
-    other: "&d%sender_display% &eviens &ad'accepter &evotre demande d'ami!"
+    other: "&d%sender_formatted% &eviens &ad'accepter &evotre demande d'ami!"
     # No requests.
-    none: "&cAucune demande de &d%player_display%&c!"
+    none: "&cAucune demande de &d%player_formatted%&c!"
   # Denying someone's friend request.
   deny:
     # What you see.
-    self: "&eVous venez de &crefuser &ela demande d'ami de &d%player_display%&e!"
+    self: "&eVous venez de &crefuser &ela demande d'ami de &d%player_formatted%&e!"
     # What they see.
-    other: "&d%sender_display% &eviens de &crefuser &evotre demande d'ami!"
+    other: "&d%sender_formatted% &eviens de &crefuser &evotre demande d'ami!"
     # No requests.
-    none: "&cAuncune demande de &d%player_display%&c!"
+    none: "&cAuncune demande de &d%player_formatted%&c!"
   # Removing someone from ignore.
   remove:
     # What you see.
-    self: "&eVous venez de &cretirer &d%player_display% &ede vos amis&e!"
+    self: "&eVous venez de &cretirer &d%player_formatted% &ede vos amis&e!"
     # What they see.
-    other: "&d%sender_display% &eviens de vous &cretirer &ede ses amis!"
+    other: "&d%sender_formatted% &eviens de vous &cretirer &ede ses amis!"
     # Already removed.
     already: "&cVous n'avez pas cette personne en ami!"
     # Not self.
@@ -1808,29 +1808,29 @@ friend:
   # Listing ignores.
   list:
     # Main message.
-    main: "&eAmis de &d%player_display%: %friends%%newline%&eDemande envoyés en attente de &d%player_display%: %pending-to%%newline%&eDemande recues en attentes de &d%player_display%: %pending-from%"
+    main: "&eAmis de &d%player_formatted%: %friends%%newline%&eDemande envoyés en attente de &d%player_formatted%: %pending-to%%newline%&eDemande recues en attentes de &d%player_formatted%: %pending-from%"
     # For %friends%.
     friends:
       # If not the last.
-      not-last: "&c%player_display%&e, "
+      not-last: "&c%player_formatted%&e, "
       # If last.
-      last: "&c%player_display%&e."
+      last: "&c%player_formatted%&e."
     # For %pending-to%.
     pending-to:
       # If not the last.
-      not-last: "&c%player_display%&e, "
+      not-last: "&c%player_formatted%&e, "
       # If last ignored.
-      last: "&c%player_display%&e."
+      last: "&c%player_formatted%&e."
     # For %pending-to%.
     pending-from:
       # If not the last.
-      not-last: "&c%player_display%&e, "
+      not-last: "&c%player_formatted%&e, "
       # If last.
-      last: "&c%player_display%&e."
+      last: "&c%player_formatted%&e."
   # On player connect.
-  connect: "&aAMI &9> &d%player_display% &a+"
+  connect: "&aAMI &9> &d%player_formatted% &a+"
   # On player disconnect.
-  disconnect: "&aAMI &9> &d%player_display% &c-"
+  disconnect: "&aAMI &9> &d%player_formatted% &c-"
 
 # GetStats command...
 getstats:
@@ -1841,9 +1841,9 @@ getstats:
     # Main message.
     main: "&eStatistiques chargées: %stats%"
     # If not the last stat.
-    not-last: "&d%player_display%&8, "
+    not-last: "&d%player_formatted%&8, "
     # If the last stat.
-    last: "&d%player_display%&8."
+    last: "&d%player_formatted%&8."
 
 # Settings command...
 settings:
@@ -2005,7 +2005,7 @@ graceful-end:
 delete-stat:
   message: "&eRetrait du fichier &b%file_name% &ede vos fichiers de joueurs&8!"
 
-bteleport: "&eTéléportation vers &d%player_display% &aRéussie&8!"
+bteleport: "&eTéléportation vers &d%player_formatted% &aRéussie&8!"
 
 language:
   message: "&eYou are now using &c%locale% &eas your locale&8!"

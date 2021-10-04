@@ -192,6 +192,9 @@ public class DiscordData {
 
         SingleSet<String, String> channelData = getChannel(channelID);
 
+        MessagingUtils.logWarning("DD > Member id : " + userID + " | Message : " + message);
+        MessagingUtils.logWarning("DD > channelData : < " + channelData.key + " , " + channelData.value + " >");
+
         if (! isVerified(userID)) {
             if (channelData.key.equals(ChatChannel.GLOBAL.toString())) {
                 if (channelData.value.equals("")) {
@@ -248,7 +251,10 @@ public class DiscordData {
             if (channelData.key.equals(ChatChannel.LOCAL.toString())) {
                 ServerInfo server = StreamLine.getInstance().getProxy().getServerInfo(channelData.value);
 
-                if (server == null) return;
+                if (server == null) {
+                    MessagingUtils.logWarning("Could not send bungee message for " + userID + " | Context : server == null");
+                    return;
+                }
 
                 MessagingUtils.sendServerMessageFromDiscord(player, server, StreamLine.serverConfig.getDefaultFormatLocal(MessageServerType.DISCORD), message);
             }
@@ -256,7 +262,9 @@ public class DiscordData {
             if (channelData.key.equals(ChatChannel.GUILD.toString())) {
                 Guild guild = GuildUtils.getGuild(channelData.value);
 
-                if (guild == null) return;
+                if (guild == null) {
+                    return;
+                }
 
                 GuildUtils.sendChatFromDiscord(player, guild, StreamLine.serverConfig.getDefaultFormatGuild(MessageServerType.DISCORD), message);
             }
