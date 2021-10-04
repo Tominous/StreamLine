@@ -184,6 +184,9 @@ public class PluginUtils {
         if (CommandsConfUtils.comBChatLevel) {
             registerCommand(plugin, new ChatChannelCommand(CommandsConfUtils.comBChatLevelBase, CommandsConfUtils.comBChatLevelPerm, stringListToArray(CommandsConfUtils.comBChatLevelAliases)));
         }
+        if (CommandsConfUtils.comBVerify) {
+            registerCommand(plugin, new BVerifyCommand(CommandsConfUtils.comBVerifyBase, CommandsConfUtils.comBVerifyPerm, stringListToArray(CommandsConfUtils.comBVerifyAliases)));
+        }
 
         // Servers.
         if (CommandsConfUtils.comBLobby) {

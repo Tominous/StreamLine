@@ -31,6 +31,10 @@ public class CommandsConfUtils {
     public static boolean comDChannel = StreamLine.config.getCommandBoolean("commands.discord.channel.enabled");
     public static List<String> comDChannelAliases = StreamLine.config.getCommandStringList("commands.discord.channel.aliases");
     public static String comDChannelPerm = StreamLine.config.getCommandString("commands.discord.channel.permission");
+    // BVerify.
+    public static boolean comDVerify = StreamLine.config.getCommandBoolean("commands.discord.verify.enabled");
+    public static List<String> comDVerifyAliases = StreamLine.config.getCommandStringList("commands.discord.verify.aliases");
+    public static String comDVerifyPerm = StreamLine.config.getCommandString("commands.discord.verify.permission");
     // ... ... Bungee Stuff.
     // Ping.
     public static boolean comBPing = StreamLine.config.getCommandBoolean("commands.bungee.ping.enabled");
@@ -308,6 +312,11 @@ public class CommandsConfUtils {
     public static String comBChatLevelBase = StreamLine.config.getCommandString("commands.bungee.messaging.chat-level.base");
     public static List<String> comBChatLevelAliases = StreamLine.config.getCommandStringList("commands.bungee.messaging.chat-level.aliases");
     public static String comBChatLevelPerm = StreamLine.config.getCommandString("commands.bungee.messaging.chat-level.permission");
+    // BVerify.
+    public static boolean comBVerify = StreamLine.config.getCommandBoolean("commands.bungee.messaging.bverify.enabled");
+    public static String comBVerifyBase = StreamLine.config.getCommandString("commands.bungee.messaging.bverify.base");
+    public static List<String> comBVerifyAliases = StreamLine.config.getCommandStringList("commands.bungee.messaging.bverify.aliases");
+    public static String comBVerifyPerm = StreamLine.config.getCommandString("commands.bungee.messaging.bverify.permission");
     // // Debug.
     // Delete Stat.
     public static boolean comBDeleteStat = StreamLine.config.getCommandBoolean("commands.bungee.debug.delete-stat.enabled");

@@ -27,7 +27,10 @@ public class SudoCommand extends Command implements TabExecutor {
 
             if (sudoOn.hasPermission(ConfigUtils.noSudoPerm)){
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoNoSudo()
-                        .replace("%user_display%", sudoOn.getDisplayName())
+                        .replace("%user_absolute%", sudoOn.getName())
+                        .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sudoOn)))
+                        .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sudoOn)))
+                        .replace("%user_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sudoOn)))
                 );
                 return;
             }

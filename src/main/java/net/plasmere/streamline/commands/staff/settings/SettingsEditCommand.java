@@ -166,7 +166,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                         }
 
                         String setLocals = TextUtils.argsToStringMinus(args, 0, 1, 2);
-                        StreamLine.serverConfig.setProxyChatChatsAtLocal(atChat, ChatChannel.LOCAL, MessageServerType.BUNGEE, setLocals);
+                        StreamLine.serverConfig.setProxyChatChatsAt(atChat, ChatChannel.LOCAL, MessageServerType.BUNGEE, setLocals);
 
                         sendSetMessageNumberedPC(sender, setLocals, atChat, ChatChannel.LOCAL, MessageServerType.BUNGEE);
                         break;
@@ -186,7 +186,7 @@ public class SettingsEditCommand extends Command implements TabExecutor {
                         }
 
                         String setGlobals = TextUtils.argsToStringMinus(args, 0, 1, 2);
-                        StreamLine.serverConfig.setProxyChatChatsAtLocal(atCh, ChatChannel.GLOBAL, MessageServerType.BUNGEE, setGlobals);
+                        StreamLine.serverConfig.setProxyChatChatsAt(atCh, ChatChannel.GLOBAL, MessageServerType.BUNGEE, setGlobals);
 
                         sendSetMessageNumberedPC(sender, setGlobals, atCh, ChatChannel.GLOBAL, MessageServerType.BUNGEE);
                         break;

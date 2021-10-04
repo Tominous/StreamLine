@@ -38,7 +38,10 @@ public class IgnoreCommand extends Command implements TabExecutor {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.bungeeNeedsMore());
         } else if (args.length < 2 && args[0].equals("list")) {
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreListMain()
-                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                    .replace("%player_absolute%", sender.getName())
+                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                    .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                     .replace("%ignores%", PlayerUtils.getIgnored(stat))
             );
         } else if (args.length < 2) {
@@ -73,18 +76,27 @@ public class IgnoreCommand extends Command implements TabExecutor {
 
                     if (stat.ignoredList.contains(other.uuid)) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreAddAlready()
-                                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
+                                .replace("%player_absolute%", sender.getName())
+                                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                         );
                         return;
                     }
 
                     stat.tryAddNewIgnored(other.uuid);
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreAddSelf()
-                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
+                            .replace("%player_absolute%", sender.getName())
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                     );
                     if ((other instanceof Player && ((Player) other).online) || other instanceof ConsolePlayer) {
                         MessagingUtils.sendBUserMessage(other.findSender(), MessageConfUtils.ignoreAddIgnored()
-                                .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                .replace("%sender_absolute%", sender.getName())
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                .replace("%sender_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                         );
                     }
                     break;
@@ -96,7 +108,10 @@ public class IgnoreCommand extends Command implements TabExecutor {
 
                     if (!stat.ignoredList.contains(other.uuid)) {
                         MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreRemAlready()
-                                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
+                                .replace("%player_absolute%", sender.getName())
+                                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                         );
                         return;
                     }

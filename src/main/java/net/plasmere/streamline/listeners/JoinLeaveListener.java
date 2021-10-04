@@ -102,7 +102,9 @@ public class JoinLeaveListener implements Listener {
                                 if (p.hasPermission(ConfigUtils.staffPerm)) {
                                     MessagingUtils.sendBUserMessage(p, MessageConfUtils.bungeeOnline()
                                             .replace("%player_absolute%", player.getName())
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(stat))
                                             .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(stat))
                                     );
                                     break label;
                                 }
@@ -117,7 +119,9 @@ public class JoinLeaveListener implements Listener {
                             if (guild.hasMember(stat)) {
                                 MessagingUtils.sendBUserMessage(p, MessageConfUtils.guildConnect()
                                         .replace("%player_absolute%", player.getName())
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(stat))
                                         .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(stat))
                                 );
                                 break label;
                             }
@@ -131,7 +135,9 @@ public class JoinLeaveListener implements Listener {
                             if (party.hasMember(stat)) {
                                 MessagingUtils.sendBUserMessage(p, MessageConfUtils.partyConnect()
                                         .replace("%player_absolute%", player.getName())
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(stat))
                                         .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(stat))
                                 );
                                 break label;
                             }
@@ -140,7 +146,9 @@ public class JoinLeaveListener implements Listener {
                             if (stat.friendList.contains(other.uuid)) {
                                 MessagingUtils.sendBUserMessage(p, MessageConfUtils.friendConnect()
                                         .replace("%player_absolute%", player.getName())
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(stat))
                                         .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(stat))
                                 );
                                 break label;
                             }
@@ -156,8 +164,11 @@ public class JoinLeaveListener implements Listener {
                     if (ConfigUtils.joinsLeavesAsConsole) {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
                                 MessageConfUtils.discordOnlineEmbed(),
-                                MessageConfUtils.discordOnline().replace("%player_absolute%", player.getName())
-                                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
+                                MessageConfUtils.discordOnline()
+                                        .replace("%player_absolute%", player.getName())
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(stat))
+                                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(stat)),
                                 DiscordBotConfUtils.textChannelBJoins));
                     } else {
                         if (ConfigUtils.joinsLeavesIcon) {
@@ -172,8 +183,11 @@ public class JoinLeaveListener implements Listener {
                         if (ConfigUtils.joinsLeavesAsConsole) {
                             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
                                     MessageConfUtils.discordOnlineEmbed(),
-                                    MessageConfUtils.discordOnline().replace("%player_absolute%", player.getName())
-                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
+                                    MessageConfUtils.discordOnline()
+                                            .replace("%player_absolute%", player.getName())
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(stat))
+                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(stat)),
                                     DiscordBotConfUtils.textChannelBJoins));
                         } else {
                             if (ConfigUtils.joinsLeavesIcon) {
@@ -372,7 +386,9 @@ public class JoinLeaveListener implements Listener {
                                 if (p.hasPermission(ConfigUtils.staffPerm)) {
                                     MessagingUtils.sendBUserMessage(p, MessageConfUtils.bungeeOffline()
                                             .replace("%player_absolute%", player.getName())
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(stat))
                                             .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(stat))
                                     );
                                     break label;
                                 }
@@ -387,7 +403,9 @@ public class JoinLeaveListener implements Listener {
                             if (guild.hasMember(stat)) {
                                 MessagingUtils.sendBUserMessage(p, MessageConfUtils.guildDisconnect()
                                         .replace("%player_absolute%", player.getName())
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(stat))
                                         .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(stat))
                                 );
                                 break label;
                             }
@@ -401,7 +419,9 @@ public class JoinLeaveListener implements Listener {
                             if (party.hasMember(stat)) {
                                 MessagingUtils.sendBUserMessage(p, MessageConfUtils.partyDisconnect()
                                         .replace("%player_absolute%", player.getName())
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(stat))
                                         .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(stat))
                                 );
                                 break label;
                             }
@@ -410,7 +430,9 @@ public class JoinLeaveListener implements Listener {
                             if (stat.friendList.contains(other.uuid)) {
                                 MessagingUtils.sendBUserMessage(p, MessageConfUtils.friendDisconnect()
                                         .replace("%player_absolute%", player.getName())
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(stat))
                                         .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(stat))
                                 );
                                 break label;
                             }
@@ -426,8 +448,11 @@ public class JoinLeaveListener implements Listener {
                     if (ConfigUtils.joinsLeavesAsConsole) {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
                                 MessageConfUtils.discordOfflineEmbed(),
-                                MessageConfUtils.discordOffline().replace("%player_absolute%", player.getName())
-                                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
+                                MessageConfUtils.discordOffline()
+                                        .replace("%player_absolute%", player.getName())
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(stat))
+                                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(stat)),
                                 DiscordBotConfUtils.textChannelBLeaves));
                     } else {
                         if (ConfigUtils.joinsLeavesIcon) {
@@ -442,8 +467,11 @@ public class JoinLeaveListener implements Listener {
                         if (ConfigUtils.joinsLeavesAsConsole) {
                             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(StreamLine.getInstance().getProxy().getConsole(),
                                     MessageConfUtils.discordOfflineEmbed(),
-                                    MessageConfUtils.discordOffline().replace("%player_absolute%", player.getName())
-                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreatePlayerStat(player))),
+                                    MessageConfUtils.discordOffline()
+                                            .replace("%player_absolute%", player.getName())
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(stat))
+                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(stat)),
                                     DiscordBotConfUtils.textChannelBLeaves));
                         } else {
                             if (ConfigUtils.joinsLeavesIcon) {

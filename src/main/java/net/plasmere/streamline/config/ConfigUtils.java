@@ -45,7 +45,7 @@ public class ConfigUtils {
     // Player logins / logouts.
     public static String moduleDPlayerJoins = StreamLine.config.getConfString("modules.discord.player-joins");
     public static String moduleDPlayerLeaves = StreamLine.config.getConfString("modules.discord.player-leaves");
-    // Proxy Chat.
+    // .. Proxy Chat.
     public static boolean moduleDPC = StreamLine.config.getConfBoolean("modules.discord.proxy-chat.enabled");
     public static boolean moduleDPCConsole = StreamLine.config.getConfBoolean("modules.discord.proxy-chat.to-console");
     public static boolean moduleDPCOnlyRole = StreamLine.config.getConfBoolean("modules.discord.proxy-chat.only-role");
@@ -55,6 +55,23 @@ public class ConfigUtils {
     public static List<String> moduleDPCOnVerifyAdd = StreamLine.config.getConfStringList("modules.discord.proxy-chat.display-names.verifying.add-roles");
     public static List<String> moduleDPCOnVerifyRemove = StreamLine.config.getConfStringList("modules.discord.proxy-chat.display-names.verifying.remove-roles");
     public static String moduleDPCDisplayNamesUseThis = StreamLine.config.getConfString("modules.discord.proxy-chat.display-names.use");
+    // Discord Data.
+    public static String moduleDPCDDLocalTitle = StreamLine.config.getConfString("modules.discord.proxy-chat.discord-data.channels.local.title");
+    public static String moduleDPCDDLocalMessage = StreamLine.config.getConfString("modules.discord.proxy-chat.discord-data.channels.local.message");
+    public static boolean moduleDPCDDLocalUseAvatar = StreamLine.config.getConfBoolean("modules.discord.proxy-chat.discord-data.channels.local.use-avatar");
+    public static String moduleDPCDDGlobalTitle = StreamLine.config.getConfString("modules.discord.proxy-chat.discord-data.channels.global.title");
+    public static String moduleDPCDDGlobalMessage = StreamLine.config.getConfString("modules.discord.proxy-chat.discord-data.channels.global.message");
+    public static boolean moduleDPCDDGlobalUseAvatar = StreamLine.config.getConfBoolean("modules.discord.proxy-chat.discord-data.channels.global.use-avatar");
+    public static String moduleDPCDDGuildTitle = StreamLine.config.getConfString("modules.discord.proxy-chat.discord-data.channels.guild.title");
+    public static String moduleDPCDDGuildMessage = StreamLine.config.getConfString("modules.discord.proxy-chat.discord-data.channels.guild.message");
+    public static boolean moduleDPCDDGuildUseAvatar = StreamLine.config.getConfBoolean("modules.discord.proxy-chat.discord-data.channels.guild.use-avatar");
+    public static String moduleDPCDDPartyTitle = StreamLine.config.getConfString("modules.discord.proxy-chat.discord-data.channels.party.title");
+    public static String moduleDPCDDPartyMessage = StreamLine.config.getConfString("modules.discord.proxy-chat.discord-data.channels.party.message");
+    public static boolean moduleDPCDDPartyUseAvatar = StreamLine.config.getConfBoolean("modules.discord.proxy-chat.discord-data.channels.party.use-avatar");
+    // Console.
+    public static String moduleDPCConsoleTitle = StreamLine.config.getConfString("modules.discord.proxy-chat.console.title");
+    public static String moduleDPCConsoleMessage = StreamLine.config.getConfString("modules.discord.proxy-chat.console.message");
+    public static boolean moduleDPCConsoleUseAvatar = StreamLine.config.getConfBoolean("modules.discord.proxy-chat.console.use-avatar");
     // ... Bungee.
     // Reports.
     public static boolean moduleReportsBConfirmation = StreamLine.config.getConfBoolean("modules.bungee.reports.send-confirmation");

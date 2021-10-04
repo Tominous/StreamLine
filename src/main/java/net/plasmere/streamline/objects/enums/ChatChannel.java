@@ -4,4 +4,5 @@ public enum ChatChannel {
     GLOBAL,
     LOCAL,
     GUILD,
+    PARTY,
 }

@@ -314,7 +314,7 @@ party:
   # When a player disconnects.
   disconnect: "&bGROUPE &9> &d%player_display% &c-"
   # Guild Spy message.
-  spy: "&d%leader_display%&a's GROUPE &9>> &d%sender_display% &8: &e%message%"
+  spy: "&3GROUPE &ede &d%leader_display% &9>> &d%sender_display% &8: &e%message%"
   # When it finds no party.
   no-party: "&cAucun groupe trouvés!"
   # Already made.
@@ -443,7 +443,7 @@ party:
   # %message% = Message user said being sent.
   chat:
     # Message format.
-    message: "&aGROUPE &9&l>> &b%sender_display% &8: &f%message%"
+    message: "&3GROUPE &9&l>> &b%sender_display% &8: &f%message%"
     # If the party is muted.
     muted: "&cDésolé, mais le groupe est muet!"
     # Message in discord console when people chat in parties.
@@ -810,7 +810,7 @@ guild:
   # When a player disconnects.
   disconnect: "&2GUILDE &9> &d%player_display% &c-"
   # For Guild Spy.
-  spy: "&aGUILDE de &d%leader_display% &9>> &d%sender_display% &8: &e%message%"
+  spy: "&2GUILDE &ede &d%leader_display% &9>> &d%sender_display% &8: &e%message%"
   # When it finds no guild.
   no-guild: "&cAucune guilde trouvées!"
   # Message shown when the name is too long.
@@ -960,7 +960,7 @@ guild:
   # %message% = Message user said being sent.
   chat:
     # Main message.
-    message: "&aGUILDE &9&l>> &b%sender_display% &8: &f%message%"
+    message: "&2GUILDE &9&l>> &b%sender_display% &8: &f%message%"
     # If the guild is muted.
     muted: "&cDésolé, mais la guilde est muette!"
     # Message in discord console.

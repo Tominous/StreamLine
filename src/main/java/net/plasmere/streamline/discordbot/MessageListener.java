@@ -1,5 +1,7 @@
 package net.plasmere.streamline.discordbot;
 
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.CommandsConfUtils;
 import net.plasmere.streamline.config.ConfigUtils;
@@ -15,7 +17,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class MessageListener extends ListenerAdapter {
-    private static final EmbedBuilder eb = new EmbedBuilder();
+    private static EmbedBuilder eb = new EmbedBuilder();
 
     @Override
     public void onMessageReceived(@Nonnull MessageReceivedEvent event) {
@@ -41,9 +43,16 @@ public class MessageListener extends ListenerAdapter {
             if (ConfigUtils.debug) MessagingUtils.logInfo("Someone talked in staffchat (discord)... sending to bungee...");
         }
 
-        if (ConfigUtils.moduleDPC) {
+        if (ConfigUtils.moduleDPC && ! em.startsWith(prefix)) {
             if (StreamLine.discordData.isChannel(event.getChannel().getIdLong())) {
+                Member member = event.getMessage().getMember();
 
+                if (member == null) {
+                    eb = new EmbedBuilder();
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("ERROR").setDescription("Error sending Discord message to Minecraft!").build());
+                }
+
+                StreamLine.discordData.sendBungeeChannel(member.getIdLong(), event.getChannel().getIdLong(), em);
             }
         }
 
@@ -63,13 +72,13 @@ public class MessageListener extends ListenerAdapter {
                     e.printStackTrace();
                 }
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("yes")) {
-                event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("staff")) {
                 if (Objects.requireNonNull(event.getMessage().getMember()).getRoles().contains(event.getJDA().getRoleById(DiscordBotConfUtils.roleStaff)))
-                    event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("owner")) {
                 if (Objects.requireNonNull(event.getMessage().getMember()).isOwner())
-                    event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             }
         // Online.
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comDOnlineAliases)) {
@@ -81,13 +90,13 @@ public class MessageListener extends ListenerAdapter {
                     e.printStackTrace();
                 }
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("yes")) {
-                event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("staff")) {
                 if (Objects.requireNonNull(event.getMessage().getMember()).getRoles().contains(event.getJDA().getRoleById(DiscordBotConfUtils.roleStaff)))
-                    event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("owner")) {
                 if (Objects.requireNonNull(event.getMessage().getMember()).isOwner())
-                    event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             }
         // Report.
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comDReportAliases)) {
@@ -99,13 +108,13 @@ public class MessageListener extends ListenerAdapter {
                     e.printStackTrace();
                 }
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("yes")) {
-                event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("staff")) {
                 if (Objects.requireNonNull(event.getMessage().getMember()).getRoles().contains(event.getJDA().getRoleById(DiscordBotConfUtils.roleStaff)))
-                    event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("owner")) {
                 if (Objects.requireNonNull(event.getMessage().getMember()).isOwner())
-                    event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             }
         // StaffChat.
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comDStaffChatAliases)) {
@@ -117,13 +126,13 @@ public class MessageListener extends ListenerAdapter {
                     e.printStackTrace();
                 }
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("yes")) {
-                event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("staff")) {
                 if (Objects.requireNonNull(event.getMessage().getMember()).getRoles().contains(event.getJDA().getRoleById(DiscordBotConfUtils.roleStaff)))
-                    event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("owner")) {
                 if (Objects.requireNonNull(event.getMessage().getMember()).isOwner())
-                    event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             }
         // StaffOnline.
         } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comDStaffOnlineAliases)) {
@@ -135,25 +144,65 @@ public class MessageListener extends ListenerAdapter {
                     e.printStackTrace();
                 }
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("yes")) {
-                event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("staff")) {
                 if (Objects.requireNonNull(event.getMessage().getMember()).getRoles().contains(event.getJDA().getRoleById(DiscordBotConfUtils.roleStaff)))
-                    event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             } else if (ConfigUtils.moduleSayCommandDisabled.equals("owner")) {
                 if (Objects.requireNonNull(event.getMessage().getMember()).isOwner())
-                    event.getChannel().sendMessage(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
             }
-        // IF NOT.
+            // IF NOT.
+        } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comDChannelAliases)) {
+            if (CommandsConfUtils.comDChannel && PermissionHelper.checkRoleIDPerms(event, CommandsConfUtils.comDChannelPerm)) {
+                if (ConfigUtils.debug) MessagingUtils.logInfo("So... Switching on case \"channel\"...");
+                try {
+                    ChannelCommand.sendMessage(args[0], event);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (ConfigUtils.moduleSayCommandDisabled.equals("yes")) {
+                event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+            } else if (ConfigUtils.moduleSayCommandDisabled.equals("staff")) {
+                if (Objects.requireNonNull(event.getMessage().getMember()).getRoles().contains(event.getJDA().getRoleById(DiscordBotConfUtils.roleStaff)))
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+            } else if (ConfigUtils.moduleSayCommandDisabled.equals("owner")) {
+                if (Objects.requireNonNull(event.getMessage().getMember()).isOwner())
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+            }
+            // IF NOT.
+        } else if (MessagingUtils.compareWithList(args[0], CommandsConfUtils.comDVerifyAliases)) {
+            if (CommandsConfUtils.comDVerify && PermissionHelper.checkRoleIDPerms(event, CommandsConfUtils.comDVerifyPerm)) {
+                if (ConfigUtils.debug) MessagingUtils.logInfo("So... Switching on case \"verify\"...");
+                try {
+                    VerifyCommand.sendMessage(args[0], event);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (ConfigUtils.moduleSayCommandDisabled.equals("yes")) {
+                event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+            } else if (ConfigUtils.moduleSayCommandDisabled.equals("staff")) {
+                if (Objects.requireNonNull(event.getMessage().getMember()).getRoles().contains(event.getJDA().getRoleById(DiscordBotConfUtils.roleStaff)))
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+            } else if (ConfigUtils.moduleSayCommandDisabled.equals("owner")) {
+                if (Objects.requireNonNull(event.getMessage().getMember()).isOwner())
+                    event.getChannel().sendMessageEmbeds(eb.setTitle("Error!").setDescription(MessageConfUtils.discordCommandDisabled().replace("%newline%", "\n")).build()).queue();
+            }
+            // IF NOT.
         } else {
             if (ConfigUtils.debug) MessagingUtils.logInfo("So... Switching on case default...");
-            if (ConfigUtils.moduleSayNotACommand.equals("yes")) {
-                event.getChannel().sendMessage(eb.setDescription(MessageConfUtils.discordNotACommand().replace("%newline%","\n")).build()).queue();
-            } else if (ConfigUtils.moduleSayNotACommand.equals("staff")) {
-                if (Objects.requireNonNull(event.getMessage().getMember()).getRoles().contains(event.getJDA().getRoleById(DiscordBotConfUtils.roleStaff)))
-                    event.getChannel().sendMessage(eb.setDescription(MessageConfUtils.discordNotACommand().replace("%newline%","\n")).build()).queue();
-            } else if (ConfigUtils.moduleSayNotACommand.equals("owner")) {
-                if (Objects.requireNonNull(event.getMessage().getMember()).isOwner())
-                    event.getChannel().sendMessage(eb.setDescription(MessageConfUtils.discordNotACommand().replace("%newline%","\n")).build()).queue();
+            switch (ConfigUtils.moduleSayNotACommand) {
+                case "yes":
+                    event.getChannel().sendMessageEmbeds(eb.setDescription(MessageConfUtils.discordNotACommand().replace("%newline%", "\n")).build()).queue();
+                    break;
+                case "staff":
+                    if (Objects.requireNonNull(event.getMessage().getMember()).getRoles().contains(event.getJDA().getRoleById(DiscordBotConfUtils.roleStaff)))
+                        event.getChannel().sendMessageEmbeds(eb.setDescription(MessageConfUtils.discordNotACommand().replace("%newline%", "\n")).build()).queue();
+                    break;
+                case "owner":
+                    if (Objects.requireNonNull(event.getMessage().getMember()).isOwner())
+                        event.getChannel().sendMessageEmbeds(eb.setDescription(MessageConfUtils.discordNotACommand().replace("%newline%", "\n")).build()).queue();
+                    break;
             }
         }
     }

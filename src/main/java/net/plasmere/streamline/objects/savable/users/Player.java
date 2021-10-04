@@ -33,6 +33,7 @@ public class Player extends SavableUser {
     public Date mutedTill;
     public ProxiedPlayer player;
     public ChatLevel chatLevel;
+    public long discordID;
 
     public int defaultLevel = 1;
 
@@ -123,6 +124,7 @@ public class Player extends SavableUser {
         defaults.add("muted=false");
         defaults.add("muted-till=");
         defaults.add("chat-level=LOCAL");
+        defaults.add("discord-id=");
         //defaults.add("");
         return defaults;
     }
@@ -155,6 +157,12 @@ public class Player extends SavableUser {
         this.currentXP = Integer.parseInt(getFromKey("current-xp"));
 
         this.chatLevel = parseChatLevel(getFromKey("chat-level"));
+
+        try {
+            this.discordID = Long.parseLong(getFromKey("discord-id"));
+        } catch (Exception e) {
+            this.discordID = 0L;
+        }
     }
 
     public static ChatLevel parseChatLevel(String string) {
@@ -453,6 +461,10 @@ public class Player extends SavableUser {
 
     public void toggleMuted() { setMuted(! muted); }
 
+    public void setDiscordID(long id) {
+        this.discordID = id;
+        updateKey("discord-id", id);
+    }
     
     public String getDisplayName() {
         return this.displayName;
@@ -467,21 +479,18 @@ public class Player extends SavableUser {
             Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).sendMessage(position, message);
         }
     }
-
     
     public void sendMessage(ChatMessageType position, BaseComponent message) {
         if (online) {
             Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).sendMessage(position, message);
         }
     }
-
     
     public void sendMessage(UUID sender, BaseComponent... message) {
         if (online) {
             Objects.requireNonNull(PlayerUtils.getPPlayer(latestName)).sendMessage(sender, message);
         }
     }
-
     
     public void sendMessage(UUID sender, BaseComponent message) {
         if (online) {

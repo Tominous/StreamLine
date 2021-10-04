@@ -51,7 +51,10 @@ public class KickCommand extends Command implements TabExecutor {
 
             MessagingUtils.sendBUserMessage(sender, MessageConfUtils.kickSender()
                     .replace("%reason%", reason)
+                    .replace("%player_absolute%", other.getName())
+                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(other))
                     .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
+                    .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(other))
                     .replace("%reason%", reason)
             );
 
@@ -63,7 +66,10 @@ public class KickCommand extends Command implements TabExecutor {
                                     MessageConfUtils.kickEmbed(),
                                     MessageConfUtils.kickDiscord()
                                             .replace("%punisher%", sender.getName())
-                                            .replace("%player_display%", other.latestName)
+                                            .replace("%player_absolute%", other.getName())
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(other))
+                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
+                                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(other))
                                             .replace("%reason%", reason)
                                     ,
                                     DiscordBotConfUtils.textChannelKicks
@@ -74,7 +80,10 @@ public class KickCommand extends Command implements TabExecutor {
 
             MessagingUtils.sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.kickStaff()
                     .replace("%punisher%", sender.getName())
-                    .replace("%player_display%", other.latestName)
+                    .replace("%player_absolute%", other.getName())
+                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(other))
+                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
+                    .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(other))
                     .replace("%reason%", reason)
             );
         }

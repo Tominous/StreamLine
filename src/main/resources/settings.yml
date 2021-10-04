@@ -50,25 +50,28 @@ proxy-chat:
   chats:
     local:
       bungee:
-        1: "&d%sender_formatted%&r &7&l>> &f%message%"
-        2: "&d%sender_formatted%&r &7&l>> &e%message%"
-        3: "&d%sender_formatted%&r &7&l>> &6%message%"
+        1: "&d%sender_display%&r &7&l>> &f%message%"
+        2: "&d%sender_display%&r &7&l>> &e%message%"
+        3: "&d%sender_display%&r &7&l>> &6%message%"
       discord:
-        1: "&e[&9Discord&e] &d%sender_formatted%&r &7&l>> &f%message%"
-        2: "&e[&9Discord&e] &d%sender_formatted%&r &7&l>> &e%message%"
-        3: "&e[&9Discord&e] &d%sender_formatted%&r &7&l>> &6%message%"
+        1: "&e[&9Discord&e] &d%sender_display%&r &7&l>> &f%message%"
+        2: "&e[&9Discord&e] &d%sender_display%&r &7&l>> &e%message%"
+        3: "&e[&9Discord&e] &d%sender_display%&r &7&l>> &6%message%"
     global:
       bungee:
-        1: "&e[&4%server%&e] &d%sender_formatted%&r &7&l>> &f%message%"
-        2: "&e[&4%server%&e] &d%sender_formatted%&r &7&l>> &e%message%"
-        3: "&e[&4%server%&e] &d%sender_formatted%&r &7&l>> &6%message%"
+        1: "&e(&dGLOBAL&e) &e[&4%server%&e] &d%sender_display%&r &7&l>> &f%message%"
+        2: "&e(&dGLOBAL&e) &e[&4%server%&e] &d%sender_display%&r &7&l>> &e%message%"
+        3: "&e(&dGLOBAL&e) &e[&4%server%&e] &d%sender_display%&r &7&l>> &6%message%"
       discord:
-        1: "&e[&9Discord&e] &d%sender_formatted%&r &7&l>> &f%message%"
-        2: "&e[&9Discord&e] &d%sender_formatted%&r &7&l>> &e%message%"
-        3: "&e[&9Discord&e] &d%sender_formatted%&r &7&l>> &6%message%"
+        1: "&e(&dGLOBAL&e) &e[&9Discord&e] &d%sender_display%&r &7&l>> &f%message%"
+        2: "&e(&dGLOBAL&e) &e[&9Discord&e] &d%sender_display%&r &7&l>> &e%message%"
+        3: "&e(&dGLOBAL&e) &e[&9Discord&e] &d%sender_display%&r &7&l>> &6%message%"
     guild:
       discord:
-        1: "&e[&9Discord&e] &aGUILD &9&l>> &b%sender_formatted% &8: &f%message%"
+        1: "&e[&9Discord&e] &2GUILD &9&l>> &b%sender_display% &8: &f%message%"
+    party:
+      discord:
+        1: "&e[&9Discord&e] &3PARTY &9&l>> &b%sender_display% &8: &f%message%"
   # When someone says someone's name in chat (on the same server).
   tags:
     # Enable getting pinged.

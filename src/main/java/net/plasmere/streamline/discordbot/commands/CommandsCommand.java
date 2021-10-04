@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class CommandsCommand {
     public static void sendMessage(String command, MessageReceivedEvent event){
         EmbedBuilder eb = new EmbedBuilder();
-        event.getChannel().sendMessage(eb.setDescription(compileCommands(event)).build()).queue();
+        event.getChannel().sendMessageEmbeds(eb.setDescription(compileCommands(event)).build()).queue();
         if (ConfigUtils.debug) MessagingUtils.logInfo("Sent message for \"" + command + "\"!");
     }
 
@@ -31,6 +31,14 @@ public class CommandsCommand {
             commands.append("\n").append(prefix).append("staffchat <message> : Puts a message in chat to all staff online.");
         if (CommandsConfUtils.comDStaffOnline && PermissionHelper.checkRoleIDPerms(event, CommandsConfUtils.comDStaffOnlinePerm))
             commands.append("\n").append(prefix).append("staffonline : shows the amount of staff and the actual staff online.");
+        if (CommandsConfUtils.comDChannel && PermissionHelper.checkRoleIDPerms(event, CommandsConfUtils.comDChannelPerm)) {
+            commands.append("\n").append(prefix).append("channel <set | remove> <global | local | guild | party> <identifier> : links a channel to the StreamLine plugin on your proxy server.");
+            commands.append("\n   - <identifier> needs to be replaced with the following:");
+            commands.append("\n      - If global: either \"\" or \"some.permission\".");
+            commands.append("\n      - If local: the name of the server you want to be local chat for.");
+            commands.append("\n      - If guild: the UUID of the guild owner.");
+            commands.append("\n      - If party: the UUID of the party owner.");
+        }
 
         return commands.toString();
     }

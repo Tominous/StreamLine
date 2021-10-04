@@ -7,6 +7,8 @@ import net.plasmere.streamline.config.MessageConfUtils;
 import net.plasmere.streamline.events.Event;
 import net.plasmere.streamline.events.EventsHandler;
 import net.plasmere.streamline.events.enums.Condition;
+import net.plasmere.streamline.objects.enums.ChatChannel;
+import net.plasmere.streamline.objects.enums.MessageServerType;
 import net.plasmere.streamline.objects.lists.SingleSet;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
 import net.plasmere.streamline.objects.Guild;
@@ -116,7 +118,10 @@ public class ChatListener implements Listener {
                             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                                     MessageConfUtils.staffChatEmbedTitle(),
                                     MessageConfUtils.discordStaffChatMessage()
-                                            .replace("%user_display%", sender.getName())
+                                            .replace("%user_absolute%", sender.getName())
+                                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                            .replace("%user_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                                             .replace("%message%", msg.substring(prefix.length())),
                                     DiscordBotConfUtils.textChannelStaffChat));
                         }
@@ -128,6 +133,17 @@ public class ChatListener implements Listener {
 
 
         if (StreamLine.serverConfig.getProxyChatEnabled() && ! isStaffMessage) {
+            if (ConfigUtils.moduleDPC) if (ConfigUtils.moduleDPCConsole) {
+                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
+                        ConfigUtils.moduleDPCConsoleTitle,
+                        ConfigUtils.moduleDPCConsoleMessage
+                                .replace("%message%", msg),
+                        DiscordBotConfUtils.textChannelProxyChat
+                ),
+                        ConfigUtils.moduleDPCConsoleUseAvatar
+                );
+            }
+
             boolean allowGlobal = StreamLine.serverConfig.getAllowGlobal();
             boolean allowLocal = StreamLine.serverConfig.getAllowLocal();
 
@@ -140,7 +156,7 @@ public class ChatListener implements Listener {
                 }
 
                 if (stat.chatLevel.equals(ChatLevel.GLOBAL)) {
-                    String format = StreamLine.serverConfig.getPermissionedProxyChatMessageGlobal(stat);
+                    String format = StreamLine.serverConfig.getPermissionedProxyChatMessageGlobal(stat, MessageServerType.BUNGEE);
                     SingleSet<String, List<ProxiedPlayer>> msgWithTagged = TextUtils.getMessageWithTags(sender, msg, format);
 
                     String withEmotes = TextUtils.getMessageWithEmotes(sender, msgWithTagged.key);
@@ -155,9 +171,13 @@ public class ChatListener implements Listener {
                         MessagingUtils.sendMessageFromUserToConsole(sender, sender.getServer(), format, withEmotes);
                     }
 
+                    if (ConfigUtils.moduleDPC) {
+                        StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.GLOBAL, "", msg);
+                    }
+
                     e.setCancelled(true);
                 } else if (stat.chatLevel.equals(ChatLevel.LOCAL)) {
-                    String format = StreamLine.serverConfig.getPermissionedProxyChatMessageLocal(stat);
+                    String format = StreamLine.serverConfig.getPermissionedProxyChatMessageLocal(stat, MessageServerType.BUNGEE);
                     SingleSet<String, List<ProxiedPlayer>> msgWithTagged = TextUtils.getMessageWithTags(sender, msg, format);
 
                     String withEmotes = TextUtils.getMessageWithEmotes(sender, msgWithTagged.key);
@@ -170,6 +190,10 @@ public class ChatListener implements Listener {
 
                     if (StreamLine.serverConfig.getProxyChatConsoleEnabled()) {
                         MessagingUtils.sendMessageFromUserToConsole(sender, sender.getServer(), format, withEmotes);
+                    }
+
+                    if (ConfigUtils.moduleDPC) {
+                        StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.LOCAL, sender.getServer().getInfo().getName(), msg);
                     }
 
                     e.setCancelled(true);

@@ -45,12 +45,18 @@ public class StaffOnlineCommand {
         for (ProxiedPlayer player : lstaffs){
             if (i < lstaffs.size())
                 staff.append(MessageConfUtils.sOnlineDiscordBulkNotLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
+                        .replace("%player_absolute%", PlayerUtils.getOrCreatePlayerStat(player).getName())
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreatePlayerStat(player)))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", player.getServer().getInfo().getName().toLowerCase())
                 );
             else
                 staff.append(MessageConfUtils.sOnlineDiscordBulkLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
+                        .replace("%player_absolute%", PlayerUtils.getOrCreatePlayerStat(player).getName())
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(player)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreatePlayerStat(player)))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrCreatePlayerStat(player)))
                         .replace("%server%", player.getServer().getInfo().getName().toLowerCase())
                 );
             i++;

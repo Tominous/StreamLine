@@ -9,9 +9,11 @@ net\plasmere\streamline\commands\staff\StaffChatCommand.class
 net\plasmere\streamline\commands\staff\TeleportCommand.class
 net\plasmere\streamline\StreamLine$1.class
 net\plasmere\streamline\listeners\PluginMessagingListener.class
+net\plasmere\streamline\commands\messaging\BVerifyCommand.class
 net\plasmere\streamline\commands\GCQuickCommand.class
 net\plasmere\streamline\discordbot\commands\ReportCommand.class
 net\plasmere\streamline\events\EventsHandler$1.class
+net\plasmere\streamline\discordbot\commands\VerifyCommand.class
 net\plasmere\streamline\objects\timers\PlayerSaveTimer.class
 net\plasmere\streamline\utils\holders\LPHolder.class
 net\plasmere\streamline\commands\messaging\ChatChannelCommand.class
@@ -25,6 +27,7 @@ net\plasmere\streamline\utils\PartyUtils$1.class
 net\plasmere\streamline\utils\GuildUtils$1.class
 net\plasmere\streamline\listeners\ChatListener.class
 net\plasmere\streamline\utils\holders\GeyserHolder.class
+net\plasmere\streamline\objects\enums\MessageServerType.class
 net\plasmere\streamline\commands\staff\DeleteStatCommand.class
 net\plasmere\streamline\StreamLine.class
 net\plasmere\streamline\objects\messaging\BungeeMessage.class
@@ -55,6 +58,7 @@ net\plasmere\streamline\objects\Party$Level.class
 net\plasmere\streamline\objects\savable\users\ChatLevel.class
 net\plasmere\streamline\objects\Punishment.class
 net\plasmere\streamline\commands\staff\settings\LanguageCommand.class
+net\plasmere\streamline\config\from\From_1_0_14_0.class
 net\plasmere\streamline\objects\timers\MOTDUpdaterTimer.class
 net\plasmere\streamline\commands\servers\GoToServerVanillaCommand.class
 net\plasmere\streamline\discordbot\commands\StaffOnlineCommand.class
@@ -69,6 +73,7 @@ net\plasmere\streamline\objects\savable\users\Player$1.class
 net\plasmere\streamline\objects\timers\PlaytimeTimer.class
 net\plasmere\streamline\config\from\From$1.class
 net\plasmere\streamline\discordbot\commands\OnlineCommand.class
+net\plasmere\streamline\discordbot\commands\ChannelCommand.class
 net\plasmere\streamline\utils\holders\ViaHolder.class
 net\plasmere\streamline\objects\configs\ServerConfig.class
 net\plasmere\streamline\utils\TextUtils.class
@@ -112,7 +117,9 @@ net\plasmere\streamline\objects\Guild$Level.class
 net\plasmere\streamline\utils\PartyUtils.class
 net\plasmere\streamline\commands\messaging\MessageCommand.class
 net\plasmere\streamline\utils\PluginUtils.class
+net\plasmere\streamline\objects\enums\ChatChannel.class
 net\plasmere\streamline\objects\configs\Lobbies.class
+net\plasmere\streamline\objects\configs\DiscordData.class
 net\plasmere\streamline\commands\staff\spy\SSPYCommand.class
 net\plasmere\streamline\commands\staff\SudoCommand.class
 net\plasmere\streamline\objects\timers\OneSecondTimer.class

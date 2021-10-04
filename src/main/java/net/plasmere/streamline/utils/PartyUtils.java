@@ -7,10 +7,13 @@ import net.luckperms.api.query.QueryOptions;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.config.DiscordBotConfUtils;
+import net.plasmere.streamline.objects.Guild;
 import net.plasmere.streamline.objects.Party;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.plasmere.streamline.objects.enums.ChatChannel;
 import net.plasmere.streamline.objects.savable.users.Player;
 import net.plasmere.streamline.objects.messaging.DiscordMessage;
+import net.plasmere.streamline.objects.savable.users.SavableUser;
 
 import java.util.*;
 
@@ -1443,6 +1446,10 @@ public class PartyUtils {
                 }
             }
 
+            if (ConfigUtils.moduleDPC) {
+                StreamLine.discordData.sendDiscordChannel(sender.findSender(), ChatChannel.PARTY, party.leaderUUID, msg);
+            }
+
             for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
                 if (! pp.hasPermission(ConfigUtils.partyView)) continue;
 
@@ -1455,6 +1462,68 @@ public class PartyUtils {
                 if (! them.pspyvs) if (them.uuid.equals(sender.uuid)) continue;
 
                 MessagingUtils.sendBPUserMessage(party, p, pp, spy.replace("%message%", msg));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendChatFromDiscord(String nameUsed, Party party, String format, String msg) {
+        try {
+            for (SavableUser pl : party.totalMembers) {
+                MessagingUtils.sendBPUserMessageFromDiscord(party, nameUsed, pl.findSender(), format
+                        .replace("%message%", msg)
+                );
+            }
+
+//            if (ConfigUtils.moduleDEnabled) {
+//                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleChats) {
+//                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), chatTitle,
+//                            chatConsole
+//                                    .replace("%message%", msg)
+//                            , DiscordBotConfUtils.textChannelGuilds));
+//                }
+//            }
+
+            for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
+                if (! pp.hasPermission(ConfigUtils.guildView)) continue;
+
+                Player them = PlayerUtils.getOrCreatePlayerStat(pp);
+
+                if (! them.gspy) continue;
+
+                MessagingUtils.sendBPUserMessageFromDiscord(party, nameUsed, them.findSender(), spy.replace("%message%", msg));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendChatFromDiscord(SavableUser user, Party party, String format, String msg) {
+        try {
+            for (SavableUser pl : party.totalMembers) {
+                MessagingUtils.sendBPUserMessageFromDiscord(party, user, pl.findSender(), format
+                        .replace("%message%", msg)
+                );
+            }
+
+//            if (ConfigUtils.moduleDEnabled) {
+//                if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleChats) {
+//                    MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), chatTitle,
+//                            chatConsole
+//                                    .replace("%message%", msg)
+//                            , DiscordBotConfUtils.textChannelGuilds));
+//                }
+//            }
+
+            for (ProxiedPlayer pp : StreamLine.getInstance().getProxy().getPlayers()){
+                if (! pp.hasPermission(ConfigUtils.guildView)) continue;
+
+                Player them = PlayerUtils.getOrCreatePlayerStat(pp);
+
+                if (! them.gspy) continue;
+
+                MessagingUtils.sendBPUserMessageFromDiscord(party, user, them.findSender(), spy.replace("%message%", msg));
             }
         } catch (Exception e) {
             e.printStackTrace();

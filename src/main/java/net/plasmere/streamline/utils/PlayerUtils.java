@@ -986,7 +986,10 @@ public class PlayerUtils {
         of.tryRemTag(tag);
 
         MessagingUtils.sendBUserMessage(sender, tagRem
-                .replace("%player_display%", getOffOnDisplayBungee(of))
+                .replace("%player_absolute%", of.getName())
+                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(of))
+                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(of))
+                .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(of))
                 .replace("%tag%", tag)
         );
     }
@@ -1000,7 +1003,10 @@ public class PlayerUtils {
         of.tryAddNewTag(tag);
 
         MessagingUtils.sendBUserMessage(sender, tagAdd
-                .replace("%player_display%", getOffOnDisplayBungee(of))
+                .replace("%player_absolute%", of.getName())
+                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(of))
+                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(of))
+                .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(of))
                 .replace("%tag%", tag)
         );
     }
@@ -1012,7 +1018,10 @@ public class PlayerUtils {
         }
 
         MessagingUtils.sendBUserMessage(sender, tagListMain
-                .replace("%player_display%", getOffOnDisplayBungee(of))
+                .replace("%player_absolute%", of.getName())
+                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(of))
+                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(of))
+                .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(of))
                 .replace("%tags%", compileTagList(of))
         );
     }
@@ -1186,7 +1195,7 @@ public class PlayerUtils {
 
     public static void doMessageWithIgnoreCheck(SavableUser from, SavableUser to, String message, boolean reply){
         if (to instanceof Player) {
-            if (! ((Player) to).online) {
+            if (! (to).online) {
                 MessagingUtils.sendBUserMessage(from.findSender(), MessageConfUtils.noPlayer());
                 return;
             }
@@ -1705,6 +1714,24 @@ public class PlayerUtils {
         }
 
         toSave.remove(user);
+    }
+
+    public static boolean isInNetworkByName(String name) {
+        for (ProxiedPlayer player : getOnlinePPlayers()) {
+            if (player.getName().equals(name)) return true;
+        }
+
+        return false;
+    }
+
+    public static String getServer(CommandSender sender) {
+        for (String server : StreamLine.getInstance().getProxy().getServers().keySet()) {
+            for (ProxiedPlayer player : getServeredPPlayers(server)) {
+                if (sender.getName().equals(player.getName())) return server;
+            }
+        }
+
+        return "";
     }
 
 //    public static void updateServerAll(){

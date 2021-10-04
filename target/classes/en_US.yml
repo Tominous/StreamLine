@@ -311,7 +311,7 @@ party:
   # When a player disconnects.
   disconnect: "&bPARTY &9> &d%player_display% &c-"
   # Guild Spy message.
-  spy: "&d%leader_display%&a's PARTY &9>> &d%sender_display% &8: &e%message%"
+  spy: "&d%leader_display%&e's &3PARTY &9>> &d%sender_display% &8: &e%message%"
   # When it finds no party.
   no-party: "&cNo party found!"
   # Already made.
@@ -440,7 +440,7 @@ party:
   # %message% = Message user said being sent.
   chat:
     # Message format.
-    message: "&aPARTY &9&l>> &b%sender_display% &8: &f%message%"
+    message: "&3PARTY &9&l>> &b%sender_display% &8: &f%message%"
     # If the party is muted.
     muted: "&cSorry, but the party is muted!"
     # Message in discord console when people chat in parties.
@@ -807,7 +807,7 @@ guild:
   # When a player disconnects.
   disconnect: "&2GUILD &9> &d%player_display% &c-"
   # For Guild Spy.
-  spy: "&d%leader_display%&a's GUILD &9>> &d%sender_display% &8: &e%message%"
+  spy: "&d%leader_display%&e's &2GUILD &9>> &d%sender_display% &8: &e%message%"
   # When it finds no guild.
   no-guild: "&cNo guild found!"
   # Message shown when the name is too long.
@@ -957,7 +957,7 @@ guild:
   # %message% = Message user said being sent.
   chat:
     # Main message.
-    message: "&aGUILD &9&l>> &b%sender_display% &8: &f%message%"
+    message: "&2GUILD &9&l>> &b%sender_display% &8: &f%message%"
     # If the guild is muted.
     muted: "&cSorry, but the guild is muted!"
     # Message in discord console.
@@ -1884,12 +1884,9 @@ settings:
     # Fillers:
     # %number% = the number of the Chats page.
     # %set% = what you set it to.
-    proxy-chat-chats-local: "&eJust set &cProxy Chat Local &a#%number% &eto &b\"%set%&b\"&e!"
-    # Proxy Chat Global.
-    # Fillers:
-    # %number% = the number of the Chats page.
-    # %set% = what you set it to.
-    proxy-chat-chats-global: "&eJust set &cProxy Chat Global &a#%number% &eto &b\"%set%&b\"&e!"
+    # %channel% = the chat channel.
+    # %server_type% = bungee or discord.
+    proxy-chat-chats: "&eJust set &cProxy Chat %channel% &efor &5%server_type% &a#%number% &eto &b\"%set%&b\"&e!"
     # Proxy Chat Base Perm.
     # Fillers:
     # %set% = what you set it to.
@@ -1956,12 +1953,9 @@ settings:
     # Fillers:
     # %number% = the number of the Chats page.
     # %set% = what you set it to.
-    proxy-chat-chats-local: "&cProxy Chat Local &a#%number% &eis &b\"%set%&b\"&e!"
-    # Proxy Chat Global.
-    # Fillers:
-    # %number% = the number of the Chats page.
-    # %set% = what you set it to.
-    proxy-chat-chats-global: "&cProxy Chat Global &a#%number% &eis &b\"%set%&b\"&e!"
+    # %channel% = the chat channel.
+    # %server_type% = bungee or discord.
+    proxy-chat-chats: "&cProxy Chat %channel% &efor &5%server_type% &a#%number% &eis &b\"%set%&b\"&e!"
     # Proxy Chat Base Perm.
     # Fillers:
     # %set% = what you set it to.

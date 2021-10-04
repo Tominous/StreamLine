@@ -6,6 +6,7 @@ import net.plasmere.streamline.utils.MessagingUtils;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
+import net.plasmere.streamline.utils.PlayerUtils;
 
 public class StreamCommand extends Command {
     private String perm = "";
@@ -35,7 +36,10 @@ public class StreamCommand extends Command {
                         );
                     } else {
                         MessagingUtils.sendBCLHBroadcast(sender, MessageConfUtils.streamMessage()
-                                .replace("%user_display%", sender.getName())
+                                        .replace("%user_absolute%", player.getName())
+                                        .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                        .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                        .replace("%user_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                                 .replace("%link%", args[0])
                                 , MessageConfUtils.streamHoverPrefix()
                         );

@@ -71,6 +71,17 @@ commands:
         - "setchannel"
       # Put the ID of the Discord role here:
       permission: "put_id_here"
+    # The channel command.
+    verify:
+      # Enables / disables the use of the "staffonline" bot command.
+      enabled: true
+      # All aliases for the command. Listed in yml list format. Including the main command.
+      aliases:
+        - "v"
+        - "verify"
+        - "ver"
+      # Put the ID of the Discord role here:
+      permission: "put_id_here"
   # Bungee commands...
   bungee:
     # The ping command.
@@ -748,6 +759,18 @@ commands:
         aliases:
           - "chat"
           - "ch"
+      # The chat level command.
+      bverify:
+        # Enables / disables the use of the command.
+        enabled: true
+        # Main command that the aliases point to.
+        base: "bverify"
+        # Custom permission.
+        permission: "streamline.command.verify"
+        # All aliases for the command. Listed in yml list format.
+        aliases:
+          - "bv"
+          - "bver"
     # Debugging commands.
     debug:
       # The delete stat command.

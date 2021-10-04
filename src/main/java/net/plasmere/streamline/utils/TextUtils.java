@@ -270,7 +270,32 @@ public class TextUtils {
     }
 
     public static String codedString(String text){
-        return ChatColor.translateAlternateColorCodes('&', newLined(text));
+        return ChatColor.translateAlternateColorCodes('&', formatted(newLined(text)));
+    }
+
+    public static String formatted(String string) {
+        String[] strings = string.split(" ");
+
+        for (int i = 0; i < strings.length; i ++) {
+            if (strings[i].toLowerCase(Locale.ROOT).startsWith("<to_upper>")) {
+                strings[i] = strings[i].toUpperCase(Locale.ROOT).replace("<TO_UPPER>", "");
+            }
+            if (strings[i].toLowerCase(Locale.ROOT).startsWith("<to_lower>")) {
+                strings[i] = strings[i].toLowerCase(Locale.ROOT).replace("<to_lower>", "");
+            }
+        }
+
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < strings.length; i ++) {
+            if (i == strings.length - 1) {
+                builder.append(strings[i]);
+            } else {
+                builder.append(strings[i]).append(" ");
+            }
+        }
+
+        return builder.toString();
     }
 
     public static TextComponent makeLinked(String text, String url){

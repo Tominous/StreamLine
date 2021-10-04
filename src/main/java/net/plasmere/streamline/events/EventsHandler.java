@@ -240,8 +240,10 @@ public class EventsHandler {
 
     public static String adjust(Event event, Player player, int i){
         return event.actions.get(i).value
-                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
                 .replace("%player_absolute%", player.getName())
+                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(player))
                 .replace("%uniques%", String.valueOf(StreamLine.getInstance().getPlDir().listFiles().length))
                 .replace("%time%", String.valueOf(new Date()))
                 ;
@@ -249,8 +251,10 @@ public class EventsHandler {
 
     public static String adjust(Event event, Player player, int i, String context){
         return event.actions.get(i).value
-                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
                 .replace("%player_absolute%", player.getName())
+                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(player))
                 .replace("%uniques%", String.valueOf(StreamLine.getInstance().getPlDir().listFiles().length))
                 .replace("%time%", String.valueOf(new Date()))
                 .replace(("%arg:" + findArgAmount(event.actions.get(i).value) + "%"), extractArg(event, context, i))
