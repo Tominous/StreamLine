@@ -7,15 +7,20 @@ channels:
   'put_id_here1':
     type: "GLOBAL"
     identifier: ""
+    bypass: true
   'put_id_here2':
     type: "GLOBAL"
     identifier: "streamline.channels.taco"
+    bypass: true
   'put_id_here3':
     type: "GUILD"
     identifier: "c4c95a91-3bbb-49e3-9b79-6abe892e39a9"
+    bypass: true
   'put_id_here4':
     type: "PARTY"
     identifier: "c4c95a91-3bbb-49e3-9b79-6abe892e39a9"
+    bypass: true
   'put_id_here5':
     type: "LOCAL"
     identifier: "lobby"
+    bypass: true

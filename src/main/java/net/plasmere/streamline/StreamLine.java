@@ -375,7 +375,11 @@ public class StreamLine extends Plugin {
 		// Set up ConsolePlayer.
 		ConsolePlayer console = PlayerUtils.applyConsole();
 		if (GuildUtils.existsByUUID(console.guild)) {
-			GuildUtils.addGuild(new Guild(console.guild, false));
+			try {
+				GuildUtils.addGuild(new Guild(console.guild, false));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		// Setting up Player's HistorySave files.

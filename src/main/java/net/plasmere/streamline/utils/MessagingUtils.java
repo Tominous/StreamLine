@@ -1000,8 +1000,14 @@ public class MessagingUtils {
             }
 
             sender.sendMessage(TextUtils.codedText(msg
-                    .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSavableUser(sender)))
-                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                    .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreatePlayerStat(sender)))
+                    .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrCreatePlayerStat(sender)))
+                    .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrCreatePlayerStat(sender)))
+                    .replace("%sender_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrCreatePlayerStat(sender)))
+                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(user))
+                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(user))
+                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(user))
+                    .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(user))
                     .replace("%total_xp%", Integer.toString(player.totalXP))
                     .replace("%xp%", Integer.toString(player.getCurrentXP()))
                     .replace("%level%", Integer.toString(player.lvl))

@@ -43,7 +43,7 @@ public class Guild {
         LEADER
     }
 
-    public Guild(String creatorUUID, String name) {
+    public Guild(String creatorUUID, String name) throws IOException {
         this.leaderUUID = creatorUUID;
         this.name = name;
         this.totalMembersByUUID.add(creatorUUID);
@@ -56,11 +56,11 @@ public class Guild {
         construct(leaderUUID, true);
     }
 
-    public Guild(String uuid, boolean create){
+    public Guild(String uuid, boolean create) throws IOException {
         construct(uuid, create);
     }
 
-    public void createCheck(String thing){
+    public void createCheck(String thing) throws IOException {
         if (thing.contains("-")){
             construct(thing, false);
         } else {
@@ -68,7 +68,7 @@ public class Guild {
         }
     }
 
-    private void construct(String uuid, boolean createNew){
+    private void construct(String uuid, boolean createNew) throws IOException {
         if (uuid == null) return;
 
         this.file = UUIDUtils.getCachedFile(StreamLine.getInstance().getGDir(), uuid);
@@ -81,11 +81,7 @@ public class Guild {
             }
         }
 
-        try {
-            getFromConfigFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        getFromConfigFile();
     }
 
     public TreeMap<String, String> getInfo() {

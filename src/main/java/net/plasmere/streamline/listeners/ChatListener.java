@@ -25,6 +25,7 @@ import net.md_5.bungee.event.EventPriority;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.TreeMap;
 
 public class ChatListener implements Listener {
     private final String prefix = ConfigUtils.moduleStaffChatPrefix;
@@ -132,90 +133,136 @@ public class ChatListener implements Listener {
         }
 
 
-        if (StreamLine.serverConfig.getProxyChatEnabled() && ! isStaffMessage) {
-            if (ConfigUtils.moduleDPC) if (ConfigUtils.moduleDPCConsole) {
-                MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
-                        ConfigUtils.moduleDPCConsoleTitle,
-                        ConfigUtils.moduleDPCConsoleMessage
-                                .replace("%message%", msg),
-                        DiscordBotConfUtils.textChannelProxyChat
-                ),
-                        ConfigUtils.moduleDPCConsoleUseAvatar
-                );
-            }
-
-            boolean allowGlobal = StreamLine.serverConfig.getAllowGlobal();
-            boolean allowLocal = StreamLine.serverConfig.getAllowLocal();
-
-            if (allowGlobal || allowLocal) {
-                if (!allowGlobal && stat.chatLevel.equals(ChatLevel.GLOBAL)) {
-                    stat.setChatLevel(ChatLevel.LOCAL);
-                }
-                if (!allowLocal && stat.chatLevel.equals(ChatLevel.LOCAL)) {
-                    stat.setChatLevel(ChatLevel.GLOBAL);
+        if (! isStaffMessage) {
+            if (StreamLine.serverConfig.getProxyChatEnabled()) {
+                if (ConfigUtils.moduleDPC) if (ConfigUtils.moduleDPCConsole) {
+                    MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
+                                    ConfigUtils.moduleDPCConsoleTitle,
+                                    ConfigUtils.moduleDPCConsoleMessage
+                                            .replace("%message%", msg),
+                                    DiscordBotConfUtils.textChannelProxyChat
+                            ),
+                            ConfigUtils.moduleDPCConsoleUseAvatar
+                    );
                 }
 
+                boolean allowGlobal = StreamLine.serverConfig.getAllowGlobal();
+                boolean allowLocal = StreamLine.serverConfig.getAllowLocal();
+
+                if (allowGlobal || allowLocal) {
+                    if (!allowGlobal && stat.chatLevel.equals(ChatLevel.GLOBAL)) {
+                        stat.setChatLevel(ChatLevel.LOCAL);
+                    }
+                    if (!allowLocal && stat.chatLevel.equals(ChatLevel.LOCAL)) {
+                        stat.setChatLevel(ChatLevel.GLOBAL);
+                    }
+
+                    if (stat.chatLevel.equals(ChatLevel.GLOBAL)) {
+                        String format = StreamLine.serverConfig.getPermissionedProxyChatMessageGlobal(stat, MessageServerType.BUNGEE);
+                        SingleSet<String, List<ProxiedPlayer>> msgWithTagged = TextUtils.getMessageWithTags(sender, msg, format);
+
+                        String withEmotes = TextUtils.getMessageWithEmotes(sender, msgWithTagged.key);
+
+                        MessagingUtils.sendGlobalMessageFromUser(sender, sender.getServer(), format, withEmotes);
+
+                        for (ProxiedPlayer player : msgWithTagged.value) {
+                            MessagingUtils.sendTagPingPluginMessageRequest(player);
+                        }
+
+                        if (StreamLine.serverConfig.getProxyChatConsoleEnabled()) {
+                            MessagingUtils.sendMessageFromUserToConsole(sender, sender.getServer(), format, withEmotes);
+                        }
+
+                        if (ConfigUtils.moduleDPC) {
+                            StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.GLOBAL, "", msg);
+                        }
+
+                        e.setCancelled(true);
+                    } else if (stat.chatLevel.equals(ChatLevel.LOCAL)) {
+                        String format = StreamLine.serverConfig.getPermissionedProxyChatMessageLocal(stat, MessageServerType.BUNGEE);
+                        SingleSet<String, List<ProxiedPlayer>> msgWithTagged = TextUtils.getMessageWithTags(sender, msg, format);
+
+                        String withEmotes = TextUtils.getMessageWithEmotes(sender, msgWithTagged.key);
+
+                        MessagingUtils.sendServerMessageFromUser(sender, sender.getServer(), format, withEmotes);
+
+                        for (ProxiedPlayer player : msgWithTagged.value) {
+                            MessagingUtils.sendTagPingPluginMessageRequest(player);
+                        }
+
+                        if (StreamLine.serverConfig.getProxyChatConsoleEnabled()) {
+                            MessagingUtils.sendMessageFromUserToConsole(sender, sender.getServer(), format, withEmotes);
+                        }
+
+                        if (ConfigUtils.moduleDPC) {
+                            StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.LOCAL, sender.getServer().getInfo().getName(), msg);
+                        }
+
+                        e.setCancelled(true);
+                    }
+                }
+
+                if (stat.chatLevel.equals(ChatLevel.GUILD)) {
+                    GuildUtils.sendChat(stat, msg);
+
+                    e.setCancelled(true);
+                }
+                if (stat.chatLevel.equals(ChatLevel.PARTY)) {
+                    PartyUtils.sendChat(stat, msg);
+
+                    e.setCancelled(true);
+                }
+            } else {
                 if (stat.chatLevel.equals(ChatLevel.GLOBAL)) {
-                    String format = StreamLine.serverConfig.getPermissionedProxyChatMessageGlobal(stat, MessageServerType.BUNGEE);
-                    SingleSet<String, List<ProxiedPlayer>> msgWithTagged = TextUtils.getMessageWithTags(sender, msg, format);
+                    if (StreamLine.discordData.ifHasChannels(ChatChannel.GLOBAL, "")) {
+                        TreeMap<Long, Boolean> ifHas = StreamLine.discordData.ifChannelBypasses(ChatChannel.GLOBAL, "");
+                        for (Long l : ifHas.keySet()) {
+                            if (!ifHas.get(l)) continue;
 
-                    String withEmotes = TextUtils.getMessageWithEmotes(sender, msgWithTagged.key);
-
-                    MessagingUtils.sendGlobalMessageFromUser(sender, sender.getServer(), format, withEmotes);
-
-                    for (ProxiedPlayer player : msgWithTagged.value) {
-                        MessagingUtils.sendTagPingPluginMessageRequest(player);
+                            StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.GLOBAL, "", msg);
+                        }
                     }
-
-                    if (StreamLine.serverConfig.getProxyChatConsoleEnabled()) {
-                        MessagingUtils.sendMessageFromUserToConsole(sender, sender.getServer(), format, withEmotes);
-                    }
-
-                    if (ConfigUtils.moduleDPC) {
-                        StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.GLOBAL, "", msg);
-                    }
-
-                    e.setCancelled(true);
-                } else if (stat.chatLevel.equals(ChatLevel.LOCAL)) {
-                    String format = StreamLine.serverConfig.getPermissionedProxyChatMessageLocal(stat, MessageServerType.BUNGEE);
-                    SingleSet<String, List<ProxiedPlayer>> msgWithTagged = TextUtils.getMessageWithTags(sender, msg, format);
-
-                    String withEmotes = TextUtils.getMessageWithEmotes(sender, msgWithTagged.key);
-
-                    MessagingUtils.sendServerMessageFromUser(sender, sender.getServer(), format, withEmotes);
-
-                    for (ProxiedPlayer player : msgWithTagged.value) {
-                        MessagingUtils.sendTagPingPluginMessageRequest(player);
-                    }
-
-                    if (StreamLine.serverConfig.getProxyChatConsoleEnabled()) {
-                        MessagingUtils.sendMessageFromUserToConsole(sender, sender.getServer(), format, withEmotes);
-                    }
-
-                    if (ConfigUtils.moduleDPC) {
-                        StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.LOCAL, sender.getServer().getInfo().getName(), msg);
-                    }
-
-                    e.setCancelled(true);
                 }
-            }
 
-            if (stat.chatLevel.equals(ChatLevel.GUILD)) {
-                GuildUtils.sendChat(stat, msg);
+                if (stat.chatLevel.equals(ChatLevel.LOCAL)) {
+                    if (StreamLine.discordData.ifHasChannels(ChatChannel.LOCAL, sender.getServer().getInfo().getName())) {
+                        TreeMap<Long, Boolean> ifHas = StreamLine.discordData.ifChannelBypasses(ChatChannel.LOCAL, sender.getServer().getInfo().getName());
+                        for (Long l : ifHas.keySet()) {
+                            if (!ifHas.get(l)) continue;
 
-                e.setCancelled(true);
-            }
-            if (stat.chatLevel.equals(ChatLevel.PARTY)) {
-                PartyUtils.sendChat(stat, msg);
+                            StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.LOCAL, sender.getServer().getInfo().getName(), msg);
+                        }
+                    }
+                }
 
-                e.setCancelled(true);
+//            if (stat.chatLevel.equals(ChatLevel.GUILD)) {
+//
+//
+//                if (StreamLine.discordData.ifHasChannels(ChatChannel.GUILD, )) {
+//                    TreeMap<Long, Boolean> ifHas = StreamLine.discordData.ifChannelBypasses(ChatChannel.GUILD, sender.getServer().getInfo().getName());
+//                    for (Long l : ifHas.keySet()) {
+//                        if (! ifHas.get(l)) continue;
+//
+//                        StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.GUILD, sender.getServer().getInfo().getName(), msg);
+//                    }
+//                }
+//            }
+//
+//            if (stat.chatLevel.equals(ChatLevel.PARTY)) {
+//                if (StreamLine.discordData.ifHasChannels(ChatChannel.PARTY, sender.getServer().getInfo().getName())) {
+//                    TreeMap<Long, Boolean> ifHas = StreamLine.discordData.ifChannelBypasses(ChatChannel.PARTY, sender.getServer().getInfo().getName());
+//                    for (Long l : ifHas.keySet()) {
+//                        if (! ifHas.get(l)) continue;
+//
+//                        StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.PARTY, sender.getServer().getInfo().getName(), msg);
+//                    }
+//                }
+//            }
             }
         }
 
         if (ConfigUtils.chatHistoryEnabled) {
-            HistorySave historySave = PlayerUtils.getChatHistory(stat.uuid);
-
-            historySave.addLine(msg);
+            PlayerUtils.addLineToChatHistory(stat.uuid, sender.getServer().getInfo().getName(), msg);
         }
 
         if (ConfigUtils.events) {

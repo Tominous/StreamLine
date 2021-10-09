@@ -25,36 +25,45 @@ public class ChannelCommand {
         long channelID = event.getChannel().getIdLong();
 
         if (args.length < 2) {
-            return "Improper syntax!\nUsage: channel <set | remove> <global | local | guild | party> <identifier>";
+            return "Improper syntax!\nUsage: channel <set | remove> <global | local | guild | party> <identifier> <bypass: true or false>";
         }
 
         switch (args[1]) {
             case "set":
                 if (args.length < 4) {
-                    return "Improper syntax!\nUsage: channel <set | remove> <global | local | guild | party> <identifier>";
+                    return "Improper syntax!\nUsage: channel <set | remove> <global | local | guild | party> <identifier> <bypass: true or false>";
+                }
+
+                boolean bypass = false;
+
+                try {
+                    bypass = Boolean.parseBoolean(args[4]);
+                } catch (Exception e) {
+//                    e.printStackTrace();
+                    return "Must specify if bypass is enabled!\nUsage: channel <set | remove> <global | local | guild | party> <identifier> <bypass: true or false>";
                 }
 
                 switch (args[2]) {
                     case "global":
-                        StreamLine.discordData.addChannel(channelID, ChatChannel.GLOBAL.toString(), args[3]);
+                        StreamLine.discordData.addChannel(channelID, ChatChannel.GLOBAL.toString(), args[3], bypass);
                         return "Successfully added channel ``" + channelID + "`` to your set channels as: <GLOBAL , " + args[3] + ">!";
                     case "local":
-                        StreamLine.discordData.addChannel(channelID, ChatChannel.LOCAL.toString(), args[3]);
+                        StreamLine.discordData.addChannel(channelID, ChatChannel.LOCAL.toString(), args[3], bypass);
                         return "Successfully added channel ``" + channelID + "`` to your set channels as: <LOCAL , " + args[3] + ">!";
                     case "guild":
-                        StreamLine.discordData.addChannel(channelID, ChatChannel.GUILD.toString(), args[3]);
+                        StreamLine.discordData.addChannel(channelID, ChatChannel.GUILD.toString(), args[3], bypass);
                         return "Successfully added channel ``" + channelID + "`` to your set channels as: <GUILD , " + args[3] + ">!";
                     case "party":
-                        StreamLine.discordData.addChannel(channelID, ChatChannel.PARTY.toString(), args[3]);
+                        StreamLine.discordData.addChannel(channelID, ChatChannel.PARTY.toString(), args[3], bypass);
                         return "Successfully added channel ``" + channelID + "`` to your set channels as: <PARTY , " + args[3] + ">!";
                     default:
-                        return "Improper syntax!\nUsage: channel <set | remove> <global | local | guild | party> <identifier>";
+                        return "Improper syntax!\nUsage: channel <set | remove> <global | local | guild | party> <identifier> <bypass: true or false>";
                 }
             case "remove":
                 StreamLine.discordData.remChannel(channelID);
                 return "Successfully removed channel ``" + channelID + "`` from your set channels!";
             default:
-                return "Improper syntax!\nUsage: channel <set | remove> <global | local | guild | party> <identifier>";
+                return "Improper syntax!\nUsage: channel <set | remove> <global | local | guild | party> <identifier> <bypass: true or false>";
         }
     }
 }

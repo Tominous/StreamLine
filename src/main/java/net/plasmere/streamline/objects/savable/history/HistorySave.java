@@ -1,53 +1,105 @@
 package net.plasmere.streamline.objects.savable.history;
 
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
+import java.nio.file.Files;
+import java.time.Instant;
+import java.util.Date;
 import java.util.TreeMap;
 
 public class HistorySave {
-    public File saveFile;
+    private Configuration conf;
+    public String fileString;
+    public File file;
     public String uuid;
 
     public HistorySave(String uuid) {
-        this.saveFile = new File(StreamLine.getInstance().getChatHistoryDir(), uuid + ".save");
+        this.fileString = uuid + ".yml";
+        this.file = new File(StreamLine.getInstance().getChatHistoryDir(), this.fileString);
         this.uuid = uuid;
     }
 
-    public String addLine(String line) {
+    public void reloadConfig(){
         try {
-            if (! saveFile.exists()) if (! saveFile.createNewFile()) if (ConfigUtils.debug) MessagingUtils.logWarning("Cannot create file for " + uuid);
+            conf = loadConfig();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
-            TreeMap<Integer, String> lines = new TreeMap<>();
-            int l = 0;
-
-            FileReader fileReader = new FileReader(saveFile);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String string = "";
-            while ((string = bufferedReader.readLine()) != null) {
-                lines.put(l, string);
-                l ++;
+    public Configuration loadConfig(){
+        if (! file.exists()){
+            try	(InputStream in = StreamLine.getInstance().getResourceAsStream(fileString)){
+                Files.copy(in, file.toPath());
+            } catch (IOException e){
+                e.printStackTrace();
             }
-            bufferedReader.close();
+        }
 
-            saveFile.delete();
-            saveFile.createNewFile();
+        Configuration thing = new Configuration();
 
-            FileWriter writer = new FileWriter(saveFile);
-            for (int i = 0; i < lines.size(); i ++) {
-                writer.write(lines.get(i) + "\n");
-            }
-            writer.write(line + "\n");
-            writer.close();
+        try {
+            thing = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file); // ???
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return line;
+        return thing;
     }
+
+    public void saveConfig() {
+        try {
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(conf, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String addLine(String server, String message) {
+        return addLine(server, Instant.now().toEpochMilli(), message);
+    }
+
+    public String addLine(String server, long milliDate, String message) {
+        conf.set(server + "." + milliDate, message);
+        reloadConfig();
+        return message;
+    }
+
+//    public String addLine(String line) {
+//        try {
+//            if (! file.exists()) if (! file.createNewFile()) if (ConfigUtils.debug) MessagingUtils.logWarning("Cannot create file for " + uuid);
+//
+//            TreeMap<Integer, String> lines = new TreeMap<>();
+//            int l = 0;
+//
+//            FileReader fileReader = new FileReader(file);
+//            BufferedReader bufferedReader = new BufferedReader(fileReader);
+//            String string = "";
+//            while ((string = bufferedReader.readLine()) != null) {
+//                lines.put(l, string);
+//                l ++;
+//            }
+//            bufferedReader.close();
+//
+//            file.delete();
+//            file.createNewFile();
+//
+//            FileWriter writer = new FileWriter(file);
+//            for (int i = 0; i < lines.size(); i ++) {
+//                writer.write(lines.get(i) + "\n");
+//            }
+//            writer.write(line + "\n");
+//            writer.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return line;
+//    }
 }

@@ -58,7 +58,11 @@ public class GuildUtils {
 
         if (guild == null) {
             if (existsByUUID(uuid)) {
-                guild = new Guild(uuid, false);
+                try {
+                    guild = new Guild(uuid, false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -119,20 +123,29 @@ public class GuildUtils {
         return guilds.contains(guild);
     }
 
-    public static boolean pHasGuild(SavableUser player){
+    public static boolean pHasGuild(SavableUser player) {
+        if (!existsByUUID(player.uuid)) return false;
+
+        Guild guild;
         try {
-            if (! existsByUUID(player.uuid)) return false;
-
-            Guild guild = new Guild(player.guild, false);
-
-            if (guild.leaderUUID == null) {
-                return false;
+            guild = new Guild(player.guild, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } catch (NullPointerException e) {
+            if (ConfigUtils.debug) {
+                MessagingUtils.logWarning("Player's guild could not be found... Adding now!");
             }
 
+            player.updateKey("guild", player.uuid);
             return true;
-        } catch (Exception e) {
+        }
+
+        if (guild.leaderUUID == null) {
             return false;
         }
+
+        return true;
     }
 
     public static boolean checkPlayer(Guild guild, SavableUser player, SavableUser sender){

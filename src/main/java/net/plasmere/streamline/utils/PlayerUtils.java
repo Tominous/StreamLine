@@ -1792,12 +1792,12 @@ public class PlayerUtils {
         }
     }
 
-    public static String addLineToChatHistory(String uuid, String line) {
-        return addLineToChatHistory(getChatHistory(uuid), line);
+    public static String addLineToChatHistory(String uuid, String server, String message) {
+        return addLineToChatHistory(getChatHistory(uuid), server, message);
     }
 
-    public static String addLineToChatHistory(HistorySave save, String line) {
-        return save.addLine(line);
+    public static String addLineToChatHistory(HistorySave save, String server, String message) {
+        return save.addLine(server, message);
     }
 
     // No stats.
