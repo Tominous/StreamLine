@@ -27,21 +27,21 @@ public class SudoCommand extends Command implements TabExecutor {
 
             if (sudoOn.hasPermission(ConfigUtils.noSudoPerm)){
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoNoSudo()
-                        .replace("%user_absolute%", sudoOn.getName())
-                        .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sudoOn)))
-                        .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sudoOn)))
-                        .replace("%user_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sudoOn)))
+                        .replace("%player_absolute%", sudoOn.getName())
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sudoOn)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sudoOn)))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sudoOn)))
                 );
                 return;
             }
 
             if (StreamLine.getInstance().getProxy().getPluginManager().dispatchCommand(sudoOn, TextUtils.argsToStringMinus(args, 0))){
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoWorked()
-                        .replace("%user_display%", sudoOn.getDisplayName())
+                        .replace("%player_display%", sudoOn.getDisplayName())
                 );
             } else {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoNoWork()
-                        .replace("%user_display%", sudoOn.getDisplayName())
+                        .replace("%player_display%", sudoOn.getDisplayName())
                 );
             }
         }

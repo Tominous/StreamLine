@@ -41,10 +41,10 @@ public class StaffChatCommand extends Command {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                                 MessageConfUtils.staffChatEmbedTitle(),
                                 MessageConfUtils.discordStaffChatMessage()
-                                        .replace("%user_absolute%", sender.getName())
-                                        .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
-                                        .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
-                                        .replace("%user_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                        .replace("%player_absolute%", sender.getName())
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                                         .replace("%message%", TextUtils.normalize(args)),
                                 DiscordBotConfUtils.textChannelStaffChat));
                     }

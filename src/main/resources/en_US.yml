@@ -165,13 +165,13 @@ staffchat:
     # Title of the embeded staff chat message (on Discord).
     embed-title: "STAFF"
     # Fillers:
-    # %user_formatted% = who chatted.
+    # %player_formatted% = who chatted.
     # %message% = the message said.
     # %from_formatted% = where the message originated. i.e. bungeecord or discord
     # Message on Discord.
     discord: "%message%"
     # Message on bungee.
-    bungee: "&2&lSTAFF &7&l>> &a%user_formatted% &7[%from_formatted%&7] &e(&4%server%&e) &8: &e%message%"
+    bungee: "&2&lSTAFF &7&l>> &a%player_formatted% &7[%from_formatted%&7] &e(&4%server%&e) &8: &e%message%"
     # Text to use when using "%from_formatted%" in your messages.
     from:
       # If message originated from Discord.
@@ -343,7 +343,7 @@ party:
   # Message for when someone joins a party...
   join:
     # Fillers:
-    # %user_formatted% = the person joining.
+    # %player_formatted% = the person joining.
     # %leader_formatted% = the party leader.
     # Members of the party.
     members: "&b%sender_formatted% &ejust joined the party!"
@@ -364,7 +364,7 @@ party:
   # Message for when someone leaves a party...
   leave:
     # Fillers:
-    # %user_formatted% = the person joining.
+    # %player_formatted% = the person joining.
     # %leader_formatted% = the party leader.
     # Members of the party.
     members: "&b%sender_formatted% &ejust left the party."
@@ -383,55 +383,55 @@ party:
   # Message for when promoting someone...
   promote:
     # Fillers:
-    # %user_formatted% = the person being promoted.
+    # %player_formatted% = the person being promoted.
     # %leader_formatted% = the party leader.
     # %level% = the permission level the person is going to.
     # Members of party.
-    members: "&b%sender_formatted% &ejust promoted &b%user_formatted% &eto &c%level%&e in the party!"
+    members: "&b%sender_formatted% &ejust promoted &b%player_formatted% &eto &c%level%&e in the party!"
     # User being promoted.
     user: "&eYou were just promoted to &c%level% &ein the party!"
     # Party leader.
-    leader: "&eYou just promoted &b%user_formatted% to &c%level%&e!"
+    leader: "&eYou just promoted &b%player_formatted% to &c%level%&e!"
     # If failed.
     failure: "&cAlready at highest level."
     # Message in discord console.
     # Options:
-    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %player_formatted% = the user-the-action-is-being-used-on's display name.
     # %sender_formatted% = the player's display name.
     # %leader_formatted% = the leader-of-the-group's display name.
-    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %player_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
-    console: "%sender_absolute% promoted %user_normal% in %leader_normal%'s party!"
+    console: "%sender_absolute% promoted %player_normal% in %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY PROMOTE"
   # Message for demoting someone...
   demote:
     # Fillers:
-    # %user_formatted% = the person being demoted.
+    # %player_formatted% = the person being demoted.
     # %leader_formatted% = the party leader.
     # %level% = the permission level the person is going to.
     # Members of party.
-    members: "&b%sender_formatted% &ejust demoted &b%user_formatted% &eto &c%level%&e in the party."
+    members: "&b%sender_formatted% &ejust demoted &b%player_formatted% &eto &c%level%&e in the party."
     # User being demoted.
     user: "&eYou were just demoted to &c%level% &ein the party."
     # Party leader.
-    leader: "&eYou just demoted &b%user_formatted% to &c%level%&e."
+    leader: "&eYou just demoted &b%player_formatted% to &c%level%&e."
     # If failed.
     failure: "&cAlready at lowest level."
     # If you are the party leader.
     is-leader: "&cCannot demote yourself..."
     # Message in discord console.
     # Options:
-    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %player_formatted% = the user-the-action-is-being-used-on's display name.
     # %sender_formatted% = the player's display name.
     # %leader_formatted% = the leader-of-the-group's display name.
-    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %player_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
-    console: "%sender_absolute% demoted %user_normal% in %leader_normal%'s party!"
+    console: "%sender_absolute% demoted %player_normal% in %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY DEMOTE"
   # Message when someone chats...
@@ -460,7 +460,7 @@ party:
     # %leaderbulk% = leaderbulk section.
     # %moderatorbulk% = moderatorbulk section.
     # %memberbulk% = memberbulk section.
-    # %user_formatted% = (only in context of "not-last" and "last") the specific member in the list of members
+    # %player_formatted% = (only in context of "not-last" and "last") the specific member in the list of members
     # %sender_formatted% = the one running the command.
     # Main message used to determine the other of parts of the message...
     main: "&7--< &5Party &6%size%&8/&6%max% &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
@@ -473,9 +473,9 @@ party:
       # For mods.
       moderators:
         # If not last mod.
-        not-last: "&b%user_formatted%&e, "
+        not-last: "&b%player_formatted%&e, "
         # If last.
-        last: "&b%user_formatted%&e."
+        last: "&b%player_formatted%&e."
         # If there are none.
         if-none: "&cNONE"
     # Bulk member message.
@@ -485,9 +485,9 @@ party:
       # Members in party.
       members:
         # If not last in party.
-        not-last: "&7%user_formatted%&e, "
+        not-last: "&7%player_formatted%&e, "
         # If last.
-        last: "&7%user_formatted%&e."
+        last: "&7%player_formatted%&e."
         # If there are none.
         if-none: "&cNONE"
   # Message for opening the party...
@@ -551,14 +551,14 @@ party:
   # Message for accepting an invite to a party...
   accept:
     # Fillers:
-    # %user_formatted% = the accepter.
+    # %player_formatted% = the accepter.
     # %leader_formatted% = the party leader.
     # User who accepts.
     user: "&eAccepted the request to &b%leader_formatted%&e's party."
     # Leader of party.
-    leader: "&b%user_formatted% &ejust &aaccepted &eyour invite!"
+    leader: "&b%player_formatted% &ejust &aaccepted &eyour invite!"
     # Members of party.
-    members: "&b%user_formatted% &ejust &aaccepted &ethe invite!"
+    members: "&b%player_formatted% &ejust &aaccepted &ethe invite!"
     # If failed.
     failure: "&cNo invites!"
     # Message in discord console.
@@ -574,14 +574,14 @@ party:
   # Message for denying an invite to a party...
   deny:
     # Fillers:
-    # %user_formatted% = the accepter.
+    # %player_formatted% = the accepter.
     # %leader_formatted% = the party leader.
     # User who denied.
     user: "&eDenied the request to &b%leader_formatted%&e's party."
     # Leader of party.
-    leader: "&b%user_formatted% &ejust &cdenied &eyour invite!"
+    leader: "&b%player_formatted% &ejust &cdenied &eyour invite!"
     # Members of party.
-    members: "&b%user_formatted% &ejust &cdenied &ethe invite!"
+    members: "&b%player_formatted% &ejust &cdenied &ethe invite!"
     # If failed.
     failure: "&cNo invites!"
     # Message in discord console.
@@ -598,41 +598,41 @@ party:
   invite:
     # Fillers:
     # %sender_formatted% = person sending the request.
-    # %user_formatted% = the accepter.
+    # %player_formatted% = the accepter.
     # %leader_formatted% = the party leader.
     # %leader_normal% = the party leader formatted without their display name.
     # User who is being invited.
     user: "&b%sender_formatted% &einvited you to &b%leader_formatted%&e's party!%newline%&eType &a/party accept %leader_absolute% &eto join!"
     # Members of party.
-    members: "&b%sender_formatted% &einvited &b%user_formatted% &eto your party!"
+    members: "&b%sender_formatted% &einvited &b%player_formatted% &eto your party!"
     # Leader of party.
-    leader: "&eJust invited &b%user_formatted% &eto your party!"
+    leader: "&eJust invited &b%player_formatted% &eto your party!"
     # If failed.
     failure: "&cAlready invited this person."
     # If self.
     non-self: "&cCannot invite yourself!"
     # Message in discord console.
     # Options:
-    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %player_formatted% = the user-the-action-is-being-used-on's display name.
     # %sender_formatted% = the player's display name.
     # %leader_formatted% = the leader-of-the-group's display name.
-    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %player_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
-    console: "%sender_absolute% invited %user_normal% to %leader_normal%'s party!"
+    console: "%sender_absolute% invited %player_normal% to %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY INVITE"
   # Messages for kicking...
   kick:
     # Fillers:
-    # %user_formatted% = the person being kicked.
+    # %player_formatted% = the person being kicked.
     # User who is kicked.
     user: "&b%sender_formatted% &ekicked you from their party."
     # Members of party.
-    members: "&b%user_formatted% &ewas kicked by &b%leader_formatted% &e from the party."
+    members: "&b%player_formatted% &ewas kicked by &b%leader_formatted% &e from the party."
     # Sender of command.
-    sender: "&eYou kicked &b%user_formatted% &efrom your party."
+    sender: "&eYou kicked &b%player_formatted% &efrom your party."
     # If failed.
     failure: "&cThis player is not in the party."
     # If it is a mod being kicked.
@@ -641,14 +641,14 @@ party:
     self: "&cCannot kick self."
     # Message in discord console.
     # Options:
-    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %player_formatted% = the user-the-action-is-being-used-on's display name.
     # %sender_formatted% = the player's display name.
     # %leader_formatted% = the leader-of-the-group's display name.
-    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %player_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %size% = the size of the party.
-    console: "%sender_absolute% kicked %user_normal% from %leader_normal%'s party!"
+    console: "%sender_absolute% kicked %player_normal% from %leader_normal%'s party!"
     # Discord embed title.
     title: "PARTY KICK"
   # Messages for muting...
@@ -706,7 +706,7 @@ stream:
   # If what they supplied wasn't a link.
   not-link: "&cSorry, but you need to specify a link beginning with \"https://\"..."
   # Message: (Do not put anything directly after the link. You need a space!
-  message: "&a%user_formatted% &dis streaming at &b&n%link%&8... &dCome and check it out!"
+  message: "&a%player_formatted% &dis streaming at &b&n%link%&8... &dCome and check it out!"
   # Hover formatted prefix.
   hover-prefix: "&b&o&n"
 
@@ -735,27 +735,27 @@ parties:
   # Mods in message.
   mods:
     # If not last in list.
-    not-last: "&d%user_formatted%&e, "
+    not-last: "&d%player_formatted%&e, "
     # If last.
-    last: "&d%user_formatted%"
+    last: "&d%player_formatted%"
   # Members in message.
   members:
     # If not last in list.
-    not-last: "&d%user_formatted%&e, "
+    not-last: "&d%player_formatted%&e, "
     # If last.
-    last: "&d%user_formatted%"
+    last: "&d%player_formatted%"
   # Invites in message.
   invites:
     # If not last in list.
-    not-last: "&d%user_formatted%&e, "
+    not-last: "&d%player_formatted%&e, "
     # If last.
-    last: "&d%user_formatted%"
+    last: "&d%player_formatted%"
   # Total members in message.
   totalmembers:
     # If not last in list.
-    not-last: "&d%user_formatted%&e, "
+    not-last: "&d%player_formatted%&e, "
     # If last.
-    last: "&d%user_formatted%"
+    last: "&d%player_formatted%"
   # Message for if public.
   ispublic:
     # If it is.
@@ -772,13 +772,13 @@ parties:
 # For command "sudo":
 sudo:
   # Fillers:
-  # %user_formatted% = the user being sudo-ed.
+  # %player_formatted% = the user being sudo-ed.
   # If it worked.
-  worked: "&eJust sudoed &d%user_formatted%&e."
+  worked: "&eJust sudoed &d%player_formatted%&e."
   # If it didn't.
-  no-work: "&cFailed to sudo &d%user_formatted%&c."
+  no-work: "&cFailed to sudo &d%player_formatted%&c."
   # If you cannot sudo that player.
-  no-sudo: "&cSorry, but you cannot sudo &d%user_formatted%&c..."
+  no-sudo: "&cSorry, but you cannot sudo &d%player_formatted%&c..."
 
 # When using guild...
 guild:
@@ -855,7 +855,7 @@ guild:
   # Message for when someone joins a guild...
   join:
     # Fillers:
-    # %user_formatted% = the person joining.
+    # %player_formatted% = the person joining.
     # %leader_formatted% = the guild leader.
     # For members.
     members: "&b%sender_formatted% &ejust joined the guild!"
@@ -877,7 +877,7 @@ guild:
   # Message for when someone leaves a guild...
   leave:
     # Fillers:
-    # %user_formatted% = the person joining.
+    # %player_formatted% = the person joining.
     # %leader_formatted% = the guild leader.
     # For members.
     members: "&b%sender_formatted% &ejust left the guild."
@@ -898,57 +898,57 @@ guild:
   # Message for when promoting someone...
   promote:
     # Fillers:
-    # %user_formatted% = the person being promoted.
+    # %player_formatted% = the person being promoted.
     # %leader_formatted% = the guild leader.
     # %level% = the permission level the person is going to.
     # For members.
-    members: "&b%sender_formatted% &ejust promoted &b%user_formatted% &eto &c%level%&e in the guild!"
+    members: "&b%sender_formatted% &ejust promoted &b%player_formatted% &eto &c%level%&e in the guild!"
     # For user who was promoted.
     user: "&eYou were just promoted to &c%level% &ein the guild!"
     # For leader.
-    leader: "&eYou just promoted &b%user_formatted% to &c%level%&e!"
+    leader: "&eYou just promoted &b%player_formatted% to &c%level%&e!"
     # If failed.
     failure: "&cAlready at highest level."
     # Message in discord console.
     # Options:
-    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %player_formatted% = the user-the-action-is-being-used-on's display name.
     # %sender_formatted% = the player's display name.
     # %leader_formatted% = the leader-of-the-group's display name.
-    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %player_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_absolute% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_absolute% promoted %user_normal% in %leader_normal%'s guild!"
+    console: "%sender_absolute% promoted %player_normal% in %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD PROMOTE"
   # Message for demoting someone...
   demote:
     # Fillers:
-    # %user_formatted% = the person being demoted.
+    # %player_formatted% = the person being demoted.
     # %leader_formatted% = the guild leader.
     # %level% = the permission level the person is going to.
     # For members.
-    members: "&b%sender_formatted% &ejust demoted &b%user_formatted% &eto &c%level%&e in the guild."
+    members: "&b%sender_formatted% &ejust demoted &b%player_formatted% &eto &c%level%&e in the guild."
     # For user who was demoted.
     user: "&eYou were just demoted to &c%level% &ein the guild."
     # For leader.
-    leader: "&eYou just demoted &b%user_formatted% to &c%level%&e."
+    leader: "&eYou just demoted &b%player_formatted% to &c%level%&e."
     # If failed.
     failure: "&cAlready at lowest level."
     # If it is leader.
     is-leader: "&cCannot demote yourself..."
     # Message in discord console.
     # Options:
-    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %player_formatted% = the user-the-action-is-being-used-on's display name.
     # %sender_formatted% = the player's display name.
     # %leader_formatted% = the leader-of-the-group's display name.
-    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %player_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_absolute% demoted %user_normal% in %leader_normal%'s guild!"
+    console: "%sender_absolute% demoted %player_normal% in %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD DEMOTE"
   # Message when someone chats...
@@ -978,8 +978,8 @@ guild:
     # %leaderbulk% = leaderbulk section.
     # %moderatorbulk% = moderatorbulk section.
     # %memberbulk% = memberbulk section.
-    # %user_formatted% = (only in context of "not-last" and "last") the specific member in the list of members
-    # %user_formatted% = (in everything else ^) the one running the command.
+    # %player_formatted% = (only in context of "not-last" and "last") the specific member in the list of members
+    # %player_formatted% = (in everything else ^) the one running the command.
     # Main message used to determine the other of things...
     main: "&7--< &5Guild &6%size%&8/&6%max% &7>--%newline%%leaderbulk%%newline%%moderatorbulk%%newline%%memberbulk%"
     # Leader bulk message.
@@ -991,9 +991,9 @@ guild:
       # Mods.
       moderators:
         # If not last in list.
-        not-last: "&b%user_formatted%&e, "
+        not-last: "&b%player_formatted%&e, "
         # If last.
-        last: "&b%user_formatted%&e."
+        last: "&b%player_formatted%&e."
         # If none in list.
         if-none: "&cNONE"
     # Member bulk message.
@@ -1003,9 +1003,9 @@ guild:
       # Members.
       members:
         # If not last in list.
-        not-last: "&7%user_formatted%&e, "
+        not-last: "&7%player_formatted%&e, "
         # If last.
-        last: "&7%user_formatted%&e."
+        last: "&7%player_formatted%&e."
         # If none in list.
         if-none: "&cNONE"
   # Message for opening the guild...
@@ -1074,14 +1074,14 @@ guild:
   # Message for accepting an invite to a guild...
   accept:
     # Fillers:
-    # %user_formatted% = the accepter.
+    # %player_formatted% = the accepter.
     # %leader_formatted% = the guild leader.
     # For user who accepted.
     user: "&eAccepted the request to &b%leader_formatted%&e's guild."
     # For leader.
-    leader: "&b%user_formatted% &ejust &aaccepted &eyour invite!"
+    leader: "&b%player_formatted% &ejust &aaccepted &eyour invite!"
     # For members.
-    members: "&b%user_formatted% &ejust &aaccepted &ethe invite!"
+    members: "&b%player_formatted% &ejust &aaccepted &ethe invite!"
     # If failed.
     failure: "&cNo invites!"
     # Message in discord console.
@@ -1097,14 +1097,14 @@ guild:
   # Message for denying an invite to a guild...
   deny:
     # Fillers:
-    # %user_formatted% = the accepter.
+    # %player_formatted% = the accepter.
     # %leader_formatted% = the guild leader.
     # For user who denied.
     user: "&eDenied the request to &b%leader_formatted%&e's guild."
     # For leader.
-    leader: "&b%user_formatted% &ejust &cdenied &eyour invite!"
+    leader: "&b%player_formatted% &ejust &cdenied &eyour invite!"
     # For members.
-    members: "&b%user_formatted% &ejust &cdenied &ethe invite!"
+    members: "&b%player_formatted% &ejust &cdenied &ethe invite!"
     # If failed.
     failure: "&cNo invites!"
     # Message in discord console.
@@ -1121,42 +1121,42 @@ guild:
   invite:
     # Fillers:
     # %sender_formatted% = person sending the request.
-    # %user_formatted% = the accepter.
+    # %player_formatted% = the accepter.
     # %leader_formatted% = the guild leader.
     # %leader_normal% = the guild leader formatted without their display name.
     # For user who was invited.
     user: "&b%sender_formatted% &einvited you to &b%leader_formatted%&e's guild!%newline%&eType &a/guild accept %leader_absolute% &eto join!"
     # For members.
-    members: "&b%sender_formatted% &einvited &b%user_formatted% &eto your guild!"
+    members: "&b%sender_formatted% &einvited &b%player_formatted% &eto your guild!"
     # For leader.
-    leader: "&eJust invited &b%user_formatted% &eto your guild!"
+    leader: "&eJust invited &b%player_formatted% &eto your guild!"
     # If failed.
     failure: "&cAlready invited this person."
     # If self.
     non-self: "&cCannot invite yourself!"
     # Message in discord console.
     # Options:
-    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %player_formatted% = the user-the-action-is-being-used-on's display name.
     # %sender_formatted% = the player's display name.
     # %leader_formatted% = the leader-of-the-group's display name.
-    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %player_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_absolute% invited %user_normal% to %leader_normal%'s guild!"
+    console: "%sender_absolute% invited %player_normal% to %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD INVITE"
   # Kick messages...
   kick:
     # Fillers:
-    # %user_formatted% = the person being kicked.
+    # %player_formatted% = the person being kicked.
     # For user who was kicked.
     user: "&b%sender_formatted% &ekicked you from their guild."
     # For members.
-    members: "&b%user_formatted% &ewas kicked by &b%sender_formatted% &e from the guild."
+    members: "&b%player_formatted% &ewas kicked by &b%sender_formatted% &e from the guild."
     # For sender.
-    sender: "&eYou kicked &b%user_formatted% &efrom your guild."
+    sender: "&eYou kicked &b%player_formatted% &efrom your guild."
     # If failed.
     failure: "&cThis player is not in the guild."
     # If mod.
@@ -1165,15 +1165,15 @@ guild:
     self: "&cCannot kick self."
     # Message in discord console.
     # Options:
-    # %user_formatted% = the user-the-action-is-being-used-on's display name.
+    # %player_formatted% = the user-the-action-is-being-used-on's display name.
     # %sender_formatted% = the player's display name.
     # %leader_formatted% = the leader-of-the-group's display name.
-    # %user_normal% = the user-the-action-is-being-used-on's regular name.
+    # %player_normal% = the user-the-action-is-being-used-on's regular name.
     # %sender_normal% = the player's regular name.
     # %leader_normal% = the leader-of-the-group's regular name.
     # %name% = the name of the guild.
     # %size% = the size of the guild.
-    console: "%sender_absolute% kicked %user_normal% from %leader_normal%'s guild!"
+    console: "%sender_absolute% kicked %player_normal% from %leader_normal%'s guild!"
     # Discord embed title.
     title: "GUILD KICK"
   # Mute messages.
@@ -1269,27 +1269,27 @@ guilds:
   # Mods of guild.
   mods:
     # If not last in list.
-    not-last: "&d%user_formatted%&e, "
+    not-last: "&d%player_formatted%&e, "
     # If last.
-    last: "&d%user_formatted%"
+    last: "&d%player_formatted%"
   # Members of guild.
   members:
     # If not last in list.
-    not-last: "&d%user_formatted%&e, "
+    not-last: "&d%player_formatted%&e, "
     # If last.
-    last: "&d%user_formatted%"
+    last: "&d%player_formatted%"
   # Invites of guild.
   invites:
     # If not last in list.
-    not-last: "&d%user_formatted%&e, "
+    not-last: "&d%player_formatted%&e, "
     # If last.
-    last: "&d%user_formatted%"
+    last: "&d%player_formatted%"
   # Total members of guild.
   totalmembers:
     # If not last in list.
-    not-last: "&d%user_formatted%&e, "
+    not-last: "&d%player_formatted%&e, "
     # If last.
-    last: "&d%user_formatted%"
+    last: "&d%player_formatted%"
   # If is public
   ispublic:
     # If true.

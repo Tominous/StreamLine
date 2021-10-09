@@ -310,24 +310,24 @@ public class GuildUtils {
 
             if (to instanceof Player && ((Player) to).online) {
                 MessagingUtils.sendBGUserMessage(guild, from.findSender(), to.findSender(), inviteUser
-                        .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(to))
-                        .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(to))
-                        .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(to))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(to))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(to))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(to))
                 );
             }
 
             for (SavableUser pl : guild.totalMembers) {
                 if (pl.uuid.equals(guild.leaderUUID)) {
                     MessagingUtils.sendBGUserMessage(guild, from.findSender(), pl.findSender(), inviteLeader
-                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(to))
-                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(to))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(to))
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(to))
+                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(to))
                     );
                 } else {
                     MessagingUtils.sendBGUserMessage(guild, from.findSender(), pl.findSender(), inviteMembers
-                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(to))
-                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(to))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(to))
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(to))
+                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(to))
                     );
                 }
             }
@@ -340,9 +340,9 @@ public class GuildUtils {
                 if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleInvites) {
                     MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(from.findSender(), inviteTitle,
                             inviteConsole
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(to))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(to))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(to))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(to))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(to))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(to))
                             , DiscordBotConfUtils.textChannelGuilds));
                 }
             }
@@ -382,9 +382,9 @@ public class GuildUtils {
                 }
 
                 MessagingUtils.sendBGUserMessage(guild, accepter.findSender(), accepter.findSender(), acceptUser
-                        .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(accepter))
-                        .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(accepter))
-                        .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(accepter))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(accepter))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(accepter))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(accepter))
                         .replace("%from_display%", PlayerUtils.getOffOnDisplayBungee(from))
                         .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
                         .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
@@ -393,18 +393,18 @@ public class GuildUtils {
                 for (SavableUser pl : guild.totalMembers){
                     if (pl.uuid.equals(guild.leaderUUID)){
                         MessagingUtils.sendBGUserMessage(guild, accepter.findSender(), pl.findSender(), acceptLeader
-                                .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(accepter))
-                                .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(accepter))
-                                .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(accepter))
+                                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(accepter))
+                                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(accepter))
+                                .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(accepter))
                                 .replace("%from_display%", PlayerUtils.getOffOnDisplayBungee(from))
                                 .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
                                 .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
                         );
                     } else {
                         MessagingUtils.sendBGUserMessage(guild, accepter.findSender(), pl.findSender(), acceptMembers
-                                .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(accepter))
-                                .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(accepter))
-                                .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(accepter))
+                                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(accepter))
+                                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(accepter))
+                                .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(accepter))
                                 .replace("%from_display%", PlayerUtils.getOffOnDisplayBungee(from))
                                 .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
                                 .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
@@ -419,9 +419,9 @@ public class GuildUtils {
                     if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleJoins) {
                         MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(accepter.findSender(), joinsTitle,
                                 joinsConsole
-                                        .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(accepter))
-                                        .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
-                                        .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(accepter))
+                                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(accepter))
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
+                                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(accepter))
                                         .replace("%from_display%", PlayerUtils.getOffOnDisplayDiscord(from))
                                         .replace("%from_normal%", PlayerUtils.getOffOnRegDiscord(from))
                                         .replace("%from_absolute%", PlayerUtils.getAbsoluteDiscord(from))
@@ -431,9 +431,9 @@ public class GuildUtils {
                     if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleAccepts) {
                         MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(accepter.findSender(), acceptTitle,
                                 acceptConsole
-                                        .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(accepter))
-                                        .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
-                                        .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(accepter))
+                                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(accepter))
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(accepter))
+                                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(accepter))
                                         .replace("%from_display%", PlayerUtils.getOffOnDisplayDiscord(from))
                                         .replace("%from_normal%", PlayerUtils.getOffOnRegDiscord(from))
                                         .replace("%from_absolute%", PlayerUtils.getAbsoluteDiscord(from))
@@ -469,9 +469,9 @@ public class GuildUtils {
 
             if (guild.invites.contains(denier)) {
                 MessagingUtils.sendBGUserMessage(guild, denier.findSender(), denier.findSender(), denyUser
-                        .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(denier))
-                        .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(denier))
-                        .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(denier))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(denier))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(denier))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(denier))
                         .replace("%from_display%", PlayerUtils.getOffOnDisplayBungee(from))
                         .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
                         .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
@@ -480,18 +480,18 @@ public class GuildUtils {
                 for (SavableUser pl : guild.totalMembers) {
                     if (pl.uuid.equals(guild.leaderUUID)) {
                         MessagingUtils.sendBGUserMessage(guild, denier.findSender(), pl.findSender(), denyLeader
-                                .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(denier))
-                                .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(denier))
-                                .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(denier))
+                                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(denier))
+                                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(denier))
+                                .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(denier))
                                 .replace("%from_display%", PlayerUtils.getOffOnDisplayBungee(from))
                                 .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
                                 .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
                         );
                     } else {
                         MessagingUtils.sendBGUserMessage(guild, denier.findSender(), pl.findSender(), denyMembers
-                                .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(denier))
-                                .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(denier))
-                                .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(denier))
+                                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(denier))
+                                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(denier))
+                                .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(denier))
                                 .replace("%from_display%", PlayerUtils.getOffOnDisplayBungee(from))
                                 .replace("%from_normal%", PlayerUtils.getOffOnRegBungee(from))
                                 .replace("%from_absolute%", PlayerUtils.getAbsoluteBungee(from))
@@ -505,9 +505,9 @@ public class GuildUtils {
                     if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleDenies) {
                         MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(denier.findSender(), denyTitle,
                                 denyConsole
-                                        .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(denier))
-                                        .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(denier))
-                                        .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(denier))
+                                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(denier))
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(denier))
+                                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(denier))
                                         .replace("%from_display%", PlayerUtils.getOffOnDisplayDiscord(from))
                                         .replace("%from_normal%", PlayerUtils.getOffOnRegDiscord(from))
                                         .replace("%from_absolute%", PlayerUtils.getAbsoluteDiscord(from))
@@ -655,21 +655,21 @@ public class GuildUtils {
                 for (SavableUser pl : guild.totalMembers) {
                     if (pl.equals(sender)) {
                         MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), kickSender
-                                .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                         );
                     } else if (! pl.uuid.equals(guild.leaderUUID)) {
                         MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), kickUser
-                                .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                         );
                     } else {
                         MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), kickMembers
-                                .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                         );
                     }
                 }
@@ -681,9 +681,9 @@ public class GuildUtils {
                 if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleKicks) {
                     MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), kickTitle,
                             kickConsole
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(player))
                             , DiscordBotConfUtils.textChannelGuilds));
                 }
             }
@@ -895,11 +895,17 @@ public class GuildUtils {
             for (SavableUser m : guild.moderators) {
                 if (i < guild.moderators.size()) {
                     mods.append(listModBulkNotLast
-                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(m))
+                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(m))
+                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(m))
                     );
                 } else {
                     mods.append(listModBulkLast
-                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(m))
+                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(m))
+                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(m))
                     );
                 }
                 i++;
@@ -925,11 +931,17 @@ public class GuildUtils {
             for (SavableUser m : guild.members) {
                 if (i <guild.moderators.size()) {
                     mems.append(listMemberBulkNotLast
-                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(m))
+                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(m))
+                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(m))
                     );
                 } else {
                     mems.append(listMemberBulkLast
-                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(m))
+                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(m))
+                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(m))
                     );
                 }
                 i++;
@@ -970,13 +982,13 @@ public class GuildUtils {
             switch (guild.getLevel(player)) {
                 case LEADER:
                     MessagingUtils.sendBGUserMessage(guild, sender.findSender(), sender.findSender(),  promoteFailure
-                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                             .replace("%level%", textLeader
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                             )
                     );
                     return;
@@ -986,35 +998,35 @@ public class GuildUtils {
                     for (SavableUser pl : guild.totalMembers) {
                         if (pl.uuid.equals(guild.leaderUUID)) {
                             MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), promoteLeader
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textLeader
-                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     )
                             );
                         } else if (pl.equals(player)) {
                             MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), promoteUser
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textLeader
-                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     )
                             );
                         } else {
                             MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), promoteMembers
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textLeader
-                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     )
                             );
                         }
@@ -1027,35 +1039,35 @@ public class GuildUtils {
                     for (SavableUser pl : guild.totalMembers) {
                         if (pl.uuid.equals(guild.leaderUUID)) {
                             MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), promoteLeader
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textModerator
-                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     )
                             );
                         } else if (pl.equals(player)) {
                             MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), promoteUser
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textModerator
-                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     )
                             );
                         } else {
                             MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), promoteMembers
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textModerator
-                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     )
                             );
                         }
@@ -1067,9 +1079,9 @@ public class GuildUtils {
                 if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsolePromotes) {
                     MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), promoteTitle,
                             promoteConsole
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(player))
                             , DiscordBotConfUtils.textChannelGuilds));
                 }
             }
@@ -1105,13 +1117,13 @@ public class GuildUtils {
             switch (guild.getLevel(player)) {
                 case LEADER:
                     MessagingUtils.sendBGUserMessage(guild, sender.findSender(), sender.findSender(),  demoteIsLeader
-                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                             .replace("%level%", textLeader
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                             )
                     );
                     return;
@@ -1121,35 +1133,35 @@ public class GuildUtils {
                     for (SavableUser pl : guild.totalMembers) {
                         if (pl.uuid.equals(guild.leaderUUID)) {
                             MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), demoteLeader
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textMember
-                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     )
                             );
                         } else if (pl.equals(player)) {
                             MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), demoteUser
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textMember
-                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     )
                             );
                         } else {
                             MessagingUtils.sendBGUserMessage(guild, sender.findSender(), pl.findSender(), demoteMembers
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     .replace("%level%", textMember
-                                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                                     )
                             );
                         }
@@ -1158,13 +1170,13 @@ public class GuildUtils {
                 case MEMBER:
                 default:
                     MessagingUtils.sendBGUserMessage(guild, sender.findSender(), sender.findSender(),  demoteFailure
-                            .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                            .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                            .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                             .replace("%level%", textMember
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
                             )
                     );
                     break;
@@ -1174,9 +1186,9 @@ public class GuildUtils {
                 if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleDemotes) {
                     MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(sender.findSender(), demoteTitle,
                             demoteConsole
-                                    .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(player))
-                                    .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                                    .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(player))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(player))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(player))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(player))
                             , DiscordBotConfUtils.textChannelGuilds));
                 }
             }

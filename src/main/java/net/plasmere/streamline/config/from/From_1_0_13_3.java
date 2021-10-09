@@ -15,7 +15,7 @@ public class From_1_0_13_3 extends From {
     @Override
     public void getCatchAll_values() {
         addCatchAll_values("%player%", "%player_display%");
-        addCatchAll_values("%user%", "%user_display%");
+        addCatchAll_values("%user%", "%player_display%");
         addCatchAll_values("%from%", "%from_display%");
         addCatchAll_values("%to%", "%to_display%");
         addCatchAll_values("%leader%", "%leader_display%");

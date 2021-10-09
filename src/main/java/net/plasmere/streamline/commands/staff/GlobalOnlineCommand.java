@@ -138,17 +138,17 @@ public class GlobalOnlineCommand extends Command {
             if (! (i == players.size() - 1))
                 text.append(MessageConfUtils.onlineMessageBPlayersBulkNotLast()
                         .replace("%player_absolute%", player.getName())
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(player)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(player)))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(player)))
                         .replace("%server%", server.getInfo().getName())
                 );
             else
                 text.append(MessageConfUtils.onlineMessageBPlayersBulkLast()
                         .replace("%player_absolute%", player.getName())
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(PlayerUtils.getOrCreatePlayerStat(player)))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(player)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(player)))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(player)))
                         .replace("%server%", server.getInfo().getName())
                 );
             i++;

@@ -36,8 +36,11 @@ public class MessagingUtils {
         }
 
         sendPermissionedMessageExcludePlayers(toExclude, ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage()
-                .replace("%user_display%", sender.getName())
-                .replace("%from_display%", from)
+                .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                .replace("%sender_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                .replace("%from_server%", from)
                 .replace("%message%", msg)
                 .replace("%server%", PlayerUtils.getOrCreateSavableUser(sender).findServer())
                 .replace("%version%", PlayerUtils.getOrCreateSavableUser(sender).latestVersion)
@@ -46,8 +49,11 @@ public class MessagingUtils {
 
     public static void sendStaffMessageExcludeSelf(CommandSender sender, String from, String msg){
         sendPermissionedMessageNonSelf(sender, ConfigUtils.staffPerm, MessageConfUtils.bungeeStaffChatMessage()
-                .replace("%user_display%", sender.getName())
-                .replace("%from_display%", from)
+                .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                .replace("%sender_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                .replace("%from_server%", from)
                 .replace("%message%", msg)
                 .replace("%server%", PlayerUtils.getOrCreateSavableUser(sender).findServer())
                 .replace("%version%", PlayerUtils.getOrCreateSavableUser(sender).latestVersion)
@@ -130,7 +136,11 @@ public class MessagingUtils {
     public static void sendServerMessageFromUser(ProxiedPlayer player, Server server, String format, String message) {
         for (ProxiedPlayer p : PlayerUtils.getServeredPPlayers(server.getInfo().getName())) {
             p.sendMessage(TextUtils.codedText(format
-                    .replace("%sender_display%", getPlayerDisplayName(player))
+                    .replace("%sender_servered%", getPlayerDisplayName(player))
+                    .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(player)))
+                    .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(player)))
+                    .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrGetSavableUser(player)))
+                    .replace("%sender_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(player)))
                     .replace("%message%", message)
                     .replace("%server%", server.getInfo().getName())
             ));
@@ -140,7 +150,11 @@ public class MessagingUtils {
     public static void sendGlobalMessageFromUser(ProxiedPlayer player, Server server, String format, String message) {
         for (ProxiedPlayer p : PlayerUtils.getOnlinePPlayers()) {
             p.sendMessage(TextUtils.codedText(format
-                    .replace("%sender_display%", getPlayerDisplayName(player))
+                    .replace("%sender_servered%", getPlayerDisplayName(player))
+                    .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(player)))
+                    .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(player)))
+                    .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrGetSavableUser(player)))
+                    .replace("%sender_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(player)))
                     .replace("%message%", message)
                     .replace("%server%", server.getInfo().getName())
             ));
@@ -150,7 +164,11 @@ public class MessagingUtils {
     public static void sendServerMessageFromDiscord(String nameUsed, ServerInfo server, String format, String message) {
         for (ProxiedPlayer p : PlayerUtils.getServeredPPlayers(server.getName())) {
             p.sendMessage(TextUtils.codedText(format
+                    .replace("%sender_servered%", nameUsed)
                     .replace("%sender_display%", nameUsed)
+                    .replace("%sender_normal%", nameUsed)
+                    .replace("%sender_absolute%", nameUsed)
+                    .replace("%sender_formatted%", nameUsed)
                     .replace("%message%", message)
                     .replace("%server%", server.getName())
             ));
@@ -160,7 +178,11 @@ public class MessagingUtils {
     public static void sendGlobalMessageFromDiscord(String nameUsed, String format, String message) {
         for (ProxiedPlayer p : PlayerUtils.getOnlinePPlayers()) {
             p.sendMessage(TextUtils.codedText(format
+                    .replace("%sender_servered%", nameUsed)
                     .replace("%sender_display%", nameUsed)
+                    .replace("%sender_normal%", nameUsed)
+                    .replace("%sender_absolute%", nameUsed)
+                    .replace("%sender_formatted%", nameUsed)
                     .replace("%message%", message)
             ));
         }
@@ -169,7 +191,10 @@ public class MessagingUtils {
     public static void sendServerMessageFromDiscord(SavableUser user, ServerInfo server, String format, String message) {
         for (ProxiedPlayer p : PlayerUtils.getServeredPPlayers(server.getName())) {
             p.sendMessage(TextUtils.codedText(format
-                    .replace("%sender_display%", PlayerUtils.getJustDisplayBungee(user))
+                    .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(user))
+                    .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(user))
+                    .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(user))
+                    .replace("%sender_formatted%", PlayerUtils.getJustDisplayBungee(user))
                     .replace("%message%", message)
                     .replace("%server%", server.getName())
             ));
@@ -179,7 +204,10 @@ public class MessagingUtils {
     public static void sendGlobalMessageFromDiscord(SavableUser user, String format, String message) {
         for (ProxiedPlayer p : PlayerUtils.getOnlinePPlayers()) {
             p.sendMessage(TextUtils.codedText(format
-                    .replace("%sender_display%", PlayerUtils.getJustDisplayBungee(user))
+                    .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(user))
+                    .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(user))
+                    .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(user))
+                    .replace("%sender_formatted%", PlayerUtils.getJustDisplayBungee(user))
                     .replace("%message%", message)
             ));
         }
@@ -187,7 +215,11 @@ public class MessagingUtils {
 
     public static void sendMessageFromUserToConsole(ProxiedPlayer player, Server server, String format, String message) {
         PlayerUtils.getConsoleStat().sendMessage(TextUtils.codedText(format
-                .replace("%sender_display%", getPlayerDisplayName(player))
+                .replace("%sender_servered%", getPlayerDisplayName(player))
+                .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(player)))
+                .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(player)))
+                .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrGetSavableUser(player)))
+                .replace("%sender_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(player)))
                 .replace("%message%", message)
                 .replace("%server%", server.getInfo().getName())
         ));
@@ -281,7 +313,7 @@ public class MessagingUtils {
 
         for (ProxiedPlayer player : staffs) {
             player.sendMessage(TextUtils.codedText(MessageConfUtils.bungeeStaffChatMessage()
-                            .replace("%user_display%", sender)
+                            .replace("%player_display%", sender)
                             .replace("%from_display%", from)
                             .replace("%message%", msg)
                             .replace("%server%", ConfigUtils.moduleStaffChatServer)
@@ -1165,18 +1197,18 @@ public class MessagingUtils {
         for (Player m : party.moderators){
             if (i < party.moderators.size()){
                 msg.append(MessageConfUtils.partiesModsNLast()
-                        .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(m))
-                        .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(m))
-                        .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(m))
-                        .replace("%user_formatted%", PlayerUtils.getJustDisplayDiscord(m))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(m))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(m))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(m))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.partiesModsLast()
-                        .replace("%user_display%", PlayerUtils.getOffOnDisplayDiscord(m))
-                        .replace("%user_normal%", PlayerUtils.getOffOnRegDiscord(m))
-                        .replace("%user_absolute%", PlayerUtils.getAbsoluteDiscord(m))
-                        .replace("%user_formatted%", PlayerUtils.getJustDisplayDiscord(m))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(m))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(m))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(m))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             }
@@ -1194,18 +1226,18 @@ public class MessagingUtils {
         for (Player m : party.members){
             if (i < party.members.size()){
                 msg.append(MessageConfUtils.partiesMemsNLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(m))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(m))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(m))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(m))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(m))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(m))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(m))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.partiesMemsLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(m))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(m))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(m))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(m))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(m))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(m))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(m))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             }
@@ -1223,18 +1255,18 @@ public class MessagingUtils {
         for (Player m : party.totalMembers){
             if (i != party.totalMembers.size()){
                 msg.append(MessageConfUtils.partiesTMemsNLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(m))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(m))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(m))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(m))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(m))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(m))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(m))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.partiesTMemsLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(m))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(m))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(m))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(m))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(m))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(m))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(m))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             }
@@ -1253,18 +1285,18 @@ public class MessagingUtils {
 
             if (i < party.invites.size()){
                 msg.append(MessageConfUtils.partiesInvsNLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(m))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(m))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(m))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(m))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(m))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(m))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(m))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.partiesInvsLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(m))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(m))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(m))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(m))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(m))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(m))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(m))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(m))
                         .replace("%version%", Objects.requireNonNull(m).latestVersion)
                 );
             }
@@ -1299,18 +1331,18 @@ public class MessagingUtils {
 
             if (i < guild.modsByUUID.size()){
                 msg.append(MessageConfUtils.guildsModsNLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(player))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(player))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(player))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(player))
                         .replace("%version%", player == null ? MessageConfUtils.nullB() : Objects.requireNonNull(player).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.guildsModsLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(player))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(player))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(player))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(player))
                         .replace("%version%", player == null ? MessageConfUtils.nullB() : Objects.requireNonNull(player).latestVersion)
                 );
             }
@@ -1337,18 +1369,18 @@ public class MessagingUtils {
 
             if (i < guild.membersByUUID.size()){
                 msg.append(MessageConfUtils.guildsMemsNLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(player))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(player))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(player))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(player))
                         .replace("%version%", player == null ? MessageConfUtils.nullB() : Objects.requireNonNull(player).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.guildsMemsLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(player))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(player))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(player))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(player))
                         .replace("%version%", player == null ? MessageConfUtils.nullB() : Objects.requireNonNull(player).latestVersion)
                 );
             }
@@ -1375,18 +1407,18 @@ public class MessagingUtils {
 
             if (i < guild.totalMembersByUUID.size()){
                 msg.append(MessageConfUtils.guildsTMemsNLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(player))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(player))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(player))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(player))
                         .replace("%version%", player == null ? MessageConfUtils.nullB() : Objects.requireNonNull(player).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.guildsTMemsLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(player))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(player))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(player))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(player))
                         .replace("%version%", player == null ? MessageConfUtils.nullB() : Objects.requireNonNull(player).latestVersion)
                 );
             }
@@ -1413,18 +1445,18 @@ public class MessagingUtils {
 
             if (i < guild.invites.size()){
                 msg.append(MessageConfUtils.guildsInvsNLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(player))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(player))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(player))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(player))
                         .replace("%version%", player == null ? MessageConfUtils.nullB() : Objects.requireNonNull(player).latestVersion)
                 );
             } else {
                 msg.append(MessageConfUtils.guildsInvsLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(player))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(player))
-                        .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(player))
-                        .replace("%player_formatted%", PlayerUtils.getJustDisplayDiscord(player))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(player))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(player))
+                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(player))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(player))
                         .replace("%version%", player == null ? MessageConfUtils.nullB() : Objects.requireNonNull(player).latestVersion)
                 );
             }

@@ -36,10 +36,10 @@ public class StreamCommand extends Command {
                         );
                     } else {
                         MessagingUtils.sendBCLHBroadcast(sender, MessageConfUtils.streamMessage()
-                                        .replace("%user_absolute%", player.getName())
-                                        .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
-                                        .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
-                                        .replace("%user_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                        .replace("%player_absolute%", player.getName())
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                                 .replace("%link%", args[0])
                                 , MessageConfUtils.streamHoverPrefix()
                         );
