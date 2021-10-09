@@ -61,7 +61,7 @@ public class DeleteStatCommand extends Command implements TabExecutor {
         if (files == null) return uuids;
 
         for (File file : files) {
-            if (! file.isDirectory()) continue;
+            if (file.isDirectory()) continue;
             if (! file.getName().contains(ConfigUtils.consoleName) || ! file.getName().contains("-")) continue;
 
             uuids.add(file.getName().replace(".properties", ""));

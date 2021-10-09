@@ -23,6 +23,8 @@ public class HistorySave {
         this.fileString = uuid + ".yml";
         this.file = new File(StreamLine.getInstance().getChatHistoryDir(), this.fileString);
         this.uuid = uuid;
+
+        this.conf = loadConfig();
     }
 
     public void reloadConfig(){
@@ -35,9 +37,9 @@ public class HistorySave {
 
     public Configuration loadConfig(){
         if (! file.exists()){
-            try	(InputStream in = StreamLine.getInstance().getResourceAsStream(fileString)){
-                Files.copy(in, file.toPath());
-            } catch (IOException e){
+            try {
+                if (! file.createNewFile()) if (ConfigUtils.debug) MessagingUtils.logWarning("Could not make HistorySave file " + file.getName() + "!");
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

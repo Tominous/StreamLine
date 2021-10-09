@@ -9,6 +9,7 @@ import net.luckperms.api.node.types.PrefixNode;
 import net.luckperms.api.node.types.SuffixNode;
 import net.luckperms.api.query.QueryMode;
 import net.luckperms.api.query.QueryOptions;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.connection.Server;
@@ -1408,9 +1409,9 @@ public class PlayerUtils {
 
         if (stat instanceof Player) {
             if (stat.online) {
-                return MessageConfUtils.onlineB().replace("%player_display%", stat.displayName);
+                return MessageConfUtils.onlineB().replace("%player_formatted%", stat.displayName);
             } else {
-                return MessageConfUtils.offlineB().replace("%player_display%", stat.displayName);
+                return MessageConfUtils.offlineB().replace("%player_formatted%", stat.displayName);
             }
         }
 
@@ -1428,9 +1429,9 @@ public class PlayerUtils {
 
         if (stat instanceof Player) {
             if (stat.online) {
-                return MessageConfUtils.onlineB().replace("%player_display%", stat.latestName);
+                return MessageConfUtils.onlineB().replace("%player_formatted%", stat.latestName);
             } else {
-                return MessageConfUtils.offlineB().replace("%player_display%", stat.latestName);
+                return MessageConfUtils.offlineB().replace("%player_formatted%", stat.latestName);
             }
         }
 
@@ -1475,14 +1476,14 @@ public class PlayerUtils {
         }
 
         if (stat instanceof ConsolePlayer) {
-            return ConfigUtils.consoleDisplayName;
+            return ChatColor.stripColor(ConfigUtils.consoleDisplayName);
         }
 
         if (stat instanceof Player) {
             if (stat.online) {
-                return MessageConfUtils.onlineD().replace("%player_display%", stat.displayName);
+                return ChatColor.stripColor(MessageConfUtils.onlineD().replace("%player_formatted%", stat.displayName));
             } else {
-                return MessageConfUtils.offlineD().replace("%player_display%", stat.displayName);
+                return ChatColor.stripColor(MessageConfUtils.offlineD().replace("%player_formatted%", stat.displayName));
             }
         }
 
@@ -1500,9 +1501,9 @@ public class PlayerUtils {
 
         if (stat instanceof Player) {
             if (stat.online) {
-                return MessageConfUtils.onlineD().replace("%player_display%", stat.latestName);
+                return ChatColor.stripColor(MessageConfUtils.onlineD().replace("%player_display%", stat.latestName));
             } else {
-                return MessageConfUtils.offlineD().replace("%player_display%", stat.latestName);
+                return ChatColor.stripColor(MessageConfUtils.offlineD().replace("%player_display%", stat.latestName));
             }
         }
 
@@ -1515,11 +1516,11 @@ public class PlayerUtils {
         }
 
         if (stat instanceof ConsolePlayer) {
-            return ConfigUtils.consoleDisplayName;
+            return ChatColor.stripColor(ConfigUtils.consoleDisplayName);
         }
 
         if (stat instanceof Player) {
-            return stat.displayName;
+            return ChatColor.stripColor(stat.displayName);
         }
 
         return MessageConfUtils.nullD();
@@ -1531,11 +1532,11 @@ public class PlayerUtils {
         }
 
         if (stat instanceof ConsolePlayer) {
-            return "%";
+            return ChatColor.stripColor(ConfigUtils.consoleName);
         }
 
         if (stat instanceof Player) {
-            return stat.latestName;
+            return ChatColor.stripColor(stat.latestName);
         }
 
         return MessageConfUtils.nullD();
