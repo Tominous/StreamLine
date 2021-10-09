@@ -177,7 +177,7 @@ public class StreamLine extends Plugin {
 				EventsHandler.addEvent(event);
 			}
 
-			getLogger().info("Loaded " + EventsHandler.getEvents().size() + " events into memory!");
+			getLogger().info("Loaded " + EventsHandler.getEvents().size() + " event(s) into memory...!");
 		} catch (Exception e){
 			e.printStackTrace();
 		}
@@ -194,7 +194,7 @@ public class StreamLine extends Plugin {
 			motdUpdater = getProxy().getScheduler().schedule(this, new MOTDUpdaterTimer(serverConfig.getMOTDTime()), 0, 1, TimeUnit.SECONDS);
 
 			// DO NOT FORGET TO UPDATE AMOUNT BELOW! :/
-			getLogger().info("Loaded 7 timers (Runnables) into memory...!");
+			getLogger().info("Loaded 7 runnable(s) into memory...!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -218,67 +218,137 @@ public class StreamLine extends Plugin {
 	}
 
 	public void loadConfigs() {
+		if (! StreamLine.getInstance().getDataFolder().exists()) {
+			if (StreamLine.getInstance().getDataFolder().mkdirs()) {
+				MessagingUtils.logInfo("Made folder: " + StreamLine.getInstance().getDataFolder().getName());
+			}
+		}
+
 		String version = "";
 		String language = "";
 
-		try {
-			if (! versionFile.exists()) {
-				if (! versionFile.createNewFile()) if (ConfigUtils.debug) { MessagingUtils.logSevere("COULD NOT CREATE VERSION FILE!"); }
-
-				FileWriter writer = new FileWriter(versionFile);
-				writer.write("13.3");
-				writer.close();
-			}
-
-			if (versionFile.exists()) {
-				Scanner reader = new Scanner(versionFile);
-
-				while (reader.hasNextLine()) {
-					String data = reader.nextLine();
-					while (data.startsWith("#")) {
-						data = reader.nextLine();
+		if (! PluginUtils.isFreshInstall()) {
+			try {
+				if (!versionFile.exists()) {
+					if (!versionFile.createNewFile()) if (ConfigUtils.debug) {
+						MessagingUtils.logSevere("COULD NOT CREATE VERSION FILE!");
 					}
-					version = data;
+
+					FileWriter writer = new FileWriter(versionFile);
+					writer.write("13.3");
+					writer.close();
 				}
 
-				reader.close();
+				if (versionFile.exists()) {
+					Scanner reader = new Scanner(versionFile);
+
+					while (reader.hasNextLine()) {
+						String data = reader.nextLine();
+						while (data.startsWith("#")) {
+							data = reader.nextLine();
+						}
+						version = data;
+					}
+
+					reader.close();
+				}
+
+				if (version.equals("")) throw new Exception("Version file could not be read!");
+			} catch (Exception e) {
+				e.printStackTrace();
+				version = "13.3";
 			}
 
-			if (version.equals("")) throw new Exception("Version file could not be read!");
-		} catch (Exception e) {
-			e.printStackTrace();
-			version = "13.3";
-		}
+			try {
+				if (!languageFile.exists()) {
+					if (!languageFile.createNewFile()) if (ConfigUtils.debug) {
+						MessagingUtils.logSevere("COULD NOT CREATE LANGUAGE FILE!");
+					}
 
-		try {
-			if (! languageFile.exists()) {
-				if (! languageFile.createNewFile()) if (ConfigUtils.debug) { MessagingUtils.logSevere("COULD NOT CREATE LANGUAGE FILE!"); }
+					FileWriter writer = new FileWriter(languageFile);
+					writer.write("# To define which language you want to use.\n");
+					writer.write("# Current supported languages: en_US, fr_FR\n");
+					writer.write("en_US");
+					writer.close();
+				}
+
+				if (languageFile.exists()) {
+					Scanner reader = new Scanner(languageFile);
+
+					while (reader.hasNextLine()) {
+						String data = reader.nextLine();
+						while (data.startsWith("#")) {
+							data = reader.nextLine();
+						}
+						language = data;
+					}
+
+					reader.close();
+				}
+
+				if (language.equals("")) throw new Exception("Language file could not be read!");
+			} catch (Exception e) {
+				e.printStackTrace();
+				language = "en_US";
+			}
+		} else {
+			try {
+				if (!versionFile.createNewFile()) if (ConfigUtils.debug) {
+					MessagingUtils.logSevere("COULD NOT CREATE VERSION FILE!");
+				}
+
+				FileWriter writer = new FileWriter(versionFile);
+				writer.write(getDescription().getVersion());
+				writer.close();
+
+				if (versionFile.exists()) {
+					Scanner reader = new Scanner(versionFile);
+
+					while (reader.hasNextLine()) {
+						String data = reader.nextLine();
+						while (data.startsWith("#")) {
+							data = reader.nextLine();
+						}
+						version = data;
+					}
+
+					reader.close();
+				}
+
+				if (version.equals("")) throw new Exception("Version file could not be read!");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				if (!languageFile.createNewFile()) if (ConfigUtils.debug) {
+					MessagingUtils.logSevere("COULD NOT CREATE LANGUAGE FILE!");
+				}
 
 				FileWriter writer = new FileWriter(languageFile);
 				writer.write("# To define which language you want to use.\n");
 				writer.write("# Current supported languages: en_US, fr_FR\n");
 				writer.write("en_US");
 				writer.close();
-			}
 
-			if (languageFile.exists()) {
-				Scanner reader = new Scanner(languageFile);
+				if (languageFile.exists()) {
+					Scanner reader = new Scanner(languageFile);
 
-				while (reader.hasNextLine()) {
-					String data = reader.nextLine();
-					while (data.startsWith("#")) {
-						data = reader.nextLine();
+					while (reader.hasNextLine()) {
+						String data = reader.nextLine();
+						while (data.startsWith("#")) {
+							data = reader.nextLine();
+						}
+						language = data;
 					}
-					language = data;
+
+					reader.close();
 				}
 
-				reader.close();
+				if (language.equals("")) throw new Exception("Language file could not be read!");
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-
-			if (language.equals("")) throw new Exception("Language file could not be read!");
-		} catch (Exception e) {
-			e.printStackTrace();
-			language = "en_US";
 		}
 
 		FindFrom.doUpdate(version, language);

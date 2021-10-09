@@ -99,6 +99,8 @@ public class DiscordData {
         purgeChannels();
 
         for (String key : conf.getSection("channels").getKeys()) {
+            if (key.contains("put")) continue;
+
             try {
                 long l = Long.parseLong(key);
                 loadedChannels.put(l, getChannel(l));

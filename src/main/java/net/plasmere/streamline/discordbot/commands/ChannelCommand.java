@@ -46,16 +46,16 @@ public class ChannelCommand {
                 switch (args[2]) {
                     case "global":
                         StreamLine.discordData.addChannel(channelID, ChatChannel.GLOBAL.toString(), args[3], bypass);
-                        return "Successfully added channel ``" + channelID + "`` to your set channels as: <GLOBAL , " + args[3] + ">!";
+                        return "Successfully added channel ``" + channelID + "`` to your set channels as: < GLOBAL , " + args[3] + "," + bypass + " >!";
                     case "local":
                         StreamLine.discordData.addChannel(channelID, ChatChannel.LOCAL.toString(), args[3], bypass);
-                        return "Successfully added channel ``" + channelID + "`` to your set channels as: <LOCAL , " + args[3] + ">!";
+                        return "Successfully added channel ``" + channelID + "`` to your set channels as: < LOCAL , " + args[3] + "," + bypass + " >!";
                     case "guild":
                         StreamLine.discordData.addChannel(channelID, ChatChannel.GUILD.toString(), args[3], bypass);
-                        return "Successfully added channel ``" + channelID + "`` to your set channels as: <GUILD , " + args[3] + ">!";
+                        return "Successfully added channel ``" + channelID + "`` to your set channels as: < GUILD , " + args[3] + "," + bypass + " >!";
                     case "party":
                         StreamLine.discordData.addChannel(channelID, ChatChannel.PARTY.toString(), args[3], bypass);
-                        return "Successfully added channel ``" + channelID + "`` to your set channels as: <PARTY , " + args[3] + ">!";
+                        return "Successfully added channel ``" + channelID + "`` to your set channels as: < PARTY , " + args[3] + "," + bypass + " >!";
                     default:
                         return "Improper syntax!\nUsage: channel <set | remove> <global | local | guild | party> <identifier> <bypass: true or false>";
                 }

@@ -3,11 +3,20 @@ package net.plasmere.streamline.config.from;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.utils.MessagingUtils;
+import net.plasmere.streamline.utils.PlayerUtils;
+import net.plasmere.streamline.utils.PluginUtils;
 
 import java.io.FileWriter;
 
 public class FindFrom {
     public static void doUpdate(String previousVersion, String language){
+
+        if (PluginUtils.isFreshInstall()) {
+            MessagingUtils.logInfo("Smells new in here!");
+            MessagingUtils.logInfo("Please report any issues at https://discord.gg/tny494zXfn :)");
+
+            return;
+        }
 
         // TODO: MAKE SURE TO APPLY ALL PATCHES TO THE FIRST AND UP! (13.3 SHOULD HAVE ALL PATCHES APPLIED!)
 

@@ -286,4 +286,8 @@ public class PluginUtils {
 
         return false;
     }
+
+    public static boolean isFreshInstall() {
+        return ! StreamLine.getInstance().getPlDir().exists() && ! StreamLine.getInstance().getChatHistoryDir().exists() && ! StreamLine.getInstance().getGDir().exists();
+    }
 }

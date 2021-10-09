@@ -213,51 +213,51 @@ public class ChatListener implements Listener {
                     e.setCancelled(true);
                 }
             } else {
-                if (stat.chatLevel.equals(ChatLevel.GLOBAL)) {
-                    if (StreamLine.discordData.ifHasChannels(ChatChannel.GLOBAL, "")) {
-                        TreeMap<Long, Boolean> ifHas = StreamLine.discordData.ifChannelBypasses(ChatChannel.GLOBAL, "");
-                        for (Long l : ifHas.keySet()) {
-                            if (!ifHas.get(l)) continue;
+                if (ConfigUtils.moduleDPC) {
+                    if (stat.chatLevel.equals(ChatLevel.GLOBAL)) {
+                        if (StreamLine.discordData.ifHasChannels(ChatChannel.GLOBAL, "")) {
+                            TreeMap<Long, Boolean> ifHas = StreamLine.discordData.ifChannelBypasses(ChatChannel.GLOBAL, "");
+                            for (Long l : ifHas.keySet()) {
+                                if (!ifHas.get(l)) continue;
 
-                            StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.GLOBAL, "", msg);
+                                StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.GLOBAL, "", msg);
+                            }
                         }
                     }
-                }
 
-                if (stat.chatLevel.equals(ChatLevel.LOCAL)) {
-                    if (StreamLine.discordData.ifHasChannels(ChatChannel.LOCAL, sender.getServer().getInfo().getName())) {
-                        TreeMap<Long, Boolean> ifHas = StreamLine.discordData.ifChannelBypasses(ChatChannel.LOCAL, sender.getServer().getInfo().getName());
-                        for (Long l : ifHas.keySet()) {
-                            if (!ifHas.get(l)) continue;
+                    if (stat.chatLevel.equals(ChatLevel.LOCAL)) {
+                        if (StreamLine.discordData.ifHasChannels(ChatChannel.LOCAL, sender.getServer().getInfo().getName())) {
+                            TreeMap<Long, Boolean> ifHas = StreamLine.discordData.ifChannelBypasses(ChatChannel.LOCAL, sender.getServer().getInfo().getName());
+                            for (Long l : ifHas.keySet()) {
+                                if (!ifHas.get(l)) continue;
 
-                            StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.LOCAL, sender.getServer().getInfo().getName(), msg);
+                                StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.LOCAL, sender.getServer().getInfo().getName(), msg);
+                            }
                         }
                     }
-                }
 
-//            if (stat.chatLevel.equals(ChatLevel.GUILD)) {
+//                    if (stat.chatLevel.equals(ChatLevel.GUILD)) {
+//                        if (StreamLine.discordData.ifHasChannels(ChatChannel.GUILD, )) {
+//                            TreeMap<Long, Boolean> ifHas = StreamLine.discordData.ifChannelBypasses(ChatChannel.GUILD, sender.getServer().getInfo().getName());
+//                            for (Long l : ifHas.keySet()) {
+//                                if (!ifHas.get(l)) continue;
 //
-//
-//                if (StreamLine.discordData.ifHasChannels(ChatChannel.GUILD, )) {
-//                    TreeMap<Long, Boolean> ifHas = StreamLine.discordData.ifChannelBypasses(ChatChannel.GUILD, sender.getServer().getInfo().getName());
-//                    for (Long l : ifHas.keySet()) {
-//                        if (! ifHas.get(l)) continue;
-//
-//                        StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.GUILD, sender.getServer().getInfo().getName(), msg);
+//                                StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.GUILD, sender.getServer().getInfo().getName(), msg);
+//                            }
+//                        }
 //                    }
-//                }
-//            }
 //
-//            if (stat.chatLevel.equals(ChatLevel.PARTY)) {
-//                if (StreamLine.discordData.ifHasChannels(ChatChannel.PARTY, sender.getServer().getInfo().getName())) {
-//                    TreeMap<Long, Boolean> ifHas = StreamLine.discordData.ifChannelBypasses(ChatChannel.PARTY, sender.getServer().getInfo().getName());
-//                    for (Long l : ifHas.keySet()) {
-//                        if (! ifHas.get(l)) continue;
+//                    if (stat.chatLevel.equals(ChatLevel.PARTY)) {
+//                        if (StreamLine.discordData.ifHasChannels(ChatChannel.PARTY, sender.getServer().getInfo().getName())) {
+//                            TreeMap<Long, Boolean> ifHas = StreamLine.discordData.ifChannelBypasses(ChatChannel.PARTY, sender.getServer().getInfo().getName());
+//                            for (Long l : ifHas.keySet()) {
+//                                if (!ifHas.get(l)) continue;
 //
-//                        StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.PARTY, sender.getServer().getInfo().getName(), msg);
+//                                StreamLine.discordData.sendDiscordChannel(sender, ChatChannel.PARTY, sender.getServer().getInfo().getName(), msg);
+//                            }
+//                        }
 //                    }
-//                }
-//            }
+                }
             }
         }
 
