@@ -218,9 +218,9 @@ public class StreamLine extends Plugin {
 	}
 
 	public void loadConfigs() {
-		if (! StreamLine.getInstance().getDataFolder().exists()) {
-			if (StreamLine.getInstance().getDataFolder().mkdirs()) {
-				MessagingUtils.logInfo("Made folder: " + StreamLine.getInstance().getDataFolder().getName());
+		if (! getDataFolder().exists()) {
+			if (getDataFolder().mkdirs()) {
+				MessagingUtils.logInfo("Made folder: " + getDataFolder().getName());
 			}
 		}
 

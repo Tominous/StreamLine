@@ -31,7 +31,7 @@ public class ServerConfig {
             if (! ConfigUtils.scMakeDefault) return;
 
             if (StreamLine.getInstance().getConfDir().mkdirs()) {
-                MessagingUtils.logInfo("Made folder: " + StreamLine.getInstance().getConfDir().getName());
+                if (ConfigUtils.debug) MessagingUtils.logInfo("Made folder: " + StreamLine.getInstance().getConfDir().getName());
             }
         }
 
