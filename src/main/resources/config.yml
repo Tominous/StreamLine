@@ -1,6 +1,6 @@
 #### DEBUG ####
 # Enables debug mode.
-debug: false
+debug: true
 
 #### BASICS ####
 # What do you want to be before links found when they are put into hoverable text.
