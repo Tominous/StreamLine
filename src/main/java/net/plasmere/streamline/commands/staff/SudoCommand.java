@@ -37,11 +37,17 @@ public class SudoCommand extends Command implements TabExecutor {
 
             if (StreamLine.getInstance().getProxy().getPluginManager().dispatchCommand(sudoOn, TextUtils.argsToStringMinus(args, 0))){
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoWorked()
-                        .replace("%player_display%", sudoOn.getDisplayName())
+                        .replace("%player_absolute%", sender.getName())
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                 );
             } else {
                 MessagingUtils.sendBUserMessage(sender, MessageConfUtils.sudoNoWork()
-                        .replace("%player_display%", sudoOn.getDisplayName())
+                        .replace("%player_absolute%", sender.getName())
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                 );
             }
         }

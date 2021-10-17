@@ -323,24 +323,27 @@ public class GuildUtils {
 
             if (to instanceof Player && ((Player) to).online) {
                 MessagingUtils.sendBGUserMessage(guild, from.findSender(), to.findSender(), inviteUser
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(to))
-                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(to))
                         .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(to))
+                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(to))
+                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(to))
+                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(to))
                 );
             }
 
             for (SavableUser pl : guild.totalMembers) {
                 if (pl.uuid.equals(guild.leaderUUID)) {
                     MessagingUtils.sendBGUserMessage(guild, from.findSender(), pl.findSender(), inviteLeader
-                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(to))
                             .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(to))
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(to))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(to))
+                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(to))
                     );
                 } else {
                     MessagingUtils.sendBGUserMessage(guild, from.findSender(), pl.findSender(), inviteMembers
-                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(to))
-                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(to))
                             .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(to))
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(to))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(to))
+                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(to))
                     );
                 }
             }
@@ -353,9 +356,10 @@ public class GuildUtils {
                 if (ConfigUtils.guildToDiscord && ConfigUtils.guildConsoleInvites) {
                     MessagingUtils.sendDiscordGEBMessage(guild, new DiscordMessage(from.findSender(), inviteTitle,
                             inviteConsole
-                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayDiscord(to))
-                                    .replace("%player_normal%", PlayerUtils.getOffOnRegDiscord(to))
-                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteDiscord(to))
+                                    .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(to))
+                                    .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(to))
+                                    .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(to))
+                                    .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(to))
                             , DiscordBotConfUtils.textChannelGuilds));
                 }
             }

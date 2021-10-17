@@ -126,8 +126,8 @@ public class MessagingUtils {
     public static void sendBungeeMessage(BungeeMessage message){
         SavableUser player = PlayerUtils.getOrCreateSavableUser(message.sender);
 
-        message.to.sendMessage(TextUtils.codedText((message.title + message.transition + message.message)
-                        .replace("%sender_display%", message.sender.getName())
+        message.to.sendMessage(TextUtils.codedText(TextUtils.replaceAllSender((message.title + message.transition + message.message)
+                        .replace("%sender_display%", message.sender.getName()), message.sender)
                         .replace("%version%", player.latestVersion)
                 )
         );
@@ -454,16 +454,16 @@ public class MessagingUtils {
                 if (message.sender instanceof ProxiedPlayer) {
                     Objects.requireNonNull(jda.getTextChannelById(message.channel))
                             .sendMessageEmbeds(
-                                    eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                            .setDescription(message.message.replace("%sender_display%", message.sender.getName()))
+                                    eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                            .setDescription(TextUtils.replaceAllSender(message.message, message.sender))
                                             .setAuthor(message.sender.getName(), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName))
                                             .build()
                             ).queue();
                 } else {
                     Objects.requireNonNull(jda.getTextChannelById(message.channel))
                             .sendMessageEmbeds(
-                                    eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                            .setDescription(message.message.replace("%sender_display%", message.sender.getName()))
+                                    eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                            .setDescription(TextUtils.replaceAllSender(message.message, message.sender))
                                             .setAuthor("CONSOLE", jda.getSelfUser().getAvatarUrl() , jda.getSelfUser().getAvatarUrl())
                                             .build()
                             ).queue();
@@ -471,8 +471,8 @@ public class MessagingUtils {
             } else {
                 Objects.requireNonNull(jda.getTextChannelById(message.channel))
                         .sendMessageEmbeds(
-                                eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                        .setDescription(message.message.replace("%sender_display%", message.sender.getName()))
+                                eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                        .setDescription(TextUtils.replaceAllSender(message.message, message.sender))
                                         .build()
                         ).queue();
             }
@@ -494,16 +494,16 @@ public class MessagingUtils {
                 if (message.sender instanceof ProxiedPlayer) {
                     Objects.requireNonNull(jda.getTextChannelById(message.channel))
                             .sendMessageEmbeds(
-                                    eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                            .setDescription(message.message.replace("%sender_display%", message.sender.getName()))
+                                    eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                            .setDescription(TextUtils.replaceAllSender(message.message, message.sender))
                                             .setAuthor(message.sender.getName(), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName))
                                             .build()
                             ).queue();
                 } else {
                     Objects.requireNonNull(jda.getTextChannelById(message.channel))
                             .sendMessageEmbeds(
-                                    eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                            .setDescription(message.message.replace("%sender_display%", message.sender.getName()))
+                                    eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                            .setDescription(TextUtils.replaceAllSender(message.message, message.sender))
                                             .setAuthor("CONSOLE", jda.getSelfUser().getAvatarUrl() , jda.getSelfUser().getAvatarUrl())
                                             .build()
                             ).queue();
@@ -511,8 +511,8 @@ public class MessagingUtils {
             } else {
                 Objects.requireNonNull(jda.getTextChannelById(message.channel))
                         .sendMessageEmbeds(
-                                eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                        .setDescription(message.message.replace("%sender_display%", message.sender.getName()))
+                                eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                        .setDescription(TextUtils.replaceAllSender(message.message, message.sender))
                                         .build()
                         ).queue();
             }
@@ -529,16 +529,16 @@ public class MessagingUtils {
                 if (message.sender instanceof ProxiedPlayer) {
                     Objects.requireNonNull(jda.getTextChannelById(message.channel))
                             .sendMessageEmbeds(
-                                    eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                            .setDescription(message.message.replace("%sender_display%", message.sender.getName()))
+                                    eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                            .setDescription(TextUtils.replaceAllSender(message.message, message.sender))
                                             .setAuthor(message.sender.getName(), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName))
                                             .build()
                             ).queue();
                 } else {
                     Objects.requireNonNull(jda.getTextChannelById(message.channel))
                             .sendMessageEmbeds(
-                                    eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                            .setDescription(message.message.replace("%sender_display%", message.sender.getName()))
+                                    eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                            .setDescription(TextUtils.replaceAllSender(message.message, message.sender))
                                             .setAuthor("CONSOLE", jda.getSelfUser().getAvatarUrl() , jda.getSelfUser().getAvatarUrl())
                                             .build()
                             ).queue();
@@ -546,8 +546,8 @@ public class MessagingUtils {
             } else {
                 Objects.requireNonNull(jda.getTextChannelById(message.channel))
                         .sendMessageEmbeds(
-                                eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                        .setDescription(message.message.replace("%sender_display%", message.sender.getName()))
+                                eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                        .setDescription(TextUtils.replaceAllSender(message.message, message.sender))
                                         .build()
                         ).queue();
             }
@@ -745,16 +745,16 @@ public class MessagingUtils {
                 if (message.sender instanceof ProxiedPlayer) {
                     Objects.requireNonNull(jda.getTextChannelById(message.channel))
                             .sendMessageEmbeds(
-                                    eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                            .setDescription(msg.replace("%sender_display%", message.sender.getName()))
+                                    eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                            .setDescription(TextUtils.replaceAllSender(msg, message.sender))
                                             .setAuthor(message.sender.getName(), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName))
                                             .build()
                             ).queue();
                 } else {
                     Objects.requireNonNull(jda.getTextChannelById(message.channel))
                             .sendMessageEmbeds(
-                                    eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                            .setDescription(msg.replace("%sender_display%", message.sender.getName()))
+                                    eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                            .setDescription(TextUtils.replaceAllSender(msg, message.sender))
                                             .setAuthor("CONSOLE", jda.getSelfUser().getAvatarUrl() , jda.getSelfUser().getAvatarUrl())
                                             .build()
                             ).queue();
@@ -762,8 +762,8 @@ public class MessagingUtils {
             } else {
                 Objects.requireNonNull(jda.getTextChannelById(message.channel))
                         .sendMessageEmbeds(
-                                eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                        .setDescription(msg.replace("%sender_display%", message.sender.getName()))
+                                eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                        .setDescription(TextUtils.replaceAllSender(msg, message.sender))
                                         .build()
                         ).queue();
             }
@@ -925,16 +925,16 @@ public class MessagingUtils {
                 if (message.sender instanceof ProxiedPlayer) {
                     Objects.requireNonNull(jda.getTextChannelById(message.channel))
                             .sendMessageEmbeds(
-                                    eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                            .setDescription(msg.replace("%sender_display%", message.sender.getName()))
+                                    eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                            .setDescription(TextUtils.replaceAllSender(msg, message.sender))
                                             .setAuthor(message.sender.getName(), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName), FaceFetcher.getFaceAvatarURL(Objects.requireNonNull(PlayerUtils.getPlayerStat(message.sender)).latestName))
                                             .build()
                             ).queue();
                 } else {
                     Objects.requireNonNull(jda.getTextChannelById(message.channel))
                             .sendMessageEmbeds(
-                                    eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                            .setDescription(msg.replace("%sender_display%", message.sender.getName()))
+                                    eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                            .setDescription(TextUtils.replaceAllSender(msg, message.sender))
                                             .setAuthor("CONSOLE", jda.getSelfUser().getAvatarUrl() , jda.getSelfUser().getAvatarUrl())
                                             .build()
                             ).queue();
@@ -942,8 +942,8 @@ public class MessagingUtils {
             } else {
                 Objects.requireNonNull(jda.getTextChannelById(message.channel))
                         .sendMessageEmbeds(
-                                eb.setTitle(message.title.replace("%sender_display%", message.sender.getName()))
-                                        .setDescription(msg.replace("%sender_display%", message.sender.getName()))
+                                eb.setTitle(TextUtils.replaceAllSender(message.title, message.sender))
+                                        .setDescription(TextUtils.replaceAllSender(msg, message.sender))
                                         .build()
                         ).queue();
             }
@@ -1098,23 +1098,17 @@ public class MessagingUtils {
 
     public static void sendBUserMessage(CommandSender sender, String msg){
         if (sender instanceof ProxiedPlayer) {
-            sender.sendMessage(TextUtils.codedText(msg
-                    .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee((PlayerUtils.getOrCreateSavableUser(sender))))
-                    .replace("%sender_normal%", sender.getName())
+            sender.sendMessage(TextUtils.codedText(TextUtils.replaceAllSender(msg, sender)
                     .replace("%version%", PlayerUtils.getOrCreatePlayerStat((ProxiedPlayer) sender).latestVersion)
             ));
         } else {
-            sender.sendMessage(TextUtils.codedText(msg
-                    .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getConsoleStat()))
-                    .replace("%sender_normal%", PlayerUtils.getConsoleStat().uuid)
-            ));
+            sender.sendMessage(TextUtils.codedText(TextUtils.replaceAllSender(msg, sender)));
         }
     }
 
     public static void sendBUserMessage(Player sender, String msg){
         if (sender instanceof ProxiedPlayer) {
-            sender.sendMessage(TextUtils.codedText(msg
-                    .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(sender))
+            sender.sendMessage(TextUtils.codedText(TextUtils.replaceAllSender(msg, sender)
                     .replace("%version%", Objects.requireNonNull(sender).latestVersion)
             ));
         }
@@ -1143,16 +1137,13 @@ public class MessagingUtils {
 
         if (as instanceof ProxiedPlayer) {
             for (ProxiedPlayer player : players) {
-                player.sendMessage(TextUtils.codedText(msg
-                        .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreatePlayerStat(as)))
+                player.sendMessage(TextUtils.codedText(TextUtils.replaceAllSender(msg, as)
                         .replace("%version%", PlayerUtils.getOrCreatePlayerStat((ProxiedPlayer) as).latestVersion)
                 ));
             }
         } else {
             for (ProxiedPlayer player : players) {
-                player.sendMessage(TextUtils.codedText(msg
-                        .replace("%sender_display%", as.getName())
-                ));
+                player.sendMessage(TextUtils.codedText(TextUtils.replaceAllSender(msg, as)));
             }
         }
     }

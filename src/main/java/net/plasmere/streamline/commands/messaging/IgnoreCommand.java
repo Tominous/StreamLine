@@ -118,17 +118,26 @@ public class IgnoreCommand extends Command implements TabExecutor {
 
                     stat.tryRemIgnored(other.uuid);
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreRemSelf()
-                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
+                            .replace("%player_absolute%", sender.getName())
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                     );
                     if ((other instanceof Player && ((Player) other).online) || other instanceof ConsolePlayer) {
                         MessagingUtils.sendBUserMessage(other.findSender(), MessageConfUtils.ignoreRemIgnored()
+                                .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(stat))
+                                .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(stat))
                                 .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(stat))
+                                .replace("%sender_formatted%", PlayerUtils.getJustDisplayBungee(stat))
                         );
                     }
                     break;
                 case "list":
                     MessagingUtils.sendBUserMessage(sender, MessageConfUtils.ignoreListMain()
-                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(other))
+                            .replace("%player_absolute%", sender.getName())
+                            .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                            .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                            .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                             .replace("%ignores%", PlayerUtils.getIgnored(other))
                     );
                     break;

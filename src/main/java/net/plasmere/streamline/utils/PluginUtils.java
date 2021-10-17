@@ -207,7 +207,10 @@ public class PluginUtils {
         if (CommandsConfUtils.comBBTag) {
             registerCommand(plugin, new BTagCommand(CommandsConfUtils.comBBTagBase, CommandsConfUtils.comBBTagPerm, stringListToArray(CommandsConfUtils.comBBTagAliases)));
         }
-        // // Stats.
+        if (CommandsConfUtils.comBPoints) {
+            registerCommand(plugin, new NetworkPointsCommand(CommandsConfUtils.comBPointsBase, CommandsConfUtils.comBPointsPerm, stringListToArray(CommandsConfUtils.comBPointsAliases)));
+        }
+        // // Parties.
         if (CommandsConfUtils.comBParties) {
             registerCommand(plugin, new PartiesCommand(CommandsConfUtils.comBPartiesBase, CommandsConfUtils.comBPartiesPerm, stringListToArray(CommandsConfUtils.comBPartiesAliases)));
         }
@@ -216,9 +219,6 @@ public class PluginUtils {
         }
         if (CommandsConfUtils.comBParQuick) {
             registerCommand(plugin, new PCQuickCommand("pc", CommandsConfUtils.comBParPerm, stringListToArray(Arrays.asList("pch", "pchat"))));
-        }
-        if (CommandsConfUtils.comBPoints) {
-            registerCommand(plugin, new NetworkPointsCommand(CommandsConfUtils.comBPointsBase, CommandsConfUtils.comBPointsPerm, stringListToArray(CommandsConfUtils.comBPointsAliases)));
         }
         // // Guilds.
         if (CommandsConfUtils.comBGuilds) {

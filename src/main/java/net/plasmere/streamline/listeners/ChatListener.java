@@ -94,7 +94,10 @@ public class ChatListener implements Listener {
                         MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                                 MessageConfUtils.staffChatEmbedTitle(),
                                 MessageConfUtils.discordStaffChatMessage()
-                                        .replace("%player_display%", sender.getName())
+                                        .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                        .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
+                                        .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                                         .replace("%message%", msg),
                                 DiscordBotConfUtils.textChannelStaffChat));
                     }
@@ -119,7 +122,7 @@ public class ChatListener implements Listener {
                             MessagingUtils.sendDiscordEBMessage(new DiscordMessage(sender,
                                     MessageConfUtils.staffChatEmbedTitle(),
                                     MessageConfUtils.discordStaffChatMessage()
-                                            .replace("%player_absolute%", sender.getName())
+                                            .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(PlayerUtils.getOrGetSavableUser(sender)))
                                             .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(PlayerUtils.getOrGetSavableUser(sender)))
                                             .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))
                                             .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(PlayerUtils.getOrGetSavableUser(sender)))

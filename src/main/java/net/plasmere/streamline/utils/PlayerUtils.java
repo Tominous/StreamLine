@@ -1050,25 +1050,21 @@ public class PlayerUtils {
     }
 
     public static String getIgnored(SavableUser stat){
-        StringBuilder ignored = new StringBuilder();
+        StringBuilder thing = new StringBuilder();
 
         int i = 1;
 
         for (String uuid : stat.ignoredList) {
             if (i < stat.ignoredList.size()) {
-                ignored.append(MessageConfUtils.ignoreListNLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
-                );
+                thing.append(TextUtils.replaceAllPlayer(MessageConfUtils.ignoreListNLast(), uuid));
             } else {
-                ignored.append(MessageConfUtils.ignoreListLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
-                );
+                thing.append(TextUtils.replaceAllPlayer(MessageConfUtils.ignoreListLast(), uuid));
             }
 
             i ++;
         }
 
-        return ignored.toString();
+        return thing.toString();
     }
 
     public static String getFriended(SavableUser stat){
@@ -1078,13 +1074,9 @@ public class PlayerUtils {
 
         for (String uuid : stat.friendList) {
             if (i < stat.friendList.size()) {
-                thing.append(MessageConfUtils.friendListFNLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
-                );
+                thing.append(TextUtils.replaceAllPlayer(MessageConfUtils.friendListFNLast(), uuid));
             } else {
-                thing.append(MessageConfUtils.friendListFLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
-                );
+                thing.append(TextUtils.replaceAllPlayer(MessageConfUtils.friendListFLast(), uuid));
             }
 
             i ++;
@@ -1100,13 +1092,9 @@ public class PlayerUtils {
 
         for (String uuid : stat.pendingToFriendList) {
             if (i < stat.pendingToFriendList.size()) {
-                thing.append(MessageConfUtils.friendListPTNLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
-                );
+                thing.append(TextUtils.replaceAllPlayer(MessageConfUtils.friendListPTNLast(), uuid));
             } else {
-                thing.append(MessageConfUtils.friendListPTLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
-                );
+                thing.append(TextUtils.replaceAllPlayer(MessageConfUtils.friendListPTLast(), uuid));
             }
 
             i ++;
@@ -1122,13 +1110,9 @@ public class PlayerUtils {
 
         for (String uuid : stat.pendingFromFriendList) {
             if (i < stat.pendingFromFriendList.size()) {
-                thing.append(MessageConfUtils.friendListPFNLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
-                );
+                thing.append(TextUtils.replaceAllPlayer(MessageConfUtils.friendListPFNLast(), uuid));
             } else {
-                thing.append(MessageConfUtils.friendListPFLast()
-                        .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(PlayerUtils.getOrCreateSUByUUID(uuid)))
-                );
+                thing.append(TextUtils.replaceAllPlayer(MessageConfUtils.friendListPFLast(), uuid));
             }
 
             i ++;

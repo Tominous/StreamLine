@@ -1,5 +1,6 @@
 package net.plasmere.streamline.utils;
 
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -10,6 +11,7 @@ import net.md_5.bungee.config.Configuration;
 import net.plasmere.streamline.StreamLine;
 import net.plasmere.streamline.config.ConfigUtils;
 import net.plasmere.streamline.objects.lists.SingleSet;
+import net.plasmere.streamline.objects.savable.users.SavableUser;
 import org.apache.commons.collections4.list.TreeList;
 
 import java.awt.*;
@@ -450,5 +452,59 @@ public class TextUtils {
         }
 
         return false;
+    }
+
+    public static String replaceAllPlayer(String of, SavableUser user) {
+        if (user == null) return of;
+
+        return of
+                .replace("%player_absolute%", PlayerUtils.getAbsoluteBungee(user))
+                .replace("%player_normal%", PlayerUtils.getOffOnRegBungee(user))
+                .replace("%player_display%", PlayerUtils.getOffOnDisplayBungee(user))
+                .replace("%player_formatted%", PlayerUtils.getJustDisplayBungee(user));
+    }
+
+    public static String replaceAllPlayer(String of, String uuid) {
+        return replaceAllPlayer(of, PlayerUtils.getOrGetSavableUser(uuid));
+    }
+
+    public static String replaceAllPlayer(String of, CommandSender sender) {
+        return replaceAllPlayer(of, PlayerUtils.getOrGetSavableUser(sender));
+    }
+
+    public static String replaceAllUser(String of, SavableUser user) {
+        if (user == null) return of;
+
+        return of
+                .replace("%user_absolute%", PlayerUtils.getAbsoluteBungee(user))
+                .replace("%user_normal%", PlayerUtils.getOffOnRegBungee(user))
+                .replace("%user_display%", PlayerUtils.getOffOnDisplayBungee(user))
+                .replace("%user_formatted%", PlayerUtils.getJustDisplayBungee(user));
+    }
+
+    public static String replaceAllUser(String of, String uuid) {
+        return replaceAllUser(of, PlayerUtils.getOrGetSavableUser(uuid));
+    }
+
+    public static String replaceAllUser(String of, CommandSender sender) {
+        return replaceAllUser(of, PlayerUtils.getOrGetSavableUser(sender));
+    }
+
+    public static String replaceAllSender(String of, SavableUser user) {
+        if (user == null) return of;
+
+        return of
+                .replace("%sender_absolute%", PlayerUtils.getAbsoluteBungee(user))
+                .replace("%sender_normal%", PlayerUtils.getOffOnRegBungee(user))
+                .replace("%sender_display%", PlayerUtils.getOffOnDisplayBungee(user))
+                .replace("%sender_formatted%", PlayerUtils.getJustDisplayBungee(user));
+    }
+
+    public static String replaceAllSender(String of, String uuid) {
+        return replaceAllSender(of, PlayerUtils.getOrGetSavableUser(uuid));
+    }
+
+    public static String replaceAllSender(String of, CommandSender sender) {
+        return replaceAllSender(of, PlayerUtils.getOrGetSavableUser(sender));
     }
 }
