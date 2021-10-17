@@ -494,7 +494,7 @@ public class StreamLine extends Plugin {
 				if (jda != null) {
 					if (ConfigUtils.moduleShutdowns) {
 						try {
-//						Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelOfflineOnline)).sendMessageEmbeds(eb.setDescription("Bot shutting down...!").build()).queue();
+						Objects.requireNonNull(jda.getTextChannelById(ConfigUtils.textChannelOfflineOnline)).sendMessageEmbeds(eb.setDescription("Bot shutting down...!").build()).queue();
 							MessagingUtils.sendDiscordEBMessage(new DiscordMessage(getProxy().getConsole(), MessageConfUtils.shutdownTitle(), MessageConfUtils.shutdownMessage(), DiscordBotConfUtils.textChannelOfflineOnline));
 						} catch (Exception e) {
 							getLogger().warning("An unknown error occurred with sending online message: " + e.getMessage());
